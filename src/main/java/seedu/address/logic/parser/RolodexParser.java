@@ -20,6 +20,7 @@ import seedu.address.logic.commands.NewCommand;
 import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.StarWarsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -76,6 +77,8 @@ public class RolodexParser {
             return new OpenCommandParser().parse(arguments);
         } else if (NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new NewCommandParser().parse(arguments);
+        }  else if (StarWarsCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+            return new StarWarsCommand();
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

@@ -37,6 +37,7 @@ import seedu.address.logic.commands.NewCommand;
 import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.StarWarsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
@@ -173,6 +174,15 @@ public class RolodexParserTest {
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
         for (String abbreviation : UndoCommand.COMMAND_WORD_ABBREVIATIONS) {
             assertTrue(parser.parseCommand(abbreviation) instanceof UndoCommand);
+        }
+    }
+
+    @Test
+    public void parseCommandStarWarsCommandWordReturnsStarWarsCommand() throws Exception {
+        assertTrue(parser.parseCommand(StarWarsCommand.COMMAND_WORD) instanceof StarWarsCommand);
+        assertTrue(parser.parseCommand("starwars 4") instanceof StarWarsCommand);
+        for (String abbreviation : StarWarsCommand.COMMAND_WORD_ABBREVIATIONS) {
+            assertTrue(parser.parseCommand(abbreviation) instanceof StarWarsCommand);
         }
     }
 

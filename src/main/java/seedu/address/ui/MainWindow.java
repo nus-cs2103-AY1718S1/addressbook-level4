@@ -17,8 +17,10 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.StarWars;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.StarWarsEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -201,6 +203,15 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Opens the star wars window
+     */
+    @FXML
+    public void handleStarWars(StarWars starWars) {
+        StarWarsWindow swWindow = new StarWarsWindow(starWars);
+        swWindow.show();
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -221,5 +232,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleStarWarsEvent(StarWarsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleStarWars(event.getStarWars());
     }
 }
