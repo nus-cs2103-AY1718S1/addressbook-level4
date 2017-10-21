@@ -38,6 +38,10 @@ public class StarWars {
         return instance;
     }
 
+    public static boolean hasInstance() {
+        return instance == null;
+    }
+
     /**
      * Disconnects the initialized telnet client on exit.
      */

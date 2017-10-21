@@ -20,6 +20,8 @@ import seedu.address.commons.util.FxViewUtil;
  */
 public class StarWarsWindow extends UiPart<Region> {
 
+    private static Timeline timeline;
+
     private static final Logger logger = LogsCenter.getLogger(StarWarsWindow.class);
     private static final String ICON = "/images/rolodex_icon_32.png";
     private static final String FXML = "StarWarsWindow.fxml";
@@ -30,7 +32,6 @@ public class StarWarsWindow extends UiPart<Region> {
 
     private final Stage dialogStage;
     private StarWars starWars;
-    private Timeline timeline;
 
     public StarWarsWindow(StarWars starWarsObject) {
         super(FXML);
@@ -68,17 +69,21 @@ public class StarWarsWindow extends UiPart<Region> {
         timeline.play();
     }
 
-    public String getNextScene(String delimeterPattern, InputStream in) {
+    public static String getNextScene(String delimeterPattern, InputStream in) {
         try {
             char lastChar = delimeterPattern.charAt(delimeterPattern.length() - 1);
             StringBuffer sb = new StringBuffer();
-            char ch = (char) in.read();
-            while ((int) ch != -1) {
-                sb.append(ch);
-                if (ch == lastChar && sb.toString().endsWith(delimeterPattern)) {
+            int ch = in.read();
+            while (ch != -1) {
+                sb.append((char) ch);
+                if ((char) ch == lastChar && sb.toString().endsWith(delimeterPattern)) {
                     return sb.toString().replace(delimeterPattern, "");
                 }
-                ch = (char) in.read();
+                ch = in.read();
+            }
+            if (ch == -1) {
+                in.close();
+                return sb.toString();
             }
         } catch (Exception e) {
             timeline.stop();
