@@ -7,6 +7,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
+import java.util.Date;
+import java.util.List;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddTaskCommand;
@@ -45,6 +47,9 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             SingleEventDate singleEventDate =
                     ParserUtil.parseSingleEventDate(argMultimap.getValue(PREFIX_SINGLE_EVENT_DATE));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            List<Date> dates = ParserUtil.parseNaturalLanguage(args);
+            System.out.println(dates + " ");
+            
             ReadOnlyTask task = new Task(description, startDate, deadline, singleEventDate, tagList);
 
             return new AddTaskCommand(task);

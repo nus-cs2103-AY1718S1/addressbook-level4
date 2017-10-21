@@ -2,11 +2,17 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
+import org.ocpsoft.prettytime.nlp.parse.DateGroup;
+
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -140,5 +146,15 @@ public class ParserUtil {
     public static SingleEventDate parseSingleEventDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
         return date.isPresent() ? new SingleEventDate(date.get()) : new SingleEventDate("");
+    }
+    
+    public static List<Date> parseNaturalLanguage(String naturalLanguageInput) throws IllegalValueException {
+        List<Date> dates = new PrettyTimeParser().parse(naturalLanguageInput);
+        List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
+        if (dates.isEmpty() && dateGroup.isEmpty()) {
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+        }
+        System.out.println(dateGroup.get(0).isRecurring() + " " + dateGroup.get(0));
+        return dates;
     }
 }
