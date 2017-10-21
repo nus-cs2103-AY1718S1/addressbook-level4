@@ -382,7 +382,7 @@ or address. This will ensure that users type in the right `KEYWORD` to sort the 
 ==== Sorting by name
 
 Suppose a user wants to sort by name, the user will type `sort name` into the command box. This will then be processed by `LogicManager` which executes the command and `AddressBookParser` will
-parse the command accordingly. The sequence diagram for this scenario is shown in Figure 2 below.
+parse the command accordingly. A `SortCommand` will be returned to the `LogicManager` which will then execute it. The sequence diagram for this scenario is shown in Figure 2 below.
 
 image::sortSD.png[width="800"]
 Figure 2: Sequence diagram for sorting by name
