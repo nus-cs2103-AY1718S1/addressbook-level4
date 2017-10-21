@@ -134,7 +134,6 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<Photo> photoProperty() {
         return photo;
     }
-    
     public Photo getPhoto() { return photo.get(); }
 
     public void setPhoto(Photo photo) {
