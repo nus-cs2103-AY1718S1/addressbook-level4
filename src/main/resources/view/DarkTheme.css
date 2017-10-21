@@ -1,6 +1,6 @@
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    background-image: url('/C:/Users/Syabil/Documents/addressbook-level4/build/resources/main/images/splash.jpg'); /* Used in the default.html file */
+    background-size: cover;
 }
 
 .label {
