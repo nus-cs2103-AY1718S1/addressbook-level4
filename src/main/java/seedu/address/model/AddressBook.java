@@ -82,7 +82,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Returns {@code UniquePersonList} of all blacklisted persons
-     * in the existing data of this {@code AddressBook} with {@code newData}.
+     * in the existing data of this {@code AddressBook}.
      */
     public UniquePersonList getBlacklistedPersons() {
         UniquePersonList blacklistedPersons = new UniquePersonList();
@@ -100,7 +100,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Returns {@code UniquePersonList} of all whitelisted persons
-     * in the existing data of this {@code AddressBook} with {@code newData}.
+     * in the existing data of this {@code AddressBook}.
      */
     public UniquePersonList getWhitelistedPersons() {
         UniquePersonList whitelistedPersons = new UniquePersonList();
@@ -343,8 +343,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */
-    public void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+    public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
             IllegalValueException {
+        int index;
+        index = persons.getIndexOf(target);
+
         Person editedPerson = new Person(target);
         double newDebtAmt = target.getDebt().toNumber() - amount.toNumber();
 
@@ -362,11 +365,13 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "New debt amount should not be invalid since amount and debt field in target have "
                     + "been validated";
         }
+
+        return persons.getReadOnlyPerson(index);
     }
     //@@author
 
     /**
-     * Resets person's debt field to zero, in the mainlist of the addressbook.
+     * Resets person's debt field to zero, in the masterlist of the addressbook.
      *
      *  @throws PersonNotFoundException if person does not exist in list.
      */
@@ -393,7 +398,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Resets person's {@code dateRepaid} field to current date, in the mainlist of the addressbook.
+     * Resets person's {@code dateRepaid} field to current date, in the masterlist of the addressbook.
      *
      *  @throws PersonNotFoundException if person does not exist in list.
      */

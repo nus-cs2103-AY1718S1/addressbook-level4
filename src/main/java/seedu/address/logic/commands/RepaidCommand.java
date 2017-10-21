@@ -43,7 +43,7 @@ public class RepaidCommand extends UndoableCommand {
         ReadOnlyPerson personToWhitelist = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            if (personToWhitelist.getIsWhitelisted()) {
+            if (personToWhitelist.getDebt().toNumber() == 0) {
                 messagetoDisplay = MESSAGE_WHITELIST_PERSON_FAILURE;
             } else {
                 model.addWhitelistedPerson(personToWhitelist);

@@ -133,5 +133,6 @@ public interface Model {
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */
-    void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException, IllegalValueException;
+    ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount)
+            throws PersonNotFoundException, IllegalValueException;
 }
