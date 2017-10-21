@@ -36,7 +36,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */ {
+     */
+    {
         persons = new UniquePersonList();
         schedules = new UniqueScheduleList();
         tags = new UniqueTagList();
@@ -148,6 +149,17 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Ensures that every schedule in these persons:
+     * - exists in the master list {@link #schedules}
+     * - points to a Schedule object in the master list
+     *
+     * @see #syncMasterScheduleListWith(Person)
+     */
+    private void syncMasterScheduleListWith(UniquePersonList persons) {
+        persons.forEach(this::syncMasterScheduleListWith);
+    }
+
+    /**
      * Ensures that every tag in this person:
      * - exists in the master list {@link #tags}
      * - points to a Tag object in the master list
@@ -165,17 +177,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         person.setTags(correctTagReferences);
-    }
-
-    /**
-     * Ensures that every schedule in these persons:
-     * - exists in the master list {@link #schedules}
-     * - points to a Schedule object in the master list
-     *
-     * @see #syncMasterScheduleListWith(Person)
-     */
-    private void syncMasterScheduleListWith(UniquePersonList persons) {
-        persons.forEach(this::syncMasterScheduleListWith);
     }
 
     /**
