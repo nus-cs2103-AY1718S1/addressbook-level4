@@ -45,7 +45,7 @@
                         <Label styleClass="cell_small_label" text="2000" />
                      </children>
                   </HBox>
-                  <GridPane fx:id="timetableGrid" prefHeight="520.0">
+                  <GridPane fx:id="timetableGrid" prefHeight="520.0" styleClass="grid-pane" stylesheets="@DarkTheme.css">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -72,6 +72,12 @@
                </children>
             </VBox>
          </children>
+         <padding>
+            <Insets top="50.0" />
+         </padding>
       </HBox>
    </children>
+   <padding>
+      <Insets top="50.0" />
+   </padding>
 </StackPane>
