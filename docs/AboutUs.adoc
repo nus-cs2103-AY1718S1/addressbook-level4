@@ -22,7 +22,7 @@ Responsibilities: Project
 '''
 
 === Joshua Ng
-image::joshua.jpg[width="150", align="left"]
+image::joshua.JPG[width="150", align="left"]
 {empty}[https://github.com/bladerail[github]] [<<joshua#, portfolio>>]
 
 Role: Team Member
@@ -32,7 +32,7 @@ Responsibilities: Project
 '''
 
 === Zhou Kai
-image::Zk_pic.jpg[width="150", align="left"]
+image::zhoukai.jpg[width="150", align="left"]
 {empty}[http://github.com/zhoukai07[github]] [<<zhoukai#, portfolio>>]
 
 Role: Developer +
