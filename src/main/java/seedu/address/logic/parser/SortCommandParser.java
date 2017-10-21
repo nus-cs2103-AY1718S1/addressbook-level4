@@ -24,7 +24,6 @@ public class SortCommandParser implements Parser<SortCommand> {
         case "name":
         case "debt":
         case "cluster":
-        case "dateborrow":
         case "deadline":
             return new SortCommand(trimmedArgs);
         default:

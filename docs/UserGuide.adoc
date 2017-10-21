@@ -285,7 +285,7 @@ Sorts all the contacts in the address book in specified order. If no order is sp
 Format: `sort ORDERING`
 
 ****
-* Valid orderings are: `name`, `cluster`, `deadline`, `dateborrow`, and `debt`.
+* Valid orderings are: `name`, `cluster`, `deadline` and `debt`.
 ****
 
 Examples:

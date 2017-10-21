@@ -1,6 +1,5 @@
 package seedu.address.model.person;
 
-import static seedu.address.model.util.DateUtil.compareDates;
 import static seedu.address.model.util.DateUtil.convertStringToDate;
 import static seedu.address.model.util.DateUtil.formatDate;
 
@@ -44,19 +43,6 @@ public class DateBorrow {
         return other == this // short circuit if same object
                 || (other instanceof DateBorrow // instanceof handles nulls
                 && this.value.equals(((DateBorrow) other).value)); // state check
-    }
-
-    /**
-     * Compares two {@code DateBorrow} objects and returns 1 if second date is earlier, -1 if later.
-     * @param other the {@code DateBorroww} object to compare to.
-     * @return an integer value of 1 if second date is earlier, -1 if second date is later.
-     */
-    public int compareTo(DateBorrow other) {
-        if (compareDates(this.getDate(), other.getDate())) {
-            return -1;
-        } else {
-            return 1;
-        }
     }
 
     @Override
