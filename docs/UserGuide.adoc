@@ -158,7 +158,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Marking a person as 'Favourite': `addFave`
+=== Marking a person as 'Favourite': `addFave` (Since V1.2)
 
 Marks the person identified by the index number used in the last person listing as a 'Favourite'. +
 Format: `addFave INDEX` +
@@ -176,7 +176,7 @@ Examples:
 Marks the 1st contact as a 'Favourite' in the address book.
 * `af 1`
 
-=== Unmarking a person as 'Favourite': `removeFave`
+=== Unmarking a person as 'Favourite': `removeFave` (Since V1.2)
 
 Unmarks the person identified by the index number used in the last person listing as a 'Favourite' +
 Format: `removeFave INDEX` +
@@ -194,7 +194,7 @@ Examples:
 Unmarks the 1st contact as a 'Favourite' in the address book.
 * `af 1`
 
-=== Creating a group: `gcreate`
+=== Creating a group: `gcreate` (Since V1.2)
 
 Adds a group to the address book. +
 Format: `gc n/NAME` +
@@ -205,7 +205,7 @@ Examples:
 * `gcreate n/Bamboo`
 * `gc n/W09-B4`
 
-=== Deleting a group: `gdelete`
+=== Deleting a group: `gdelete` (Since V1.2)
 
 Deletes a group from address book. +
 Format: `gdelete INDEX` +
@@ -223,7 +223,7 @@ Examples:
 Deletes the 2nd group in the address book.
 * `gd 2`
 
-=== Sorting persons : `sort`
+=== Sorting persons : `sort` (Since V1.1)
 
 Sorts persons based on prefix specified in either ascending or descending order. +
 Format: `sort [PREFIX/[r]]` +
