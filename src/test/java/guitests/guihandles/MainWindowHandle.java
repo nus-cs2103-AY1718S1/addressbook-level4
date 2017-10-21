@@ -5,7 +5,6 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Password;
 import seedu.address.logic.UndoRedoStack;
@@ -22,13 +21,13 @@ public class MainWindowHandle extends StageHandle {
 
     public static final String TEST_USERNAME = "TESTloanShark97";
     public static final String TEST_PASSWORD = "TESThitMeUp123";
+    private static ModelManager modelManager;
     private PersonListPanelHandle personListPanel;
     private ResultDisplayHandle resultDisplay;
     private CommandBoxHandle commandBox;
     private StatusBarFooterHandle statusBarFooter;
     private MainMenuHandle mainMenu;
     private InfoPanelHandle infoPanel;
-    private static ModelManager modelManager;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
