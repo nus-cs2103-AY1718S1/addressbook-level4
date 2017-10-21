@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -32,9 +33,12 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.alias.AliasToken;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonHasKeywordsPredicate;
 import seedu.address.model.person.Remark;
+import seedu.address.testutil.AliasTokenBuilder;
+import seedu.address.testutil.AliasTokenUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -134,6 +138,13 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandAlias() throws Exception {
+        AliasToken aliasToken = new AliasTokenBuilder().build();
+        AliasCommand command = (AliasCommand) parser.parseCommand(AliasTokenUtil.getAliasCommand(aliasToken));
+        assertEquals(new AliasCommand(aliasToken), command);
     }
 
     @Test
