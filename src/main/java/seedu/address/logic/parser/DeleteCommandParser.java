@@ -23,7 +23,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     public DeleteCommand parse(String args) throws ParseException {
         try {
             List<Index> indexList = ParserUtil.parseMultipleIndexes(args);
-            Collections.reverse(indexList);
+            // Sorts and reverses list to allow input indexes to be in any order
+            Collections.sort(indexList, Collections.reverseOrder());
             return new DeleteCommand(indexList);
         } catch (IllegalValueException ive) {
             throw new ParseException(
