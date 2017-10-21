@@ -323,7 +323,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 
-
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
@@ -345,6 +344,55 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::sort[]
+=== Sort mechanism
+
+The sort command is facilitated by the `LogicManager` class. It supports sorting contact list and makes it easier for users to find contacts they want according to alphabetical order.
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortSequenceDiagram.png[width="800"]
+
+The user enters a sort command which is got by `LogicManager`.
+`LogicManager` calls `AddressBookParser` to parse the command.
+Then `AddressBookParser` creates the sort command object and return it.
+`LogicManager` receives the command object and executes the command.
+The sort command object calls `sortPersons()` in the `Model`.
+Then `Model` returns the sorted list.
+The sort command object receives the sorted list and creates `CommandResult` object and return it.
+`LogicManager` receives the result and shows it through `UI`.
+
+==== Design Considerations
+
+**Aspect:** How sort command affects the data +
+**Alternative 1 (current choice):** Sorts the copy of contact list and return it. +
+**Pros:** It is more defensive and keep the data unchanged. +
+**Cons:** Users have to sort the list every time when they open the application. +
+**Alternative 2:** Sorts the contact list and return it. +
+**Pros:** Users do not need to type the command everytime. +
+**Cons:** Sort command is not undoable which means that the order of list cannot change anymore after you call it and it is less defensive because you could frequently change the original data. +
+
+---
+
+**Aspect:** How sort command executes +
+**Alternative 1 (current choice):** Sorts the contact list according to alphabetical order(ascending order). +
+**Pros:** Easy to imlement. +
+**Cons:** Less function for sort command. +
+**Alternative 2:** Sorts the contact list according to different order(ascending order or descending order). +
+**Pros:** Users have more choices. +
+**Cons:** It will be more complex for developers to maintain and test. +
+
+---
+
+**Aspect:** What could be sorted +
+**Alternative 1 (current choice):** According to names +
+**Pros:** It is useful and necessary for general users. +
+**Cons:** It is too narrow and common. +
+**Alternative 2:** According to address/email/phone number +
+**Pros:** It provides more choices for users +
+**Cons:** Because address/email/phone number is unique, most of time you could find them without sorting the list. +
+// end::sort[]
 
 === Logging
 
