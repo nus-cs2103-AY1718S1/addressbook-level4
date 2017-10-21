@@ -143,6 +143,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+                throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
