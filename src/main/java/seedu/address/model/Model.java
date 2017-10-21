@@ -58,6 +58,10 @@ public interface Model {
     /** Returns the themes list */
     ArrayList<String> getThemesList();
 
+    void setCurrentTheme(String theme);
+
+    String getCurrentTheme();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

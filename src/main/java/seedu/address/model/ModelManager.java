@@ -29,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private static String currentTheme;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -42,6 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        currentTheme = userPrefs.getTheme();
     }
 
     public ModelManager() {
@@ -114,6 +116,16 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ArrayList<String> getThemesList() {
         return this.addressBook.getThemesList();
+    }
+
+    @Override
+    public void setCurrentTheme(String theme) {
+        currentTheme = theme;
+    }
+
+    @Override
+    public String getCurrentTheme() {
+        return currentTheme;
     }
 
     //=========== Filtered Person List Accessors =============================================================
