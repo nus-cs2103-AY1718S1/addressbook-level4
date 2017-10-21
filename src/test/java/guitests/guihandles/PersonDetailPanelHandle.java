@@ -18,11 +18,11 @@ public class PersonDetailPanelHandle extends NodeHandle<Node> {
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String TAGS_FIELD_ID = "#tags";
 
-    private final Label nameLabel;
-    private final Label addressLabel;
-    private final Label phoneLabel;
-    private final Label emailLabel;
-    private final List<Label> tagLabels;
+    private Label nameLabel;
+    private Label addressLabel;
+    private Label phoneLabel;
+    private Label emailLabel;
+    private List<Label> tagLabels;
 
     public PersonDetailPanelHandle(Node personDetailNode) {
         super(personDetailNode);
@@ -32,12 +32,7 @@ public class PersonDetailPanelHandle extends NodeHandle<Node> {
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
 
-        Region tagsContainer = getChildNode(TAGS_FIELD_ID);
-        this.tagLabels = tagsContainer
-                .getChildrenUnmodifiable()
-                .stream()
-                .map(Label.class::cast)
-                .collect(Collectors.toList());
+        updateTags();
     }
 
     public String getName() {
@@ -60,6 +55,18 @@ public class PersonDetailPanelHandle extends NodeHandle<Node> {
         return tagLabels
                 .stream()
                 .map(Label::getText)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Update tags in person detail panel
+     */
+    public void updateTags() {
+        Region tagsContainer = getChildNode(TAGS_FIELD_ID);
+        this.tagLabels = tagsContainer
+                .getChildrenUnmodifiable()
+                .stream()
+                .map(Label.class::cast)
                 .collect(Collectors.toList());
     }
 }
