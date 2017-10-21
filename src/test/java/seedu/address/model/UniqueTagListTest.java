@@ -3,8 +3,8 @@ package seedu.address.model;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import seedu.address.model.lecturer.UniqueLecturerList;
 
-import seedu.address.model.tag.UniqueTagList;
 
 public class UniqueTagListTest {
     @Rule
@@ -12,8 +12,8 @@ public class UniqueTagListTest {
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        UniqueTagList uniqueTagList = new UniqueTagList();
+        UniqueLecturerList uniqueLecturerList = new UniqueLecturerList();
         thrown.expect(UnsupportedOperationException.class);
-        uniqueTagList.asObservableList().remove(0);
+        uniqueLecturerList.asObservableList().remove(0);
     }
 }
