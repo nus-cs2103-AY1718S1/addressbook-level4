@@ -131,7 +131,7 @@ public class BirthdayCommandTest {
     /**
      * Returns an {@code BirthdayCommand} with parameters {@code index} and {@code birthday}
      */
-    private BirthdayCommand prepareCommand(Index index, String birthday) throws IllegalValueException{
+    private BirthdayCommand prepareCommand(Index index, String birthday) throws IllegalValueException {
         BirthdayCommand birthdayCommand = new BirthdayCommand(index, new Birthday(birthday));
         birthdayCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return birthdayCommand;
