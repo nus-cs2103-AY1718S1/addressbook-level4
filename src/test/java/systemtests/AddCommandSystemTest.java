@@ -3,10 +3,7 @@ package systemtests;
 import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.lecturer.Lecturer;
@@ -50,11 +47,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MA1101R;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
-import static seedu.address.testutil.TypicalLessons.CS2103T_L1;
-import static seedu.address.testutil.TypicalLessons.CS2103_L1;
-import static seedu.address.testutil.TypicalLessons.GEQ_T66;
-import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
-import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
 import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
@@ -160,28 +152,33 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid code -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_CODE_DESC + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        command = AddCommand.COMMAND_WORD + INVALID_CODE_DESC + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandFailure(command, Code.MESSAGE_CODE_CONSTRAINTS);
 
         /* Case: invalid class type -> rejected */
-        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + INVALID_CLASSTYPE_DESC + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + INVALID_CLASSTYPE_DESC + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandFailure(command, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
 
         /* Case: invalid venue -> rejected */
-        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + INVALID_VENUE_DESC + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + INVALID_VENUE_DESC
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandFailure(command, Location.MESSAGE_LOCATION_CONSTRAINTS);
 
         /* Case: invalid group -> rejected */
-        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + INVALID_GROUP_DESC + TIMESLOT_DESC_MA1101R;
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + INVALID_GROUP_DESC + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandFailure(command, Group.MESSAGE_GROUP_CONSTRAINTS);
 
         /* Case: invalid time slot -> rejected */
-        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + INVALID_TIMESLOT_DESC;
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + INVALID_TIMESLOT_DESC + LECTURER_DESC_MA1101R;
         assertCommandFailure(command, TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS);
 
         /* Case: invalid lecturers -> rejected */
-        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R
-                + INVALID_LECTURER_DESC;
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + INVALID_LECTURER_DESC;
         assertCommandFailure(command, Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
     }
 
