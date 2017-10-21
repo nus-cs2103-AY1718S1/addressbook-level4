@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,6 +21,9 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -58,6 +62,8 @@ public class CombinePanel extends UiPart<Region>{
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
         loadDefaultPage();
+        timeBox.setVisible(false);
+        browser.setVisible(false);
         registerAsAnEventHandler(this);
 
     }
@@ -73,8 +79,8 @@ public class CombinePanel extends UiPart<Region>{
     @Subscribe
     private void handleViewedLessonEvent(ViewedLessonEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        generateTimeTableGrid();
         if(ListingUnit.getCurrentListingUnit().equals(ListingUnit.LESSON)){
-            generateTimeTableGrid();
             timeBox.setVisible(true);
             browser.setVisible(false);
         }else if(ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)){
@@ -92,7 +98,9 @@ public class CombinePanel extends UiPart<Region>{
 
         ObservableList<ReadOnlyLesson> lessons =  logic.getFilteredLessonList();
         initGridData();
-        for(int i = 0;i <lessons.size(); i++){
+        timetableGrid.getChildren().clear();
+
+        for(int i = 0;i < lessons.size(); i++){
             ReadOnlyLesson lesson = lessons.get(i);
             String text = lesson.getCode() + " " + lesson.getClassType() +
                     "(" + lesson.getGroup() + ") " + lesson.getLocation();
@@ -113,18 +121,27 @@ public class CombinePanel extends UiPart<Region>{
                 int endHourSpan = data.endHourSpan;
                 if( i == weekDayRow &&  j == startHourCol ){
                     TextArea lbl = new TextArea(text);
+                    lbl.setId("lbl");
                     lbl.setWrapText(true);
                     lbl.setStyle("-fx-control-inner-background:black;" +
                             " -fx-background-color: #383838; " +
                             " -fx-padding: 5 5 5 5; " +
                             " -fx-font-family: Consolas; " +
                             "-fx-text-fill: #00ff00;");
-                    timetableGrid.setGridLinesVisible(true);
+                    //timetableGrid.setGridLinesVisible(true);
                     timetableGrid.add(lbl, j, i, endHourSpan, 1);
                 }
+
+                StackPane apane = new StackPane();
+                apane.setStyle("-fx-background-color: transparent;" +
+                        "-fx-border-color: #EEEEEE");
+                timetableGrid.add(apane,j,i);
             }
         }
     }
+
+
+
 
     private int getWeekDay(String text){
         text = text.toUpperCase();
@@ -147,6 +164,23 @@ public class CombinePanel extends UiPart<Region>{
     private int getTime(String text){
         int time = Integer.parseInt(text);
         return time - 8;
+    }
+
+
+
+    private void clearGrid() {
+        ObservableList<Node> list = timetableGrid.getChildren();
+        final List<Node> removalCandidates = new ArrayList<>();
+
+        Iterator<Node> iter = list.iterator();
+        while (iter.hasNext()) {
+            Node node = iter.next();
+            if (node.getId().contains("lbl")) {
+                node.setVisible(false);
+                removalCandidates.add(node);
+            }
+        }
+        timetableGrid.getChildren().removeAll(removalCandidates);
     }
 
 
@@ -184,7 +218,6 @@ public class CombinePanel extends UiPart<Region>{
             timeBox.setVisible(false);
             browser.setVisible(true);
         }
-
     }
 
 }

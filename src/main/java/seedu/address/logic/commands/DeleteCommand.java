@@ -1,12 +1,10 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
-
-import java.util.List;
-
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.Code;
@@ -15,6 +13,10 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
+
+import java.util.List;
+
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 
 
 
@@ -70,6 +72,7 @@ public class DeleteCommand extends UndoableCommand {
             } catch (LessonNotFoundException pnfe) {
                 assert false : "The target lesson cannot be missing";
             }
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             return new CommandResult(String.format(MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete));
         }
     }
@@ -95,6 +98,7 @@ public class DeleteCommand extends UndoableCommand {
         }
 
         model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS, location));
     }
 
@@ -118,6 +122,7 @@ public class DeleteCommand extends UndoableCommand {
         }
 
         model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, code));
     }
 
