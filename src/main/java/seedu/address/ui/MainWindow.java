@@ -284,5 +284,6 @@ public class MainWindow extends UiPart<Region> {
     private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleChangeTheme(event.theme);
+        logic.setCurrentTheme(getCurrentTheme());
     }
 }
