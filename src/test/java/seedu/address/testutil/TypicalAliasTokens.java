@@ -49,7 +49,7 @@ public class TypicalAliasTokens {
     /**
      * Returns an {@code AddressBook} with all the typical aliases.
      */
-    public static AddressBook getTypicalAddressBookwithAlias() {
+    public static AddressBook getTypicalAddressBookWithAlias() {
         AddressBook ab = new AddressBook();
         for (ReadOnlyAliasToken aliasToken : getTypicalAliasTokens()) {
             try {

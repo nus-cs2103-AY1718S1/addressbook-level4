@@ -48,7 +48,7 @@ public class UnaliasCommand extends UndoableCommand {
         }
         try {
             if (toRemove == null) {
-                return new CommandResult(MESSAGE_UNKNOWN_ALIAS);
+                throw new CommandException(MESSAGE_UNKNOWN_ALIAS);
             }
             model.deleteAliasToken(toRemove);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toRemove));
@@ -56,6 +56,13 @@ public class UnaliasCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_UNKNOWN_ALIAS);
         }
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UnaliasCommand // instanceof handles nulls
+                && keyword.equals(((UnaliasCommand) other).keyword));
     }
 }
 

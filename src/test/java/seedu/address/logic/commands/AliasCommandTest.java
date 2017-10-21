@@ -29,6 +29,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.AliasTokenBuilder;
 
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for AliasCommand.
+ */
 public class AliasCommandTest {
 
     @Rule
