@@ -36,7 +36,9 @@ public interface Model {
      */
     void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException;
 
-    /** Deletes the given tag from every parcel. */
+    /** 
+     * Deletes the given tag from every parcel.
+     */
     void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException;
 
     /**
