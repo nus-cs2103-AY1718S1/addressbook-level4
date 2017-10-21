@@ -26,14 +26,14 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s):\n%1$s";
 
-    private ArrayList<Index> targetIndexArraylist = new ArrayList<Index>();
+    private List<Index> targetIndexList = new ArrayList<>();
 
-    public DeleteCommand(ArrayList<Index> targetIndexArraylist) {
-        this.targetIndexArraylist = targetIndexArraylist;
+    public DeleteCommand(List<Index> targetIndexList) {
+        this.targetIndexList = targetIndexList;
     }
 
     public DeleteCommand(Index targetIndex) {
-        this.targetIndexArraylist.add(targetIndex);
+        this.targetIndexList.add(targetIndex);
     }
 
 
@@ -44,7 +44,8 @@ public class DeleteCommand extends UndoableCommand {
         String result = "";
         String people = "";
         ReadOnlyPerson personToDelete = null;
-        for (Index i : this.targetIndexArraylist) {
+        for (Index i : this.targetIndexList) {
+
             if (i.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
@@ -69,6 +70,6 @@ public class DeleteCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndexArraylist.equals(((DeleteCommand) other).targetIndexArraylist)); // state check
+                && this.targetIndexList.equals(((DeleteCommand) other).targetIndexList)); // state check
     }
 }
