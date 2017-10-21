@@ -48,73 +48,37 @@ public class RolodexParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
-        switch (commandWord.toLowerCase()) {
-
-        case AddCommand.COMMAND_WORD:
-        case AddCommand.COMMAND_WORD_ABBREV:
+        if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new AddCommandParser().parse(arguments);
-
-        case EditCommand.COMMAND_WORD:
-        case EditCommand.COMMAND_WORD_ABBREV:
+        } else if (EditCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new EditCommandParser().parse(arguments);
-
-        case SelectCommand.COMMAND_WORD:
-        case SelectCommand.COMMAND_WORD_ABBREV:
+        } else if (SelectCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new SelectCommandParser().parse(arguments);
-
-        case DeleteCommand.COMMAND_WORD:
-        case DeleteCommand.COMMAND_WORD_ABBREV:
+        } else if (DeleteCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new DeleteCommandParser().parse(arguments);
-
-        case ClearCommand.COMMAND_WORD:
-        case ClearCommand.COMMAND_WORD_ABBREV:
+        } else if (ClearCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new ClearCommand();
-
-        case FindCommand.COMMAND_WORD:
-        case FindCommand.COMMAND_WORD_ABBREV:
-        case FindCommand.COMMAND_WORD_ALT:
+        } else if (FindCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new FindCommandParser().parse(arguments);
-
-        case ListCommand.COMMAND_WORD:
-        case ListCommand.COMMAND_WORD_ABBREV:
+        } else if (ListCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new ListCommandParser().parse(arguments);
-
-        case HistoryCommand.COMMAND_WORD:
-        case HistoryCommand.COMMAND_WORD_ABBREV:
-        case HistoryCommand.COMMAND_WORD_ALT:
+        } else if (HistoryCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new HistoryCommand();
-
-        case ExitCommand.COMMAND_WORD:
-        case ExitCommand.COMMAND_WORD_ABBREV:
+        } else if (ExitCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-        case HelpCommand.COMMAND_WORD_ABBREV:
+        } else if (HelpCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new HelpCommand();
-
-        case UndoCommand.COMMAND_WORD:
-        case UndoCommand.COMMAND_WORD_ABBREV:
+        } else if (UndoCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new UndoCommand();
-
-        case RedoCommand.COMMAND_WORD:
-        case RedoCommand.COMMAND_WORD_ABBREV:
+        } else if (RedoCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new RedoCommand();
-
-        case OpenCommand.COMMAND_WORD:
-        case OpenCommand.COMMAND_WORD_ABBREV:
+        } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new OpenCommandParser().parse(arguments);
-
-        case NewCommand.COMMAND_WORD:
-        case NewCommand.COMMAND_WORD_ABBREV:
+        } else if (NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new NewCommandParser().parse(arguments);
-
-        case StarWarsCommand.COMMAND_WORD:
-        case StarWarsCommand.COMMAND_WORD_ABBREV:
-            return new StarWarsCommand(new StarWars());
-
-        default:
+        } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }

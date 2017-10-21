@@ -32,7 +32,7 @@ public class PersonCompareTest {
     @Before
     public void setUp() {
         personSet.addAll(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, HOON, IDA));
-        personPermutations = generatePermutations(personSet);
+        personPermutations = generatePersonPermutations(personSet);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class PersonCompareTest {
      * Returns a list permutation of all pairs of persons in a set
      * @param set to be permuted
      */
-    private static ArrayList<Pair<ReadOnlyPerson, ReadOnlyPerson>> generatePermutations(Set<ReadOnlyPerson> set) {
+    private static ArrayList<Pair<ReadOnlyPerson, ReadOnlyPerson>> generatePersonPermutations(Set<ReadOnlyPerson> set) {
         ArrayList<Pair<ReadOnlyPerson, ReadOnlyPerson>> personPairList = new ArrayList<>();
         ArrayList<ReadOnlyPerson> personList = new ArrayList<>(set);
 

@@ -27,7 +27,7 @@ public class SelectCommandSystemTest extends RolodexSystemTest {
 
         /* Case: select the last card in the person list -> selected */
         Index personCount = Index.fromOneBased(getTypicalPersons().size());
-        command = SelectCommand.COMMAND_WORD_ABBREV + " " + personCount.getOneBased();
+        command = SelectCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " " + personCount.getOneBased();
         assertCommandSuccess(command, personCount);
 
         /* Case: undo previous selection -> rejected */
@@ -47,7 +47,7 @@ public class SelectCommandSystemTest extends RolodexSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getLatestPersonList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD_ABBREV + " " + invalidIndex,
+        assertCommandFailure(SelectCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " " + invalidIndex,
                 MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: select the current selected card -> selected */
@@ -63,7 +63,7 @@ public class SelectCommandSystemTest extends RolodexSystemTest {
         /* Case: filtered person list, select index within bounds of rolodex and person list -> selected */
         Index validIndex = Index.fromOneBased(1);
         assert validIndex.getZeroBased() < getModel().getLatestPersonList().size();
-        command = SelectCommand.COMMAND_WORD_ABBREV + " " + validIndex.getOneBased();
+        command = SelectCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
 
         /* Case: invalid index (0) -> rejected */
@@ -71,7 +71,7 @@ public class SelectCommandSystemTest extends RolodexSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD_ABBREV + " " + -1,
+        assertCommandFailure(SelectCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " " + -1,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid arguments (alphabets) -> rejected */
@@ -79,7 +79,7 @@ public class SelectCommandSystemTest extends RolodexSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD_ABBREV + " 1 abc",
+        assertCommandFailure(SelectCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " 1 abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: select from empty rolodex -> rejected */
