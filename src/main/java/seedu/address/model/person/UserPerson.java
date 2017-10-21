@@ -23,7 +23,7 @@ import seedu.address.model.util.SampleUserPersonUtil;
 public class UserPerson implements ReadOnlyPerson {
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
-    private ObjectProperty<Email> email;
+    private ObjectProperty<ArrayList<Email>> emails;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<UniqueTagList> tags;
@@ -40,11 +40,11 @@ public class UserPerson implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public UserPerson(Name name, Phone phone, Email email, Address address) {
+    public UserPerson(Name name, Phone phone, ArrayList<Email> email, Address address) {
         requireAllNonNull(name, phone, email, address);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
+        this.emails = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
@@ -57,7 +57,7 @@ public class UserPerson implements ReadOnlyPerson {
     public UserPerson(ReadOnlyPerson src) {
         this.name = new SimpleObjectProperty<>(src.getName());
         this.phone = new SimpleObjectProperty<>(src.getPhone());
-        this.email = new SimpleObjectProperty<>(src.getEmail());
+        this.emails = new SimpleObjectProperty<>(src.getEmail());
         this.address = new SimpleObjectProperty<>(src.getAddress());
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
@@ -92,18 +92,18 @@ public class UserPerson implements ReadOnlyPerson {
         return phone.get();
     }
 
-    public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
+    public void setEmail(ArrayList<Email> email) {
+        this.emails.set(requireNonNull(email));
     }
 
     @Override
-    public ObjectProperty<Email> emailProperty() {
-        return email;
+    public ObjectProperty<ArrayList<Email>> emailProperty() {
+        return emails;
     }
 
     @Override
-    public Email getEmail() {
-        return email.get();
+    public ArrayList<Email> getEmail() {
+        return emails.get();
     }
 
     public void setAddress(Address address) {
@@ -204,7 +204,7 @@ public class UserPerson implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, emails, address, tags);
     }
 
     @Override
@@ -218,7 +218,7 @@ public class UserPerson implements ReadOnlyPerson {
      */
     public void update(ReadOnlyPerson target) {
         this.name = new SimpleObjectProperty<>(target.getName());
-        this.email = new SimpleObjectProperty<>(target.getEmail());
+        this.emails = new SimpleObjectProperty<>(target.getEmail());
         this.phone = new SimpleObjectProperty<>(target.getPhone());
         this.address = new SimpleObjectProperty<>(target.getAddress());
     }

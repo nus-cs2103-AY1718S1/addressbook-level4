@@ -1,5 +1,6 @@
 package seedu.address.model.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -19,7 +20,9 @@ import seedu.address.model.tag.Tag;
 public class SampleUserPersonUtil {
     public static ReadOnlyPerson getDefaultSamplePerson() {
         try {
-            return new Person (new Name("Default"), new Phone("00000000"), new Email("default@default.com"),
+            ArrayList<Email> emails = new ArrayList<Email>();
+            emails.add(new Email("default@default.com"));
+            return new Person (new Name("Default"), new Phone("00000000"), emails,
                             new Address("Default"), new Remark(""), new HashSet<Tag>(), new HashSet<WebLink>());
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
@@ -28,7 +31,9 @@ public class SampleUserPersonUtil {
 
     public static ReadOnlyPerson getDummySamplePerson() {
         try {
-            return new Person (new Name("Dummy"), new Phone("11111111"), new Email("dummy@dummy.com"),
+            ArrayList<Email> emails = new ArrayList<Email>();
+            emails.add(new Email("dummy@dummy.com"));
+            return new Person (new Name("Dummy"), new Phone("11111111"), emails,
                     new Address("Dummy"), new Remark(""), new HashSet<Tag>(), new HashSet<WebLink>());
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);

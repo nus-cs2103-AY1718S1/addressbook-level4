@@ -2,6 +2,8 @@
 <userperson>
     <name>Dummy</name>
     <phone>11111111</phone>
-    <email>dummy@dummy.com</email>
+    <emailList>
+        <value>dummy@dummy.com</value>
+    </emailList>
     <address>Dummy</address>
 </userperson>

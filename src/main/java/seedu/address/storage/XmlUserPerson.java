@@ -23,7 +23,7 @@ public class XmlUserPerson {
     @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
-    private String email;
+    private ArrayList<Email> emailList;
     @XmlElement(required = true)
     private String address;
 
@@ -39,14 +39,17 @@ public class XmlUserPerson {
     public XmlUserPerson(UserPerson source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
-        email = source.getEmail().value;
+        emailList = new ArrayList<Email>();
+        for (Email email : source.getEmail()) {
+            emailList.add(email);
+        }
         address = source.getAddress().value;
     }
 
     public UserPerson getUser() throws IllegalValueException {
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
-        final Email email = new Email(this.email);
+        final ArrayList<Email> email = new ArrayList<>(this.emailList);
         final Address address = new Address(this.address);
         return new UserPerson(name, phone, email, address);
     }
