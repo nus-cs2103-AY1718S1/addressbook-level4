@@ -24,7 +24,7 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s):\n%1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s): %1$s";
 
     private List<Index> targetIndexList = new ArrayList<>();
 
@@ -56,8 +56,8 @@ public class DeleteCommand extends UndoableCommand {
                 assert false : "The target person cannot be missing";
             }
 
-            people.append(personToDelete);
             people.append("\n");
+            people.append(personToDelete);
         }
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, people));
     }
