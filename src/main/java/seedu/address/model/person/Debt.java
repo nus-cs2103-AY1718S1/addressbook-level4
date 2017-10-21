@@ -72,6 +72,10 @@ public class Debt {
                 && this.value.equals(((Debt) other).value)); // state check
     }
 
+    public int compareTo(Debt other) {
+        return (int) (this.toNumber() - other.toNumber());
+    }
+
     @Override
     public int hashCode() {
         return value.hashCode();
