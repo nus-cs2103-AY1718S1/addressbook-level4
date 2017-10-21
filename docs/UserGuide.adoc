@@ -49,6 +49,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Wildcard symbol `*` is allowed in parameters for `find` and `filter` which matches any non-space string.
 ====
 
 === Viewing help : `help`
@@ -162,6 +163,10 @@ Returns `john` and `John Doe`
 Returns any person having names `Betsy`, `Tim`, or `John`
 * `f watson` +
 Returns `John Watson`
+* `find j*` +
+Returns `John Watson` and `joanna`
+* `find j*n` +
+Returns `John Watson` but not `joanna`
 
 === Locating persons by tags: `filter`
 
@@ -184,6 +189,8 @@ Examples:
 Returns `Alice` and `Bob` provided that Alice and Bob has the family tag
 * `filter family friends` +
 Returns any person tagged with `family` or `friends`
+* `ft fa*` +
+Returns any person tagged with any tags matching `fa*` such as `family` but not `friends`
 
 === Deleting a person : `delete`
 
