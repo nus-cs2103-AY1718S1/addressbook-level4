@@ -4,6 +4,9 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
+import com.google.common.eventbus.Subscribe;
+
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.collections.FXCollections;
@@ -13,12 +16,13 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 
 public class BrowserSelector extends UiPart<Region> {
 
     private static final String FXML = "BrowserSelector.fxml";
     private final Logger logger = LogsCenter.getLogger(BrowserSelector.class);
-
 
     @FXML
     private ListView<BrowserSelectorCard> browserSelectorList;
@@ -26,7 +30,7 @@ public class BrowserSelector extends UiPart<Region> {
     public BrowserSelector() {
         super(FXML);
         setConnections();
-        setEventHandler();
+        registerAsAnEventHandler(this);
     }
 
     private void setConnections() {
@@ -66,12 +70,20 @@ public class BrowserSelector extends UiPart<Region> {
         }); */
     }
 
-    private void setEventHandler() {
-        browserSelectorList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+    private void selectBrowser(String browserSelection) {
+        for (int i = 0; i <= browserSelectorList.getItems().size(); i++) {
+            if(browserSelectorList.getItems().get(i).getImageString().equals(browserSelection)) {
+                browserSelectorList.getSelectionModel().select(i);
+                raise(new BrowserPanelSelectionChangedEvent(browserSelection));
+                return;
             }
-        });
+        }
+    }
+
+    @Subscribe
+    private void handleJumpToBrowserListRequestEvent(JumpToBrowserListRequestEvent event) {
+        logger.info(event.toString());
+        selectBrowser(event.browserItem);
     }
 
     /**

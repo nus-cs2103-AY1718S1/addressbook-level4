@@ -11,11 +11,14 @@ public class BrowserSelectorCard extends UiPart<Region> {
 
     private static final String FXML = "BrowserSelectorCard.fxml";
 
+    private final String imageString;
+
     @FXML
     private ImageView browserCardImage;
 
     public BrowserSelectorCard(String imageName) {
         super(FXML);
+        this.imageString = imageName;
         fillImage(imageName);
     }
 
@@ -27,5 +30,9 @@ public class BrowserSelectorCard extends UiPart<Region> {
         } else if (imageName.equals("meeting")) {
             browserCardImage.setImage(new Image("/images/meeting.png"));
         }
+    }
+
+    public String getImageString() {
+        return imageString;
     }
 }

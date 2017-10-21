@@ -1,5 +1,8 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 public class ChooseCommand extends Command {
@@ -12,7 +15,7 @@ public class ChooseCommand extends Command {
             + "Example: choose linkedin";
 
 
-    public static final String MESSAGE_SUCCESS = "selected type ";
+    public static final String MESSAGE_SUCCESS = "Selected type ";
 
     private final String targetDisplay;
 
@@ -22,6 +25,10 @@ public class ChooseCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        /** Old code
+        EventsCenter.getInstance().post(new BrowserPanelSelectionChangedEvent(targetDisplay));
+         */
+        EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
         return new CommandResult(MESSAGE_SUCCESS + targetDisplay);
     }
 }

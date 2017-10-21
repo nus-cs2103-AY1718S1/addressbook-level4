@@ -14,6 +14,13 @@ public class ChooseCommandParser implements Parser<ChooseCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ChooseCommand parse(String args) throws ParseException {
-        return new ChooseCommand(args.trim());
+        String browsertype = args.trim();
+
+        if (browsertype.equals("linkedin") || browsertype.equals("facebook") || browsertype.equals("meeting")) {
+            return new ChooseCommand(args.trim());
+        } else {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChooseCommand.MESSAGE_USAGE));
+        }
     }
 }
