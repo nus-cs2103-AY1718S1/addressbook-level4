@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalTasks.ASSIGNMENT;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplayTask;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysTask;
 
 import org.junit.Test;
 
@@ -61,6 +61,6 @@ public class TaskCardTest extends GuiUnitTest {
         assertEquals("  " + Integer.toString(expectedId) + ". ", taskCardHandle.getId());
 
         // verify task details are displayed correctly
-        assertCardDisplayTask(expectedTask, taskCardHandle);
+        assertCardDisplaysTask(expectedTask, taskCardHandle);
     }
 }
