@@ -23,6 +23,8 @@ public class SwitchThemeCommand extends Command {
 
     public static final String MESSAGE_SWITCH_THEME_SUCCESS = "Switched Theme: %1$s";
 
+    public static final String VIEW_PATH = "/view/";
+
     private final Index targetIndex;
 
     public SwitchThemeCommand(Index targetIndex) {
@@ -40,6 +42,11 @@ public class SwitchThemeCommand extends Command {
         }
 
         String themeToChange = themesList.get(targetIndex.getZeroBased());
+        String currentTheme = model.getCurrentTheme();
+
+        if (currentTheme.equals(VIEW_PATH + themeToChange)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_SWITCH);
+        }
 
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent(themeToChange));
 
