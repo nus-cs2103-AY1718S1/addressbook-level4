@@ -482,6 +482,8 @@ You do not need to save data manually.
 
 |=======================================================================
 
+<<<
+
 === Keyboard Shortcut
 
 [width="59%",cols="22%,<40%,<40%",options="header",]
