@@ -4,8 +4,7 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_DIR_URL_PREFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -185,11 +184,10 @@ public abstract class AddressBookSystemTest {
         String selectedCardAddress = getPersonListPanel().getHandleToSelectedCard().getAddress();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardAddress.replaceAll(" ", "+")
+            expectedUrl = new URL(GOOGLE_DIR_URL_PREFIX + selectedCardAddress.replaceAll(" ", "+")
                     .replaceAll(",", "+")
                     .replaceAll("#", "+")
-                    .replaceAll("-", "+")
-                    + GOOGLE_SEARCH_URL_SUFFIX);
+                    .replaceAll("-", "+"));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
