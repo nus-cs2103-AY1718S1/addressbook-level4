@@ -3,7 +3,7 @@ package seedu.address.model.person;
 import java.util.function.Predicate;
 
 /**
- * Tests that a {@code ReadOnlyPerson} {@code Name} is pinned.
+ * Tests that a {@code ReadOnlyPerson} is pinned.
  */
 public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 
