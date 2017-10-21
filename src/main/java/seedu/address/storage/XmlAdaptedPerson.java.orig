@@ -78,7 +78,11 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark);
+<<<<<<< HEAD
+        final Birthday birthday = new Birthday(this.birthday);
+=======
         final Birthday birthday = new Birthday("");
+>>>>>>> 953e8ade8877eae28d17bd235289dbf0f768ce3d
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, remark, birthday, tags);
     }
