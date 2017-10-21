@@ -399,7 +399,13 @@ The index *must be a positive integer* 1, 2, 3, ...
 2. Customising colors while adding tags
 ****
 
-
+=== Patient's Condition Tag: [Coming in v2.0]
+****
+* Stores the patient's condition as a specialized Tag
+* Potential distinction between a specialized tag and normal tag:
+1. Browser bar goes to a known medical site, showing potential cures for the +
+described condition
+****
 
 
 == *FAQ*
