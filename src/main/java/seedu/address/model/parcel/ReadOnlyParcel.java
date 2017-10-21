@@ -1,5 +1,6 @@
 package seedu.address.model.parcel;
 
+import java.util.Comparator;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -10,7 +11,7 @@ import seedu.address.model.tag.UniqueTagList;
  * A read-only immutable interface for a Parcel in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
-public interface ReadOnlyParcel {
+public interface ReadOnlyParcel extends Comparable{
 
     ObjectProperty<TrackingNumber> trackingNumberProperty();
     TrackingNumber getTrackingNumber();
