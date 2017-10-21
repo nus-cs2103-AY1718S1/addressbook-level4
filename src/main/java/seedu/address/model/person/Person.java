@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.person.Photo;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -134,7 +133,9 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<Photo> photoProperty() {
         return photo;
     }
-    public Photo getPhoto() { return photo.get(); }
+    public Photo getPhoto() {
+        return photo.get();
+    }
 
     public void setPhoto(Photo photo) {
         this.photo.set(requireNonNull(photo));
