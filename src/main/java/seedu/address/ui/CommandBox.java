@@ -93,6 +93,8 @@ public class CommandBox extends UiPart<Region> {
                     && commandBoxHelper.isMainSelected()) {
                 try {
                     commandTextField.setText(commandBoxHelper.getHelperText());
+                    commandTextField.requestFocus();
+                    commandTextField.end();
                     hideHelper();
                 } catch (Exception e) {
                     logger.info(e.getMessage() + "Nothing selected in command helper");
@@ -155,6 +157,8 @@ public class CommandBox extends UiPart<Region> {
             if (helperContainer.getChildren().contains(commandBoxHelper.getRoot())
                     && commandBoxHelper.isMainSelected()) {
                 commandTextField.setText(commandBoxHelper.getHelperText());
+                commandTextField.requestFocus();
+                commandTextField.end();
                 hideHelper();
             } else {
                 hideHelper();

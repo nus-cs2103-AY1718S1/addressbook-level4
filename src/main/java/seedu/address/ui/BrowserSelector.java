@@ -6,9 +6,6 @@ import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -43,31 +40,6 @@ public class BrowserSelector extends UiPart<Region> {
 
         browserSelectorList.setItems(mappedList);
         browserSelectorList.setCellFactory(listView -> new BrowserListViewCell());
-
-        /** old code
-        browserSelectorList.setItems(items);
-        browserSelectorList.setCellFactory(param -> new ListCell<String>() {
-            private ImageView imageView = new ImageView();
-            @Override
-            public void updateItem(String name, boolean empty) {
-                super.updateItem(name, empty);
-                if (empty) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    if (name.equals("linkedin")) {
-                        imageView.setImage(new Image("/images/linkedin.png"));
-                    } else if (name.equals("facebook")) {
-                        imageView.setImage(new Image("/images/facebook.png"));
-                    } else if (name.equals("meeting")) {
-                        imageView.setImage(new Image("/images/meeting.png"));
-                    }
-                    imageView.setFitWidth(32.0);
-                    imageView.setFitHeight(32.0);
-                    setGraphic(imageView);
-                }
-            }
-        }); */
     }
 
     private void selectBrowser(String browserSelection) {

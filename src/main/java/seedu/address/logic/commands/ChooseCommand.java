@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.BrowserPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
@@ -16,6 +15,7 @@ public class ChooseCommand extends Command {
 
 
     public static final String MESSAGE_SUCCESS = "Selected type ";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " TYPE";
 
     private final String targetDisplay;
 
