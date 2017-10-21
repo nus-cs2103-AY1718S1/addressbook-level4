@@ -566,36 +566,32 @@ some of his contacts may have tags that serve the same purpose but spelt differe
 
 === Facebook mechanism
 
-The facebook mechanism is facilitated by `FacebookCommandParser`, which resides inside the parser folder of the logic component.
+The facebook mechanism is facilitated by `FacebookCommand`, which resides inside the commands folder of the logic component.
 
-The facebook mechanism searches a contact's email on Facebook as specified by the contact's index number, according to the last ordering of the contact list.
+The facebook mechanism displays the Facebook login page when the `facebook` command is entered.
 
-The `FacebookCommand` will inherit from `Command`.
+image::facebook-command-ui.png[width="800"]
 
-When the command word `facebook` is typed into UniCity, `AddressBookParser` will call `FacebookCommandParser`.
+Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page.
 
-`FacebookCommandParser` then takes in the command argument (index of the contact), wraps it as an `Index` class to be parsed into the `FacebookCommand` constructor.
+As part of the UI component, the `BrowserPanel` class loads the facebook page using a method called `loadFacebookPage`.
 
-Upon execution, the `FacebookCommand` posts an event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load the search page.
+The `MainWindow` class sets up the browser panel by calling the `BrowserPanel`'s constructor.
 
-The `BrowserPanel` has `loadPersonPage` and `loadPage` to load the url that holds the search page. The url consists of 2 parts: the first part is a constant url string that
-exhibits the search behaviour on facebook while the second part will be the contact's email address to search on facebook.
-
-[NOTE]
-The user may be required to log in to Facebook in the browser panel of UniCity if that is his first Facebook command.
+This class handles the dispatched `ShowFacebookRequestEvent` event and calls the browser panel's `loadFacebookPage` to mount the Facebook Page on the user interface.
 
 [NOTE]
-This command may not work for some contacts as the specified contact may either not have a Facebook account or has not registered an account with the given email.
+The user has to ensure that an internet connection is established to succeed in the command.
 
 ==== Design Considerations
 
-**Aspect:** Facebook search by contact's name or email address +
-**Alternative 1 (current choice):** The url in `loadPersonPage` to contain email address search +
-**Pros:** Reduces ambiguity in comparison to searching by names as the chances of Facebook users sharing the same names or part of their names are higher compared to their email addresses. +
-**Cons:** The users' contacts might not have registered a Facebook account under their specified email. In which case, the users will be unable to search for their desired contacts on Facebook. +
-**Alternative 2:** The url in `loadPersonPage` to contain the contact's name search  +
-**Pros:** With the contact's full name, there is a chance of finding the contact on Facebook. Accounts for contacts who do not have an account with the same email address. +
-**Cons:** Facebook search by name may return a broader result as there are more Facebook users who share similar names. This contributes to an inaccurate result.
+**Aspect:** Logging in to Facebook through CLI or GUI +
+**Alternative 1 (current choice):** User enters the command `facebook` in the command box without his username and password; once the log in page is loaded he will enter his username and password in the page itself.  +
+**Pros:** Easy to implement and hassle-free. No need to import Facebook API, just load the page by parsing its URL into the relevant methods. +
+**Cons:** Defeats the purpose of a CLI application. User needs to navigate the log in page. +
+**Alternative 2:** User enters the command `facebook`, followed by his username and password in the command box. He is automatically logged into Facebook and is directed to Facebook's newsfeed page.  +
+**Pros:** Saves users the trouble of navigating the facebook log in page. Adheres to the purpose of the application having a CLI. +
+**Cons:** More difficult to implement. May require the use of Facebook API which may cause unexpected regressions that developers may not know how to solve.
 
 ---
 

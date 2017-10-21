@@ -178,7 +178,7 @@ Examples:
 * `favourite 1` +
 Changes the `favourite` status of the 1st person in the latest list.
 
-==== Add a tag to select persons : `addtag`
+==== Adding a tag to select persons : `addtag`
 
 Adds the given tag to the specified persons . +
 Format: `addtag [INDEX] [MORE_INDEXES] [t/TAG]...`
@@ -199,7 +199,7 @@ Adds the tag "friends" to the 1st, 2nd and 3rd person in the address book.
 `addtag 2 5 t/classmate` +
 Adds the tag "classmate" to the 2nd and 5th person in the results of the `find` command.
 
-==== Remove a tag from select persons : `removetag`
+==== Removing a tag from select persons : `removetag`
 
 Removes the given tag from identified person by the list of index numbers used in the last person . +
 Format: `removetag [INDEX] [MORE_INDEXES] [t/TAG]...`
