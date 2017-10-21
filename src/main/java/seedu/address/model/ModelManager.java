@@ -81,7 +81,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Removes given tag from given the indexes of the target persons shown in the last person listing.
+     * Removes given tag from the given indexes of the target persons shown in the last person listing.
      */
     @Override
     public synchronized void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
@@ -93,6 +93,26 @@ public class ModelManager extends ComponentManager implements Model {
             Person newPerson = new Person(oldPerson);
             Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
             newTags.remove(toRemove);
+            newPerson.setTags(newTags);
+
+            addressBook.updatePerson(oldPerson, newPerson);
+            indicateAddressBookChanged();
+        }
+    }
+
+    /**
+     * Adds given tag to the given indexes of the target persons shown in the last person listing.
+     */
+    @Override
+    public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
+            DuplicatePersonException {
+        for (int i = 0; i < targetIndexes.size(); i++) {
+            int targetIndex = targetIndexes.get(i).getZeroBased();
+            ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
+
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
+            newTags.add(toAdd);
             newPerson.setTags(newTags);
 
             addressBook.updatePerson(oldPerson, newPerson);
