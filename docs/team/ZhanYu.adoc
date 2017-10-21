@@ -62,9 +62,33 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=sorting]
 
 ---
 
-=== Enhancement Proposed: Opening a new and separate Rolodex
+=== Enhancement Added: Open existing file and Create new file commands
 
-To allow users to operate on a different data set for different purposes.
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[leveloffset=2,tag=openNew]
+
+---
+
+==== Justification
+
+Users may want to work on a different group of data for different purposes.
+Users with too many contacts can also create a separate database for dividing up the contacts into smaller,
+more manageable sizes.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=openNew]
+
+---
+
+=== Enhancement Proposed: Markdown/HTML parser
+
+To replace the content field of the note/remark command with 'rich-text', to be displayed on the browser panel.
 
 === Other contributions
 

@@ -346,8 +346,8 @@ Clears all entries from Rolodex. +
 Format: `clear` or `c` +
 Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
+// tag::openNew[]
 === Opening an existing Rolodex storage file: `open` or `o`
-// TODO: add 'ls' and 'cd' abbreviations
 Reloads the application with data from a rolodex at the specified filepath. +
 Format: `open FILEPATH` or `o FILEPATH`
 
@@ -376,7 +376,6 @@ Loads the application with the data at the directory `C:/Users/Rolodex/downloads
 Loads the application with the data in `default.rldx` in the folder `data`.
 
 === Creating a new Rolodex storage file: `new` or `n`
-// TODO: add '>' abbreviation
 Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
 Format: `new FILEPATH` or `n FILEPATH`
 
@@ -397,6 +396,7 @@ Creates a new Rolodex file `myOwn.rldx` at the directory `C:\Users\Rolodex\downl
 * `new data/default.rldx` +
 `new data\default.rldx` +
 Creates a new Rolodex file `default.rldx` at the relative directory `data` and reloads the application with sample data created for the new Rolodex.
+// end::openNew[]
 
 === Exiting the program : `exit` or `quit`
 
