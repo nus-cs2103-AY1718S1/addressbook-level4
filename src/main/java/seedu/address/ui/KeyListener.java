@@ -14,19 +14,12 @@ import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.BaseEvent;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.logic.Logic;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Listens to key events in the main window.
@@ -34,14 +27,12 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class KeyListener {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private Logic logic;
     private Region mainNode;
     private PersonListPanel personListPanel;
     private CommandBox commandBox;
 
-    public KeyListener(Logic logic, Region mainNode, PersonListPanel personListPanel,
+    public KeyListener(Region mainNode, PersonListPanel personListPanel,
                        CommandBox commandBox) {
-        this.logic = logic;
         this.mainNode = mainNode;
         this.personListPanel = personListPanel;
         this.commandBox = commandBox;
@@ -100,30 +91,8 @@ public class KeyListener {
      * Handles execution of command
      */
     private void executeCommand(String command) {
-        try {
-            CommandResult commandResult = logic.execute(command);
-            displayResult(commandResult.feedbackToUser);
-
-        } catch (CommandException | ParseException e) {
-            commandBox.setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + e.getMessage());
-            raise(new NewResultAvailableEvent(e.getMessage()));
-        }
-    }
-
-    /**
-     * Displays the command result to user
-     */
-    private void displayResult(String commandResult) {
-        logger.info("Result: " + commandResult);
-        raise(new NewResultAvailableEvent(commandResult));
-    }
-
-    /**
-     * Raises the event via {@link EventsCenter#post(BaseEvent)}
-     */
-    private void raise(BaseEvent event) {
-        EventsCenter.getInstance().post(event);
+        commandBox.replaceText(command);
+        commandBox.handleCommandInputChanged();
     }
 
     /**
