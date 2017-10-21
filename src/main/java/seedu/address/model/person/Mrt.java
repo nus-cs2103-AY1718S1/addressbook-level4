@@ -5,7 +5,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
-
 /**
  * Represents a Person's mrt station in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidMrt(String)}
@@ -21,7 +20,7 @@ public class Mrt {
     */
     public static final String MRT_VALIDATION_REGEX = "[^\\s].*";
 
-    //public static final Set<String> validMrt = ValidMrt.mrt.keySet();
+    public final Set<String> validMrt = ValidMrt.validMrt.keySet();
 
     public final String value;
 
@@ -41,9 +40,9 @@ public class Mrt {
     /**
      * Returns if a given string is a valid Mrt station.
      */
-    public static boolean isValidMrt(String test) {
+    public boolean isValidMrt(String test) {
         boolean check1 = test.matches(MRT_VALIDATION_REGEX);
-        boolean check2 = true;
+        boolean check2 = ValidMrt.contains(test);
         return check1 && check2;
     }
 
