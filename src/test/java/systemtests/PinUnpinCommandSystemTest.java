@@ -23,7 +23,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
 
-    private static final String MESSAGE_INVALID_PIN_COMMAND_FORMAT =
+    private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, PinCommand.MESSAGE_USAGE);
 
     @Test
@@ -34,25 +34,24 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         String command = "     " + PinCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
         ReadOnlyPerson pinnedPerson = pinPerson(expectedModel, INDEX_FIRST_PERSON);
-        String message = "\n" + pinnedPerson.toString();
-        String expectedResultMessage = String.format(MESSAGE_PIN_PERSON_SUCCESS, message);
+        String expectedResultMessage = String.format(MESSAGE_PIN_PERSON_SUCCESS, pinnedPerson);
         assertPinCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: pin the last person in the list -> pinned */
-        Model modelBeforeDeletingLast = getModel();
-        Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
+        Model modelBeforePinningLast = getModel();
+        Index lastPersonIndex = getLastIndex(modelBeforePinningLast);
         assertPinCommandSuccess(lastPersonIndex);
 
         /* Case: undo deleting the last person in the list -> last person restored */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertPinCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+        assertPinCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
 
         /* Case: redo deleting the last person in the list -> last person pinned again */
         command = RedoCommand.COMMAND_WORD;
-        pinPerson(modelBeforeDeletingLast, lastPersonIndex);
+        pinPerson(modelBeforePinningLast, lastPersonIndex);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertPinCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+        assertPinCommandSuccess(command, modelBeforePinningLast, expectedResultMessage);
 
         /* Case: pin the middle person in the list -> pinned */
         Index middlePersonIndex = getMidIndex(getModel());
@@ -71,32 +70,12 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
-        command = PinCommand.COMMAND_WORD + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
-       /* --------------------- Performing delete operation while a person card is selected ------------------------ */
-
-        /* Case: delete the selected person -> person list panel selects the person before the deleted person */
-        showAllPersons();
-        expectedModel = getModel();
-        Index selectedIndex = getLastIndex(expectedModel);
-        Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        selectPerson(selectedIndex);
-        command = PinCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-        pinnedPerson = pinPerson(expectedModel, selectedIndex);
-        message = "\n" + pinnedPerson.toString();
-        expectedResultMessage = String.format(MESSAGE_PIN_PERSON_SUCCESS, message);
-        assertPinCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
-
-        /* --------------------------------- Performing invalid delete operation ------------------------------------ */
-
-        /* Case: invalid index (0) -> rejected */
         command = PinCommand.COMMAND_WORD + " 0";
-        assertCommandFailure(command, MESSAGE_INVALID_PIN_COMMAND_FORMAT);
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid index (-1) -> rejected */
         command = PinCommand.COMMAND_WORD + " -1";
-        assertCommandFailure(command, MESSAGE_INVALID_PIN_COMMAND_FORMAT);
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
@@ -105,10 +84,10 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(PinCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_PIN_COMMAND_FORMAT);
+        assertCommandFailure(PinCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(PinCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_PIN_COMMAND_FORMAT);
+        assertCommandFailure(PinCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
@@ -116,8 +95,7 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Removes the {@code ReadOnlyPerson} at the specified {@code index} in {@code model}'s address book.
-     *
-     * @return the pinned person
+     * @return the removed person
      */
     private ReadOnlyPerson pinPerson(Model model, Index index) {
         ReadOnlyPerson targetPerson = getPerson(model, index);
@@ -132,14 +110,12 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
     /**
      * Deletes the person at {@code toPin} by creating a default {@code PinCommand} using {@code toPin} and
      * performs the same verification as {@code assertPinCommandSuccess(String, Model, String)}.
-     *
-     * @see PinCommandSystemTest#assertPinCommandSuccess(String, Model, String)
+     * @see PinUnpinCommandSystemTest#assertPinCommandSuccess(String, Model, String)
      */
     private void assertPinCommandSuccess(Index toPin) {
         Model expectedModel = getModel();
         ReadOnlyPerson pinnedPerson = pinPerson(expectedModel, toPin);
-        String message = "\n" + pinnedPerson.toString();
-        String expectedResultMessage = String.format(MESSAGE_PIN_PERSON_SUCCESS, message);
+        String expectedResultMessage = String.format(MESSAGE_PIN_PERSON_SUCCESS, pinnedPerson);
 
         assertPinCommandSuccess(
                 PinCommand.COMMAND_WORD + " " + toPin.getOneBased(), expectedModel, expectedResultMessage);
@@ -155,7 +131,6 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
      * 6. Asserts that the command box has the default style class.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
-     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertPinCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
@@ -165,12 +140,11 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
     /**
      * Performs the same verification as {@code assertPinCommandSuccess(String, Model, String)} except that the browser url
      * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
-     *
-     * @see PinCommandSystemTest#assertPinCommandSuccess(String, Model, String)
+     * @see PinUnpinCommandSystemTest#assertPinCommandSuccess(String, Model, String)
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertPinCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-                                         Index expectedSelectedCardIndex) {
+                                      Index expectedSelectedCardIndex) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
@@ -193,7 +167,6 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
