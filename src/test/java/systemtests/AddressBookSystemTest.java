@@ -10,6 +10,7 @@ import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.address.ui.testutil.GuiTestAssert.assertTaskListMatching;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,6 +30,7 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.TaskListPanelHandle;
 import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -100,6 +102,10 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getResultDisplay();
     }
 
+    public TaskListPanelHandle getTaskListPanel() {
+        return mainWindowHandle.getTaskListPanel();
+    }
+
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
@@ -151,6 +157,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+        assertTaskListMatching(getTaskListPanel(), expectedModel.getFilteredTaskList());
     }
 
     /**

@@ -17,7 +17,7 @@ public class AddTaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addtask";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the address book. "
             + "Parameters: "
             + "DESCRIPTION "
             + PREFIX_START_DATE + " START DATE(dd-MM-yy) "
