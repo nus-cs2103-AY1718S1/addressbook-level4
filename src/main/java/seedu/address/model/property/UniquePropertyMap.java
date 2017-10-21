@@ -1,6 +1,7 @@
 package seedu.address.model.property;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.PROPERTY_EXISTS;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
@@ -104,7 +105,7 @@ public class UniquePropertyMap implements Iterable<Property> {
         String shortName = toAdd.getShortName();
 
         if (containsProperty(shortName)) {
-            throw new DuplicatePropertyException();
+            throw new DuplicatePropertyException(String.format(PROPERTY_EXISTS, shortName));
         }
         internalMap.put(shortName, toAdd);
     }

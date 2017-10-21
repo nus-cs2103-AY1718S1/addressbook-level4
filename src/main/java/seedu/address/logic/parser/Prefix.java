@@ -7,7 +7,7 @@ package seedu.address.logic.parser;
 public class Prefix {
     private final String prefix;
 
-    Prefix(String prefix) {
+    public Prefix(String prefix) {
         this.prefix = prefix;
     }
 

@@ -67,7 +67,7 @@ public class ParserUtil {
     /**
      * 
      */
-    public static Optional<Property> parseProperty(Optional<String> shortName) {
+    public static Optional<Property> parseProperties(Optional<String> shortName) {
         return null;
     }
 
