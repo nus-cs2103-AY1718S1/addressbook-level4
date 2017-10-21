@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -33,7 +34,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String ICON = "/images/rolodex_icon_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 600;
+    private static final int MIN_WIDTH = 800;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -65,6 +66,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private SplitPane splitPane;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -79,6 +83,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        setSplitPaneDividerProperty();
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -184,6 +189,18 @@ public class MainWindow extends UiPart<Region> {
     private void setWindowMinSize() {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
+    }
+
+    /**
+     * Proportions the split pane divider position according to window size
+     */
+    private void setSplitPaneDividerProperty() {
+
+        primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
+                splitPane.setDividerPositions(0.4f));
+
+        primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
+                splitPane.setDividerPositions(0.4f));
     }
 
     /**
