@@ -48,6 +48,8 @@ public class ParcelCard extends UiPart<Region> {
     @FXML
     private Label deliveryDate;
     @FXML
+    private Label status;
+    @FXML
     private FlowPane tags;
 
     public ParcelCard(ReadOnlyParcel parcel, int displayedIndex) {
@@ -69,10 +71,31 @@ public class ParcelCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(parcel.addressProperty()));
         email.textProperty().bind(Bindings.convert(parcel.emailProperty()));
         deliveryDate.textProperty().bind(Bindings.convert(parcel.deliveryDateProperty()));
+        status.textProperty().bind(Bindings.convert(parcel.statusProperty()));
+        setColorForStatus();
         parcel.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(parcel);
         });
+    }
+
+    /**
+     * Sets color for the status labels based on the current status.
+     */
+    private void setColorForStatus() {
+        switch (status.textProperty().get()) {
+            case "PENDING":
+                status.setStyle("-fx-background-color: " + "#ff4500");
+                break;
+
+            case "DELIVERING":
+                status.setStyle("-fx-background-color: " + "#ffc200");
+                break;
+
+            case "DELIVERED":
+                status.setStyle("-fx-background-color: " + "#00bf00");
+                break;
+        }
     }
 
     /**
