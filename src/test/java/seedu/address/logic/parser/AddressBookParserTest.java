@@ -29,8 +29,13 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.AnyContainsKeywordsPredicate;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
+import seedu.address.model.tag.TagContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -81,7 +86,27 @@ public class AddressBookParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new AnyContainsKeywordsPredicate(keywords)), command);
+
+        FindCommand nameCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " n/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), nameCommand);
+
+        FindCommand addressCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " a/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new AddressContainsKeywordsPredicate(keywords)), addressCommand);
+
+        FindCommand emailCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " e/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new EmailContainsKeywordsPredicate(keywords)), emailCommand);
+
+        FindCommand phoneCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " p/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new PhoneContainsKeywordsPredicate(keywords)), phoneCommand);
+
+        FindCommand tagCommand = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " t/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new TagContainsKeywordsPredicate(keywords)), tagCommand);
     }
 
     @Test
