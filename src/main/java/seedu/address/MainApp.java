@@ -53,7 +53,7 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
-    private final String SORT_BY_NAME = "name";
+    private final String sortByName = "name";
 
 
     @Override
@@ -71,7 +71,7 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
-        model.sortList(SORT_BY_NAME);
+        model.sortList(sortByName);
         model.updateFilteredPersonList(PREDICATE_SHOW_NOT_HIDDEN);
 
         logic = new LogicManager(model);
