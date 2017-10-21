@@ -47,15 +47,6 @@ public class UnaliasCommandTest {
     @Test
     public void executeUnaliasCommandFailure() throws Exception {
         Keyword toDelete = new Keyword("tues"); // no such alias keyword exists
-
-        ReadOnlyAliasToken aliasTokenToRemove = null;
-
-        for (ReadOnlyAliasToken token : model.getAddressBook().getAliasTokenList()) {
-            if (token.getKeyword().keyword.equalsIgnoreCase(toDelete.keyword)) {
-                aliasTokenToRemove = token;
-                break;
-            }
-        }
         String expectedMessage = UnaliasCommand.MESSAGE_UNKNOWN_ALIAS;
         UnaliasCommand unaliasCommand = prepareCommand(toDelete);
 

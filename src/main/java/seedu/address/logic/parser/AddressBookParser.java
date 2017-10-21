@@ -154,7 +154,7 @@ public class AddressBookParser {
      */
     private String argumentsCheck(String checkedCommandWord, String arguments) {
 
-        if (checkedCommandWord.equals("alias") || checkedCommandWord.equals("unalias")) {
+        if ("alias".equals(checkedCommandWord) || ("unalias".equals(checkedCommandWord))) {
             return arguments;
         }
         StringBuilder builder = new StringBuilder();

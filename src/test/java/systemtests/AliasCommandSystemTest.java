@@ -13,7 +13,6 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
-import seedu.address.testutil.AliasTokenUtil;
 
 public class AliasCommandSystemTest extends AddressBookSystemTest {
 
@@ -46,22 +45,6 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         /*Case : invalid representation -> rejected */
         assertCommandFailure("alias k/lol laugh out loud",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE));
-    }
-
-    /**
-     * Executes the {@code AliasCommand} that adds an alias {@code toAdd} to the model and verifies that the command box
-     * displays an empty string, the result display box displays the success message of executing {@code AliasCommand}
-     * with the details of {@code toAdd}, and the model related components equal to the current model added with
-     * {@code toAdd}.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the command box has the default style class, the status bar's sync status changes,
-     * the browser url and selected card remains unchanged.
-     *
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(ReadOnlyAliasToken toAdd) {
-        assertCommandSuccess(AliasTokenUtil.getAliasCommand(toAdd), toAdd);
     }
 
     /**

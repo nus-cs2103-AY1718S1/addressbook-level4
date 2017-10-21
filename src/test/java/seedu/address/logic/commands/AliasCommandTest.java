@@ -83,7 +83,7 @@ public class AliasCommandTest {
         assertFalse(aliasPhCommand.equals(1));
 
         // null -> returns false
-        assertFalse(aliasPhCommand.equals(null));
+        assertFalse(aliasPhCommand == null);
 
         // different AliasToken -> returns false
         assertFalse(aliasPhCommand.equals(aliasStCommand));
@@ -192,7 +192,7 @@ public class AliasCommandTest {
      * A Model stub that always accepts the AliasToken being added
      */
     private class ModelStubAcceptingAliasTokenAdded extends ModelStub {
-        final ArrayList<AliasToken> aliasTokensAdded = new ArrayList<>();
+        private final ArrayList<AliasToken> aliasTokensAdded = new ArrayList<>();
 
         @Override
         public void addAliasToken(ReadOnlyAliasToken aliasToken) throws DuplicateTokenKeywordException {

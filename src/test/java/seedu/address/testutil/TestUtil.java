@@ -7,7 +7,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
-import seedu.address.model.alias.Keyword;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -56,7 +55,6 @@ public class TestUtil {
     }
 
     public static ReadOnlyAliasToken getAlias(Model model, String keyword) throws IllegalValueException {
-        Keyword toFind = new Keyword(keyword);
         ReadOnlyAliasToken foundAliasToken = null;
 
         for (ReadOnlyAliasToken token : model.getAddressBook().getAliasTokenList()) {

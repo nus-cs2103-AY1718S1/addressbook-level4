@@ -26,9 +26,6 @@ public class UnaliasCommandParserTest {
 
     @Test
     public void parse_keywordInvalid_failure() throws IllegalValueException {
-
-        Keyword expectedKeyword = new Keyword("gg");
-
         assertParseFailure(parser, UnaliasCommand.COMMAND_WORD + " gg",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE));
     }

@@ -54,10 +54,9 @@ public class AliasCommand extends UndoableCommand {
                 return new CommandResult(MESSAGE_DUPLICATE_ALIAS);
             }
         }
-        if (logic != null) { /* to avoid logic stub test failure */
-            if (logic.isCommandWord(toAdd.getKeyword().keyword)) {
-                return new CommandResult(MESSAGE_INVALID_KEYWORD);
-            }
+
+        if ((logic != null) && (logic.isCommandWord(toAdd.getKeyword().keyword))) {
+            return new CommandResult(MESSAGE_INVALID_KEYWORD);
         }
         try {
             model.addAliasToken(toAdd);
