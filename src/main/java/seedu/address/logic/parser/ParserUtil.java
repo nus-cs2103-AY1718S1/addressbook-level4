@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -70,8 +71,16 @@ public class ParserUtil {
      *
      * @return a set containing all properties parsed.
      */
-    public static Set<Property> parseProperties(HashMap<Prefix, String> values) {
-        return null;
+    public static Set<Property> parseProperties(HashMap<Prefix, String> values)
+            throws IllegalValueException, PropertyNotFoundException {
+        requireNonNull(values);
+        Set<Property> properties = new HashSet<>();
+
+        for (Map.Entry<Prefix, String> entry: values.entrySet()) {
+            properties.add(new Property(entry.getKey().getPrefix(), entry.getValue()));
+        }
+
+        return properties;
     }
 
     /**
