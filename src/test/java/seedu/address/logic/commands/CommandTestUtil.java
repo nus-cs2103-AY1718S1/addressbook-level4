@@ -20,7 +20,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.TaskContainsKeywordsPredicate;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -132,6 +134,17 @@ public class CommandTestUtil {
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredPersonList().size() == 1;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first task in the {@code model}'s address book.
+     */
+    public static void showFirstTaskOnly(Model model) {
+        ReadOnlyTask task = model.getAddressBook().getTaskList().get(0);
+        final String[] splitName = task.getDescription().taskDescription.split("\\s+");
+        model.updateFilteredTaskList(new TaskContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredTaskList().size() == 1;
     }
 
     /**

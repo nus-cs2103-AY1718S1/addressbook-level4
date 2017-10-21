@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel`, `TaskListPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -217,6 +217,63 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::detag[]
+=== Detag mechanism
+
+The detag mechanism is facilitated by the `DetagCommand` class which inherited from the `UndoableCommand` class. It allows for the removing of existing tag from multiple person, i.e. detag. The minimum number of person specified is 1 and the maximum number is the number of person on the filtered list.
+
+Suppose the user to execute the command `detag` using the following code
+----
+detag 1, 2 t/friends
+----
+
+The `DetagCommandParser` class will check for the validity of the indices specified, i.e. within the range of the filtered list. Afterwards, the `LogicManager` invokes the method `deleteTag`, which removes the specific tag from the `Set` of tags from the specified persons, and update the storage.
+
+[NOTE]
+If one or more of the persons specified by the indices does not contain the specified tag to remove, the removal will not be executed even for those persons that have the tag.
+
+[NOTE]
+The current detag mechanism does not support multiple tags removal, i.e. remove 2 different tags in one command line.
+
+==== Design Considerations
+**Aspect:** Implementation of `DetagCommand` +
+**Alternative 1 (current choice):** Directly removes the tag from `Set` of person(s) +
+**Pros:** Easier and more specific command to remove tag, and could remove from multiple persons in one command +
+**Cons:** Makes the tags of person skeptical for changes, and introducing of new additional command specifically for removal of tag may be not necessary +
+**Alternative 2:** Just use the `EditCommand` to change the tag +
+**Pros:** Use of one command to edit any details of a person is more organised +
+**Cons:** Could not remove tag of multiple persons, and have to type in the tags that do not need to be remove +
+// end::detag[]
+
+=== FindTag mechanism
+
+The FindTag mechanism is facilitated by the `FindTagCommand` class which inherits from `Command` class. It allows the user to find persons using tags. User can search using multiple tags too.
+
+Suppose the user has just executed the `FindTagCommand` using `findtag friends`.
+
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTagCommand` feature is being evoked and calls the `FindTagCommandParser` to parse the string and compare the tags. These are validated and formatted by the `TagContainsKeywordsPredicate` and return as a `TagContainsKeywordsPredicate` object to be used to call the `FindTagCommand` class. The `LogicManager` then calls the `execute()` in the `FindTagCommand` class which creates and return a `CommandResult` object.
+
+=== Add Task mechanism
+
+The Add Task mechanism is facilitated by the `AddTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the addition of new tasks to the application with a starting date and a deadline. Both dates are optional and may be omitted.
+
+Suppose the user has just executed the `addtask` command using `addtask CS assignment from 15-10-2017 to 20-10-2017`.
+
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `AddTask` feature is being evoked and calls the `AddTaskCommandParser` to parse the String and separate it into three components: `Description`, `StartDate` and `Deadline`. These are validated and formatted by the `Task` class and returned as a `Task` object to be used to call the `AddTaskCommand` class. The `LogicManager` then calls the `executeUndoableFunction()` in the `AddTaskCommand` class which creates and returns a `CommandResult` object.
+
+The following sequence diagram summarizes how this operation works:
+
+image::AddTaskCommandSequenceDiagram.png[width="800", height="500"]
+
+==== Design Considerations
+**Aspect:** Implementation of AddTaskCommand +
+**Alternative 1 (current choice):** Use Strings to contains the StartDates and Deadlines. +
+**Pros:** Easy to assign an empty string to the instance variable so that the dates are optional and do not show up in the UI. +
+**Cons:** Date not stored the correct format. +
+**Alternative 2:** Use java.time.LocalDate class. +
+**Pros:** Dates are in correct format. +
+**Cons:** LocalDate cannot be initialized when no input is given. Extra code needed to make dates optional.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -960,6 +1017,35 @@ Use case resumes at step 2.
 ** 3b1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+=== Use Case: Find the person using tags
+
+1. User requests to find person.
+2. User enters the category (i.e. tag) and details to search for person.
+3. AddressBook shows the list of persons with the details.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The category entered is invalid.
++
+** 2a1. AddressBook shows an error message.
+** 2a2. AddressBook prompts user to type from a list of categories.
+** 2a3. User enters new category.
+** Steps 2a1 - 2a3 are repeated until valid category is entered.
+** User resumes from step 3.
++
+* 2b. The detail entered is invalid.
++
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
++
+* 2c. The list is empty.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements

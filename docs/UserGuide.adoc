@@ -192,6 +192,22 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Adding a task: `addtask`
+
+Adds a task to the address book +
+Format: `addtask DESCRIPTION from STARTDATE to DEADLINE`
+
+[NOTE]
+The dates must be in "dd-MM-yyyy" format
+
+[TIP]
+A person can opt to leave out the start date, deadline or both
+
+Examples:
+
+* `addtask internship applications open from 11-10-2017 to 13-12-2017`
+* `addtask get groceries`
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +

@@ -128,8 +128,14 @@ public class AddCommandTest {
         }
 
         @Override
-        public void changeTag(Tag oldTag, Tag newTag)
+        public void deleteTag(ReadOnlyPerson person, Tag oldTag)
             throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void attachTag(ReadOnlyPerson person, Tag tag)
+                throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
 

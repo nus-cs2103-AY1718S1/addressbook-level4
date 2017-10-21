@@ -22,7 +22,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
         String tag = Arrays.toString(person.getTags().toArray())
-                .replaceAll("[\\[\\](),{}]", "");
+            .replaceAll("[\\[\\](),{}]", "");
         return keywords.stream()
                         .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag, keyword));
     }
