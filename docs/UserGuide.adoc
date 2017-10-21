@@ -386,6 +386,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/1234
 * *Clear* : `clear`
 * *Borrow* : `borrow INDEX AMOUNT` +
 e.g. `borrow 1 500.50`
+* *Pay back* : `payback INDEX AMOUNT` +
+e.g. `payback 1 500.50`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Ban* : `ban INDEX` +
@@ -428,11 +430,11 @@ e.g.`select 2`
 * `Ban` and `Unban` a person (since v1.1)
 
 * `Nearby` command (since v1.2)
-* Grouping of contacts (since v1.2)
-* Display nearby contacts (since v1.2)
 * `Borrow` command (since v1.2)
 * Display nearby contacts (since v1.2)
 * Interest field (since v1.2)
+
+* `Payback` command (since v1.3)
 
 == Features to be included by `V2.0`
 
@@ -442,7 +444,6 @@ e.g.`select 2`
 * List of people who have overdue debts.
 * A command to `Sort` the list of person's by name.
 * A person's debts are automatically incremented according to the interest rate of their loan.
-* Group debtors by location.
 //[end of V1.3]
 //[V1.4]
 * A progress bar to indicate how much of the person's debt has been paid off.
