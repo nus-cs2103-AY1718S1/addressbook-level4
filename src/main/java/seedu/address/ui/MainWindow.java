@@ -23,7 +23,6 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-import seedu.address.ui.util.PersonDetailPanel;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -197,10 +196,10 @@ public class MainWindow extends UiPart<Region> {
     private void setSplitPaneDividerProperty() {
 
         primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
-                splitPane.setDividerPositions(0.4f));
+                splitPane.setDividerPositions(0.35f));
 
         primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
-                splitPane.setDividerPositions(0.4f));
+                splitPane.setDividerPositions(0.35f));
     }
 
     /**

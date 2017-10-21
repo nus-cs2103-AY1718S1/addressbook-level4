@@ -36,12 +36,6 @@
                </padding>
             </VBox>
       </HBox>
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" wrapText="true">
-            <padding>
-               <Insets top="10.0" />
-            </padding></Label>
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" wrapText="true" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" wrapText="true" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

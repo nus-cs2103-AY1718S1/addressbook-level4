@@ -43,7 +43,7 @@
     </VBox>
     <VBox>
       <children>
-
+      
         <StackPane fx:id="resultDisplayPlaceholder">
           <padding>
             <Insets bottom="15.0" left="10.0" right="25.0" top="20.0" />
@@ -52,8 +52,8 @@
             <Insets />
           </VBox.margin>
         </StackPane>
-
-        <StackPane fx:id="personDetailPlaceholder" minWidth="400.0" prefHeight="400.0">
+      
+              <StackPane fx:id="personDetailPlaceholder" minWidth="400.0" prefHeight="450.0">
           <opaqueInsets>
             <Insets />
           </opaqueInsets>
