@@ -611,6 +611,12 @@ comparator before executing a sort and filter which is handled by the event cons
 **Cons:** The displayed listing will not comply with the model comparator.
 // end::sorting[]
 
+// tag::commandAbbreviations[]
+=== Abbreviation mechanism
+The ability for users to enter multiple different words for
+==== Design Considerations
+// end::commandAbbreviations[]
+
 // tag::auto-completion[]
 === Auto-completion mechanism
 Auto-completion mechanism is implemented in `CommandBox` class under UI component.

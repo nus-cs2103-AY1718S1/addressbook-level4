@@ -51,12 +51,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help` or `h`
+=== Viewing help : `help`, `h`, `assist` or `faq`
 
 Format: `help` or `h` +
 Keyboard shortcut: kbd:[F1]
 
-=== Adding a person: `add` or `a`
+=== Adding a person: `add`, `a` or `+`
 
 Adds a person to Rolodex +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -72,7 +72,7 @@ Examples:
 * `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 // tag::list[]
-=== Listing all persons : `list` or `l`
+=== Listing all persons : `list`, `l`, `show` or `display`
 
 Shows a list of all persons in Rolodex, sorted by the specified sort order or default sort order. +
 Format: `list [SORT_ARGUMENTS]` or `l [SORT_ARGUMENTS]` +
@@ -98,7 +98,7 @@ Examples:
 * `list p/ a/desc` or `list p/asc a/desc` displays all persons sorted by ascending phone, then by descending address.
 // end::list[]
 
-=== Editing a person : `edit` or `e`
+=== Editing a person : `edit`, `e`, `change` or `modify`
 
 Edits an existing person in Rolodex. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
@@ -122,7 +122,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 // tag::find[]
 
-=== Locating persons in Rolodex: `find` or `f` or `search`
+=== Locating persons in Rolodex: `find`, `f`, `filter` or `search`
 
 Finds persons in Rolodex. +
 Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
@@ -182,7 +182,7 @@ Returns any person having tag `School` or tag `werk`, sorted by email.
 Returns an error (do not count as search arguments).
 // end::find[]
 
-=== Deleting a person : `delete` or `d`
+=== Deleting a person : `delete`, `d` or `-`
 
 Deletes the specified person from Rolodex. +
 Format: `delete INDEX` or `d INDEX`
@@ -277,7 +277,7 @@ image::profile_pic_before.png[width="500"]
 image::profile_pic_after.png[width="500"]
 // end::picture[]
 
-=== Listing entered commands : `history` or `his` or `past`
+=== Listing entered commands : `history`, `his` or `past`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` or `his` or `past` +
@@ -347,7 +347,7 @@ Format: `clear` or `c` +
 Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
 // tag::openNew[]
-=== Opening an existing Rolodex storage file: `open` or `o`
+=== Opening an existing Rolodex storage file: `open`, `o`, `cd`, `ls`, `<`
 Reloads the application with data from a rolodex at the specified filepath. +
 Format: `open FILEPATH` or `o FILEPATH`
 
@@ -375,7 +375,7 @@ Loads the application with the data at the directory `C:/Users/Rolodex/downloads
 `open data\default.rldx` +
 Loads the application with the data in `default.rldx` in the folder `data`.
 
-=== Creating a new Rolodex storage file: `new` or `n`
+=== Creating a new Rolodex storage file: `new`, `n`, `touch` or `>`
 Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
 Format: `new FILEPATH` or `n FILEPATH`
 
@@ -398,7 +398,7 @@ Creates a new Rolodex file `myOwn.rldx` at the directory `C:\Users\Rolodex\downl
 Creates a new Rolodex file `default.rldx` at the relative directory `data` and reloads the application with sample data created for the new Rolodex.
 // end::openNew[]
 
-=== Exiting the program : `exit` or `quit`
+=== Exiting the program : `exit`, `quit`, `close`, `bye`, `esc`
 
 Exits the program. +
 Format: `exit` +
