@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.model.event.ReadOnlyEventStorage;
+import seedu.address.model.ReadOnlyEventList;
 
 /**
  * A class to access EventStorage data stored as an xml file on the hard disk.
@@ -31,7 +31,7 @@ public class XmlEventStorage implements EventStorage {
     }
 
     @Override
-    public Optional<ReadOnlyEventStorage> readEventStorage() throws DataConversionException, IOException {
+    public Optional<ReadOnlyEventList> readEventStorage() throws DataConversionException, IOException {
         return readEventStorage(filePath);
     }
 
@@ -40,7 +40,7 @@ public class XmlEventStorage implements EventStorage {
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyEventStorage> readEventStorage(String filePath) throws DataConversionException,
+    public Optional<ReadOnlyEventList> readEventStorage(String filePath) throws DataConversionException,
             FileNotFoundException {
         requireNonNull(filePath);
 
@@ -51,21 +51,21 @@ public class XmlEventStorage implements EventStorage {
             return Optional.empty();
         }
 
-        ReadOnlyEventStorage eventStorageOptional = XmlFileStorage.loadDataFromSaveFileEventStorage(new File(filePath));
+        ReadOnlyEventList eventStorageOptional = XmlFileStorage.loadDataFromSaveFileEventStorage(new File(filePath));
 
         return Optional.of(eventStorageOptional);
     }
 
     @Override
-    public void saveEventStorage(ReadOnlyEventStorage eventStorage) throws IOException {
+    public void saveEventStorage(ReadOnlyEventList eventStorage) throws IOException {
         saveEventStorage(eventStorage, filePath);
     }
 
     /**
-     * Similar to {@link #saveEventStorage(ReadOnlyEventStorage)}
+     * Similar to {@link #saveEventStorage(ReadOnlyEventList)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveEventStorage(ReadOnlyEventStorage eventStorage, String filePath) throws IOException {
+    public void saveEventStorage(ReadOnlyEventList eventStorage, String filePath) throws IOException {
         requireNonNull(eventStorage);
         requireNonNull(filePath);
 

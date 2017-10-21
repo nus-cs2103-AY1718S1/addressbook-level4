@@ -8,8 +8,8 @@ import seedu.address.commons.events.model.EventStorageChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventList;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.event.ReadOnlyEventStorage;
 
 /**
  * API of the Storage component
@@ -42,10 +42,10 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage, EventStor
     String getEventStorageFilePath();
 
     @Override
-    Optional<ReadOnlyEventStorage> readEventStorage() throws DataConversionException, IOException;
+    Optional<ReadOnlyEventList> readEventStorage() throws DataConversionException, IOException;
 
     @Override
-    void saveEventStorage(ReadOnlyEventStorage eventStorage) throws IOException;
+    void saveEventStorage(ReadOnlyEventList eventStorage) throws IOException;
 
     /**
      * Saves the current version of the Event Storage to the hard disk.

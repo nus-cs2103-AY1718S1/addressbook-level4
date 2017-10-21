@@ -1,21 +1,23 @@
 package seedu.address.storage;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.ReadOnlyEventStorage;
-import seedu.address.model.event.ReadOnlyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.ReadOnlyEventList;
+import seedu.address.model.event.ReadOnlyEvent;
+
 /**
  * An Immutable EventStorage that is serializable to XML format
  */
 @XmlRootElement(name = "eventstorage")
-public class XmlSerializableEventStorage implements ReadOnlyEventStorage {
+public class XmlSerializableEventStorage implements ReadOnlyEventList {
 
     @XmlElement
     private List<XmlAdaptedEvent> events;
@@ -31,7 +33,7 @@ public class XmlSerializableEventStorage implements ReadOnlyEventStorage {
     /**
      * Conversion
      */
-    public XmlSerializableEventStorage(ReadOnlyEventStorage src) {
+    public XmlSerializableEventStorage(ReadOnlyEventList src) {
         this();
         events.addAll(src.getEventList().stream().map(XmlAdaptedEvent::new).collect(Collectors.toList()));
     }

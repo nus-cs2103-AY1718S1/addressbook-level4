@@ -5,7 +5,14 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventList;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventDescription;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.EventTime;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -46,6 +53,23 @@ public class SampleDataUtil {
         }
     }
 
+    public static Event[] getSampleEvents() {
+        try {
+            return new Event[] {
+                new Event(new EventName("First meeting"), new EventDescription("Discuss coding"),
+                    new EventTime("10/10/2017")),
+                new Event(new EventName("Second meeting"), new EventDescription("Discuss PPT"),
+                    new EventTime("13/10/2017")),
+                new Event(new EventName("Third meeting"), new EventDescription("Discuss presentation"),
+                    new EventTime("17/10/2017")),
+                new Event(new EventName("Forth meeting"), new EventDescription("Discuss demo"),
+                    new EventTime("03/11/2017")),
+            };
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
@@ -54,6 +78,18 @@ public class SampleDataUtil {
             }
             return sampleAb;
         } catch (DuplicatePersonException e) {
+            throw new AssertionError("sample data cannot contain duplicate persons", e);
+        }
+    }
+
+    public static ReadOnlyEventList getSampleEventList() {
+        try {
+            EventList sampleEl = new EventList();
+            for (Event sampleEvent : getSampleEvents()) {
+                sampleEl.addEvent(sampleEvent);
+            }
+            return sampleEl;
+        } catch (DuplicateEventException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         }
     }
