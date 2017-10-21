@@ -39,6 +39,11 @@ public class ArgumentMultimap {
         return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
     }
 
+    public String getStringValue(Prefix prefix) {
+        List<String> values = getAllValues(prefix);
+        return values.isEmpty() ? "" : values.get(values.size() - 1);
+    }
+
     /**
      * Returns all values of {@code prefix}.
      * If the prefix does not exist or has no values, this will return an empty list.
