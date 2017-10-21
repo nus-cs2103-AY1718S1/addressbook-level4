@@ -12,12 +12,13 @@ import org.apache.commons.net.telnet.TelnetClient;
  */
 public class StarWars {
 
+    private static StarWars instance;
     private static final String server = "towel.blinkenlights.nl";
 
     private TelnetClient telnetClient = new TelnetClient();
     private InputStream in;
 
-    public StarWars() {
+    private StarWars() {
         try {
             // Connect to the specified server
             telnetClient.connect(server, 23);
@@ -30,14 +31,23 @@ public class StarWars {
         }
     }
 
+    public static StarWars getInstance() {
+        if (instance == null) {
+            instance = new StarWars();
+        }
+        return instance;
+    }
+
     /**
      * Disconnects the initialized telnet client on exit.
      */
-    public void shutDown() {
+    public static void shutDown() {
         try {
-            telnetClient.disconnect();
+            if (instance != null) {
+                getInstance().telnetClient.disconnect();
+            }
         } catch (IOException e) {
-            // nothing needs to be done.
+            shutDown();
         }
     }
 

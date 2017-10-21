@@ -23,6 +23,7 @@ import seedu.address.logic.commands.NewCommand;
 import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.StarWarsCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -45,7 +46,8 @@ public class CommandParserTestUtil {
             OpenCommand.COMMAND_WORD_ABBREVIATIONS,
             RedoCommand.COMMAND_WORD_ABBREVIATIONS,
             SelectCommand.COMMAND_WORD_ABBREVIATIONS,
-            UndoCommand.COMMAND_WORD_ABBREVIATIONS
+            UndoCommand.COMMAND_WORD_ABBREVIATIONS,
+            StarWarsCommand.COMMAND_WORD_ABBREVIATIONS
     ));
 
     /**

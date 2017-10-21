@@ -6,7 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.commons.core.StarWars;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
@@ -78,6 +77,8 @@ public class RolodexParser {
             return new OpenCommandParser().parse(arguments);
         } else if (NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
             return new NewCommandParser().parse(arguments);
+        }  else if (StarWarsCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+            return new StarWarsCommand();
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

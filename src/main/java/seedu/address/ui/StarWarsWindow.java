@@ -5,8 +5,6 @@ import java.util.logging.Logger;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
@@ -32,12 +30,20 @@ public class StarWarsWindow extends UiPart<Region> {
 
     private final Stage dialogStage;
     private StarWars starWars;
+    private Timeline timeline;
 
     public StarWarsWindow(StarWars starWarsObject) {
         super(FXML);
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
+        dialogStage.setMinWidth(720.0);
+        dialogStage.setMinHeight(480.0);
+        dialogStage.setOnCloseRequest(event -> {
+            StarWars.shutDown();
+            timeline.stop();
+        });
+        dialogStage.setOnHiding(event -> StarWars.shutDown());
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
         starWars = starWarsObject;
@@ -52,13 +58,10 @@ public class StarWarsWindow extends UiPart<Region> {
 
         InputStream inputStream = starWars.getIn();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                String nextScene = getNextScene("[H", inputStream);
-                if (nextScene != null) {
-                    textArea.setText(nextScene);
-                }
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
+            String nextScene = getNextScene("[H", inputStream);
+            if (nextScene != null) {
+                textArea.setText(nextScene);
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -78,7 +81,8 @@ public class StarWarsWindow extends UiPart<Region> {
                 ch = (char) in.read();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            timeline.stop();
+            StarWars.shutDown();
         }
         return null;
     }
