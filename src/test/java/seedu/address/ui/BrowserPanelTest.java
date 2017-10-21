@@ -22,6 +22,8 @@ public class BrowserPanelTest extends GuiUnitTest {
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
 
+    private static final String ALICE_WEBSITE = "https://twitter.com/alice";
+
     @Before
     public void setUp() {
         accessWebsiteEventStub = new AccessWebsiteRequestEvent(ALICE.getWebsite().toString());
@@ -33,14 +35,14 @@ public class BrowserPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void display() throws Exception {
+    public void displayWebsite() throws Exception {
         // default web page
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
 
         // associated web page of a person
         postNow(accessWebsiteEventStub);
-        URL expectedPersonUrl = new URL("https://twitter.com/alice");
+        URL expectedPersonUrl = new URL(ALICE_WEBSITE);
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
