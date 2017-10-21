@@ -1,5 +1,6 @@
 package seedu.address.model.alias;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
@@ -30,6 +31,15 @@ public class AliasToken implements ReadOnlyAliasToken {
     public AliasToken(ReadOnlyAliasToken source) {
         this(source.getKeyword(), source.getRepresentation());
     }
+
+    public void setKeyword(Keyword keyword) {
+        this.keyword.set(requireNonNull(keyword));
+    }
+
+    public void setRepresentation(Representation representation) {
+        this.representation.set(requireNonNull(representation));
+    }
+    
 
     @Override
     public ObjectProperty<Keyword> keywordProperty() {
