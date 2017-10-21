@@ -178,7 +178,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Pins (@code toPin) from this {@code AddressBook}.
+     * Pins (@code toPin) in this {@code AddressBook}.
      *
      * @throws PersonNotFoundException if the {@code toPin} is not in this {@code AddressBook}.
      */
