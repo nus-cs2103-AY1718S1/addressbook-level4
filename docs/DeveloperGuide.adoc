@@ -364,7 +364,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-===== Since v1.1
+=== Since v1.1
 
 // tag::sort[]
 === Sorting of contacts
@@ -406,7 +406,7 @@ Figure 2: Sequence diagram for sorting by name
 **Cons:** Forgetful users may not be able to find their contact if they forget to sort by name when they add a new contact +
 
 
-===== Since v1.2
+=== Since v1.2
 
 //  tag::find[]
 === Enhanced find
