@@ -66,7 +66,9 @@ public class ParserUtil {
     }
 
     /**
-     * 
+     * Parses all properties in the given {@code HashMap}.
+     *
+     * @return a set containing all properties parsed.
      */
     public static Set<Property> parseProperties(HashMap<Prefix, String> values) {
         return null;
