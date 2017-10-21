@@ -248,7 +248,6 @@ public class AddressBookParser {
         commandMap.put("history", null);
         commandMap.put("list", null);
         commandMap.put("redo", null);
-        commandMap.put("select", null);
         commandMap.put("undo", null);
     }
 

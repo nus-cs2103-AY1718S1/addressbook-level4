@@ -19,6 +19,7 @@ import seedu.address.logic.parser.EditCommandParser;
 import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.logic.parser.HideCommandParser;
 import seedu.address.logic.parser.RemarkCommandParser;
+import seedu.address.logic.parser.SelectCommandParser;
 import seedu.address.logic.parser.SortCommandParser;
 import seedu.address.logic.parser.UnaliasCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -76,6 +77,7 @@ public class LogicManager extends ComponentManager implements Logic {
         addressBookParser.registerCommandParser(new HideCommandParser());
         addressBookParser.registerCommandParser(new RemarkCommandParser());
         addressBookParser.registerCommandParser(new UnaliasCommandParser());
+        addressBookParser.registerCommandParser(new SelectCommandParser());
     }
 
     /**
