@@ -50,6 +50,8 @@ public class DetailsPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getBirthdayField());
         assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getPhone());
         assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getPhoneField());
+        assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getHomePhone());
+        assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getHomePhoneField());
         assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getWebsite());
         assertEquals(MESSAGE_EMPTY_STRING, detailsPanelHandle.getWebsiteField());
         assertEquals(new ArrayList<>(), detailsPanelHandle.getTags());

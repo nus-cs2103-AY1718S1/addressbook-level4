@@ -27,6 +27,7 @@ public class DetailsPanel extends UiPart<Region> {
     private static final String FXML = "DetailsPanel.fxml";
     private static final String PREFIX_ADDRESS_FIELD = "Address: ";
     private static final String PREFIX_PHONE_FIELD = "Phone: ";
+    private static final String PREFIX_HOME_PHONE_FIELD = "Home Phone: ";
     private static final String PREFIX_EMAIL_FIELD = "Email: ";
     private static final String PREFIX_SCHOOL_EMAIL_FIELD = "School Email: ";
     private static final String PREFIX_BIRTHDAY_FIELD = "Birthday: ";
@@ -64,6 +65,10 @@ public class DetailsPanel extends UiPart<Region> {
     @FXML
     private Label website;
     @FXML
+    private Text homePhoneField;
+    @FXML
+    private Label homePhone;
+    @FXML
     private FlowPane tags;
 
     public DetailsPanel() {
@@ -84,6 +89,7 @@ public class DetailsPanel extends UiPart<Region> {
         schoolEmailField.setText(PREFIX_SCHOOL_EMAIL_FIELD);
         birthdayField.setText(PREFIX_BIRTHDAY_FIELD);
         websiteField.setText(PREFIX_WEBSITE_FIELD);
+        homePhoneField.setText(PREFIX_HOME_PHONE_FIELD);
         bindListeners(person);
     }
 
@@ -99,6 +105,7 @@ public class DetailsPanel extends UiPart<Region> {
         schoolEmail.textProperty().bind(Bindings.convert(person.schEmailProperty()));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         website.textProperty().bind(Bindings.convert(person.websiteProperty()));
+        homePhone.textProperty().bind(Bindings.convert(person.homeNumberProperty()));
         tags.getChildren().clear();
         initTags(person);
     }
@@ -136,6 +143,7 @@ public class DetailsPanel extends UiPart<Region> {
                 && schoolEmail.getText().equals(detailsPanel.schoolEmail.getText())
                 && birthday.getText().equals(detailsPanel.birthday.getText())
                 && website.getText().equals(detailsPanel.website.getText())
+                && homePhone.getText().equals(detailsPanel.homePhone.getText())
                 && tags.getChildrenUnmodifiable()
                 .stream()
                 .map(Label.class::cast)
