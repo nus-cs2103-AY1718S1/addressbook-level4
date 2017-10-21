@@ -11,7 +11,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     public static final String STATUS_BAR_PLACEHOLDER = "#statusBarPlaceholder";
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
-    private static final String SYNC_TOTAL_PERSONS_ID = "#totalPersons";
+    private static final String SYNC_TOTAL_PERSONS_ID = "#totalCount";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
 
     private final StatusBar syncStatusNode;
@@ -39,7 +39,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     /**
      * Returns the text of the person count portion of the status bar.
      */
-    public String getTotalPersons() {
+    public String getTotalCount() {
         return totalPersonsNode.getText();
     }
 
