@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -67,7 +68,7 @@ public class ParserUtil {
     /**
      * 
      */
-    public static Optional<Property> parseProperties(Optional<String> shortName) {
+    public static Set<Property> parseProperties(HashMap<Prefix, String> values) {
         return null;
     }
 
@@ -75,7 +76,7 @@ public class ParserUtil {
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      *
-     * TODO: Use a generic parseProperty method to replace all methods below.
+     * TODO: Use parseProperties method to replace all methods below.
      */
     public static Optional<Name> parseName(Optional<String> name)
             throws IllegalValueException, PropertyNotFoundException {

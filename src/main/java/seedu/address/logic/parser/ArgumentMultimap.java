@@ -2,9 +2,11 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Stores mapping of prefixes to their respective arguments. Each key may be associated with multiple argument values.
@@ -48,6 +50,20 @@ public class ArgumentMultimap {
             return new ArrayList<>();
         }
         return new ArrayList<>(internalMap.get(prefix));
+    }
+
+    /**
+     * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
+     * there is a value present).
+     */
+    public HashMap<Prefix, String> getAllValues() {
+        HashMap<Prefix, String> values = new HashMap<>();
+
+        for (Prefix prefix: internalMap.keySet()) {
+            getValue(prefix).ifPresent(s -> values.put(prefix, s));
+        }
+
+        return values;
     }
 
     /**

@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -35,10 +36,12 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PropertyManager.getAllPrefixes());
 
-        // TODO: Keep this checking for now.
+        // TODO: Keep this checking for now. These pre-loaded properties are compulsory.
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
+
+        HashMap<Prefix, String> allValues = argMultimap.getAllValues();
 
         try {
             // TODO: Implement and use generic ParserUtil::parseProperty method here.
@@ -51,8 +54,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
 
             return new AddCommand(person);
-        } catch (IllegalValueException | PropertyNotFoundException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+        } catch (IllegalValueException | PropertyNotFoundException e) {
+            throw new ParseException(e.getMessage(), e);
         }
     }
 }
