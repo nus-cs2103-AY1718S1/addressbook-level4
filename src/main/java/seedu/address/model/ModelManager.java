@@ -122,6 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removeBlacklistedPerson(target);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+        changeListTo(BlacklistCommand.COMMAND_WORD);
         indicateAddressBookChanged();
     }
 

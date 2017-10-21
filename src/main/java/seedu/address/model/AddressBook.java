@@ -149,6 +149,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (PersonNotFoundException e) {
             assert false : "This is not possible as prior checks have been done";
         }
+        newBlacklistedPerson.setIsWhitelisted(false);
         persons.add(index, newBlacklistedPerson);
     }
 
@@ -239,11 +240,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         int index;
         index = persons.getIndexOf(key);
 
-        Person newBlacklistedPerson = new Person(key);
-        newBlacklistedPerson.setIsBlacklisted(false);
+        Person newUnBlacklistedPerson = new Person(key);
+        newUnBlacklistedPerson.setIsBlacklisted(false);
+
+        if (newUnBlacklistedPerson.getDebt().toNumber() == 0) {
+            newUnBlacklistedPerson.setIsWhitelisted(true);
+        }
+
         persons.remove(key);
+
         try {
-            persons.add(index, newBlacklistedPerson);
+            persons.add(index, newUnBlacklistedPerson);
         } catch (DuplicatePersonException e) {
             assert false : "This is not possible as prior checks have been done";
         }
