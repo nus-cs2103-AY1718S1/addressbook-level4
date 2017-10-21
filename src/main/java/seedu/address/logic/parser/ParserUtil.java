@@ -16,6 +16,7 @@ import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
+import seedu.address.model.property.Property;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -61,6 +62,13 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * 
+     */
+    public static Optional<Property> parseProperty(Optional<String> shortName) {
+        return null;
     }
 
     /**
