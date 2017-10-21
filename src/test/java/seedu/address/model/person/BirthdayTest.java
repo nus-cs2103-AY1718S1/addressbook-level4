@@ -4,11 +4,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class BirthdayTest {
 
     @Test
-    public void equals() {
+    public void equals() throws IllegalValueException {
         Birthday birthday = new Birthday("07-01-1995");
 
         //same object -> returns true
