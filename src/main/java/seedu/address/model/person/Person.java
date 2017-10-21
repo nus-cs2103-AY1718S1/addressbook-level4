@@ -22,18 +22,21 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
+    private ObjectProperty<Remark> remark;
+    private ObjectProperty<Website> website;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Website website, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, remark, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
+        this.website = new SimpleObjectProperty<>(website);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -42,7 +45,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(), source.getWebsite(),
                 source.getTags());
     }
 
@@ -102,6 +105,34 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
+    }
+
+    public void setWebsite(Website website) {
+        this.website.set(requireNonNull(website));
+    }
+
+    @Override
+    public ObjectProperty<Website> websiteProperty() {
+        return website;
+    }
+
+    @Override
+    public Website getWebsite(){
+        return website.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -138,6 +169,19 @@ public class Person implements ReadOnlyPerson {
     @Override
     public String toString() {
         return getAsText();
+    }
+
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public void resetData(ReadOnlyPerson replacement) {
+        this.setPhone(replacement.getPhone());
+        this.setEmail(replacement.getEmail());
+        this.setAddress(replacement.getAddress());
+        this.setRemark(replacement.getRemark());
+        this.setWebsite(replacement.getWebsite());
+        this.setTags(replacement.getTags());
     }
 
 }
