@@ -16,7 +16,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 public class PersonDetailPanelTest extends GuiUnitTest {
 
-    private PersonPanelSelectionChangedEvent selectionChangedEventStub;
     private PersonDetailPanel personDetailPanel;
     private PersonDetailPanelHandle personDetailPanelHandle;
 
@@ -31,23 +30,25 @@ public class PersonDetailPanelTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
-        postNow(selectionChangedEventStub);
+        postNow(new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0)));
         assertPanelDisplaysPerson(ALICE, personDetailPanelHandle);
 
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1));
-        postNow(selectionChangedEventStub);
+        postNow(new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1)));
         assertPanelDisplaysPerson(BOB, personDetailPanelHandle);
     }
 
     /**
      * Asserts that {@code actualPerson} displays the details of {@code expectedPerson}.
      */
-    private static void assertPanelDisplaysPerson(ReadOnlyPerson expectedPerson, PersonDetailPanelHandle actualPerson) {
+    private void assertPanelDisplaysPerson(ReadOnlyPerson expectedPerson, PersonDetailPanelHandle actualPerson) {
+        guiRobot.pauseForHuman();
+
         assertEquals(expectedPerson.getName().toString(), actualPerson.getName());
         assertEquals(expectedPerson.getPhone().toString(), actualPerson.getPhone());
         assertEquals(expectedPerson.getAddress().toString(), actualPerson.getAddress());
         assertEquals(expectedPerson.getEmail().toString(), actualPerson.getEmail());
+
+        actualPerson.updateTags();
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualPerson.getTags());
     }
