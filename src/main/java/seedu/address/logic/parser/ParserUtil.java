@@ -161,13 +161,4 @@ public class ParserUtil {
         Tag parsedTag = new Tag(tag);
         return parsedTag;
     }
-    /**
-     * Parses {@code deliveryDate} into an {@code deliveryDate} and returns it. Leading and trailing whitespaces will be
-     * trimmed.
-     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
-     */
-    public static Optional<DeliveryDate> parseDeliveryDate(Optional<String> deliveryDate) throws IllegalValueException {
-        requireNonNull(deliveryDate);
-        return deliveryDate.isPresent() ? Optional.of(new DeliveryDate(deliveryDate.get())) : Optional.empty();
-    }
 }
