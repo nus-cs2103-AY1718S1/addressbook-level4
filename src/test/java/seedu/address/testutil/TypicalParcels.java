@@ -57,7 +57,7 @@ public class TypicalParcels {
             .withName("George Best").withPhone("9482442").withEmail("anna@example.com")
             .withAddress("Block 532 HDB Upper Cross Street s050532").withDeliveryDate("07-07-2007")
             .withTags("family", "friends").withStatus("delivered").build();
-    
+
     // Manually added
     public static final ReadOnlyParcel HOON = new ParcelBuilder().withTrackingNumber("RR121212124SG")
             .withName("Hoon Meier").withPhone("8482424").withEmail("stefan@example.com")
