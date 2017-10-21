@@ -13,6 +13,7 @@ import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.model.person.DateRepaid;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
@@ -303,7 +304,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
 
     //@@author jelneo
-
     /**
      * Increase debts of a person by the indicated amount
      * @param target person that borrowed more money
@@ -316,6 +316,35 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         try {
             Debt newDebt = new Debt(target.getDebt().toNumber() + amount.toNumber());
+            editedPerson.setDebt(newDebt);
+            persons.setPerson(target, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "There should be no duplicate when updating the debt of a person";
+        } catch (IllegalValueException ive) {
+            assert false : "New debt amount should not be invalid since amount and debt field in target have "
+                    + "been validated";
+        }
+    }
+
+    /**
+     * Decrease the debt of a person by the amount indicated
+     * @param target person in the address book who paid back some money
+     * @param amount amount that the person paid back. Must be either a positive integer or positive number with
+     *               two decimal places
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
+     */
+    public void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+            IllegalValueException {
+        Person editedPerson = new Person(target);
+        double newDebtAmt = target.getDebt().toNumber() - amount.toNumber();
+
+        if (newDebtAmt < 0) {
+            throw new IllegalValueException(PaybackCommand.MESSAGE_PAYBACK_FAILURE);
+        }
+
+        try {
+            Debt newDebt = new Debt(newDebtAmt);
             editedPerson.setDebt(newDebt);
             persons.setPerson(target, editedPerson);
         } catch (DuplicatePersonException dpe) {

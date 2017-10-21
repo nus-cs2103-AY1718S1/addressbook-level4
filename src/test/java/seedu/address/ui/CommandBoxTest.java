@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import static guitests.guihandles.MainWindowHandle.TEST_PASSWORD;
+import static guitests.guihandles.MainWindowHandle.TEST_USERNAME;
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 
@@ -20,6 +23,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -32,15 +36,13 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private CommandBoxHandle commandBoxHandle;
     private ModelManager model;
-    private String adminUsername;
-    private String adminPassword;
-
 
     @Before
     public void setUp() {
-        model = new ModelManager();
-        adminUsername = model.getUsernameFromUserPref();
-        adminPassword = model.getPasswordFromUserPref();
+        UserPrefs testUserPrefs = new UserPrefs();
+        testUserPrefs.setAdminUsername(TEST_USERNAME);
+        testUserPrefs.setAdminPassword(TEST_PASSWORD);
+        model = new ModelManager(getTypicalAddressBook(), testUserPrefs);
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
@@ -60,10 +62,11 @@ public class CommandBoxTest extends GuiUnitTest {
      * Logs in to admin user account so that other GUI tests can test the main GUIs in the address book
      */
     public void simulateLogin() {
+        Username username = null;
         try {
-            Username username = new Username(adminUsername);
-            Password password = new Password(adminPassword);
-            loginCommand = new LoginCommand(username, password);
+            username = new Username(TEST_USERNAME);
+            Password password = new Password(TEST_PASSWORD);
+            LoginCommand loginCommand = new LoginCommand(username, password);
             loginCommand.setData(model, new CommandHistory(), new UndoRedoStack());
             loginCommand.execute();
         } catch (IllegalValueException ive) {

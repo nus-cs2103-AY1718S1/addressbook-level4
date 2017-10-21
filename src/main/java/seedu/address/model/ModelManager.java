@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toCollection;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.storage.PasswordSecurity.getSha512SecurePassword;
 
 import java.util.Set;
 import java.util.function.Predicate;
@@ -238,8 +239,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void authenticateUser(Username username, Password password) throws UserNotFoundException,
             IllegalValueException {
         Username fileUsername = new Username(getUsernameFromUserPref());
-        Password filePassword = new Password(getPasswordFromUserPref());
-        if (fileUsername.equals(username) && filePassword.equals(password)) {
+        if (fileUsername.equals(username) && checkAgainstPasswordFromUserPref(password.toString(),
+                userPrefs.getPasswordSalt())) {
             raise(new LoginAppRequestEvent(true));
         } else {
             raise(new LoginAppRequestEvent(false));
@@ -256,6 +257,17 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
+     * Checks the entered password against the password stored in {@code UserPrefs} class
+     * @param currPassword password entered by user
+     * @return true if the hash generated from the entered password matches the hashed password stored
+     * in {@code UserPrefs}
+     */
+    public boolean checkAgainstPasswordFromUserPref(String currPassword, byte[] salt) {
+        String hashedPassword = getSha512SecurePassword(currPassword, salt);
+        return hashedPassword.equals(userPrefs.getAdminPassword());
+    }
+
+    /**
      * Increase the debt of a person by the amount indicated
      * @param target person in the address book who borrowed more money
      * @param amount amount that the person borrowed. Must be either a positive integer or positive number with
@@ -265,6 +277,21 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
         addressBook.addDebtToPerson(target, amount);
+        indicateAddressBookChanged();
+    }
+
+    /**
+     * Decrease the debt of a person by the amount indicated
+     * @param target person in the address book who paid back some money
+     * @param amount amount that the person paid back. Must be either a positive integer or positive number with
+     *               two decimal places
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
+     */
+    @Override
+    public void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+            IllegalValueException {
+        addressBook.deductDebtFromPerson(target, amount);
         indicateAddressBookChanged();
     }
     //@@author
