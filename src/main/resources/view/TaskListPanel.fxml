@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ListView fx:id="taskCardListView" prefHeight="800.0" prefWidth="320.0" />
-   </children>
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <ListView fx:id="taskCardListView" VBox.vgrow="ALWAYS" />
 </VBox>

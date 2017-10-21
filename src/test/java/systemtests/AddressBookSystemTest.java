@@ -103,7 +103,7 @@ public abstract class AddressBookSystemTest {
     }
 
     public TaskListPanelHandle getTaskListPanel() {
-        return mainWindowHandle.getTaskListPanelHandle();
+        return mainWindowHandle.getTaskListPanel();
     }
 
     /**
@@ -165,6 +165,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+        assertTaskListMatching(getTaskListPanel(), expectedModel.getFilteredTaskList());
     }
 
     /**
@@ -188,7 +189,6 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
-        assertFalse(getTaskListPanel().isAnyTaskCardSelected());
     }
 
     /**

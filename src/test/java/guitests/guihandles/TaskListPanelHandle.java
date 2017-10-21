@@ -44,7 +44,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     /**
      * Returns true if a card is currently selected.
      */
-    public boolean isAnyTaskCardSelected() {
+    public boolean isAnyCardSelected() {
         List<TaskCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCardsList.size() > 1) {
@@ -93,7 +93,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     /**
      * Selects the {@code TaskCard} at {@code index} in the list.
      */
-    public void selectTaskCard(int index) {
+    public void select(int index) {
         getRootNode().getSelectionModel().select(index);
     }
 

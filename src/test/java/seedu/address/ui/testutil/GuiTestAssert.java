@@ -85,7 +85,7 @@ public class GuiTestAssert {
     public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, List<ReadOnlyTask> tasks) {
         assertTaskListMatching(taskListPanelHandle, tasks.toArray(new ReadOnlyTask[0]));
     }
-
+    
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
      */
