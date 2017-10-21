@@ -23,20 +23,51 @@ include::../UserGuide.adoc[tag=sort]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Users will want to view the list of contacts sorted for them based on their name, phone, email or address.
+Some users find the contact they want by scrolling through the list as opposed to typing and this will aid them.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=sort]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: Enhanced Find
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users may want to search for the contact not just by their names, but also by their phone number, email
+, address and also their tags as well. This enhancement gives users the choice to decide how they would want
+to search for the contact they want.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: A quickstart tutorial for first time users of the application
 
 {Explain similar to the Undo/Redo feature above.}
 
@@ -45,6 +76,3 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}

@@ -31,6 +31,8 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String address;
     @XmlElement(required = true)
+    private boolean isPrivate;
+    @XmlElement(required = true)
     private String remark;
 
     @XmlElement
@@ -58,6 +60,7 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        isPrivate = source.isPrivate();
     }
 
     /**
@@ -76,6 +79,7 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, remark, tags);
+        final boolean isPrivate = this.isPrivate;
+        return new Person(name, phone, email, address, remark, tags, isPrivate);
     }
 }

@@ -106,6 +106,21 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    /**
+     * Hides the equivalent person from the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean hide(ReadOnlyPerson toHide) throws PersonNotFoundException {
+        requireNonNull(toHide);
+        final int indexToHide = internalList.indexOf(toHide);
+        final boolean personFoundAndHidden = internalList.get(indexToHide).setPrivate(true);
+        if (!personFoundAndHidden) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndHidden;
+    }
+
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

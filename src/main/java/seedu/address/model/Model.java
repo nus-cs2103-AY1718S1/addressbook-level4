@@ -18,8 +18,10 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
-
-    /**
+ 
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
+  
+   /**
      * Clears existing backing model and replaces with the provided new data.
      */
     void resetData(ReadOnlyAddressBook newData);
@@ -39,7 +41,10 @@ public interface Model {
      */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
-    /**
+    /** Hides the given person. */
+    void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    
+     /**
      * Adds the given person
      */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;

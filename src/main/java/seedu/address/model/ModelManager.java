@@ -88,9 +88,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.hidePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredPersonList(PREDICATE_SHOW_NOT_HIDDEN);
         indicateAddressBookChanged();
     }
 

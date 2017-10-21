@@ -9,13 +9,13 @@ import java.util.function.Predicate;
 import seedu.address.model.tag.Tag;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s details matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+public class PersonHasKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
     private final String fullWord;
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public PersonHasKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
         StringJoiner joiner = new StringJoiner(" ");
         for (String key : keywords) {
@@ -67,8 +67,8 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof PersonHasKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((PersonHasKeywordsPredicate) other).keywords)); // state check
     }
 
 }
