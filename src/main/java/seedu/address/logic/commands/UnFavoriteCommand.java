@@ -33,7 +33,7 @@ public class UnFavoriteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        String names = "";
+        StringBuilder names = new StringBuilder();
 
         /*
          * First, efficiently check whether user input any index larger than address book size with Collections.max
@@ -58,10 +58,11 @@ public class UnFavoriteCommand extends UndoableCommand {
          */
         for (Index targetIndex : targetIndexList) {
             ReadOnlyPerson personToUnFavorite = lastShownList.get(targetIndex.getZeroBased());
-            names += "\n" + personToUnFavorite.getName().toString();
 
             try {
                 model.toggleFavoritePerson(personToUnFavorite, COMMAND_WORD);
+                names.append("\n");
+                names.append(personToUnFavorite.getName().toString());
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(EditCommand.MESSAGE_DUPLICATE_PERSON);
             } catch (PersonNotFoundException pnfe) {
