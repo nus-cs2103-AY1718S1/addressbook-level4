@@ -40,7 +40,9 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+//    private Timetable timetable;
+//    private BrowserPanel browserPanel;
+    private CombinePanel combinePanel;
     private LessonListPanel lessonListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -129,8 +131,15 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+//        browserPanel = new BrowserPanel();
+//        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+//
+//        timetable = new Timetable(logic);
+//        browserPlaceholder.getChildren().add(timetable.getRoot());
+
+        combinePanel = new CombinePanel(logic);
+        browserPlaceholder.getChildren().add(combinePanel.getRoot());
 
         lessonListPanel = new LessonListPanel(logic.getFilteredLessonList());
         lessonListPanelPlaceholder.getChildren().add(lessonListPanel.getRoot());
@@ -212,7 +221,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        combinePanel.freeResources();
     }
 
     @Subscribe

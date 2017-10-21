@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
@@ -54,6 +56,7 @@ public class AddCommand extends UndoableCommand {
         try {
             model.addLesson(toAdd);
             model.handleListingUnit();
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateLessonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_LESSON);

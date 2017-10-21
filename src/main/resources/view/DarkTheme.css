@@ -189,6 +189,7 @@
     -fx-text-fill: white;
 }
 
+
 .grid-pane {
     -fx-background-color: derive(#1d1d1d, 30%);
     -fx-border-color: derive(#1d1d1d, 30%);
