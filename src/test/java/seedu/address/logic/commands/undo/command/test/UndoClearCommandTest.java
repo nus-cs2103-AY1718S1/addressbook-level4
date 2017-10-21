@@ -17,6 +17,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventList;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -47,7 +48,7 @@ public class UndoClearCommandTest {
         clearCommandTwo.execute();
 
         // multiple commands in undoStack
-        expectedModel.resetData(new AddressBook());
+        expectedModel.resetData(new AddressBook(), new EventList());
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in undoStack

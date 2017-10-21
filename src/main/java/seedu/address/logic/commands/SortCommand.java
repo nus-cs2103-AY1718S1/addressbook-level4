@@ -12,7 +12,6 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Sorted all persons";
 
-
     @Override
     public CommandResult execute() {
         model.sortPersons();

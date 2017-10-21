@@ -16,10 +16,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
+import seedu.address.model.*;
 
 public class RedoClearCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
@@ -41,7 +38,7 @@ public class RedoClearCommandTest {
                 Collections.emptyList(), Arrays.asList(clearCommandTwo, clearCommandOne));
         RedoCommand redoCommand = new RedoCommand();
         redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
-        Model expectedModel = new ModelManager(new AddressBook(), getTypicalEventList(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(), new EventList(), new UserPrefs());
 
         // multiple commands in redoStack
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);

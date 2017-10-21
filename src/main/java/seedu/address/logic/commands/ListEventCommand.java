@@ -11,7 +11,6 @@ public class ListEventCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Listed all events";
 
-
     @Override
     public CommandResult execute() {
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
