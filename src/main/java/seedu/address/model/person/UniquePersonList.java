@@ -122,7 +122,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Pins the equivalent person from the list.
+     * Pins the equivalent person in the list.
      *
      * @throws PersonNotFoundException if no such person could be found in the list.
      */
@@ -137,18 +137,18 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Unpins the equivalent person from the list.
+     * Unpins the equivalent person in the list.
      *
      * @throws PersonNotFoundException if no such person could be found in the list.
      */
-    public boolean unpin(ReadOnlyPerson toPin) throws PersonNotFoundException {
-        requireNonNull(toPin);
-        final int indexToPin = internalList.indexOf(toPin);
-        final boolean personFoundAndPinned = internalList.get(indexToPin).setPinned(false);
-        if (!personFoundAndPinned) {
+    public boolean unpin(ReadOnlyPerson toUnpin) throws PersonNotFoundException {
+        requireNonNull(toUnpin);
+        final int indexToPin = internalList.indexOf(toUnpin);
+        final boolean personFoundAndUnpinned = internalList.get(indexToPin).setPinned(false);
+        if (!personFoundAndUnpinned) {
             throw new PersonNotFoundException();
         }
-        return personFoundAndPinned;
+        return personFoundAndUnpinned;
     }
 
     public void setPersons(UniquePersonList replacement) {
