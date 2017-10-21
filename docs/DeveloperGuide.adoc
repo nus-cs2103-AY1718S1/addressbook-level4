@@ -347,7 +347,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // end::undoredo[]
 
 // tag::favourite[]
-=== Favourite mechanism
+=== Favourite mechanism (Since v1.2)
 To favourite a contact is achieved by `FavouriteCommand`, which is a subclass of `UndoableCommand`. It basically changes the value of the `Favourite` field of a `Person`.
 
 In this sense, `Favourite` class need to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is "False".
@@ -474,7 +474,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-=== Filter mechanism
+=== Filter mechanism (Since v1.2)
 
 The filter mechanism is facilitated by `FilterCommandParser`, which resides inside the parser folder of the logic component.
 
@@ -568,7 +568,7 @@ some of his contacts may have tags that serve the same purpose but spelt differe
 
 ---
 
-=== Sorting mechanism
+=== Sorting mechanism (Since v1.2)
 
 The sorting mechanism is achieved by the `SortCommand`. In order to sort the list of contacts, the default constructor of `SortCommand` creates an empty editable array list of contacts as shown below:
 
@@ -661,7 +661,7 @@ The sorting process is case insensitive.
 **Pros:** Less time and space consuming as sorting is achieved in a single array. +
 **Cons:** There is no way to obtain the origin list of contacts for other functions. If a mistake is made, the original list of contacts will be compromised. Need to update all classes that inherits from Address Book class as well which may be confusing.
 
-=== Facebook mechanism
+=== Facebook mechanism (Coming in v1.3)
 
 The facebook mechanism is facilitated by `FacebookCommandParser`, which resides inside the parser folder of the logic component.
 
