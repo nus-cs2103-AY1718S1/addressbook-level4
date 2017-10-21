@@ -61,7 +61,7 @@ public class UniqueEventList implements Iterable<Event> {
     public void sort() {
         Collections.sort(internalList, new Comparator<Event>() {
             public int compare (Event p1, Event p2) {
-                return p1.getEventName().toString().compareTo(p2.getEventName().toString()); } });
+                return p1.getEventTime().toString().compareTo(p2.getEventTime().toString()); } });
     }
 
     /**

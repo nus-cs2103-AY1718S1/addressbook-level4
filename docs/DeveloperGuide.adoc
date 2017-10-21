@@ -312,7 +312,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 
 [discrete]
-====== Design Considerations
+===== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
@@ -376,8 +376,10 @@ The person is associated with a list of tags, and we need to eliminate them when
 .. When we redo this command:
 1. Add this person into address book (Since newTags has already existed).
 
+---
+
 [discrete]
-====== Design Considerations
+===== Design Considerations
 **Aspect:** How to deal with tags when we undo add command. +
 **Alternative 1 (current choice):** Remove all tags which only exists in this person. +
 **Pros:** This allows to undo add command completely. +
@@ -402,14 +404,16 @@ The person is associated with a list of tags, and we need to eliminate them when
 1. Delete the target person. +
 
 [discrete]
-====== Design Considerations
+===== Design Considerations
 **Aspect:** Where to add the target person when we undo the delete person. +
 **Alternative 1 (current choice):** Add it to the original position `index`. +
 **Pros:** This allows to undo delete command completely, and the sequence of persons in address book will not change because of undoing. +
 **Cons:** Need to spend more time adding a person in the middle of the list, because it requires all persons behind `index` to switch to right. +
 **Alternative 2:** Just add it at the back of address book. +
 **Pros:** Easy to implement, and more efficient. +
-**Cons:** The sequence of persons in address book will change.
+**Cons:** The sequence of persons in address book will change. +
+
+---
 
 ==== Undo an edit command
 * We keep the `personToEdit` and the `editedPerson`.
@@ -431,6 +435,8 @@ Similar as `add` command, if the `editedPerson` causes some change in `tagList`,
 .. When we redo this command:
 1. Swap back the role of `personToEdit` and `editedPerson`
 2. Execute edit operation (Since newTags has already existed). +
+
+---
 
 ==== Undo an clear command
 * We can only keep the whole copy of address book to undo clear command.
