@@ -1,12 +1,13 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.event.ReadOnlyEventStorage;
 import java.io.IOException;
 import java.util.Optional;
 
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.ReadOnlyEventList;
+
 /**
- * Represents a storage for {@link seedu.address.model.event.Event).
+ * Represents a storage for {@link seedu.address.model.EventList}.
  */
 public interface EventStorage {
 
@@ -16,28 +17,28 @@ public interface EventStorage {
     String getEventStorageFilePath();
 
     /**
-     * Returns Event data as a {@link ReadOnlyEventStorage}.
+     * Returns Event data as a {@link ReadOnlyEventList}.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyEventStorage> readEventStorage() throws DataConversionException, IOException;
+    Optional<ReadOnlyEventList> readEventStorage() throws DataConversionException, IOException;
 
     /**
      * @see #getEventStorageFilePath()
      */
-    Optional<ReadOnlyEventStorage> readEventStorage(String filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyEventList> readEventStorage(String filePath) throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link ReadOnlyEventStorage} to the storage.
+     * Saves the given {@link ReadOnlyEventList} to the storage.
      * @param eventStorage cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveEventStorage(ReadOnlyEventStorage eventStorage) throws IOException;
+    void saveEventStorage(ReadOnlyEventList eventStorage) throws IOException;
 
     /**
-     * @see #saveEventStorage(ReadOnlyEventStorage)
+     * @see #saveEventStorage(ReadOnlyEventList)
      */
-    void saveEventStorage(ReadOnlyEventStorage eventStorage, String filePath) throws IOException;
+    void saveEventStorage(ReadOnlyEventList eventStorage, String filePath) throws IOException;
 
 }

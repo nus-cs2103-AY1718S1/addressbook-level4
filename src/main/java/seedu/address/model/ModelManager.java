@@ -30,36 +30,45 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final EventList eventList;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyEventList eventList, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.eventList = new EventList(eventList);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        filteredEvents = new FilteredList<>(this.eventList.getEventList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new EventList(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
+    public void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyEventList newEventList) {
+        addressBook.resetData(newAddressBook);
+        eventList.resetData(newEventList);
         indicateAddressBookChanged();
+        indicateEventListChanged();
     }
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public ReadOnlyEventList getEventList() {
+        return eventList;
     }
 
     /** Raises an event to indicate the model has changed */
@@ -68,7 +77,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private void indicateEventListChanged() {
-        raise(new EventStorageChangedEvent(addressBook));
+        raise(new EventStorageChangedEvent(eventList));
     }
 
     @Override
@@ -134,29 +143,31 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Event List Modifiers =============================================================
+
     @Override
     public synchronized void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
-        addressBook.removeEvent(target);
-        indicateAddressBookChanged();
+        eventList.removeEvent(target);
+        indicateEventListChanged();
     }
 
     @Override
     public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
-        addressBook.addEvent(event);
+        eventList.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        indicateAddressBookChanged();
+        indicateEventListChanged();
     }
 
     @Override
     public synchronized void addEvent(int position, ReadOnlyEvent event) {
-        addressBook.addEvent(position, event);
+        eventList.addEvent(position, event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        indicateAddressBookChanged();
+        indicateEventListChanged();
     }
 
     @Override
     public synchronized void sortEvents() {
-        addressBook.sortEvents();
+        eventList.sortEvents();
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
@@ -165,7 +176,7 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicateEventException, EventNotFoundException {
         requireAllNonNull(target, editedEvent);
 
-        addressBook.updateEvent(target, editedEvent);
+        eventList.updateEvent(target, editedEvent);
         indicateAddressBookChanged();
     }
 

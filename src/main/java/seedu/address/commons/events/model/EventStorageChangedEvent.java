@@ -1,15 +1,14 @@
 package seedu.address.commons.events.model;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.event.ReadOnlyEventStorage;
+import seedu.address.model.ReadOnlyEventList;
 
 /** Indicates the EventStorage in the model has changed*/
 public class EventStorageChangedEvent extends BaseEvent {
 
-    public final ReadOnlyEventStorage data;
+    public final ReadOnlyEventList data;
 
-    public EventStorageChangedEvent(ReadOnlyEventStorage data) {
+    public EventStorageChangedEvent(ReadOnlyEventList data) {
         this.data = data;
     }
 
