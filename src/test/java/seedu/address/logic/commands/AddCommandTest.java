@@ -133,6 +133,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateBookedSlotSet() {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException {
             fail("This method should not be called.");
         }
