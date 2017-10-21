@@ -54,6 +54,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+image::help.png[width="900"]
+
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -67,27 +69,39 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+image::add.png[width="900"]
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
+image::list all.png[width="900"]
+
 Shows a list of all distinct addresses of all persons in the address book. +
 Format: `List address`
+
+image::list address.png[width="900"]
 
 Shows a list of all distinct emails of all persons in the address book. +
 Format: `List email`
 
+image::list email.png[width="900"]
+
 Shows a list of all distinct phones of all persons in the address book. +
 Format: `List phone`
 
+image::list phone.png[width="900"]
+
 Shows a list all persons in the favourite list. +
+
 Format: `List collection`
 
 === Collect a person into favourite list : `collect`
 
 Adds an existing person into the favourite list. +
 Format: `collect 1`
+
 
 === View all persons with the specified attribute: `view`
 
@@ -104,6 +118,9 @@ Examples:
 `view 2` +
 find all persons with the second address shown in the address list.
 
+image::view 1.png[width="900"]
+
+image::view 2.png[width="900"]
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -135,6 +152,10 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 * `edit 3 Clementi Ave 3` +
 Edits all the persons with the third address shown in the address list to be `Clementi Ave 3` (Assume user types `list address` first).
 
+image::edit 1.png[width="900"]
+
+image::edit 2.png[width="900"]
+
 === Locating persons by attributes: `find`
 
 Finds persons whose names, address, email, phone number contain any of the given keywords. +
@@ -162,6 +183,10 @@ in their email and phone number
 `find tianlan` +
 Returns any email contain `tianlan` word in the emails
 
+image::find address 1.png[width="900"]
+
+image::find address 2.png[width="900"]
+
 === Sorting persons by attributes: `sort`
 
 Sort the existing list. +
@@ -184,6 +209,10 @@ Returns whole list +
 `sort` +
 Return a list sorted by name lexicographically
 
+image::sort 1.png[width="900"]
+
+image::sort 2.png[width="900"]
+
 === Highlighting keywords: `color`
 
 Highlight the command keywords. +
@@ -200,6 +229,14 @@ All command keywords will be highlighted +
 
 * `color disable` +
 All command keywords will not be highlighted +
+
+image::color enable 1.png[width="900"]
+
+image::color enable 2.png[width="900"]
+
+image::disable 1.png[width="900"]
+
+image::disable 2.png[width="900"]
 
 === Deleting a person : `delete`
 
@@ -235,6 +272,9 @@ Deletes the 1st person in the results of the `find` command.
 `delete 2` +
 Deletes all the persons who with the second address value shown in the address list.
 
+image::delete 1.png[width="900"]
+
+image::delete 2.png[width="900"]
 
 === Selecting a person : `select`
 
@@ -256,6 +296,10 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+image::select 1.png[width="900"]
+
+image::select 2.png[width="900"]
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -265,6 +309,10 @@ Format: `history`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+image::history 1.png[width="900"]
+
+image::history 2.png[width="900"]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -293,6 +341,10 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+image::undo 1.png[width="900"]
+
+image::undo 2.png[width="900"]
+
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
@@ -316,10 +368,18 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+image::find address 1.png[width="900"]
+
+image::find address 2.png[width="900"]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
+
+image::clear 1.png[width="900"]
+
+image::clear 2.png[width="900"]
 
 === Exiting the program : `exit`
 
@@ -339,6 +399,10 @@ Examples:
 * `customise fs\xsmall`
 * `customise fs\small`
 * `customise fs\xlarge`
+
+image::customise 1.png[width="900"]
+
+image::customise 2.png[width="900"]
 
 === Saving the data
 
