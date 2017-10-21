@@ -15,7 +15,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Unpins a person identified using it's last displayed index from the address book.
  */
-public class UnpinCommand extends Command {
+public class UnpinCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "unpin";
 
@@ -34,7 +34,7 @@ public class UnpinCommand extends Command {
 
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> pinnedList = model.getFilteredPersonList().filtered(PREDICATE_SHOW_ONLY_PINNED);
 
