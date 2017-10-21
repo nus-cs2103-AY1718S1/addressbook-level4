@@ -114,7 +114,7 @@ public class FindCommand extends Command {
             if (!(other instanceof Person)) {
                 return false;
             }
-            if (this.name != null && !this.name.equals(((Person) other).getName())) {
+            if (this.name != null && !match(this.name, ((Person) other).getName())) {
                 return false;
             }
             if (this.phone != null && !this.phone.equals(((Person) other).getPhone())) {
@@ -126,8 +126,56 @@ public class FindCommand extends Command {
             if (this.address != null && !this.address.equals(((Person) other).getAddress())) {
                 return false;
             }
+            if (this.tags != null && !match(this.tags, ((Person) other).getTags())) {
+                return false;
+            }
 
             return true;
+        }
+
+        /**
+         *
+         * @param predicate
+         * @param test
+         * @return true if test contains predicate
+         */
+        private boolean match(Name predicate, Name test) {
+            if (predicate == test) {
+                return true;
+            }
+            if (predicate == null || test == null) {
+                return false;
+            }
+
+            String[] splitPredicate = predicate.toString().toUpperCase().split("\\s+");
+
+            for (String keyword : splitPredicate) {
+                if (keyword.equals("")) {
+                    continue;
+                }
+                if (test.toString().toUpperCase().contains(keyword)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /**
+         *
+         * @param predicate
+         * @param test
+         * @return true if test contains a tag that is among the predicate
+         */
+        private boolean match(Set<Tag> predicate, Set<Tag> test) {
+            for (Tag predicateTag : predicate) {
+                for (Tag testTag : test) {
+                    if (predicateTag.equals(test)) {
+                        return  true;
+                    }
+                }
+            }
+            return false;
         }
 
         public void setName(Name name) {
