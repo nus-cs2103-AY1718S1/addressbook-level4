@@ -73,6 +73,11 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Sorting all persons : `sort`
+
+Shows a list of all persons in the address book sorted alphanumerically by name. +
+Format: `sort`
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -393,6 +398,7 @@ e.g. `removeTag friend`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Sort* : `sort`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
