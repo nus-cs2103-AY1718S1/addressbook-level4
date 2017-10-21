@@ -188,11 +188,12 @@ public class Parcel implements ReadOnlyParcel{
     }
 
     @Override
-    public int compareTo(Object other) {
+    public int compareTo(Object o) {
+        Parcel other = (Parcel) o;
         if (other == this) {
             return 0;
         } else {
-            return 
+            return this.getDeliveryDate().compareTo(other.getDeliveryDate());
         }
     }
 }

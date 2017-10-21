@@ -72,7 +72,6 @@ public interface Model {
      * Method to sort the lists of addresses by delivery date with the earliest date in front
      */
     void maintainSorted();
-    }
 }
 
 

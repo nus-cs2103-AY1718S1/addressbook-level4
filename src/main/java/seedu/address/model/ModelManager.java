@@ -120,7 +120,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void maintainSorted() {
-
+        addressBook.sort();
+        indicateAddressBookChanged();
     }
 
     @Override
