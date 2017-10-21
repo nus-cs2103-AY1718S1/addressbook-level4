@@ -21,13 +21,4 @@ public interface Parser<T extends Command> {
      * @return command word string
      */
     String getCommandWord();
-
-    /**
-     * Gets the format of the string required to parse the respective command correctly
-     *
-     * @return comamnd usage string
-     */
-    String getCommandUsage();
-
-
 }

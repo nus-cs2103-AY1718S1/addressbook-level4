@@ -81,9 +81,4 @@ public class EditCommandParser implements Parser<EditCommand> {
     public String getCommandWord() {
         return EditCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return EditCommand.MESSAGE_USAGE;
-    }
 }

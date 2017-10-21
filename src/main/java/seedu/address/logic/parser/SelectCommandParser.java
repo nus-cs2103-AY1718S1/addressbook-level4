@@ -32,9 +32,4 @@ public class SelectCommandParser implements Parser<SelectCommand> {
     public String getCommandWord() {
         return SelectCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return SelectCommand.MESSAGE_USAGE;
-    }
 }

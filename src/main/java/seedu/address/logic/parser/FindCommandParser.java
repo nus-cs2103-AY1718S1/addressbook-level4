@@ -35,9 +35,4 @@ public class FindCommandParser implements Parser<FindCommand> {
     public String getCommandWord() {
         return FindCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return FindCommand.MESSAGE_USAGE;
-    }
 }

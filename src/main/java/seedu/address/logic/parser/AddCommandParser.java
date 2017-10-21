@@ -70,9 +70,4 @@ public class AddCommandParser implements Parser<AddCommand> {
     public String getCommandWord() {
         return AddCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return AddCommand.MESSAGE_USAGE;
-    }
 }

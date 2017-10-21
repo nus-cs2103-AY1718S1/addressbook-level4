@@ -19,6 +19,7 @@ public interface Model {
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
+
     /**
      * Clears existing backing model and replaces with the provided new data.
      */
@@ -39,7 +40,9 @@ public interface Model {
      */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
-    /** Hides the given person. */
+    /**
+     * Hides the given person.
+     */
     void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /**

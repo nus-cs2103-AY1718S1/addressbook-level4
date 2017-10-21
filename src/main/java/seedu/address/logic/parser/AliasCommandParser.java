@@ -55,11 +55,6 @@ public class AliasCommandParser implements Parser<AliasCommand> {
     public String getCommandWord() {
         return AliasCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return AliasCommand.MESSAGE_USAGE;
-    }
 }
 
 

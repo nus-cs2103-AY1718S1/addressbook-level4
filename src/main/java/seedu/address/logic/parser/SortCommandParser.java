@@ -30,9 +30,4 @@ public class SortCommandParser implements Parser<SortCommand> {
     public String getCommandWord() {
         return SortCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return SortCommand.MESSAGE_USAGE;
-    }
 }

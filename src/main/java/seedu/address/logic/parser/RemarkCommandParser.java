@@ -41,10 +41,5 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     public String getCommandWord() {
         return RemarkCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return RemarkCommand.MESSAGE_USAGE;
-    }
 }
 

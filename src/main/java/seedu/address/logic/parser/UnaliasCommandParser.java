@@ -48,10 +48,5 @@ public class UnaliasCommandParser implements Parser<UnaliasCommand> {
     public String getCommandWord() {
         return UnaliasCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return UnaliasCommand.MESSAGE_USAGE;
-    }
 }
 

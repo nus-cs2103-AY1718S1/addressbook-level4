@@ -32,10 +32,5 @@ public class HideCommandParser implements Parser<HideCommand> {
     public String getCommandWord() {
         return HideCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return HideCommand.MESSAGE_USAGE;
-    }
 }
 

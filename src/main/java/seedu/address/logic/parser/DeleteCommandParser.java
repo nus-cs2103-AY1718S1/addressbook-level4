@@ -50,9 +50,4 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     public String getCommandWord() {
         return DeleteCommand.COMMAND_WORD;
     }
-
-    @Override
-    public String getCommandUsage() {
-        return DeleteCommand.MESSAGE_USAGE;
-    }
 }
