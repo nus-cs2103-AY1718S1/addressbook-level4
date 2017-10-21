@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
-import seedu.address.commons.events.ui.SwitchListEvent;
+import seedu.address.commons.events.ui.SwitchToEventsListEvent;
 
 /**
  * Lists all events in the address book to the user.
@@ -21,7 +21,7 @@ public class ListEventCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredEventsList(PREDICATE_SHOW_ALL_EVENTS);
-        raise(new SwitchListEvent());
+        raise(new SwitchToEventsListEvent());
         return new CommandResult(MESSAGE_EVENT_SUCCESS);
     }
 }

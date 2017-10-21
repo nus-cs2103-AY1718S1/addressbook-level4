@@ -19,8 +19,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
-import seedu.address.commons.events.ui.SwitchListContacts;
-import seedu.address.commons.events.ui.SwitchListEvent;
+import seedu.address.commons.events.ui.SwitchToContactsListEvent;
+import seedu.address.commons.events.ui.SwitchToEventsListEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -229,7 +229,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleSwitchToContacts(SwitchListContacts event) {
+    public void handleSwitchToContacts(SwitchToContactsListEvent event) {
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
@@ -241,7 +241,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleSwitchToEvents(SwitchListEvent event) {
+    public void handleSwitchToEvents(SwitchToEventsListEvent event) {
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
     }

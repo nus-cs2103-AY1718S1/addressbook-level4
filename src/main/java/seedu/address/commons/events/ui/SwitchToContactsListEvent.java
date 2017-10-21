@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Represents a change that invokes list switching
  */
-public class SwitchListContacts extends BaseEvent {
+public class SwitchToContactsListEvent extends BaseEvent {
 
     @Override
     public String toString() {
