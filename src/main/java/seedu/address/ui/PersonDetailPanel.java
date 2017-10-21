@@ -56,7 +56,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonDetailPanel(PersonListPanel personListPanel) {
+    public PersonDetailPanel() {
         super(FXML);
         initialise();
         registerAsAnEventHandler(this);

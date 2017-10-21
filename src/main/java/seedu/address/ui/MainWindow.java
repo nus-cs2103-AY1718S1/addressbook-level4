@@ -144,7 +144,7 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getLatestPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        personDetailPanel = new PersonDetailPanel(personListPanel);
+        personDetailPanel = new PersonDetailPanel();
         personDetailPlaceholder.getChildren().add(personDetailPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
