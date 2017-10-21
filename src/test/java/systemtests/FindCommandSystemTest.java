@@ -80,7 +80,7 @@ public class FindCommandSystemTest extends RolodexSystemTest {
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: redo previous find command -> rejected */
-        command = RedoCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next();
+        command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
         assertCommandFailure(command, expectedResultMessage);
 

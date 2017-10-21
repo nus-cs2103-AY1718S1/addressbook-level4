@@ -48,7 +48,7 @@ public class ClearCommandSystemTest extends RolodexSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: clear empty rolodex -> cleared */
-        assertCommandSuccess(ClearCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next());
+        assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
     }
 
