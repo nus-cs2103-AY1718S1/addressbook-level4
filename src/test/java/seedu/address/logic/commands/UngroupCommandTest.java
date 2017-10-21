@@ -43,7 +43,8 @@ public class UngroupCommandTest {
         model.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         UngroupCommand ungroupCommand = prepareCommand(INDEX_FIRST_PERSON, new Group("Some group"));
-        String expectedMessage = String.format(UngroupCommand.MESSAGE_UNGROUP_SUCCESS, afterEditPerson);
+        String expectedMessage =
+                String.format(UngroupCommand.MESSAGE_UNGROUP_SUCCESS, afterEditPerson.getName(), "Some group");
 
         assertCommandSuccess(ungroupCommand, model, expectedMessage, expectedModel);
     }
@@ -60,7 +61,8 @@ public class UngroupCommandTest {
         model.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         UngroupCommand ungroupCommand = prepareCommand(INDEX_FIRST_PERSON, new Group("Some group"));
-        String expectedMessage = String.format(UngroupCommand.MESSAGE_UNGROUP_SUCCESS, afterEditPerson);
+        String expectedMessage =
+                String.format(UngroupCommand.MESSAGE_UNGROUP_SUCCESS, afterEditPerson.getName(), "Some group");
 
         assertCommandSuccess(ungroupCommand, model, expectedMessage, expectedModel);
     }

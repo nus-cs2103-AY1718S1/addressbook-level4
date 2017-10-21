@@ -40,7 +40,8 @@ public class GroupCommandTest {
 
         GroupCommand groupCommand = prepareCommand(INDEX_FIRST_PERSON, new Group("Some Group"));
 
-        String expectedMessage = String.format(GroupCommand.MESSAGE_ADD_GROUP_SUCCESS, editedPerson);
+        String expectedMessage =
+                String.format(GroupCommand.MESSAGE_ADD_GROUP_SUCCESS, editedPerson.getName(), "Some Group");
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
@@ -57,7 +58,8 @@ public class GroupCommandTest {
                 .withGroups("Some Group").build();
         GroupCommand groupCommand = prepareCommand(INDEX_FIRST_PERSON, new Group("Some Group"));
 
-        String expectedMessage = String.format(GroupCommand.MESSAGE_ADD_GROUP_SUCCESS, editedPerson);
+        String expectedMessage =
+                String.format(GroupCommand.MESSAGE_ADD_GROUP_SUCCESS, editedPerson.getName(), "Some Group");
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);

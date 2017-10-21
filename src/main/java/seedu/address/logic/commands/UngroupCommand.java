@@ -31,8 +31,8 @@ public class UngroupCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_GROUP_NAME + "Family";
 
-    public static final String MESSAGE_UNGROUP_SUCCESS = "Removed from the group Person: %1$s";
-    public static final String MESSAGE_GROUP_NOT_FOUND = "The person does not belong to that group";
+    public static final String MESSAGE_UNGROUP_SUCCESS = "Removed %1$s from a group: %2$s";
+    public static final String MESSAGE_GROUP_NOT_FOUND = "%1$s does not belong to: %2$s";
 
     private final Index index;
     private final Group group;
@@ -71,7 +71,7 @@ public class UngroupCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         } catch (GroupNotFoundException gnfe) {
-            throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
+            throw new CommandException(String.format(MESSAGE_GROUP_NOT_FOUND, personToEdit.getName(), group.groupName));
         }
         model.updateGroups(group);
         model.updateFilteredPersonList(p ->true);
@@ -79,7 +79,7 @@ public class UngroupCommand extends UndoableCommand {
     }
 
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        return String.format(MESSAGE_UNGROUP_SUCCESS, personToEdit);
+        return String.format(MESSAGE_UNGROUP_SUCCESS, personToEdit.getName(), group.groupName);
     }
 
     @Override

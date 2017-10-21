@@ -30,9 +30,8 @@ public class GroupCommand extends UndoableCommand {
             + PREFIX_GROUP_NAME + "GROUP_NAME.\n"
             + "Example: " + COMMAND_WORD + " 3 " + PREFIX_GROUP_NAME + "Family";
 
-    public static final String MESSAGE_ADD_GROUP_SUCCESS = "Added Person to group: %1$s";
-    // public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Removed Person from group: %1$s";
-    public static final String MESSAGE_DUPLICATE_GROUP = "This person already belongs to that group.";
+    public static final String MESSAGE_ADD_GROUP_SUCCESS = "Added %1$s to the group: %2$s";
+    public static final String MESSAGE_DUPLICATE_GROUP = "%1$s already belongs to: %2$s";
 
     private final Index index;
     private final Group group;
@@ -71,14 +70,14 @@ public class GroupCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         } catch (UniqueGroupList.DuplicateGroupException dge) {
-            throw new CommandException(MESSAGE_DUPLICATE_GROUP);
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_GROUP, personToEdit.getName(), group.groupName));
         }
         model.updateFilteredPersonList(p ->true);
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        return String.format(MESSAGE_ADD_GROUP_SUCCESS, personToEdit);
+        return String.format(MESSAGE_ADD_GROUP_SUCCESS, personToEdit.getName(), group.groupName);
     }
 
     @Override
