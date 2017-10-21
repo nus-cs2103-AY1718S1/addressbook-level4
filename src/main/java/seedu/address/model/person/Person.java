@@ -3,7 +3,9 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -33,6 +35,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
 
     private boolean isBlacklisted = false;
+    private Date lastAccruedDate; // the last time debt was updated by interest
 
     /**
      * Every field must be present and not null.
@@ -51,6 +54,7 @@ public class Person implements ReadOnlyPerson {
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
         this.deadline = new SimpleObjectProperty<>(deadline);
         this.dateRepaid = new SimpleObjectProperty<>(new DateRepaid());
+        this.lastAccruedDate = new Date();
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -64,6 +68,7 @@ public class Person implements ReadOnlyPerson {
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
+        this.lastAccruedDate = source.getLastAccruedDate();
         this.isBlacklisted = source.getIsBlacklisted();
     }
 
@@ -288,6 +293,20 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
+     * Sets date of last accrued date.
+     * @param lastAccruedDate must not be null.
+     */
+    public void setLastAccruedDate(Date lastAccruedDate) {
+        requireNonNull(lastAccruedDate);
+        this.lastAccruedDate = lastAccruedDate;
+    }
+
+    @Override
+    public Date getLastAccruedDate() {
+        return lastAccruedDate;
+    }
+
+    /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
@@ -313,6 +332,34 @@ public class Person implements ReadOnlyPerson {
     @Override
     public boolean isSameCluster(ReadOnlyPerson other) {
         return other.getCluster().equals(this.getCluster());
+    }
+
+    @Override
+    public String calcAccruedAmount() {
+        this.lastAccruedDate = new Date(); // update last accrued date
+        double principal = this.getDebt().toNumber();
+        int interest = Integer.parseInt(this.getInterest().toString());
+        double accruedInterest = principal * ((double) interest) / 100;
+        return String.format("%.2f", accruedInterest);
+    }
+
+    @Override
+    public boolean checkUpdateDebt() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(lastAccruedDate);
+        int monthLastAccrued = cal.get(Calendar.MONTH);
+        cal.setTime(new Date());
+        int currentMonth = cal.get(Calendar.MONTH);
+        if (currentMonth == monthLastAccrued) {
+            return false;
+        } else {
+            int currentDate = cal.get(Calendar.DAY_OF_MONTH);
+            if (currentDate == 1) { // interest rate only increments debt on 1st day of month
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     @Override

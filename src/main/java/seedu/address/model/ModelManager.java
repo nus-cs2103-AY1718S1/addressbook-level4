@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -298,6 +300,29 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredBlacklistedPersons.equals(other.filteredBlacklistedPersons);
+    }
+
+
+    //==================== Event Handling Code ===============================================================
+
+    @Subscribe
+    public void handleLoginUpdateDebt(LoginAppRequestEvent event) {
+        // login is successful
+        if (event.getLoginStatus() == true) {
+            for (ReadOnlyPerson person : allPersons) {
+                if (!person.getInterest().value.equals("No interest set.") && person.checkUpdateDebt()) {
+                    String accruedAmount = person.calcAccruedAmount();
+                    try {
+                        Debt amount = new Debt(accruedAmount);
+                        addDebtToPerson(person, amount);
+                    } catch (PersonNotFoundException pnfe) {
+                        assert false : "Should not occur as person obtained from allPersons";
+                    } catch (IllegalValueException ive) {
+                        assert false : Debt.MESSAGE_DEBT_CONSTRAINTS;
+                    }
+                }
+            }
+        }
     }
 
 }

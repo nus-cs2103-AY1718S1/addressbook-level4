@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.Date;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -34,6 +35,7 @@ public interface ReadOnlyPerson {
     Deadline getDeadline();
     ObjectProperty<DateRepaid> dateRepaidProperty();
     DateRepaid getDateRepaid();
+    Date getLastAccruedDate();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -53,6 +55,16 @@ public interface ReadOnlyPerson {
      * Returns true if both are in same cluster.
      */
     boolean isSameCluster(ReadOnlyPerson other);
+
+    /**
+     * Calculates new debt of debtor based on current interest rate.
+     */
+    String calcAccruedAmount();
+
+    /**
+     * Checks if person is due for an update on his/her debt.
+     */
+    boolean checkUpdateDebt();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
