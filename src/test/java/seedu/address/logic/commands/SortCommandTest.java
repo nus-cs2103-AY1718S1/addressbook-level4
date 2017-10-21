@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalPersons.getUnTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getUnsortedAddressBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class SortCommandTest {
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        unsortedModel = new ModelManager(getUnTypicalAddressBook(), new UserPrefs());
+        unsortedModel = new ModelManager(getUnsortedAddressBook(), new UserPrefs());
 
         sortCommand = new SortCommand();
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());

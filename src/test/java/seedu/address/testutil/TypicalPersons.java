@@ -80,11 +80,11 @@ public class TypicalPersons {
     }
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code AddressBook} with all the typical persons in unsorted order.
      */
-    public static AddressBook getUnTypicalAddressBook() {
+    public static AddressBook getUnsortedAddressBook() {
         AddressBook ab = new AddressBook();
-        for (ReadOnlyPerson person : getUnTypicalPersons()) {
+        for (ReadOnlyPerson person : getUnsortedTypicalPersons()) {
             try {
                 ab.addPerson(person);
             } catch (DuplicatePersonException e) {
@@ -98,7 +98,7 @@ public class TypicalPersons {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 
-    public static List<ReadOnlyPerson> getUnTypicalPersons() {
+    public static List<ReadOnlyPerson> getUnsortedTypicalPersons() {
         return new ArrayList<>(Arrays.asList(DANIEL, BENSON, CARL, ALICE, ELLE, FIONA, GEORGE));
     }
 }
