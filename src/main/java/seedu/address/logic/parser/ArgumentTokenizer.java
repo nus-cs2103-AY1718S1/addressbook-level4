@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Tokenizes arguments string of the form: {@code preamble <prefix>value <prefix>value ...}<br>
@@ -12,7 +13,6 @@ import java.util.List;
  *    in the above example.<br>
  */
 public class ArgumentTokenizer {
-
     /**
      * Tokenizes an arguments string and returns an {@code ArgumentMultimap} object that maps prefixes to their
      * respective argument values. Only the given prefixes will be recognized in the arguments string.
@@ -27,6 +27,14 @@ public class ArgumentTokenizer {
     }
 
     /**
+     * Overload the method {@link #tokenize(String, Prefix...)}, but receives a {@link Set} of prefixes.
+     */
+    public static ArgumentMultimap tokenize(String argsString, Set<Prefix> prefixes) {
+        List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
+        return extractArguments(argsString, positions);
+    }
+
+    /**
      * Finds all zero-based prefix positions in the given arguments string.
      *
      * @param argsString Arguments string of the form: {@code preamble <prefix>value <prefix>value ...}
@@ -34,6 +42,19 @@ public class ArgumentTokenizer {
      * @return           List of zero-based prefix positions in the given arguments string
      */
     private static List<PrefixPosition> findAllPrefixPositions(String argsString, Prefix... prefixes) {
+        List<PrefixPosition> positions = new ArrayList<>();
+
+        for (Prefix prefix : prefixes) {
+            positions.addAll(findPrefixPositions(argsString, prefix));
+        }
+
+        return positions;
+    }
+
+    /**
+     * Overload the method {@link #findAllPrefixPositions(String, Prefix...)}, but receives a {@link Set} of prefixes.
+     */
+    private static List<PrefixPosition> findAllPrefixPositions(String argsString, Set<Prefix> prefixes) {
         List<PrefixPosition> positions = new ArrayList<>();
 
         for (Prefix prefix : prefixes) {
