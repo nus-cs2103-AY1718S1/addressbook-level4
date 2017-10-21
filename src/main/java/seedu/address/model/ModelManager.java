@@ -217,14 +217,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Reads the main list and updates the blacklist accordingly.
+     * Reads the masterlist and updates the blacklist accordingly.
      */
     public void syncBlacklist() {
         filteredBlacklistedPersons = new FilteredList<>(this.addressBook.getBlacklistedPersonList());
     }
 
     /**
-     * Reads the main list and updates the whitelist accordingly.
+     * Reads the masterlist and updates the whitelist accordingly.
      */
     public void syncWhitelist() {
         filteredWhitelistedPersons = new FilteredList<>(this.addressBook.getWhitelistedPersonList());
@@ -289,10 +289,11 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */
     @Override
-    public void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+    public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
             IllegalValueException {
-        addressBook.deductDebtFromPerson(target, amount);
+        ReadOnlyPerson repayingPerson = addressBook.deductDebtFromPerson(target, amount);
         indicateAddressBookChanged();
+        return repayingPerson;
     }
     //@@author
 
@@ -340,7 +341,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Obtains the latest list of blacklisted persons from main list and adds to {@code filteredBlacklistedPersons}
+     * Obtains the latest list of blacklisted persons from masterlist and adds to {@code filteredBlacklistedPersons}
      * Raises an {@code event} to signal the requirement for change in displayed list in {@code PersonListPanel}
      * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
      */
@@ -352,7 +353,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Obtains the latest list of whitelisted persons from main list and adds to {@code filteredWhitelistedPersons}
+     * Obtains the latest list of whitelisted persons from masterlist and adds to {@code filteredWhitelistedPersons}
      * Raises an {@code event} to signal the requirement for change in displayed list in {@code PersonListPanel}
      * Filters {@code filteredWhitelistedPersons} according to given {@param predicate}
      */
