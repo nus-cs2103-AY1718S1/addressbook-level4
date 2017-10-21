@@ -98,7 +98,10 @@ public class CombinePanel extends UiPart<Region>{
 
         ObservableList<ReadOnlyLesson> lessons =  logic.getFilteredLessonList();
         initGridData();
+
+        Node node = timetableGrid.getChildren().get(0);
         timetableGrid.getChildren().clear();
+        timetableGrid.getChildren().add(0,node);
 
         for(int i = 0;i < lessons.size(); i++){
             ReadOnlyLesson lesson = lessons.get(i);
@@ -124,18 +127,15 @@ public class CombinePanel extends UiPart<Region>{
                     lbl.setId("lbl");
                     lbl.setWrapText(true);
                     lbl.setStyle("-fx-control-inner-background:black;" +
-                            " -fx-background-color: #383838; " +
+                            " -fx-background-color: #383838;" +
+                            " -fx-border-color: #EEEEEE" +
+                            " -fx-border-width: 10" +
                             " -fx-padding: 5 5 5 5; " +
                             " -fx-font-family: Consolas; " +
                             "-fx-text-fill: #00ff00;");
-                    //timetableGrid.setGridLinesVisible(true);
+                    timetableGrid.setGridLinesVisible(true);
                     timetableGrid.add(lbl, j, i, endHourSpan, 1);
                 }
-
-                StackPane apane = new StackPane();
-                apane.setStyle("-fx-background-color: transparent;" +
-                        "-fx-border-color: #EEEEEE");
-                timetableGrid.add(apane,j,i);
             }
         }
     }
