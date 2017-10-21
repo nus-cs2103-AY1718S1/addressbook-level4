@@ -328,6 +328,10 @@ public class ModelManager extends ComponentManager implements Model {
         filteredWhitelistedPersons.setPredicate(predicate);
     }
 
+    /**
+     * Obtains and returns the list of persons that share the same cluster as {@param selectedPerson}.
+     */
+    @Override
     public void updateSelectedPerson(ReadOnlyPerson selectedPerson) {
         this.selectedPerson = selectedPerson;
         nearbyPersons = allPersons.stream().filter(person -> person.isSameCluster(selectedPerson))

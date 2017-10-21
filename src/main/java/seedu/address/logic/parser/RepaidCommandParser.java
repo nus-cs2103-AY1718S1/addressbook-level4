@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new RepaidCommand object
  */
-public class RepaidCommandParser {
+public class RepaidCommandParser implements Parser<RepaidCommand> {
     /**
     * Parses the given {@code String} of arguments in the context of the RepaidCommand
     * and returns an RepaidCommand object for execution.
