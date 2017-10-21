@@ -3,6 +3,7 @@ package guitests.guihandles;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;

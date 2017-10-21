@@ -27,7 +27,6 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
-
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueWebLinkList> webLinks;
 

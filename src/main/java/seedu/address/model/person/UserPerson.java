@@ -3,11 +3,15 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.person.weblink.UniqueWebLinkList;
+import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.util.SampleUserPersonUtil;
@@ -23,6 +27,7 @@ public class UserPerson implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<UniqueWebLinkList> webLinks;
 
     public UserPerson() {
         this(SampleUserPersonUtil.getDefaultSamplePerson().getName(),
@@ -43,6 +48,7 @@ public class UserPerson implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
+        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList());
     }
 
     /**
@@ -55,6 +61,7 @@ public class UserPerson implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(src.getAddress());
         this.remark = new SimpleObjectProperty<>(new Remark(""));
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
+        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList());
     }
 
     public void setName(Name name) {
@@ -145,6 +152,46 @@ public class UserPerson implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    /**
+     * Replaces this person's web links with the web links in the argument tag set.
+     */
+    public void setWebLinks(Set<WebLink> replacement) {
+        webLinks.set(new UniqueWebLinkList(replacement));
+    }
+
+    /**
+     * Returns an immutable webLink set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<WebLink> getWebLinks() {
+        return webLinks.get().toSet();
+    }
+
+    @Override
+    public ObjectProperty<UniqueWebLinkList> webLinkProperty() {
+        return webLinks;
+    }
+
+
+    /**
+     * returns a ArrayList of string websites for UI usage.
+     * @code WebLinkUtil for the list of webLinkTags can be used as category.
+     */
+    @Override
+    public ArrayList<String> listOfWebLinkByCategory (String category) {
+        ArrayList<String> outputWebLinkList = new ArrayList<String>();
+        for (Iterator<WebLink> iterateWebLinkSet = getWebLinks().iterator(); iterateWebLinkSet.hasNext();) {
+            WebLink checkWebLink = iterateWebLinkSet.next();
+            String webLinkAddedToList = checkWebLink.toStringWebLink();
+            String checkWebLinkTag = checkWebLink.toStringWebLinkTag();
+            if (checkWebLinkTag.equals(category)) {
+                outputWebLinkList.add(webLinkAddedToList);
+            }
+        }
+        return outputWebLinkList;
     }
 
     @Override
