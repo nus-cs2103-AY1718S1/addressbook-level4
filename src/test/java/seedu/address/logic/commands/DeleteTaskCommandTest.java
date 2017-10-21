@@ -93,7 +93,7 @@ public class DeleteTaskCommandTest {
         assertFalse(deleteFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(deleteFirstCommand == null);
 
         // different person -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
