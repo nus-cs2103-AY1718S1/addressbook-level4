@@ -13,7 +13,7 @@ public class SortCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_SUCCESS = "Address book has been sorted by %1$s!";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the addressbook by specified ordering.\n"
-            + "Parameters: ORDERING (i.e. \"name\", \"debt\", or \"cluster\")\n"
+            + "Parameters: ORDERING (i.e. \"name\", \"debt\", \"dateborrow\" or \"cluster\")\n"
             + "Example: " + COMMAND_WORD + " name";
 
     private final String order;

@@ -23,6 +23,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         case "name":
         case "debt":
         case "cluster":
+        case "dateborrow":
             return new SortCommand(trimmedArgs);
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
