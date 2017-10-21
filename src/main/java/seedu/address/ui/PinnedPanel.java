@@ -44,6 +44,7 @@ public class PinnedPanel extends UiPart<Region> {
                         pinnedList.indexOf(person) + 1));
         pinnedListView.setItems(mappedList);
         pinnedListView.setCellFactory(listView -> new PinnedListViewCell());
+        setEventHandlerForSelectionChangeEvent();
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
@@ -93,6 +94,7 @@ public class PinnedPanel extends UiPart<Region> {
                         pinnedList.indexOf(person) + 1));
         pinnedListView.setItems(mappedList);
         pinnedListView.setCellFactory(listView -> new PinnedListViewCell());
+        setEventHandlerForSelectionChangeEvent();
     }
 
     public void highlight() {
