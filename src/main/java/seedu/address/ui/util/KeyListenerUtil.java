@@ -1,31 +1,34 @@
 package seedu.address.ui.util;
 
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javafx.scene.input.KeyCombination;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 
 /**
  * A utility class for mapping key events.
  */
 public class KeyListenerUtil {
-    public static HashMap<String, KeyCombination> getKeys() {
 
-        HashMap<String, KeyCombination> keys = new HashMap<>();
+    public static final KeyCombination FOCUS_PERSON_LIST = KeyCombination.valueOf("Esc");
+    public static final KeyCombination FOCUS_COMMAND_BOX = KeyCombination.valueOf("Enter");
+    public static final KeyCombination DELETE_SELECTION = KeyCombination.valueOf("Ctrl+D");
+    public static final KeyCombination CLEAR = KeyCombination.valueOf("Ctrl+Shift+D");
+    public static final KeyCombination HISTORY = KeyCombination.valueOf("Ctrl+H");
+    public static final KeyCombination UNDO = KeyCombination.valueOf("Ctrl+Z");
+    public static final KeyCombination REDO = KeyCombination.valueOf("Ctrl+Y");
+    public static final KeyCombination LIST = KeyCombination.valueOf("Ctrl+L");
 
-        keys.put("FOCUS_PERSON_LIST", KeyCombination.valueOf("Esc"));
-        keys.put("FOCUS_COMMAND_BOX", KeyCombination.valueOf("Enter"));
-        keys.put("DELETE_SELECTION", KeyCombination.valueOf("Ctrl+D"));
-        keys.put(ClearCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+Shift+D"));
-        keys.put(HistoryCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+H"));
-        keys.put(UndoCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+Z"));
-        keys.put(RedoCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+Y"));
-        keys.put(ListCommand.COMMAND_WORD, KeyCombination.valueOf("Ctrl+L"));
-
-        return keys;
-    }
+    public static final Set<KeyCombination> POSSIBLE_KEY_COMBINATIONS =
+            new HashSet<>(Arrays.asList(
+                    FOCUS_PERSON_LIST,
+                    FOCUS_COMMAND_BOX,
+                    DELETE_SELECTION,
+                    CLEAR,
+                    HISTORY,
+                    UNDO,
+                    REDO,
+                    LIST
+            ));
 }

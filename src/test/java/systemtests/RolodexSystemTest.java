@@ -37,6 +37,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
+import seedu.address.model.UserPrefs;
+import seedu.address.storage.Storage;
 import seedu.address.ui.CommandBox;
 
 /**
@@ -145,12 +147,25 @@ public abstract class RolodexSystemTest {
      * and the person list panel displays the persons in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
-            Model expectedModel) {
+                                                     Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getRolodex(), testApp.readStorageRolodex());
         assertListMatching(getPersonListPanel(), expectedModel.getLatestPersonList());
+    }
+
+    /**
+     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
+     * {@code expectedResultMessage}, the storage contains the same person objects as {@code expectedStorage},
+     * the person list panel displays the persons in the model correctly and the storage is equal to the supplied
+     * {@code expectedStorage}.
+     */
+    protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
+                                                     Storage expectedStorage) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        assertEquals(expectedStorage, getStorage());
     }
 
     /**
@@ -229,6 +244,14 @@ public abstract class RolodexSystemTest {
     }
 
     /**
+     * Asserts that the status bar directory has changed to {@code expectedSaveLocation}
+     */
+    protected void assertStatusBarDirectoryChanged(String expectedSaveLocation) {
+        StatusBarFooterHandle handle = getStatusBarFooter();
+        assertEquals(handle.getSaveLocation(), expectedSaveLocation);
+    }
+
+    /**
      * Asserts that only the sync status in the status bar was changed to the timing of
      * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
      */
@@ -261,5 +284,19 @@ public abstract class RolodexSystemTest {
      */
     protected Model getModel() {
         return testApp.getModel();
+    }
+
+    /**
+     * Returns a defensive copy of the current storage.
+     */
+    protected Storage getStorage() {
+        return testApp.getStorage();
+    }
+
+    /**
+     * Returns a defensive copy of the current userPrefs.
+     */
+    protected UserPrefs getUserPrefs() {
+        return testApp.getUserPrefs();
     }
 }

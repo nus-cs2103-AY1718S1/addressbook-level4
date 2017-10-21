@@ -15,7 +15,7 @@ import seedu.address.commons.util.FxViewUtil;
  */
 public class HelpWindow extends UiPart<Region> {
 
-    public static final String USERGUIDE_FILE_PATH = "/docs/UserGuide.html";
+    public static final String HELP_FILE_PATH = "/docs/Help.html";
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
     private static final String ICON = "/images/help_icon.png";
@@ -35,7 +35,7 @@ public class HelpWindow extends UiPart<Region> {
         dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
-        String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();
+        String userGuideUrl = getClass().getResource(HELP_FILE_PATH).toString();
         browser.getEngine().load(userGuideUrl);
     }
 

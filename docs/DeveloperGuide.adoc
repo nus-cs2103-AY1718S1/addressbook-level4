@@ -72,6 +72,20 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
+==== Configuring Rolodex `.rldx` extensions
+
+Rolodex files are associated with the `.rldx` extensions and are an extension of xml. To configure xml tools in intellij for `rldx` files,
+
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
+. Select `Editor` > `File Types`
+. Under `Recognized File Types`, highlight the `XML` option
+. In the lower tab under registered patterns, click `+` on the side. A new prompt should appear as seen in the picture below
+. Enter `.rldx` and click `ok`, then click `apply`
+
+image::RegisterRldx.png[width="600"]
+
+You are now configured to use `.rldx` files with intellij.
+
 ==== Updating documentation to match your fork
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
@@ -351,6 +365,114 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::openNew[]
+=== Open file and New file mechanism
+The open new file and creating new file mechanism are handled by two new types of requests under the `EventsCenter`,
+`OpenRolodexRequestEvent` and `RolodexChangedDirectoryEvent`. Upon receiving a new command, the `MainApp` attempts to
+reloads the instance `model` and `logic` but **not the `UI`**.
+
+The high level sequence diagram for a typical `open` request can be seen below:
+
+image::OpenNewHighLevelSequenceDiagram.png[]
+
+1. A user requests to open `data/default.rldx`.
+2. The command is handled the same way as other commands, by the parser in
+logic, then via the `OpenCommand` object itself, under the `Logic` component of the application.
+3. Upon a successful parsing of the command and execution, the command would raise a new `OpenRolodexRequestEvent` to
+be handled by the `EventsCenter`.
+4. The `EventsCenter` posts a new `OpenRolodexRequestEvent` back to the `MainApp` where the new Rolodex path would be
+loaded with the successfully read data from the file path specified:
+* The preferences file of the user specified under `config.json` would now point to the latest active directory.
+* The `storage`, `model` and `logic` instances of the `MainApp` would be now loaded with data from the new active directory.
+
+The behaviour of the `save` operation remains unchanged, to be handled under the `RolodexChangedEvent`.
+The Rolodex only writes to the active database upon an editor command (e.g. `add`, `edit`).
+The `UI` however, is updated as seen in the following sequence diagram:
+
+image::OpenNewRolodexChangedLocationEventSequenceDiagram.png[]
+
+1. Upon successful handling of a `OpenRolodexRequestEvent`, `MainApp` raises a new `RolodexChangedDirectoryEvent`.
+2. The event is then reposted by the `EventsCenter`.
+3. The `MainWindow` of the `UI` instance consumes the event and updates the status bar with the new active filepath.
+
+The `New` command only differs from the sequence of the open new Rolodex by being executed when no valid file exists at
+the specified active directory:
+
+----
+@Override
+public CommandResult execute() throws CommandException {
+    if (new File(filePath).exists()) {
+        throw  new CommandException(String.format(MESSAGE_ALREADY_EXISTS, filePath));
+    } else {
+        EventsCenter.getInstance().post(new OpenRolodexRequestEvent(filePath));
+        return new CommandResult(String.format(MESSAGE_CREATING, filePath));
+    }
+}
+----
+
+In contrast, the `Open` command is a reverse of the above:
+
+----
+@Override
+public CommandResult execute() throws CommandException {
+    if (new File(filePath).exists()) {
+        EventsCenter.getInstance().post(new OpenRolodexRequestEvent(filePath));
+        return new CommandResult(String.format(MESSAGE_OPENING, filePath));
+    } else {
+        throw new CommandException(String.format(MESSAGE_NOT_EXIST, filePath));
+    }
+}
+----
+
+
+[NOTE]
+The `XmlRolodexStorage.java` now only saves upon recognizing that the current file has a `.rldx` extension, which is a
+subset of xml for the Rolodex application, as seen in the snippet below:
+
+----
+public void saveRolodex(ReadOnlyRolodex rolodex, String filePath) throws IOException {
+    ...
+    if (!isValidRolodexStorageExtension(filePath)) {
+        throw new InvalidExtensionException(
+                String.format(MESSAGE_INVALID_EXTENSION_FORMAT, ROLODEX_FILE_EXTENSION));
+    }
+    ...
+}
+----
+==== Design Considerations
+
+**Aspect:** General Implementation +
+**Alternative 1 (current choice):** Reload the current `MainApp` with the new database. +
+**Pros:** The application can be quickly reloaded onto the active window. +
+**Cons:** User might need to switch back and forth between the Rolodex directories. +
+**Alternative 2:** Reload `MainApp` with a new application instance. +
+**Constraint:** JavaFX only allows launch(args) to be launched once per execution time on a code level.
+Another approach would be to reload the application with a loaded and built .jar. +
+**Pros:** Easier logic to understand for new developers. +
+**Cons:** Building and debugging with a second .jar will be confusing and problematic to any development workflow. +
+**Alternative 3:** Open a new window with the loaded data. +
+**Pros:** The user can continue to operate on the previous Rolodex application. +
+**Cons:** The developer would have to spend time configuring different `EventsCenter` posts for the different application windows.
+
+---
+
+**Aspect:** Saving only to files with `.rldx` extensions +
+**Alternative 1 (current choice):** Write to the active directory only if it has a `.rldx` extension. +
+**Pros:** The application control becomes stricter, preventing users from writing to a file with say a `.png` extension. +
+**Cons:** Extensions become forced even for valid databases with `.xml` file types. +
+**Alternative 2:** Allow writable to all file extensions. +
+**Pros:** Users can have more freedom in choice of file naming. +
+**Cons:** If the user accidentally writes to a file that is not a valid database, the user would corrupt the file data.
+
+---
+
+**Aspect:** Separating `open` and `new` commands +
+**Alternative 1 (current choice):** Two commands, one for opening existing files and one for creating new files. +
+**Pros:** The user can easily be notified if a file exists or if it has been moved. +
+**Cons:** The user would have to take note of two commands instead of one. +
+
+// end::openNew[]
+
 // tag::findClose[]
 === Fuzzy finding mechanism
 The fuzzy finding mechanism is powered by https://en.wikipedia.org/wiki/Levenshtein_distance[Levenshtein distance],
@@ -427,8 +549,8 @@ The case for a list command:
 
 1. A user executes a `list` command with sort arguments.
 2. The application checks for invalid sort arguments.
-4. The application model creates a comparator using the sort arguments, in order.
-5. The application displays the results in the specified sort order.
+3. The application model creates a comparator using the sort arguments, in order.
+4. The application displays the results in the specified sort order.
 
 The case for a find command:
 
@@ -488,6 +610,127 @@ comparator before executing a sort and filter which is handled by the event cons
 **Pros:** Users can immediately `edit` the person using the last listing index. +
 **Cons:** The displayed listing will not comply with the model comparator.
 // end::sorting[]
+
+// tag::auto-completion[]
+=== Auto-completion mechanism
+Auto-completion mechanism is implemented in `CommandBox` class under UI component.
+
+Auto-completion is activated when `TAB` key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
+[source,java]
+----
+@FXML
+private void handleKeyPress(KeyEvent keyEvent) {
+    switch (keyEvent.getCode()) {
+    case TAB:
+        autocomplete(); //checkes the input and performs actions accordingly
+        break;
+    //other cases
+    }
+----
+
+When `TAB` is pressed, the current input in the command box is checked against the list of commands.
+* If the input command is a valid command that requires additional field(s), the full format of the command is displayed in the command box.
+At the same time, the placeholder for the first field that the user needs to key in is selected (as shown below).
+
+image::AutoCompletionAfterTab.png[width="450"]
+
+* If the input is already in the required format of the add command, the `TAB` is meant to navigate to the next input field (only `add` command require multiple fields).
+The current caret position is checked and used to determine the current field the user is at.
+The anchor and caret positions are reset to the start and end of the next field so that the placeholder is selected (as shown below).
+
+image::AutoCompletionNextField.png[width="450"]
+
+Below is an activity diagram for `TAB` keypress which activates autocompletion.
+
+image::AutoCompleteActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** text input control +
+**Alternative 1 (current choice):** Continue to use the original TextField +
+**Pros:** External library enables bindAutocompletion for TextField (the drop down list of suggested commands that appears and updates itself as user types). +
+**Pros:** Minimise changes need to be made to the original text input control structure. +
+**Cons:** Text formatting is limited. All text in the TextField must have the same format. +
+**Alternative 2:** Create additional TextField as user request for additional fields +
+**Pros:** Allows for different formatting for different fields (Commands can have a different colour from the fields) +
+**Cons:** Original structure will be disrupted. Command box will no longer be single line text input, which have consequences such as the user cannot backspace or select through the entire line.
+
+**Aspect:** auto-completion drop-down list +
+**Alternative 1 (current choice):** Continue to use the original TextField and use external library to bind auto-completion +
+**Pros:** Easy to implement +
+**Cons:** User cannot see the full format of the commands in the drop-down list +
+**Alternative 2:** Use ComboBox +
+**Pros:** User can see the required fields for each command in the drop-down box +
+**Cons:** As user selects an option, the command is executed with the place holders, resulting in an invalid command. User has to manually select the placeholders and change accordingly.
+// end::auto-completion[]
+
+// tag::shortcut[]
+=== Keyboard Shortcuts Mechanism
+The keyboard shortcuts mechanism is implemented in the `KeyListener` class under the `UI` component of the application.
+It listens for key presses done by the user and executes actions mapped to these key presses, or key events.
+The mapping of actions to key events are found in the `KeyListenerUtil` class.
+
+The following class diagram shows the relationship between classes concerning the keyboard shortcuts mechanism.
+
+image::KeyListenerDiagram.png[width="800"]
+
+The `KeyListener` requires access to the `CommandBox`, `PersonListPanel` and `Logic` components for key event executions,
+such as changing the focus node and executing word commands.
+
+When the user launches the application, the `UiManager` calls `mainWindow.setKeyListeners()`
+which creates the `KeyListener` class to handle the key events.
+In `KeyListener`, the main method for handling the key events has the following code:
+
+[source,java]
+----
+public void handleKeyPress() {
+    mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        // actions to execute key event
+    });
+}
+----
+The `mainNode` refers to the node containing the all UI components in the application,
+and `addEventFilter` captures key events received by that node.
+
+NOTE: Another common method used for capturing key events is `keyOnPressed`.
+In this case, `addEventFilter` is used instead as key events captured by the former will be consumed by the `TextField` used in the application.
+`addEventFilter` captures the key events before they are consumed by the `TextField`.
+
+When the user presses a key combination which matches one that is assigned to the `KeyCombination` attribute in the `KeyListenerUtil` class, the corresponding action will be executed.
+An example of such an execution is given as shown:
+
+[source, java]
+----
+private void executeKeyEvents(KeyEvent keyEvent) {
+	if (FOCUS_PERSON_LIST.match(keyEvent)) {
+		// action to focus on person list
+	}
+	// … more cases
+}
+----
+Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by the event filter.
+
+
+==== Design Considerations
+
+**Aspect:** The way commands words are executed +
+**Alternative 1 (current choice):** Pressing the shortcut automatically executes the command +
+**Pros:** Execution of command is faster and more convenient for the user. +
+**Cons:** User may want to check what the shortcut does before executing the command. +
+**Alternative 2:** Pressing the shortcut replaces the `TextField` with the command word +
+**Pros:** Allows the user to check the command before executing it. +
+**Cons:**  An extra step for user to execute the command, i.e. pressing `Enter`.
+
+**Aspect:** Scrolling of the contact list +
+**Alternative 1 (current choice):** Pressing the `Esc` key focuses on the person list panel, then scrolling is handled by selecting the next contact with either the up or down arrow key. +
+**Pros:**  User can select contacts quickly. +
+**Cons:** Scrolling is done by selection of contacts one at a time.
+Thus, it may be time consuming for the user to search for a contact by scrolling. +
+**Alternative 2:** Contact list scrolls without triggering selection of a contact in the list +
+**Pros:** Scrolling motion is faster and smoother. +
+**Cons:** An extra step is needed for users who want to select a contact,
+          i.e. scroll the list until the contact is visible, then select the desired contact with a select command/shortcut. +
+// end::shortcut[]
 
 === Logging
 
@@ -816,7 +1059,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 
 . Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `rolodex.xml` so that the application will load the sample data when you launch it.)
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `default.rldx` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
@@ -828,7 +1071,7 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 **Tests:**
 
-. Fix `validRolodex.xml` such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix `validRolodex.rldx` such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
 Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
@@ -862,7 +1105,6 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
@@ -877,21 +1119,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |secure user |secure my app with a password when not in use |prevent unauthorized access into my app
 
-|`* * *` |advanced user |perform actions with hotkeys |increase productivity
+|`* * *` |efficient user |perform actions with hotkeys |increase productivity
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |private user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |delete a specific tag |remove tags that I no longer need
+|`* *` |organized user |delete a specific tag |remove tags that I no longer need
 
-|`* *`|user |store notes about a contact|remember things pertaining to the contact
+|`* *`|forgetful user |store notes about a contact|remember things pertaining to the contact
 
-|`* *` |user |use abbreviation when typing commands |type commands faster
+|`* *` |lazy user |use abbreviation when typing commands |type commands faster
 
-|`* *` |user |be prompted for confirmation when clearing the rolodex |avoid accidentally clearing the rolodex
+|`* *` |careless user |be prompted for confirmation when clearing the address book |avoid accidentally clearing the address book
 
 |`*` |user with many persons in the rolodex |sort persons by name |locate a person easily
 
-|`*` |user with many persons in the rolodex |delete a person using their name |remove a contact without having to find their index
+|`*` |lazy user |delete a person using their name |remove a contact without having to find their index
 
 |`*` |advanced user |amend the storage file manually |import and export data easily
 
@@ -1162,14 +1404,15 @@ Use case resumes at step 2.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Every command should respond within two seconds.
-.  Features of the product should be added incrementally.
+.  Navigation through the application without a mouse should be easy.
 .  Should be able to work offline.
 .  Should be free to download.
 .  Startup time should be less than 3s.
-.  Should be usable by a novice who has never used a command prompt before
-.  Data should be encrypted when application is not running
-.  A computing professional should be able to manage his/her Rolodex contacts in a fast and efficient manner
-
+.  Should be usable by a human who has never seen a command line interface before.
+.  Should be usable by a human who has never used a command line interface before.
+.  Data should be encrypted when application is not running.
+.  A computing professional should be able to manage his/her AddressBook contacts in a fast and efficient manner
+.  Commands should be intuitive and easy to learn.
 
 
 [appendix]
@@ -1205,3 +1448,7 @@ Cons:
 
 * ...
 * ...
+
+ifndef::env-github[]
+include::NavigationMenu.adoc[]
+endif::[]

@@ -16,7 +16,12 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyRolodex;
 import seedu.address.model.Rolodex;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.RolodexStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.XmlRolodexStorage;
 import seedu.address.storage.XmlSerializableRolodex;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
@@ -27,13 +32,15 @@ import systemtests.ModelHelper;
  */
 public class TestApp extends MainApp {
 
-    public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.rldx");
+    public static final String SECONDARY_SAVE_LOCATION = TestUtil.getFilePathInSandboxFolder("tempRolodex.rldx");
     public static final String APP_TITLE = "Test App";
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ROLODEX_NAME = "Test";
     protected Supplier<ReadOnlyRolodex> initialDataSupplier = () -> null;
+    protected String userPrefsLocation = DEFAULT_PREF_FILE_LOCATION_FOR_TESTING;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
     public TestApp() {
@@ -55,7 +62,7 @@ public class TestApp extends MainApp {
     protected Config initConfig(String configFilePath) {
         Config config = super.initConfig(configFilePath);
         config.setAppTitle(APP_TITLE);
-        config.setUserPrefsFilePath(DEFAULT_PREF_FILE_LOCATION_FOR_TESTING);
+        config.setUserPrefsFilePath(userPrefsLocation);
         return config;
     }
 
@@ -96,6 +103,26 @@ public class TestApp extends MainApp {
     public Model getModel() {
         Model copy = new ModelManager((model.getRolodex()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getLatestPersonList());
+        return copy;
+    }
+
+    /**
+     * Returns a defensive copy of the storage.
+     */
+    public Storage getStorage() {
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        UserPrefs userPrefsCopy = initPrefs(userPrefsStorage);
+        RolodexStorage rolodexStorage = new XmlRolodexStorage(userPrefsCopy.getRolodexFilePath());
+
+        return new StorageManager(rolodexStorage, userPrefsStorage);
+    }
+
+    /**
+     * Returns a defensive copy of the user prefs.
+     */
+    public UserPrefs getUserPrefs() {
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        UserPrefs copy = initPrefs(userPrefsStorage);
         return copy;
     }
 

@@ -29,6 +29,10 @@ public interface Storage extends RolodexStorage, UserPrefsStorage {
     @Override
     void saveRolodex(ReadOnlyRolodex rolodex) throws IOException;
 
+    RolodexStorage getExistingRolodexStorage();
+
+    void setNewRolodexStorage(RolodexStorage storage);
+
     /**
      * Saves the current version of the Rolodex to the hard disk.
      *   Creates the data file if it is missing.

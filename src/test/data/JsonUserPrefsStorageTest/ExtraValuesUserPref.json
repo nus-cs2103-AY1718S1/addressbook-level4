@@ -9,6 +9,6 @@
       "z" : 99
     }
   },
-  "rolodexFilePath": "rolodex.xml",
+  "rolodexFilePath": "default.rldx",
   "rolodexName": "TypicalRolodexName"
 }
