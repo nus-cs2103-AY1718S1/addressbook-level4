@@ -365,6 +365,114 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::openNew[]
+=== Open file and New file mechanism
+The open new file and creating new file mechanism are handled by two new types of requests under the `EventsCenter`,
+`OpenRolodexRequestEvent` and `RolodexChangedDirectoryEvent`. Upon receiving a new command, the `MainApp` attempts to
+reloads the instance `model` and `logic` but **not the `UI`**.
+
+The high level sequence diagram for a typical `open` request can be seen below:
+
+image::OpenNewHighLevelSequenceDiagram.png[]
+
+1. A user requests to open `data/default.rldx`.
+2. The command is handled the same way as other commands, by the parser in
+logic, then via the `OpenCommand` object itself, under the `Logic` component of the application.
+3. Upon a successful parsing of the command and execution, the command would raise a new `OpenRolodexRequestEvent` to
+be handled by the `EventsCenter`.
+4. The `EventsCenter` posts a new `OpenRolodexRequestEvent` back to the `MainApp` where the new Rolodex path would be
+loaded with the successfully read data from the file path specified:
+* The preferences file of the user specified under `config.json` would now point to the latest active directory.
+* The `storage`, `model` and `logic` instances of the `MainApp` would be now loaded with data from the new active directory.
+
+The behaviour of the `save` operation remains unchanged, to be handled under the `RolodexChangedEvent`.
+The Rolodex only writes to the active database upon an editor command (e.g. `add`, `edit`).
+The `UI` however, is updated as seen in the following sequence diagram:
+
+image::OpenNewRolodexChangedLocationEventSequenceDiagram.png[]
+
+1. Upon successful handling of a `OpenRolodexRequestEvent`, `MainApp` raises a new `RolodexChangedDirectoryEvent`.
+2. The event is then reposted by the `EventsCenter`.
+3. The `MainWindow` of the `UI` instance consumes the event and updates the status bar with the new active filepath.
+
+The `New` command only differs from the sequence of the open new Rolodex by being executed when no valid file exists at
+the specified active directory:
+
+----
+@Override
+public CommandResult execute() throws CommandException {
+    if (new File(filePath).exists()) {
+        throw  new CommandException(String.format(MESSAGE_ALREADY_EXISTS, filePath));
+    } else {
+        EventsCenter.getInstance().post(new OpenRolodexRequestEvent(filePath));
+        return new CommandResult(String.format(MESSAGE_CREATING, filePath));
+    }
+}
+----
+
+In contrast, the `Open` command is a reverse of the above:
+
+----
+@Override
+public CommandResult execute() throws CommandException {
+    if (new File(filePath).exists()) {
+        EventsCenter.getInstance().post(new OpenRolodexRequestEvent(filePath));
+        return new CommandResult(String.format(MESSAGE_OPENING, filePath));
+    } else {
+        throw new CommandException(String.format(MESSAGE_NOT_EXIST, filePath));
+    }
+}
+----
+
+
+[NOTE]
+The `XmlRolodexStorage.java` now only saves upon recognizing that the current file has a `.rldx` extension, which is a
+subset of xml for the Rolodex application, as seen in the snippet below:
+
+----
+public void saveRolodex(ReadOnlyRolodex rolodex, String filePath) throws IOException {
+    ...
+    if (!isValidRolodexStorageExtension(filePath)) {
+        throw new InvalidExtensionException(
+                String.format(MESSAGE_INVALID_EXTENSION_FORMAT, ROLODEX_FILE_EXTENSION));
+    }
+    ...
+}
+----
+==== Design Considerations
+
+**Aspect:** General Implementation +
+**Alternative 1 (current choice):** Reload the current `MainApp` with the new database. +
+**Pros:** The application can be quickly reloaded onto the active window. +
+**Cons:** User might need to switch back and forth between the Rolodex directories. +
+**Alternative 2:** Reload `MainApp` with a new application instance. +
+**Constraint:** JavaFX only allows launch(args) to be launched once per execution time on a code level.
+Another approach would be to reload the application with a loaded and built .jar. +
+**Pros:** Easier logic to understand for new developers. +
+**Cons:** Building and debugging with a second .jar will be confusing and problematic to any development workflow. +
+**Alternative 3:** Open a new window with the loaded data. +
+**Pros:** The user can continue to operate on the previous Rolodex application. +
+**Cons:** The developer would have to spend time configuring different `EventsCenter` posts for the different application windows.
+
+---
+
+**Aspect:** Saving only to files with `.rldx` extensions +
+**Alternative 1 (current choice):** Write to the active directory only if it has a `.rldx` extension. +
+**Pros:** The application control becomes stricter, preventing users from writing to a file with say a `.png` extension. +
+**Cons:** Extensions become forced even for valid databases with `.xml` file types. +
+**Alternative 2:** Allow writable to all file extensions. +
+**Pros:** Users can have more freedom in choice of file naming. +
+**Cons:** If the user accidentally writes to a file that is not a valid database, the user would corrupt the file data.
+
+---
+
+**Aspect:** Separating `open` and `new` commands +
+**Alternative 1 (current choice):** Two commands, one for opening existing files and one for creating new files. +
+**Pros:** The user can easily be notified if a file exists or if it has been moved. +
+**Cons:** The user would have to take note of two commands instead of one. +
+
+// end::openNew[]
+
 // tag::findClose[]
 === Fuzzy finding mechanism
 The fuzzy finding mechanism is powered by https://en.wikipedia.org/wiki/Levenshtein_distance[Levenshtein distance],
@@ -502,6 +610,59 @@ comparator before executing a sort and filter which is handled by the event cons
 **Pros:** Users can immediately `edit` the person using the last listing index. +
 **Cons:** The displayed listing will not comply with the model comparator.
 // end::sorting[]
+
+// tag::auto-completion[]
+=== Auto-completion mechanism
+Auto-completion mechanism is implemented in `CommandBox` class under UI component.
+
+Auto-completion is activated when `TAB` key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
+[source,java]
+----
+@FXML
+private void handleKeyPress(KeyEvent keyEvent) {
+    switch (keyEvent.getCode()) {
+    case TAB:
+        autocomplete(); //checkes the input and performs actions accordingly
+        break;
+    //other cases
+    }
+----
+
+When `TAB` is pressed, the current input in the command box is checked against the list of commands.
+* If the input command is a valid command that requires additional field(s), the full format of the command is displayed in the command box.
+At the same time, the placeholder for the first field that the user needs to key in is selected (as shown below).
+
+image::AutoCompletionAfterTab.png[width="450"]
+
+* If the input is already in the required format of the add command, the `TAB` is meant to navigate to the next input field (only `add` command require multiple fields).
+The current caret position is checked and used to determine the current field the user is at.
+The anchor and caret positions are reset to the start and end of the next field so that the placeholder is selected (as shown below).
+
+image::AutoCompletionNextField.png[width="450"]
+
+Below is an activity diagram for `TAB` keypress which activates autocompletion.
+
+image::AutoCompleteActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** text input control +
+**Alternative 1 (current choice):** Continue to use the original TextField +
+**Pros:** External library enables bindAutocompletion for TextField (the drop down list of suggested commands that appears and updates itself as user types). +
+**Pros:** Minimise changes need to be made to the original text input control structure. +
+**Cons:** Text formatting is limited. All text in the TextField must have the same format. +
+**Alternative 2:** Create additional TextField as user request for additional fields +
+**Pros:** Allows for different formatting for different fields (Commands can have a different colour from the fields) +
+**Cons:** Original structure will be disrupted. Command box will no longer be single line text input, which have consequences such as the user cannot backspace or select through the entire line.
+
+**Aspect:** auto-completion drop-down list +
+**Alternative 1 (current choice):** Continue to use the original TextField and use external library to bind auto-completion +
+**Pros:** Easy to implement +
+**Cons:** User cannot see the full format of the commands in the drop-down list +
+**Alternative 2:** Use ComboBox +
+**Pros:** User can see the required fields for each command in the drop-down box +
+**Cons:** As user selects an option, the command is executed with the place holders, resulting in an invalid command. User has to manually select the placeholders and change accordingly.
+// end::auto-completion[]
 
 // tag::shortcut[]
 === Keyboard Shortcuts Mechanism
@@ -944,7 +1105,6 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App

@@ -61,6 +61,7 @@ Keyboard shortcut: kbd:[F1]
 Adds a person to Rolodex +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
         or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+        (press TAB after typing `add` for auto-completion)
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -102,6 +103,7 @@ Examples:
 Edits an existing person in Rolodex. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
         or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+        (press TAB after typing `edit` for auto-completion)
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -126,6 +128,7 @@ Finds persons in Rolodex. +
 Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
         or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
         or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
+        (press TAB after typing `find` for auto-completion)
 
 ****
 * Only the [underline]#name# and [underline]#tags# are searched.
@@ -183,6 +186,7 @@ Returns an error (do not count as search arguments).
 
 Deletes the specified person from Rolodex. +
 Format: `delete INDEX` or `d INDEX`
+        (press TAB after typing `delete` for auto-completion)
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -203,6 +207,7 @@ Deletes the 1st person in the results of the `find` command.
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX` or `s INDEX`
+        (press TAB after typing `select` for auto-completion)
 
 ****
 * Selects the person and view the complete details of the person at the specified `INDEX`.
@@ -341,8 +346,8 @@ Clears all entries from Rolodex. +
 Format: `clear` or `c` +
 Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
+// tag::openNew[]
 === Opening an existing Rolodex storage file: `open` or `o`
-// TODO: add 'ls' and 'cd' abbreviations
 Reloads the application with data from a rolodex at the specified filepath. +
 Format: `open FILEPATH` or `o FILEPATH`
 
@@ -371,7 +376,6 @@ Loads the application with the data at the directory `C:/Users/Rolodex/downloads
 Loads the application with the data in `default.rldx` in the folder `data`.
 
 === Creating a new Rolodex storage file: `new` or `n`
-// TODO: add '>' abbreviation
 Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
 Format: `new FILEPATH` or `n FILEPATH`
 
@@ -392,6 +396,7 @@ Creates a new Rolodex file `myOwn.rldx` at the directory `C:\Users\Rolodex\downl
 * `new data/default.rldx` +
 `new data\default.rldx` +
 Creates a new Rolodex file `default.rldx` at the relative directory `data` and reloads the application with sample data created for the new Rolodex.
+// end::openNew[]
 
 === Exiting the program : `exit` or `quit`
 

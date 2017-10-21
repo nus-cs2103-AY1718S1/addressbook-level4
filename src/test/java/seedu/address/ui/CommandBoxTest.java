@@ -11,7 +11,9 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
@@ -19,6 +21,10 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
+    private static final String ADD_COMMAND = AddCommand.COMMAND_WORD;
+    private static final String SELECT_COMMAND = SelectCommand.COMMAND_WORD;
+    private static final String ADD_COMMAND_FORMAT = "add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS";
+    private static final String SELECT_COMMAND_FORMAT = "select INDEX";
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -56,6 +62,18 @@ public class CommandBoxTest extends GuiUnitTest {
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
         assertBehaviorForFailedCommand();
+    }
+
+    @Test
+    public void addCommandAutoComplete() {
+        assertAutoComplete("a", ADD_COMMAND);
+        assertInputHistory(KeyCode.TAB, ADD_COMMAND_FORMAT);
+    }
+
+    @Test
+    public void selectCommandAutoComplete() {
+        assertAutoComplete("sel", SELECT_COMMAND);
+        assertInputHistory(KeyCode.TAB, SELECT_COMMAND_FORMAT);
     }
 
     @Test
@@ -152,6 +170,15 @@ public class CommandBoxTest extends GuiUnitTest {
      */
     private void assertInputHistory(KeyCode keycode, String expectedCommand) {
         guiRobot.push(keycode);
+        assertEquals(expectedCommand, commandBoxHandle.getInput());
+    }
+
+    /**
+     * Types in {@code input} and presses enter to select the first option from the drop-down list,
+     * then checks that the input in the {@code commandBox} equals to {@code expectedCommand}.
+     */
+    private void assertAutoComplete(String input, String expectedCommand) {
+        commandBoxHandle.inputAndEnter(input);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
 }
