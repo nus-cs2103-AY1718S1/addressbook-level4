@@ -2,10 +2,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -112,7 +112,8 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         Person updatedPerson =
-                new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBirthday, updatedRemark, updatedTags);
+                new Person(updatedName, updatedPhone, updatedEmail,
+                        updatedAddress, updatedBirthday, updatedRemark, updatedTags);
         updatedPerson.setFavorite(updatedFavorite);
         return updatedPerson;
     }
@@ -199,9 +200,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        public void setBirthday(Birthday birthday) { this.birthday = birthday; }
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
+        }
 
-        public Optional<Birthday> getBirthday() { return Optional.ofNullable(birthday); }
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
+        }
 
         public void setRemark(Remark remark) {
             this.remark = remark;

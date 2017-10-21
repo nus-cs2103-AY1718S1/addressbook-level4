@@ -4,11 +4,11 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Birthday;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
@@ -92,11 +92,7 @@ public class PersonBuilder {
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
     public PersonBuilder withBirthday(String birthday) {
-        try {
-            this.person.setBirthday(new Birthday(birthday));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("birthday is expected to be unique.");
-        }
+        this.person.setBirthday(new Birthday(birthday));
         return this;
     }
 

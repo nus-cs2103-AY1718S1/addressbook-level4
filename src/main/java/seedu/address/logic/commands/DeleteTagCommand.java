@@ -74,7 +74,7 @@ public class DeleteTagCommand extends Command {
             }
             Person newPerson = new Person(originalPerson.getName(), originalPerson.getPhone(),
                     originalPerson.getEmail(), originalPerson.getAddress(),
-                    originalPerson.getRemark(), tagList);
+                    originalPerson.getBirthday(), originalPerson.getRemark(), tagList);
             try {
                 model.updatePerson(originalPerson, newPerson);
             } catch (DuplicatePersonException dpe) {

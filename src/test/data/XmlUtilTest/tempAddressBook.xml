@@ -9,6 +9,7 @@
         <postalCode></postalCode>
         <city></city>
         <remark></remark>
+        <birthday></birthday>
     </persons>
     <tags>
         <name>Friends</name>
