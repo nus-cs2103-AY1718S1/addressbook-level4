@@ -29,8 +29,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
             }
-        } else if (args.contains("-")) {
-            String[] indices = args.trim().split("-");
+        } else if (args.contains("~")) {
+            String[] indices = args.trim().split("~");
             List<Index> indexes = new ArrayList<>();
             for (int i = Integer.parseInt(indices[0]); i <= Integer.parseInt(indices[1]); i++) {
                 try {
