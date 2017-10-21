@@ -22,6 +22,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindPersonsWithTagsCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -31,6 +32,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonContainsTagsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -82,6 +84,38 @@ public class AddressBookParserTest {
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+
+    }
+    @Test
+    public void parseCommand_findPersonsWithTags() throws Exception {
+        List<String> keywords = Arrays.asList("friend", "colleague");
+        List<String> expectedPredicateKeywords = Arrays.asList("friend", "friends", "colleague", "colleagues");
+        FindPersonsWithTagsCommand command = (FindPersonsWithTagsCommand) parser.parseCommand(
+                FindPersonsWithTagsCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindPersonsWithTagsCommand(
+                new PersonContainsTagsPredicate(expectedPredicateKeywords)), command);
+    }
+
+    @Test
+    public void parseCommand_findPersonsWithTags_alias1() throws Exception {
+        List<String> keywords = Arrays.asList("friend", "colleague");
+        List<String> expectedPredicateKeywords = Arrays.asList("friend", "friends", "colleague", "colleagues");
+        FindPersonsWithTagsCommand command = (FindPersonsWithTagsCommand) parser.parseCommand(
+                FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS1 + " "
+                        + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindPersonsWithTagsCommand(
+                new PersonContainsTagsPredicate(expectedPredicateKeywords)), command);
+    }
+
+    @Test
+    public void parseCommand_findPersonsWithTags_alias2() throws Exception {
+        List<String> keywords = Arrays.asList("friend", "colleague");
+        List<String> expectedPredicateKeywords = Arrays.asList("friend", "friends", "colleague", "colleagues");
+        FindPersonsWithTagsCommand command = (FindPersonsWithTagsCommand) parser.parseCommand(
+                FindPersonsWithTagsCommand.COMMAND_WORD_ALIAS2 + " "
+                        + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindPersonsWithTagsCommand(
+                new PersonContainsTagsPredicate(expectedPredicateKeywords)), command);
     }
 
     @Test

@@ -25,6 +25,20 @@ public abstract class Command {
     }
 
     /**
+            * Constructs a feedback message to inform users on number of contacts listed.
+            *
+            * @param displaySize used to generate summary
+     * @return summary message for number of persons displayed / No results found message
+     */
+    public static String getMessageForAlphabetListSummary(int displaySize) {
+        if (displaySize > 0) {
+            return String.format(Messages.MESSAGE_ALPHABET_LISTED_OVERVIEW, displaySize);
+        } else {
+            return Messages.MESSAGE_NO_ALPHABET_LISTED_OVERVIEW;
+        }
+    }
+
+    /**
      * Executes the command and returns the result message.
      *
      * @return feedback message of the operation result for display

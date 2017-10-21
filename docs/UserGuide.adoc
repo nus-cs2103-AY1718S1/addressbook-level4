@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T11-B4/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -111,6 +111,66 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+==== EasyFind
+
+Auto updates the display when user enters an alphabet with the `find` command.
+Finds persons whose names contain any of the alphabets sequence in the command box constantly having the user to input `enter`.
+
+****
+* The search will be case insensitibe. e.g. `hans` will match `Hans`
+* The alphabetic sequence must start with the name of the contacts. e.g. `hans` will match `handsome` but not `irhans`
+* Different alphabetic sequences will be separated by a `space`.
+* Persons matching at least one of the alphabetic sequence seperated by spaces will be returned. e.g. `Hans Ma` will return `Hans Gruber`, `May Tan`
+* When the search results displays `no results`, the particular alphabetic sequence will not display any contacts even when the user continues inputing new characters.
+****
+
+Examples:
+
+ * `find Alex` +
+ Returns `Alex` and `Alexandra`
+ * `find Alexan` +
+ Returns `Alexandra`
+* `find Betsy Tim John` +
+Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
+
+
+=== Locating persons by tag name: `findtags`
+
+Finds persons who have tags matching any of the given keywords. +
+Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+
+[TIP]
+You can substitute the command `findtags` with `findtag` or `ft`.
+
+****
+* The search is case insensitive.
+** `FrIeNdS` will match `friends`
+* The order of the keywords does not matter.
+** `classmates roommates` will match `roommates classmates`.
+* Only full words will be matched.
+** `col` will not match `colleagues`.
+* Will attempt to be more lenient with singular and plural tense.
+** `friend` will return contacts with either tag `friend` or `friends`.
+** `colleagues` will return contacts with either tag `colleague` or `colleagues`.
+*** However, this may not always be correct for words where plural and singular differs not only by a single letter 's'.
+*** Searching by tag `glass` will attempt to find contacts with tags `glass` and `glassS` instead of `glasses`.
+* Persons with at least one tag matching the keywords will be returned.
+** `friends` will return a contact who has `friends` tags and more.
+****
+
+Examples:
+
+* `findtags friends` +
+Returns any person having tags `friends`.
+* `findtags friends colleagues schoolmates` +
+Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
+
+=== List tags : `listtags` +
+`coming in v2.0`
+
+Lists all existing tags in the App +
+Format: `listtags` +
 
 === Deleting a person : `delete`
 
@@ -243,6 +303,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find by tags* : `findtags KEYWORD[MORE_KEYWORDS]` +
+e.g. `findtags friends`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -250,3 +312,8 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+=======
+== Coming in v2.0
+-PhuaJunJie : EasyFind, multiple deletes, importing contacts from google.
+

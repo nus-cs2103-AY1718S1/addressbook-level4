@@ -26,9 +26,11 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private String findWordCommand = "Sfind ";
 
     @FXML
     private TextField commandTextField;
+
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -36,6 +38,33 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+    }
+
+    /**
+     * Handles the key release event, {@code keyEvent}.
+     */
+    @FXML
+    private void handleKeyRelease() {
+        String commandText = commandTextField.getText();
+        int textLength = commandTextField.getLength();
+        //Starts the generation search results with each character typed if command find is entered
+        if ((textLength > 5) && (commandText.substring(0, 5).equals("find "))) {
+            try {
+                CommandResult commandResult = logic.execute(findWordCommand + commandText.substring(5));
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } catch (CommandException | ParseException e) {
+                logger.info("No smart searches");
+            }
+        }
+
+        if ((textLength == 5) && (commandText.substring(0, 5).equals("find "))) {
+            try {
+                raise(new NewResultAvailableEvent(""));
+                logic.execute("list");
+            } catch (CommandException | ParseException e) {
+                logger.info("No List from smart search");
+            }
+        }
     }
 
     /**
@@ -53,13 +82,13 @@ public class CommandBox extends UiPart<Region> {
             break;
         case DOWN:
             keyEvent.consume();
+
             navigateToNextInput();
             break;
         default:
             // let JavaFx handle the keypress
         }
     }
-
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
@@ -100,6 +129,7 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
+        //Prevents the build up og the alphabetNames variable during find function by refreshing it every run
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();

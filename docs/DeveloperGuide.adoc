@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T11-B4/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -120,7 +120,7 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -215,8 +215,123 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 == Implementation
-
 This section describes some noteworthy details on how certain features are implemented.
+
+
+// tag::EasyFind[]
+=== EasyFind mechanism
+
+The EasyFind mechanism is an Event Driven task, which activates when user tries to search for a contact by updating the search results whenever the user enter a character into the commandbox.
+
+The mechanism is facilitated by a new command `FindAlphabets` will search for contacts matching the sequence of alphabets in the `commandbox`. The command is called every time they user enters or remove a character from the command box while using the command `Find`.
+
+The key release event of the command box is constantly searching for the term `find` and when the user inputs the mentioned term into the `commandbox`, the key release event will begin searching for contacts by passing the alphabets entered after the term `find` into `FindAlphabetsCommand`.
+
+The application will display the number of contacts that share the same alphabetic sequence as the input. The following images shows how the EasyFind mechanism is activated:
+
+image::EasyFind Mechanism Example .png[width="800"]
+
+[NOTE]
+After the user inputs `enter`, normal find command will be executed
+[NOTE]
+EasyFind mechanism is case insensitive
+
+The following sequence diagram shows how the `FindAlphabetsCommand` works:
+
+image::FindAlphabetsCommand.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Intertwining of `FindAlphabetsCommand` and `FindCommand` +
+**Alternative 1 (current choice):** Both commands are not intertwined. They are separate entities. +
+**Pros:** We will not lose the original functionality of the `FindCommand` and creating a new `FindAlphabetsCommand` allows the application to search for contacts more frequently when the EasyFind mechanism is activated. +
+**Cons:** This might confuse the user as the `FindCommand` and `FindAlphabetsCommand` could generate different results. The contact that the user is searching for may be displayed when a partial name is inputted. However, when the user inputs `enter` before typing in the full name, the displayed contact will be removed by the original `FindCommand` +
+**Alternative 2:** Just replace `FindCommand` with `FindAlphabetsCommand` +
+**Pros:** The results displayed will not change even after the user has pressed `enter`. It can also help the user to speed up the process of searching for contacts as they user does not have to input the full name +
+**Cons:** Removing the find Command will affect other functions of the Addressbook such as the `findtags` function which works better with the original `FindCommand`.
+
+---
+
+=======
+// tag::findbytags[]
+=== Finding contacts by tags
+
+The application allows users to find contacts based on their tags. The figure below helps illustrate this process, and more detailed explanations and elaborations are given in the sub-sections below.
+
+image::FindContactsByTagsLogic.png[width="800"]
+
+==== Implementation of Parser
+To begin, the user enters the command and the relevant arguments, AddressbookParser will call this command's parser, FindPersonsWithTagsCommandParser, which will then parse the arguments and eventually return the proper FindPersonsWithTagsCommand.
+
+Within the command parser, the parser first checks if the arguments are empty.
+
+[WARNING]
+If the arguments are empty, the ParseException error will be thrown.
+
+If the arguments are valid (non-empty), they are split and stored in a String array "tagKeywords".
+
+Each keyword is then passed into the parser's private method, getImprovedList(), to retrieve a more comprehensive list of tags.
+This method is merely a crude way of improving convenience for the user when spelling tags, and it adds these tags to the list in addition to the original tags.
+
+[NOTE]
+The added tags are formed by appending the letter 's' to tags which do not end with the letter 's', and vice-versa.
+
+[WARNING]
+This method, however, does not account for words where the singular and plural forms do not defer by just a single letter 's', such as "family", and "families".
+
+[TIP]
+It is therefore recommended that future developers improve this method by implementing a proper dictionary/library for this method, after weighing the costs and the benefits.
+
+The parser then returns the proper FindPersonWithTagsCommand with the proper predicate (details in later section), created with the improved tag list, to be executed.
+
+==== Implementation of Predicate
+The predicate associated with this functionality is called PersonContainsTagsPredicate.
+
+To determine if a contact should be returned, the 'test' method of the predicate is called, which returns a boolean value, true if this contact should be returned, and false otherwise.
+
+Within the test method, all of the person's tags, if any, are appended to a string.
+
+[NOTE]
+If a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
+
+This String is then compared with the list of keywords generated by the parser earlier.
+
+[NOTE]
+For the current version of this command, as long as a single tag matches the keywords, the contact will be returned.
+However, in future iterations of the command, there will be choices to exclude certain tags, more details in future updates.
+
+==== Implementation of Command
+
+After the parser returns the command, assuming that no exceptions are thrown so far, the command is executed.
+
+The current model invokes its updateFilteredPersonList method, with the predicate as describe above as its parameter.
+
+This runs the test method of the predicate, which returns the appropriate contacts, and updates the model and contacts displayed in the UI.
+
+The command also returns to the command box the number of being displayed.
+
+==== Design Considerations
+
+**Aspect:** Improving list of keywords. +
+**Alternative 1 (current choice):** Add 's' to letters that do not end with 's', and vice-versa. +
+**Pros:** Easy to implement and read. +
+**Cons:** Does not account for all words in English, may have non-English words. +
+**Alternative 2:** Import appropriate library for getting singular/plural words. +
+**Pros:** More likely to account for all words. +
+**Cons:** May impact performance. +
+
+---
+
+**Aspect**: Comparision of tag names and keywords in predicate. +
+**Alternative 1 (current choice): **Append names to an empty String for comparision with keywords. +
+**Pros:** Easy to implement and change. +
+**Cons:** Requires use of lambda, which may be more difficult to understand for beginners. +
+**Alternative 2:** Compare tag against tag by encapsulating all keywords into Tags. +
+**Pros:** Can use the equals specified in Tag, and/or comparator instead of lambda for better readability. +
+**Cons:** More difficult to implement, and may create many tags that are never used because the keywords and expanded to improve user convenience (singular vs plural tag names). +
+
+// end::findbytags[]
+
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -675,6 +790,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 . Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
+
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
 
 **Main:**
@@ -723,15 +839,71 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |new user |import existing contacts |add contacts quickly when starting to use the App or reinstalling the App
+
+|`* * *` |frequent user |backup existing contacts as I add/remove them |restore a previous version of my contacts if I make a big mistake
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |sort persons by arrange the names in my contacts by Alphabetical order |locate a person easily
+
+|`* * *` |forgetful user |have prompts for right command syntax when I enter the wrong one |use the app more conveniently
+
+|`* * *` |user |arrange the names in my contacts according to first name |locate a person easily
+
+|`* * *` |user |arrange the names in my contacts according to last name |locate a person easily
+
+|`* * *` |user |favourite a contact |have favorites appear at the top of search results
+
+|`* * *` |user |update information for any of my contacts |not have to delete and add a contact just to change his details
+
+|`* * *` |user |share a contact with other people|
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |forgetful user |view my contacts' profile picture(s) |have a picture to attach to the contact
+
+|`* *` |user |alternate between using the alias and the name of my contacts |have a nickname to attach to the person
+
+|`* *` |user |view frequently contacted/searched for people at the top of the list |
+
+|`* *` |lazy user |delete multiple users at a time |
+
+|`* *` |power user |call a selected contact within 1 command after selecting the contact|
+
+|`* *` |power user |message a selected contact within 1 command after selecting the contact|
+
+|`* *` |power user |attach multiple notes to each contact|
+
+|`* *` |user with many contacts|notified when I have 2 contacts with the same name to add an alias or tag |do not get confused by 2 contacts with the same name
+
+|`* *` |user with many contacts|add multiple tags to each contact |easily group them
+
+|`* *` |user |search results to be displayed and updated every time i key in an alphabet |search for contacts without having to finish typing in the whole name
+
+|`*` |user |arrange the names in my contacts according to their address in alphabetical order  |locate a person easily
+
+|`*` |user |view the number of contacts that I have |
+
+|`*` |user |merge contacts |
+
+|`*` |user |select relevant information and export to a list |
+
+|`*` |user |access to more buttons | have more convenience using the App
+
+|`*` |user |see the address of a selected contact on Google Maps within 1 command |
+
+|`*` |user |link my contacts to their social media account |
+
+|`*` |user with many contacts |have tabs for different category of contacts |easily see who is in which group
+
+|`*` |user |customize the background colour of the application |personalize the App.
+
+
 |=======================================================================
 
 {More to be added}
@@ -769,12 +941,110 @@ Use case resumes at step 2.
 
 {More to be added}
 
+[discrete]
+=== Use case: Sort contacts alphabetically
+
+*MSS*
+
+1. User requests to sort contacts alphabetically
+2. AddressBook sorts contacts alphabetically according to their names
+3. AddressBook shows contact list to user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows “empty list of contacts” to user
++
+Use case ends.
+
+[discrete]
+=== Use case:  Adding a tag to a person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows list of persons
+3. User requests to add a specific tag to a person in the list
+4. AddressBook confirms the details of the instruction with the user
+5. User confirms command
+6. AddressBook adds tag to this person
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows “empty list of contacts” to user
++
+Use case ends.
+
+[none]
+* 3a. User enters an invalid person on the list (out of bound of list)
++
+[none]
+** 3a1. AddressBook shows “invalid person, choose correct person (starting index to ending index)” and
+displays list again in background
++
+Use case resumes at step 3.
+
+[none]
+* 3b. User enters unsupported character for tag
++
+[none]
+** 3b1. AddressBook shows “invalid tag name, only valid characters (display valid characters)”.
++
+Use case resumes at step 3.
+
+[none]
+* 4a. User cancels command
++
+[none]
+** 4a1. AddressBook shows “command cancelled”.
++
+Use case ends.
+
+[discrete]
+=== Use case: finding by tags
+
+*MSS*
+
+1. User requests to find contacts with a certain tag name
+2. App displays all contacts with such tags
++
+Use case ends
+
+[discrete]
+=== Use case: displaying list of tags
+
+*MSS*
+
+1. User reuqests to list all tags
+2. App displays all existing tags
++
+Use case ends
+
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Any command should not take longer than 1 second to execute
+.  App should be able to hold at least 5000 contacts
+.  Should support integration with Google contacts
+.  Should support integration with Google Map for proximity services
+.  App should support importing and exporting of contacts in Microsoft Excel Format
+.  Support multiple instances of the app on a single device
+.  Support integration with telecommunication apps such as, but not limited to, WhatsApp, Line etc.
+.  Support integration with social media services and apps
 
 {More to be added}
 
