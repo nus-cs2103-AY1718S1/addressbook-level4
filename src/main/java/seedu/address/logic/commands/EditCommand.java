@@ -11,7 +11,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.util.DateUtil.formatDate;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,6 +24,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateRepaid;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
@@ -91,11 +94,7 @@ public class EditCommand extends UndoableCommand {
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         try {
-            if (personToEdit.getIsWhitelisted() && editedPerson.getDebt().toNumber() > 0) {
-                editedPerson.setIsWhitelisted(false);
-            } else if (!personToEdit.getIsWhitelisted() && editedPerson.getDebt().toNumber() == 0) {
-                editedPerson.setIsWhitelisted(true);
-            }
+            editedPerson = listSyncChecks(personToEdit, editedPerson);
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -104,6 +103,20 @@ public class EditCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+    }
+
+    /**
+     * Does the appropriate list status checks on {@code personToEdit} and changes the list status of {@code editedPerson} accordingly
+     * Returns {@code editedPerson}.
+     */
+    private Person listSyncChecks(ReadOnlyPerson personToEdit, Person editedPerson) {
+        if (personToEdit.getIsWhitelisted() && editedPerson.getDebt().toNumber() > 0) {
+            editedPerson.setIsWhitelisted(false);
+        } else if (!personToEdit.getIsWhitelisted() && !personToEdit.getIsBlacklisted() && editedPerson.getDebt().toNumber() == 0) {
+            editedPerson.setIsWhitelisted(true);
+            editedPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
+        }
+        return editedPerson;
     }
 
     /**
