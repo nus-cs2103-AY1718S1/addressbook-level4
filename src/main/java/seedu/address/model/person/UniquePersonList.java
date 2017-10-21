@@ -124,6 +124,29 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Sorts the unique person list by the specified order.
+     * @param order to sort the list by.
+     */
+    public void sortBy(String order) throws IllegalArgumentException {
+        switch (order) {
+        case "name":
+            internalList.sort((Person p1, Person p2) -> p1.getName().compareTo(p2.getName()));
+            break;
+        case "debt":
+            internalList.sort((Person p1, Person p2) -> p2.getDebt().compareTo(p1.getDebt()));
+            break;
+        case "cluster":
+            internalList.sort((Person p1, Person p2) -> p1.getCluster().compareTo(p2.getCluster()));
+            break;
+        case "deadline":
+            internalList.sort((Person p1, Person p2) -> p1.getDeadline().compareTo(p2.getDeadline()));
+            break;
+        default:
+            throw new IllegalArgumentException("Invalid sort ordering");
+        }
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {

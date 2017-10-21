@@ -239,6 +239,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.remove(t);
     }
 
+    //// sorting operations
+
+    /**
+     * Sorts the address book by given order
+     */
+    public void sortBy(String order) throws IllegalArgumentException {
+        persons.sortBy(order);
+    }
+
 
     //@@author jelneo
     /**

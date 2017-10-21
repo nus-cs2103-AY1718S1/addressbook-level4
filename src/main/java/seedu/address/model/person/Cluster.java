@@ -12,6 +12,7 @@ import static seedu.address.model.util.ClusterUtil.getCluster;
  */
 public class Cluster {
 
+    public final int clusterNumber;
     public final String value;
 
     /**
@@ -23,7 +24,8 @@ public class Cluster {
             throw new AssertionError(MESSAGE_POSTAL_CODE_CONSTRAINTS);
         }
         String cluster = getCluster(postalCode.toString());
-        this.value = cluster;
+        clusterNumber = Integer.parseInt(cluster.substring(0, 2));
+        this.value = cluster.substring(4);
     }
 
     @Override
@@ -35,7 +37,12 @@ public class Cluster {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Cluster // instanceof handles nulls
+                && this.clusterNumber == ((Cluster) other).clusterNumber
                 && this.value.equals(((Cluster) other).value)); // state check
+    }
+
+    public int compareTo(Cluster other) {
+        return this.clusterNumber - other.clusterNumber;
     }
 
     @Override
