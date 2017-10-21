@@ -64,7 +64,7 @@ public class TypicalParcels {
             .withAddress("522 Hougang Ave 6 s530522").withDeliveryDate("08-08-2008").withStatus("delivered").build();
     public static final ReadOnlyParcel IDA = new ParcelBuilder().withTrackingNumber("RR111333888SG")
             .withName("Ida Mueller").withPhone("8482131").withEmail("hans@example.com")
-            .withAddress("3 River Valley Rd, S179024").withDeliveryDate("09-09-2009").withStatus("delivered").build();
+            .withAddress("3 River Valley Rd, S179024").withDeliveryDate("09-09-2009").withStatus("DELIVERED").build();
 
     // Manually added - Parcel's details found in {@code CommandTestUtil}
     public static final ReadOnlyParcel AMY = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)

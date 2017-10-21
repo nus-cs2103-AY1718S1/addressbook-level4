@@ -30,7 +30,7 @@ public class SampleDataUtil {
                         getTagSet("friends")),
                 new Parcel(new TrackingNumber("RR111111111SG"), new Name("Bernice Yu"), new Phone("99272758"),
                         new Email("berniceyu@example.com"), new Address("Blk 326 Serangoon Ave 3, #07-18 S550326"),
-                        new DeliveryDate("02-02-2002"), Status.getStatusInstance("pending"),
+                        new DeliveryDate("02-02-2002"), Status.getStatusInstance("PENDING"),
                         getTagSet("colleagues", "friends")),
                 new Parcel(new TrackingNumber("RR222222222SG"), new Name("Charlotte Oliveiro"), new Phone("93210283"),
                         new Email("charlotte@example.com"), new Address("Blk 512 Ang Mo Kio Ave 8, #11-04 s560512"),
@@ -38,7 +38,7 @@ public class SampleDataUtil {
                         getTagSet("neighbours")),
                 new Parcel(new TrackingNumber("RR123456789SG"), new Name("David Li"), new Phone("91031282"),
                         new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43 "
-                        + "s558675"), new DeliveryDate("04-04-2004"), Status.getStatusInstance("Delivered"),
+                        + "s558675"), new DeliveryDate("04-04-2004"), Status.getStatusInstance("DELIVERED"),
                         getTagSet("family")),
                 new Parcel(new TrackingNumber("RR987654321SG"), new Name("Irfan Ibrahim"), new Phone("92492021"),
                         new Email("irfan@example.com"), new Address("Blk 47 Tampines Street 20, #17-35 s535070"),
@@ -46,7 +46,7 @@ public class SampleDataUtil {
                         getTagSet("classmates")),
                 new Parcel(new TrackingNumber("RR123789456SG"), new Name("Roy Balakrishnan"), new Phone("92624417"),
                         new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31 S389825"),
-                        new DeliveryDate("06-06-2006"), Status.getStatusInstance("delIvering"),
+                        new DeliveryDate("06-06-2006"), Status.getStatusInstance("DELIVERING"),
                         getTagSet("colleagues"))
             };
         } catch (IllegalValueException e) {
