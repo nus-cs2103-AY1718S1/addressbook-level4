@@ -7,8 +7,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.module.BookedSlot;
 import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -42,6 +44,7 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.handleListingUnit();
+        model.updateBookedSlotSet();
     }
 
     /**

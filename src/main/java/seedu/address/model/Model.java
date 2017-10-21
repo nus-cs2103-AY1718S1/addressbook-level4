@@ -10,6 +10,7 @@ import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
@@ -48,6 +49,11 @@ public interface Model {
      * Returns the AddressBook
      */
     ReadOnlyAddressBook getAddressBook();
+
+    /**
+     * update the set of BookedList
+     */
+    void updateBookedSlotSet();
 
     /**
      * Deletes the given lesson.

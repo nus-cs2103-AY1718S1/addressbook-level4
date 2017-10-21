@@ -38,7 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyLesson> filteredLessons;
     private final HashSet<ReadOnlyLesson> favouriteList;
-    private HashSet<BookedSlot> bookedList;
+    private final HashSet<BookedSlot> bookedList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -105,6 +105,15 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public void updateBookedSlotSet() {
+        bookedList.clear();
+        for(ReadOnlyLesson lesson : addressBook.getLessonList()) {
+            BookedSlot slot = new BookedSlot(lesson.getLocation(), lesson.getTimeSlot());
+            bookedList.add(slot);
+        }
     }
 
     /** Raises an event to indicate the model has changed */
