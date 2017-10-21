@@ -21,7 +21,7 @@ public class RepaidCommand extends UndoableCommand {
             + ": Adds person identified by the index number into the whitelist and concurrently clear his debt.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
-    public static final String MESSAGE_WHITELIST_PERSON_SUCCESS = "Added person to whitelist: %1$s";
+    public static final String MESSAGE_WHITELIST_PERSON_SUCCESS = "%1$s has now repaid his/her debt";
     public static final String MESSAGE_WHITELIST_PERSON_FAILURE = "Person has already repaid debt!";
 
     private final Index targetIndex;
@@ -52,7 +52,7 @@ public class RepaidCommand extends UndoableCommand {
             assert false : "The target person is already in whitelist";
         }
 
-        return new CommandResult(String.format(messagetoDisplay, personToWhitelist));
+        return new CommandResult(String.format(messagetoDisplay, personToWhitelist.getName()));
     }
 
     @Override

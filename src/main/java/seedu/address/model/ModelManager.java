@@ -41,9 +41,10 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final ObservableList<ReadOnlyPerson> allPersons;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final UserPrefs userPrefs;
+
     private FilteredList<ReadOnlyPerson> filteredWhitelistedPersons;
     private FilteredList<ReadOnlyPerson> filteredBlacklistedPersons;
-    private final UserPrefs userPrefs;
     private ObservableList<ReadOnlyPerson> nearbyPersons;
     private ReadOnlyPerson selectedPerson;
 
@@ -165,6 +166,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         ReadOnlyPerson whitelistedPerson = person;
+
         try {
             whitelistedPerson = addressBook.resetPersonDebt(person);
             whitelistedPerson = addressBook.setDateRepaid(whitelistedPerson);
@@ -172,8 +174,11 @@ public class ModelManager extends ComponentManager implements Model {
             assert false : "This person cannot be missing";
         }
 
-        addressBook.addWhitelistedPerson(whitelistedPerson);
-        updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
+        if (!whitelistedPerson.getIsBlacklisted()) {
+            addressBook.addWhitelistedPerson(whitelistedPerson);
+            updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
+        }
+
         indicateAddressBookChanged();
     }
 

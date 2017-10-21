@@ -10,7 +10,7 @@ public class WhitelistCommand extends Command {
     public static final String COMMAND_WORD = "whitelist";
     public static final String COMMAND_WORD_ALIAS = "wl";
 
-    public static final String MESSAGE_SUCCESS = "Whitelist: Listed all clients "
+    public static final String MESSAGE_SUCCESS = "Whitelist: Listed all debtors "
             + "who have cleared their debts";
 
 
