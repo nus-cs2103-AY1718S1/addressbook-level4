@@ -53,6 +53,8 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    private final String sortByName = "name";
+
 
     @Override
     public void init() throws Exception {
@@ -69,6 +71,7 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        model.sortList(sortByName);
         model.updateFilteredPersonList(PREDICATE_SHOW_NOT_HIDDEN);
 
         logic = new LogicManager(model);
