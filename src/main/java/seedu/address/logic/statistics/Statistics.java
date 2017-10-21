@@ -81,9 +81,11 @@ public class Statistics {
     }
 
     private double getVariance() {
-        double temp = 0, mean = getMean();
-        for (double score : scoreArray)
+        double temp = 0;
+        double mean = getMean();
+        for (double score : scoreArray) {
             temp += (score - mean) * (score - mean);
+        }
         return temp / (size - 1);
 
     }
@@ -104,7 +106,7 @@ public class Statistics {
             if (size > 1) {
                 System.out.println("Variance: " + getVariance());
                 System.out.println("Standard Deviation: " + getStdDev());
-            }else{
+            } else {
                 System.out.println("Too few data to calculate Variance and StD");
             }
         } else {
@@ -118,15 +120,15 @@ public class Statistics {
      */
     public void printPercentiles() {
         if (size > 0) {
-            if (size >1) {
+            if (size > 1) {
                 System.out.println("First Quartile: " + getQuartile1());
                 System.out.println("Second Quartile: " + getQuartile2());
                 System.out.println("Third Quartile: " + getQuartile3());
                 System.out.println("Interquartile Range: " + getInterQuartileRange());
-            }else{
+            } else {
                 System.out.println("Too few data to calculate deciles");
             }
-            } else {
+        } else {
             System.out.println("There are no persons in the list to calculate percentiles with");
         }
     }
