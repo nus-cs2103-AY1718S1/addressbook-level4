@@ -25,7 +25,7 @@ public class StartDate extends TaskDates {
         }
         this.date = trimmedDate;
     }
-    
+
     public boolean isEmpty() {
         return date.isEmpty();
     }

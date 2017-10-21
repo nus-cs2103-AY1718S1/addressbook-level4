@@ -41,7 +41,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             Description description = ParserUtil.parseDescription(argMultimap.getPreamble());
             StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_START_DATE));
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE));
-            SingleEventDate singleEventDate = 
+            SingleEventDate singleEventDate =
                     ParserUtil.parseSingleEventDate(argMultimap.getValue(PREFIX_SINGLE_EVENT_DATE));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             ReadOnlyTask task = new Task(description, startDate, deadline, singleEventDate, tagList);
