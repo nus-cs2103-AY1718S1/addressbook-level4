@@ -1,10 +1,8 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.model.person.CheckIfBirthday;
 
-public class BirthdaysCommand extends Command{
+public class BirthdaysCommand extends UndoableCommand{
     public static final String COMMAND_WORD = "birthdays";
     public static final String COMMAND_ALIAS = "bd";
 
@@ -13,18 +11,14 @@ public class BirthdaysCommand extends Command{
             + "Parameters: KEYWORD \n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String SHOWING_BIRTHDAY_MESSAGE = "Opened birthday dialog box.";
+    private CheckIfBirthday check = new CheckIfBirthday();
 
-    private final CheckIfBirthday check;
-
-    public BirthdaysCommand (CheckIfBirthday check){
-        this.check = check;
-    }
+    public BirthdaysCommand (){}
 
     @Override
-    public CommandResult execute() {
-        EventsCenter.getInstance().post(new ShowHelpRequestEvent());
-        return new CommandResult(SHOWING_BIRTHDAY_MESSAGE);
+    public CommandResult executeUndoableCommand() {
+        model.updateFilteredPersonList(check);
+        return new CommandResult(getBirthdayMessageSummary(model.getFilteredPersonList().size()));
     }
 
 }
