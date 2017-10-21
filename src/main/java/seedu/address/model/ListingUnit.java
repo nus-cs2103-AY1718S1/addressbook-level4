@@ -1,8 +1,5 @@
 package seedu.address.model;
 
-
-import seedu.address.model.module.predicates.UniqueLocationPredicate;
-
 import java.util.function.Predicate;
 
 /**
