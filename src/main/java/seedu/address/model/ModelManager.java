@@ -14,8 +14,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.UserPersonChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UserPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -29,11 +31,12 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private FilteredList<ReadOnlyPerson> filteredPersons;
+    private final UserPerson userPerson;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs, UserPerson userPerson) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
@@ -41,10 +44,11 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.userPerson = userPerson;
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UserPrefs(), new UserPerson());
     }
 
     @Override
@@ -56,6 +60,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public UserPerson getUserPerson() {
+        return userPerson;
     }
 
     /** Raises an event to indicate the model has changed */
@@ -124,6 +133,19 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateUserPerson(ReadOnlyPerson editedPerson) {
+        requireAllNonNull(editedPerson);
+        userPerson.update(editedPerson);
+        indicateUserPersonChanged();
+    }
+
+    /** Raises an event to indicate the model has changed */
+    public void indicateUserPersonChanged() {
+        raise(new UserPersonChangedEvent(userPerson));
+        logger.info("Updated User Person: " + userPerson);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
@@ -138,7 +160,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && userPerson.equals(other.userPerson);
     }
 
 }

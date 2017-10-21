@@ -22,7 +22,7 @@ Responsibilities: Project
 '''
 
 === Joshua Ng
-image::joshua.JPG[width="150", align="left"]
+image::joshua.jpg[width="150", align="left"]
 {empty}[https://github.com/bladerail[github]] [<<joshua#, portfolio>>]
 
 Role: Team Member

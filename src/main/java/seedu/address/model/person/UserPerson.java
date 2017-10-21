@@ -10,18 +10,17 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-
 import seedu.address.model.person.weblink.UniqueWebLinkList;
 import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.util.SampleUserPersonUtil;
 
 /**
- * Represents a Person in the address book.
- * Guarantees: details are present and not null, field values are validated.
+ * Represents the user's Profile in the address book.
+ *
  */
-public class Person implements ReadOnlyPerson {
-
+public class UserPerson implements ReadOnlyPerson {
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
     private ObjectProperty<ArrayList<Email>> emails;
@@ -30,28 +29,39 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueWebLinkList> webLinks;
 
+    public UserPerson() {
+        this(SampleUserPersonUtil.getDefaultSamplePerson().getName(),
+                SampleUserPersonUtil.getDefaultSamplePerson().getPhone(),
+                SampleUserPersonUtil.getDefaultSamplePerson().getEmail(),
+                SampleUserPersonUtil.getDefaultSamplePerson().getAddress());
+    }
+
+
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, ArrayList<Email> email, Address address,
-                  Remark remark, Set<Tag> tags, Set<WebLink> webLinks) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public UserPerson(Name name, Phone phone, ArrayList<Email> email, Address address) {
+        requireAllNonNull(name, phone, email, address);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.emails = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-        this.remark = new SimpleObjectProperty<>(remark);
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList(webLinks));
+        this.remark = new SimpleObjectProperty<>(new Remark(""));
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList());
+        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList());
     }
 
     /**
-     * Creates a copy of the given ReadOnlyPerson.
+     * Every field must be present and not null.
      */
-    public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getRemark(), source.getTags(), source.getWebLinks());
+    public UserPerson(ReadOnlyPerson src) {
+        this.name = new SimpleObjectProperty<>(src.getName());
+        this.phone = new SimpleObjectProperty<>(src.getPhone());
+        this.emails = new SimpleObjectProperty<>(src.getEmail());
+        this.address = new SimpleObjectProperty<>(src.getAddress());
+        this.remark = new SimpleObjectProperty<>(new Remark(""));
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList());
+        this.webLinks = new SimpleObjectProperty<>(new UniqueWebLinkList());
     }
 
     public void setName(Name name) {
@@ -138,19 +148,6 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Returns an immutable webLink set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    @Override
-    public Set<WebLink> getWebLinks() {
-        return webLinks.get().toSet();
-    }
-
-    public ObjectProperty<UniqueWebLinkList> webLinkProperty() {
-        return webLinks;
-    }
-
-    /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
     public void setTags(Set<Tag> replacement) {
@@ -165,9 +162,25 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
+     * Returns an immutable webLink set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<WebLink> getWebLinks() {
+        return webLinks.get().toSet();
+    }
+
+    @Override
+    public ObjectProperty<UniqueWebLinkList> webLinkProperty() {
+        return webLinks;
+    }
+
+
+    /**
      * returns a ArrayList of string websites for UI usage.
      * @code WebLinkUtil for the list of webLinkTags can be used as category.
      */
+    @Override
     public ArrayList<String> listOfWebLinkByCategory (String category) {
         ArrayList<String> outputWebLinkList = new ArrayList<String>();
         for (Iterator<WebLink> iterateWebLinkSet = getWebLinks().iterator(); iterateWebLinkSet.hasNext();) {
@@ -181,7 +194,6 @@ public class Person implements ReadOnlyPerson {
         return outputWebLinkList;
     }
 
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -192,7 +204,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, emails, address, tags, webLinks);
+        return Objects.hash(name, phone, emails, address, tags);
     }
 
     @Override
@@ -200,4 +212,14 @@ public class Person implements ReadOnlyPerson {
         return getAsText();
     }
 
+    /**
+     * Update the UserPerson details with that of the ReadOnlyPerson target
+     * @param target
+     */
+    public void update(ReadOnlyPerson target) {
+        this.name = new SimpleObjectProperty<>(target.getName());
+        this.emails = new SimpleObjectProperty<>(target.getEmail());
+        this.phone = new SimpleObjectProperty<>(target.getPhone());
+        this.address = new SimpleObjectProperty<>(target.getAddress());
+    }
 }
