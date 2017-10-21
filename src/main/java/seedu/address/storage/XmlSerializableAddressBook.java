@@ -23,15 +23,15 @@ import seedu.address.model.tag.Tag;
  */
 @XmlRootElement(name = "AddressBook")
 public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
+    // Make sure all properties are loaded first.
+    @XmlElement
+    private XmlAdaptedPropertyManager properties;
     @XmlElement
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedEvent> events;
     @XmlElement
     private List<XmlAdaptedTag> tags;
-    @XmlElement
-    private XmlAdaptedPropertyManager properties;
-
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -40,11 +40,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
-
         events = new ArrayList<>();
-
         properties = new XmlAdaptedPropertyManager();
-
     }
 
     /**

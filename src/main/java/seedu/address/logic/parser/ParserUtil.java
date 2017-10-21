@@ -3,7 +3,9 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -16,6 +18,7 @@ import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
 import seedu.address.model.property.Phone;
+import seedu.address.model.property.Property;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -64,10 +67,27 @@ public class ParserUtil {
     }
 
     /**
+     * Parses all properties in the given {@code HashMap}.
+     *
+     * @return a set containing all properties parsed.
+     */
+    public static Set<Property> parseProperties(HashMap<Prefix, String> values)
+            throws IllegalValueException, PropertyNotFoundException {
+        requireNonNull(values);
+        Set<Property> properties = new HashSet<>();
+
+        for (Map.Entry<Prefix, String> entry: values.entrySet()) {
+            properties.add(new Property(entry.getKey().getPrefixValue(), entry.getValue()));
+        }
+
+        return properties;
+    }
+
+    /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      *
-     * TODO: Use a generic parseProperty method to replace all methods below.
+     * TODO: Use parseProperties method to replace all methods below.
      */
     public static Optional<Name> parseName(Optional<String> name)
             throws IllegalValueException, PropertyNotFoundException {

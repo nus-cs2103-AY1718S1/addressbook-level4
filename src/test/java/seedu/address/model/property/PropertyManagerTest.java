@@ -96,6 +96,13 @@ public class PropertyManagerTest {
         PropertyManager.addNewProperty(shortName, fullName, message, regex);
     }
 
+    @Test
+    public void clearAllProperties_success_checkCorrectness() {
+        PropertyManager.clearAllProperties();
+        assertEquals(0, PropertyManager.getAllShortNames().size());
+        PropertyManager.initializePropertyManager();
+    }
+
     /**
      * Uses reflection to get the size of private static {@link HashMap}s.
      *
