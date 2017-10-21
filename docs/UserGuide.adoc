@@ -92,9 +92,9 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Finding a person: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose attributes match the prefix and keywords input. +
 Format: `find [PREFIX][KEYWORD]`
 
 ****
@@ -142,14 +142,15 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Adding photo : `addPhoto`
+=== Adding photo : `addPhoto` (Since v1.3)
 
 Adds a photo for the specifed person in the address book. +
-Format: `addPhoto INDEX f/filepath`
+Format: `addPhoto INDEX f/[FILEPATH]`
 
 Examples:
 
-* `addPhoto 1 f/C:/users/pictures/thickThings/thic.png`
+* `addPhoto 1 f/C:/users/pictures/cuteThings/cutedog.png` +
+Adds a photo `cutedog.png` to the first person of the Address Book.
 
 === Selecting a person : `select`
 
@@ -260,6 +261,11 @@ Removes the birthday for the first person.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
+
 === List recently added contacts : `listrecent` (Coming in v2.0)
 
 Lists contacts added in the past 24 hours. +
@@ -279,11 +285,6 @@ Format: `emailall t/[TAG]`
 
 Display birthdays of contacts according to months in a calendar view. +
 Format: `calendar`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
 
 === Saving the data
 
