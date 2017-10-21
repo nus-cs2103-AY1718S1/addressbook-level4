@@ -40,8 +40,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         try {
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<Property> propertyList = ParserUtil.parseProperties(argMultimap.getAllValues());
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             return new AddCommand(new Person(propertyList, tagList));
         } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
             throw new ParseException(e.getMessage(), e);

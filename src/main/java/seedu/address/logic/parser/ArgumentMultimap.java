@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -60,8 +61,9 @@ public class ArgumentMultimap {
     public HashMap<Prefix, String> getAllValues() {
         HashMap<Prefix, String> values = new HashMap<>();
 
-        // Need to manually remove preamble from here.
-        Set<Prefix> prefixes = internalMap.keySet();
+        // Need to manually remove preamble from here. We are creating a new copy of all prefixes, so the actual
+        // instance variable will not be affected.
+        Set<Prefix> prefixes = new HashSet<>(internalMap.keySet());
         prefixes.remove(new Prefix(""));
         prefixes.remove(PREFIX_TAG);
 
