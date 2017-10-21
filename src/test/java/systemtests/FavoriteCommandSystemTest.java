@@ -46,8 +46,8 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
                 + INDEX_THIRD_PERSON.getOneBased() + "       "
                 + INDEX_FOURTH_PERSON.getOneBased() + "        "
                 + INDEX_FIFTH_PERSON.getOneBased();
-        StringBuilder names = new StringBuilder();
         List<Index> indexList = Arrays.asList(INDEX_THIRD_PERSON, INDEX_FOURTH_PERSON, INDEX_FIFTH_PERSON);
+        StringBuilder names = new StringBuilder();
         for (Index index : indexList) {
             ReadOnlyPerson favoritedPerson = favoritePerson(expectedModel, index);
             names.append("\n★ ");
@@ -88,7 +88,8 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
                 MESSAGE_FAVORITE_PERSON_SUCCESS, "\n★ " + favoritedPerson.getName().toString());
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: filtered person list, favorite index within bounds of address book but out of bounds of person list
+        /*
+         * Case: filtered person list, favorite index within bounds of address book but out of bounds of person list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
