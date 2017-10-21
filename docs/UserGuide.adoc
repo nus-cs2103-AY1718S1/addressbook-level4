@@ -14,6 +14,13 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== About
+
+This User Guide introduces a detailed description of the various features that are available to *DummyName*.
+It also contains a summary of all the commands, giving you a quick overview on how to use all the features.
+Being familiar with Command-Line Interface(CLI) will help you with understanding the document, but do not worry if you are not.
+As long as you follow the guide closely, we are sure you can still comprehend the document.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -295,53 +302,95 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
+====
+Command Name: `undo` +
 Shorthand Alias: `u` +
-Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
+====
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `note` and `clear`).
+Undoable commands: those commands that modify the address book's content. They include `add`, `delete`, `edit`, `note` and `clear`.
 ====
 
-Examples:
+If you ever typed in a command by mistake, typed in `undo` next. +
+This command will restore the address book to the state where the previous _undoable_ command was not executed. +
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+Here is when you `delete` a contact by accident: +
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+. image:Ui.png[UI, 40, 40, role = "right"] `>> delete 1`
+. Type in +
+image:Ui.png[UI, 40, 40, role = "right"]`>> undo` +
 
-* `delete 1` +
-`clear` +
-`u` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+You should see that the effects of `delete 1` has been reverted.
+
+The following are more examples to help you better understand the `undo` command:
+
+* Failure to `undo` as there are no undoable commands executed previously. You will see an error message displayed like that in _Fig_.
+. Restart the application.
+. Type in +
+`>> select 1`
+. Type in +
+`>> list`
+. Type in +
+`>> undo`
+
+* Attempting to `undo` multiple commands.
+. Type in +
+`>> delete 1`
+. Type in +
+`>> clear`
+. Type in +
+`>> u` +
+The `clear` command is reverted.
+. Type in +
+`>> undo` +
+The `delete 1` command is reverted.
 
 === Redoing the previously undone command : `redo`
 
+====
+Command Name: `redo` +
 Shorthand Alias: `r` +
-Reverses the most recent `undo` command. +
 Format: `redo`
+====
 
-Examples:
+Now you realized you made a mistake when you entered the `undo` command. This command will revert the most recent `undo` command. +
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+Here is when you `delete` a contact and `undo` the `delete` by mistake: +
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+. image:Ui.png[UI, 40, 40, role = "right"] `>> delete 1`
+. image:Ui.png[UI, 40, 40, role = "right"] `>> undo`
+. Type in +
+image:Ui.png[UI, 40, 40, role = "right"]`>> redo`
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`r` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+You should see that the `undo` command has been reverted and the contact remains deleted. Refer to _Fig_ to see that you have obtained the correct results.
+
+The following are more examples to help you better understand the `redo` command:
+
+* Failure to `redo` as there are no `undo` commands executed previously. You will see an error message displayed like that in _Fig_.
+. Type in +
+`>> delete 1`
+. Type in +
+`>> redo`
+
+* Attempting to `redo` multiple commands.
+. Type in +
+`>> delete 1`
+. Type in +
+`>> clear`
+. Type in +
+`>> undo` +
+The `clear` command should be reverted.
+. Type in +
+`>> undo` +
+The `delete 1` command should be reverted.
+. Type in +
+`>> redo` +
+The `delete 1` command should be reapplied.
+. Type in +
+`>> redo` +
+The `clear` command should be reapplied.
 // end::undoredo[]
 
 === Clearing all entries : `clear`
@@ -352,9 +401,15 @@ Format: `clear`
 
 === Exiting the program : `exit`
 
+====
+Command Name: `exit` +
 Shorthand Alias: `q` +
-Exits the program. +
 Format: `exit`
+====
+
+If you want to close the app, simply type in: +
+image:Ui.png[UI, 40, 40, role = "right"]`>> exit` +
+*DummyName* will be closed and all contacts will be saved.
 
 === Saving the data
 
