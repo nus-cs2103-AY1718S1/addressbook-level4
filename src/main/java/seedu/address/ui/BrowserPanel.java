@@ -53,7 +53,7 @@ public class BrowserPanel extends UiPart<Region> {
                     + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
-    public void loadFacebookPage(){
+    public void loadFacebookPage() {
         loadPage(FACEBOOK_URL);
     }
 
