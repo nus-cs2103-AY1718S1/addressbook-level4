@@ -93,6 +93,13 @@ public class UniquePropertyMap implements Iterable<Property> {
         return containsProperty(toCheck.getShortName());
     }
 
+    public String getPropertyValue(String shortName) throws PropertyNotFoundException {
+        if (!containsProperty(shortName)) {
+            throw new PropertyNotFoundException();
+        }
+        return internalMap.get(shortName).getValue();
+    }
+
     /**
      * Adds a property to the map.
      *

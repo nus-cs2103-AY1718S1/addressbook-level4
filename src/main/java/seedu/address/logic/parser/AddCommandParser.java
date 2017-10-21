@@ -14,12 +14,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.property.Address;
-import seedu.address.model.property.Email;
-import seedu.address.model.property.Name;
-import seedu.address.model.property.Phone;
+import seedu.address.model.property.Property;
 import seedu.address.model.property.PropertyManager;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -44,17 +41,10 @@ public class AddCommandParser implements Parser<AddCommand> {
         HashMap<Prefix, String> allValues = argMultimap.getAllValues();
 
         try {
-            // TODO: Implement and use generic ParserUtil::parseProperty method here.
-            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            Set<Property> propertyList = ParserUtil.parseProperties(allValues);
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
-            ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
-
-            return new AddCommand(person);
-        } catch (IllegalValueException | PropertyNotFoundException e) {
+            return new AddCommand(new Person(propertyList, tagList));
+        } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
             throw new ParseException(e.getMessage(), e);
         }
     }

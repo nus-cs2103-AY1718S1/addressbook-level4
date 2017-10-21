@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.Email;
 import seedu.address.model.property.Name;
@@ -17,6 +18,7 @@ import seedu.address.model.property.Phone;
 import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyMap;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -47,10 +49,31 @@ public class Person implements ReadOnlyPerson {
         properties.add(phone);
         properties.add(email);
         properties.add(address);
+
         this.properties = new SimpleObjectProperty<>();
         try {
             setProperties(properties);
         } catch (DuplicatePropertyException e) {
+            // TODO: Better error handling
+            e.printStackTrace();
+            System.err.println("This should never happen.");
+        }
+
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+
+    public Person(Set<Property> properties, Set<Tag> tags) throws DuplicatePropertyException {
+        requireAllNonNull(properties, tags);
+        this.properties = new SimpleObjectProperty<>();
+        setProperties(properties);
+
+        try {
+            this.name = new SimpleObjectProperty<>(new Name(getProperty("n")));
+            this.phone = new SimpleObjectProperty<>(new Phone(getProperty("p")));
+            this.email = new SimpleObjectProperty<>(new Email(getProperty("e")));
+            this.address = new SimpleObjectProperty<>(new Address(getProperty("a")));
+        } catch (IllegalValueException | PropertyNotFoundException e) {
             // TODO: Better error handling
             e.printStackTrace();
             System.err.println("This should never happen.");
@@ -143,6 +166,10 @@ public class Person implements ReadOnlyPerson {
      */
     public void setProperties(Set<Property> replacement) throws DuplicatePropertyException {
         properties.set(new UniquePropertyMap(replacement));
+    }
+
+    private String getProperty(String shortName) throws PropertyNotFoundException {
+        return properties.get().getPropertyValue(shortName);
     }
 
     /**
