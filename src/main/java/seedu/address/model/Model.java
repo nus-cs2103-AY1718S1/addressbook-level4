@@ -58,8 +58,10 @@ public interface Model {
     /** Returns the themes list */
     ArrayList<String> getThemesList();
 
+    /** Sets the current theme */
     void setCurrentTheme(String theme);
 
+    /** Returns the current theme */
     String getCurrentTheme();
 
     /**
@@ -68,6 +70,6 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
-
+    /** Sorts the address book person list */
     void sort();
 }
