@@ -56,7 +56,7 @@
                 <Label text="Pinned person" />
                 <VBox fx:id="pinList" SplitPane.resizableWithParent="false">
                     <children>
-                        <StackPane fx:id="pinListPlaceHolder" alignment="TOP_LEFT" minHeight="150.0" minWidth="300.0" VBox.vgrow="ALWAYS" />
+                        <StackPane fx:id="pinListPlaceHolder" alignment="TOP_LEFT" minHeight="300.0" minWidth="300.0" VBox.vgrow="ALWAYS" />
                     </children>
                 </VBox>
             </items>
