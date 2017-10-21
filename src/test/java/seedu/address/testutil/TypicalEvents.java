@@ -8,6 +8,9 @@ import seedu.address.model.EventList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 
+/**
+ * A utility class containing a list of {@code Event} objects to be used in tests.
+ */
 public class TypicalEvents {
     public static final ReadOnlyEvent FIRST = new EventBuilder().withName("First meeting")
             .withDescription("Discuss coding").withTime("10/10/2017").build();
@@ -37,7 +40,7 @@ public class TypicalEvents {
     }
 
     public static List<ReadOnlyEvent> getTypicalEvents() {
-        return new ArrayList<>(Arrays.asList(FIRST,SECOND,THIRD,FORTH));
+        return new ArrayList<>(Arrays.asList(FIRST, SECOND, THIRD, FORTH));
     }
 
 }

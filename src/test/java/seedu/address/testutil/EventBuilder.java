@@ -13,9 +13,8 @@ import seedu.address.model.event.ReadOnlyEvent;
 public class EventBuilder {
 
     public static final String DEFAULT_NAME = "First meeting";
-    public static final String DEFAULT_DESCRIPTION= "Discuss coding";
+    public static final String DEFAULT_DESCRIPTION = "Discuss coding";
     public static final String DEFAULT_TIME = "01/01/2017";
-    
     private Event event;
 
     public EventBuilder() {
@@ -23,7 +22,8 @@ public class EventBuilder {
             EventName defaultName = new EventName(DEFAULT_NAME);
             EventDescription defaultDescription = new EventDescription(DEFAULT_DESCRIPTION);
             EventTime defaultTime = new EventTime(DEFAULT_TIME);
-            this.event = new Event(defaultName, defaultDescription, defaultTime); 
+
+            this.event = new Event(defaultName, defaultDescription, defaultTime);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default event's values are invalid.");
         }

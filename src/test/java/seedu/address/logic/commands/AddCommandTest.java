@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
@@ -123,6 +124,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyEventList getEventList() {
+            return null;
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -170,7 +176,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws DuplicateEventException, EventNotFoundException {
+        public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+                throws DuplicateEventException, EventNotFoundException {
 
         }
 
