@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_WHITELISTED_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -10,7 +11,9 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.BorrowCommand;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.WhitelistCommand;
@@ -34,9 +37,31 @@ public class WhitelistSyncTest {
     }
 
     @Test
-    public void execute_borrowCommandRemovesPersonFromWhitelist_success() throws Exception {
-        ReadOnlyPerson borrowedPerson = model.getFilteredWhitelistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+    public void execute_deleteCommandOnMasterlistDeletesPersonFromWhitelist_success() throws Exception {
 
+        ReadOnlyPerson personToBeDeleted = model.getFilteredWhitelistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personToBeDeleted));
+
+        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        // Ensure person is deleted from masterlist
+        expectedModel.deletePerson(personToBeDeleted);
+        expectedModel.updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
+
+        DeleteCommand deleteCommand = prepareDeleteCommand(index);
+        deleteCommand.execute();
+
+        WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+
+        assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_borrowCommandRemovesPersonFromWhitelist_success() throws Exception {
+
+        ReadOnlyPerson borrowedPerson = model.getFilteredWhitelistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(borrowedPerson));
         Debt amount = new Debt("500");
 
@@ -44,6 +69,7 @@ public class WhitelistSyncTest {
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
+        // To make sure person does not exist in whitelist anymore
         borrowedPerson = expectedModel.removeWhitelistedPerson(borrowedPerson);
         expectedModel.addDebtToPerson(borrowedPerson, amount);
 
@@ -56,7 +82,75 @@ public class WhitelistSyncTest {
     }
 
     @Test
+    public void execute_paybackCommandRepayExactDebtAddsPersonIntoWhitelist_success() throws Exception {
+
+        ReadOnlyPerson repayingPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Debt amount = repayingPerson.getDebt();
+
+        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        // To ensure person exists in whitelist
+        repayingPerson = expectedModel.deductDebtFromPerson(repayingPerson, amount);
+        expectedModel.addWhitelistedPerson(repayingPerson);
+
+        PaybackCommand paybackCommand = preparePaybackCommand(INDEX_FIRST_PERSON, amount);
+        paybackCommand.execute();
+
+        WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+
+        assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_paybackCommandRepayInexactDebtDoesNotAddPersonIntoWhitelist_success() throws Exception {
+
+        ReadOnlyPerson repayingPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Debt amount = new Debt(0.5 * (repayingPerson.getDebt().toNumber()));
+
+        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        // To ensure person only gets his debt decremented. No other actions
+        expectedModel.deductDebtFromPerson(repayingPerson, amount);
+
+        PaybackCommand paybackCommand = preparePaybackCommand(INDEX_FIRST_PERSON, amount);
+        paybackCommand.execute();
+
+        WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+
+        assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_paybackCommandRepayExactDebtDoesNotAddBlacklistedPersonIntoWhitelist_success()
+            throws Exception {
+
+        ReadOnlyPerson repayingPerson = model.getFilteredBlacklistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(repayingPerson));
+        Debt amount = repayingPerson.getDebt();
+
+        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        repayingPerson = expectedModel.deductDebtFromPerson(repayingPerson, amount);
+
+        // To make sure person does not exist in whitelist
+        expectedModel.removeWhitelistedPerson(repayingPerson);
+
+        PaybackCommand paybackCommand = preparePaybackCommand(index, amount);
+        paybackCommand.execute();
+
+        WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+
+        assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_editCommandAddDebtRemovesPersonFromWhitelist_success() throws Exception {
+
         ReadOnlyPerson borrowedPerson = model.getFilteredWhitelistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(borrowedPerson));
         Debt amount = new Debt("500");
@@ -70,6 +164,7 @@ public class WhitelistSyncTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
+        // To ensure person does not exist in whitelist
         expectedModel.updatePerson(borrowedPerson, editedPerson);
         expectedModel.removeWhitelistedPerson(editedPerson);
 
@@ -82,7 +177,8 @@ public class WhitelistSyncTest {
     }
 
     @Test
-    public void execute_editCommandRemoveExactDebtAddsPersonIntoWhitelist_success() throws Exception {
+    public void execute_editCommandRepayExactDebtAddsPersonIntoWhitelist_success() throws Exception {
+
         ReadOnlyPerson repayingPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Debt amount = new Debt("0");
 
@@ -94,6 +190,8 @@ public class WhitelistSyncTest {
         String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        // To ensure person exists in whitelist
         expectedModel.updatePerson(repayingPerson, editedPerson);
         expectedModel.addWhitelistedPerson(editedPerson);
 
@@ -106,7 +204,8 @@ public class WhitelistSyncTest {
     }
 
     @Test
-    public void execute_editCommandRemoveInexactDebtDoesNotAddPersonIntoWhitelist_success() throws Exception {
+    public void execute_editCommandRepayInexactDebtDoesNotAddPersonIntoWhitelist_success() throws Exception {
+
         ReadOnlyPerson repayingPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Debt amount = new Debt(0.5 * (repayingPerson.getDebt().toNumber()));
 
@@ -172,8 +271,15 @@ public class WhitelistSyncTest {
         UnbanCommand unbanCommand = prepareUnbanCommand(INDEX_FIRST_PERSON);
         unbanCommand.execute();
 
+        // addWhitelistedPerson() method will set debt to zero and
+        // Generates new date repaid.
+        // Does not add person into whitelist as he is blacklisted
         unbannedPerson = expectedModel.addWhitelistedPerson(unbannedPerson);
+
+        // removeBlacklistedPerson() now unbans the person
         unbannedPerson = expectedModel.removeBlacklistedPerson(unbannedPerson);
+
+        // Person will be added to whitelisted as he is now unbanned
         expectedModel.addWhitelistedPerson(unbannedPerson);
 
         String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
@@ -226,5 +332,23 @@ public class WhitelistSyncTest {
         UnbanCommand unbanCommand = new UnbanCommand(index);
         unbanCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return unbanCommand;
+    }
+
+    /**
+     * Returns a {@code PaybackCommand} with the parameter {@code index} & {@code amount}.
+     */
+    private PaybackCommand preparePaybackCommand(Index index, Debt amount) {
+        PaybackCommand paybackCommand = new PaybackCommand(index, amount);
+        paybackCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return paybackCommand;
+    }
+
+    /**
+     * Returns a {@code DeleteCommand} with the parameter {@code payingPerson}.
+     */
+    private DeleteCommand prepareDeleteCommand(Index index) {
+        DeleteCommand deleteCommand = new DeleteCommand(index);
+        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteCommand;
     }
 }

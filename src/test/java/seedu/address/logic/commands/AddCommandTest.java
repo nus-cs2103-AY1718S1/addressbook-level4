@@ -229,9 +229,10 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+        public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
                 IllegalValueException {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override
