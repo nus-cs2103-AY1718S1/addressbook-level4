@@ -1,7 +1,7 @@
 
 = MedNus - User Guide
 :toc:
-:toc-title: Table of Contents
+:toc-title: *Table of Contents*
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -38,7 +38,7 @@ You are required to know how to use Java to run a Graphical User Interface (GUI)
 
 == *GETTING STARTED*
 
-.  Make sure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Make sure you have link:https://java.com/en/download/[Java] version `1.8.0_60` or later installed in your Computer.
 +
 [WARNING]
 Having any Java 8 version is not enough. +
@@ -49,6 +49,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
 +
 image::Ui.png[width="790"]
+    Figure 1: Successful start up UI Sample
 +
 .  You can type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -83,6 +84,7 @@ You can use the `help` command to access the User Guide from MedNus. +
 You can also click the `Help` at the top left corner of MedNus.
 
 image::helpUI.png[width="790"]
+    Figure 2: Methods to access `help` command
 
 === Adding a person: `add`
 
@@ -353,6 +355,16 @@ Existing remarks of the person will be removed
 The index refers to the index number shown in the last person listing +
 The index *must be a positive integer* `1, 2, 3, ...`
 
+=== Deleting all persons with a particular tag : [Since v1.2]
+
+You can delete multiple contacts by tags +
+*Format:* `batch TAG` +
+*Shorthand format:* `b TAG`
+
+[WARNING]
+Command can only delete one tag at a time
+
+
 === KeyBoard Shortcuts [Since v1.2]
 
 You can use keyboard shortcuts in the command box to use the address book more efficiently.
@@ -365,19 +377,12 @@ You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
 image::exitUI.png[width="790"]
+    Figure 3: Methods to access `exit` command
 
 === Saving the data
 
 MedNus data are saved in the hard disk automatically after any command that changes the data. +
 You do not need to save manually.
-
-=== Deleting all persons with a particular tag : [In Progress]
-****
-* Delete all contacts with a particular tag
-* Basic Error catching: Throws error when tag is not present
-* Potential Upgrades:
-1. Input many tags & delete all persons with that tag
-****
 
 === Setting Appointments : [Coming in v2.0]
 ****
@@ -523,5 +528,4 @@ described condition
 
 |*Right* |Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
 |=======================================================================
-
 
