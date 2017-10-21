@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.person.exceptions.GroupNotFoundException;
 
 /**
  * A list of groups that enforces no nulls and uniqueness between its elements.
@@ -90,6 +91,19 @@ public class UniqueGroupList implements Iterable<Group> {
         internalList.add(toAdd);
 
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Removes a Group from the list.
+     *
+     * @throws GroupNotFoundException if the Group to remove is not on the list.
+     */
+    public void remove(Group toRemove) throws GroupNotFoundException {
+        requireNonNull(toRemove);
+        if (!contains(toRemove)) {
+            throw new GroupNotFoundException();
+        }
+        internalList.remove(toRemove);
     }
 
     @Override

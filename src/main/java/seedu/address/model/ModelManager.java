@@ -14,6 +14,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -82,6 +83,25 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateGroups(Group group) {
+        if (!addressBook.getGroupList().contains(group)) {
+            return;
+        }
+        for (ReadOnlyPerson person : addressBook.getPersonList()) {
+            if (person.getGroups().contains(group)) {
+                return;
+            }
+        }
+        Set<Group> newGroups = addressBook.getGroupList()
+                .stream()
+                .filter(x -> !x.equals(group))
+                .collect(Collectors.toSet());
+
+        addressBook.setGroups(newGroups);
         indicateAddressBookChanged();
     }
 

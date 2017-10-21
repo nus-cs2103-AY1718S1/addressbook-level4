@@ -3,8 +3,18 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
 
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.GroupNotFoundException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Removes a person from a group
@@ -21,16 +31,17 @@ public class UngroupCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_GROUP_NAME + "Family";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Group: %2$s";
+    public static final String MESSAGE_UNGROUP_SUCCESS = "Removed from the group Person: %1$s";
+    public static final String MESSAGE_GROUP_NOT_FOUND = "The person does not belong to that group";
 
     private final Index index;
-    private final String group;
+    private final Group group;
 
     /**
      * @param index of the person in the filtered person list to remove from the group
      * @param group from which the person is to be removed
      */
-    public UngroupCommand(Index index, String group) {
+    public UngroupCommand(Index index, Group group) {
         requireNonNull(index);
         requireNonNull(group);
 
@@ -40,7 +51,35 @@ public class UngroupCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), group));
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        UniqueGroupList editedGroups = new UniqueGroupList(personToEdit.getGroups());
+
+        Person editedPerson;
+        try {
+            editedGroups.remove(group);
+            editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                    personToEdit.getAddress(), editedGroups.toSet(), personToEdit.getTags());
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException("The person cannot be duplicated when adding to a group");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        } catch (GroupNotFoundException gnfe) {
+            throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
+        }
+        model.updateGroups(group);
+        model.updateFilteredPersonList(p ->true);
+        return new CommandResult(generateSuccessMessage(editedPerson));
+    }
+
+    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
+        return String.format(MESSAGE_UNGROUP_SUCCESS, personToEdit);
     }
 
     @Override

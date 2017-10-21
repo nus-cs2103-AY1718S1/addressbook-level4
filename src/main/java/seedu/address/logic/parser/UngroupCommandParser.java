@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.UngroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.group.Group;
 
 /**
  * Parses input arguments and creates a new UngroupCommand object
@@ -26,8 +27,7 @@ public class UngroupCommandParser implements Parser<UngroupCommand> {
         Index index;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
-            //Group group = ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP_NAME)).get();
-            String group = argMultimap.getValue(PREFIX_GROUP_NAME).orElse("");
+            Group group = ParserUtil.parseGroup(argMultimap.getValue(PREFIX_GROUP_NAME)).get();
             return new UngroupCommand(index, group);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UngroupCommand.MESSAGE_USAGE));

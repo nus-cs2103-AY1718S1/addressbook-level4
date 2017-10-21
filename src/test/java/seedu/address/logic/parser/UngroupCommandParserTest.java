@@ -10,24 +10,19 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.UngroupCommand;
+import seedu.address.model.group.Group;
 
 public class UngroupCommandParserTest {
     private UngroupCommandParser parser = new UngroupCommandParser();
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
-        final String group = "Some group";
+        final Group group = new Group("Some group");
 
-        // has group
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_GROUP_NAME.toString() + " " + group;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_GROUP_NAME.toString() + " " + group.groupName;
         UngroupCommand expectedCommand = new UngroupCommand(INDEX_FIRST_PERSON, group);
         assertParseSuccess(parser, userInput, expectedCommand);
-
-        // no group specified
-        /*userInput = targetIndex.getOneBased() + " " + PREFIX_GROUP_NAME.toString();
-        expectedCommand = new UngroupCommand(INDEX_FIRST_PERSON, "");
-        assertParseFailure(parser, userInput, expectedCommand); */
     }
 
     @Test

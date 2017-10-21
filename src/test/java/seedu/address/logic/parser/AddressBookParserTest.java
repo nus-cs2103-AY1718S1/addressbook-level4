@@ -91,9 +91,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_ungroup() throws Exception {
-        final String group = "Some group";
+        final Group group = new Group("Some group");
         UngroupCommand command = (UngroupCommand) parser.parseCommand(UngroupCommand.COMMAND_WORD + " "
-            + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + group);
+            + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + group.groupName);
         assertEquals(new UngroupCommand(INDEX_FIRST_PERSON, group), command);
     }
 
