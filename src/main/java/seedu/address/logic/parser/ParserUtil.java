@@ -11,7 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Description;
-import seedu.address.model.event.Timing;
+import seedu.address.model.event.timing.Timing;
 import seedu.address.model.event.Title;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Company;

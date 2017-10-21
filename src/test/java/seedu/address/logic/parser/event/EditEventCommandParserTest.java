@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.event.EditEventCommand;
-import seedu.address.model.event.Timing;
+import seedu.address.model.event.timing.Timing;
 import seedu.address.model.event.Title;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 

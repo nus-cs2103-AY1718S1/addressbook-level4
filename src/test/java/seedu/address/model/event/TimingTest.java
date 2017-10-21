@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.model.event.timing.Timing;
+
 public class TimingTest {
     @Test
     public void isValidTiming() {

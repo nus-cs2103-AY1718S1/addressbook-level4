@@ -1,4 +1,4 @@
-package seedu.address.model.event;
+package seedu.address.model.event.timing;
 
 import static java.util.Objects.requireNonNull;
 

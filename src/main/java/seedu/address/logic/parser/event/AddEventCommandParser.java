@@ -18,7 +18,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.Timing;
+import seedu.address.model.event.timing.Timing;
 import seedu.address.model.event.Title;
 
 /**

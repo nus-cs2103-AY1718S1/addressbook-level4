@@ -20,7 +20,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.Timing;
+import seedu.address.model.event.timing.Timing;
 import seedu.address.model.event.Title;
 import seedu.address.testutil.EventBuilder;
 
