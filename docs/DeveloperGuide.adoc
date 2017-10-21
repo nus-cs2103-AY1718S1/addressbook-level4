@@ -817,6 +817,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+|`* * *`|user |add a person to an event |keep track of who is involved
+
+|`* * *`|user |delete a person from an event |remove a person who is no longer participating
+
+|`* * *`|user |list all events a person is involved in |easily check which events a person is a participant of
+
+|`* * *`|user |list every person involved in an event |easily check who is participating
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
 |`* * *` |user |add a new person |add a person's contact detail into the app
