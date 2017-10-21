@@ -27,5 +27,4 @@ public class NameIsPrivatePredicate implements Predicate<ReadOnlyPerson> {
         return other == this // short circuit if same object
                 || (other instanceof NameIsPrivatePredicate); // instanceof handles nulls
     }
-
 }

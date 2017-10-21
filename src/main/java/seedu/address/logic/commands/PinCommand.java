@@ -13,7 +13,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Pins a person identified using it's last displayed index from the address book.
  */
-public class PinCommand extends UndoableCommand {
+public class PinCommand extends Command {
 
     public static final String COMMAND_WORD = "pin";
 
@@ -32,7 +32,7 @@ public class PinCommand extends UndoableCommand {
 
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 

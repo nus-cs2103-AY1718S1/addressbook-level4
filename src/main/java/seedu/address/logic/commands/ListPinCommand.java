@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ONLY_PINNED;
+import seedu.address.model.person.PersonIsPinnedPredicate;
 
 /**
  * Lists all persons in the address book to the user.
@@ -13,7 +13,7 @@ public class ListPinCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ONLY_PINNED);
+        model.updateFilteredPersonList(new PersonIsPinnedPredicate());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

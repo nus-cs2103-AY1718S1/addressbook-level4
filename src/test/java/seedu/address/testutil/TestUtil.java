@@ -51,4 +51,8 @@ public class TestUtil {
     public static ReadOnlyPerson getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
     }
+
+    public static ReadOnlyPerson getUnpinPerson(Model model, Index index) {
+        return model.getFilteredPersonList().get(index.getZeroBased());
+    }
 }
