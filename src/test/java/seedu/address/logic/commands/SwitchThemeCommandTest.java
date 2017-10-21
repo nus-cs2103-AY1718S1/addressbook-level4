@@ -24,7 +24,7 @@ public class SwitchThemeCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndex_invalidSwitch_throwsCommandException() throws Exception {
+    public void execute_validIndexInvalidSwitch_throwsCommandException() throws Exception {
         SwitchThemeCommand switchThemeCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         try {
@@ -36,7 +36,7 @@ public class SwitchThemeCommandTest {
     }
 
     @Test
-    public void execute_validIndex_validSwitch_success() throws Exception {
+    public void execute_validIndexValidSwitch_success() throws Exception {
         String themeToChange = model.getThemesList().get(INDEX_SECOND_PERSON.getZeroBased());
 
         SwitchThemeCommand switchThemeCommand = prepareCommand(INDEX_SECOND_PERSON);
