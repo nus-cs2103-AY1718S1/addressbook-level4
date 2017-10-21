@@ -381,6 +381,71 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Open new AddressBook mechanism
+
+image::OpenAddressBookEvent.png[width="200"]
+
+As you can see from the diagram, when the `Open` button is clicked in the Application, it raises an event and triggers
+`MainApp` to update new Application metadata and restart the UI.
+
+==== Design consideration
+
+**Aspect:** Architectural Design +
+**Alternative 1 (current choice):** Event-Driven Architectural Style +
+**Alternative 2:** N-Tier Architectural Design +
+
+=== Add new person with optional fields
+
+Adding new person in DeathNote requires only name, other fields are optional. This is done by allowing the creation of
+`Phone`, `Email`, etc. objects with `null` parameter.
+
+Problem arises when these field class can create with `null` parameter. Necessary changes are mostly about additional
+checks of `null` in its respective class:
+
+----
+    public Phone(String phone) throws IllegalValueException {
+        String trimmedPhone = phone == null ? null : phone.trim();
+        if (!isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+        this.value = trimmedPhone;
+    }
+----
+
+----
+    public static boolean isValidPhone(String test) {
+        return test == null || test.matches(PHONE_VALIDATION_REGEX);
+    }
+----
+
+----
+    public boolean equals(Object other) {
+        if (other == this) { // short circuit if same object
+            return true;
+        } else if (!(other instanceof Phone)) { // instanceof handle nulls
+            return false;
+        } else if (this.value == ((Phone) other).value) {
+            return true;
+        } else if (this.value != null && this.value.equals(((Phone) other).value)) { // state check
+            return true;
+        }
+
+        return false;
+    }
+----
+
+==== Design consideration
+
+**Aspect:** Nature of field object when dealing with `null` +
+**Alternative 1 (current choice):** Each `Person` must have all field objects being non-null, but the respective objects
+can have `null` in their `value` field. +
+**Pros:** Only each field class needs to be modified. No other components are affected. +
+**Cons:** All existing tests will fail, since it wasn't meant to be allowed. +
+**Alternative 2:** Each `Person` can have field objects being `null`. +
+**Pros:** Only little modification needed to make in `Model` component. +
+**Cons:** Since many components rely on each field object being non-null, this design will fail the other components. +
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
