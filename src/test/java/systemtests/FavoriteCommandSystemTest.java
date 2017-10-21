@@ -47,8 +47,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         StringBuilder names = new StringBuilder();
         for (Index index : indexList) {
             ReadOnlyPerson favoritedPerson = favoritePerson(expectedModel, index);
-            names.append("\n★ ");
-            names.append(favoritedPerson.getName().toString());
+            names.append("\n★ ").append(favoritedPerson.getName().toString());
         }
         String expectedResultMessage = String.format(MESSAGE_FAVORITE_PERSON_SUCCESS, names);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -58,7 +57,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: redo favoriting the 3rd, 4th & 5th person in the list -> last person favorited again */
+        /* Case: redo favoriting the 3rd, 4th & 5th person in the list -> 3rd, 4th & 5th person favorited again */
         command = RedoCommand.COMMAND_WORD;
         for (Index index : indexList) {
             favoritePerson(expectedModel, index);
@@ -119,8 +118,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " 1 2 3 abc",
-                MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
+        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " 1 2 a", MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("FaV 1", MESSAGE_UNKNOWN_COMMAND);
