@@ -39,7 +39,6 @@ public class AliasToken implements ReadOnlyAliasToken {
     public void setRepresentation(Representation representation) {
         this.representation.set(requireNonNull(representation));
     }
-    
 
     @Override
     public ObjectProperty<Keyword> keywordProperty() {
