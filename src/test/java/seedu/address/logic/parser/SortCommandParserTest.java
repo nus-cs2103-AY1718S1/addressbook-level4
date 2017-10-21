@@ -11,6 +11,7 @@ import seedu.address.logic.commands.SortCommand;
 //@@author khooroko
 public class SortCommandParserTest {
 
+    private static final String ORDERING_DEFAULT = "";
     private static final String ORDERING_NAME = "name";
     private static final String ORDERING_DEBT = "debt";
     private static final String ORDERING_CLUSTER = "cluster";
@@ -24,8 +25,6 @@ public class SortCommandParserTest {
 
     @Test
     public void parse_invalidOrdering_failure() {
-        // no argument
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
 
         // number
         assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
@@ -37,6 +36,9 @@ public class SortCommandParserTest {
     @Test
     public void parse_validOrdering_success() {
         SortCommand expectedCommand;
+
+        expectedCommand = new SortCommand(ORDERING_DEFAULT);
+        assertParseSuccess(parser, ORDERING_DEFAULT, expectedCommand);
 
         expectedCommand = new SortCommand(ORDERING_NAME);
         assertParseSuccess(parser, ORDERING_NAME, expectedCommand);

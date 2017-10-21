@@ -21,6 +21,7 @@ import seedu.address.model.UserPrefs;
  */
 public class SortCommandTest {
 
+    private static final String ORDERING_DEFAULT = "";
     private static final String ORDERING_NAME = "name";
     private static final String ORDERING_DEBT = "debt";
     private static final String ORDERING_CLUSTER = "cluster";
@@ -39,6 +40,11 @@ public class SortCommandTest {
         String expectedMessage;
 
         Model expectedModel = model;
+
+        expectedModel.sortBy(ORDERING_NAME);
+        sortCommand = prepareCommand(ORDERING_DEFAULT);
+        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_NAME);
+        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
 
         expectedModel.sortBy(ORDERING_NAME);
         sortCommand = prepareCommand(ORDERING_NAME);

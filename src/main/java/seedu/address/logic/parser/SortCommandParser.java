@@ -20,6 +20,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         requireNonNull(args);
         String trimmedArgs = args.trim().toLowerCase();
         switch (trimmedArgs) {
+        case "":
         case "name":
         case "debt":
         case "cluster":
