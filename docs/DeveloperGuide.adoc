@@ -373,7 +373,7 @@ The sort command sorts the `People` in `AddressBook` based on their `Name`, `Pho
 `SortCommand` inherits from `UndoableCommand` which inherits from `Command` and the logic is
 shown in figure 1 below.
 
-image::sortLogic.png[width="800"]
+image::sortLogicDiagram.png[width="700"]
 Figure 1: Logic of SortCommand
 
 There will be a `SortCommandParser` as well to parse out the `KEYWORD` which is either name, phone, email
