@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.graph.GraphWrapper;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -23,12 +24,15 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private final GraphWrapper graphWrapper;
 
     public LogicManager(Model model) {
         this.model = model;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+        this.graphWrapper = new GraphWrapper();
+        graphWrapper.setData(model);
     }
 
     @Override
@@ -36,7 +40,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack);
+            command.setData(model, history, undoRedoStack, graphWrapper);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;

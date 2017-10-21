@@ -158,11 +158,9 @@ public class Person implements ReadOnlyPerson {
         return relationships;
     }
 
-    /**
-     * Replaces this person's relationships with the relationships in the argument relationship set.
-     */
-    public void setRelationships(Set<Relationship> replacement) {
-        relationships.set(new UniqueRelationshipList(replacement));
+    @Override
+    public ReadOnlyPerson copy() {
+        return new Person(getName(), getPhone(), getEmail(), getAddress(), getTags(), getRelationships());
     }
 
     /**

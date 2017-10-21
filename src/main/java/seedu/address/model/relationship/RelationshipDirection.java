@@ -22,4 +22,8 @@ public enum RelationshipDirection {
     public boolean isDirected() {
         return this.direction.equals(directed);
     }
+
+    public String toString() {
+        return this.getDirection();
+    }
 }

@@ -27,8 +27,11 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueRelationshipList> relationshipProperty();
     Set<Relationship> getRelationships();
 
+    ReadOnlyPerson copy();
+
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
+     * Relationships and tags of the person are not taking into account.
      */
     default boolean isSameStateAs(ReadOnlyPerson other) {
         return other == this // short circuit if same object

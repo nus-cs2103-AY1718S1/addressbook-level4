@@ -1,6 +1,7 @@
 package seedu.address.model.graph;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -11,8 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
-
-
+import seedu.address.model.relationship.RelationshipDirection;
 
 
 /**
@@ -24,15 +24,18 @@ public class GraphWrapper {
     public static final String MESSAGE_PERSON_DOESNOT_EXIST = "The person does not exist in this address book.";
 
     private SingleGraph graph;
-    private final Model model;
-    private final ObservableList<ReadOnlyPerson> filteredPersons;
+    private Model model;
+    private ObservableList<ReadOnlyPerson> filteredPersons;
     private final String graphId = "ImARandomGraphID";
 
     private final String nodeAttributePersonName = "PersonName";
     private final String nodeAttributePerson = "Person";
 
-    public GraphWrapper(Model model) {
+    public GraphWrapper() {
         this.graph = new SingleGraph(graphId);
+    }
+
+    public void setData(Model model) {
         this.model = model;
         this.filteredPersons = model.getFilteredPersonList();
     }
@@ -120,6 +123,21 @@ public class GraphWrapper {
         }
 
         return graph.getEdge(designatedEdgeId1);
+    }
+
+    public Edge addEdge(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson, RelationshipDirection direction) {
+        requireAllNonNull(firstPerson, secondPerson, direction);
+        if (direction.isDirected()) {
+            return addDirectedEdge(firstPerson, secondPerson);
+        } else {
+            return addUndirectedEdge(firstPerson, secondPerson);
+        }
+    }
+
+    public void clear() {
+        this.graph = null;
+        this.model = null;
+        this.filteredPersons = null;
     }
 
     private SingleGraph initiateGraphEdges() {
