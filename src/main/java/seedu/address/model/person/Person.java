@@ -87,8 +87,14 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+        try {
+            setProperties(source.getProperties());
+        } catch (DuplicatePropertyException e) {
+            // TODO: Better error handling
+            e.printStackTrace();
+            System.err.println("This should never happen.");
+        }
     }
 
     public void setName(Name name) {

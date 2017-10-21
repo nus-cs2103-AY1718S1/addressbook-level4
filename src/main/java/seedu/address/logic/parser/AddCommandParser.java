@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.HashMap;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -40,11 +39,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        HashMap<Prefix, String> allValues = argMultimap.getAllValues();
-
         try {
-            Set<Property> propertyList = ParserUtil.parseProperties(allValues);
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Set<Property> propertyList = ParserUtil.parseProperties(argMultimap.getAllValues());
             return new AddCommand(new Person(propertyList, tagList));
         } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
             throw new ParseException(e.getMessage(), e);
