@@ -41,7 +41,6 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private PersonDetailPanel personDetailPanel;
     private PersonListPanel personListPanel;
     private CommandBox commandBox;
     private Config config;
@@ -144,7 +143,7 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getLatestPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        personDetailPanel = new PersonDetailPanel();
+        PersonDetailPanel personDetailPanel = new PersonDetailPanel();
         personDetailPlaceholder.getChildren().add(personDetailPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
