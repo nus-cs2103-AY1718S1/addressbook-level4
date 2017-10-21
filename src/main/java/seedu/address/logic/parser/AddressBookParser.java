@@ -92,7 +92,7 @@ public class AddressBookParser {
             return new ClearCommand();
 
         case HideCommand.COMMAND_WORD:
-            return new HideCommandParser().parse(arguments);
+            return new HideCommandParser().parse(checkedArguments);
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(checkedArguments);
