@@ -398,6 +398,7 @@ image::OpenNewRolodexChangedLocationEventSequenceDiagram.png[]
 The `New` command only differs from the sequence of the open new Rolodex by being executed when no valid file exists at
 the specified active directory:
 
+[source,java]
 ----
 @Override
 public CommandResult execute() throws CommandException {
@@ -412,6 +413,7 @@ public CommandResult execute() throws CommandException {
 
 In contrast, the `Open` command is a reverse of the above:
 
+[source,java]
 ----
 @Override
 public CommandResult execute() throws CommandException {
@@ -429,6 +431,7 @@ public CommandResult execute() throws CommandException {
 The `XmlRolodexStorage.java` now only saves upon recognizing that the current file has a `.rldx` extension, which is a
 subset of xml for the Rolodex application, as seen in the snippet below:
 
+[source,java]
 ----
 public void saveRolodex(ReadOnlyRolodex rolodex, String filePath) throws IOException {
     ...
@@ -610,6 +613,66 @@ comparator before executing a sort and filter which is handled by the event cons
 **Pros:** Users can immediately `edit` the person using the last listing index. +
 **Cons:** The displayed listing will not comply with the model comparator.
 // end::sorting[]
+
+// tag::commandAbbreviations[]
+=== Abbreviation mechanism
+The ability for users to enter a variety of different words for a same command is implemented using `java.util.set`.
+
+An example as implemented in the open command:
+
+[source,java]
+----
+import java.util.HashSet;
+import java.util.Set;
+
+public class OpenCommand extends Command {
+
+    public static final String COMMAND_WORD = "open";
+    public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "o", "cd", "ls", "<"));
+    ...
+}
+----
+
+`COMMAND_WORD_ABBREVIATIONS` is implemented using a `java.util.HashSet` which offers reasonably fast access times.
+
+The user would be able to use a wide variety of different commands such as `o`, `cd` like on Windows cmd, `ls` on
+UNIX-like systems or the loose `<` such as when you run a `java program < input > output` on a wide variety of systems.
+
+It can easily be seen that using a set implementation, the developer would have an extremely easy time adding/ deleting
+new abbreviations. A set implementation also allows an easy way of testing if there are conflicting abbreviations, by
+simply permuting the `COMMAND_WORD_ABBREVIATIONS` property of all possible commands and checking if all permutations are
+pairwise disjoint:
+
+[source,java]
+----
+@Test
+public void parseAllCommandAbbreviationsAreDisjoint() {
+    ArrayList<Pair<Set<String>, Set<String>>> commandAbbreviationPermutations =
+            generateCommandAbbreviationPermutations(POSSIBLE_COMMAND_ABBREVIATIONS);
+    for (Pair<Set<String>, Set<String>> commandAbbreviationPair : commandAbbreviationPermutations) {
+        assertTrue(Collections.disjoint(commandAbbreviationPair.getKey(), commandAbbreviationPair.getValue()));
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation +
+**Alternative 1 (current choice):** A Set of strings +
+**Pros:** Constant access time per command level. Improves performance and reliability significantly. +
+**Pros:** Ease of testing for conflicting abbreviations, particularly where developers forget if they used a
+same abbreviation for two different commands (e.g. assigning `h` to both the `history` and `help` commands). +
+**Cons:** If you have a better suggestion than the above implementation, feel free to create a new issue for discussion
+on https://github.com/CS2103AUG2017-W11-B2/main/issues[github]. +
+**Alternative 2 (previous choice):** Manually named string Constants +
+**Pros:** Forces developer to be more prudent in checking through the conflicting abbreviations. +
+**Cons:** Developers would have to manually check through all commands to ensure the accuracy of the abbreviations,
+which is time-consuming and makes way for human errors. +
+**Cons:** A switch-case for all possible commands abbreviations would perform significantly slower than direct memory
+access on a java `HashSet`, in the worst case.
+
+// end::commandAbbreviations[]
 
 // tag::auto-completion[]
 === Auto-completion mechanism

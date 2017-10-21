@@ -4,7 +4,10 @@ import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_NAME_DESCENDING
 import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DEFAULT;
 import static seedu.address.logic.parser.SortUtil.MESSAGE_SORT_USAGE;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
@@ -17,8 +20,8 @@ import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
-    public static final String COMMAND_WORD_ABBREV = "f";
-    public static final String COMMAND_WORD_ALT = "search";
+    public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "f", "filter", "search"));
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names roughly match any of "
             + "the specified keywords (case-insensitive) "

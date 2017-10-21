@@ -80,7 +80,7 @@ public class DeleteCommandSystemTest extends RolodexSystemTest {
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
         selectPerson(selectedIndex);
-        command = DeleteCommand.COMMAND_WORD_ABBREV + " " + selectedIndex.getOneBased();
+        command = DeleteCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " " + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
@@ -92,7 +92,7 @@ public class DeleteCommandSystemTest extends RolodexSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid index (-1) -> rejected */
-        command = DeleteCommand.COMMAND_WORD_ABBREV + " -1";
+        command = DeleteCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " -1";
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid index (size + 1) -> rejected */
@@ -102,7 +102,8 @@ public class DeleteCommandSystemTest extends RolodexSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD_ABBREV + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " abc",
+                MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);

@@ -3,13 +3,50 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import javafx.util.Pair;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NewCommand;
+import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Contains helper methods for testing command parsers.
  */
 public class CommandParserTestUtil {
+
+    public static final Set<Set<String>> POSSIBLE_COMMAND_ABBREVIATIONS = new HashSet<>(Arrays.asList(
+            AddCommand.COMMAND_WORD_ABBREVIATIONS,
+            ClearCommand.COMMAND_WORD_ABBREVIATIONS,
+            DeleteCommand.COMMAND_WORD_ABBREVIATIONS,
+            EditCommand.COMMAND_WORD_ABBREVIATIONS,
+            ExitCommand.COMMAND_WORD_ABBREVIATIONS,
+            FindCommand.COMMAND_WORD_ABBREVIATIONS,
+            HelpCommand.COMMAND_WORD_ABBREVIATIONS,
+            HistoryCommand.COMMAND_WORD_ABBREVIATIONS,
+            ListCommand.COMMAND_WORD_ABBREVIATIONS,
+            NewCommand.COMMAND_WORD_ABBREVIATIONS,
+            OpenCommand.COMMAND_WORD_ABBREVIATIONS,
+            RedoCommand.COMMAND_WORD_ABBREVIATIONS,
+            SelectCommand.COMMAND_WORD_ABBREVIATIONS,
+            UndoCommand.COMMAND_WORD_ABBREVIATIONS
+    ));
 
     /**
      * Asserts that the parsing of {@code userInput} by {@code parser} is successful and the command created
@@ -35,5 +72,26 @@ public class CommandParserTestUtil {
         } catch (ParseException pe) {
             assertEquals(expectedMessage, pe.getMessage());
         }
+    }
+
+    /**
+     * Returns a list permutation of all pairs of Set of Strings in a Set of Set of Strings
+     * @param set to be permuted
+     */
+    public static ArrayList<Pair<Set<String>, Set<String>>> generateCommandAbbreviationPermutations(Set<Set<String>>
+                                                                                                            set) {
+        ArrayList<Pair<Set<String>, Set<String>>> commandAbbreviationPairList = new ArrayList<>();
+        ArrayList<Set<String>> stringList = new ArrayList<>(set);
+
+        for (int i = 0; i < set.size(); i++) {
+            for (int j = i + 1; j < set.size(); j++) {
+                if (i != j) {
+                    Pair<Set<String>, Set<String>> setPair = new Pair<>(stringList.get(i), stringList.get(j));
+                    commandAbbreviationPairList.add(setPair);
+                }
+            }
+        }
+
+        return commandAbbreviationPairList;
     }
 }
