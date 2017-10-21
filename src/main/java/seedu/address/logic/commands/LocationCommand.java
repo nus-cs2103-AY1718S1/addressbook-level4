@@ -13,14 +13,14 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Accesses a person's location in the address book.
  */
 public class LocationCommand extends Command {
-    public static final String COMMAND_WORD = "location";
+    public static final String COMMAND_WORD = "locate";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Accesses the location of the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_ACCESS_PERSON_SUCCESS = "Accessed location of Person: %1$s";
+    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Accessed location of Person: %1$s";
 
     private final Index targetIndex;
 
@@ -38,7 +38,7 @@ public class LocationCommand extends Command {
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
         EventsCenter.getInstance().post(new AccessLocationRequestEvent(person.getAddress().toString()));
-        return new CommandResult(String.format(MESSAGE_ACCESS_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased()));
     }
 
     @Override
