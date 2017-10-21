@@ -42,15 +42,16 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
          * -> favorited
          */
         Model expectedModel = getModel();
-        String command = "     " + FavoriteCommand.COMMAND_WORD
-                + "      " + INDEX_THIRD_PERSON.getOneBased()
-                + "       " + INDEX_FOURTH_PERSON.getOneBased()
-                + "        " + INDEX_FIFTH_PERSON.getOneBased();
-        String names = "";
+        String command = "     " + FavoriteCommand.COMMAND_WORD + "      "
+                + INDEX_THIRD_PERSON.getOneBased() + "       "
+                + INDEX_FOURTH_PERSON.getOneBased() + "        "
+                + INDEX_FIFTH_PERSON.getOneBased();
+        StringBuilder names = new StringBuilder();
         List<Index> indexList = Arrays.asList(INDEX_THIRD_PERSON, INDEX_FOURTH_PERSON, INDEX_FIFTH_PERSON);
         for (Index index : indexList) {
             ReadOnlyPerson favoritedPerson = favoritePerson(expectedModel, index);
-            names += "\n★ " + favoritedPerson.getName().toString();
+            names.append("\n★ ");
+            names.append(favoritedPerson.getName().toString());
         }
         String expectedResultMessage = String.format(MESSAGE_FAVORITE_PERSON_SUCCESS, names);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -69,7 +70,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
          */
         command = RedoCommand.COMMAND_WORD;
         for (Index index : indexList) {
-            ReadOnlyPerson favoritedPerson = favoritePerson(expectedModel, index);
+            favoritePerson(expectedModel, index);
         }
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
