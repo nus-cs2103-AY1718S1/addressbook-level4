@@ -14,7 +14,6 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.AccessLocationRequestEvent;
 import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Browser Panel of the App.
