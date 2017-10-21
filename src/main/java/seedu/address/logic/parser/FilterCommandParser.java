@@ -25,7 +25,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
 
-        String[] tags = trimmedArgs.split("\\s+");
+        String[] tags = ArgumentWildcardMatcher.createKeywords(trimmedArgs);
 
         return new FilterCommand(new ContainsTagsPredicate(Arrays.asList(tags)));
     }

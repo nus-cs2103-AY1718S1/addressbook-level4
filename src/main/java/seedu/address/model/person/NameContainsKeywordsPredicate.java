@@ -17,8 +17,12 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        for (String name : person.getName().fullName.split("\\s+")) {
+            for (String keyword : keywords) {
+                if (name.toLowerCase().matches(keyword)) return true;
+            }
+        }
+        return false;
     }
 
     @Override

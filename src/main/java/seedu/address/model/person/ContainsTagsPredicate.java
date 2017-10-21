@@ -19,7 +19,7 @@ public class ContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     public boolean test(ReadOnlyPerson person) {
         for (Tag tag : person.getTags()) {
             for (String keyword : keywords) {
-                if (keyword.equalsIgnoreCase(tag.tagName)) {
+                if (tag.tagName.toLowerCase().matches(keyword)) {
                     return true;
                 }
             }
