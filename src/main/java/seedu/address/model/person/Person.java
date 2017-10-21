@@ -98,7 +98,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setName(Name name) {
-        this.name.set(requireNonNull(name));
+        requireNonNull(name);
+        setProperty(name);
+        this.name.set(name);
     }
 
     @Override
@@ -112,7 +114,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
+        requireNonNull(phone);
+        setProperty(phone);
+        this.phone.set(phone);
     }
 
     @Override
@@ -126,7 +130,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
+        requireNonNull(email);
+        setProperty(email);
+        this.email.set(email);
     }
 
     @Override
@@ -140,7 +146,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setAddress(Address address) {
-        this.address.set(requireNonNull(address));
+        requireNonNull(address);
+        setProperty(address);
+        this.address.set(address);
     }
 
     @Override
