@@ -61,7 +61,8 @@ public class BirthdayCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRemark(), birthday, personToEdit.getTags());
+                personToEdit.getAddress(), personToEdit.getRemark(), birthday, personToEdit.getPhoto(),
+                personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);

@@ -142,14 +142,14 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Adding photo : `addPhoto`
+=== Adding photo : `addphoto`
 
 Adds a photo for the specifed person in the address book. +
-Format: `addPhoto INDEX f/filepath`
+Format: `addphoto INDEX f/filepath`
 
 Examples:
 
-* `addPhoto 1 f/C:/users/pictures/thickThings/thic.png`
+* `addphoto 1 f/C:/users/pictures/thickThings/thic.png`
 
 === Selecting a person : `select`
 

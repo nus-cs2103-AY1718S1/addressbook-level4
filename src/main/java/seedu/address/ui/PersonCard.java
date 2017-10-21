@@ -5,6 +5,7 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -48,7 +49,8 @@ public class PersonCard extends UiPart<Region> {
     private Label birthday;
     @FXML
     private FlowPane tags;
-
+    @FXML
+    private ImageView imageView;
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -73,6 +75,7 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        imageView.setImage(person.getPhoto().getImage());
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
