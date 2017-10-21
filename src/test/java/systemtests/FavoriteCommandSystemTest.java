@@ -37,15 +37,12 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         /* -------------- Performing favorite operation while an unfiltered list is being shown ----------------- */
 
         /*
-         * Case: favorites the third, fourth and fifth person in the list,
-         * command with leading spaces and trailing spaces
-         * -> favorited
+         * Case: favorites the 3rd, 4th & 5th person in the list,
+         * command with leading spaces and trailing spaces -> favorited
          */
         Model expectedModel = getModel();
-        String command = "     " + FavoriteCommand.COMMAND_WORD + "      "
-                + INDEX_THIRD_PERSON.getOneBased() + "       "
-                + INDEX_FOURTH_PERSON.getOneBased() + "        "
-                + INDEX_FIFTH_PERSON.getOneBased();
+        String command = "     " + FavoriteCommand.COMMAND_WORD + "      " + INDEX_THIRD_PERSON.getOneBased()
+                + "       " + INDEX_FOURTH_PERSON.getOneBased() + "        " + INDEX_FIFTH_PERSON.getOneBased();
         List<Index> indexList = Arrays.asList(INDEX_THIRD_PERSON, INDEX_FOURTH_PERSON, INDEX_FIFTH_PERSON);
         StringBuilder names = new StringBuilder();
         for (Index index : indexList) {
@@ -56,18 +53,12 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_FAVORITE_PERSON_SUCCESS, names);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /*
-         * Case: undo favoriting the third, fourth and fifth person in the list
-         * -> third, fourth and fifth person unfavorited
-         */
+        /* Case: undo favoriting the 3rd, 4th & 5th person in the list -> 3rd, 4th & 5th person unfavorited */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /*
-         * Case: redo favoriting the third, fourth and fifth person in the list
-         * -> last person favorited again
-         */
+        /* Case: redo favoriting the 3rd, 4th & 5th person in the list -> last person favorited again */
         command = RedoCommand.COMMAND_WORD;
         for (Index index : indexList) {
             favoritePerson(expectedModel, index);
@@ -128,10 +119,6 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(FavoriteCommand.COMMAND_WORD + " abc",
-                MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
-
-        /* Case: invalid arguments (multiple valid indexes but contained alphabets) -> rejected */
         assertCommandFailure(FavoriteCommand.COMMAND_WORD + " 1 2 3 abc",
                 MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
 
