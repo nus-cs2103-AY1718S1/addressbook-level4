@@ -116,7 +116,8 @@ public class AccessCommandTest {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         ReadOnlyPerson person = lastShownList.get(index.getZeroBased());
 
-        AccessWebsiteRequestEvent lastEvent = (AccessWebsiteRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        AccessWebsiteRequestEvent lastEvent = (AccessWebsiteRequestEvent) eventsCollectorRule
+                .eventsCollector.getMostRecent();
         assertEquals(person.getWebsite().toString(), lastEvent.website);
     }
 
