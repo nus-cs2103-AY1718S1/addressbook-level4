@@ -1,12 +1,12 @@
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    background-image: url('/C:/Users/Syabil/Documents/addressbook-level4/build/resources/main/images/splash.jpg'); /* Used in the default.html file */
+    background-size: cover;
 }
 
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #555555;
+    -fx-text-fill: #87b5ff;
     -fx-opacity: 0.9;
 }
 
@@ -164,8 +164,8 @@
 }
 
 .status-bar-with-border {
-    -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 25%);
+    -fx-background-color: derive(#1d1d1d, 100%);
+    -fx-border-color: derive(#1d1d1d, 100%);
     -fx-border-width: 1px;
 }
 
