@@ -5,7 +5,9 @@ import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTIVITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -34,6 +36,7 @@ public class ScheduleCommand extends UndoableCommand {
             + MESSAGE_GET_MORE_HELP;
 
     public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Scheduled an activity with %1$s";
+    public static final String MESSAGE_DUPLICATE_SCHEDULE = "Schedule already exists";
 
     private final Index index;
     private final Schedule schedule;
@@ -56,12 +59,20 @@ public class ScheduleCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), schedule, personToEdit.getTags());
+        ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+        Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
+
+        if (schedules.contains(schedule)) {
+            throw new CommandException(MESSAGE_DUPLICATE_SCHEDULE);
+        }
+
+        schedules.add(schedule);
+
+        Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(), schedulePerson.getEmail(),
+                schedulePerson.getAddress(), schedules, schedulePerson.getTags());
 
         try {
-            model.updatePerson(personToEdit, editedPerson);
+            model.updatePerson(schedulePerson, scheduleAddedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
@@ -69,7 +80,7 @@ public class ScheduleCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_ADD_SCHEDULE_SUCCESS, personToEdit.getName()));
+        return new CommandResult(String.format(MESSAGE_ADD_SCHEDULE_SUCCESS, schedulePerson.getName()));
     }
 
     @Override
