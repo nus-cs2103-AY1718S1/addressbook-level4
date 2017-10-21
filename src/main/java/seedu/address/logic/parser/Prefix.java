@@ -6,13 +6,19 @@ package seedu.address.logic.parser;
  */
 public class Prefix {
     private final String prefix;
+    private final String value;
 
     public Prefix(String prefix) {
         this.prefix = prefix;
+        this.value = prefix.replace("/", "");
     }
 
     public String getPrefix() {
         return prefix;
+    }
+
+    public String getPrefixValue() {
+        return value;
     }
 
     public String toString() {

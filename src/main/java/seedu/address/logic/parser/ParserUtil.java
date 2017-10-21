@@ -77,7 +77,7 @@ public class ParserUtil {
         Set<Property> properties = new HashSet<>();
 
         for (Map.Entry<Prefix, String> entry: values.entrySet()) {
-            properties.add(new Property(entry.getKey().getPrefix(), entry.getValue()));
+            properties.add(new Property(entry.getKey().getPrefixValue(), entry.getValue()));
         }
 
         return properties;

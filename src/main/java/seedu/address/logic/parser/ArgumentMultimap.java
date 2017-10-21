@@ -1,10 +1,13 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Stores mapping of prefixes to their respective arguments. Each key may be associated with multiple argument values.
@@ -52,12 +55,17 @@ public class ArgumentMultimap {
 
     /**
      * Returns the mapping of {@code Prefix} and their corresponding last values for all {@code prefix}es (only if
-     * there is a value present).
+     * there is a value present). <b>Notice</b>: the return {@code HashMap} does not include preamble and tags.
      */
     public HashMap<Prefix, String> getAllValues() {
         HashMap<Prefix, String> values = new HashMap<>();
 
-        for (Prefix prefix: internalMap.keySet()) {
+        // Need to manually remove preamble from here.
+        Set<Prefix> prefixes = internalMap.keySet();
+        prefixes.remove(new Prefix(""));
+        prefixes.remove(PREFIX_TAG);
+
+        for (Prefix prefix: prefixes) {
             getValue(prefix).ifPresent(s -> values.put(prefix, s));
         }
 

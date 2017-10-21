@@ -12,9 +12,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
 
-    /* Prefix definition for configuration change type. */
-    public static final Prefix PREFIX_CONFIG_TYPE  = new Prefix("--");
-
     /* Prefix definitions for adding a new customize property. */
     public static final Prefix PREFIX_SHORT_NAME = new Prefix("s/");
     public static final Prefix PREFIX_FULL_NAME = new Prefix("f/");

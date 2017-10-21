@@ -31,7 +31,9 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PropertyManager.getAllPrefixes());
+        Set<Prefix> prefixes = PropertyManager.getAllPrefixes();
+        prefixes.add(PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
 
         // TODO: Keep this checking for now. These pre-loaded properties are compulsory.
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
