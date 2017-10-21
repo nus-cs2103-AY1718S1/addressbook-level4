@@ -111,9 +111,9 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_2)) {
             return new SortCommand();
+
         } else {
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
-
 }
