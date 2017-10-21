@@ -2,7 +2,6 @@ package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.parcel.Status.PENDING;
 
 import java.util.Collections;
 import java.util.Objects;
