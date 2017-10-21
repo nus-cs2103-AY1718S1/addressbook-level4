@@ -206,10 +206,6 @@ public class ModelManager extends ComponentManager implements Model {
         return userPrefs.getAdminPassword();
     }
 
-    public byte[] getSaltFromUserPrefs() {
-        return userPrefs.getPasswordSalt();
-    }
-
     /**
      * Checks the entered password against the password stored in {@code UserPrefs} class
      * @param currPassword password entered by user
