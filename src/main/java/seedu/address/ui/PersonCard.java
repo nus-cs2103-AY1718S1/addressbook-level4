@@ -17,8 +17,8 @@ import seedu.address.model.tag.Tag;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] colors = {"red", "blue", "orange", "brown", "purple", "black", "gray", "maroon", "coral",
-            "blueviolet", "slategrey", "darkseagreen", "darkturquoise", "darkkhaki", "firebrick", "darkcyan"};
+    private static String[] colors = { "red", "blue", "orange", "brown", "purple", "black", "gray", "maroon", "coral",
+        "blueviolet", "slategrey", "darkseagreen", "darkturquoise", "darkkhaki", "firebrick", "darkcyan" };
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static int tagNumber = 0;
 
@@ -97,7 +97,7 @@ public class PersonCard extends UiPart<Region> {
             tagColors.put(tagValue, colors[tagNumber]);
             tagNumber++;
         }
-        if (tagNumber >= colors.length){
+        if (tagNumber >= colors.length) {
             tagNumber = 0;
         }
 
