@@ -14,6 +14,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+/**
+ * Adds the birthday to the identified persons.
+ */
 public class AddBirthdayCommand extends UndoableCommand {
 
     public static final String COMMAND_WORDVAR_1 = "birthday";
@@ -28,13 +31,17 @@ public class AddBirthdayCommand extends UndoableCommand {
             + "Parameters: "
             + "[INDEX] (index must be a positive integer) "
             + "[" + PREFIX_BIRTHDAY + "BIRTHDAY]... (birthday must be integers)\n"
-            + "Example 1: " + COMMAND_WORDVAR_1 + " 1 b/240594 \n"
-            + "Example 2: " + COMMAND_WORDVAR_2.toUpperCase() + " 5 b/110696 \n";
+            + "Example 1: "
+            + COMMAND_WORDVAR_1
+            + " 1 b/240594 \n"
+            + "Example 2: "
+            + COMMAND_WORDVAR_2.toUpperCase()
+            + " 5 b/110696 \n";
 
     public static final String MESSAGE_ADD_BIRTHDAY_SUCCESS = "Added Birthday: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_DUPLICATE_BIRTHDAY = "A birthday already exists in the given person. " +
-            "Please use edit command to make changes to it.";
+    public static final String MESSAGE_DUPLICATE_BIRTHDAY = "A birthday already exists in the given person. "
+            + "Please use edit command to make changes to it.";
 
     private final Index targetIndex;
     private final Birthday toAdd;
@@ -67,7 +74,6 @@ public class AddBirthdayCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex.getZeroBased());
-//        System.out.println("Birthday: " + readOnlyPerson.getBirthday().toString());
         if (Objects.equals(readOnlyPerson.getBirthday().toString(), "[-]")) {
             personsContainsBirthdayToAdd = false;
         }

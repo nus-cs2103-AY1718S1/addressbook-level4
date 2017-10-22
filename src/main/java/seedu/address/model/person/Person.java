@@ -31,6 +31,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(Name name, Phone phone, Email email, Address address, Favourite favourite,
                   Birthday birthday, Set<Tag> tags) {
+
         requireAllNonNull(name, phone, email, address, birthday, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -46,11 +47,13 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
+
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavourite(),
                 source.getBirthday(), source.getTags());
     }
 
     public void setName(Name name) {
+
         this.name.set(requireNonNull(name));
     }
 
@@ -120,13 +123,22 @@ public class Person implements ReadOnlyPerson {
         return favourite.get();
     }
 
-    public void setBirthday(Birthday birthday) { this.birthday.set(requireNonNull(birthday)); }
+    public void setBirthday(Birthday birthday) {
+
+        this.birthday.set(requireNonNull(birthday));
+    }
 
     @Override
-    public ObjectProperty<Birthday> birthdayProperty(){ return birthday; }
+    public ObjectProperty<Birthday> birthdayProperty() {
+
+        return birthday;
+    }
 
     @Override
-    public Birthday getBirthday(){ return birthday.get(); }
+    public Birthday getBirthday() {
+
+        return birthday.get();
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

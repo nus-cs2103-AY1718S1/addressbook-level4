@@ -87,7 +87,7 @@ public class ParserUtil {
      */
     public static Birthday parseBirthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        if(Objects.equals(birthday, "")){
+        if (Objects.equals(birthday, "")) {
             return new Birthday();
         } else {
             return new Birthday(birthday);

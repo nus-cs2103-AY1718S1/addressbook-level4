@@ -32,7 +32,7 @@ public interface Model {
 
     /** Adds the given birthday to a person */
     void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
-    DuplicatePersonException;
+            DuplicatePersonException;
 
     /** Deletes given tag from every person */
     void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,

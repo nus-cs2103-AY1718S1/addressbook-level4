@@ -4,10 +4,14 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/**
+ * Represents a birthday field in the address book.
+ * Guarantees: immutable; name is valid as declared in {@link #isValidBirthdayNumber(String)}
+ */
 public class Birthday {
 
-    public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Birthdays should be in numeric, 6 numbers long " +
-            "in the format DDMMYY.";
+    public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Birthdays should be in numeric, 6 numbers long "
+            + "in the format DDMMYY.";
     public static final String BIRTHDAY_VALIDATION_REGEX = "[0-9-]{1,8}";
 
     private final String birthdayNumber;
