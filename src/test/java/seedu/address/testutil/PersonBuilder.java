@@ -105,6 +105,18 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Parses the {@code customFields} into a {@code Set<CustomField>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withCustomFields(String ... customFields) {
+        try {
+            this.person.setCustomFields(SampleDataUtil.getCustomFieldSet(customFields));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
     public Person build() {
         return this.person;
     }
