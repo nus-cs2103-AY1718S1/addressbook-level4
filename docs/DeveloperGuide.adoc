@@ -1338,6 +1338,33 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Sort all contacts
+
+*MSS*
+
+1. User requests to sort all persons in the list.
+2. UniCity displays a list of every person sorted by name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+[none]
+** 2a1. UniCity displays a message on empty list.
++
+Use case ends.
++
+[none]
+* 2a. The list is already sorted in order.
++
+** 2a1. UniCity displays a message on about the sorted list.
++
+Use case ends.
+
+[discrete]
 === Use case: Undo an action
 
 *MSS*
@@ -1384,6 +1411,41 @@ Use case ends.
 ** 2a1. UniCity displays a failure message.
 +
 Use case ends.
+
+[discrete]
+=== Use case: Add birthday to a contact
+
+*MSS*
+
+1. User requests to list persons.
+2. UniCity shows a list of persons.
+3. User requests to add birthday to a specific contact in the list.
+4. UniCity adds the birthday of that contact to the field.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. the list is empty.
++
+Use case ends.
+
+[none]
+* 3a. the given index is invalid.
++
+[none]
+** 3a1. UniCity displays an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 3a. the given birthday is invalid format.
++
+[none]
+** 3a1. UniCity shows an error message and a sample input.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: View previous commands
