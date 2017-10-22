@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.reminder.ReadOnlyReminder;
 
 public class ReminderCard extends UiPart<Region> {
 
@@ -52,7 +52,7 @@ public class ReminderCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyReminder reminder) {
         task.textProperty().bind(Bindings.convert(reminder.taskProperty()));
         priority.textProperty().bind(Bindings.convert(reminder.priorityProperty()));
-        datentime.textProperty().bind(Bindings.convert(reminder.datentimeProperty()));
+        datentime.textProperty().bind(Bindings.convert(reminder.dateProperty()));
         message.textProperty().bind(Bindings.convert(reminder.messageProperty()));
         reminder.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
@@ -60,8 +60,8 @@ public class ReminderCard extends UiPart<Region> {
         });
     }
 
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    private void initTags(ReadOnlyReminder reminder) {
+        reminder.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     @Override

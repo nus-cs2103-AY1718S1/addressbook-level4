@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.Reminder;
 
@@ -61,7 +61,7 @@ public class AddReminderCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof AddCommand // instanceof handles nulls
-                && toAdd.equals(((AddCommand) other).toAdd));
+                || (other instanceof AddReminderCommand // instanceof handles nulls
+                && toAdd.equals(((AddReminderCommand) other).toAdd));
     }
 }

@@ -15,6 +15,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.UniqueReminderList;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -25,6 +30,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueReminderList reminders;
     private final UniqueTagList tags;
 
     /*
@@ -36,6 +42,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        reminders = new UniqueReminderList();
         tags = new UniqueTagList();
     }
 
@@ -53,6 +60,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
+    }
+
+    public void setReminders(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
+        this.reminders.setReminders(reminders);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -92,6 +103,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    public void addReminder(ReadOnlyReminder p) throws DuplicateReminderException {
+        Reminder newReminder = new Reminder(p);
+        syncMasterTagListWith(newReminder);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any reminder
+        // in the reminder list.
+        reminders.add(newReminder);
+    }
+
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -114,6 +134,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    public void updateReminder(ReadOnlyReminder target, ReadOnlyReminder editedReadOnlyReminder)
+            throws DuplicateReminderException, ReminderNotFoundException {
+        requireNonNull(editedReadOnlyReminder);
+
+        Reminder editedReminder = new Reminder(editedReadOnlyReminder);
+        syncMasterTagListWith(editedReminder);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any reminder
+        // in the reminder list.
+        reminders.setReminder(target, editedReminder);
+    }
+
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
@@ -134,6 +166,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         person.setTags(correctTagReferences);
     }
 
+    private void syncMasterTagListWith(Reminder reminder) {
+        final UniqueTagList reminderTags = new UniqueTagList(reminder.getTags());
+        tags.mergeFrom(reminderTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking reminder tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of reminder tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        reminderTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        reminder.setTags(correctTagReferences);
+    }
+
     /**
      * Ensures that every tag in these persons:
      *  - exists in the master list {@link #tags}
@@ -142,6 +189,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     private void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
+    }
+
+    private void syncMasterTagListWith(UniqueReminderList reminders) {
+        reminders.forEach(this::syncMasterTagListWith);
     }
 
     /**
@@ -156,6 +207,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    public boolean removeReminder(ReadOnlyReminder key) throws ReminderNotFoundException {
+        if (reminders.remove(key)) {
+            return true;
+        } else {
+            throw new ReminderNotFoundException();
+        }
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -166,13 +225,19 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags" + "\n"
+                + reminders.asObservableList().size() + " reminders, " + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
 
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyReminder> getReminderList() {
+        return reminders.asObservableList();
     }
 
     @Override

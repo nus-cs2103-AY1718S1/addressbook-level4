@@ -26,7 +26,7 @@ public class SortAgeCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        Boolean isEmpty = model.checkIfListEmpty(contactList);
+        Boolean isEmpty = model.checkIfPersonListEmpty(contactList);
         if (!isEmpty) {
             model.sortListByAge(contactList);
             return new CommandResult(MESSAGE_SUCCESS);
