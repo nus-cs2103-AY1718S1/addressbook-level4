@@ -136,6 +136,12 @@
     -fx-text-fill: #716F70;
 }
 
+.cell_id_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: derive(gray, 35%);
+    -fx-font-size: 15px;
+}
+
 .anchor-pane {
      -fx-background-color: transparent;
 }
@@ -329,14 +335,26 @@
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
-
+/*
 #avatarImage {
     -fx-image: url("../images/avatarGray.png");
+}
+*/
+#initial_small {
+    -fx-font-family: "Roboto";
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 25px;
+}
+
+#initial_big {
+    -fx-font-family: "Roboto";
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 45px;
 }
 
 #commandTypeLabel {
     -fx-font-size: 11px;
-    -fx-text-fill: #F70D1A;
+    -fx-text-fill: #f70d1a;
 }
 
 #commandTextField {
@@ -370,9 +388,10 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
-    -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: gray;
+    -fx-padding: 1 0 1 0;
+    -fx-border-radius: 0;
     -fx-background-radius: 2;
-    -fx-font-size: 11;
+    -fx-font-size: 14px;
 }

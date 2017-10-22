@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -10,8 +9,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
-<StackPane fx:id="personDetailPanel" styleClass="person-detail-panel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="personDetailPanel" minHeight="100.0" minWidth="200.0" styleClass="person-detail-panel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox fx:id="cardPane">
          <children>
@@ -27,7 +27,12 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="avatar" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                              <StackPane>
+                                 <children>
+                                    <Circle fx:id="avatar" fill="DODGERBLUE" radius="40.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                                    <Label id="initial_big" fx:id="initial" text="Label" textFill="WHITE" />
+                                 </children>
+                              </StackPane>
                               <VBox alignment="CENTER_LEFT">
                                  <children>
                                     <Label fx:id="name" alignment="TOP_LEFT" styleClass="cell_big_label" text="\$first">
@@ -61,6 +66,9 @@
                            </padding>
                         </VBox>
                      </children>
+                     <padding>
+                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                     </padding>
                   </VBox>
                </children>
             </GridPane>

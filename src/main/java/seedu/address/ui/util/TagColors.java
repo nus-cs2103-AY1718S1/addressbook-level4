@@ -7,9 +7,9 @@ import java.util.Random;
  * Stores the color information of all tags
  */
 public class TagColors {
-    private static HashMap<String, String> tagColors = new HashMap<>();;
+    private static HashMap<String, String> tagColors = new HashMap<>();
     private static Random random = new Random();
-    private static String[] colors = ColorsUtil.getTagColors();
+    private static String[] colors = ColorsUtil.getColors();
 
     private TagColors() {}
 
