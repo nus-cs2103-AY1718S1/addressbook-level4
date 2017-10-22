@@ -33,9 +33,9 @@ public class UniqueScheduleList implements Iterable<Schedule> {
      * Creates a UniqueScheduleList using given schedules.
      * Enforces no nulls.
      */
-    public UniqueScheduleList(Set<Schedule> tags) {
-        requireAllNonNull(tags);
-        internalList.addAll(tags);
+    public UniqueScheduleList(Set<Schedule> schedules) {
+        requireAllNonNull(schedules);
+        internalList.addAll(schedules);
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
@@ -52,9 +52,9 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     /**
      * Replaces the Schedules in this list with those in the argument schedule list.
      */
-    public void setSchedules(Set<Schedule> tags) {
-        requireAllNonNull(tags);
-        internalList.setAll(tags);
+    public void setSchedules(Set<Schedule> schedules) {
+        requireAllNonNull(schedules);
+        internalList.setAll(schedules);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
@@ -64,7 +64,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     public void mergeFrom(UniqueScheduleList from) {
         final Set<Schedule> alreadyInside = this.toSet();
         from.internalList.stream()
-                .filter(tag -> !alreadyInside.contains(tag))
+                .filter(schedule -> !alreadyInside.contains(schedule))
                 .forEach(internalList::add);
 
         assert CollectionUtil.elementsAreUnique(internalList);

@@ -24,20 +24,20 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-    private ObjectProperty<UniqueScheduleList> schedule;
+    private ObjectProperty<UniqueScheduleList> schedules;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Schedule> schedule, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Schedule> schedules, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, schedules, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-        this.schedule = new SimpleObjectProperty<>(new UniqueScheduleList(schedule));
+        this.schedules = new SimpleObjectProperty<>(new UniqueScheduleList(schedules));
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -110,12 +110,12 @@ public class Person implements ReadOnlyPerson {
      * Replaces this person's schedules with the schedules in the argument schedule set.
      */
     public void setSchedules(Set<Schedule> replacement) {
-        schedule.set(new UniqueScheduleList(replacement));
+        schedules.set(new UniqueScheduleList(replacement));
     }
 
     @Override
     public ObjectProperty<UniqueScheduleList> scheduleProperty() {
-        return schedule;
+        return schedules;
     }
 
     /**
@@ -124,7 +124,7 @@ public class Person implements ReadOnlyPerson {
      */
     @Override
     public Set<Schedule> getSchedules() {
-        return Collections.unmodifiableSet(schedule.get().toSet());
+        return Collections.unmodifiableSet(schedules.get().toSet());
     }
 
     /**
@@ -157,7 +157,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, schedule, tags);
+        return Objects.hash(name, phone, email, address, schedules, tags);
     }
 
     @Override
