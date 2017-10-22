@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= ModU - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -134,7 +134,7 @@ image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the ModU data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the link:#ui[UI] being updated to reflect the 'Last Updated' time.
 
@@ -176,7 +176,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a lesson) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the link:#sequence-diagram[Sequence Diagram] for interactions within the `Logic` component for the `execute("delete 1")` link:#api[API] call.
@@ -194,8 +194,8 @@ _Figure 2.4.1 : Structure of the Model Component_
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the link:#ui[UI] can be bound to this list so that the link:#ui[UI] automatically updates when the data in the list change.
+* stores the ModU data.
+* exposes an unmodifiable `ObservableList<ReadOnlyLesson>` that can be 'observed' e.g. the link:#ui[UI] can be bound to this list so that the link:#ui[UI] automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -208,7 +208,7 @@ _Figure 2.5.1 : Structure of the Storage Component_
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the ModU data in xml format and read it back.
 
 === Common classes
 
@@ -221,13 +221,13 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 === Undo/Redo mechanism
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the ModU (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the ModU before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -262,20 +262,20 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th lesson in the ModU. The current state of the ModU is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new lesson.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the lesson was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the ModU to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -286,7 +286,7 @@ The following link:#sequence-diagram[sequence diagram] shows how the undo operat
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the ModU to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -316,22 +316,22 @@ image::UndoRedoActivityDiagram.png[width="200"]
 ---
 
 **Aspect:** How undo & redo executes +
-**Alternative 1 (current choice):** Saves the entire address book. +
+**Alternative 1 (current choice):** Saves the entire ModU. +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
-**Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
+**Pros:** Will use less memory (e.g. for `delete`, just save the lesson being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
 
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
-**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
+**Alternative 1 (current choice):** Only include commands that modifies the ModU (`add`, `clear`, `edit`). +
 **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
 **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
 **Alternative 2:** Include all commands. +
 **Pros:** Might be more intuitive for the user. +
-**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
+**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the ModU and not the view. +
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
@@ -464,7 +464,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using link:#gradle[Gradle]. For example, link:#gradle[Gradle] can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, ModU depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using link:#gradle[Gradle]. For example, link:#gradle[Gradle] can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -487,7 +487,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all lessons in the list.
 +
 ****
 * Hints
@@ -521,7 +521,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `link:#ui[UI]` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
+. Use different colors for different tags inside lesson cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
 +
 **Before**
 +
@@ -575,7 +575,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the address book.
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
@@ -735,31 +735,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |admin |view the commands/function i can use in this software |I no need to memorise the function in this software and can review them conviencely whenever i want
 
+|`* * *` |admin |add new location |I can update the list of location in the system whenever a new location is constructed
+
 |`* *` |admin |find a particular lecturer |I no need to search manually in the list of teachers
 
 |`* *` |admin |generate comprehensive reports of the current semester detail |I can save time from making this report myself
 
 |`* *` |admin |view the history of commands |so I no need to go through the list to know what I have added so far
 
-|`* * *` |admin |add new location |I can update the list of location in the system whenever a new location is constructed
+|`* * *` |student |check location and time slot of different modules |I can make my study plan
 
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |student |view all modules that are available next semester |I plan what module I would like to take next semester
 
 |`* * *` |teacher |add new timeslot in timetable |I can plan my teaching schedule
 
-|`* * *` |teacher |delete an existing module in a particular timeslot |I can make changes to the timeslot
+|`* * *` |teacher |delete an existing module in a particular time slot |I can make changes to the time slot
 
-|`* * *` |teacher |delete an existing module in a particular location |I can make changes to the timeslot
+|`* * *` |teacher |delete an existing module in a particular location |I can make changes to the time slot
 
-|`* * *` |teacher |update an existing module timeslot |I can change the current timeslot to an updated one
+|`* * *` |teacher |update an existing module time slot |I can change the current time slot to an updated one
 
 |`* * *` |teacher |update an existing module location |I can change the current location to an updated one
 
@@ -781,30 +775,36 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |teacher |back up my file |I can retrieve back data
 
-|`* * *` |student |check location and time slot of different modules |I can make my study plan
-
-|`* * *` |student |view all modules that are available next semester |I plan what module I would like to take next semester
-
 |`* *` |teacher/student |export the timetable to various files (pdf, excel, png, jpeg) |I can print the timetable
 
 |`* *` |teacher/student |report bugs to developers | developer can solve the bug and improve the product
 
 |`* *` |teacher/student |bookmark a particular module |I can have easy access to the particular module
 
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |delete a lesson |remove entries that I no longer need
+
+|`* * *` |user |find a lecturer by name |locate details of lecturers without having to go through the entire list
+
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` |user with many lessons in the ModU |sort lessons by code |locate a lesson easily
+
 |=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `ModU` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Add module to timeslot
+=== Use case: Add module to time slot
 
 *MSS*
 
-1. User requests to add module timeslot.
-2. AddressBook adds module shows “successfully added” message.
+1. User requests to add module time slot.
+2. ModU adds module shows “successfully added” message.
 +
 Use case ends.
 
@@ -814,26 +814,26 @@ Use case ends.
 * 1a. User enter wrong command format.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. ModU shows an error message.
 +
 Use case ends.
 
 * 2a. The module code, class type, time-slot or location is not available.
 +
 [none]
-** 2a1. AddressBook shows an error message.
+** 2a1. ModU shows an error message.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Update module in a particular timeslot
+=== Use case: Update module in a particular time slot
 
 *MSS*
 
 1. User requests to list modules.
-2. AddressBook shows a list of modules.
+2. ModU shows a list of modules.
 3. User requests to update a specific module in the list.
-4. AddressBook updates the module.
+4. ModU updates the module.
 +
 Use case ends.
 
@@ -847,19 +847,19 @@ Use case ends.
 * 3a. The module code, class type, time-slot or location is not available.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ModU shows an error message.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Delete module by module/timeslot/location
+=== Use case: Delete module by module/time slot/location
 
 *MSS*
 
-1. User requests to list module by module/timeslot/location.
-2. AddressBook shows a list of module/timeslot/location.
-3. User requests to delete a specific item (module/timeslot/location) on the list
-4. AddressBook deletes the item
+1. User requests to list module by module/time slot/location.
+2. ModU shows a list of module/time slot/location.
+3. User requests to delete a specific item (module/time slot/location) on the list.
+4. ModU deletes the item.
 +
 Use case ends.
 
@@ -873,7 +873,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ModU shows an error message.
 +
 Use case resumes at step 3.
 
@@ -884,15 +884,15 @@ Use case resumes at step 3.
 
 *MSS*
 
-1.  User requests redo the previously command
-2.  AddressBook redo previous command
+1.  User requests redo the previously command.
+2.  ModU redo previous command.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. Unable to find previous command
+* 2a. Unable to find previous command.
 +
 Use case ends.
 
@@ -901,15 +901,15 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to undo previous command
-2.  AddressBook undo previous command
+1.  User requests to undo previous command.
+2.  ModU undo previous command.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. Unable to find previous command
+* 2a. Unable to find previous command.
 +
 Use case ends.
 
@@ -918,8 +918,8 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to list history of commands
-2.  AddressBook shows a list of history of commands
+1.  User requests to list history of commands.
+2.  ModU shows a list of history of commands.
 +
 Use case ends.
 
@@ -935,8 +935,8 @@ Use case ends.
 
 *MSS*
 
-1.  User requests show help guide
-2.  AddressBook shows help guide
+1.  User requests show help guide.
+2.  ModU shows help guide.
 +
 Use case ends.
 
@@ -945,8 +945,8 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to list all modules time-slots
-2.  AddressBook shows all modules time-slots
+1.  User requests to list all modules time-slots.
+2.  ModU shows all modules time-slots.
 +
 Use case ends.
 
@@ -962,9 +962,9 @@ Use case ends.
 
 *MSS*
 
-1. User requests to list by tag-name
-2. AddressBook shows a list of information by tag-name
-3. User requests to view specific information of tag-name
+1. User requests to list by tag-name.
+2. ModU shows a list of information by tag-name.
+3. User requests to view specific information of tag-name.
 +
 Use case ends.
 
@@ -978,7 +978,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ModU shows an error message.
 +
 Use case resumes at step 2.
 
@@ -987,10 +987,10 @@ Use case resumes at step 2.
 
 *MSS*
 
-1. User requests to login with a User Account
-2. AddressBook asks user to key in password
-3. User key in password
-4. AddressBook checks the password and show successful message
+1. User requests to login with a User Account.
+2. ModU asks user to key in password.
+3. User key in password.
+4. ModU checks the password and show successful message.
 +
 Use case ends.
 
@@ -999,7 +999,7 @@ Use case ends.
 * 4a. The account is not registered.
 +
 [none]
-** 4a1. AddressBook shows an error message.
+** 4a1. ModU shows an error message.
 +
 Use case ends.
 
@@ -1013,13 +1013,12 @@ Use case ends.
        .  Compatible with both 32-bits and 64-bits systems
 
    Capacity
-       .  Should be able to hold up to 10000 persons without a noticeable sluggishness in performance for typical usage.
+       .  Should be able to hold up to 10000 lessons without a noticeable sluggishness in performance for typical usage.
 
    Constraint(s)
        .  The system should be backward compatible with data produced by earlier version of the system
        .  The total project cost should not exceed $10,000
        .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
 
    Performance requirement(s):
        .  The application should be respond to 1000 people within 2 seconds
