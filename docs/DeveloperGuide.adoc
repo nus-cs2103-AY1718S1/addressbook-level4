@@ -445,6 +445,58 @@ can have `null` in their `value` field. +
 **Pros:** Only little modification needed to make in `Model` component. +
 **Cons:** Since many components rely on each field object being non-null, this design will fail the other components. +
 
+=== Adding new parameters to person
+
+==== Design consideration
+
+**Aspect:** Implementation of a new variable. +
+**Alternative 1 (current choice):** Add the variable into person and make it be able to be initialised at the constructor with all other existing variables. +
+**Pros:** Consistent with code and how the commands work. +
+**Cons:** Requires a lot of work as many classes depend on using the `Person` constructor; mostly tests. +
+**Alternative 2:** Adding the variable into person but not initialising it at `Person` constructor. +
+**Pros:** Implementation is much easier and it does not affect tests in any way. +
+**Cons:** It is not consistent with the variables in `Person` +
+
+=== Theme mechanism
+
+Theme mechanism uses a singleton class called "UiStyle" which stores the scene of the application in it. +
+This allows the modification of the scene's css at runtime.
+
+----
+public class UiStyle {
+...
+    private static Scene scene = null;
+    
+     public static void setScene(Scene s) {
+        scene = s;
+        setToDarkTheme(); // Default theme
+    }
+    
+    public static void setToLightTheme() {
+        scene.getStylesheets().remove(DARK_THEME_STYLE);
+        scene.getStylesheets().add(LIGHT_THEME_STYLE);
+    }
+    
+    public static void setToDarkTheme() {
+        scene.getStylesheets().remove(LIGHT_THEME_STYLE);
+        scene.getStylesheets().add(DARK_THEME_STYLE);
+    }
+}
+----
+
+----
+UiStyle.getInstance().setToLightTheme();
+----
+
+==== Design consideration
+
+**Aspect:** Implementation of theme +
+**Alternative 1 (current choice):** Pass the scene of the application into a singleton class dedicated for UI usage only +
+**Pros:** Changing the theme can be called easily +
+**Cons:** Changing of the theme can be called anywhere by any class +
+**Alternative 2:** Passing the scene down from `MainApp` class to `ThemeCommand` class +
+**Pros:** Only `ThemeCommand` class will be able to modify the theme +
+**Cons:** Very tedious as `ThemeCommand` class is very far down the architecture +
 
 === Logging
 
