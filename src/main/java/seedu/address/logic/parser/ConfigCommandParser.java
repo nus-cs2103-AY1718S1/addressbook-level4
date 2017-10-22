@@ -24,6 +24,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new ConfigCommand object
  */
 public class ConfigCommandParser implements Parser<ConfigCommand> {
+    // Some messages ready to use.
+    public static final String CONFIG_TYPE_NOT_FOUND = "The configuration you want to change is not "
+            + "available or the command entered is incomplete.";
+    public static final String COLOR_CODE_WRONG = "The color must be one of the pre-defined color names or "
+            + "a valid hexadecimal RGB value";
+    private static final String MESSAGE_REGEX_TOGETHER = "Constraint message and regular expression must be "
+            + "both present or absent";
+
     /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
     private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
     private static final Pattern TAG_COLOR_FORMAT = Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>.+)");
@@ -33,14 +41,6 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
 
     // Some pre-defined colors for convenience.
     private static final HashMap<String, String> preDefinedColors = new HashMap<>();
-
-    // Some messages ready to use.
-    private static final String CONFIG_TYPE_NOT_FOUND = "The configuration you want to change is not "
-            + "available or the command entered is incomplete.";
-    private static final String COLOR_CODE_WRONG = "The color must be one of the pre-defined color names or "
-            + "a valid hexadecimal RGB value";
-    private static final String MESSAGE_REGEX_TOGETHER = "Constraint message and regular expression must be "
-            + "both present or absent";
 
     /**
      * Loads all pre-defined colors here. If you want to define more, you can get more color codes can be obtained from
