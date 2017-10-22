@@ -345,6 +345,37 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Favourite mechanism
+
+The favourite feature allows users to favourite or unfavourite a *single person* depending on whether the person is currently favourited or not. Favourited persons are all sorted to the top of the list in the user interface.
+
+The favourite mechanism makes use of `FavouriteCommandParser` which is called by `AddressBookParser` when it parses the user input. `FavouriteCommandParser` then passes the specified index into FavouriteCommand to execute its code.
+
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("favourite 2")` API call.
+
+image::FavouritePersonSequenceDiagram.png[width="800"]
+
+`FavouriteCommand` extends `UndoableCommand` and is thus also able to be undone/redone.
+
+==== Design Considerations
+**Aspect:** Data structure to hold the favourite status of a person +
+**Alternative 1 (current choice):** Create another class `FavouriteStatus` to hold data on whether the person is a favourite. +
+**Pros:** Consistent with the other data fields like `Name` and `Email` +
+**Cons:** Less memory efficient +
+**Alternative 2:** Creating a boolean variable in `Person` class itself +
+**Pros:** More memory efficient +
+**Cons:** Not as intuitive since all other data fields are encapsulated in other classes +
+
+---
+
+**Aspect:** Implementation of `FavouriteCommand` +
+**Alternative 1 (current choice):** Use the existing `updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)` method in `Model` +
+**Pros:** Able to make use of existing code +
+**Cons:** Might not be as speed efficient since another `Person` object is created just to toggle favourite status +
+**Alternative 2:** Implement additional methods in `Model`, `AddressBook`, etc. to specifically toggle a person's favourite status +
+**Pros:** Makes clear what the method is trying to do +
+**Cons:** Is not necessary when existing code is able to perform the same action +
+
 === Remove mechanism
 
 The remove feature allows users to remove a `Tag` either from a *single person* or from the *whole address book*.
