@@ -279,6 +279,23 @@ Adds a 'remark' to the 1st person in the list. +
 A new remark added to the same person will overwrite the previous remark.
 // end::remark[]
 
+// tag::updateUserPerson[]
+=== Updating User Profile: `update`
+
+Edits the User Profile contact card similar to edit command, but does not take in any index parameter. +
+Only the name, email, address and phone number of the User Person can be updated. +
+The user profile is stored in data/userProfile.xml by default. +
+
+Format: 'update [n/Name] [p/Phone] [e/Email] [a/Address]'
+
+Examples:
+
+* `update n/Drake p/93236353` +
+Updates the name and phone number of the User Person, saved to userProfile.xml. +
+
+Any new information added will overwrite previous data.
+// end::updateUserPerson[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -304,7 +321,7 @@ A CLI command will be implemented `coming in v1.3`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Address book data and user profile data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 == FAQ

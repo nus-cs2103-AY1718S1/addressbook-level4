@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.UserPerson;
 import seedu.address.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -33,8 +34,8 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
         AddressBook unSortedTypicalPersons = getUnsortedTypicalAddressBook();
         AddressBook sortedTypicalPersons = getSortedTypicalAddressBook();
-        ModelManager modelManager1 = new ModelManager(unSortedTypicalPersons, userPrefs);
-        ModelManager modelManager2 = new ModelManager(sortedTypicalPersons, userPrefs);
+        ModelManager modelManager1 = new ModelManager(unSortedTypicalPersons, userPrefs, new UserPerson());
+        ModelManager modelManager2 = new ModelManager(sortedTypicalPersons, userPrefs, new UserPerson());
         modelManager1.sortFilteredPersonList();
         assertTrue(modelManager1.equals(modelManager2));
     }
@@ -46,8 +47,8 @@ public class ModelManagerTest {
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs, new UserPerson());
+        ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs, new UserPerson());
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -60,12 +61,15 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs, new UserPerson())));
+
+        // different userPerson -> returns false
+        assertFalse(modelManager.equals(new ModelManager(new AddressBook(), userPrefs, new UserPerson(ALICE))));
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs, new UserPerson())));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -73,6 +77,6 @@ public class ModelManagerTest {
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
-        assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+        assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs, new UserPerson())));
     }
 }
