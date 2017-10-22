@@ -119,7 +119,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showAllLessons() {
         executeCommand(ListCommand.COMMAND_WORD + " module");
-        assert getModel().getAddressBook().getLessonList().size() == getModel().getFilteredLessonList().size();
+        assert getModel().getAddressBook().getLessonList().size() >= getModel().getFilteredLessonList().size();
     }
 
     /**

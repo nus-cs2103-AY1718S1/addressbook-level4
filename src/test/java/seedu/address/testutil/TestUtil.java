@@ -1,12 +1,12 @@
 package seedu.address.testutil;
 
-import java.io.File;
-import java.io.IOException;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
 import seedu.address.model.module.ReadOnlyLesson;
+
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -47,9 +47,17 @@ public class TestUtil {
     }
 
     /**
+     * Returns the last index of the lesson in the {@code model}'s lesson list.
+     */
+    public static Index getLastModuleIndex(Model model) {
+        return Index.fromOneBased(model.getFilteredLessonList().size());
+    }
+
+    /**
      * Returns the lesson in the {@code model}'s lesson list at {@code index}.
      */
     public static ReadOnlyLesson getLesson(Model model, Index index) {
         return model.getAddressBook().getLessonList().get(index.getZeroBased());
     }
+
 }

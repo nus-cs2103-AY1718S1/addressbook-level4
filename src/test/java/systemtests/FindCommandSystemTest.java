@@ -1,18 +1,6 @@
 package systemtests;
 
-import static seedu.address.commons.core.Messages.MESSAGE_LESSONS_LISTED_OVERVIEW;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalLessons.CS2101_L1;
-import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
-import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
-import static seedu.address.testutil.TypicalLessons.MA1101R_T1;
-import static seedu.address.testutil.TypicalLessons.MA1101R_T2;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -21,6 +9,19 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.lecturer.Lecturer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static seedu.address.commons.core.Messages.MESSAGE_LESSONS_LISTED_OVERVIEW;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalLessons.CS2101_L1;
+import static seedu.address.testutil.TypicalLessons.CS2101_L2;
+import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
+import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
+import static seedu.address.testutil.TypicalLessons.MA1101R_L2;
+import static seedu.address.testutil.TypicalLessons.MA1101R_T1;
+import static seedu.address.testutil.TypicalLessons.MA1101R_T2;
 
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
@@ -32,7 +33,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MA1101R + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, MA1101R_T1, MA1101R_T2); // Both mod code are "MA1101R"
+        ModelHelper.setFilteredList(expectedModel, MA1101R_L1, MA1101R_L2, MA1101R_T1, MA1101R_T2); // Four mod code are "MA1101R"
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -43,15 +44,15 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find lesson where lesson list is not displaying the lesson we are finding -> 1 lesson found */
+        /* Case: find lesson where lesson list is not displaying the lesson we are finding -> 2 lesson found */
         command = FindCommand.COMMAND_WORD + " CS2101";
-        ModelHelper.setFilteredList(expectedModel, CS2101_L1);
+        ModelHelper.setFilteredList(expectedModel, CS2101_L2, CS2101_L1);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple lessons in address book, 1 keywords -> 2 lessons found */
+        /* Case: find multiple lessons in address book, 1 keywords -> 4 lessons found */
         command = FindCommand.COMMAND_WORD + " MA1101R";
-        ModelHelper.setFilteredList(expectedModel, MA1101R_L1, MA1101R_T1);
+        ModelHelper.setFilteredList(expectedModel, MA1101R_L1, MA1101R_L2, MA1101R_T1, MA1101R_T2);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
