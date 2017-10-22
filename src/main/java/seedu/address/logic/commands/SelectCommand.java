@@ -39,9 +39,6 @@ public class SelectCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
-        /*
-         * EventsCenter.getInstance().post(new PanelSwitchRequestEvent(COMMAND_WORD));
-         */
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 

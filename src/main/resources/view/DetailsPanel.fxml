@@ -18,6 +18,12 @@
         </TextFlow>
         <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
+                <Text fx:id="homePhoneField" fill="gray" styleClass="window_small_label" text="Home Phone: "/>
+                <Label fx:id="homePhone" styleClass="window_small_label" text= "\$homePhone" />
+            </children>
+        </TextFlow>
+        <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
                 <Text fx:id="addressField" fill="gray" styleClass="window_small_label" text="Address: " />
                 <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text= "\$address" wrapText="true" />
             </children>

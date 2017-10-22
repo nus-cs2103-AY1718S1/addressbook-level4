@@ -181,7 +181,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Partial words will also be matched. For eg: "Han" will be matched to "Hans".
+* Partial words will also be matched. For eg: "Han" will be matched to "Hans". `since v1.0` `Archana Pradeep`
 * If search word is smaller than name, it has to be the first n character of the name.
 * It cannot be the middle n or the last n characters of the name.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
@@ -327,8 +327,9 @@ Format: `add n/NAME d/DATE a/ADDRESS`
 
 Examples:
 
-* `add n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach`
-* `add n/Orbital d/1/5/2018 a/NUS School Of Computing`
+* `addevent n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach`
+* `addevent n/Orbital d/1/5/2018 a/NUS School Of Computing`
+* `addevent n/Halloween Horror Night d/31/10/2017 a/Universal Studios Singapore
 
 === Favouriting a person : `favourite`
 `since v1.2` `Dickson Chan`
@@ -368,9 +369,30 @@ Examples:
 * `list` +
 `unfavourite 2` +
 Unfavourites the 2nd person in the address book.
+* `favouritelist` +
+`unfavourite 1` +
+Unfavourites the 1st person in the results of the `favouritelist` command.
 * `find Betsy` +
 `unfavourite 1` +
 Unfavourites the 1st person in the results of the `find` command.
+
+=== Listing all favourited persons : `favouritelist`
+`since v1.2` `Dickson Chan`
+
+Shows a list of all favourited persons in the address book. +
+Format: `favouritelist`
+
+=== Details Panel
+`since v1.2` `Archana Pradeep`
+
+UI that shows all details of a person that is not shown in person card
+
+Checking for birthdays : `birthdays`
+`since v1.3` `Archana Pradeep`
+
+Returns a list of all contacts who have their birthdays today
+
+Format: `birthdays' or `bd`
 
 === Clearing all entries : `clear`
 
@@ -387,17 +409,21 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+link:#the-myths-book---user-guide[Back To Top]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+link:#the-myths-book---user-guide[Back To Top]
 
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 h/65812131 e/jamesho@example.com se/jamesho@u.nus.edu w/https://www.facebook.com/jamesHo a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Access* : `access INDEX` +
-e.g.`access 2`
+e.g. `access 2`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -407,15 +433,26 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Locate* : `locate INDEX` +
-e.g.`locate 2`
+e.g. `locate 2`
+* *Favourite* : `favourite INDEX` +
+e.g. `favourite 3`
+* *Unfavourite* : `unfavourite INDEX` +
+e.g. `unfavourite 3`
+* *FavouriteList* : `favouritelist`
+* *ThemesList* : `themeslist`
+* *SwitchTheme* : `switchtheme INDEX` +
+e.g. `switchtheme 2`
 * *Help* : `help`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *AddEvent* `addevent n/NAME d/DATE a/ADDRESS` +
 e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
+
+
+link:#the-myths-book---user-guide[Back To Top]
 
 == Coming in v2.0
 
@@ -427,3 +464,5 @@ e.g. `addevent n/IHG Floorball d/16/01/2018 a/NUS Sports Recreation Centre`
 . Calendar command, that shows all events and appointments on a calendar.
 
 . Enable pictures for each contact so that users can remember the person faster.
+
+link:#the-myths-book---user-guide[Back To Top]

@@ -42,17 +42,19 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
+    private Label email;
+    /*
+    @FXML
     private Label homeNumber;
     @FXML
     private Label address;
-    @FXML
-    private Label email;
     @FXML
     private Label schEmail;
     @FXML
     private Label website;
     @FXML
     private Label birthday;
+    */
     @FXML
     private FlowPane tags;
 
@@ -71,12 +73,12 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        homeNumber.textProperty().bind(Bindings.convert(person.homeNumberProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        schEmail.textProperty().bind(Bindings.convert(person.schEmailProperty()));
-        website.textProperty().bind(Bindings.convert(person.websiteProperty()));
-        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        //homeNumber.textProperty().bind(Bindings.convert(person.homeNumberProperty()));
+        //address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        //schEmail.textProperty().bind(Bindings.convert(person.schEmailProperty()));
+        //website.textProperty().bind(Bindings.convert(person.websiteProperty()));
+        //birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);

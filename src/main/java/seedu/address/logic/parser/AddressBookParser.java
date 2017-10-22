@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AccessCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -57,12 +58,10 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
-
-        case AccessCommand.COMMAND_WORD:
-            return new AccessCommandParser().parse(arguments);
-
         case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
+        case AccessCommand.COMMAND_WORD:
+            return new AccessCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
@@ -82,14 +81,14 @@ public class AddressBookParser {
         case FindTagCommand.COMMAND_WORD: case FindTagCommand.COMMAND_ALIAS:
             return new FindTagCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
-
         case LocationCommand.COMMAND_WORD:
             return new LocationCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
+
+        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
+            return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
@@ -123,6 +122,9 @@ public class AddressBookParser {
 
         case FavouriteListCommand.COMMAND_WORD: case FavouriteListCommand.COMMAND_ALIAS:
             return new FavouriteListCommand();
+
+        case BirthdaysCommand.COMMAND_WORD: case BirthdaysCommand.COMMAND_ALIAS:
+            return new BirthdaysCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
