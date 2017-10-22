@@ -52,6 +52,7 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        setPinIcon(person);
         bindListeners(person);
     }
 
@@ -110,9 +111,8 @@ public class PersonCard extends UiPart<Region> {
     }
 
     private Image setPinIcon(ReadOnlyPerson person) {
-        Image pinned = new Image(PIN_ICON);
         if (person.isPinned()) {
-            return pinned;
+            return new Image(PIN_ICON);
         } else {
             return null;
         }
