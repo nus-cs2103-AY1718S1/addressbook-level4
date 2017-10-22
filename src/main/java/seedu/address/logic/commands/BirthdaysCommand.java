@@ -2,7 +2,10 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.person.CheckIfBirthday;
 
-public class BirthdaysCommand extends UndoableCommand{
+/**
+ * Lists all persons with a birthday today
+ */
+public class BirthdaysCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "birthdays";
     public static final String COMMAND_ALIAS = "bd";
 

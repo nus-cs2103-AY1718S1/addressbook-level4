@@ -57,68 +57,71 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
-            return new AddCommandParser().parse(arguments);
-        case AccessCommand.COMMAND_WORD:
-            return new AccessCommandParser().parse(arguments);
-        case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
-            return new EditCommandParser().parse(arguments);
+            case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
+                return new AddCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
+            case AccessCommand.COMMAND_WORD:
+                return new AccessCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
-            return new DeleteCommandParser().parse(arguments);
+            case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
+                return new EditCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_ALIAS:
-            return new ClearCommand();
+            case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
+                return new SelectCommandParser().parse(arguments);
 
-        case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
-            return new FindCommandParser().parse(arguments);
+            case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
+                return new DeleteCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
+            case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_ALIAS:
+                return new ClearCommand();
 
-        case SortCommand.COMMAND_WORD:
-            return new SortCommand();
+            case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
+                return new FindCommandParser().parse(arguments);
 
-        case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
-            return new HistoryCommand();
+            case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
+                return new ListCommand();
 
-        case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
-            return new ExitCommand();
+            case SortCommand.COMMAND_WORD:
+                return new SortCommand();
 
-        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
-            return new HelpCommand();
+            case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
+                return new HistoryCommand();
 
-        case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
-            return new UndoCommand();
+            case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
+                return new ExitCommand();
 
-        case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
-            return new RedoCommand();
+            case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
+                return new HelpCommand();
 
-        case ThemeListCommand.COMMAND_WORD: case ThemeListCommand.COMMAND_ALIAS:
-            return new ThemeListCommand();
+            case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
+                return new UndoCommand();
 
-        case SwitchThemeCommand.COMMAND_WORD: case SwitchThemeCommand.COMMAND_ALIAS:
-            return new SwitchThemeCommandParser().parse(arguments);
+            case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
+                return new RedoCommand();
 
-        case AddEventCommand.COMMAND_WORD: case AddEventCommand.COMMAND_ALIAS:
-            return new AddEventCommandParser().parse(arguments);
+            case ThemeListCommand.COMMAND_WORD: case ThemeListCommand.COMMAND_ALIAS:
+                return new ThemeListCommand();
 
-        case FavouriteCommand.COMMAND_WORD: case FavouriteCommand.COMMAND_ALIAS:
-            return new FavouriteCommandParser().parse(arguments);
+            case SwitchThemeCommand.COMMAND_WORD: case SwitchThemeCommand.COMMAND_ALIAS:
+                return new SwitchThemeCommandParser().parse(arguments);
 
-        case UnfavouriteCommand.COMMAND_WORD: case UnfavouriteCommand.COMMAND_ALIAS:
-            return new UnfavouriteCommandParser().parse(arguments);
+            case AddEventCommand.COMMAND_WORD: case AddEventCommand.COMMAND_ALIAS:
+                return new AddEventCommandParser().parse(arguments);
 
-        case FavouriteListCommand.COMMAND_WORD: case FavouriteListCommand.COMMAND_ALIAS:
-            return new FavouriteListCommand();
+            case FavouriteCommand.COMMAND_WORD: case FavouriteCommand.COMMAND_ALIAS:
+                return new FavouriteCommandParser().parse(arguments);
+
+            case UnfavouriteCommand.COMMAND_WORD: case UnfavouriteCommand.COMMAND_ALIAS:
+                return new UnfavouriteCommandParser().parse(arguments);
+
+            case FavouriteListCommand.COMMAND_WORD: case FavouriteListCommand.COMMAND_ALIAS:
+                return new FavouriteListCommand();
+
             case BirthdaysCommand.COMMAND_WORD: case BirthdaysCommand.COMMAND_ALIAS:
                 return new BirthdaysCommand();
 
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            default:
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 
