@@ -58,6 +58,12 @@ public class LogicManagerTest {
         logic.getFilteredBlacklistedPersonList().remove(0);
     }
 
+    @Test
+    public void getFilteredWhitelistedPersonList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        logic.getFilteredWhitelistedPersonList().remove(0);
+    }
+
 
     /**
      * Executes the command, confirms that no exceptions are thrown and that the result message is correct.
