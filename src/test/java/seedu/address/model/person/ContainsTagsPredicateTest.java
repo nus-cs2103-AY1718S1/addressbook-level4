@@ -49,11 +49,11 @@ public class ContainsTagsPredicateTest {
         assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
 
         // Mixed-case keywords
-        predicate = new ContainsTagsPredicate(Arrays.asList("family", "friends"));
+        predicate = new ContainsTagsPredicate(Arrays.asList("FamIly", "FrIeNds"));
         assertTrue(predicate.test(new PersonBuilder().withTags("fAmilY", "friEnDS").build()));
 
         // Wildcard Symbol in keywords
-        predicate = new ContainsTagsPredicate(Arrays.asList("f\\S*"));
+        predicate = new ContainsTagsPredicate(Arrays.asList("f*"));
         assertTrue(predicate.test(new PersonBuilder().withTags("family").build()));
     }
 

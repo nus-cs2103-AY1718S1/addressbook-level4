@@ -1,6 +1,9 @@
 package seedu.address.logic.parser;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -9,8 +12,8 @@ public class ArgumentWildcardMatcherTest {
     @Test
     public void wildcard_matcherSuccess() {
         String args = "Fa* *s* G*d";
-        String[] keywords = ArgumentWildcardMatcher.createKeywords(args);
-        String[] expected = {"fa\\S*", "\\S*s\\S*", "g\\S*d"};
-        assertArrayEquals(keywords, expected);
+        List<String> keywords = ArgumentWildcardMatcher.processKeywords(Arrays.asList(args.split("\\s+")));
+        List<String> expected = Arrays.asList("fa\\S*", "\\S*s\\S*", "g\\S*d");
+        assertEquals(keywords, expected);
     }
 }

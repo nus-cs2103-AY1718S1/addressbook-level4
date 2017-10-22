@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.logic.parser.ArgumentWildcardMatcher;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -12,7 +13,7 @@ public class ContainsTagsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
     public ContainsTagsPredicate(List<String> keywords) {
-        this.keywords = keywords;
+        this.keywords = ArgumentWildcardMatcher.processKeywords(keywords);
     }
 
     @Override

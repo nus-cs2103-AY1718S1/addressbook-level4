@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.logic.parser.ArgumentWildcardMatcher;
+
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
@@ -10,7 +12,7 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     private final List<String> keywords;
 
     public NameContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
+        this.keywords = ArgumentWildcardMatcher.processKeywords(keywords);
     }
 
     @Override
