@@ -256,6 +256,19 @@ Edits the birthday for the first person to `20/DEC/2012` +
 * `birthday 1 b/` +
 Removes the birthday for the first person.
 
+=== Sorting all entries : `sort` (Since v1.2)
+
+Sorts all entries in Peersonal based on the given prefix in ascending order. +
+Sorts based on `NAME` by default. +
+Format: `sort [PREFIX]` +
+
+Examples:
+
+* `sort` +
+Sorts the list based on `NAME` +
+* `sort p/` +
+Sorts the list based on `PHONE`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
