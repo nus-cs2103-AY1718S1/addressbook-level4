@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -17,6 +19,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.ArgumentWildcardMatcher;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -65,6 +68,20 @@ public class FindCommandTest {
     }
 
     @Test
+    public void execute_wildcardKeywords_onePersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommand("b*n");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
+    }
+
+    @Test
+    public void execute_wildcardKeywords_twoPersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        FindCommand command = prepareCommand("b*");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, GEORGE));
+    }
+
+    @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
@@ -76,7 +93,8 @@ public class FindCommandTest {
      */
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new FindCommand(new NameContainsKeywordsPredicate(
+                        Arrays.asList(ArgumentWildcardMatcher.createKeywords(userInput))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

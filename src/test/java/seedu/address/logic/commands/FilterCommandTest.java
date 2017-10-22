@@ -21,6 +21,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.ArgumentWildcardMatcher;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -83,6 +84,13 @@ public class FilterCommandTest {
     }
 
     @Test
+    public void execute_wildcardKeywords_onePersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FilterCommand command = prepareCommand("o*");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
+    }
+
+    @Test
     public void execute_successiveCommands_onePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         FilterCommand command1 = prepareCommand("owesMoney");
@@ -95,7 +103,8 @@ public class FilterCommandTest {
      */
     private FilterCommand prepareCommand(String userInput) {
         FilterCommand command =
-                new FilterCommand(new ContainsTagsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new FilterCommand(new ContainsTagsPredicate(
+                        Arrays.asList(ArgumentWildcardMatcher.createKeywords(userInput))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
