@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 /**
@@ -24,7 +26,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label addressLabel;
     private final Label phoneLabel;
     private final Label emailLabel;
-    private final Label favouriteStatusLabel;
+    private final ImageView favouriteStatusImageView;
     private final List<Label> tagLabels;
 
     public PersonCardHandle(Node cardNode) {
@@ -35,7 +37,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
-        this.favouriteStatusLabel = getChildNode(FAVOURITE_STATUS_FIELD_ID);
+        this.favouriteStatusImageView = getChildNode(FAVOURITE_STATUS_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -65,8 +67,8 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return emailLabel.getText();
     }
 
-    public String getFavouriteStatus() {
-        return favouriteStatusLabel.getText();
+    public Image getFavouriteStatus() {
+        return favouriteStatusImageView.getImage();
     }
 
     public List<String> getTags() {
