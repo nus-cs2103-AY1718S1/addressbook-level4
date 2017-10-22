@@ -69,7 +69,7 @@
       <StackPane fx:id="dataListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="dataDetailsPanelPlaceholder" prefWidth="580.0">
+    <StackPane fx:id="dataDetailsPanelPlaceholder">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>

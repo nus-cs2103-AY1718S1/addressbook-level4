@@ -26,3 +26,9 @@
     -fx-text-fill: black;
     -fx-font-size: 14px;
 }
+
+.details-name-huge-label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 40px;
+    -fx-text-fill: #ffffff;
+}
