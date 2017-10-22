@@ -100,7 +100,7 @@ public class PersonCard extends UiPart<Region> {
             picture.setFitWidth(person.getPicture().PIC_WIDTH);
             picture.setImage(personPicture);
             cardPane.getChildren().add(picture);
-            picture .setOnMouseClicked((MouseEvent e) -> {
+            picture.setOnMouseClicked((MouseEvent e) -> {
                 handleAddImage();
             });
         } catch (Exception e) {

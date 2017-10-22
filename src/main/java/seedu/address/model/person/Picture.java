@@ -28,7 +28,7 @@ public class Picture {
     }
 
     /**
-     * @param pictureUrl: Name of image which will be appended to contact_images directory
+     * Sets name of image which will be appended to contact_images directory
      */
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = BASE_URL + pictureUrl;
