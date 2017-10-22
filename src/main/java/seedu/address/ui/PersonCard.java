@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -7,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -14,6 +17,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static String[] colors = { "red", "blue", "orange", "brown", "purple", "black", "gray", "maroon", "coral",
+        "blueviolet", "slategrey", "darkseagreen", "darkturquoise", "darkkhaki", "firebrick", "darkcyan" };
+    private static HashMap<String, String> tagColors = new HashMap<>();
+    private static int tagNumber = 0;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -65,12 +72,36 @@ public class PersonCard extends UiPart<Region> {
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
+    /**
+     * Binds the individual tags shown for each contact to a different color
+     * so that it is clearer for the user.
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach((Tag tag) -> {
+            Label tagLabel = new Label(tag.tagName);
+            if (tag.tagName.equalsIgnoreCase("friends") || tag.tagName.equalsIgnoreCase("friend")) {
+                tagLabel.setStyle("-fx-background-color: green");
+            } else {
+                tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            }
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    private String getColorForTag(String tagValue) {
+        if (!tagColors.containsKey(tagValue)) {
+            tagColors.put(tagValue, colors[tagNumber]);
+            tagNumber++;
+        }
+        if (tagNumber >= colors.length) {
+            tagNumber = 0;
+        }
+
+        return tagColors.get(tagValue);
     }
 
     @Override
