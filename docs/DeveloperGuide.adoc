@@ -484,6 +484,7 @@ to choose any word to alias if they desire to do so. +
 **Cons:** The user is very restricted on what to alias and cannot have aliases for shortcut words.
 //  end::alias[]
 
+// tag::delete[]
 === Enhanced Delete
 
 The enhanced delete feature allows for multiple indices to be accepted by the parser. This is done by splitting the inputs into multiple string tokens,
@@ -500,7 +501,27 @@ A loop is then used to iterate through the list to delete the persons requested 
 **Alternative 2:** The indices are deleted one by one, without using a list. +
 **Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
 **Cons:** It has to display the result repeatedly after every every person is deleted successfully. +
+// end::delete[]
 
+// tag::hide[]
+=== Hide
+
+The hide feature allows for multiple indices to be accepted by the parser. This is done similar to the enhanced delete
+feature, where inputs are split into multiple string tokens, each containing the index of the person to be hidden.
+A list, listhidden, is then used to store all the indices of the person(s) to be hidden. Unhide is then done to revert
+the previously hidden indices from the list storing all hidden persons.
+
+==== Design Considerations
+
+**Aspect**: Defining how accurate the hide command will be +
+** Alternative 1 (current choice):** Indicse are parsed into a list containing all the index of person to be deleted. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** The use of a loop will increase the time for the code to run. +
+**Alternative 2**: The indices are deleted one by one, without using a list. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** User has to repeatedly type the command multiple times, and application has to display the result repeatedly
+after every person is hidden successfully.
+// end::hide[]
 
 == Documentation
 
