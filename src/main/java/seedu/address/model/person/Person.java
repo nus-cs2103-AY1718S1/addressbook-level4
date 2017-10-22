@@ -339,7 +339,7 @@ public class Person implements ReadOnlyPerson {
     public String calcAccruedAmount(int differenceInMonths) {
         this.lastAccruedDate = new Date(); // update last accrued date
         double principal = this.getDebt().toNumber();
-        double interestRate = (double)Integer.parseInt(this.getInterest().toString()) / 100;
+        double interestRate = (double) Integer.parseInt(this.getInterest().toString()) / 100;
         double accruedInterest = principal * Math.pow((1 + interestRate), differenceInMonths) - principal;
         return String.format("%.2f", accruedInterest);
     }
