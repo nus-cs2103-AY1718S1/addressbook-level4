@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Name;
@@ -32,6 +33,8 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String favourite;
+    @XmlElement(required = true)
+    private String birthday;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -41,7 +44,6 @@ public class XmlAdaptedPerson {
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedPerson() {}
-
 
     /**
      * Converts a given Person into this class for JAXB use.
@@ -54,6 +56,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         favourite = source.getFavourite().getStatus();
+        birthday = source.getBirthday().getBirthdayNumber();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -75,7 +78,8 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Favourite favourite = new Favourite(this.favourite);
+        final Birthday birthday = new Birthday(this.birthday);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, favourite, tags);
+        return new Person(name, phone, email, address, favourite, birthday, tags);
     }
 }

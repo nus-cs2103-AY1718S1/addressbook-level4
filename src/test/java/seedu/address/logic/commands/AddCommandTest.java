@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -143,6 +144,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addBirthday (Index targetIndex, Birthday toAdd) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
