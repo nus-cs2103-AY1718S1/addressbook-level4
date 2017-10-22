@@ -197,6 +197,19 @@ Examples:
 Shows a list of all meetings in the address book. +
 Format: `listMeeting`
 
+To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+* `darkRed` : Meeting is in next 24 hours.
+
+image::MeetingCard1.png[width="250"]
+
+* `red` : Meeting is in next 48 hours.
+
+image::MeetingCard2.png[width="250"]
+
+* `orangeRed` : Meeting is in next 72 hours.
+
+image::MeetingCard3.png[width="250"]
+
 === Editing a meeting : `editmeeting`
 
 Edits an existing meeting in the address book. +
@@ -212,19 +225,6 @@ Examples:
 
 * `edit 1 n/John l/Clementi` +
 Edits the name and location of the 1st meeting to be `John` and `Clementi` respectively.
-
-To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
-* `darkRed` : Meeting is in next 24 hours.
-
-image::MeetingCard1.png[width="250"]
-
-* `red` : Meeting is in next 48 hours.
-
-image::MeetingCard2.png[width="250"]
-
-* `orangeRed` : Meeting is in next 72 hours.
-
-image::MeetingCard3.png[width="250"]
 
 === Locating meetings by name: `findMeeting`
 
