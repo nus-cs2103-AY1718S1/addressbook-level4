@@ -75,4 +75,16 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    /**
+     * Formats the tags as text.
+     */
+    default String getTagsText() {
+        final StringBuilder builder = new StringBuilder();
+        for (Tag tag : getTags()) {
+            builder.append(tag.tagName)
+                .append(" ");
+        }
+        return builder.toString();
+    }
+
 }
