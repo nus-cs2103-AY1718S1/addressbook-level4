@@ -375,23 +375,24 @@ Shorthand Alias: `c` +
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Resize the main window : `resize`
+=== Resizing the main window : `resize`
 
+====
+Command Name: `resize` +
 Shorthand Alias: `rs` +
-Resize the main window to the specified width and height in pixels +
+Function: Resizes the main window to the specified width and height in pixels +
 Format: `resize WIDTH HEIGHT`
+[NOTE]
+Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
+[NOTE]
+You *CANNOT* `undo` a `resize` command
+====
 
-****
-* Resize the MainWindows to the specified WIDTH and HEIGHT.
-* Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
-****
+If you want to resize your main window to 1280 * 720: +
 
-Examples:
-
-* `resize 1280 720` +
-Resize the main window to 1280*720.
-* `rs 1000 600` +
-Resize the main window to 1000*600.
+.  Type in +
+image:Ui.png[UI, 40, 40, role = "right"]`>> resize 1280 720`
+.  Press `Enter` and the main window would be resized to 1280 * 720.
 
 === Exiting the program : `exit`
 
