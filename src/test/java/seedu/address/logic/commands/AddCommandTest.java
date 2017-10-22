@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.Password;
 import seedu.address.logic.UndoRedoStack;
@@ -189,12 +190,23 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortBy(String string) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void changeListTo(String string) {
             fail("This method should not be called.");
         }
 
         @Override
         public void addDebtToPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+                IllegalValueException {
             fail("This method should not be called.");
         }
 
