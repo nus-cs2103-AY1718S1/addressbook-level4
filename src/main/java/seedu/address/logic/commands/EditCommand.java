@@ -116,10 +116,11 @@ public class EditCommand extends UndoableCommand {
         Website updatedWebsite = editPersonDescriptor.getWebsite().orElse(personToEdit.getWebsite());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
+        Boolean favourite = editPersonDescriptor.getFavourite().orElse(personToEdit.getFavourite());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedHomeNumber, updatedEmail, updatedSchEmail,
-                        updatedWebsite, updatedAddress, updatedBirthday, updatedTags);
+                        updatedWebsite, updatedAddress, updatedBirthday, favourite, updatedTags);
     }
 
     @Override
@@ -153,6 +154,7 @@ public class EditCommand extends UndoableCommand {
         private Website website;
         private Address address;
         private Birthday birthday;
+        private Boolean favourite;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -166,6 +168,7 @@ public class EditCommand extends UndoableCommand {
             this.website = toCopy.website;
             this.address = toCopy.address;
             this.birthday = toCopy.birthday;
+            this.favourite = toCopy.favourite;
             this.tags = toCopy.tags;
         }
 
@@ -242,6 +245,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(birthday);
         }
 
+        public void setFavourite(Boolean favourite) {
+            this.favourite = favourite;
+        }
+
+        public Optional<Boolean> getFavourite() {
+            return Optional.ofNullable(favourite);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -273,6 +284,7 @@ public class EditCommand extends UndoableCommand {
                     && getWebsite().equals(e.getWebsite())
                     && getAddress().equals(e.getAddress())
                     && getBirthday().equals(e.getBirthday())
+                    && getFavourite().equals(e.getFavourite())
                     && getTags().equals(e.getTags());
         }
     }
