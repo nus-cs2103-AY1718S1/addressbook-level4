@@ -18,6 +18,8 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 === Prerequisites
 
+You must make sure that you have all of the following to work with the code optimally:
+
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
@@ -34,6 +36,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
+Before you start coding, follow these steps to set up the project in Intellij IDEA:
+
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
@@ -47,6 +51,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+
+To make sure that the application runs as expected after setting up, do the following:
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
@@ -103,12 +109,12 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of four components:
 
 * link:#ui-component[*`UI`*] : The UI of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
@@ -173,6 +179,8 @@ _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+
+The following is a brief explanation on how the API is implemented:
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -355,6 +363,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 *Logging Levels*
 
+The logging levels used in this project include:
+
 * `SEVERE` : Critical problem detected which may possibly cause the termination of the application
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
@@ -484,6 +494,8 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [discrete]
 ==== `Logic` component
 
+The following is a suggestion for the local enhancement in the `Logic` component:
+
 [TIP]
 Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
 
@@ -501,6 +513,8 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 [discrete]
 ==== `Model` component
 
+The following is a suggestion for the local enhancement in the `Model` component:
+
 [TIP]
 Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
 
@@ -517,6 +531,8 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 
 [discrete]
 ==== `Ui` component
+
+The following are some suggestions for the local enhancements in the `Ui` component:
 
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
@@ -771,6 +787,8 @@ Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
+
+The following are some of the non-functional requirements for the project:
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
