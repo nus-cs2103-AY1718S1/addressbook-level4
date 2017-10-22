@@ -26,7 +26,7 @@ public class LockCommandParser implements Parser<LockCommand> {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
 
-        return new LockCommand(userInput);
+        return new LockCommand(userInput.trim());
     }
 
 }
