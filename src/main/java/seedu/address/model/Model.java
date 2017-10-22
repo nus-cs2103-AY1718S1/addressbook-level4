@@ -48,4 +48,8 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Method to call sorting the address book
+     */
+    void sortContact();
 }
