@@ -1,6 +1,5 @@
 package seedu.address.storage;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -12,10 +11,7 @@ import seedu.address.model.schedule.ScheduleDate;
  * JAXB-friendly adapted version of the Schedule.
  */
 public class XmlAdaptedSchedule {
-    @XmlAttribute
-    private String scheduleDate;
-    @XmlAttribute
-    private String activity;
+
     @XmlValue
     private String schedule;
 
@@ -31,8 +27,8 @@ public class XmlAdaptedSchedule {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedSchedule(Schedule source) {
-        scheduleDate = source.scheduleDate.toString();
-        activity = source.activity.toString();
+        ScheduleDate scheduleDate = source.scheduleDate;
+        Activity activity = source.activity;
         schedule = "Date: " + scheduleDate.toString() + " Activity: " + activity.toString();
     }
 
@@ -42,6 +38,11 @@ public class XmlAdaptedSchedule {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Schedule toModelType() throws IllegalValueException {
+        // extract out schedule date and activity from schedule string
+        String[] tokens = schedule.split(" ");
+        String scheduleDate = tokens[1];
+        String activity = tokens[3];
+
         return new Schedule(new ScheduleDate(scheduleDate), new Activity(activity));
     }
 }
