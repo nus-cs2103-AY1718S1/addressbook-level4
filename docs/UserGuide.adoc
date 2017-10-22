@@ -103,6 +103,26 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Favouriting a person : `favourite`
+
+Favourites or unfavourites an existing perosn in the address book. +
+Format: `favourite INDEX`
+
+****
+* Favourites/Unfavourites the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If the person at the specified `INDEX` is a favourite contact, the person will be unfavourited, otherwise the person will be favourited.
+* Favourited contacts are automatically sorted to the top of the list
+****
+
+Examples:
+
+* `list` +
+`favourite 6` +
+Favourites/Unfavourites the 6th person in the address book.
+* `find n/Betsy` +
+`favourite 1` +
+Favourites/Unfavourites the 1st person in the results of the `find` command.
+
 === Finding persons : `find`
 
 Finds persons whose given field contain any of the given keywords. +
@@ -174,7 +194,7 @@ Examples:
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
-* `find Betsy` +
+* `find n/Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
