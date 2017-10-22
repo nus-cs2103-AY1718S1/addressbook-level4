@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.Tasks.AddTaskCommand;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;

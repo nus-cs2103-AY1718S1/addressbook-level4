@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.Persons;
+package seedu.address.logic.commands.persons;
 
 import java.util.List;
 

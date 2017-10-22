@@ -52,7 +52,7 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Birthday: ")
                 .append(getBirthday())
-                .append(" Tags: ");
+                .append(" tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

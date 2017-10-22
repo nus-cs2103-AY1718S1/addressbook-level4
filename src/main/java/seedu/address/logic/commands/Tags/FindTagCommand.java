@@ -1,11 +1,11 @@
-package seedu.address.logic.commands.Tags;
+package seedu.address.logic.commands.tags;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in address book whose Tags contains any of the argument keywords.
+ * Finds and lists all persons in address book whose tags contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 

@@ -4,7 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import java.util.Arrays;
 
-import seedu.address.logic.commands.Tasks.FindTaskCommand;
+import seedu.address.logic.commands.tasks.FindTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.task.TaskContainsKeywordsPredicate;
 

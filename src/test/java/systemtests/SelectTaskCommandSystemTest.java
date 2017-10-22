@@ -2,7 +2,7 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
-import static seedu.address.logic.commands.Tasks.SelectTaskCommand.MESSAGE_SELECT_TASK_SUCCESS;
+import static seedu.address.logic.commands.tasks.SelectTaskCommand.MESSAGE_SELECT_TASK_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.getTypicalTasks;
@@ -12,7 +12,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.Tasks.SelectTaskCommand;
+import seedu.address.logic.commands.tasks.SelectTaskCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 

@@ -35,12 +35,12 @@ import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.Persons.FindCommand;
-import seedu.address.logic.commands.Persons.ListCommand;
-import seedu.address.logic.commands.Persons.SelectCommand;
-import seedu.address.logic.commands.Tasks.FindTaskCommand;
-import seedu.address.logic.commands.Tasks.ListTasksCommand;
-import seedu.address.logic.commands.Tasks.SelectTaskCommand;
+import seedu.address.logic.commands.persons.FindCommand;
+import seedu.address.logic.commands.persons.ListCommand;
+import seedu.address.logic.commands.persons.SelectCommand;
+import seedu.address.logic.commands.tasks.FindTaskCommand;
+import seedu.address.logic.commands.tasks.ListTasksCommand;
+import seedu.address.logic.commands.tasks.SelectTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
 
