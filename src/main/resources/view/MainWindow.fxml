@@ -24,13 +24,13 @@
     </Menu>
   </MenuBar>
 
-  <StackPane fx:id="commandBoxPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" VBox.vgrow="NEVER">
+  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
 
-  <StackPane fx:id="resultDisplayPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border">
+  <StackPane fx:id="resultDisplayPlaceholder" styleClass="pane-with-border">
     <padding>
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
