@@ -203,4 +203,8 @@ public class Task implements ReadOnlyTask {
         return this;
     }
 
+    public String toString() {
+        return getAsText();
+    }
+
 }

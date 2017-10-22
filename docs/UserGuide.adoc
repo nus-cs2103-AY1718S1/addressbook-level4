@@ -187,7 +187,7 @@ Format: `select INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* The index refers to the index number shown in the most recent listing of persons.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -199,6 +199,23 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Selecting a task : `selectTask`
+
+Selects the task identified by the index number used in the last task listing. +
+Format: `selectTask INDEX`
+
+****
+* Selects the task and display the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing of tasks.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `select 2` +
+Selects the 2nd task in the task book.
+
 
 === Listing entered commands : `history`
 
@@ -280,7 +297,6 @@ There is no need to save manually.
 === Finding a person by name
 === Auto-focusing on input bar at the start of the application
 === Setting a task to be recurring
-=== Editing a task
 === Seeing tasks in certain range of time
 === Listing tasks by date
 === Listing tasks by priority
