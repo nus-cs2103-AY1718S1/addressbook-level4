@@ -131,9 +131,9 @@
 }
 
 .cell_small_label {
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
-    -fx-text-fill: #716F70;
+    -fx-font-family: "Segoe UI", Optima;
+    -fx-font-size: 14px;
+    -fx-text-fill: derive(gray, 10%);
 }
 
 .cell_id_label {
@@ -241,7 +241,7 @@
     -fx-border-width: 2;
     -fx-background-radius: 0;
     -fx-background-color: #f7f5f4;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-family: "Segoe UI", Optima, Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
@@ -388,8 +388,8 @@
 }
 
 #tags .label {
-    -fx-font-family: "Segoe UI";
-    -fx-text-fill: gray;
+    -fx-font-family: "Segoe UI", Optima;
+    -fx-text-fill: derive(gray, 20%);
     -fx-padding: 1 0 1 0;
     -fx-border-radius: 0;
     -fx-background-radius: 2;
