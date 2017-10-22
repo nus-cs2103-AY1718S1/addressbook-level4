@@ -46,7 +46,6 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -134,8 +133,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          */
         showParcelsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getParcelList().size();
-//        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
-//                Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
+                Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
 
         /* --------------------- Performing edit operation while a parcel card is selected -------------------------- */
 

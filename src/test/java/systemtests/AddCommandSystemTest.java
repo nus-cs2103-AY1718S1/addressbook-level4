@@ -41,6 +41,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.testutil.TypicalParcels.AMY;
 import static seedu.address.testutil.TypicalParcels.BOB;
@@ -225,8 +226,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          * Case: selects first card in the parcel list, add a parcel -> added, card selection
          * remains unchanged
          */
-//        executeCommand(SelectCommand.COMMAND_WORD + " 1");
-//        assert getParcelListPanel().isAnyCardSelected();
+        executeCommand(SelectCommand.COMMAND_WORD + " 1");
+        assert getParcelListPanel().isAnyCardSelected();
         assertCommandSuccess(CARL);
 
         /* Case: add a parcel, missing tags -> added */

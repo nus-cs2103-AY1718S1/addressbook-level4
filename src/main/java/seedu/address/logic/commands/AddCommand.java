@@ -65,11 +65,17 @@ public class AddCommand extends UndoableCommand {
                 ReadOnlyParcel previous = model.getAddressBook()
                                                .getParcelList()
                                                .get(model.getPrevIndex().getZeroBased());
+                System.out.println(previous.getAsText());
+                System.out.println(toAdd.getAsText());
                 model.maintainSorted();
+                System.out.println("previous index: " + model.getPrevIndex().getZeroBased());
                 if (previous.compareTo(toAdd) > 0) {
+                    System.out.println("here1");
                     model.forceSelect(model.getPrevIndex());
                 } else {
+                    System.out.println("here2");
                     model.forceSelect(Index.fromZeroBased(findIndex(previous)));
+                    System.out.println(model.getAddressBook().getParcelList().get(findIndex(previous)));
                 }
             } else {
                 model.maintainSorted();

@@ -194,6 +194,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         return Objects.hash(parcels, tags);
     }
 
+    /**
+     * Function that sorts the lists of parcels
+     */
     public void sort() {
         try {
             this.setParcels(parcels.sortedList());

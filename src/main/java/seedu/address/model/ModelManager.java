@@ -27,11 +27,12 @@ import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static boolean selected = false;
+    private static Index prevIndex = Index.fromZeroBased(0);
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyParcel> filteredParcels;
-    private static boolean selected = false;
-    private Index prevIndex = Index.fromZeroBased(0);
+
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.

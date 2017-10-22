@@ -16,7 +16,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Parcel in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Parcel implements ReadOnlyParcel{
+public class Parcel implements ReadOnlyParcel {
 
     private ObjectProperty<TrackingNumber> trackingNumber;
     private ObjectProperty<Name> name;
