@@ -27,8 +27,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniqueEventList implements Iterable<Event> {
-
-
     private final ObservableList<Event> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyEvent> mappedList = EasyBind.map(internalList, (event) -> event);
