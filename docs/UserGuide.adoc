@@ -113,6 +113,22 @@ Examples:
 * `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
  t/fragile`
 
+=== Import multiple parcels stored in an xml storage file: `import`
+
+Imports the parcels in an Ark storage `.xml` file stored in `/data/import/` folder to Ark +
+Format: `import FILE_NAME`
+
+Examples:
+
+* `import addressBook.xml`
+* `import addressBook123661.xml`
+
+[WARNING]
+====
+File names should be alphanumeric i.e. `addressBook12.xml`, `12.xml`
+Non alphanumeric file names will not be accepted. i.e. `$addressbook#!@,xml`
+====
+
 === Listing all parcels : `list`
 
 Shows a list of all parcels in Ark and expands the Parcel List section in the main window.
@@ -187,6 +203,21 @@ Deletes the 2nd parcel in the Ark.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st parcel in the results of the `find` command.
+
+=== Deleting a tag : `deleteTag`
+
+Deletes the specified tag from all parcels in Ark. +
+Format: `deleteTag TAG`
+
+****
+* The tag to delete is case sensitive.
+* The tag to delete must actually be tagged to a parcel.
+****
+
+Examples:
+
+* `deleteTag urgent`
+Deletes the tag "urgent" from each parcel in the address book.
 
 === Selecting a parcel : `select`
 
@@ -351,24 +382,28 @@ e.g.`select 2`
 === Features added in v1.0
 In version v1.0, users will be able to: +
 
-* have their data backed up automatically when Ark is launched.
-
 {{More to be added}}
 
 === Features added v1.1
 In version v1.1, users will be able to: +
 
-*
+* have their data backed up automatically when Ark is launched.
 
 {{More to be added}}
 
 === Features added in v1.2
 In version v1.2, users will be able to: +
 
-* work with a parcels instead of persons.
-* add and edit the tracking numbers of parcels.
-* Automatically search for the delivery address of the selected `Parcel` in Google Maps on click.
-* Autocomplete input commands.
+* Work with parcels instead of persons.
+* Add and edit the tracking numbers of parcels.
+
+{{More to be added}}
+
+=== Features added in v1.3
+In version v1.3, users will be able to: +
+
+* Add one of three Status to parcels. i.e. `PENDING`, `DELIVERING`, `DELIVERED`
+* Import parcels stored in an Ark storage file in xml format into Ark.
 
 {{More to be added}}
 
@@ -376,8 +411,6 @@ In version v1.2, users will be able to: +
 
 In `Ark v2.0`, the delivery vendor will be able to do the following: +
 
-* Add a new `Parcel`
-* Delete a `Parcel`
 * Filter `Parcel` by tags
 * Know the shortest path from one address to a delivery address.
 * Find the shortest path from the current location to a delivery address.
@@ -388,7 +421,6 @@ In `Ark v2.0`, the delivery vendor will be able to do the following: +
 * Sort by customer's `NAME`
 * Sort by customer's `PHONE`
 * Sort by customer's `ADDRESS`
-* Track status of `Parcel` (i.e. Shipping, Processing, Being Delivered)
 * Update status of `Parcel`
 * Color code `ParcelCard` based on impending deadlines.
 * Generate the optimal route for the day's deliveries, based on shortest time, shortest distance travelled or most
@@ -396,6 +428,7 @@ In `Ark v2.0`, the delivery vendor will be able to do the following: +
 * Archive completed deliveries
 * Add multiple parcels by importing a XML file
 * Store the sender's and receiver's details (i.e. `Name`, `Phone`, `Email Address`, `Address`)
+* Autocomplete input commands.
 * Be informed of overdue parcels.
 * Be informed of parcels that can be delivered at a specific location.
 * Assign levels of importance to deliveries.

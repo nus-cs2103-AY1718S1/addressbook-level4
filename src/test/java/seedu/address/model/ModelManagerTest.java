@@ -32,7 +32,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void addAllPersonsTest() {
+    public void addAllParcelsTest() {
         AddressBook addressBook = new AddressBookBuilder().withParcel(ALICE).withParcel(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -55,7 +55,7 @@ public class ModelManagerTest {
         }
 
         // ensure that addressbook updated
-        assertEquals(3, modelManager.getAddressBook().getTagList().size());
+        assertEquals(4, modelManager.getAddressBook().getTagList().size());
         assertEquals(7, modelManager.getAddressBook().getParcelList().size());
     }
 

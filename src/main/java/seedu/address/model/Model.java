@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagInternalErrorException;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * The API of the Model component.
@@ -31,6 +35,11 @@ public interface Model {
      * Deletes the given parcel.
      */
     void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException;
+
+    /**
+     * Deletes the given tag from every parcel.
+     */
+    void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException;
 
     /**
      * Adds the given parcel
