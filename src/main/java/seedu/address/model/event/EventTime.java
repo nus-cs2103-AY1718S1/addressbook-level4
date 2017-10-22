@@ -44,7 +44,6 @@ public class EventTime {
         return test.matches(EVNET_TIME_VALIDATION_REGEX);
     }
 
-
     @Override
     public String toString() {
         return eventTime;
