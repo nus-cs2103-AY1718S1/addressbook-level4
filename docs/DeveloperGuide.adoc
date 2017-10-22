@@ -412,33 +412,36 @@ image::birthday_sd.png[width="560"]
 **Pros:** Faster for users to add in all the parameters. +
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
-=== Retrieve and tag commands mechanism
+=== Retrieve mechanism
 
-The `RetrieveCommand` and `TagCommand` reside in the `commands` of `Logic`.
+The `RetrieveCommand` reside in the `commands` of `Logic`.
 
-`RetrieveCommand` : allows user to list all persons that are holding an existing tag in the unique tags list.
+`RetrieveCommand` : allows user to list all persons that have been assigned an existing tag in the unique tags list.
 
-Suppose that the address book already has a sufficiently large number of persons, some of whom hold a certain `Tag`. The `UniqueTagList` will contain this tag. +
-The user wants to quickly find out all of the persons holding this tag, so he decides to use `retrieve`.
+The command inherit from `UndoableCommand`, thus these commands can be undone.
+
+Suppose that the address book already has a sufficiently large number of persons, some of whom have a certain `Tag`. The `UniqueTagList` will contain this tag. +
+
+The user wants to quickly find out all of the those persons with this tag, so he decides to use `retrieve`.
 
 We will now parse the command argument to get the name of the tag which user want to use `retrieve` on.
 
 [NOTE]
-If the command argument is empty, an `Exception` will be thrown to remind user about the usage of the command.
+If the tag name provided by user is empty or invalid, an `Exception` will be thrown during parsing.
 
 We use `TagContainsKeyWordPredicate` to test whether the tag is inside the tag list of each person in the address book and get the filtered person list with `getFilteredPersonList()` of `Model` to display to user.
 
 [NOTE]
 If the filtered person list is empty, that means the tag user want to look for does not exist. User will then be notified of all existing tags.
 
-`TagCommand` : supports tagging multiple persons at the same time.
+The following sequence diagram shows how the retrieve operation works:
 
-`RetrieveCommand` and `TagCommand` inherit from `UndoableCommands`, thus these commands can be undone.
+image::RetrieveSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-**Aspect:** Getting the filtered person list +
-**Alternative 1 (current choice):** Go through every person in the addressbook. +
+**Aspect:** Updating the filtered person list +
+**Alternative 1 (current choice):** Go through every person in the addressbook to filter out those having the tag. +
 **Pros:** Easy to implement. +
 **Cons:** Slower if the addressbook contains a large number of persons +
 **Alternative 2:**  Create a list attribute for `Tag` to store all persons having that tag. +
