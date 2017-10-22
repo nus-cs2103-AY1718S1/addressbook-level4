@@ -12,7 +12,15 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team CS2103-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
+By: `CS2103AUG2017-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
+
+== Introduction
+ModU is a software design to help teachers and lecturers to plan their weekly teaching schedule. +
+
+There are many ways to improve and extend the functionality of this software and this guide provides essential information to help you get started.
+This developer guide contains information of the architecture design of this software, implementation of the existing commands that is accessible for the
+users and other useful information such as guide to teach you how to test this software. For more information please refer
+to the table of content.
 
 == Setting up
 
@@ -344,6 +352,123 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::sort[]
+=== Sort mechanism
+
+The sort mechanism is facilitated by link:#event-bus[`Event Bus`]. Whenever sort command is executed, in `SortCommand` it will raise a `SortListRequestEvent` via `EventCenter` which there is an listerner in `PersonListPanel` which will conduct the sorting list according to the attribute type of `list` command which was executed previously.
+
+[NOTE]
+If the previous attribute type of `list` command is address, the list will be sorted by person's address lexicographically, such sorting will also be applied for attribute email and phone. If there is no attribute in the execution of previous `list` command, the list will be sorted by person's name lexicographically by default.
+
+The following link:#sequence-diagram[sequence diagram] shows how the sort operation works:
+
+image::SortCommandSeqDiagram.png[width="900"]
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+
+The following link:#activity-diagram[activity diagram] summarize what happens when an user execute sort command.
+
+image::sortCommandactivitydiagram.png[width="900"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** Sort list by calling event to sort the current Observable<ReadOnlyLesson> lesson list on `LessonListPanel`. +
+**Pros:** The actual `internalList` wont be altered and wont affect other commands' execution. +
+**Cons:** Could be counter intuitive for new developer who is looking at the code for the first time as normally developers would relate such execution in the `Model` component of this product. In additional, this will make the `internalList` to be different with the `list` users see on the `LessonListPanel` which sill make other command operate to not operate properly. +
+**Alternative 2:** Sort the actual `internalList` in `UniqueLessonList`. +
+**Pros:** Easier for new developer to understand the operation of SortCommand execution as it is more intuitive. Prevent conflicting with other command execution which use the `internalList`. +
+**Cons:** More work as need to create different level of abstraction in model for a single method.
+
+---
+
+**Aspect:** How sort executes +
+**Alternative 1 (current choice):** Sort exiting list base on the attribute type of previous `List` command called. +
+**Pros:** Make more sense as if address attribute was provided as parameter for previous `List` command, the existing list before sort been execute will only shown a list addresses. +
+**Cons:** Need to find out with attribute type was given as parameter for previous `List` command and sort accordingly which amount to more work. +
+**Alternative 2:** Despite the previous `List` attribute type and return a list with all the details from all attributes and sorted by name. +
+**Pros:** Less work. +
+**Cons:** `Sort` command will not go hand in hand with `List` command.
+// end::sort[]
+
+// tag::colorKeyword[]
+=== Color Keyword mechanism
+
+The color keyword mechanism is facilitated by link:#event-bus[`Event Bus`]. Whenever color keyword command is executed, in `ColorKeywordCommand` it will raise a `ColorKeywordEvent` via `EventCenter` which there is an listener in `CommandBox` which will enable/disable the highlighting of command keyword feature according to the parameter which was passed in by the user.
+
+[NOTE]
+The default setting for this feature is set as disable.
+
+The following link:#sequence-diagram[sequence diagram] shows how the color keyword command operation works:
+
+image::ColorKeywordCommandSeqDiagram.png[width="900"]
+
+The following link:#sequence-diagram[activity diagram] summarize what happens when an user execute color keyword command.
+
+image::ColorKeywordActivityDiagram.png[width="900"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ColorKeywordCommand` +
+**Alternative 1 (current choice):**  Update boolean variable "isEnable" in the command box by calling event to set the status of this variable. +
+**Pros:** Since only command box will be updated, using event center will maintain a good data encapsulation. +
+**Cons:** Hard for new developers to understand the event center mechanism. +
+**Alternative 1 (current choice):** Declare a global boolean variable +
+**Pros:** Easier for new developer to design +
+**Cons:** This method breaks encapsulation and fails to follow standard java code style.
+// end::colorKeyword[]
+
+// tag::customise[]
+=== Customise mechanism
+
+The customise mechanism is facilitated by both the link:#event-bus[`Event Bus`] and an enumeration class `FontSizeUnit`. Currently, `CustomiseCommand` only supports changing the font size of the application. Each time `CustomiseCommand` is executed, it will raise a `ChangedFontSizeEvent` via `EventCenter` according to the user specified parameter as well as update the `currentFontSizeUnit`.
+
+[NOTE]
+The `FontSizeUnit` enumeration is to set a global static variable `currentFontSizeUnit` so that `PersonCard` is able to follow the current font size whenever it is called.
+
+The following link:#sequence-diagram[sequence diagram] shows how the customise command operation works:
+
+image::CustomiseCommandSeqDiagram.png[width="900"]
+
+The following link:#sequence-diagram[activity diagram] summarize what happens when an user execute customise command.
+
+image::CustomiseCommandActivityDiagram.png[width="900"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `CustomiseCommand` +
+**Alternative 1 (current choice):** Update static variable `currentFontSizeUnit` to the corresponding `fontSizeUnit` and use `EventBus` to inform `UI` the change of `fontSizeUnit`.
+**Pros:** One global variable that records current `fontSizeUnit`. +
+**Cons:** Hard for new developers to understand the event center mechanism. +
+**Alternative 2 (previous choice):** Use a variable in model manager to keep record of `currentFontSizeUnit` +
+**Pros:** No need for extra enumeration class and easier for new developers to design. +
+**Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
+// end::customise[]
+
+=== List mechanism
+
+The list mechanism is facilitated by an enumeration class `ListingUnit`. Each time user list by different attributes, the static variable `currentListingUnit` in the Enumeration class is reset.
+[NOTE]
+The default listing (without parameter) is to list all persons.
+When list by attribute, for example, `list address`, the `currentListingUnit` will be set to `ADDRESS` and show a list of all addresses.
+
+The following link:#sequence-diagram[sequence diagram] shows how the list command operation works:
+
+image::ListCommandSeqDiagram.png[width="900"]
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ListCommand` +
+**Alternative 1 (current choice):**  Update static variable `currentListingUnit` to the corresponding listingUnit and use event bus to inform UI the change of listingUnit.
+**Pros:** One global variable that records current listingUnit. +
+**Cons:** Hard for new developers to understand the event center mechanism. +
+**Alternative 2 (previous choice):** Use a variable in model manager to keep record of currentListingUnit +
+**Pros:** No need for extra enumeration class. +
+**Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface.
+// end::colorKeyword[]
+
 
 === Logging
 
