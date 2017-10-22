@@ -19,6 +19,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 /**
@@ -39,6 +40,7 @@ public class CommandIdentifier {
             + HistoryCommand.COMMAND_WORD + ", "
             + ListCommand.COMMAND_WORD + ", "
             + RedoCommand.COMMAND_WORD + ", "
+            + ScheduleCommand.COMMAND_WORD + ", "
             + LocateCommand.COMMAND_WORD + ", "
             + UndoCommand.COMMAND_WORD;
 
@@ -54,6 +56,7 @@ public class CommandIdentifier {
             HistoryCommand.COMMAND_WORD, HistoryCommand.COMMAND_ALIAS,
             ListCommand.COMMAND_WORD, ListCommand.COMMAND_ALIAS,
             RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_ALIAS,
+            ScheduleCommand.COMMAND_WORD, ScheduleCommand.COMMAND_ALIAS,
             LocateCommand.COMMAND_WORD, LocateCommand.COMMAND_ALIAS,
             UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS);
 

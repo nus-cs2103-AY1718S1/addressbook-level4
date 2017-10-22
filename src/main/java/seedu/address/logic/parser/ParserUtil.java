@@ -15,6 +15,8 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.schedule.Activity;
+import seedu.address.model.schedule.ScheduleDate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -78,6 +80,25 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> scheduleDate} into an {@code Optional<ScheduleDate>}
+     * if {@code scheduleDate} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ScheduleDate> parseScheduleDate(Optional<String> scheduleDate) throws IllegalValueException {
+        requireNonNull(scheduleDate);
+        return scheduleDate.isPresent() ? Optional.of(new ScheduleDate(scheduleDate.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String activity} into an {@code Optional<Activity>} if {@code activity} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Activity> parseActivity(Optional<String> activity) throws IllegalValueException {
+        requireNonNull(activity);
+        return activity.isPresent() ? Optional.of(new Activity(activity.get())) : Optional.empty();
     }
 
     /**
