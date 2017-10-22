@@ -16,13 +16,13 @@ public class FindTaskCommandParserTest {
     private FindTaskCommandParser parser = new FindTaskCommandParser();
 
     @Test
-    public void parse_emptyArg_throwsParseException() {
+    public void parseEmptyArgThrowsParseException() {
         assertParseFailure(parser, "     ",
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTaskCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_validArgs_returnsFindCommand() {
+    public void parseValidArgsReturnsFindCommand() {
         // no leading and trailing whitespaces
         FindTaskCommand expectedTaskFindCommand =
             new FindTaskCommand(new TaskContainsKeywordsPredicate(Arrays.asList("Finish", "art")));

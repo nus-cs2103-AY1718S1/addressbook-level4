@@ -18,12 +18,12 @@ public class SelectTaskCommandParserTest {
     private SelectTaskCommandParser parser = new SelectTaskCommandParser();
 
     @Test
-    public void parse_validArgs_returnsSelectTaskCommand() {
+    public void parseValidArgsReturnsSelectTaskCommand() {
         assertParseSuccess(parser, "1", new SelectTaskCommand(INDEX_FIRST_TASK));
     }
 
     @Test
-    public void parse_invalidArgs_throwsParseException() {
+    public void parseInvalidArgsThrowsParseException() {
         assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectTaskCommand.MESSAGE_USAGE));
     }
 }

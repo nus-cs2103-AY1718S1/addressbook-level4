@@ -16,13 +16,13 @@ public class FindTagCommandParserTest {
     private FindTagCommandParser parser = new FindTagCommandParser();
 
     @Test
-    public void parse_emptyArg_throwsParseException() {
+    public void parseEmptyArgThrowsParseException() {
         assertParseFailure(parser, "     ",
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTagCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_validArgs_returnsFindCommand() {
+    public void parseValidArgsReturnsFindCommand() {
         // no leading and trailing whitespaces
         FindTagCommand expectedTagFindCommand =
             new FindTagCommand(new TagContainsKeywordsPredicate(Arrays.asList("friends", "family")));

@@ -60,14 +60,14 @@ public class FindTaskCommandTest {
     }
 
     @Test
-    public void execute_zeroKeywords_noTaskFound() {
+    public void executeZeroKeywordsNoTaskFound() {
         String expectedMessage = String.format(MESSAGE_TASK_LISTED_OVERVIEW, 0);
         FindTaskCommand command = prepareCommand(" ");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_multipleKeywords_multipleTasksFound() {
+    public void executeMultipleKeywordsMltipleTasksFound() {
         String expectedMessage = String.format(MESSAGE_TASK_LISTED_OVERVIEW, 4);
         FindTaskCommand command = prepareCommand("Finish gym online");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ASSIGNMENT, QUIZ, GYM, PERSONAL_PROJECT));
