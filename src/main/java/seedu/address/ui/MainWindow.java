@@ -220,6 +220,11 @@ public class MainWindow extends UiPart<Region> {
         dataDetailsPanel.freeResources();
     }
 
+    /**
+     * Take note of the following two methods, which overload each other. The one without parameter is used as the
+     * callback when the user clicks on the sidebar button; the other one is used as the subscriber when the user
+     * enters some command(s) that raise(s) the corresponding event(s).
+     */
     @FXML
     private void handleSwitchToContacts() {
         dataListPanelPlaceholder.getChildren().clear();
