@@ -1,10 +1,11 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Set;
 
-import static java.util.Objects.requireNonNull;
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Person's mrt station in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidMrt(String)}
@@ -12,9 +13,9 @@ import static java.util.Objects.requireNonNull;
 public class Mrt {
 
     public static final String MESSAGE_MRT_CONSTRAINTS =
-            "Person's MRT station should be an existing MRT station in: " +
-                    "North-South, East-West, Circle and North-West Line /n" + //other lines to be added soon
-                    "Example: Jurong East";
+            "Person's MRT station should be an existing MRT station in: "
+                    + "North-South, East-West, Circle and North-West Line /n"  //other lines to be added soon
+                    + "Example: Jurong East";
 
     /*
     * The first character of the address must not be a whitespace,
@@ -22,7 +23,7 @@ public class Mrt {
     */
     public static final String MRT_VALIDATION_REGEX = "[^\\s].*";
 
-    public static final Set<String> validMrt = ValidMrt.validMrtSet.keySet();
+    public static final Set<String> validMrt = ValidMrt.VALID_MRT_SET.keySet();
 
     public final String value;
 
