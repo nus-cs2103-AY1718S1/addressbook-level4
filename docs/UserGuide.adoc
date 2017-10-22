@@ -194,9 +194,12 @@ Deletes the tag `class2101` from all contacts in the address book.
 
 === Locating persons by name: `find`
 
+====
+Command Name: `find` +
 Shorthand Alias: `f` +
-Finds persons whose names contain any of the given keywords. +
+Function : finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
+====
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -206,17 +209,24 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
-Examples:
+If you want to find a person named `John Watson`:
 
-* `find John` +
-Returns `john` and `John Doe`
+.  Type in +
+image:Ui.png[UI, 40, 40, role = "right"]`>> find john`.
+.  Press `Enter` and you should see a list of persons having the name `john`:
+image:Ui.png[UI, 40, 40, role = "right"]
+
+Here are some other ways you can do with `find`:
+
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `f watson` +
-Returns `John Watson`
+Lists any person having names `Betsy`, `Tim`, or `John`
+* `f Watson` +
+Lists any person having the name `Watson`
 
 === Locating persons by tags: `filter`
 
+====
+Command Name: `filter` +
 Shorthand Alias: `ft` +
 Finds persons who are tagged with any of the given tags from the current list. +
 Format: `filter TAG [MORE_TAGS]`
@@ -305,7 +315,7 @@ Format: `sync`
 ====
 Command Name: `history` +
 Shorthand Alias: `hx` +
-Function: Lists all the commands that you have entered in reverse chronological order. +
+Function: lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 [NOTE]
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
@@ -380,7 +390,7 @@ Format: `clear`
 ====
 Command Name: `resize` +
 Shorthand Alias: `rs` +
-Function: Resizes the main window to the specified width and height in pixels +
+Function: resizes the main window to the specified width and height in pixels +
 Format: `resize WIDTH HEIGHT`
 [NOTE]
 Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
