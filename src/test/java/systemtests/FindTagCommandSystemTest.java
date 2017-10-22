@@ -8,7 +8,7 @@ import static seedu.address.testutil.TypicalPersons.DANIEL;
 import org.junit.Test;
 
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.commands.Tags.FindTagCommand;
 import seedu.address.model.Model;
 
 

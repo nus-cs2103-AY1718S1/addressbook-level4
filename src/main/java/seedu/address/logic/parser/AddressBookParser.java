@@ -6,22 +6,25 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.logic.commands.Persons.AddCommand;
+import seedu.address.logic.commands.Tasks.AddTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteTaskCommand;
-import seedu.address.logic.commands.DetagCommand;
-import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.Persons.DeleteCommand;
+import seedu.address.logic.commands.Tasks.DeleteTaskCommand;
+import seedu.address.logic.commands.Tags.DetagCommand;
+import seedu.address.logic.commands.Persons.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.FindTagCommand;
+import seedu.address.logic.commands.Persons.FindCommand;
+import seedu.address.logic.commands.Tags.FindTagCommand;
+import seedu.address.logic.commands.Tasks.FindTaskCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.Persons.ListCommand;
+import seedu.address.logic.commands.Tasks.ListTasksCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.Persons.SelectCommand;
+import seedu.address.logic.commands.Tasks.SelectTaskCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -83,8 +86,17 @@ public class AddressBookParser {
         case AddTaskCommand.COMMAND_WORD:
             return new AddTaskCommandParser().parse(arguments);
 
+        case SelectTaskCommand.COMMAND_WORD:
+            return new SelectTaskCommandParser().parse(arguments);
+
         case DeleteTaskCommand.COMMAND_WORD:
             return new DeleteTaskCommandParser().parse(arguments);
+
+        case FindTaskCommand.COMMAND_WORD:
+            return new FindTaskCommandParser().parse(arguments);
+
+        case ListTasksCommand.COMMAND_WORD:
+            return new ListTasksCommand();
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
