@@ -46,7 +46,9 @@ public interface ReadOnlyPerson {
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Emails: ");
-        getEmails().forEach(builder::append);
+        for (Email email: getEmails()) {
+            builder.append(email).append("; ");
+        }
         builder.append(" Address: ")
                 .append(getAddress())
                 .append(" Tags: ");
