@@ -39,10 +39,10 @@ public class FindCommandParser implements Parser<FindCommand> {
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
             if (!((token.contains(PREFIX_NAME.getPrefix())) || (token.contains(PREFIX_PHONE.getPrefix()))
-            || (token.contains(PREFIX_EMAIL.getPrefix())) || (token.contains(PREFIX_ADDRESS.getPrefix()))
+                || (token.contains(PREFIX_EMAIL.getPrefix())) || (token.contains(PREFIX_ADDRESS.getPrefix()))
                     || (token.contains(PREFIX_TAG.getPrefix())))) {
-                        throw new ParseException(
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
             }
         }
 
