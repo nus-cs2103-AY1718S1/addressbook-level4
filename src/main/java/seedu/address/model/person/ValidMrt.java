@@ -9,7 +9,7 @@ import java.util.Vector;
 public class ValidMrt {
 
     public final HashMap<String, Coordinates> validMrt = new MrtListBuilder()
-            .addLine()          //only circle, NE and EW line available
+            .addLine()          //only circle, NW, NE and EW line available
             .build();
 
     public ValidMrt() {
@@ -36,6 +36,7 @@ class MrtListBuilder{
     public MrtListBuilder addLine() {
         addEWline();
         addNSline();
+        addNWline();
         addCircleLine();
         return this;
     }
@@ -105,6 +106,26 @@ class MrtListBuilder{
         S("Marina South Pier",1.270978, 103.863303);
     }
 
+    private void addNWline() {
+        S("HarbourFront", 1.265925, 103.820900);
+        S("Outram Park",1.279770, 103.839575);
+        S("Chinatown", 1.284793, 103.843926);
+        S("Clarke Quay", 1.288625, 103.847105);
+        S("Dhoby Ghaut",1.299711, 103.845488);
+        S("Little India", 1.306291, 103.849391);
+        S("Farrer Park", 1.312456, 103.854813);
+        S("Boon Keng", 1.319859, 103.861828);
+        S("Potong Pasir", 1.331302, 103.868793);
+        S("Woodleigh", 1.338918, 103.870472);
+        S("Serangoon", 1.349726, 103.873567);
+        S("Kovan", 1.359996, 103.885298);
+        S("Hougang", 1.371139, 103.892461);
+        S("Buangkok", 1.383069, 103.893108);
+        S("Sengkang", 1.391530, 103.895411);
+        S("Punggol", 1.405170, 103.902353);
+    }
+
+
     private void addCircleLine() {
         S("Dhoby Ghaut", 1.299711, 103.845488);
         S("Bras Basah", 1.296948, 103.850793);
@@ -134,6 +155,8 @@ class MrtListBuilder{
         S("Labrador Park", 1.272221, 103.802414);
         S("Telok Blangah", 1.270689, 103.809876);
         S("HarbourFront", 1.265925, 103.820900);
+        S("Bayfront", 1.281362, 103.858914);
+        S("Marina Bay",1.276382, 103.854583);
     }
 
 
