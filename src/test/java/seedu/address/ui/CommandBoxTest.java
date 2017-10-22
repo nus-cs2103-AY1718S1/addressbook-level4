@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,7 @@ public class CommandBoxTest extends GuiUnitTest {
     public static final String STRING_EMAIL = PREFIX_EMAIL.toString();
     public static final String STRING_ADDRESS = PREFIX_ADDRESS.toString();
     public static final String STRING_BLOODTYPE = PREFIX_BLOODTYPE.toString();
+    public static final String STRING_REMARK = PREFIX_REMARK.toString();
     public static final String STRING_TAG = PREFIX_TAG.toString();
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
@@ -711,7 +713,7 @@ public class CommandBoxTest extends GuiUnitTest {
         testString += " " + STRING_EMAIL;
         testString += " " + STRING_ADDRESS;
         testString += " " + STRING_BLOODTYPE;
-        testString += " " + STRING_TAG;
+        testString += " " + STRING_REMARK;
         testString += " " + STRING_TAG;
         testString += " " + STRING_TAG;
         assertTrue(testString.equals(mySandBox.getText()));
@@ -791,6 +793,9 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(testString.equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
         testString += " " + STRING_BLOODTYPE;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_REMARK;
         assertTrue(testString.equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
         testString += " " + STRING_TAG;

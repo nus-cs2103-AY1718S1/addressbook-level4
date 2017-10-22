@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.logging.Logger;
@@ -378,6 +379,8 @@ public class CommandBox extends UiPart<Region> {
             finalText = concatPrefix(PREFIX_ADDRESS);
         } else if (containsPrefix("bloodtype")) {
             finalText = concatPrefix(PREFIX_BLOODTYPE);
+        } else if (containsPrefix("remark")) {
+            finalText = concatPrefix(PREFIX_REMARK);
         } else if (containsPrefix("all")) {
             finalText = concatPrefix(PREFIX_TAG);
         } else {
@@ -403,6 +406,8 @@ public class CommandBox extends UiPart<Region> {
             return (!containsAddress() && addPollSuccessful());
         case "bloodtype":
             return (!containsBloodtype() && addPollSuccessful());
+        case "remark":
+            return (!containsRemark() && addPollSuccessful());
         default:
             return (containsAllCompulsoryPrefix() && addPollSuccessful());
 
@@ -469,6 +474,14 @@ public class CommandBox extends UiPart<Region> {
     private boolean containsBloodtype() {
         String currentInput = commandTextField.getText();
         return currentInput.contains(PREFIX_BLOODTYPE.getPrefix());
+    }
+
+    /**
+     * Checks if existing input has Remark Prefix String
+     */
+    private boolean containsRemark(){
+        String currentInput = commandTextField.getText();
+        return currentInput.contains(PREFIX_REMARK.getPrefix());
     }
 
     /**
