@@ -765,7 +765,7 @@ The address will then be loaded onto Google Maps Search of the browser of the `M
 Sequence diagram for `execute()` method of `LocationCommand` and its event handling:
 
 image::LocationCommandEventsSequenceDiagram.PNG[width="800"]
-Figure 5.6.1 Access Command Model/EventsCenter/UI Sequence Diagram
+Figure 5.7.2 Access Command Model/EventsCenter/UI Sequence Diagram
 
 ==== Design Considerations
 **Aspect:** How accessing a location of a person executes +
