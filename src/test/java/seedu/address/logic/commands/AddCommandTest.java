@@ -108,8 +108,15 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -140,8 +147,15 @@ public class AddCommandTest {
         }
 
         @Override
-        public void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        public ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -169,6 +183,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
@@ -176,6 +195,11 @@ public class AddCommandTest {
         @Override
         public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+
         }
 
         @Override
@@ -205,9 +229,10 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+        public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
                 IllegalValueException {
             fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -232,7 +257,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             throw new DuplicatePersonException();
         }
 

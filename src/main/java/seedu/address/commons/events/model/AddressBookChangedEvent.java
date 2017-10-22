@@ -16,6 +16,7 @@ public class AddressBookChangedEvent extends BaseEvent {
     public String toString() {
         return "number of persons " + data.getPersonList().size()
                 + ", number of blacklisted persons " + data.getBlacklistedPersonList().size()
+                + ", number of whitelisted persons " + data.getWhitelistedPersonList().size()
                 + ", number of tags " + data.getTagList().size();
     }
 }

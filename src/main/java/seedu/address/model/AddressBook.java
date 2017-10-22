@@ -1,7 +1,9 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.util.DateUtil.formatDate;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PaybackCommand;
+import seedu.address.model.person.DateRepaid;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -78,8 +81,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns {@UniquePersonList} of all blacklisted persons
-     * in the existing data of this {@code AddressBook} with {@code newData}.
+     * Returns {@code UniquePersonList} of all blacklisted persons
+     * in the existing data of this {@code AddressBook}.
      */
     public UniquePersonList getBlacklistedPersons() {
         UniquePersonList blacklistedPersons = new UniquePersonList();
@@ -93,6 +96,24 @@ public class AddressBook implements ReadOnlyAddressBook {
             }
         }
         return blacklistedPersons;
+    }
+
+    /**
+     * Returns {@code UniquePersonList} of all whitelisted persons
+     * in the existing data of this {@code AddressBook}.
+     */
+    public UniquePersonList getWhitelistedPersons() {
+        UniquePersonList whitelistedPersons = new UniquePersonList();
+        for (Person person : persons.getInternalList()) {
+            if (person.getIsWhitelisted()) {
+                try {
+                    whitelistedPersons.add(person);
+                } catch (DuplicatePersonException e) {
+                    assert false : "This is not possible as prior checks have been done";
+                }
+            }
+        }
+        return whitelistedPersons;
     }
 
     //// person-level operations
@@ -114,13 +135,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a blacklisted person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a person to the blacklist in the address book.
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void addBlacklistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
+    public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         int index;
         index = persons.getIndexOf(p);
 
@@ -131,11 +150,31 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (PersonNotFoundException e) {
             assert false : "This is not possible as prior checks have been done";
         }
-        syncMasterTagListWith(newBlacklistedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        newBlacklistedPerson.setIsWhitelisted(false);
         persons.add(index, newBlacklistedPerson);
+
+        return persons.getReadOnlyPerson(index);
+
+    }
+
+    /**
+     * Adds a person to the whitelist in the address book.
+     *
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
+    public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
+        int index;
+        index = persons.getIndexOf(p);
+
+        Person newWhitelistedPerson = new Person(p);
+        newWhitelistedPerson.setIsWhitelisted(true);
+        try {
+            persons.remove(p);
+        } catch (PersonNotFoundException e) {
+            assert false : "This is not possible as prior checks have been done";
+        }
+        persons.add(index, newWhitelistedPerson);
+        return persons.getReadOnlyPerson(index);
     }
 
     /**
@@ -202,23 +241,47 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Updates {@code key} to exclude {@code key} from the blacklist in this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public void removeBlacklistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
+    public ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
         int index;
         index = persons.getIndexOf(key);
 
-        Person newBlacklistedPerson = new Person(key);
-        newBlacklistedPerson.setIsBlacklisted(false);
+        Person newUnBlacklistedPerson = new Person(key);
+        newUnBlacklistedPerson.setIsBlacklisted(false);
+
+        if (newUnBlacklistedPerson.getDebt().toNumber() == 0) {
+            newUnBlacklistedPerson.setIsWhitelisted(true);
+        }
+
         persons.remove(key);
-        syncMasterTagListWith(newBlacklistedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+
         try {
-            persons.add(index, newBlacklistedPerson);
+            persons.add(index, newUnBlacklistedPerson);
         } catch (DuplicatePersonException e) {
             assert false : "This is not possible as prior checks have been done";
         }
+
+        return persons.getReadOnlyPerson(index);
     }
+
+    /**
+     * Updates {@code key} to exclude {@code key} from the whitelist in this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        int index;
+        index = persons.getIndexOf(key);
+
+        Person newWhitelistedPerson = new Person(key);
+        newWhitelistedPerson.setIsWhitelisted(false);
+        persons.remove(key);
+        try {
+            persons.add(index, newWhitelistedPerson);
+        } catch (DuplicatePersonException e) {
+            assert false : "This is not possible as prior checks have been done";
+        }
+        return persons.getReadOnlyPerson(index);
+    }
+
     //// tag-level operations
 
     /**
@@ -280,8 +343,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */
-    public void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
+    public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
             IllegalValueException {
+        int index;
+        index = persons.getIndexOf(target);
+
         Person editedPerson = new Person(target);
         double newDebtAmt = target.getDebt().toNumber() - amount.toNumber();
 
@@ -299,8 +365,60 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "New debt amount should not be invalid since amount and debt field in target have "
                     + "been validated";
         }
+
+        return persons.getReadOnlyPerson(index);
     }
     //@@author
+
+    /**
+     * Resets person's debt field to zero, in the masterlist of the addressbook.
+     *
+     *  @throws PersonNotFoundException if person does not exist in list.
+     */
+    public ReadOnlyPerson resetPersonDebt(ReadOnlyPerson p) throws PersonNotFoundException {
+        int index;
+        index = persons.getIndexOf(p);
+
+        Person existingPerson = new Person(p);
+        try {
+            existingPerson.setDebt(new Debt(Debt.DEBT_ZER0_VALUE));
+        } catch (IllegalValueException e) {
+            assert false : "The target value cannot be of illegal value";
+        }
+
+        persons.remove(p);
+
+        try {
+            persons.add(index, existingPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "There should be no duplicate when resetting the debt of a person";
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
+
+    /**
+     * Resets person's {@code dateRepaid} field to current date, in the masterlist of the addressbook.
+     *
+     *  @throws PersonNotFoundException if person does not exist in list.
+     */
+    public ReadOnlyPerson setDateRepaid(ReadOnlyPerson p) throws PersonNotFoundException {
+        int index;
+        index = persons.getIndexOf(p);
+
+        Person existingPerson = new Person(p);
+        existingPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
+
+        persons.remove(p);
+
+        try {
+            persons.add(index, existingPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "There should be no duplicate when resetting the date repaid field of a person";
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
 
     //// util methods
 
@@ -318,6 +436,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
         return getBlacklistedPersons().asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
+        return getWhitelistedPersons().asObservableList();
     }
 
     @Override

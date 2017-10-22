@@ -70,6 +70,15 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
+        ObservableList<ReadOnlyPerson> persons = getPersonList();
+        ObservableList<ReadOnlyPerson> whitelistedPersons = persons.stream()
+                .filter(person -> person.getIsWhitelisted())
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(whitelistedPersons);
+    }
+
+    @Override
     public ObservableList<Tag> getTagList() {
         final ObservableList<Tag> tags = this.tags.stream().map(t -> {
             try {

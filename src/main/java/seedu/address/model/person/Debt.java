@@ -15,6 +15,7 @@ public class Debt {
             + "a positive integer or a positive number with two decimal places";
     // validation regex validates empty string. Check for presence of at least 1 digit is needed.
     public static final String DEBT_VALIDATION_REGEX = "^(?=.*\\d)\\d*(?:\\.\\d\\d)?$";
+    public static final String DEBT_ZER0_VALUE = "0";
     private String value;
 
     /**

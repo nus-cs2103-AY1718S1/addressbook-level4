@@ -33,6 +33,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
 
     private boolean isBlacklisted = false;
+    private boolean isWhitelisted = false;
 
     /**
      * Every field must be present and not null.
@@ -65,6 +66,7 @@ public class Person implements ReadOnlyPerson {
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
         this.isBlacklisted = source.getIsBlacklisted();
+        this.isWhitelisted = source.getIsWhitelisted();
     }
 
     /**
@@ -268,6 +270,21 @@ public class Person implements ReadOnlyPerson {
         this.isBlacklisted = isBlacklisted;
     }
 
+    /**
+     * Returns boolean status of a person's whitelist-status.
+     */
+    @Override
+    public boolean getIsWhitelisted() {
+        return isWhitelisted;
+    }
+
+    /**
+     * Sets boolean status of a person's whitelist-status using the value of {@param isWhitelisted}.
+     */
+    @Override
+    public void setIsWhitelisted(boolean isWhitelisted) {
+        this.isWhitelisted = isWhitelisted;
+    }
     //@@author
     /**
      * Sets date repaid of a person in the given {@code dateRepaid}.

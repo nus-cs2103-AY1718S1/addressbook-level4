@@ -21,7 +21,11 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_WHITELISTED_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -39,13 +43,19 @@ public interface Model {
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Deletes the given person from blacklist. */
-    void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /** Removes the given person from whitelist. */
+    ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Adds the given person into blacklist */
-    void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+    ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Adds the given person into whitelist */
+    ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -63,6 +73,9 @@ public interface Model {
     /** Returns an unmodifiable view of the blacklisted filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList();
 
+    /** Returns an unmodifiable view of the whitelisted filtered person list */
+    ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -74,6 +87,12 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Updates the filter of the filtered whitelisted person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate);
 
     ObservableList<ReadOnlyPerson> getNearbyPersons();
 
@@ -114,5 +133,6 @@ public interface Model {
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */
-    void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException, IllegalValueException;
+    ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount)
+            throws PersonNotFoundException, IllegalValueException;
 }
