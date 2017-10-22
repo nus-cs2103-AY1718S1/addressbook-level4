@@ -321,7 +321,7 @@ Format: `select e/INDEX_E`
 Example:
 
 * `listE` +
-`select 2` +
+`select e/2` +
 Shows all persons who are involved in the 2nd event of event list.
 
 You will see the following after typing above commands: +
@@ -478,29 +478,69 @@ Format & Example: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Adding an event* `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENTTIME` +
+e.g. `adde en/Project Meeting ed/Project meeting with CS2103 Team Members et/20/10/2017`
+
+* *Adding a person* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+
+* *Deleting an event* : `delete INDEX` +
+e.g. `deleteE 5`
+
+* *Deleting a person* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+
+* *Disjoining an event* : `disjoin p/PERSON_INDEX e/EVENT_INDEX` +
+e.g. `disjoin p/4 e/6`
+
+* *Editing an event* : `editE INDEX [en/NAME] [ed/DESCRIPTION] [et/TIME]` +
+e.g. `edit 1 en/Lunch ed/Lunch with Albert at Bishan`
+
+* *Editing a person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 e.g. `find t/friends`
 e.g. `find t/neighbors alex`
-* *List* : `list`
-* *Sort* : `sort`
+
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
+
 * *History* : `history`
-* *Undo* : `undo`
+
+* *Joining an event* `join p/PERSON_INDEX e/EVENT_INDEX` +
+e.g. `join p/3 e/1`
+
+* *Listing every person* : `list`
+
+* *Listing every event* : `listE`
+
 * *Redo* : `redo`
+
+* *Selecting every event a person has joined* : `selectE p/INDEX` +
+e.g. `selectE p/1`
+
+* *Selecting every person in an event* : `select e/INDEX` +
+e.g.`select e/2`
+
+* *Sort* : `sort`
+
+* *Undo* : `undo`
+
+== FAQ
+*Q*: Do I need to install anything else other than Java 1.8.0_60? +
+*A*: No. Planno only needs Java 1.8.0_60 or any later versions to work.
+
+*Q*: How do i run/open Planno with the jar file? +
+*A*: Double click the jar file to run Planno.
+
+*Q*: Can I run Planno with a older version of Java? +
+*A*: No. You will not be able to run Planno.
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
