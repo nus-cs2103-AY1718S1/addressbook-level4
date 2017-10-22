@@ -39,9 +39,13 @@ public class ArgumentMultimap {
         return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
     }
 
-    public String getStringValue(Prefix prefix) {
+    /**
+     * Returns the last birthday value of {@code prefix}.
+     * Returns default birthday value if empty.
+     */
+    public Optional<String> getBirthdayOptionalValue(Prefix prefix) {
         List<String> values = getAllValues(prefix);
-        return values.isEmpty() ? "" : values.get(values.size() - 1);
+        return values.isEmpty() ? Optional.of("-") : Optional.of(values.get(values.size() - 1));
     }
 
     /**
