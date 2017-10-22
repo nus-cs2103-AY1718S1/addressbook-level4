@@ -29,9 +29,9 @@ public class CheckIfBirthday implements Predicate<ReadOnlyPerson> {
     @Override
     public boolean test(ReadOnlyPerson person) {
         boolean val = false;
-        try { val = birthdayList(person); }
-        catch (ParseException e) { e.printStackTrace(); }
-        return val;
+        try { val = birthdayList(person);
+        } catch (ParseException e) { e.printStackTrace();
+        } return val;
     }
 
     @Override
