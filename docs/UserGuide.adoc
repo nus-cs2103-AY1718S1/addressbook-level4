@@ -278,15 +278,52 @@ Resize the main window to 1000*600.
 
 === Creating a backup : `backup`
 
+====
+Command Name: `backup` +
 Shorthand Alias: `b` +
-Creates a backup file to store the data in address book. +
+Function: Creates a backup file to store the data in address book. +
 Format: `backup`
+====
+
+You may want to be safe and backup often when using *DummyName*:
+
+. Type in `backup`. (Figure 2.13.1) +
+`>> backup` +
+image:Backup_1.png[600] +
+_Figure 2.13.1_ +
+. Press `Enter` and you should see a message indicating the successful backup of your data. (Figure 2.13.2) +
+image:Backup_2.png[600] +
+_Figure 2.13.2_ +
 
 === Restoring a backup : `restore`
 
-Shorthand Alias: `rb`
-Retrieves data from a backup file and store it in address book. +
+====
+Command Name: `restore` +
+Shorthand Alias: `rb` +
+Function: Retrieves data from a backup file and store it in *DummyName*. +
 Format: `restore`
+====
+
+You encounter an unforeseen circumstance and want to revert to a backup file: +
+
+. Execute the `backup` command to save the current data. (Figure 2.14.1) +
+`>> backup` +
+image:Restore_1.png[600] +
+_Figure 2.14.1_ +
+
+. Enter the `clear` command to simulate a lost of data. (Figure 2.14.2) +
+`>> clear` +
+image:Restore_2.png[600] +
+_Figure 2.14.2_ +
+
+. Type in `restore` command. (Figure 2.14.3) +
+`restore` +
+image:Restore_3.png[600] +
+_Figure 2.14.3_ +
+
+. Press `Enter` and you should see that the backup data is restored. (Figure 2.14.4) +
+image:Restore_4.png[600] +
+_Figure 2.16.4_ +
 
 === Listing entered commands : `history`
 
@@ -305,92 +342,138 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 Command Name: `undo` +
 Shorthand Alias: `u` +
+Function: Restore the address book to the state where the previous _undoable_ command was not executed. +
 Format: `undo`
 ====
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content. They include `add`, `delete`, `edit`, `note` and `clear`.
+_Undoable_ commands: those commands that modify the address book's content. They include `add`, `delete`, `edit`, `note` and `clear`.
 ====
 
-If you ever typed in a command by mistake, typed in `undo` next. +
-This command will restore the address book to the state where the previous _undoable_ command was not executed. +
+When you `delete` a contact by accident: +
 
-Here is when you `delete` a contact by accident: +
+. Remove the first contact. (Figure 2.16.1) +
+`>> delete 1` +
+image:Undo_1.png[600] +
+_Figure 2.16.1_ +
 
-. image:Ui.png[UI, 40, 40, role = "right"] `>> delete 1`
-. Type in +
-image:Ui.png[UI, 40, 40, role = "right"]`>> undo` +
+. Type in the `undo` command. (Figure 2.16.2) +
+`>> undo` +
+image:Undo_2.png[600] +
+_Figure 2.16.2_ +
 
-You should see that the effects of `delete 1` has been reverted.
+. Press `Enter` and you should see that the effects of `delete 1` has been reverted. (Figure 2.16.3) +
+image:Undo_3.png[600] +
+_Figure 2.16.3_ +
 
 The following are more examples to help you better understand the `undo` command:
 
-* Failure to `undo` as there are no undoable commands executed previously. You will see an error message displayed like that in _Fig_.
+* Failure to `undo` as there are no undoable commands executed previously.
 . Restart the application.
-. Type in +
-`>> select 1`
-. Type in +
-`>> list`
-. Type in +
-`>> undo`
+. Select the first contact. (Figure 2.16.4) +
+`>> select 1` +
+image:Undo_4.png[600] +
+_Figure 2.16.4_ +
+. List all the contacts. (Figure 2.16.5) +
+`>> list` +
+image:Undo_5.png[600] +
+_Figure 2.16.5_ +
+. Type in `undo` and you will see an error message. (Figure 2.16.6) +
+`>> undo` +
+image:Undo_6.png[600] +
+_Figure 2.16.6_ +
 
 * Attempting to `undo` multiple commands.
-. Type in +
-`>> delete 1`
-. Type in +
+. Delete the first contact. (Figure 2.16.7) +
+`>> delete 1` +
+image:Undo_7.png[600] +
+_Figure 2.16.7_ +
+. Clear out all the contacts. (Figure 2.16.8) +
 `>> clear`
-. Type in +
+image:Undo_8.png[600] +
+_Figure 2.16.8_ +
+. Type in the shorthand alias for `undo` (Figure 2.16.9) +
 `>> u` +
-The `clear` command is reverted.
-. Type in +
+image:Undo_9.png[600] +
+_Figure 2.16.9_ +
+. Press `Enter` and you should see that the `clear` command is reverted. (Figure 2.16.10)+
+image:Undo_10.png[600] +
+ _Figure 2.16.9_ +
+. Type in `undo` and you should see that the `delete 1` command is reverted as well. (Figure 2.16.11)+
 `>> undo` +
-The `delete 1` command is reverted.
+image:Undo_11.png[600] +
+_Figure 2.16.11_ +
 
 === Redoing the previously undone command : `redo`
 
 ====
 Command Name: `redo` +
 Shorthand Alias: `r` +
+Function: Reverts the most recent `undo` command. +
 Format: `redo`
 ====
 
-Now you realized you made a mistake when you entered the `undo` command. This command will revert the most recent `undo` command. +
+You `delete` a contact and `undo` the `delete` by mistake: +
 
-Here is when you `delete` a contact and `undo` the `delete` by mistake: +
+. Type in the command to delete the first contact. (Figure 2.17.1) +
+`>> delete 1` +
+image:Redo_1.png[600] +
+_Figure 2.17.1_ +
+. Press `Enter` and the contact is removed. (Figure 2.17.2)+
+image:Redo_2.png[600] +
+. Type in `undo` by mistake. (Figure 2.17.3) +
+`>> undo` +
+image:Redo_3.png[600] +
+_Figure 2.17.3_ +
+. Enter the command `redo` to revert the `undo` command. (Figure 2.17.4) +
+`>> redo` +
+image:Redo_4.png[600] +
+_Figure 2.17.4_ +
+. Press `Enter` and you shoud see that the `undo` command has been reverted and the contact remains deleted. Refer to _Fig_ to see that you have obtained the correct results. (Figure 2.17.5) +
+image:Redo_5.png[600] +
+_Figure 2.17.5_ +
 
-. image:Ui.png[UI, 40, 40, role = "right"] `>> delete 1`
-. image:Ui.png[UI, 40, 40, role = "right"] `>> undo`
-. Type in +
-image:Ui.png[UI, 40, 40, role = "right"]`>> redo`
+The following are more examples to help you better understand the `redo` command.
 
-You should see that the `undo` command has been reverted and the contact remains deleted. Refer to _Fig_ to see that you have obtained the correct results.
-
-The following are more examples to help you better understand the `redo` command:
-
-* Failure to `redo` as there are no `undo` commands executed previously. You will see an error message displayed like that in _Fig_.
-. Type in +
+* Failure to `redo` as there are no `undo` commands executed previously:
+. Select a contact to delete. (Figure 2.17.6) +
 `>> delete 1`
-. Type in +
+image:Redo_6.png[600] +
+_Figure 2.17.6_ +
+. Type in the `redo` command. (Figure 2.17.7)+
 `>> redo`
+image:Redo_7.png[600] +
+_Figure 2.17.7_ +
+. Press `Enter` and you should see an error message. (Figure 2.17.8) +
+image:Redo_8.png[600] +
+_Figure 2.17.8_ +
 
-* Attempting to `redo` multiple commands.
-. Type in +
+* Attempting to `redo` multiple commands:
+. Select a contact to delete. (Figure 2.17.9) +
 `>> delete 1`
-. Type in +
+image:Redo_9.png[600] +
+_Figure 2.17.9_ +
+. Remove all the contacts by `clear` command. (Figure 2.17.10) +
 `>> clear`
-. Type in +
+image:Redo_10.png[600] +
+_Figure 2.17.10_ +
+. Type in `undo` to revert the `clear` command. (Figure 2.17.11) +
 `>> undo` +
-The `clear` command should be reverted.
-. Type in +
+image:Redo_11.png[600] +
+_Figure 2.17.11_ +
+. Type in `undo` to revert the `delete 1` command. (Figure 2.17.12) +
 `>> undo` +
-The `delete 1` command should be reverted.
-. Type in +
+image:Redo_12.png[600] +
+_Figure 2.17.12_ +
+. Type in `redo` to reapply the `delete 1` command. (Figure 2.17.13) +
 `>> redo` +
-The `delete 1` command should be reapplied.
-. Type in +
+image:Redo_13.png[600] +
+_Figure 2.17.13_ +
+. Type in `redo` to reapply the `clear` command. (Figure 2.17.14) +
 `>> redo` +
-The `clear` command should be reapplied.
+image:Redo_14.png[600] +
+_Figure 2.17.14_ +
 // end::undoredo[]
 
 === Clearing all entries : `clear`
@@ -404,12 +487,19 @@ Format: `clear`
 ====
 Command Name: `exit` +
 Shorthand Alias: `q` +
+Function: Exits the app.
 Format: `exit`
 ====
 
-If you want to close the app, simply type in: +
-image:Ui.png[UI, 40, 40, role = "right"]`>> exit` +
-*DummyName* will be closed and all contacts will be saved.
+If you want to close the app:
+
+. Type in the command. (Figure 2.19.1) +
+`>> exit` +
+image:Exit_1.png[600] +
+_Figure 2.19.1_ +
+. Press `Enter` and you will see that *DummyName* is closed. +
+
+Do not worry about losing your contacts as they will be saved automatically.
 
 === Saving the data
 
