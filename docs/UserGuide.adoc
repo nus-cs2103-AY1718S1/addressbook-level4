@@ -61,8 +61,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
+====
+Command Name: `help` +
 Shorthand Alias: `hp` +
 Format: `help`
+====
+
+If you want to view the *User Guide*: +
+
+.  Type in +
+image:Ui.png[UI, 40, 40, role = "right"]`>> help`
+.  Press `Enter` and a *User Guide* document would show up.
 
 === Adding a person: `add`
 
@@ -74,14 +83,13 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 A person can have any number of tags (including 0)
 [TIP]
 Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` are equivalent.
-
 ====
 
 If you want to add a new contact to your *DummyName*: +
 
 .  Type in +
 image:Ui.png[UI, 40, 40, role = "right"]`>> add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`.
-.  image:Ui.png[UI, width = "40", role = "right"]Press `Enter` and you should see
+.  image:Ui.png[UI, width = "40", role = "right"]Press `Enter` and you should see:
 
 
 Here are some other ways you can add contacts:
