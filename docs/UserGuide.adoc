@@ -337,6 +337,15 @@ Format: `clearhistory`
 After the command history is cleared, you will not be able to undo any previous commands.
 ====
 
+=== Backing up: `backup`
+
+Backs up the current address book to a fixed location (`addressbook.xml.bak` in current working directory).
+
+[WARNING]
+====
+Any existing backup at the same location will be overwritten after running this command.
+====
+
 === Exiting the program : `exit`
 
 Exits the program. +
