@@ -345,6 +345,33 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::clearhistory[]
+=== `clearhistory` command
+
+The `clearhistory` command is implemented as a regular command that calls `.clear()` methods added to `CommandHistory` and `UndoRedoStack`, which clears the command history and the undo/redo stack respectively.
+
+==== Design Considerations
+
+**Aspect:** Type of `clearhistory` command +
+**Alternative 1 (current choice):** `Command` +
+**Pros:** History is permanently cleared. +
+**Cons:** Impossible to undo accidental clearing of history, meaning all undoable changes become permanent. +
+**Alternative 2:** `UndoableCommand` +
+**Pros:** Possible to undo accidental clearing of history. +
+**Cons:** Since the most likely use for `clearhistory` is for it to be permanent, having it be undoable is counterintuitive to user expectations.
+
+---
+
+**Aspect:** Behaviour of `clearhistory` command on empty history +
+**Alternative 1 (current choice):** Clear anyway and indicate success +
+**Pros:** Simple to implement, no additional cases to take care of. +
+**Cons:** May be confusing to declare an empty history cleared. +
+**Alternative 2:** Indicate that history is empty. +
+**Pros:** Clearer messages about the state of the command history. +
+**Cons:** More complex to implement, and the end result of clearing an empty history also results in a cleared history, meaning the user intention of clearing their history is fufilled regardless of which alternative is chosen.
+
+// end::clearhistory[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
