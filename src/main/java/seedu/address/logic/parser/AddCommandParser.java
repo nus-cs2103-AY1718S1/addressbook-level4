@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -57,10 +58,15 @@ public class AddCommandParser implements Parser<AddCommand> {
             Bloodtype bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Remark remark = new Remark("");
-            Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            Appointment appointment = new Appointment(name.toString(), calendar);
+            Optional<Date> date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE));
+            Appointment appointment;
+            if (date.isPresent()) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date.get());
+                appointment = new Appointment(name.toString(), calendar);
+            } else {
+                appointment = new Appointment(name.toString());
+            }
             ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark, appointment);
             return new AddCommand(person);
         } catch (IllegalValueException | java.text.ParseException ive) {
