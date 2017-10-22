@@ -29,7 +29,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         String trimmedArgument = arg.trim();
 
         // preventing directory traversal attack
-        if(!isValidFileName(trimmedArgument)) {
+        if (!isValidFileName(trimmedArgument)) {
             throw new ParseException(MESSAGE_FILE_NAME_INVALID);
         }
 
