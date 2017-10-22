@@ -1,7 +1,7 @@
 package seedu.address.model.event;
 
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.event.timing.Timing;
+import seedu.address.model.event.timeslot.Timing;
 
 /**
  * A read-only immutable interface for an Event in the addressbook.

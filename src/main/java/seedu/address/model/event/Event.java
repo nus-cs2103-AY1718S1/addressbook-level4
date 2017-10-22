@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.event.timing.Timing;
+import seedu.address.model.event.timeslot.Timing;
 
 /**
  * Represents an Event in the address book.

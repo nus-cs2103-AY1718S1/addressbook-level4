@@ -1,5 +1,5 @@
 //@@author A0162268B
-package seedu.address.model.event.timing;
+package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
 

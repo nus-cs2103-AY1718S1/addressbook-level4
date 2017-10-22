@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import seedu.address.model.event.timing.Timing;
+import seedu.address.model.event.timeslot.Timing;
 
 public class TimingTest {
     @Test
