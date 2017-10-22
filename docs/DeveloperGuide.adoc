@@ -419,6 +419,23 @@ The sort command object receives the sorted list and creates `CommandResult` obj
 **Cons:** Because address/email/phone number is unique, most of time you could find them without sorting the list. +
 // end::sort[]
 
+=== ListEvent mechanism
+
+The list event command is facilitated by the `LogicManager` class. It supports listing all the events for user to process.
+
+The following sequence diagram shows how the list event operation works:
+
+image::ListEventSequenceDiagram.png[width="800"]
+
+The user enters a listE command which is got by `LogicManager`.
+`LogicManager` calls `AddressBookParser` to parse the command.
+Then `AddressBookParser` creates the list event command object and return it.
+`LogicManager` receives the command object and executes the command.
+The list event command object calls `updateFilteredEventList()` in the `Model`.
+Then `Model` process the event list.
+The list event command object creates `CommandResult` object and return it.
+`LogicManager` receives the result and shows it through `UI`.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
