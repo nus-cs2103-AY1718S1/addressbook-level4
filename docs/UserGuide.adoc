@@ -1,6 +1,6 @@
 :toc:
 :toc-title:
-:toc-placement: preamble
+:toc-placement: macro
 :imagesDir: images\UG_DG
 :sectnums:
 :stylesDir: stylesheets
@@ -15,6 +15,8 @@ image::UG_cover.png[width="750", align="left"]
 
 
 By: `Team W14-B4`      Since: `Sep 2017`      Licence: `NUS`
+
+toc::[]
 
 == About
 
@@ -261,7 +263,7 @@ You will see the following after typing `delete 1` and `deleteE 1`:
 image::UG_delete.png[width="790"]
 _Figure 3.7 delete command result_
 
-=== Connecting a person to an event : join
+=== Connecting a person to an event : `join`
 You can use it to show a person is involved in an event. +
 Format : `join p/INDEX_P e/INDEX_E` +
 ****
@@ -283,7 +285,7 @@ You will see the following after typing above commands: +
 image::dummy_pic.png[width='790']
 _Figure 3.8 join result_
 
-=== Disconnecting a person to an event : disjoin
+=== Disconnecting a person to an event : `disjoin`
 You can use it to show a person is not involved in an event any more. +
 Format : `disjoin p/INDEX_P e/INDEX_E` +
 ****
