@@ -59,7 +59,7 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane dataListPanelPlaceholder;
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane dataDetailsPanelPlaceholder;
 
     @FXML
     private StackPane statusBarPlaceholder;
@@ -138,7 +138,7 @@ public class MainWindow extends UiPart<Region> {
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         dataDetailsPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(dataDetailsPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().add(dataDetailsPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                                                               logic.getFilteredPersonList().size(),
