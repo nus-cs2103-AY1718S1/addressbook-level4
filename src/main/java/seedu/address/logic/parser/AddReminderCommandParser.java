@@ -16,6 +16,7 @@ import seedu.address.model.reminder.Date;
 import seedu.address.model.reminder.Message;
 import seedu.address.model.reminder.Priority;
 import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.Task;
 
 import seedu.address.model.tag.Tag;
@@ -32,11 +33,10 @@ public class AddReminderCommandParser implements Parser<AddReminderCommand> {
      */
     public AddReminderCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_TASK, PREFIX_PRIORITY, PREFIX_DATE, PREFIX_TAG,
-                        PREFIX_MESSAGE);
+                ArgumentTokenizer.tokenize(args, PREFIX_TASK, PREFIX_PRIORITY, PREFIX_DATE, PREFIX_MESSAGE,
+                        PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_TASK, PREFIX_PRIORITY, PREFIX_DATE, PREFIX_TAG,
-                PREFIX_MESSAGE)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_TASK, PREFIX_PRIORITY, PREFIX_DATE, PREFIX_MESSAGE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddReminderCommand.MESSAGE_USAGE));
         }
 
