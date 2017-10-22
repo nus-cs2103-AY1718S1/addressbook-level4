@@ -24,6 +24,19 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     }
 
     /**
+     * Enters the given input in the Command Box without executing the input and
+     * chooses the first option in the auto-complete list.
+     * Note that the input is not executed.
+     */
+    public void enterInput(String input) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(input));
+        guiRobot.pauseForAutoComplete(400);
+
+        guiRobot.type(KeyCode.ENTER);
+    }
+
+    /**
      * Enters the given command in the Command Box and presses enter.
      * @return true if the command succeeded, false otherwise.
      */

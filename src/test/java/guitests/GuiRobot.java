@@ -40,6 +40,13 @@ public class GuiRobot extends FxRobot {
     }
 
     /**
+     * Pauses execution for a given period of time to allow auto-completion popup to execute.
+     */
+    public void pauseForAutoComplete(int time) {
+        sleep(time);
+    }
+
+    /**
      * Waits for {@code event} to be true by {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS} milliseconds.
      *
      * @throws EventTimeoutException if the time taken exceeds {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS}

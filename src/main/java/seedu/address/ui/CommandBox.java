@@ -2,11 +2,15 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.Commands;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
@@ -29,13 +33,24 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
+    private AutoCompletionBinding<String> autoCompletionBinding;
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        autoCompletionBinding = TextFields.bindAutoCompletion(commandTextField, Commands.getAllCommandWords());
+        autoCompletionBinding.setVisibleRowCount(3);
+        autoCompletionBinding.setMinWidth(100);
         historySnapshot = logic.getHistorySnapshot();
+    }
+
+    /**
+     * Returns the {@code AutoCompletionBinding} bound to the text field in the command box.
+     */
+    public AutoCompletionBinding<String> getAutoCompletionBinding() {
+        return this.autoCompletionBinding;
     }
 
     /**
@@ -51,6 +66,7 @@ public class CommandBox extends UiPart<Region> {
 
             navigateToPreviousInput();
             break;
+
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();

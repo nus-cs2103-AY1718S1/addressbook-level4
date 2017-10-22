@@ -43,6 +43,27 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
+    public void commandBox_multipleSuggestions() {
+        String input = "l";
+        commandBoxHandle.enterInput(input);
+        assertEquals("clear", commandBoxHandle.getInput());
+    }
+
+    @Test
+    public void commandBox_singleSuggestion() {
+        String input = "li";
+        commandBoxHandle.enterInput(input);
+        assertEquals("list", commandBoxHandle.getInput());
+    }
+
+    @Test
+    public void commandBox_noSuggestion() {
+        String input = "abc";
+        commandBoxHandle.enterInput(input);
+        assertEquals("abc", commandBoxHandle.getInput());
+    }
+
+    @Test
     public void commandBox_startingWithSuccessfulCommand() {
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
