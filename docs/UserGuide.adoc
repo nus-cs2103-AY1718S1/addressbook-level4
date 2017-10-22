@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Bamboo - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -22,11 +22,11 @@ By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `bamboo.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::bambooUi.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
