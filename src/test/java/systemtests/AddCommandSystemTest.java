@@ -15,6 +15,11 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.NON_COMPULSORY_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.NON_COMPULSORY_BLOODTYPE;
+import static seedu.address.logic.commands.CommandTestUtil.NON_COMPULSORY_EMAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.NON_COMPULSORY_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.NON_COMPULSORY_REMARK;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
@@ -166,21 +171,46 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing remark -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + TAG_DESC_FRIEND
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
+        assertCommandSuccess(command, toAdd);
 
-        /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing phone -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
+                + ADDRESS_DESC_AMY + BLOODTYPE_DESC_AMY;
+        assertCommandSuccess(command, toAdd);
 
-        /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + BLOODTYPE_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing email -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
+                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND
+                + BLOODTYPE_DESC_AMY;
+        assertCommandSuccess(command, toAdd);
 
-        /* Case: missing bloodtype -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing address -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
+                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(NON_COMPULSORY_ADDRESS_AMY)
+                .withBloodType(VALID_BLOODTYPE_AMY).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + BLOODTYPE_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: missing bloodtype -> success */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NON_COMPULSORY_PHONE_AMY)
+                .withEmail(NON_COMPULSORY_EMAIL_AMY).withAddress(NON_COMPULSORY_ADDRESS_AMY)
+                .withBloodType(NON_COMPULSORY_BLOODTYPE).withRemark(NON_COMPULSORY_REMARK)
+                .withTags(VALID_TAG_FRIEND).withAppointment(VALID_NAME_AMY).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
 
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
