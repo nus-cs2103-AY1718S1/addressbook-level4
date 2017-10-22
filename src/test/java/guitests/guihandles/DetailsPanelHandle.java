@@ -18,12 +18,14 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
+    private static final String HOME_PHONE_FIELD_ID = "#homePhone";
     private static final String SCHOOL_EMAIL_FIELD_ID = "#schoolEmail";
     private static final String BIRTHDAY_FIELD_ID = "#birthday";
     private static final String WEBSITE_FIELD_ID = "#website";
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String ADDRESS_FIELD_FIELD_ID = "#addressField";
     private static final String PHONE_FIELD_FIELD_ID = "#phoneField";
+    private static final String HOME_PHONE_FIELD_FIELD_ID = "#homePhoneField";
     private static final String EMAIL_FIELD_FIELD_ID = "#emailField";
     private static final String SCHOOL_EMAIL_FIELD_FIELD_ID = "#schoolEmailField";
     private static final String BIRTHDAY_FIELD_FIELD_ID = "#birthdayField";
@@ -32,6 +34,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
+    private final Label homePhoneLabel;
     private final Label emailLabel;
     private final Label schEmailLabel;
     private final Label birthdayLabel;
@@ -40,6 +43,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
 
     private final Text addressText;
     private final Text phoneText;
+    private final Text homePhoneText;
     private final Text emailText;
     private final Text schEmailText;
     private final Text birthdayText;
@@ -52,6 +56,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
     private String latestSchoolEmail;
     private String latestBirthday;
     private String latestWebsite;
+    private String latestHomePhone;
     private List<String> latestTags;
 
     public DetailsPanelHandle(Node detailsPanelNode) {
@@ -64,6 +69,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
         this.schEmailLabel = getChildNode(SCHOOL_EMAIL_FIELD_ID);
         this.birthdayLabel = getChildNode(BIRTHDAY_FIELD_ID);
         this.websiteLabel = getChildNode(WEBSITE_FIELD_ID);
+        this.homePhoneLabel = getChildNode(HOME_PHONE_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -78,6 +84,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
         this.schEmailText = getChildNode(SCHOOL_EMAIL_FIELD_FIELD_ID);
         this.birthdayText = getChildNode(BIRTHDAY_FIELD_FIELD_ID);
         this.websiteText = getChildNode(WEBSITE_FIELD_FIELD_ID);
+        this.homePhoneText = getChildNode(HOME_PHONE_FIELD_FIELD_ID);
     }
 
     public String getName() {
@@ -108,12 +115,20 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
         return  websiteLabel.getText();
     }
 
+    public String getHomePhone() {
+        return homePhoneLabel.getText();
+    }
+
     public String getAddressField() {
         return addressText.getText();
     }
 
     public String getPhoneField() {
         return phoneText.getText();
+    }
+
+    public String getHomePhoneField() {
+        return homePhoneText.getText();
     }
 
     public String getEmailField() {
@@ -151,6 +166,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
         latestBirthday = getBirthday();
         latestTags = getTags();
         latestWebsite = getWebsite();
+        latestHomePhone = getHomePhone();
     }
 
     /**
@@ -165,6 +181,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
                 || !getEmail().equals(latestEmail)
                 || !getBirthday().equals(latestBirthday)
                 || !getWebsite().equals(latestWebsite)
+                || !getHomePhone().equals(latestHomePhone)
                 || !getTags().equals(latestTags);
     }
 

@@ -115,6 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
     @Override
     public ArrayList<String> getThemesList() {
         return this.addressBook.getThemesList();
