@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= PEERSONAL - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -92,43 +92,35 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Finding a person: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose attributes match the prefix and keywords input. +
+Format: `find [PREFIX][KEYWORD]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The prefixes are `n/`, `p/`, `e/`, `a/`, `t/`, `r/`, `b/`
+* Only full words and numbers will be matched e.g. `Han` will not match `Hans`, `999` will not match `99987343`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `find n/alice` will return `Alice Lim`
+and `Alice Tan`
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Locating persons by phone number: `findphone` (Since v1.2)
-
-Finds persons whose names contain any of the given keywords. +
-Format: `findphone KEYWORD [MORE_KEYWORDS]`
-
-****
-* Only the phone number is searched.
-* Only full phone number will be matched.
-* Persons matching at least one keyword will be returned.
-****
-
-Examples:
-
-* `findphone 98765432` +
-Returns contact with phone number `9876432`.
-* `findphone 98765432 91234567` +
-Returns contacts with phone number `98765432` and `91234567`.
+* `find p/98765432` +
+Returns any person having the phone number `98765432`
+* `find a/138 Clementi Road` +
+Returns any person having the address `138 Clementi Road`
+* `find e/john@example.com` +
+Returns any person having the email `john@example.com`
+* `find t/[friend]` +
+Returns any person having the tag `[friend]`
+* `find r/[Likes coffee]` +
+Returns any person having the remarks `[Likes coffee]`
+* `find b/10-October-1995` +
+Returns any person with birthday on `10-October-1995`
 
 === Deleting a person : `delete`
 
@@ -150,14 +142,15 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Adding photo : `addPhoto`
+=== Adding photo : `addPhoto` (Since v1.3)
 
 Adds a photo for the specifed person in the address book. +
-Format: `addPhoto INDEX f/filepath`
+Format: `addPhoto INDEX f/[FILEPATH]`
 
 Examples:
 
-* `addPhoto 1 f/C:/users/pictures/thickThings/thic.png`
+* `addPhoto 1 f/C:/users/pictures/cuteThings/cutedog.png` +
+Adds a photo `cutedog.png` to the first person of the Address Book.
 
 === Selecting a person : `select`
 
@@ -263,10 +256,28 @@ Edits the birthday for the first person to `20/DEC/2012` +
 * `birthday 1 b/` +
 Removes the birthday for the first person.
 
+=== Sorting all entries : `sort` (Since v1.2)
+
+Sorts all entries in Peersonal based on the given prefix in ascending order. +
+Sorts based on `NAME` by default. +
+Format: `sort [PREFIX]` +
+
+Examples:
+
+* `sort` +
+Sorts the list based on `NAME` +
+* `sort p/` +
+Sorts the list based on `PHONE`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
 
 === List recently added contacts : `listrecent` (Coming in v2.0)
 
@@ -287,11 +298,6 @@ Format: `emailall t/[TAG]`
 
 Display birthdays of contacts according to months in a calendar view. +
 Format: `calendar`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
 
 === Saving the data
 
