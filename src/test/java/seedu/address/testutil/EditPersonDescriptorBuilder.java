@@ -134,6 +134,15 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+
+    /**
+     * Sets the {@code Favourite} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFavourite(String favourite) {
+        descriptor.setFavourite(new Boolean(favourite));
+        return this;
+    }
+
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
