@@ -557,7 +557,7 @@ By being a subscriber to this event, the `WebView` in `BrowserPanel` will load t
 === FindCommand by any search field [Since v1.2]
 
 
-The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords. The keywords must be a full word match.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
+The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords. The keywords must be a full word match.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone` and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
 
 
 `Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input. Checks will be conducted via l`FindCommandParserl` which inherits from `FindCommand`.
@@ -575,7 +575,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
 ----
 [NOTE]
-A valid find command search keywords based on prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG]
+A valid find command can only search for keywords based on specific prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG]
 
 Also,the input will first have to be tokenised in order to extract the prefix for for the search procedure. In absence of valid prefix ,an exception will be thrown.
 [source,java]
@@ -591,19 +591,19 @@ Upon any successful match, the particulars of the contact will be displayed. _Fi
 
 
 image::FindCommand_Name.PNG[width="300"]
-_Figure 3.6.1a : Find by name_
+_Figure 3.6.1a : Find by name [n/NAME]_
 
 image::FindCommand_Phone.PNG[width="300"]
-_Figure 3.6.1b : Find by phone_
+_Figure 3.6.1b : Find by phone [p/PHONE]_
 
 image::FindCommand_Email.PNG[width="300"]
-_Figure 3.6.1c : Find by email_
+_Figure 3.6.1c : Find by email [e/EMAIL]_
 
 image::FindCommand_Address.PNG[width="300"]
-_Figure 3.6.1d : Find by address_
+_Figure 3.6.1d : Find by address [a/ADDRESS]_
 
 image::FindCommand_Tag.PNG[width="300"]
-_Figure 3.6.1e : Find by tag_
+_Figure 3.6.1e : Find by tag [t/TAG]_
 
 //tag::CopyCommand[]
 === Copy email address to clipboard [Since v1.2]
@@ -1071,6 +1071,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |create a timeline with a contact |record and store activities with them
 
+|`* *` |user |check my calendar|update of new events
+
 |`* *` |user |see my contacts' social media profile pictures |identify them more easily
 
 |`* *` |user |write down remarks for a contact |record specific information about the contact
@@ -1097,7 +1099,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete persons
 *MSS*
 
 1.  User requests to list persons
