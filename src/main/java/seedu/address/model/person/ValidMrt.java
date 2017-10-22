@@ -126,10 +126,10 @@ class MrtListBuilder {
      */
     private void addNWline() {
         add("HarbourFront", 1.265925, 103.820900);
-        add("Outram Park",1.279770, 103.839575);
+        add("Outram Park", 1.279770, 103.839575);
         add("Chinatown", 1.284793, 103.843926);
         add("Clarke Quay", 1.288625, 103.847105);
-        add("Dhoby Ghaut",1.299711, 103.845488);
+        add("Dhoby Ghaut", 1.299711, 103.845488);
         add("Little India", 1.306291, 103.849391);
         add("Farrer Park", 1.312456, 103.854813);
         add("Boon Keng", 1.319859, 103.861828);
@@ -190,7 +190,7 @@ class MrtListBuilder {
 /**
  * Class for coordinates
  */
-class Coordinates{
+class Coordinates {
     private double x;
     private double y;
     Coordinates(double x, double y) {
@@ -210,9 +210,9 @@ class Coordinates{
      * returns the distance between 2 coordinates
      */
     public double getDistance(Coordinates coordinates) {
-        double x_dist = Math.abs(coordinates.getX() - x);
-        double y_dist = Math.abs(coordinates.getY() - y);
-        double res = Math.sqrt(x_dist * x_dist + y_dist * y_dist); //pythagoras
+        double xDist = Math.abs(coordinates.getX() - x);
+        double yDist = Math.abs(coordinates.getY() - y);
+        double res = Math.sqrt(xDist * xDist + yDist * yDist); //pythagoras
         return res;
     }
 }

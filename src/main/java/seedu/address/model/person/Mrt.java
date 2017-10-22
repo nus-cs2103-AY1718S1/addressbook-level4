@@ -23,7 +23,7 @@ public class Mrt {
     */
     public static final String MRT_VALIDATION_REGEX = "[^\\s].*";
 
-    public static final Set<String> validMrt = ValidMrt.VALID_MRT_SET.keySet();
+    public static final Set<String> VALID_MRT = ValidMrt.VALID_MRT_SET.keySet();
 
     public final String value;
 
@@ -45,7 +45,7 @@ public class Mrt {
      */
     public static boolean isValidMrt(String test) {
         boolean check1 = test.matches(MRT_VALIDATION_REGEX);
-        boolean check2 = validMrt.contains(test);
+        boolean check2 = VALID_MRT.contains(test);
         return check1 && check2;
     }
 
