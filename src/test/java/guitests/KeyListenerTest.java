@@ -33,7 +33,7 @@ public class KeyListenerTest extends RolodexGuiTest {
     @Test
     public void executeKeyEventForFocusOnPersonListPanel() {
         KeyCodeCombination focusKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Left");
-        
+
         guiRobot.push(focusKeyCode);
         assertTrue(getPersonListPanel().isFocused());
 
