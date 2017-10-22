@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.model.util.DateUtil.generateOutdatedDebtDate;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Date;
@@ -90,8 +89,8 @@ public class InterestTest {
             }
         }
         for (ReadOnlyPerson person : model.getFilteredPersonList()) {
-            if (person.equals(personToTest)) {
-                assertEquals("10100.00", person.getDebt().toNumber());
+            if (person.getName().equals(personToTest.getName())) {
+                assertEquals("10100.00", person.getDebt().toString());
             }
         }
     }
