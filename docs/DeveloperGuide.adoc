@@ -309,6 +309,7 @@ image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 Suppose now user wants to view all lessons of Module Code CS2103, thus user types command `view 1`(Suppose the index of Module CS2103 is 1), command `view` will result in listing element changed from `Module` to `Lesson`. Then the `undoStack` is cleared. Because User can only undo if the listing element type has not been switched.
 
+image::UndoRedoNewCommand4StackDiagram.png[width="800"]
 
 The following link:#activity-diagram[activity diagram] summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
