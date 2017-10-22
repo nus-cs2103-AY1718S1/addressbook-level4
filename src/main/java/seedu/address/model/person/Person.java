@@ -65,7 +65,8 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Photo photo, Set<Tag> tags, Set<CustomField> customFields) {
+    public Person(Name name, Phone phone, Email email, Address address, Photo photo,
+                  Set<Tag> tags, Set<CustomField> customFields) {
         requireAllNonNull(name, phone, email, address, tags, customFields);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);

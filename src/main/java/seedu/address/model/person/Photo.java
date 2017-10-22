@@ -2,16 +2,16 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's photo in the address book.
@@ -55,6 +55,9 @@ public class Photo {
         return pathName;
     }
 
+    /**
+     *  Displace the photo
+     */
     public void showPhoto() {
         JFrame frame = new JFrame("Icon Photo");
         BufferedImage img = null;
