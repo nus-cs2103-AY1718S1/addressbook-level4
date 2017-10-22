@@ -510,9 +510,10 @@ The actual implementation of filtering on the existing list involves three steps
 .  Update the list using the predicate generated in step 2.
 
 ===== Design consideration
-The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]]. +
-By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
-Making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
+The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]].
+
+* By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
+* By making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
 // end::filter[]
 
 // tag::sync[]
