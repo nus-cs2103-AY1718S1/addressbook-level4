@@ -87,9 +87,20 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updateParcel(parcelToEdit, editedParcel);
+            System.out.println("How did I get here?");
             model.maintainSorted();
             if (model.hasSelected()) {
-                model.forceSelect(model.getPrevIndex());
+                ReadOnlyParcel previous = model.getAddressBook()
+                        .getParcelList()
+                        .get(model.getPrevIndex().getZeroBased());
+                model.maintainSorted();
+                if (previous.compareTo(editedParcel) > 0) {
+                    model.forceSelect(model.getPrevIndex());
+                } else {
+                    model.forceSelect(Index.fromZeroBased(findIndex(previous)));
+                }
+            } else {
+                model.maintainSorted();
             }
         } catch (DuplicateParcelException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PARCEL);
@@ -264,5 +275,12 @@ public class EditCommand extends UndoableCommand {
                     && getStatus().equals(e.getStatus())
                     && getTags().equals(e.getTags());
         }
+
+
     }
+
+    private int findIndex(ReadOnlyParcel target) {
+        return model.getAddressBook().getParcelList().indexOf(target);
+    }
+
 }

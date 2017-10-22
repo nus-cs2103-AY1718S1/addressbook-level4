@@ -66,7 +66,6 @@ public class AddCommand extends UndoableCommand {
                                                .getParcelList()
                                                .get(model.getPrevIndex().getZeroBased());
                 model.maintainSorted();
-                System.out.println("Selecting again");
                 if (previous.compareTo(toAdd) > 0) {
                     model.forceSelect(model.getPrevIndex());
                 } else {

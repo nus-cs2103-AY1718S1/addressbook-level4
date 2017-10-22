@@ -46,6 +46,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -207,18 +208,18 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a parcel with new values same as another parcel's values -> rejected */
-        executeCommand(ParcelUtil.getAddCommand(BOB));
-        assertTrue(getModel().getAddressBook().getParcelList().contains(BOB));
+        executeCommand(ParcelUtil.getAddCommand(AMY));
+        assertTrue(getModel().getAddressBook().getParcelList().contains(AMY));
         index = INDEX_FIRST_PARCEL;
-        assertFalse(getModel().getFilteredParcelList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
-                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERYDATE_DESC_BOB + STATUS_DESC_BOB
-                + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        assertFalse(getModel().getFilteredParcelList().get(index.getZeroBased()).equals(AMY));
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERYDATE_DESC_AMY + STATUS_DESC_AMY
+                + TAG_DESC_FRIEND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PARCEL);
 
         /* Case: edit a parcel with new values same as another parcel's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
-                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERYDATE_DESC_BOB + STATUS_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY
+                + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERYDATE_DESC_AMY + STATUS_DESC_AMY
                 + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PARCEL);
     }
@@ -310,7 +311,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
 
         executeCommand(command);
-        expectedModel.maintainSorted();
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
