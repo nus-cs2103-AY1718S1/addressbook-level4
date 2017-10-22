@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.PropertyLabel;
 import seedu.address.ui.UiPart;
 
 /**
@@ -44,8 +45,8 @@ public class PersonDetailsPanel extends UiPart<Region> {
         List<Label> values = new ArrayList<>();
 
         person.getProperties().forEach(property -> {
-            Label newPropertyKey = new Label(property.getFullName());
-            Label newPropertyValue = new Label(property.getValue());
+            Label newPropertyKey = new PropertyLabel(property.getFullName() + ":", "details-property-key");
+            Label newPropertyValue = new PropertyLabel(property.getValue(), "details-property-value");
 
             keys.add(newPropertyKey);
             values.add(newPropertyValue);
