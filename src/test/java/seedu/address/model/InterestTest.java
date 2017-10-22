@@ -9,7 +9,6 @@ import java.util.Date;
 import org.junit.Test;
 
 import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.util.DateUtil;
 import seedu.address.testutil.PersonBuilder;
@@ -83,16 +82,19 @@ public class InterestTest {
         } catch (DuplicatePersonException dpe) {
             assert false : " Should not happen as personToAdd is unique to typical persons";
         }
-        for (ReadOnlyPerson person : model.getFilteredPersonList()) {
-            if (person.equals(personToTest)) {
-                model.updateDebtFromInterest(person, 1);
-            }
-        }
-        for (ReadOnlyPerson person : model.getFilteredPersonList()) {
-            if (person.getName().equals(personToTest.getName())) {
-                assertEquals("10100.00", person.getDebt().toString());
-            }
-        }
+        // personToTest added to end of addressbook
+        int personToTestIdx = model.getFilteredPersonList().size() - 1;
+        model.updateDebtFromInterest(model.getFilteredPersonList().get(personToTestIdx), 1);
+        assertEquals("10100.00", model.getFilteredPersonList().get(personToTestIdx).getDebt().toString());
+
+        model.updateDebtFromInterest(model.getFilteredPersonList().get(personToTestIdx), 1);
+        assertEquals("10201.00", model.getFilteredPersonList().get(personToTestIdx).getDebt().toString());
+        // interest compounded for a duration of 2 months
+        model.updateDebtFromInterest(model.getFilteredPersonList().get(personToTestIdx), 2);
+        assertEquals("10406.04", model.getFilteredPersonList().get(personToTestIdx).getDebt().toString());
+        // interest compounded for a duration of 5 months
+        model.updateDebtFromInterest(model.getFilteredPersonList().get(personToTestIdx), 5);
+        assertEquals("10936.85", model.getFilteredPersonList().get(personToTestIdx).getDebt().toString());
     }
 
     /**
