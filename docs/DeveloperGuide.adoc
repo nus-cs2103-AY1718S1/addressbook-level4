@@ -231,6 +231,14 @@ Intro
 ==== Single Responsibility Principle (SRP)
 
 ==== Open-Closed Principle (OCP)
+ Open-Closed Principle (OCP): A module should be open for extension but closed for modification. That is, modules should be written so that they can be extended, without requiring them to be modified.
+
+When different classes interact with one another, coupling is inevitable and and interaction will naturally lead to increased coupling. Bluebird applies OCP in order to reduce coupling and increase cohesion. +
+As shown in Figure 2.7.2.1, if a new command is added to Bluebird, there is no need to modify the `Command` class, the new command can simply just inherit from
+`Command`.
+
+image::OCPLogic.png[width="800"]
+
 
 ==== Liskov Substitution Principle (LSP)
 
@@ -394,10 +402,10 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 The sort command sorts the `People` in `AddressBook` based on their `Name`, `Phone`, `Email` or `Address`. The sort command is also an `UndoableCommand` and users can undo the sort if they wish to.
 `SortCommand` inherits from `UndoableCommand` which inherits from `Command` and the logic is
-shown in figure 1 below.
+shown in Figure 3.4.1 below.
 
 image::sortLogicDiagram.png[width="700"]
-Figure 1: Logic of SortCommand
+Figure 3.4.1: Logic of SortCommand
 
 There will be a `SortCommandParser` as well to parse out the `KEYWORD` which is either name, phone, email
 or address. This will ensure that users type in the right `KEYWORD` to sort the list however they want.
@@ -406,10 +414,10 @@ or address. This will ensure that users type in the right `KEYWORD` to sort the 
 
 Suppose a user wants to sort by name, the user will type `sort name` into the command box. This will then be processed by `LogicManager` which executes the command and `AddressBookParser` will
 parse the command accordingly. A `SortCommand` will be returned to the `LogicManager` which will then execute it. Finally, the result of the execution will be returned and displayed
-on the `ResultDisplay` Ui for the user. The sequence diagram for this scenario is shown in Figure 2 below.
+on the `ResultDisplay` Ui for the user. The sequence diagram for this scenario is shown in Figure 3.4.2 below.
 
 image::sortSD.png[width="800"]
-Figure 2: Sequence diagram for sorting by name
+Figure 3.4.2: Sequence diagram for sorting by name
 
 When `SortCommand` executes,
 
@@ -417,10 +425,10 @@ When `SortCommand` executes,
 . Then, it will call the sortList() method in `AddressBook`
 . Finally, it will call the sort() method to sort the internal list in `UniquePersonList`
 
-The sequence diagram for executeUndoableCommand() is given in Figure 3 below.
+The sequence diagram for executeUndoableCommand() is given in Figure 3.4.3 below.
 
 image::sortExecuteSD.png[width="750"]
-Figure 3: Sequence diagram for SortCommand executeUndoableCommand()
+Figure 3.4.3: Sequence diagram for SortCommand executeUndoableCommand()
 
 
 ==== Design Considerations
@@ -440,6 +448,7 @@ Figure 3: Sequence diagram for SortCommand executeUndoableCommand()
 **Alternative 2:** Not automatically sort +
 **Pros:** This gives users freedom to select how they want their list to be sorted +
 **Cons:** Forgetful users may not be able to find their contact if they forget to sort by name when they add a new contact +
+// end::sort[]
 
 [discrete]
 === Since v1.2
