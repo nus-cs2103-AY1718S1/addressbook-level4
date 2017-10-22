@@ -252,9 +252,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand} for an address search.
      */
     private FindCommand prepareAddressCommand(String userInput) {
+        graphWrapper.buildGraph(model);
         FindCommand command =
                 new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return command;
     }
 
@@ -262,9 +263,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand} for an email search.
      */
     private FindCommand prepareEmailCommand(String userInput) {
+        graphWrapper.buildGraph(model);
         FindCommand command =
                 new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return command;
     }
 
@@ -272,9 +274,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand} for a phone search.
      */
     private FindCommand preparePhoneCommand(String userInput) {
+        graphWrapper.buildGraph(model);
         FindCommand command =
                 new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return command;
     }
 
@@ -282,9 +285,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand} for a tag search.
      */
     private FindCommand prepareTagCommand(String userInput) {
+        graphWrapper.buildGraph(model);
         FindCommand command =
                 new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return command;
     }
 
