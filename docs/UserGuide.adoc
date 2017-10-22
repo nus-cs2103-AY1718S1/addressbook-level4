@@ -342,9 +342,11 @@ e.g. `find James Jake`
 * *List* : `list`
 * *Add Meeting* `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]` +
 e.g. `addmeeting 5 n/Mary Jane d/22-11-2017 l/Vivo City`
-* *Delete Meeting* `dm INDEX` + e.g. `dm 1`
+* *Delete Meeting* `deletemeeting INDEX` + e.g. `dm 1`
 * *Edit Meeting* `editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
-* *List Meeting* : `lm`
+* *List Meeting* : `listmeeting`
+* *Find Meeting* : `findmeeting KeyWORD [MORE_KEYWORDS]` +
+e.g. `find Shopping Study Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
