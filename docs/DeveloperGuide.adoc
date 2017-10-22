@@ -146,6 +146,9 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+==== Model-View-Controller (MVC) pattern
+Model View Components
+
 === UI component
 
 image::UiClassDiagram.png[width="800"]
@@ -213,6 +216,17 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+=== Software Design Principles
+Intro
+
+==== Single Responsibility Principle (SRP)
+
+==== Open-Closed Principle (OCP)
+
+==== Liskov Substitution Principle (LSP)
+
+==== Dependency Inversion Principle (DIP)
 
 == Implementation
 
