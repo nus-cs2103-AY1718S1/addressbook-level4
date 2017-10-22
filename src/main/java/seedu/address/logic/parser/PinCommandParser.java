@@ -28,4 +28,8 @@ public class PinCommandParser implements Parser<PinCommand> {
         }
     }
 
+    @Override
+    public String getCommandWord() {
+        return PinCommand.COMMAND_WORD;
+    }
 }

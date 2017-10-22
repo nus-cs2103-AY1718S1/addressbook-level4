@@ -28,4 +28,8 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
         }
     }
 
+    @Override
+    public String getCommandWord() {
+        return UnpinCommand.COMMAND_WORD;
+    }
 }

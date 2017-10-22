@@ -135,8 +135,10 @@ public class AddressBookParser {
 
         case AliasCommand.COMMAND_WORD:
             return new AliasCommandParser().parse(checkedArguments);
+
         case UnaliasCommand.COMMAND_WORD:
             return new UnaliasCommandParser().parse(checkedArguments);
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
@@ -259,6 +261,7 @@ public class AddressBookParser {
         commandMap.put("help", null);
         commandMap.put("history", null);
         commandMap.put("list", null);
+        commandMap.put("listpin", null);
         commandMap.put("redo", null);
         commandMap.put("undo", null);
     }

@@ -56,8 +56,8 @@ public class TestUtil {
 
     public static ReadOnlyPerson getUnpinPerson(Model model, Index index) {
         return model.getFilteredPersonList().get(index.getZeroBased());
-      }
-  
+    }
+
     public static ReadOnlyAliasToken getAlias(Model model, String keyword) throws IllegalValueException {
         ReadOnlyAliasToken foundAliasToken = null;
 
