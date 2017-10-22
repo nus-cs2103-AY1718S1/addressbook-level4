@@ -3,8 +3,6 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
-
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
@@ -19,7 +17,9 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     public boolean test(ReadOnlyPerson person) {
         for (String name : person.getName().fullName.split("\\s+")) {
             for (String keyword : keywords) {
-                if (name.toLowerCase().matches(keyword)) return true;
+                if (name.toLowerCase().matches(keyword)) {
+                    return true;
+                }
             }
         }
         return false;
