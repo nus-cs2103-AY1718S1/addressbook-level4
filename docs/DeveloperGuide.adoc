@@ -603,6 +603,21 @@ The user enters an addEvent command, which is received by `LogicManager`. `Logic
 
 === ListEvent mechanism
 
+The list event command is facilitated by the `LogicManager` class. It supports listing all the events for user to process.
+
+The following sequence diagram shows how the list event operation works:
+
+image::ListEventSequenceDiagram.png[width="800"]
+
+The user enters a listE command which is got by `LogicManager`.
+`LogicManager` calls `AddressBookParser` to parse the command.
+Then `AddressBookParser` creates the list event command object and return it.
+`LogicManager` receives the command object and executes the command.
+The list event command object calls `updateFilteredEventList()` in the `Model`.
+Then `Model` process the event list.
+The list event command object creates `CommandResult` object and return it.
+`LogicManager` receives the result and shows it through `UI`.
+
 === Delete event
 
 The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
