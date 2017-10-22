@@ -8,12 +8,11 @@ import java.util.Vector;
  */
 public class ValidMrt {
 
-    public final HashMap<String, Coordinates> validMrt = new MrtListBuilder()
-            .addLine()          //only circle, NW, NE and EW line available
+    public static final HashMap<String, Coordinates> validMrtSet = new MrtListBuilder()
+            .addLines()          //only circle, NW, NE and EW line available
             .build();
 
     public ValidMrt() {
-
     }
 }
 
@@ -30,10 +29,10 @@ class MrtListBuilder{
     }
 
     public void S(String station, double x, double y) {
-        this.add(station, x, y);
+        mrt.put(station, new Coordinates(x, y));
     }
 
-    public MrtListBuilder addLine() {
+    public MrtListBuilder addLines() {
         addEWline();
         addNSline();
         addNWline();
@@ -159,7 +158,6 @@ class MrtListBuilder{
         S("Marina Bay",1.276382, 103.854583);
     }
 
-
     public HashMap<String, Coordinates> build() {
         return mrt;
     }
@@ -172,6 +170,6 @@ class Coordinates{
         this.x = x;
         this.y = y;
     }
-    public double getX() { return x; }
-    public double getY() { return y; }
+    public double getX() { return x; }  //accessor
+    public double getY() { return y; }  //accessor
 }

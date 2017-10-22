@@ -12,7 +12,8 @@ import static java.util.Objects.requireNonNull;
 public class Mrt {
 
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
-            "Person's MRT station should be an existing MRT station";
+            "Person's MRT station should be an existing MRT station in :" +
+                    "North-South, East-West, Circle and North-West Line "; //other lines to be added soon
 
     /*
     * The first character of the address must not be a whitespace,
@@ -20,7 +21,7 @@ public class Mrt {
     */
     public static final String MRT_VALIDATION_REGEX = "[^\\s].*";
 
-    public final Set<String> validMrt = ValidMrt.validMrt.keySet();
+    public final Set<String> validMrt = ValidMrt.validMrtSet.keySet();
 
     public final String value;
 
@@ -42,7 +43,7 @@ public class Mrt {
      */
     public boolean isValidMrt(String test) {
         boolean check1 = test.matches(MRT_VALIDATION_REGEX);
-        boolean check2 = ValidMrt.contains(test);
+        boolean check2 = validMrt.contains(test);
         return check1 && check2;
     }
 
