@@ -20,77 +20,80 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.alias.AliasToken;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
 import seedu.address.model.alias.exceptions.TokenKeywordNotFoundException;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.AliasTokenBuilder;
 
-public class AddCommandTest {
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for AliasCommand.
+ */
+public class AliasCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullAliasToken_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AliasCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_aliasAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingAliasTokenAdded modelStub = new ModelStubAcceptingAliasTokenAdded();
+        AliasToken validAliasToken = new AliasTokenBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAliasCommandForAliasToken(validAliasToken, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AliasCommand.MESSAGE_SUCCESS, validAliasToken), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validAliasToken), modelStub.aliasTokensAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateAliasToken_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateAliasTokenException();
+        AliasToken validAliasToken = new AliasTokenBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AliasCommand.MESSAGE_DUPLICATE_ALIAS);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAliasCommandForAliasToken(validAliasToken, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        AliasToken ph = new AliasTokenBuilder().withKeyword("ph").build();
+        AliasToken st = new AliasTokenBuilder().withKeyword("st").build();
+        AliasCommand aliasPhCommand = new AliasCommand(ph);
+        AliasCommand aliasStCommand = new AliasCommand(st);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(aliasPhCommand.equals(aliasPhCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AliasCommand aliasPhCommandCopy = new AliasCommand(ph);
+        assertTrue(aliasPhCommand.equals(aliasPhCommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(aliasPhCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(aliasPhCommand == null);
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different AliasToken -> returns false
+        assertFalse(aliasPhCommand.equals(aliasStCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AliasCommand with the details of the given AliasToken
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AliasCommand getAliasCommandForAliasToken(AliasToken aliasToken, Model model) {
+        AliasCommand command = new AliasCommand(aliasToken);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -126,21 +129,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void pinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void unpinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -154,6 +142,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -181,12 +174,12 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicateTokenKeywordException when trying to add an alias.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateAliasTokenException extends ModelStub {
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addAliasToken(ReadOnlyAliasToken aliasToken) throws DuplicateTokenKeywordException {
+            throw new DuplicateTokenKeywordException();
         }
 
         @Override
@@ -196,14 +189,14 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accepts the AliasToken being added
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingAliasTokenAdded extends ModelStub {
+        private final ArrayList<AliasToken> aliasTokensAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
+        public void addAliasToken(ReadOnlyAliasToken aliasToken) throws DuplicateTokenKeywordException {
+            aliasTokensAdded.add(new AliasToken(aliasToken));
         }
 
         @Override
@@ -211,5 +204,4 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
-
 }

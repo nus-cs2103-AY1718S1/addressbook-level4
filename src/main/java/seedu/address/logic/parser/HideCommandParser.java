@@ -15,6 +15,7 @@ public class HideCommandParser implements Parser<HideCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the HideCommand
      * and returns an HideCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public HideCommand parse(String args) throws ParseException {
@@ -27,4 +28,9 @@ public class HideCommandParser implements Parser<HideCommand> {
         }
     }
 
+    @Override
+    public String getCommandWord() {
+        return HideCommand.COMMAND_WORD;
+    }
 }
+

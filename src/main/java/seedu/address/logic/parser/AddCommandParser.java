@@ -67,4 +67,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    @Override
+    public String getCommandWord() {
+        return AddCommand.COMMAND_WORD;
+    }
 }

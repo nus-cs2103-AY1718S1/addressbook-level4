@@ -245,10 +245,12 @@ Deletes the specified person(s) from the address book. +
 Format: `delete INDEX [MORE_INDEX]`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the person at the specified `INDEX` or the specified `INDEX RANGE`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* The index *can be multiple positive integers with a space in between* 1 2 3 ...
+* Acceptable inputs:
+** The input *can be a single positive integer* 1, 2, 3, ...
+** The input *can be multiple positive integers with a space in between* 1 2 3 ...
+** The input *can be a range of positive integers, denoted by a "~" in between the minimum and maximum index (both inclusive)* 1~4, 2~7, ...
 ****
 
 Examples:
@@ -259,6 +261,10 @@ Deletes the 2nd, 3rd and 4th person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list` +
+`delete 2~5`
+Deletes 2nd to 5th person (*both inclusive*) in the address book.
+
 
 === Selecting a person : `select`
 

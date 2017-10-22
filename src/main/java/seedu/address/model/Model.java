@@ -3,6 +3,9 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.alias.ReadOnlyAliasToken;
+import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
+import seedu.address.model.alias.exceptions.TokenKeywordNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -81,5 +84,25 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Adds the given AliasToken
+     */
+    void addAliasToken(ReadOnlyAliasToken target) throws DuplicateTokenKeywordException;
+
+    /**
+     * Removes the given AliasToken.
+     */
+    void deleteAliasToken(ReadOnlyAliasToken target) throws TokenKeywordNotFoundException;
+
+    /**
+     * Returns the number of Aliases
+     */
+    int getAliasTokenCount();
+
+    /**
+     * Returns an unmodifiable view of the filtered AliasToken list
+     */
+    ObservableList<ReadOnlyAliasToken> getFilteredAliasTokenList();
 
 }
