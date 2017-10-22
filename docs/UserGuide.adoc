@@ -92,17 +92,25 @@ Format: `list`
 
 === Deleting a person : `delete`
 
+====
+Command Name: `delete` +
 Shorthand Alias: `d` +
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Function: Deletes the specified person at the specified `INDEX` from the address book. +
+Format: `delete INDEX` +
+====
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+If you want to delete a contact in your *DummyName*: +
 
-Examples:
+.  Locate the contact you want to delete and the index of the contact. +
+.  Type in the index of the contact. (Figure 2.4.1) +
+`>> delete 1`.
+image:Delete_1.png[600] +
+_Figure 2.4.1_
+.  Press `Enter` and you should see that the selected contact has been deleted. (Figure 2.4.2) +
+image:Delete_2.png[600] +
+_Figure 2.4.2_
+
+You can also delete contacts in a filtered list:
 
 * `list` +
 `delete 2` +
@@ -110,9 +118,9 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
-* `list` +
+* `filter friends` +
 `d 4` +
-Deletes the 4th person in the address book.
+Deletes the 4th person in the results of the `filter` command.
 
 === Editing a person : `edit`
 
@@ -133,7 +141,7 @@ If you want to change the details of a contact in your *DummyName*: +
 
 .  Locate the contact you want to edit and the index of the contact. +
 .  Type in the index of the contact, and the details you wish to replace. (Figure 2.5.1) +
->> edit 1 p/91234567 e/johndoe@example.com`.
+`>> edit 1 p/91234567 e/johndoe@example.com`.
 image:Edit_1.png[600] +
 _Figure 2.5.1_
 .  Press `Enter` and you should see that the first contact that you selected has been modified. (Figure 2.5.2) +
