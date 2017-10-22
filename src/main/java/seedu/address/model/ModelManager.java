@@ -3,9 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import java.util.function.Predicate;
@@ -164,21 +166,46 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeTag(Tag tag, Index index) throws DuplicatePersonException, PersonNotFoundException {
+    public void removeTag(Set<Tag> tag, Set<Index> index) throws DuplicatePersonException,
+            PersonNotFoundException {
         int totalSize = getFilteredPersonList().size();
         Boolean tagExist = false;
 
-        if (index != null) {
-            int targetIndex = index.getZeroBased();
-            Person toDelete =  new Person(getFilteredPersonList().get(targetIndex));
-            Person toUpdate = new Person(toDelete);
-            Set<Tag> oldTags = toDelete.getTags();
+        if (!index.isEmpty()) {
+            if ((index.size() > 1) && (tag.size() > 1)) {
+                throw new DuplicatePersonException();
+            } else {
+                List<Index> indexList = new ArrayList<>();
+                indexList.addAll(index);
+                if (index.size() == 1) {
+                    int targetIndex = indexList.get(index.size() - 1).getZeroBased();
+                    Person toDelete = new Person(getFilteredPersonList().get(targetIndex));
+                    Person toUpdate = new Person(toDelete);
+                    Set<Tag> oldTags = toDelete.getTags();
 
-            Set<Tag> newTags = deleteTag(tag, toDelete);
-            if (!(newTags.size() == oldTags.size())) {
-                toUpdate.setTags(newTags);
-                tagExist = true;
-                addressBook.updatePerson(toDelete, toUpdate);
+                    Set<Tag> newTags = deleteTag(tag, toDelete);
+                    if (!(newTags.size() == oldTags.size())) {
+                        toUpdate.setTags(newTags);
+                        tagExist = true;
+                        addressBook.updatePerson(toDelete, toUpdate);
+                    }
+                } else {
+                    Iterator<Index> it = indexList.iterator();
+                    while (it.hasNext()) {
+                        Index current = it.next();
+                        int targetIndex = current.getZeroBased();
+                        Person toDelete = new Person(getFilteredPersonList().get(targetIndex));
+                        Person toUpdate = new Person(toDelete);
+                        Set<Tag> oldTags = toDelete.getTags();
+
+                        Set<Tag> newTags = deleteTag(tag, toDelete);
+                        if (!(newTags.size() == oldTags.size())) {
+                            toUpdate.setTags(newTags);
+                            tagExist = true;
+                            addressBook.updatePerson(toDelete, toUpdate);
+                        }
+                    }
+                }
             }
         } else {
             for (int i = 0; i < totalSize; i++) {
@@ -206,7 +233,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @param toDelete
      * @return Set of Tags of new Person to be updated
      */
-    private Set<Tag> deleteTag(Tag tag, Person toDelete) {
+    private Set<Tag> deleteTag(Set<Tag> tag, Person toDelete) {
         Set<Tag> oldTags = toDelete.getTags();
         Set<Tag> newTags = new HashSet<>();
 
@@ -214,8 +241,15 @@ public class ModelManager extends ComponentManager implements Model {
         while (it.hasNext()) {
             Tag checkTag = it.next();
             String current = checkTag.tagName;
-            String toCheck = tag.tagName;
-            if (!current.equals(toCheck)) {
+            Boolean toAdd = true;
+            Iterator<Tag> it2 = tag.iterator();
+            while (it2.hasNext()) {
+                String toCheck = it2.next().tagName;
+                if (current.equals(toCheck)) {
+                    toAdd = false;
+                }
+            }
+            if (toAdd) {
                 newTags.add(checkTag);
             }
         }

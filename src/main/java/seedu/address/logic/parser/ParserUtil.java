@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -92,6 +93,54 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code Collection<String> names} into a {@code List<Name>}.
+     */
+    public static List<Name> parseNameFind(Collection<String> names) throws IllegalValueException {
+        requireNonNull(names);
+        final List<Name> nameList = new ArrayList<>();
+        for (String name : names) {
+            nameList.add(new Name(name));
+        }
+        return nameList;
+    }
+
+    /**
+     * Parses {@code Collection<String> phones} into a {@code List<Phone>}.
+     */
+    public static List<Phone> parsePhoneFind(Collection<String> phones) throws IllegalValueException {
+        requireNonNull(phones);
+        final List<Phone> phoneList = new ArrayList<>();
+        for (String phoneName : phones) {
+            phoneList.add(new Phone(phoneName));
+        }
+        return phoneList;
+    }
+
+    /**
+     * Parses {@code Collection<String> emails} into a {@code List<Email>}.
+     */
+    public static List<Email> parseEmailFind(Collection<String> emails) throws IllegalValueException {
+        requireNonNull(emails);
+        final List<Email> emailList = new ArrayList<>();
+        for (String emailName : emails) {
+            emailList.add(new Email(emailName));
+        }
+        return emailList;
+    }
+
+    /**
+     * Parses {@code Collection<String> addresses} into a {@code List<Address>}.
+     */
+    public static List<Address> parseAddressFind(Collection<String> addresses) throws IllegalValueException {
+        requireNonNull(addresses);
+        final List<Address> addressList = new ArrayList<>();
+        for (String addressName : addresses) {
+            addressList.add(new Address(addressName));
+        }
+        return addressList;
     }
 
     /**
