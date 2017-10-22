@@ -19,7 +19,7 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 public class PersonCard extends UiPart<Region> {
     private static final String FXML = "PersonListCard.fxml";
 
-    // Keep a list of all persons.
+    // Keep a record of the displayed persons.
     public final ReadOnlyPerson person;
 
     /**
