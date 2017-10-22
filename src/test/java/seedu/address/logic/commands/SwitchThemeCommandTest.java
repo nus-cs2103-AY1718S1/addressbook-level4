@@ -24,9 +24,22 @@ public class SwitchThemeCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndex_success() throws Exception {
-        String themeToChange = model.getThemesList().get(INDEX_FIRST_PERSON.getZeroBased());
+    public void execute_validIndexInvalidSwitch_throwsCommandException() throws Exception {
         SwitchThemeCommand switchThemeCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        try {
+            switchThemeCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            assertEquals(Messages.MESSAGE_INVALID_SWITCH, e.getMessage());
+        }
+    }
+
+    @Test
+    public void execute_validIndexValidSwitch_success() throws Exception {
+        String themeToChange = model.getThemesList().get(INDEX_SECOND_PERSON.getZeroBased());
+
+        SwitchThemeCommand switchThemeCommand = prepareCommand(INDEX_SECOND_PERSON);
 
         String expectedMessage = String.format(SwitchThemeCommand.MESSAGE_SWITCH_THEME_SUCCESS, themeToChange);
         CommandResult commandResult = switchThemeCommand.execute();

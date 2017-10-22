@@ -58,12 +58,18 @@ public interface Model {
     /** Returns the themes list */
     ArrayList<String> getThemesList();
 
+    /** Sets the current theme */
+    void setCurrentTheme(String theme);
+
+    /** Returns the current theme */
+    String getCurrentTheme();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
-
+    /** Sorts the address book person list */
     void sort();
 }

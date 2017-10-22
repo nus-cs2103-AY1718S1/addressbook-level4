@@ -12,8 +12,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.AccessLocationRequestEvent;
 import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Browser Panel of the App.
@@ -21,7 +21,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
@@ -49,8 +49,8 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(website);
     }
 
-    private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+    private void loadPersonLocation(String location) {
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + location.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
@@ -77,5 +77,11 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleWebsiteAccess(event.website);
+    }
+
+    @Subscribe
+    private void handleAccessLocationEvent(AccessLocationRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonLocation(event.location);
     }
 }

@@ -141,6 +141,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void setCurrentTheme(String theme) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public String getCurrentTheme() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void sort() {
             fail("This method should not be called.");
         }

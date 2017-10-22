@@ -17,6 +17,8 @@ import seedu.address.MainApp;
 import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
 
 public class BrowserPanelTest extends GuiUnitTest {
+    private static final String ALICE_WEBSITE = "https://twitter.com/alice";
+
     private AccessWebsiteRequestEvent accessWebsiteEventStub;
 
     private BrowserPanel browserPanel;
@@ -33,14 +35,14 @@ public class BrowserPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void display() throws Exception {
+    public void displayWebsite() throws Exception {
         // default web page
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
 
         // associated web page of a person
         postNow(accessWebsiteEventStub);
-        URL expectedPersonUrl = new URL("https://twitter.com/alice");
+        URL expectedPersonUrl = new URL(ALICE_WEBSITE);
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
