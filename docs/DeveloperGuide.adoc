@@ -364,7 +364,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-<<<<<<< HEAD
 // tag::picture
 === Add Picture
 
@@ -378,7 +377,6 @@ Images are saved in he format `<name><contact>` to differentiate between persons
 The autocomplete mechanism implements a list of commands to be auto-completed upon user input
 
 The autocomplete list is obtained from the creation of an AutoComplete object and is automatically updated since it utilizes the model within the LogicManager
-=======
 
 // tag::undoredo[]
 === Temporary Contact mechanism
@@ -410,8 +408,6 @@ The temporary contact is implemented this way:
 ----
 As we can see, the time that this contact will expire is to the nearest hour, done by ignoring nanosecond, second, and
 minute
-
->>>>>>> master
 
 // tag::import[]
 === Import mechanism
