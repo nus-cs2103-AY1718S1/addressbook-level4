@@ -347,6 +347,31 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::websiteselectionevent[]
+=== Web command for Social Links
+
+The web selection commmand mechanism is executed with the use of a `WebsiteSelectionRequestEvent`, which resides inside `commons.events.ui`. This allows for the event to be handled by the Ui component required.
+
+image::WebsiteSelectionEvent.png[width="800"]
+
+As you can see from the diagram, the link between the `Logic` and the `Ui` exists in the `EventsCenter`. Other commands that utilise this mechanism includes `Select`.
+
+This mechanism allows for the addition of other Ui components, such as buttons or tabs to replace the trigger event.
+
+[NOTE]
+If web command is executed before the selection of a `PersonCard`, the event trigger would simply load a default page.
+
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of URL loadings +
+**Alternative 1 (current choice):** Implement URL loadings within the `BrowserPanel` +
+**Pros:** We will not have a separation of classes, or the need to update any data values within any dynamically generated objects. `BrowserPanel` handles all URLs, URL parsings, and had the necessary information to process or execute these commands. +
+**Cons:** `BrowserPanel` has to be pre-loaded with website URLs, if not the `Websites` within the `Person` class has to be a full URL +
+// end::websiteselectionevent[]
+
+
 // tag::websitebuttonbar[]
 === Button Bar for Social Links
 

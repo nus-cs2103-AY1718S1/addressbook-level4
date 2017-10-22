@@ -105,10 +105,10 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Called when the user clicks on the button bar buttons.
+     * Called when the user clicks on the button bar buttons or via the "web" command.
      */
     @Subscribe
-    private void handleButtonPressedEvent(WebsiteSelectionRequestEvent event) {
+    private void handleWebsiteSelectionEvent(WebsiteSelectionRequestEvent event) {
         switch (event.getWebsiteRequested()) {
         case "mapsView":
             loadPersonAddress(selectedPerson);
