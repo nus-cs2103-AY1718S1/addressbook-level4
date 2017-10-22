@@ -399,6 +399,7 @@ RGB value of your favorite color from https://www.w3schools.com/colors/colors_rg
 
 ==== Import calendar : `config --import-calendar`
 
+_(Coming in version 2.0)_ +
 Imports events from an online available calender. +
 Format: `config --import-calendar URL`
 

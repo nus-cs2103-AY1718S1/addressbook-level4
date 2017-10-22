@@ -187,25 +187,8 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
-    /**
-     * Opens the help window.
-     */
-    @FXML
-    public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
-        helpWindow.show();
-    }
-
     void show() {
         primaryStage.show();
-    }
-
-    /**
-     * Closes the application.
-     */
-    @FXML
-    private void handleExit() {
-        raise(new ExitAppRequestEvent());
     }
 
     public PersonListPanel getPersonListPanel() {
@@ -249,9 +232,26 @@ public class MainWindow extends UiPart<Region> {
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
     }
 
+    /**
+     * Opens the help window.
+     */
+    @FXML
+    public void handleHelp() {
+        HelpWindow helpWindow = new HelpWindow();
+        helpWindow.show();
+    }
+
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    /**
+     * Closes the application.
+     */
+    @FXML
+    private void handleExit() {
+        raise(new ExitAppRequestEvent());
     }
 }
