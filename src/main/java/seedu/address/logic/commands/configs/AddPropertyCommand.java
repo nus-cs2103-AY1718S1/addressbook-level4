@@ -12,6 +12,10 @@ import seedu.address.model.property.exceptions.DuplicatePropertyException;
  * Adds a new property to the application.
  */
 public class AddPropertyCommand extends ConfigCommand {
+    public static final String MESSAGE_USAGE = "Example: " + COMMAND_WORD + " --add-property "
+            + "s/b f/birthday m/Birthday needs to be a valid date format "
+            + "r/^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}";
+
     static final String MESSAGE_DUPLICATE_PROPERTY =
             "Another property with the same short name already exists in the application.";
     static final String MESSAGE_INVALID_REGEX = "The regular expression you provide is invalid.";

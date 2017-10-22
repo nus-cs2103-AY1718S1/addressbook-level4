@@ -12,10 +12,13 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_TAG_COLO
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_URL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NEW_PROPERTY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NEW_PROPERTY_NO_REGEX;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PREDEFINED_COLOR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_COLOR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.parser.ConfigCommandParser.COLOR_CODE_WRONG;
+import static seedu.address.logic.parser.ConfigCommandParser.CONFIG_TYPE_NOT_FOUND;
 import static seedu.address.model.property.PropertyManager.DEFAULT_MESSAGE;
 import static seedu.address.model.property.PropertyManager.DEFAULT_REGEX;
 
@@ -51,21 +54,27 @@ public class ConfigCommandParserTest {
     }
 
     @Test
+    public void parse_usePreDefinedColor_success() throws Exception {
+        ConfigCommand expected = new ChangeTagColorCommand("husband red", "husband", "FF0000");
+        assertParseSuccess(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + VALID_PREDEFINED_COLOR, expected);
+    }
+
+    @Test
     public void parse_invalidConfigType_expectException() {
         assertParseFailure(parser, INVALID_CONFIG_TYPE + INVALID_CONFIG_VALUE,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CONFIG_TYPE_NOT_FOUND));
     }
 
     @Test
     public void parse_invalidTagColor_expectException() {
         assertParseFailure(parser, VALID_CONFIG_TAG_COLOR + VALID_TAG_HUSBAND + INVALID_TAG_COLOR,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, COLOR_CODE_WRONG));
     }
 
     @Test
     public void parse_invalidNewProperty_expectException() {
         assertParseFailure(parser, VALID_CONFIG_ADD_PROPERTY + INVALID_NEW_PROPERTY,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPropertyCommand.MESSAGE_USAGE));
     }
 
     @Test
