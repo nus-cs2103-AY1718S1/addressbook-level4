@@ -18,6 +18,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.google.OAuth;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
@@ -40,7 +41,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 2, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -50,6 +51,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected OAuth oauth;
 
 
     @Override
@@ -63,10 +65,12 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        oauth = new OAuth();
 
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        storage.backupAddressBook(model.getAddressBook());
 
         logic = new LogicManager(model);
 

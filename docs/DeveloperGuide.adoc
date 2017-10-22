@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= AddressBookX - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W13-B3/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -344,6 +344,336 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::restoreandbackup[]
+=== Backup / Restoring Backup
+
+The backing up of address book is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`. These commands do not support the undoing and redoing of user actions and thus, inherits from `Command`.
+These commands require access to `Storage` from `Logic` and the way to accomplish this is to post an event to `EventCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
+The following shows a sequence diagram of how the `BackupCommand` is carried out.
+
+image::BackupCommandSequenceDiagram.png[width="800"]
+
+[NOTE]
+`RestoreBackupCommand` shares a similar sequence diagram in terms of logic.
+
+The `BackupCommand` is executed when user input "backup" or "b". The data that is in `model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
+The following is the implementation of `BackupCommand`:
+[source, java]
+----
+public class BackupCommand extends Command {
+    //... variables, constructor, other methods...
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        // reading data from model
+        ReadOnlyAddressBook backupAddressBookData = model.getAddressBook();
+
+        // posting event to backup data
+        EventsCenter.getInstance().post(new BackupDataEvent(backupAddressBookData));
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
+    }
+}
+----
+
+The `RestoreBackupCommand` is executed when user input "restore" or "rb". `RestoreBackupDataEvent` is posted and `StorageManager` handles it. The data from default file path "data/addressbook-backup.xml" will be retrieved and it will replace the active address book.
+The following is the implementation of `RestoreBackupCommand`:
+[source, java]
+----
+public class RestoreBackupCommand extends Command {
+    //... variables, constructor, other methods...
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        RestoreBackupDataEvent event = new RestoreBackupDataEvent();
+
+        // posting event to help with restoring backup data
+        EventsCenter.getInstance().post(event);
+
+        // overwriting the data in active address book
+        ReadOnlyAddressBook backupAddressBookData = event.getAddressBookData();
+        model.resetData(backupAddressBookData);
+        return new CommandResult(String.format(MESSAGE_SUCCESS));
+    }
+}
+----
+
+[NOTE]
+Once the data has been restored, the original data will be lost and is no longer retrievable.
+[NOTE]
+A backup of address book is always created when the Address Book starts. This means that `RestoreBackupCommand` will not encounter an `IOException` where the file does not exist.
+
+==== Design Considerations
+
+**Aspect:** Accessing `Storage` from `Logic` +
+**Alternative 1 (current choice):** Make use of `EventBus` to post events and have `StorageManager` handle the backing up or retrieval of data +
+**Pros:** Follows the architecture closely without introducing dependencies between components. +
+**Cons:** New `Event` classes have to be created every time a command requires access to data in the storage.  +
+**Alternative 2:** Allow `Logic` to access `Storage` and its functions +
+**Pros:** Easier implementation for current and future functions or commands related to `Storage`. +
+**Cons:** Increases coupling between the components. +
+// end::restoreandbackup[]
+
+// tag::addremovetag[]
+=== Adding/Removing a tag
+
+Adding or removing a tag is facilitated by `AddTagCommand` and `DeleteTagCommand`, which are subclasses of `UndoableCommand`. These commands work by changing the value of the `Tag` objects associated with the contact.
+
+These commands take in an integer and a string as arguments. The command is first parsed in `AddressBookParser` to identify it as the appropriate command. It will then be parsed by `AddTagCommandParser` or `DeleteTagCommandParser`, to parse the index, which was the integer argument, and the `Tag`, which was represented by the string argument. Invalid indexes and tags will be handled by throwing an exception. This is how `AddTagCommandParser` is implemented:
+[source, java]
+----
+public class AddTagCommandParser implements Parser<AddTagCommand> {
+    public AddTagCommand parse(String args) throws ParseException {
+        try {
+            // ... parse `Index` and `Tag` and pass it to `AddTagCommand` ...
+        } catch (IllegalValueException ive) {
+            // ... throw an exception ...
+        }
+    }
+}
+----
+
+To update the `Tag` objects associated with a `Person`, the set of `Tag` objects of that `Person` is copied to a new set. The new data is then modified, then copied into a newly created `Person` instance. This is implemented as follows:
+[source, java]
+----
+public class AddTagCommand extends UndoableCommand {
+    // ... variables, constructor, other methods ...
+    private final Tag newTag;
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... fetch personToEdit ...
+
+        Set<Tag> oldTags = new HashSet<Tag>(personToEdit.getTags());
+        // ... check if tag is duplicated ...
+        Person editedPerson = new Person(personToEdit);
+        oldTags.add(newTag);
+        editedPerson.setTags(oldTags);
+
+        // ... try to replace personToEdit with editedPerson ...
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Changing the `Tag` objects of the selected `Person` +
+**Alternative 1 (current choice):** Copy set of `Tag` objects to a newly created set. Modify the newly created set. Then create a copy of the selected `Person` instance and replace its set of `Tag` objects. +
+**Pros:** Ensures that the original value will be unchanged, which is important in the event that updating the `Person` instance fails in a later stage. +
+**Cons:** Additional memory required to create a new `Person` instance. +
+**Alternative 2:** Just edit the `Tag` set directly +
+**Pros:** No need to instantiate new `Person` instance. Easy to implement. +
+**Cons:** Problematic implementation and bad coding practice. Modifying the original values directly can cause problems if updating the `Person` instance fails in a later stage.
+// end::addremovetag[]
+
+// tag::filter[]
+=== Filter mechanism
+
+==== Fundamental mechanism
+The list of persons displayed is filtered by a [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[Predicate]]
+when the method `updateFilteredPersonList(predicate)` from the `Model` interface is invoked.
+
+The relevant methods in the Model interface:
+[source,java]
+----
+public interface Model {
+
+    ...
+
+    /** Returns the predicate of the current filtered person list */
+    Predicate<? super ReadOnlyPerson> getPersonListPredicate();
+
+    /** Updates the filter of the filtered person list to filter by the given {@code predicate}.*/
+    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+}
+----
+
+
+When `updateFilteredPersonList(predicate)` is invoked, every `person` in the **AddressBook** is evaluated against the `predicate`. +
+A `person` will be added the the list for display if `predicate.test(person)` is evaluated to be TRUE. +
+All `person` that fulfill the conditions specified in `predicate` are filtered to be displayed.
+
+==== Filtering on the existing list
+Note that all `person` in the existing list satisfy a Predicate `currentPredicate`. +
+Given a new Predicate `newPredicate`, filtering on the existing list is equivalent to selecting `person` that satisfy both `currentPredicate` and `newPredicate`. +
+From Figure 3.2.1, it can also be viewed as the interception of two lists of `person`, each satisfying one of the two predicates respectively.
+
+image::venn_diagram.png[height = 200, width = 250]
+_Figure 3.2.1 : Venn Diagram for Filtering_
+
+===== Implementation
+The actual implementation of filtering on the existing list involves three steps. +
+
+.  invokes `getPersonListPredicate()` provided in the Model interface to get the `currentPredicate`.
+.  Use [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html#and-java.util.function.Predicate-[Predicate.and()]] to generated the logical AND of the two predicates.
+.  Update the list using the predicate generated in step 2.
+
+===== Design consideration
+The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]]. +
+By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
+Making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
+// end::filter[]
+
+// tag::sync[]
+=== Synchronisation with Google Contacts
+
+==== Basic flow summary
+Authentication and synchronisation of data with a user's Google Contacts is done via the `sync` command, which is a subclass of `UndoableCommand`. This command works in conjunction with the Google Client and People API.
+
+Firstly, the command posts an `AuthorizationEvent` event to the EventCenter, which is then handled by a `OAuth` class, which is chiefly responsible for authorization and interaction with a user's Google Contacts. Hence, threading allows for the application to run in the background, while the user can perform other tasks. The user is redirected to login to Google via his default browser through the invoked `authorize` method. A callback is then done to create a `Credential` which is then used to instantiate a `PeopleService` instance. The `PeopleService` is then used to perform CRUD functions on the user's Google Contacts. The following diagram shows the entire sequence.
+
+image::SyncCommandSequenceDiagram.png[width="1000"]
+
+==== Methods
+
+===== SyncCommand
+Below is the implementation of `SyncCommand`, where the `AuthorizationEvent` is sent upon execution, and the command notifies the user that synchronisation has been initiated.
+
+[source,java]
+----
+public class SyncCommand extends UndoableCommand {
+    //...variables, constructor, other methods
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        try {
+            List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+            AuthorizationEvent event = new AuthorizationEvent(personList);
+            EventsCenter.getInstance().post(event);
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+
+    }
+}
+----
+
+===== AuthorizationEvent Handler
+The `OAuth` class handles the AuthorizationEvent. It first runs the `authorize` method to obtain a Credential, and uses that to create a `PeopleService`. The `exportContacts` method is then invoked to export all contacts to the AddressBook to Google Contacts. Below is the code for the handler.
+
+[source,java]
+----
+public class OAuth {
+    // variables, constructor and other methods
+
+    @Subscribe
+    public static void handleAuthorizationEvent(AuthorizationEvent event) throws Throwable {
+        new Thread (() -> {
+            try {
+                // initialize the transport
+                httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+
+                // initialize the data store factory
+                dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+
+                // authorization
+                Credential credential = authorize();
+                // set up global People instance
+                client = new PeopleService.Builder(
+                        httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
+
+                exportContacts(event.getPersonList());
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }).start();
+
+
+    }
+----
+
+===== Authorize with Google servers
+Below is the `authorize` method implemented in `OAuth`, which uses the `People API` to get an authorization token, used to create a `PeopleService` to retrieve Google Contacts information. A `clients_secret.json` file is used to provide the required Client ID and Secret for the Google API. A `Credential` is returned from this method, which is then used to create a `PeopleService`.
+
+[source,java]
+----
+public class OAuth {
+    // variables, constructor and other methods
+
+    /** Authorizes the installed application to access user's protected data. */
+    private static Credential authorize() throws Exception {
+        // load client secrets
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+                new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
+        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+            System.out.println(
+                    "Enter Client ID and Secret from https://code.google.com/apis/console/?api=people "
+                            + "into seedu/address/src/main/resources/client_secrets.json");
+            System.exit(1);
+        }
+
+        // set up authorization code flow
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                httpTransport, JSON_FACTORY, clientSecrets,
+                Collections.singleton(PeopleServiceScopes.CONTACTS)).setDataStoreFactory(dataStoreFactory)
+                .build();
+
+        // authorize
+
+        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+    }
+
+}
+----
+
+===== Export contacts to Google Contacts
+Lastly, AddressBook contacts are then exported to Google Contacts via the `exportContacts` method. A `ReadOnlyPersonList` is obtained from the current AddressBook, and iterated through to add their entries into the user's Google account via the `createContact` method provided by People API. The code is shown below.
+
+[source,java]
+----
+public class OAuth {
+
+    /**Uploads AddressBook contacts to Google Contacts
+     * TODO: Prevent adding of duplicates
+     */
+    private static void exportContacts (List<ReadOnlyPerson> personList) throws IOException {
+        for (ReadOnlyPerson person : personList) {
+            Person contactToCreate = new Person();
+            List<Name> name = new ArrayList<Name>();
+            List<EmailAddress> email = new ArrayList<EmailAddress>();
+            List<Address> address = new ArrayList<Address>();
+            List<PhoneNumber> phone = new ArrayList<PhoneNumber>();
+            name.add(new Name().setGivenName(person.getName().fullName));
+            email.add(new EmailAddress().setValue(person.getEmail().value));
+            address.add(new Address().setFormattedValue(person.getAddress().value));
+            phone.add(new PhoneNumber().setValue(person.getPhone().value));
+
+            contactToCreate.setNames(name)
+                            .setEmailAddresses(email)
+                            .setAddresses(address)
+                            .setPhoneNumbers(phone);
+
+            Person createdContact = client.people().createContact(contactToCreate).execute();
+        }
+    }
+----
+
+==== Design Considerations
+**Aspect:** Google Authorization +
+**Alternative 1 (current choice):** A thread is used +
+**Pros:** Users can use the application and execute other commands asynchronously from the authorization +
+**Cons:** It is thus more difficult to show the progress of the syncCommand
+
+**Alternative 2:** Block the application while waiting for authorization +
+**Pros:** Users will know the progress of the SyncCommand +
+**Cons:** The application will freeze if authorization is done, or done in a manner not coded for by the People API (e.g. exiting the window via the 'X' or 'Close' button
+
+---
+
+**Aspect:** Accessing `OAuth` from `Logic` +
+**Alternative 1 (current choice):** An `Event` and a `Subscriber` is used to communicate between the two different components +
+**Pros:** Maintain low coupling and prevent unnecessary addition of dependencies +
+**Cons:** Handlers have to be created to handle `Events` when they occur +
+**Alternative 2:** Create an `OAuth` object in `Logic` +
+**Pros:** No handlers are required to process `Events` +
+**Cons:** Introduce unnecessary dependencies
+// end::sync[]
 
 === Logging
 
@@ -729,12 +1059,82 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |use shorter aliases for commands|enter commands quickly and not have to type in the full command
+
+|`* * *` |user |find people by their tags|locate a specific group of persons
+
+|`* * *` |user |have a responsive inbuilt browser with similar response times to external browsers|use the inbuilt browser smoothly
+
+|`* * *` |user |add tags cumulatively|edit tags conveniently
+
+|`* * *` |user |add a person with fewer parameters|add someone I don't know all the details of
+
+|`* * *` |user |edit contact details|modify contacts without having to delete the contact
+
+|`* * *` |user |view in-line help via the help command|view the help without having to navigate the user guide(which is not CLI friendly)
+
+|`* * *` |user |add contacts with multiple phone numbers|have contact entries with multiple phone numbers without the need for multiple entries
+
+|`* * *` |user |revert to a previous version of my AddressBook|restore from a backup if my contact data is accidentally lost
+
+|`* * *` |user |navigate the navigation using only my keyboard (using preset keybindings)|use the application solely with my keyboard, as with CLI-focused apps
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |have Google Contacts integration link:#google-contacts-api[Google Contacts API]| view and modify my contacts on other platforms than my computer
+
+|`* *` |user |have a reminder system tag to names| remember my appointments with other people
+
+|`* *` |user |access a person's Facebook account via in the in-built browser|use Facebook features from the AddressBook
+
+|`* *` |user |find a subset of contacts using specified parameters|filter through my contacts
+
+|`* *` |user |locate a person's address on Google Maps|easily navigate to my contact's location
+
+|`* *` |user |resize the dimensions of the command and output bar|customise the application to the desired layout
+
+|`* *` |user |upload pictures of my contacts|identify my contacts with similar names
+
+|`* *` |user |change the layout and enable/disable certain components e.g. the inbuilt browser|change the layout as desired and customise my AddressBook
+
+|`* *` |user |clear the screen to the default view|reset my AddressBook and start from a clean slate
+
+|`* *` |user |have a plugin manager to download and use plugins I want|only use resources I want to
+
+|`* *` |user |have a theme manager|change the colours to fit my desires
+
+|`* *` |user |modify private information|conveniently modify private information
+
+|`* *` |user |encrypt private information with a passphrase|secure my private information and hide it from others
+
+|`* *` |user |have a Favourites section where popular contacts are shown|access my frequently viewed contacts quickly
+
+|`* *` |user |have a settings manager/config file|customise the application and preferences
+
+|`* *` |user |send an email via the inbuilt browser by clicking on a contact's email|easily and quickly send an email to an existing contact
+
+|`* *` |user |have a Notes section to add notes that attaches to a person|jot down certain events and details
+
+|`* *` |user who is privacy focused |encrypt my contacts|hide and secure my contacts from others
+
+|`* *` |user |tab-complete my commands|quickly complete my commands and do inline searching for contacts
+
+|`* *` |user |add aliases for contacts|label my contacts with a different name
+
+|`* *` |user |use regex for find command|type less and perform a wider variety of searches
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |be able to sort the contacts|look for people easily
+
+|`*` |user |send a message to my contacts in the AddressBook|contact people directly from the application
+
+|`*` |user |use the application on my phone|access contact details directly on my phone
+
+|`*` |user |store/see the relationship between our contacts in a graph|see our mutual friends
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,14 +1167,265 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Delete tag
+
+*MSS*
+
+1.  User requests to delete a specific tag by name
+2.  AddressBook deletes the tag from every person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The tag does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
+Use case ends.
+
+* 1b. The tag is not a valid tag.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit contact details
+
+*MSS*
+
+1.  User requests to edit contact
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific index in the list with required tags on new information
+4.  AddressBook confirms that user wishes to change data
+5.  User confirms the change
+6.  AddressBook changes the information in the field
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The user does not provide fields for new data.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The user does not change any field.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User inputs no.
++
+Use case ends.
+
+* 5b. User inputs something other than yes or no.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+[discrete]
+=== Use case: Add tag to contact
+
+*MSS*
+
+1.  User requests to add tag to contact
+2.  AddressBook shows a list of persons
+3.  User requests to add tag to the person at a specific index in the list
+4.  AddressBook changes the information in the field
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The user does not provide a new tag.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The user provides an invalid tag.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3d. The user provides a tag that already exists on the specified contact.
++
+[none]
+** 3d1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Backup data
+
+*MSS*
+
+1.  User requests to backup data
+2.  AddressBook backs up the data to the hard drive
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AddressBook fails to save the data.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Restore backup
+
+*MSS*
+
+1.  User requests to restore backup
+2.  AddressBook shows a list of backups available
+3.  User selects index of specific backup in the list
+4.  AddressBook confirms that user wishes to restore backup and will lose current data
+5.  User confirms the change
+6.  AddressBook restores to backup specified by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 5a. User inputs no.
++
+Use case ends.
+
+* 5b. User inputs something other than yes or no.
++
+[none]
+** 5b1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+
+[discrete]
+=== Use case: upload pictures
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to upload a picture in a directory for a specific person in the list
+4.  AddressBook saves the picture for the person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The specified picture is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: add remark to a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add remark to a person in the list
+4.  AddressBook adds remark to the person in the address book
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to respond to a command within 500ms.
+.  Data should only be accessible to the user himself.
+.  Should be compatible with earlier versions.
+.  Should be able to handle all possible exceptions.
+.  Should adhere to the Java coding standard.
 
 {More to be added}
 
@@ -795,6 +1446,12 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[google-contacts-api]]
+Google Contacts API
+
+....
+An API provided by Google for client applications to perform basic CRUD functions on a user's contacts.
+....
 [appendix]
 == Product Survey
 

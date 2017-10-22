@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -16,19 +17,24 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BackupCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NoteCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ResizeCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ContainsTagsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -85,6 +91,13 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_filter() throws Exception {
+        List<String> keywords = Arrays.asList("tag1", "tag2", "tag3");
+        FilterCommand command = (FilterCommand) parser.parseCommand(
+                FilterCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FilterCommand(new ContainsTagsPredicate(keywords)), command);
+    }
+    @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
@@ -104,6 +117,14 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_resize() throws Exception {
+        ResizeCommand command = (ResizeCommand) parser.parseCommand(
+                ResizeCommand.COMMAND_WORD
+                        + String.format(" %d %d", ResizeCommand.MAX_WIDTH, ResizeCommand.MAX_HEIGHT));
+        assertEquals(new ResizeCommand(ResizeCommand.MAX_WIDTH, ResizeCommand.MAX_HEIGHT), command);
+    }
+
+    @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
@@ -117,6 +138,12 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_backup() throws Exception {
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD) instanceof BackupCommand);
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD + " 3") instanceof BackupCommand);
+    }
+
+    @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
@@ -126,6 +153,15 @@ public class AddressBookParserTest {
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+    }
+
+    @Test
+    public void parseCommand_noteCommandWord_returnsNoteCommand() throws Exception {
+        assertTrue(parser.parseCommand(NoteCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased()
+                + " " + PREFIX_NOTE)
+                instanceof NoteCommand);
+        assertTrue(parser.parseCommand("note 3 n/") instanceof NoteCommand);
     }
 
     @Test
