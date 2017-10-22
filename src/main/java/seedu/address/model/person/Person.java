@@ -158,11 +158,6 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return relationships;
     }
 
-    @Override
-    public ReadOnlyPerson copy() {
-        return new Person(getName(), getPhone(), getEmail(), getAddress(), getTags(), getRelationships());
-    }
-
     /**
      * Add a relationship to a person's relationships
      */

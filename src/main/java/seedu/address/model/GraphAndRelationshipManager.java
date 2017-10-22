@@ -51,13 +51,13 @@ public class GraphAndRelationshipManager {
 
         ReadOnlyPerson fromPerson = lastShownList.get(indexFromPerson.getZeroBased());
         ReadOnlyPerson toPerson = lastShownList.get(indexToPerson.getZeroBased());
-        Relationship relationshipForFromPerson = new Relationship(fromPerson, toPerson, direction);
+        ReadOnlyPerson fromPersonCopy = fromPerson;
+        ReadOnlyPerson toPersonCopy = toPerson;
+        Relationship relationshipForFromPerson = new Relationship(fromPersonCopy, toPersonCopy, direction);
         Relationship relationshipForToPerson = relationshipForFromPerson;
         if (!direction.isDirected()) {
-            relationshipForToPerson = new Relationship(toPerson, fromPerson, direction);
+            relationshipForToPerson = new Relationship(toPersonCopy, fromPersonCopy, direction);
         }
-        ReadOnlyPerson fromPersonCopy = fromPerson.copy();
-        ReadOnlyPerson toPersonCopy = toPerson.copy();
 
         /*
          Updating the model
