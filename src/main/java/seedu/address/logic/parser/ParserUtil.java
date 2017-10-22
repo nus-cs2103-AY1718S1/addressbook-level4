@@ -19,6 +19,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.Status;
@@ -132,6 +133,19 @@ public class ParserUtil {
         requireNonNull(note);
         return note.isPresent() ? Optional.of(new Note(note.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code Optional<String> photoURL} into an {@code
+     * Optional<Photo>} if {@code photoURL} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Photo> parsePhotoURL(Optional<String> photoURL)
+            throws IllegalValueException {
+        requireNonNull(photoURL);
+        return photoURL.isPresent() ? Optional.of(new Photo(photoURL.get())) :
+                Optional.empty();
+    }
+
     /**
      * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.

@@ -27,6 +27,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Status> status;
     private ObjectProperty<Priority> priority;
     private ObjectProperty<Note> note;
+    private ObjectProperty<Photo> photo;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -39,7 +40,8 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-        //if Person is called without Company, Position, and Status parameters, initialize them to "NIL".
+        //if Person is called without Company, Position, Status or Photo
+        // parameters, initialize them to "NIL".
         //if Person is called without Priority, initialize it to L. Note is initialized to "NIL" in all cases
         //as it is meant to be added after creating the person.
         try {
@@ -48,6 +50,7 @@ public class Person implements ReadOnlyPerson {
             this.status = new SimpleObjectProperty<>(new Status("NIL"));
             this.priority = new SimpleObjectProperty<>(new Priority("L"));
             this.note = new SimpleObjectProperty<>(new Note("NIL"));
+            this.photo = new SimpleObjectProperty<>(new Photo("NIL"));;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,10 +69,12 @@ public class Person implements ReadOnlyPerson {
      * @param position
      * @param status
      * @param priority
+     * @param photo
      * @param tags
      */
     public Person(Name name, Phone phone, Email email, Address address, Company company, Position position,
-                  Status status, Priority priority, Set<Tag> tags) {
+                  Status status, Priority priority, Photo photo, Set<Tag>
+                          tags) {
         requireAllNonNull(name, phone, email, address, company, position, status, priority, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -79,6 +84,7 @@ public class Person implements ReadOnlyPerson {
         this.position = new SimpleObjectProperty<>(position);
         this.status = new SimpleObjectProperty<>(status);
         this.priority = new SimpleObjectProperty<>(priority);
+        this.photo = new SimpleObjectProperty<>(photo);
         //Note is initialized to "NIL" as it is meant to be added after creating the person.
         try {
             this.note = new SimpleObjectProperty<>(new Note("NIL"));
@@ -104,7 +110,8 @@ public class Person implements ReadOnlyPerson {
      * @param tags
      */
     public Person(Name name, Phone phone, Email email, Address address, Company company, Position position,
-                  Status status, Priority priority, Note note, Set<Tag> tags) {
+                  Status status, Priority priority, Note note, Photo
+                          photo, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, company, position, status, priority, note, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -115,6 +122,7 @@ public class Person implements ReadOnlyPerson {
         this.status = new SimpleObjectProperty<>(status);
         this.priority = new SimpleObjectProperty<>(priority);
         this.note = new SimpleObjectProperty<>(note);
+        this.photo = new SimpleObjectProperty<>(photo);
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
@@ -126,7 +134,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getCompany(), source.getPosition(), source.getStatus(), source.getPriority(),
-                source.getNote(), source.getTags());
+                source.getNote(), source.getPhoto(), source.getTags());
     }
 
     @Override
@@ -253,6 +261,22 @@ public class Person implements ReadOnlyPerson {
     public void setNote(Note note) {
         this.note.set(note);
     }
+
+    @Override
+    public Photo getPhoto() {
+        return photo.get();
+    }
+
+    @Override
+    public ObjectProperty<Photo> photoProperty() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo.set(photo);
+    }
+
+
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

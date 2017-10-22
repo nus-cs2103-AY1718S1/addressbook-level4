@@ -18,9 +18,9 @@ public class Photo {
     public final String photoURL;
 
     /**
-     * Validates given photo number.
+     * Validates given photo URL.
      *
-     * @throws IllegalValueException if given photo string is invalid.
+     * @throws IllegalValueException if given photo URL string is invalid.
      */
     public Photo(String photoURL) throws IllegalValueException {
         requireNonNull(photoURL);
@@ -31,7 +31,7 @@ public class Photo {
     }
 
     /**
-     * Returns true if a given string is a valid person photo number.
+     * Returns true if a given string is a valid person photo.
      */
     public static boolean isValidPhotoURL(String testURL) {
         return testURL.matches(PHOTOURL_VALIDATION_REGEX);
