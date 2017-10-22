@@ -9,10 +9,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SHORT_NAME;
 import static seedu.address.model.property.PropertyManager.DEFAULT_MESSAGE;
 import static seedu.address.model.property.PropertyManager.DEFAULT_REGEX;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.configs.AddPropertyCommand;
 import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
@@ -24,13 +24,38 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new ConfigCommand object
  */
 public class ConfigCommandParser implements Parser<ConfigCommand> {
-
     /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
     private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
-    private static final Pattern TAG_COLOR_FORMAT =
-            Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+#(?<tagNewColor>([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
+    private static final Pattern TAG_COLOR_FORMAT = Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>.+)");
+    private static final Pattern RGB_FORMAT = Pattern.compile("#(?<tagNewColor>([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
     private static final Pattern URL_FORMAT =  Pattern.compile("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]"
             + "{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)");
+
+    // Some pre-defined colors for convenience.
+    private static final HashMap<String, String> preDefinedColors = new HashMap<>();
+
+    // Some messages ready to use.
+    private static final String CONFIG_TYPE_NOT_FOUND = "The configuration you want to change is not defined.";
+    private static final String COLOR_CODE_WRONG = "The color must be one of the pre-defined color names or "
+            + "a valid hexadecimal RGB value";
+    private static final String MESSAGE_REGEX_TOGETHER = "Constraint message and regular expression must be "
+            + "both present or absent";
+
+    /**
+     * Loads all pre-defined colors here. If you want to define more, you can get more color codes can be obtained from
+     * https://www.w3schools.com/colors/colors_names.asp Make sure you put them in alphabetical order.
+     *
+     * Notice: Do not include # before the RGB value. # is already included in the CSS file.
+     */
+    public ConfigCommandParser() {
+        preDefinedColors.put("black", "000000");
+        preDefinedColors.put("blue", "0000FF");
+        preDefinedColors.put("brown", "A52A2A");
+        preDefinedColors.put("green", "008000");
+        preDefinedColors.put("red", "FF0000");
+        preDefinedColors.put("white", "FFFFFF");
+        preDefinedColors.put("yellow", "FFFF00");
+    }
 
     @Override
     public ConfigCommand parse(String args) throws ParseException {
@@ -44,7 +69,7 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
 
         final String configType = matcher.group("configType").trim();
         if (!checkConfigType(configType)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CONFIG_TYPE_NOT_FOUND));
         }
 
         final ConfigType enumConfigType = toEnumType(configType);
@@ -74,7 +99,7 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
             return checkTagColor(value);
         default:
             System.err.println("Unknown ConfigType. Should never come to here.");
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CONFIG_TYPE_NOT_FOUND));
         }
     }
 
@@ -82,13 +107,24 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
      * Creates an {@link ChangeTagColorCommand}.
      */
     private ChangeTagColorCommand checkTagColor(String value) throws ParseException {
-        final Matcher matcher = TAG_COLOR_FORMAT.matcher(value.trim());
+        Matcher matcher = TAG_COLOR_FORMAT.matcher(value.trim());
         if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ChangeTagColorCommand.MESSAGE_USAGE));
         }
 
         final String tagName = matcher.group("tagName").trim();
-        final String tagColor = matcher.group("tagNewColor").trim();
+        String tagColor = matcher.group("tagNewColor").trim();
+
+        // Use the corresponding RGB value to replace pre-defined color names.
+        if (preDefinedColors.containsKey(tagColor)) {
+            tagColor = preDefinedColors.get(tagColor);
+        }
+
+        matcher = RGB_FORMAT.matcher(tagColor.trim());
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, COLOR_CODE_WRONG));
+        }
 
         return new ChangeTagColorCommand(value, tagName, tagColor);
     }
@@ -106,7 +142,8 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
 
         // shortName and fullName must be supplied by the user.
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_SHORT_NAME, PREFIX_FULL_NAME)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddPropertyCommand.MESSAGE_USAGE));
         }
         String shortName = argMultimap.getValue(PREFIX_SHORT_NAME).get();
         String fullName = argMultimap.getValue(PREFIX_FULL_NAME).get();
@@ -114,7 +151,7 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
         // message and regex must be supplied together or both be absent.
         if (!(ParserUtil.arePrefixesPresent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX)
                 || ParserUtil.arePrefixesAbsent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX))) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_REGEX_TOGETHER));
         }
         String message = argMultimap.getValue(PREFIX_MESSAGE).orElse(String.format(DEFAULT_MESSAGE, fullName));
         String regex = argMultimap.getValue(PREFIX_REGEX).orElse(DEFAULT_REGEX);
