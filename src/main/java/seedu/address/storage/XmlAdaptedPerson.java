@@ -25,8 +25,8 @@ public class XmlAdaptedPerson {
     private String name;
     @XmlElement(required = true)
     private String phone;
-    @XmlElement(required = true)
-    private List<XmlAdaptedEmail> emails;
+    @XmlElement
+    private List<XmlAdaptedEmail> emails = new ArrayList<>();
     @XmlElement(required = true)
     private String address;
 

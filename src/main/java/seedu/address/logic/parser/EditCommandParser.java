@@ -65,7 +65,7 @@ public class EditCommandParser implements Parser<EditCommand> {
     /**
      * Parses {@code Collection<String> emails} into a {@code Set<Email>} if {@code emails} is non-empty.
      * If {@code emails} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Email>} containing zero tags.
+     * {@code Set<Email>} containing zero emails.
      */
     private Optional<Set<Email>> parseEmailsForEdit(Collection<String> emails) throws IllegalValueException {
         assert emails != null;
