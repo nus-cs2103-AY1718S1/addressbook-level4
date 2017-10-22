@@ -1,7 +1,4 @@
 = About ConTag's Developer Guide
-
-Welcome to the ConTag's Developer Guide!Fret not if you are a developer or user, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
-
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -17,11 +14,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `T15-B2`      `Aw Wen Hao2`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
 
+
+Welcome to the ConTag's Developer Guide!Fret not if you are a developer or user, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
+
 == Setting up
 
 === Prerequisites
 
-You must make sure that you have all of the following to work with the code optimally:
+This section guides you on the necessary set up  you need to work with the code optimally:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -103,6 +103,9 @@ When you are ready to start coding,
 == Design
 
 === Architecture
+
+This section will provide an overview of the high level architecture system used to design and implement the application , mainly
+`Model` , `Logic` , `Storage` and `UI`.
 
 The *_Architecture Diagram_* shown in _Figure 2.1.1_ below explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -246,6 +249,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+Each sample code shows the correct sequence of calls and parameters in general implementation of the feature to allow you to perform modification of your own. 
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -670,10 +674,23 @@ Alternatively, it may also be possible to permanently display all fields in each
 
 == Documentation
 
-We use asciidoc for writing documentation.
+This section indicates the type of file we use for writing documentation.
+
+We will be using asciidoc for writing documentation.
+
+Advatnages of using  asciidoc over Markdown:
+
+asciidoc uses the same number of markup characters or less when compared to Markdown in nearly all cases.
+
+asciidoc uses a consistent formatting scheme (i.e., it has consistent patterns).
+
+asciidoc can handle all permutations of nested inline (and block) formatting, whereas Markdown often falls down.
+
+asciidoc handles cases that Markdown doesn’t, such as a proper approach to inner-word markup, source code blocks and block-level images.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+asciidoc also supports a broader range of syntax than Markdown.
 
 === Editing Documentation
 
@@ -702,7 +719,9 @@ _Figure 4.4.1 : Saving documentation as PDF files in Chrome_
 
 === Running Tests
 
-There are three ways to run tests.
+This section covers the various testing framework adopted for this application. 
+Testing is essential for quality assurance, verification and validation.
+There are three ways to run tests in this application.
 
 [TIP]
 The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
@@ -742,12 +761,15 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 
 === Troubleshooting Testing
+
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
+
+This section introduce the various tools adopted for building, testing and releasing of application.
 
 === Build Automation
 
