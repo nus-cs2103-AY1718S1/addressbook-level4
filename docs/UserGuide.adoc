@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -67,6 +67,18 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding a new task : `addTask`
+
+Adds a new task to the task book +
+Format: `addTask n/TaskName d/Description s/startDateTime f/finishDateTime [t/TAG]...` +
+
+[TIP]
+A task can have any number of tags (including 0), the tag mechanism is the same as that for person
+
+Examples:
+
+* `addTask n/picnic d/have fun at Botanic Garden s/1/1/2099 12:00pm f/1/1/2099 15:00pm t/friends`
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
@@ -91,6 +103,24 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Editing a new task : `editTask`
+
+Edits an existing task in the address book +
+Format: `editTask INDEX [n/TaskName] [d/Description] [s/startDateTime] [f/finishDateTime] [t/TAG]...` +
+
+****
+* Edits the task at the specified `INDEX`. The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Examples:
+
+* `editTask 1 n/picnic d/have fun at Botanic Garden s/1/1/2017 12:00pm f/1/1/2017 15:00pm t/friends`
+Edits the name, description, start time, finish time ad tag of the 1st task to be `picnic`, `have fun at Botanic Garden`, `1/1/2017 12:00pm`, `1/1/2017 15:00pm` and `friends` respectively.
+* `editTask 2 t/teammates`
+Edits the tag of the 2nd task to be `teammates` only and others remain same.
 
 === Locating persons by name: `find`
 
@@ -131,6 +161,24 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Deleting a task : `deleteTask`
+
+Deletes the specific task from the task book. +
+Format: `deleteTask IDNEX`
+
+****
+* Deletes the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+* `deleteTask` 1 +
+Deletes the 1st task in the task book.
+
 
 === Selecting a person : `select`
 
@@ -226,6 +274,39 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+== Coming in v2.0
+=== Marking a task as complete/incomplete
+=== Finding a person by name
+=== Auto-focusing on input bar at the start of the application
+=== Setting a task to be recurring
+=== Editing a task
+=== Seeing tasks in certain range of time
+=== Listing tasks by date
+=== Listing tasks by priority
+=== Listing tasks by tag
+=== Viewing one task details with the relevant person in the addressbook
+=== Viewing one person details with the relevant tasks displayed in the addressbook
+=== Having a map view of the current selected person or himself
+=== Linking a task to a person
+=== Adding a general notes or comments to each contact person
+=== Listing last few contacts the user have found
+=== Exporting contact info as an add command (user can choose whether to disclose the private information about this contact details)
+=== Exporting task details as an add command
+=== Pinning important contacts or task on top
+=== Remindering region in task bar|see the reminder and be reminded of the deadline or the up comings of this task
+=== Possible new features
+==== Adding image to a contact person
+==== Sorting persons by name
+==== Adding new tasks with hierarchy
+==== Editing hierarchy
+==== Getting error and warnings on event conflicts
+==== Having multiple hot keys available
+==== Auto-completion of commands
+==== Suggesting next part of the commands
+==== Trigger & password
+==== Customising background wallpaper
+==== Having a settings manager/config file
 
 == FAQ
 
