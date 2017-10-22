@@ -302,14 +302,20 @@ Format: `sync`
 
 === Listing entered commands : `history`
 
-Shorthand Alias: `hx` +
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
 ====
+Command Name: `history` +
+Shorthand Alias: `hx` +
+Function: Lists all the commands that you have entered in reverse chronological order. +
+Format: `history`
+[NOTE]
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+If you want to view the list of commands entered: +
+
+.  Type in +
+image:Ui.png[UI, 40, 40, role = "right"]`>> history`
+.  Press `Enter` and the lists of commands that you entered before would show up.
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
