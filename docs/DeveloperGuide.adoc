@@ -1,4 +1,7 @@
-= AddressBook Level 4 - Developer Guide
+= About ConTag's Developer Guide
+
+Welcome to the ConTag's Developer Guide!Fret not if you are a developer or user, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
+
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -33,6 +36,11 @@ This app will not work with earlier versions of Java 8.
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
+. Overall *understanding* and *knowledge* of `JAVA`
++
+[NOTE]
+This application is written in JAVA. +
+All example codes in the guide uses JAVA langugae
 
 === Setting up the project in your computer
 
