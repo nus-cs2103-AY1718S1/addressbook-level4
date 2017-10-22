@@ -95,7 +95,7 @@ Format: `list`
 ====
 Command Name: `delete` +
 Shorthand Alias: `d` +
-Function: Deletes the specified person at the specified `INDEX` from the address book. +
+Function: Deletes the specified person at the specified `INDEX` from your *DummyName*. +
 Format: `delete INDEX` +
 ====
 
@@ -144,7 +144,7 @@ If you want to change the details of a contact in your *DummyName*: +
 `>> edit 1 p/91234567 e/johndoe@example.com`.
 image:Edit_1.png[600] +
 _Figure 2.5.1_
-.  Press `Enter` and you should see that the first contact that you selected has been modified. (Figure 2.5.2) +
+.  Press `Enter` and you should see that the contact that you selected has been modified. (Figure 2.5.2) +
 image:Edit_2.png[600] +
 _Figure 2.5.2_
 
@@ -176,40 +176,82 @@ When you edit tags, the existing tags of the person will be removed. To add tags
 
 === Adding a tag to a person : `addtag`
 
-Shorthand Alias: `at`
-Adds a tag to an existing person in the address book. +
-Format: `addtag INDEX TAG`
+====
+Command Name: `addtag` +
+Shorthand Alias: `at` +
+Function: Adds a tag to an existing person at the specified `INDEX` in your *DummyName*. +
+Format: `addtag INDEX TAG` +
+[NOTE]
+Only one alphanumeric tag can be added at a time. Special characters will not be accepted. e.g !, @, #, ...
+====
 
-****
-* Adds a tag to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* Only one alphanumeric tag can be added at a time. Special characters will not be accepted. e.g !, @, #, ...
-* The tag added must not already exist on the desired contact.
-****
+If you want to add a single tag to a contact in your *DummyName*: +
 
-Examples:
+.  Locate the contact you want to add a tag to and the index of the contact. +
+.  Type in the index of the contact, and the tag you wish to add. (Figure 2.6.1) +
+`>> addtag 1 classmate`.
+image:Addtag_1.png[600] +
+_Figure 2.6.1_
+.  Press `Enter` and you should see that the contact that you selected has been modified. (Figure 2.6.2) +
+image:Addtag_2.png[600] +
+_Figure 2.6.2_
 
-* `addtag 1 friends` +
-Adds the `friends` tag to the 1st person.
-* `at 2 9pmclass` +
-Adds the `9pmclass` tag to the 2nd person.
+[NOTE]
+====
+The tag added must not already exist on the desired contact.
+====
+
+You can also add tags to contacts in a filtered list:
+
+* `>> filter friends` +
+`>> addtag 2 friends` +
+Adds the `friends` tag to the 2nd person in the results of the `filter` command.
+
+* `>> find John` +
+`>> at 1 9pmclass` +
+Adds the `9pmclass` tag to the 1st person in the results of the `find` command.
 
 === Deleting a tag : `deletetag`
 
+====
+Command Name: `deletetag` +
 Shorthand Alias: `dt` +
-Deletes the specified tag from the address book. +
-Format: `deletetag TAGNAME`
+Function: Deletes the specified tag from an existing person at the specified `INDEX` in your *DummyName*.
+Can also remove all instances of a tag from your *DummyName*. +
+Format: `deletetag INDEX TAG` +
+====
 
-****
-* Deletes the tag with the specified `TAGNAME`.
-* The tag name *must be alphanumeric* friend, class1, 123, ...
-****
+_Coming in v1.3_ +
+If you want to delete a single tag from a contact in your *DummyName*: +
 
-Examples:
+.  Locate the contact you want to delete a tag from and the index of the contact. +
+.  Type in the index of the contact, and the tag you wish to delete. (Figure 2.7.1) +
+`>> deletetag 1 classmate`.
+image:deletetag_1.png[600] +
+_Figure 2.7.1_
+.  Press `Enter` and you should see that the contact that you selected has been modified. (Figure 2.7.2) +
+image:deletetag_2.png[600] +
+_Figure 2.7.2_
 
-* `deletetag buddy` +
-Deletes the tag `buddy` from all contacts in the address book.
-* `dt class2101` +
-Deletes the tag `class2101` from all contacts in the address book.
+You can also delete tags from contacts in a filtered list:
+
+* `>> filter friends` +
+`>> deletetag 2 friends` +
+Deletes the `friends` tag from the 2nd person in the results of the `filter` command.
+
+* `>> find John` +
+`>> dt 1 9pmclass` +
+Deletes the `9pmclass` tag from the 1st person in the results of the `find` command.
+
+If you would like to delete all instances of a particular tag from your *DummyName*: +
+
+.  Type in `all`, followed by the tag you wish to delete. (Figure 2.7.3) +
+image:deletetag_3.png[600] +
+_Figure 2.7.3_
+
+.  Press `Enter` and you should see that this tag has been deleted from all contacts.
+image:deletetag_4.png[600] +
+_Figure 2.7.4_
 
 === Locating persons by name: `find`
 
@@ -441,7 +483,14 @@ There is no need to save manually.
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous *DummyName* folder.
+
+*Q*: I can't sync my contacts with my Google contacts! +
+*A*: Make sure you have a default browser enabled as attempting to sync your data
+will open up a new window in your default browser.
+
+*Q*: I have a question that isn't answered here. How do I get further support? +
+*A*: You can contact us by mailto:alexleegs@gmail.com[email].
 
 == Command Summary
 
