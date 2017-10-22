@@ -57,6 +57,8 @@ public class WhitelistSyncTest {
         // Ensure person is deleted from masterlist
         expectedModel.deletePerson(personToBeDeleted);
         expectedModel.updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         DeleteCommand deleteCommand = prepareDeleteCommand(index);
@@ -82,6 +84,8 @@ public class WhitelistSyncTest {
         // To make sure person does not exist in whitelist anymore
         borrowedPerson = expectedModel.removeWhitelistedPerson(borrowedPerson);
         expectedModel.addDebtToPerson(borrowedPerson, amount);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         BorrowCommand borrowCommand = prepareBorrowCommand(index, amount);
@@ -106,6 +110,8 @@ public class WhitelistSyncTest {
         // To ensure person exists in whitelist
         repayingPerson = expectedModel.deductDebtFromPerson(repayingPerson, amount);
         expectedModel.addWhitelistedPerson(repayingPerson);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         PaybackCommand paybackCommand = preparePaybackCommand(INDEX_FIRST_PERSON, amount);
@@ -129,6 +135,8 @@ public class WhitelistSyncTest {
 
         // To ensure person only gets his debt decremented. No other actions
         expectedModel.deductDebtFromPerson(repayingPerson, amount);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         PaybackCommand paybackCommand = preparePaybackCommand(INDEX_FIRST_PERSON, amount);
@@ -155,6 +163,8 @@ public class WhitelistSyncTest {
 
         // To make sure person does not exist in whitelist
         expectedModel.removeWhitelistedPerson(repayingPerson);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         PaybackCommand paybackCommand = preparePaybackCommand(index, amount);
@@ -185,6 +195,8 @@ public class WhitelistSyncTest {
         // To ensure person does not exist in whitelist
         expectedModel.updatePerson(borrowedPerson, editedPerson);
         expectedModel.removeWhitelistedPerson(editedPerson);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         EditCommand editCommand = prepareEditCommand(index, descriptor);
@@ -214,6 +226,8 @@ public class WhitelistSyncTest {
         // To ensure person exists in whitelist
         expectedModel.updatePerson(repayingPerson, editedPerson);
         expectedModel.addWhitelistedPerson(editedPerson);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         EditCommand editCommand = prepareEditCommand(INDEX_FIRST_PERSON, descriptor);
@@ -240,6 +254,8 @@ public class WhitelistSyncTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(repayingPerson, editedPerson);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         EditCommand editCommand = prepareEditCommand(INDEX_FIRST_PERSON, descriptor);
@@ -269,6 +285,8 @@ public class WhitelistSyncTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(repayingPerson, editedPerson);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         EditCommand editCommand = prepareEditCommand(index, descriptor);
@@ -308,6 +326,8 @@ public class WhitelistSyncTest {
 
         // Person will be added to whitelisted as he is now unbanned
         expectedModel.addWhitelistedPerson(unbannedPerson);
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         UnbanCommand unbanCommand = prepareUnbanCommand(INDEX_FIRST_PERSON);
@@ -326,9 +346,8 @@ public class WhitelistSyncTest {
             throws Exception {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-
-        // Preparation done on actual model
-        model.changeListTo("whitelist");
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         RepaidCommand repaidCommand = new RepaidCommand(INDEX_FIRST_PERSON);
@@ -360,9 +379,8 @@ public class WhitelistSyncTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.addWhitelistedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-
-        // Preparation done on actual model
-        model.changeListTo("whitelist");
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         RepaidCommand repaidCommand = new RepaidCommand(INDEX_FIRST_PERSON);
