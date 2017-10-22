@@ -29,7 +29,7 @@ public class SortCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts peers in ascending order according to specified parameter (Sorts by name by default)\n"
             + "Parameters: "
-            + "Prefix"
+            + "Prefix\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME;
 
@@ -56,7 +56,7 @@ public class SortCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, sortParam));
     }
 
-    private Comparator<ReadOnlyPerson> getSortComparator(String field) {
+    private Comparator<ReadOnlyPerson> getSortComparator(String parameter) {
         switch (parameter) {
         case PREFIX_NAME:
             this.sortParam = "name";

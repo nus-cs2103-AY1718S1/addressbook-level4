@@ -423,6 +423,38 @@ command. Further enhancements are needed to catch more invalid cases. +
 
 ---
 
+=== SortCommand mechanism
+
+`SortCommand` inherits from `UndoableCommand` and supports undoing and redoing.
+It is facilitated by the Logic component, where most of the process is executed.
+The command sorts the persons within the list by the given prefix, which defaults to `NAME` if the prefix is left blank.
+
+
+The `SortCommand` class takes in the given prefix and determines the Comparator for the sort to occur.
+It would then pass the Comparator to the Model component and executes the sort based on the Comparator using the inbuilt function
+of `Collections.sort()`. It will then call the `updatedFilteredPersonList()` method in the `Model` class and display
+a Success message upon successful completion of the command.
+
+
+==== Design Considerations
+**Aspect:** Implementation of `SortCommand`. +
+**Alternative 1 (current choice):** Sorting of the list instead of solely using the `FindCommand` so as to allow
+display of the entire list in an easier to see manner. +
+**Pros:** Can easily see the full list and spot contacts which may be missed out due to spelling errors. +
+**Cons:** List may be excessively long, making it harder to access the contacts you are trying to find. +
+**Alternative 2:** Enhancement of `FindCommand` such that it can display all names starting with a certain letter. +
+**Pros:** Can view a list of people whose name starts with the given letter +
+**Cons:** Will still miss out erroneously added names. Only applicable for names and not other fields.
+
+---
+
+**Aspect:** Sort parameters of `SortCommand`. +
+**Alternative 1 (current choice):** Allow sorting based on name, phone, email or address +
+**Pros:** Gives the option to sort based on whichever option the user wants.  +
+**Cons:** Unable to make it inbuilt due to the presence of multiple sort parameters. Contacts are not sorted upon addition to Peersonal.  +
+
+---
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
