@@ -26,6 +26,6 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
             throw new ParseException(PARSE_EXCEPTION_MESSAGE);
         }
 
-        return new UnlockCommand(userInput);
+        return new UnlockCommand(userInput.trim());
     }
 }
