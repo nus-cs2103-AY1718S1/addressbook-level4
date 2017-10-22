@@ -268,13 +268,13 @@ public class DeleteCommand extends UndoableCommand {
 }
 ----
 
-Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
+Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning. And the panel is listing all modules.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th lesson in the ModU. The current state of the ModU is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete all lessons associate with 5th Module in the ModU. The current state of the ModU is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new lesson.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add m/CS2103T ...` to add a new lesson.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
@@ -283,7 +283,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the lesson was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the ModU to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack`, and check if the command is redoable now, we say a command is redoable if the listing panel has not been changed(For example, user type `list location`, then current listing element changed to location from module, or user types in `find MA1101`, then only a selected set of Module is listed.), since command like `delete 5` has different meaning when listing by module and location. However, if the listing element has not been changed, we will push it back to the `redoStack`. We will restore the ModU to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -299,13 +299,16 @@ The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, an
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add m/MA1101R` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+
+Suppose now user wants to view all lessons of Module Code CS2103, thus user types command `view 1`(Suppose the index of Module CS2103 is 1), command `view` will result in listing element changed from `Module` to `Lesson`. Then the `undoStack` is cleared. Because User can only undo if the listing element type has not been switched.
+
 
 The following link:#activity-diagram[activity diagram] summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
