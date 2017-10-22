@@ -108,6 +108,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Mrt} of the {@code Person} that we are building.
+     */
     public PersonBuilder withMrt(String mrt) {
         try {
             this.person.setMrt(new Mrt(mrt));
