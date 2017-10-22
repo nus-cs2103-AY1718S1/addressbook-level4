@@ -210,16 +210,12 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
-
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
 // 3.3tag::addPhoto[]
-=== addPhoto mechanism
+=== Adding a profile picture mechanism
 
 The `addphoto` feature is facilitated mainly by the `Logic` component where most of the process is executed.
 It adds an image to the contact indicated by the user using `AddPhotoCommand`. `AddPhotoCommand` inherits from `UndoableCommand` and is therefore undoable using the `undo` function.
