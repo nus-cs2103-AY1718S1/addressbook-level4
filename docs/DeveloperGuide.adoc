@@ -393,7 +393,13 @@ Learning from many modern database implementations, we should think of the data 
 other one for *events*. Each table is composed of many rows and many columns. A single contact/event is one row, while
 all their different properties/fields are the columns.
 
-==== Design Considerations
+image::phpmyadminTableView.png[width="700"]
+_Figure 3.3.1 : Data Table View of phpMyAdmin (a MySQL visualization tool)_
+
+image::phpmyadminAddColumn.png[width="700"]
+_Figure 3.3.2 : Add New Column in phpMyAdmin_
+
+==== Implementation Outline
 
 1. Create a more general class to capture the common patterns among all columns (all different fields/properties): according to
 the basic OOP concept, a more generic class should become the superclass `Property`; then, other more specific classes
