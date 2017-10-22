@@ -4,6 +4,8 @@ import static seedu.address.ui.util.KeyListenerUtil.CLEAR;
 import static seedu.address.ui.util.KeyListenerUtil.DELETE_SELECTION;
 import static seedu.address.ui.util.KeyListenerUtil.FOCUS_COMMAND_BOX;
 import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_ALT;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_RESULT_DISPLAY;
 import static seedu.address.ui.util.KeyListenerUtil.HISTORY;
 import static seedu.address.ui.util.KeyListenerUtil.LIST;
 import static seedu.address.ui.util.KeyListenerUtil.NEW_FILE;
@@ -34,12 +36,14 @@ public class KeyListener {
     private Region mainNode;
     private PersonListPanel personListPanel;
     private CommandBox commandBox;
+    private ResultDisplay resultDisplay;
 
-    public KeyListener(Region mainNode, PersonListPanel personListPanel,
+    public KeyListener(Region mainNode, ResultDisplay resultDisplay, PersonListPanel personListPanel,
                        CommandBox commandBox) {
         this.mainNode = mainNode;
         this.personListPanel = personListPanel;
         this.commandBox = commandBox;
+        this.resultDisplay = resultDisplay;
     }
 
     /**
@@ -62,11 +66,14 @@ public class KeyListener {
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
-        if (FOCUS_PERSON_LIST.match(keyEvent)) {
+        if (FOCUS_PERSON_LIST.match(keyEvent) || FOCUS_PERSON_LIST_ALT.match(keyEvent)) {
             personListPanel.setFocus();
 
         } else if (FOCUS_COMMAND_BOX.match(keyEvent)) {
             commandBox.setFocus();
+
+        } else if (FOCUS_RESULT_DISPLAY.match(keyEvent)) {
+            resultDisplay.setFocus();
 
         } else if (DELETE_SELECTION.match(keyEvent)) {
             deleteSelectedContact();

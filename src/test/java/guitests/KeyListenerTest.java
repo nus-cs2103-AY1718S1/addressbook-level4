@@ -32,6 +32,14 @@ public class KeyListenerTest extends RolodexGuiTest {
 
     @Test
     public void executeKeyEventForFocusOnPersonListPanel() {
+        KeyCodeCombination focusKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Left");
+        
+        guiRobot.push(focusKeyCode);
+        assertTrue(getPersonListPanel().isFocused());
+
+        guiRobot.push(KeyCode.ENTER);
+        assertFalse(getPersonListPanel().isFocused());
+
         guiRobot.push(KeyCode.ESCAPE);
         assertTrue(getPersonListPanel().isFocused());
 
@@ -40,6 +48,13 @@ public class KeyListenerTest extends RolodexGuiTest {
         assertTrue(getPersonListPanel().isFocused());
         guiRobot.push(KeyCode.DOWN);
         assertTrue(getPersonListPanel().isFocused());
+    }
+
+    @Test
+    public void executeKeyEventForFocusOnResultDisplayPanel() {
+        KeyCodeCombination focusKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Right");
+        guiRobot.push(focusKeyCode);
+        assertTrue(getResultDisplay().isFocused());
 
         guiRobot.push(KeyCode.ENTER);
         assertFalse(getPersonListPanel().isFocused());

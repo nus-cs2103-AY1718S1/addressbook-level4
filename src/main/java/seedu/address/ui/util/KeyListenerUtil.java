@@ -19,7 +19,9 @@ import seedu.address.logic.commands.UndoCommand;
 public class KeyListenerUtil {
 
     public static final KeyCombination FOCUS_PERSON_LIST = KeyCombination.valueOf("Esc");
+    public static final KeyCombination FOCUS_PERSON_LIST_ALT = KeyCombination.valueOf("Ctrl+Left");
     public static final KeyCombination FOCUS_COMMAND_BOX = KeyCombination.valueOf("Enter");
+    public static final KeyCombination FOCUS_RESULT_DISPLAY = KeyCombination.valueOf("Ctrl+Right");
     public static final KeyCombination DELETE_SELECTION = KeyCombination.valueOf("Ctrl+D");
     public static final KeyCombination CLEAR = KeyCombination.valueOf(ClearCommand.COMMAND_HOTKEY);
     public static final KeyCombination HISTORY = KeyCombination.valueOf(HistoryCommand.COMMAND_HOTKEY);
