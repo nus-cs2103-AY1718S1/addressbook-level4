@@ -14,6 +14,18 @@ public class DateUtil {
     public static final String DATE_FORMAT = "E',' dd MMM', Year' yyyy";
     // for input format of DD-MM-YYYY
     public static final String DATE_VALIDATION_REGEX = "([0-3][0-9](-))([0-1][0-9](-))(\\d{4})";
+    public static final int JAN = 1;
+    public static final int FEB = 2;
+    public static final int MAR = 3;
+    public static final int APR = 4;
+    public static final int MAY = 5;
+    public static final int JUN = 6;
+    public static final int JUL = 7;
+    public static final int AUG = 8;
+    public static final int SEP = 9;
+    public static final int OCT = 10;
+    public static final int NOV = 11;
+    public static final int DEC = 12;
 
     /**
      * Formats a Date class to a string value of format DAY, DD MM, 'Year' YYYY.
@@ -64,17 +76,17 @@ public class DateUtil {
             int year = Integer.parseInt(dateToValidate.substring(6, 10));
             boolean valid;
             switch (month) {
-            case 4:
-            case 6:
-            case 9:
-            case 11:
+            case APR:
+            case JUN:
+            case SEP:
+            case NOV:
                 if (day > 30) {
                     valid = false;
                 } else {
                     valid = true;
                 }
                 break;
-            case 2:
+            case FEB:
                 if (checkLeapYear(year)) {
                     if (day <= 29) {
                         valid = true;
@@ -132,44 +144,63 @@ public class DateUtil {
         }
     }
 
+    /**
+     * generate a date that is 1 month behind current date
+     */
+    public static Date generateOutdatedDebtDate(Date currentDate) {
+        String currentDateString = formatDate(currentDate);
+        int year = Integer.parseInt(currentDateString.substring(18, 22));
+        int day = Integer.parseInt(currentDateString.substring(5, 7));
+        int month = getMonthFromString(currentDateString.substring(8, 11));
+        if (month == JAN) { // if it is the month of Jan.
+            month = DEC; // set the month to Dec
+            year -= 1;
+        } else {
+            month -= 1; // go to prev month
+        }
+        month -= 1; // month is zero based
+        Date dateToReturn = new GregorianCalendar(year, month, day).getTime();
+        return dateToReturn;
+    }
+
     public static int getMonthFromString(String month) {
         int monthToReturn;
         switch(month) {
         case "Jan":
-            monthToReturn = 1;
+            monthToReturn = JAN;
             break;
         case "Feb":
-            monthToReturn = 2;
+            monthToReturn = FEB;
             break;
         case "Mar":
-            monthToReturn = 3;
+            monthToReturn = MAR;
             break;
         case "Apr":
-            monthToReturn = 4;
+            monthToReturn = APR;
             break;
         case "May":
-            monthToReturn = 5;
+            monthToReturn = MAY;
             break;
         case "Jun":
-            monthToReturn = 6;
+            monthToReturn = JUN;
             break;
         case "Jul":
-            monthToReturn = 7;
+            monthToReturn = JUL;
             break;
         case "Aug":
-            monthToReturn = 8;
+            monthToReturn = AUG;
             break;
         case "Sep":
-            monthToReturn = 9;
+            monthToReturn = SEP;
             break;
         case "Oct":
-            monthToReturn = 10;
+            monthToReturn = OCT;
             break;
         case "Nov":
-            monthToReturn = 11;
+            monthToReturn = NOV;
             break;
         case "Dec":
-            monthToReturn = 12;
+            monthToReturn = DEC;
             break;
         default:
             monthToReturn = 0;

@@ -64,7 +64,7 @@ public interface ReadOnlyPerson {
     /**
      * Checks if person is due for an update on his/her debt.
      */
-    boolean checkUpdateDebt();
+    boolean checkUpdateDebt(Date currentDate);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

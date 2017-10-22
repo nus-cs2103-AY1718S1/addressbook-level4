@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toCollection;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -310,7 +311,7 @@ public class ModelManager extends ComponentManager implements Model {
         // login is successful
         if (event.getLoginStatus() == true) {
             for (ReadOnlyPerson person : allPersons) {
-                if (!person.getInterest().value.equals("No interest set.") && person.checkUpdateDebt()) {
+                if (!person.getInterest().value.equals("No interest set.") && person.checkUpdateDebt(new Date())) {
                     String accruedAmount = person.calcAccruedAmount();
                     try {
                         Debt amount = new Debt(accruedAmount);

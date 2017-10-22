@@ -344,21 +344,22 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public boolean checkUpdateDebt() {
+    public boolean checkUpdateDebt(Date currentDate) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(lastAccruedDate);
         int monthLastAccrued = cal.get(Calendar.MONTH);
-        cal.setTime(new Date());
+        cal.setTime(currentDate);
         int currentMonth = cal.get(Calendar.MONTH);
-        if (currentMonth == monthLastAccrued) {
-            return false;
-        } else {
-            int currentDate = cal.get(Calendar.DAY_OF_MONTH);
-            if (currentDate == 1) { // interest rate only increments debt on 1st day of month
+        // if currentMonth is 1 month ahead of monthLastAccrued
+        if ((currentMonth - monthLastAccrued == 1) || (currentMonth - monthLastAccrued == -11)) {
+            int currentDay = cal.get(Calendar.DAY_OF_MONTH);
+            if (currentDay == 1) { // interest rate only increments debt on 1st day of month
                 return true;
             } else {
                 return false;
             }
+        } else {
+            return false;
         }
     }
 
