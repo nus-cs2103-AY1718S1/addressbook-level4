@@ -52,7 +52,7 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all parcels.
+* *`list`* : lists all parcels and expands the parcel list section in the main window.
 * **`clear`**` : clears the list of parcels.
 * **`delete`**`3` : deletes the 3rd parcel shown in the current list.
 * *`exit`* : exits the app.
@@ -81,21 +81,25 @@ Format: `help`
 === Adding a parcel: `add`
 
 Adds a parcel to Ark +
-Format: `add #/TRACKING_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERYDATE [t/TAG]...`
+Format: `add #/TRACKING_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERYDATE s/STATUS [t/TAG]...`
 
 [TIP]
 A parcel can have any number of tags (including 0)
 
 Examples:
 
-* `add #/RR000000000SG n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001`
-* `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
+* `add #/RR000000000SG n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001 s/pending`
+* `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 s/pending e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
  t/fragile`
 
 === Listing all parcels : `list`
 
-Shows a list of all parcels in Ark. +
+Shows a list of all parcels in Ark and expands the parcel list section in the main window +
 Format: `list`
+
+[TIP]
+The parcel list section can also be expanded or reduced by clicking and dragging the divider between the
+parcel list section and browser section.
 
 === Editing a parcel : `edit`
 
@@ -163,7 +167,9 @@ Deletes the 1st parcel in the results of the `find` command.
 
 === Selecting a parcel : `select`
 
-Selects the parcel identified by the index number used in the last parcel listing. +
+Selects the parcel identified by the index number used in the last parcel listing
+and expands the browser section in th main window. The browser section will then show a google map search
+of the selected parcel's delivery address. +
 Format: `select INDEX`
 
 [TIP]
@@ -256,13 +262,20 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Google Maps Browser
+
+Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
+of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
+into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
+browser section of the main window.
+
 === Autocomplete
 
 Ark comes with tab autocompletion which is able to complete a command for you
 without requiring you to type out the command fully. +
 To make use of this feature, simply key in the first few characters of the command you with to enter and press the
  kbd:[Tab] key.
-Ark will then fill in the rest of the command for you.
+Ark will then fill in the rest of the command for you in the command box.
 Then press kbd:[Enter] key to enter the command.
 
 Examples:
@@ -295,7 +308,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [#/TRACKING_NUMBER] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERY_DATE] [t/TAG]...` +
+* *Edit* : `edit INDEX [#/TRACKING_NUMBER] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERY_DATE] [s/STATUS] [t/TAG]...` +
 e.g. `edit 2 #/RR000000000SG n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
