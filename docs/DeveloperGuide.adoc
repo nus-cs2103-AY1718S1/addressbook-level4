@@ -676,9 +676,10 @@ Alternatively, it may also be possible to permanently display all fields in each
 
 This section indicates the type of file we use for writing documentation.
 
+
 We will be using asciidoc for writing documentation.
 
-Advatnages of using  asciidoc over Markdown:
+*Advatnages of using  asciidoc over Markdown:*
 
 asciidoc uses the same number of markup characters or less when compared to Markdown in nearly all cases.
 
