@@ -227,6 +227,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          * remains unchanged
          */
         executeCommand(SelectCommand.COMMAND_WORD + " 1");
+        selectParcel(INDEX_FIRST_PARCEL);
         assert getParcelListPanel().isAnyCardSelected();
         assertCommandSuccess(CARL);
 

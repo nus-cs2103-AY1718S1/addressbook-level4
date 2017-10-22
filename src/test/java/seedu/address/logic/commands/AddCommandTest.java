@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -200,6 +201,16 @@ public class AddCommandTest {
      */
     private class ModelStubAcceptingParcelAdded extends ModelStub {
         final ArrayList<Parcel> parcelsAdded = new ArrayList<>();
+
+        @Override
+        public boolean hasSelected() {
+            return false;
+        }
+
+        @Override
+        public void maintainSorted() {
+            Collections.sort(parcelsAdded);
+        }
 
         @Override
         public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
