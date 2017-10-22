@@ -140,6 +140,11 @@ public class AddCommandTest {
         public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void maintainSorted() {
+            fail("This method should not be called.");
+        }
     }
 
     /**
