@@ -153,6 +153,26 @@ Returns `john` and `John Doe` whose addresses contain the word 'stadium'.
 * `findByAddress stadium pier` +
 Returns any person having addresses containing `stadium` or `pier`
 
+=== Locating persons by email: `findByEmail`
+
+Finds persons whose addresses contain any of the given keywords. +
+Format: `findByEmail KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `m@emsp.com` will match `M@EMsP.COM`
+* The order of the keywords does not matter.
+* Only the email is searched.
+* Only full words will be matched e.g. `hans@gmail.com` will not match `hans@mail.com`
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
+****
+
+Examples:
+
+* `findByEmail bob@gmail.com` +
+Returns Bob whose email matches the searched email.
+* `findByAddress bob@gmail.com grant@mail.com` +
+Returns any person having email addresses of `bob@gmail.com` or `grant@mail.com`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
