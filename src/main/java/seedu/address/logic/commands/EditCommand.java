@@ -129,7 +129,6 @@ public class EditCommand extends UndoableCommand {
         } catch (DuplicateBookedSlotException s){
             throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         }
-
         EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(String.format(MESSAGE_EDIT_LESSON_SUCCESS, editedLesson));
     }

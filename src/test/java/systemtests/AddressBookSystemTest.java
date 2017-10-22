@@ -15,10 +15,13 @@ import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 import seedu.address.ui.CommandBox;
 
 import java.net.MalformedURLException;
@@ -26,10 +29,12 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.logic.commands.CommandTestUtil.MA1101R_CODE_PREDICATE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
@@ -60,7 +65,7 @@ public abstract class AddressBookSystemTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws IllegalValueException {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
@@ -147,7 +152,8 @@ public abstract class AddressBookSystemTest {
             Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
-        assertEquals(expectedModel, getModel());
+        Model model = getModel();
+        assertEquals(expectedModel, model);
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getLessonListPanel(), expectedModel.getFilteredLessonList());
     }
@@ -260,5 +266,13 @@ public abstract class AddressBookSystemTest {
      */
     protected Model getModel() {
         return testApp.getModel();
+    }
+
+    /**
+     * Update the filtered list of test app with given predicate.
+     * @param predicate
+     */
+    protected void updateFilterdList(Predicate predicate) {
+        testApp.updateFilteredList(predicate);
     }
 }

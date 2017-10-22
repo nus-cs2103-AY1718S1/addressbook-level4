@@ -19,6 +19,7 @@ import systemtests.ModelHelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -119,5 +120,12 @@ public class TestApp extends MainApp {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Update the filteredList with given predicate.
+     */
+    public void updateFilteredList(Predicate predicate) {
+        model.updateFilteredLessonList(predicate);
     }
 }

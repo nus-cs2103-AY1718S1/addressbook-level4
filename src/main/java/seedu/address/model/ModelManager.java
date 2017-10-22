@@ -152,13 +152,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void unbookBookedSlot(BookedSlot target){
+    public void unbookBookedSlot(BookedSlot target) {
         if(bookedList.contains(target))
             bookedList.remove(target);
     }
 
     @Override
-    public void bookingSlot(BookedSlot target) throws DuplicateBookedSlotException{
+    public void bookingSlot(BookedSlot target) throws DuplicateBookedSlotException {
         if(!bookedList.contains(target)){
             bookedList.add(target);
         }else{
@@ -168,10 +168,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void updateBookedSlot(BookedSlot target, BookedSlot toReplace) throws DuplicateBookedSlotException{
-        if(!bookedList.contains(toReplace)){
+        if (target.equals(toReplace) || !bookedList.contains(toReplace)) {
             bookedList.remove(target);
             bookedList.add(toReplace);
-        }else{
+        } else {
             throw new DuplicateBookedSlotException();
         }
     }
@@ -180,7 +180,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
             throws DuplicateLessonException, LessonNotFoundException {
         requireAllNonNull(target, editedLesson);
-
         addressBook.updateLesson(target, editedLesson);
         indicateAddressBookChanged();
     }
