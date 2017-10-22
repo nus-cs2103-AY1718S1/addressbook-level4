@@ -40,7 +40,7 @@ import seedu.address.ui.UiManager;
 /**
  * The main entry point to the application.
  */
-public class  MainApp extends Application {
+public class MainApp extends Application {
 
     public static final Version VERSION = new Version(1, 2, 0, true);
 
