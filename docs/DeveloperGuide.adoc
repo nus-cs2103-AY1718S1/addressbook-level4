@@ -12,7 +12,14 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-W13-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B3`      Since: `Jun 2016`      Licence: `MIT`
+
+Welcome to *DummyName*!
+
+*DummyName* is a desktop Address Book application, which is primarily a CLI (Command Line Interface)
+application, but also uses a GUI (graphical user interface). It provides a convenient way for users
+to customize their contacts and keep track of appointments. This guide provides information that will
+help both experienced contributors and first-time users contribute to *DummyName*.
 
 == Setting up
 
