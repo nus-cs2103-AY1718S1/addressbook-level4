@@ -466,17 +466,17 @@ This allows the modification of the scene's css at runtime.
 public class UiStyle {
 ...
     private static Scene scene = null;
-    
+
      public static void setScene(Scene s) {
         scene = s;
         setToDarkTheme(); // Default theme
     }
-    
+
     public static void setToLightTheme() {
         scene.getStylesheets().remove(DARK_THEME_STYLE);
         scene.getStylesheets().add(LIGHT_THEME_STYLE);
     }
-    
+
     public static void setToDarkTheme() {
         scene.getStylesheets().remove(LIGHT_THEME_STYLE);
         scene.getStylesheets().add(DARK_THEME_STYLE);
