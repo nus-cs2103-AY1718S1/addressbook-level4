@@ -50,6 +50,13 @@ public class ArgumentMultimap {
         }
         return new ArrayList<>(argMultimap.get(prefix));
     }
+    
+    /*public List<String> getAllValuesSeparatedByWhitespace(Prefix prefix) {
+        if (!argMultimap.containsKey(prefix)) {
+            return new ArrayList<>();
+        }
+        i
+    }*/
 
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.

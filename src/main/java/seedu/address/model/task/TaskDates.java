@@ -1,5 +1,10 @@
 package seedu.address.model.task;
 
+import org.ocpsoft.prettytime.nlp.parse.DateGroup;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -28,10 +33,11 @@ public class TaskDates {
     }
 
     /**
-     * Formats the date of a given string into LocalDate.
+     * Formats the first date of a given DateGroup into a String.
      */
-    public static LocalDate formatDate(String date) throws IllegalValueException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return LocalDate.parse(date, formatter);
+    public static String formatDate(DateGroup date) throws IllegalValueException {
+        List<Date> dates = date.getDates();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        return sdf.format(dates.get(0));
     }
 }

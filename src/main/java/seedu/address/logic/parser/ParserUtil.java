@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 import org.ocpsoft.prettytime.nlp.parse.DateGroup;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.SingleEventDate;
 import seedu.address.model.task.StartDate;
+import seedu.address.model.task.TaskDates;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -127,7 +129,10 @@ public class ParserUtil {
      */
     public static StartDate parseStartDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? new StartDate(date.get()) : new StartDate("");
+        if (!date.isPresent()) {
+            return new StartDate("");
+        }
+        return new StartDate(TaskDates.formatDate(parseDate(date.get())));
     }
 
     /**
@@ -136,7 +141,10 @@ public class ParserUtil {
      */
     public static Deadline parseDeadline(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? new Deadline(date.get()) : new Deadline("");
+        if (!date.isPresent()) {
+            return new Deadline("");
+        }
+        return new Deadline(TaskDates.formatDate(parseDate(date.get())));
     }
 
     /**
@@ -145,16 +153,15 @@ public class ParserUtil {
      */
     public static SingleEventDate parseSingleEventDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? new SingleEventDate(date.get()) : new SingleEventDate("");
+        if (!date.isPresent()) {
+            return new SingleEventDate("");
+        }
+        return new SingleEventDate(TaskDates.formatDate(parseDate(date.get())));
     }
     
-    public static List<Date> parseNaturalLanguage(String naturalLanguageInput) throws IllegalValueException {
-        List<Date> dates = new PrettyTimeParser().parse(naturalLanguageInput);
-        List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
-        if (dates.isEmpty() && dateGroup.isEmpty()) {
-            throw new IllegalValueException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
-        }
-        System.out.println(dateGroup.get(0).isRecurring() + " " + dateGroup.get(0));
-        return dates;
+    public static DateGroup parseDate(String naturalLanguageInput) {
+        List<DateGroup> dates = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
+        System.out.println(dates.get(0).getDates());
+        return dates.get(0);
     }
 }

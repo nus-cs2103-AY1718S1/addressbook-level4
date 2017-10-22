@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.Date;
 import java.util.List;
 
+import org.ocpsoft.prettytime.nlp.parse.DateGroup;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -41,14 +43,12 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         }
 
         try {
-            Description description = ParserUtil.parseDescription(argMultimap.getPreamble());
             StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_START_DATE));
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE));
-            SingleEventDate singleEventDate =
+            SingleEventDate singleEventDate = 
                     ParserUtil.parseSingleEventDate(argMultimap.getValue(PREFIX_SINGLE_EVENT_DATE));
+            Description description = ParserUtil.parseDescription(argMultimap.getPreamble());
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            List<Date> dates = ParserUtil.parseNaturalLanguage(args);
-            System.out.println(dates + " ");
             
             ReadOnlyTask task = new Task(description, startDate, deadline, singleEventDate, tagList);
 
