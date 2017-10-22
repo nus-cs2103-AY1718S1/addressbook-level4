@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
@@ -72,6 +73,27 @@ public interface Model {
      * Method to sort the lists of addresses by delivery date with the earliest date in front
      */
     void maintainSorted();
+
+    /**
+     * Method to check if there is a parcel selected.
+     */
+    boolean hasSelected();
+
+    /**
+     * Method to toggle whether or not a parcel has been selected
+     */
+    void select();
+
+    /**
+     * Method to toggle whether or not a parcel has been selected
+     */
+    void unselect();
+
+    void setPrevIndex(Index target);
+
+    Index getPrevIndex();
+
+    void forceSelect(Index target);
 }
 
 

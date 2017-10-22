@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -143,6 +144,38 @@ public class AddCommandTest {
 
         @Override
         public void maintainSorted() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasSelected() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void select() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unselect() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void setPrevIndex(Index target) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public Index getPrevIndex() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void forceSelect(Index target) {
             fail("This method should not be called.");
         }
     }

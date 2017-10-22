@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
@@ -60,12 +61,29 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addParcel(toAdd);
-            model.maintainSorted();
+            if (model.hasSelected()) {
+                ReadOnlyParcel previous = model.getAddressBook()
+                                               .getParcelList()
+                                               .get(model.getPrevIndex().getZeroBased());
+                model.maintainSorted();
+                System.out.println("Selecting again");
+                if (previous.compareTo(toAdd) > 0) {
+                    model.forceSelect(model.getPrevIndex());
+                } else {
+                    model.forceSelect(Index.fromZeroBased(findIndex(previous)));
+                }
+            } else {
+                model.maintainSorted();
+            }
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateParcelException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PARCEL);
         }
 
+    }
+
+    private int findIndex(ReadOnlyParcel target) {
+        return model.getAddressBook().getParcelList().indexOf(target);
     }
 
     @Override

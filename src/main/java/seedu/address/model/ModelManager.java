@@ -11,8 +11,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
@@ -27,6 +30,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyParcel> filteredParcels;
+    private static boolean selected = false;
+    private Index prevIndex = Index.fromZeroBased(0);
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -122,6 +127,34 @@ public class ModelManager extends ComponentManager implements Model {
     public void maintainSorted() {
         addressBook.sort();
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public boolean hasSelected() {
+        return selected;
+    }
+
+    @Override
+    public void select() {
+        selected = true;
+    }
+
+    @Override
+    public void unselect() {
+        selected = false;
+    }
+
+    @Override
+    public void forceSelect(Index target) {
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(target));
+    }
+
+    public void setPrevIndex(Index newIndex) {
+        prevIndex = newIndex;
+    }
+
+    public Index getPrevIndex() {
+        return prevIndex;
     }
 
     @Override
