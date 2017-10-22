@@ -37,9 +37,7 @@ public class AccessCommand extends Command {
         }
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
-        /*
-         * EventsCenter.getInstance().post(new PanelSwitchRequestEvent(COMMAND_WORD));
-         */
+
         EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(person.getWebsite().toString()));
         return new CommandResult(String.format(MESSAGE_ACCESS_PERSON_SUCCESS, targetIndex.getOneBased()));
     }

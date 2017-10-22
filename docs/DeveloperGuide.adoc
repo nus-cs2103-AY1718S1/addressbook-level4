@@ -498,34 +498,31 @@ Upon detecting `ChangeThemeRequestEvent`, `Ui` will call `handleChangeTheme` to 
 // tag::sort[]
 === Sort mechanism
 
-The sort mechanism sorts the names of people inside the `addressbook` which
-is inside the 'ModelManager'. It organizes the position of the people existing in
-the addressbook based on their names in an alphabetical order. The sort command inherits
-from UndoableCommand.
+The sort mechanism sorts the names of people inside the `addressbook` of the 'ModelManager'.
+When the sort method is executed, it organizes the position of the people existing in the `addressbook`
+based on their names in alphabetical order. The sort mechanism touches all components of the software application
+but mainly involving the logic and model component.
 
-From Figure 5.2.1 below, it is visible that `SortCommand` inherits from `UndoableCommand`
-which is an extra layer between abstract `Command` class in which the SortCommand
-can be undoable, where the previous state of the address book before sorting
-is saved.
+In the figure [Figure 5.2.1] below, the `SortCommand` inherits from `UndoableCommand`
+which is an extra layer between abstract `Command` class which belongs to the Logic Component.
+This allows the SortCommand to be undoable, where the previous state of the address book before sorting is saved.
 
 image::SortCommandLogicClassDiagram.PNG[width="800"]
 Figure 5.2.1 SortCommand Logic Class Diagram
 
-Suppose a user has an unorganized list of contacts and executes the
-`SortCommand` to organize his contacts based on their names in an
-alphabetical order.
+Suppose a user has an unorganized list of contacts and executes the `SortCommand` to organize his contacts.
 
 The execution of SortCommand is processed in this way:
 
-. User will execute a new `SortCommand` so as to sort the address book.
-. This is carried out by `model.sort()` in `executeUndoableCommand()`.
-. The `internalList` of the address book is accessed and is sorted through a `lambda` function which
+. User will execute and create a new `SortCommand` so as to sort the address book.
+. When `executeUndoableCommand()` of `SortCommand` is called, `model.sort()` in the method will be processed.
+. The `internalList` of the address book is then accessed and sorted through a `lambda` function which
   compares the name of everyone and necessarily switches the position between contacts throughout the `internalList` by comparing names between person r1 and r2 sequentially.
 . After `internalList` is sorted, function `updateFilterPersonList(PREDICATE_SHOW_ALL_PERSONS)` is called
   to update the list being filtered and also call an event `indicatedAddressBookChanged()`
   to update the `PersonListPanel` of the GUI being shown.
 
-Code of SortCommand :
+Code of `SortCommand.java` and its method `executeUndoableCommand`:
 [source,java]
 ----
 public class SortCommand extends UndoableCommand {
@@ -537,7 +534,7 @@ public class SortCommand extends UndoableCommand {
 }
 ----
 
-Sort method inside ModelManager.java :
+Code of sort method inside `ModelManager.java`:
 [source,java]
 ----
 @Override
@@ -548,7 +545,7 @@ public synchronized void sort() {
 }
 ----
 
-Sort method inside UniquePersonList.java :
+Code of sort method inside `UniquePersonList.java` using a lambda function to sort `internalList`:
 [source,java]
 ----
 public void sort() {
@@ -558,24 +555,27 @@ public void sort() {
 
 ----
 The following sequence diagram shows how the sort operation works:
-
-When sort is typed into command line input, new SortCommand is created.
+As seen from the figure [Figure 5.2.2] below, when sort is typed into command line input, new `SortCommand` is created.
 
 image::SortCommandLogicSequenceDiagram.PNG[width="800"]
+Figure 5.2.2 SortCommand Logic Sequence Diagram
 
-When executeUndoableCommand is called in SortCommand class, it will call the sort function in ModelManager.
-It will call the sort() function of its own class until it reaches InternalList.sort() where the sorting of contacts based on their names will begin.
+When `executeUndoableCommand` is called in SortCommand class, it will call the sort function in ModelManager.
+It will call the sort() function of its own class until it reaches InternalList.sort() where the sorting of
+contacts positions based on their names will be executed.
+Ultimately, achieving the final product of having a sorted addressbook being shown in the `PersonListPanel`
 
 image::SortCommandModelSequenceDiagram.PNG[width="800"]
+Figure 5.2.3 SortCommand Model Sequence Diagram
 
 ==== Design Considerations
 **Aspect:** Implementation of `SortCommand` +
 **Alternative 1 (current choice):** extending to `UndoableCommand` class +
-**Pros:** Sort function call is able to be undone if needed as it now inherits from the Super Class. +
+**Pros:** Sort method call is able to be undone if needed as it now inherits from the Super Class. +
 **Cons:** Developers might need to understand how `UndoableCommand` works before implementation. +
 **Alternative 2:** Just extend to `Command` class +
 **Pros:** Does not need understanding of `UndoableCommand` class. +
-**Cons:** Unable to undo sort function and work from previous state of address book if user has called `SortCommand` to sort address book.
+**Cons:** Unable to undo sort method and work from previous state of address book if user has called `SortCommand` to sort address book.
 
 ---
 **Aspect:** Implementation of how sort executes +
@@ -591,27 +591,30 @@ image::SortCommandModelSequenceDiagram.PNG[width="800"]
 ---
 //end::sort[]
 
-// tag::accessWebsite[]
+// tag::access[]
 === Access Website mechanism
 
 The access website mechanism has an `AccessCommand` that allows user to access the website by stating the
-index of the desired contact in the contact list viewed. The `AccessCommand` class inherits from the `Command` class.
+index of the desired contact in the contact list viewed.
+The implementation of the access website mechanism is mostly done in the `UI`, `Model`, and `Logic` component.
+The `AccessCommand` class inherits from the `Command` class.
 
-Suppose a user would like access one of his contacts website that is listed in the address book
+Suppose a user would like to access one of his contacts website that is listed in the `PersonListPanel` of the address book
 and executes the `AccessCommand` to access the website.
 
 The execution of AccessCommand is processed in this way:
 
-. User will input `access index` where index refers to the index of the person listed in the person card list in GUI.
+. User will input `access index` where `index` refers to the index of the person listed in the `PersonListPanel` in GUI.
 . Input of user will be parse as an argument through the AddressBookParser and AccessCommandParser to extract the index.
-. A new `AccessCommand` with the index inputted will be executed.
-. In the execute() of AccessCommand, the person of the website that the user wants to access will be obtained through the
- index of the `lastShownList` and stored into `ReadOnlyPerson` class variable.
-. The `EventsCenter` will then post a new `AccessWebsiteRequestEvent` which contains the website of the person.
-. The `AccessWebsiteRequestEvent` event would then be handled by an event handler `handleAccessWebsiteEvent`.
+. A new `AccessCommand` with the index inputted will be created.
+. The method `execute()` of the `AccessCommand` will then be processed,
+ where the person of the website that the user wants to access will be obtained through the
+ index of the `lastShownList` and stored into `person` variable which is of `ReadOnlyPerson` data-type.
+. The `EventsCenter` will then post a new `AccessWebsiteRequestEvent` with parameter input of the `website` of the `person` variable.
+. The `AccessWebsiteRequestEvent` event would then be handled by an event handler `handleAccessWebsiteEvent` in `BrowserPanel`.
 . The event handler will help to load the website of the person through the browser panel based on the website inputted.
 
-Code of AccessCommand :
+Code of `AccessCommand` and its method `execute()`:
 [source,java]
 ----
 public class AccessCommand extends Command {
@@ -636,12 +639,18 @@ public class AccessCommand extends Command {
     }
 }
 ----
+
+Code of how accessing website event is handled in `BrowserPanel`:
 [source,java]
 ----
-public class MainWindow extends UiPart<Region> {
+public class BrowserPanel extends UiPart<Region> {
     public void handleWebsiteAccess(String website) {
         browserPanel.loadPage(website);
     }
+
+    public void loadPage(String url) {
+            Platform.runLater(() -> browser.getEngine().load(url));
+        }
 
     @Subscribe
     private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
@@ -654,30 +663,134 @@ public class MainWindow extends UiPart<Region> {
 Through the sequence diagram, you can see how the code executes when a user
 inputs `access 1` into the command line.
 
-Sequence diagram for Logic Component of AccessCommand:
+Sequence diagram for `Logic` Component for `AccessCommand` and how it is executed:
 
 image::AccessCommandLogicSequenceDiagram.PNG[width="800"]
+Figure 5.6.1 Access Command Logic Sequence Diagram
 
 After creating a new `AccessCommand`, `LogicManager` will call execute on `AccessCommand`
 and this will result in the website of the person at the index inputted to be called through an event request and event handler.
 The website will then be loaded onto the browser of the `BrowserPanel` of the `MainWindow`.
 
-Sequence diagram for execute() of AccessCommand:
+Sequence diagram for `execute()` method of `AccessCommand` and its event handling:
 
 image::AccessCommandEventsSequenceDiagram.PNG[width="800"]
+Figure 5.6.1 Access Command Model/EventsCenter/UI Sequence Diagram
 
 ==== Design Considerations
 **Aspect:** How accessing a website of a person executes +
 **Alternative 1 (current choice):** Create a new event request and event handler for AccessCommand. +
-**Pros:** Able to have more features as AccessWebsite and Select feature is able to exist concurrently in the application. +
+**Pros:** Able to have more features like AccessWebsite and Select feature that is able to exist concurrently in the application. +
 **Cons:** Having the current select feature which is to search for names of contact of Google is quite unnecessary. +
 **Alternative 2:** Change the code of event request and event handler related to SelectCommand to allow users to access website of their contacts instead
-of creating a search on contacts name through he browser panel. +
+of creating a search on contacts name through the browser panel. +
 **Pros:** Select feature which seems unnecessary is replaced with a more useful feature of AccessWebsite. +
 **Cons:** Will not be able to replace the select feature anymore which might be important for other aspects such as creating a Person Card Viewer
 which is important for GUI enhancement. +
 
-//end::accessWebsite[]
+//end::access[]
+
+// tag::locate[]
+=== Location mechanism
+The location mechanism has an `LocationCommand` that allows user to access the address through Google Maps Search
+by stating the index of the desired contact in the contact list viewed.
+The implementation of the location mechanism is mostly done in the `UI`, `Model`, and `Logic` component
+and is very similar to the access website mechanism in terms of implementation and sequential process.
+The `LocationCommand` class inherits from the `Command` class.
+
+Suppose a user would like to access one of his contacts address that is listed in the `PersonListPanel` of the address book
+and executes the `LocationCommand` to access the location using the address attained.
+
+The execution of LocationCommand is processed in this way:
+
+. User will input `locate index` where `index` refers to the index of the person listed in the `PersonListPanel` in GUI.
+. Input of user will be parse as an argument through the AddressBookParser and LocationCommandParser to extract the index.
+. A new `LocationCommand` with the index inputted will be created.
+. The method `execute()` of the `LocationCommand` will then be processed,
+ where the person of the address that the user wants to find on Google Maps Search will be obtained through the
+ index of the `lastShownList` and stored into `person` variable which is of `ReadOnlyPerson` data-type.
+. The `EventsCenter` will then post a new `AccessLocationRequestEvent` with parameter input of the `address` of the `person` variable.
+. The `AccessLocationRequestEvent` event would then be handled by an event handler `handleAccessLocationEvent` in `BrowserPanel`.
+. The event handler will help to load the address of the person through Google Maps Search in the browser panel.
+
+Code of `LocationCommand` and its method `execute()`:
+[source,java]
+----
+public class LocationCommand extends Command {
+    private final Index targetIndex;
+
+    public LocationCommand(Index targetIndex) {
+            this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        EventsCenter.getInstance().post(new AccessLocationRequestEvent(person.getAddress().toString()));
+        return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased()));
+    }
+}
+----
+
+Code of how accessing location event is handled in `BrowserPanel`:
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+
+    private void loadPersonLocation(String location) {
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + location.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
+    }
+
+    public void loadPage(String url) {
+            Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    @Subscribe
+    private void handleAccessLocationEvent(AccessLocationRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonLocation(event.location);
+    }
+}
+----
+
+Through the sequence diagram, you can see how the code executes when a user
+inputs `locate 1` into the command line.
+
+Sequence diagram for `Logic` Component for `LocationCommand` and how it is executed:
+
+image::LocationCommandLogicSequenceDiagram.PNG[width="800"]
+Figure 5.7.1 Location Command Logic Sequence Diagram
+
+After creating a new `LocationCommand`, `LogicManager` will call execute on `LocationCommand`
+and this will result in the address of the person at the index inputted to be called through an event request and event handler.
+The address will then be loaded onto Google Maps Search of the browser of the `MainWindow`.
+
+Sequence diagram for `execute()` method of `LocationCommand` and its event handling:
+
+image::LocationCommandEventsSequenceDiagram.PNG[width="800"]
+Figure 5.7.2 Access Command Model/EventsCenter/UI Sequence Diagram
+
+==== Design Considerations
+**Aspect:** How accessing a location of a person executes +
+**Alternative 1 (current choice):** Create a new event request and event handler for LocationCommand. +
+**Pros:** Able to have more features like Location, AccessWebsite and Select feature that is able to exist concurrently in the application. +
+**Cons:** Having the current select feature which is to search for names of contact of Google is quite unnecessary. +
+**Alternative 2:** Change the code of event request and event handler related to SelectCommand to allow users to access the address through Google Maps Search instead
+of processing a search on contact's name through the google search using browser. +
+**Pros:** Select feature which seems unnecessary is replaced with a more useful feature of AccessWebsite. +
+**Cons:** Will not be able to replace the select feature anymore which might be important for other aspects such as creating a PersonCard Viewer
+which is important for GUI enhancement. +
+
+//end::locate[]
 
 // tag::find[]
 === Find Mechanism

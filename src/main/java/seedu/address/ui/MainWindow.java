@@ -26,11 +26,6 @@ import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
-/*import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Person;
-import java.util.List;
-*/
-
 /**
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
@@ -284,19 +279,4 @@ public class MainWindow extends UiPart<Region> {
         handleChangeTheme(event.theme);
         logic.setCurrentTheme(getCurrentTheme());
     }
-
-    /*
-    @Subscribe
-    private void handlePanelSwitchEvent(PanelSwitchRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (event.wantedPanel.toString().equals(AccessCommand.COMMAND_WORD)) {
-            detailsPanelPlaceholder.getChildren().clear();
-            browserPlaceholder.getChildren().clear();
-            browserPlaceholder.getChildren().add(browserPanel.getRoot());
-        } else if (event.wantedPanel.toString().equals(SelectCommand.COMMAND_WORD)) {
-            browserPlaceholder.getChildren().clear();
-            detailsPanelPlaceholder.getChildren().clear();
-            detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
-        }
-    }*/
 }
