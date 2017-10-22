@@ -254,6 +254,19 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ChangeInternalListEvent(listName));
     }
 
+    @Override
+    public void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths) {
+        String accruedAmount = person.calcAccruedAmount(differenceInMonths);
+        try {
+            Debt amount = new Debt(accruedAmount);
+            addDebtToPerson(person, amount);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "Should not occur as person obtained from allPersons";
+        } catch (IllegalValueException ive) {
+            assert false : Debt.MESSAGE_DEBT_CONSTRAINTS;
+        }
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -344,16 +357,9 @@ public class ModelManager extends ComponentManager implements Model {
         // login is successful
         if (event.getLoginStatus() == true) {
             for (ReadOnlyPerson person : allPersons) {
-                if (!person.getInterest().value.equals("No interest set.") && person.checkUpdateDebt(new Date())) {
-                    String accruedAmount = person.calcAccruedAmount();
-                    try {
-                        Debt amount = new Debt(accruedAmount);
-                        addDebtToPerson(person, amount);
-                    } catch (PersonNotFoundException pnfe) {
-                        assert false : "Should not occur as person obtained from allPersons";
-                    } catch (IllegalValueException ive) {
-                        assert false : Debt.MESSAGE_DEBT_CONSTRAINTS;
-                    }
+                if (!person.getInterest().value.equals("No interest set.")
+                        && (person.checkUpdateDebt(new Date()) != 0)) {
+                    updateDebtFromInterest(person, person.checkUpdateDebt(new Date()));
                 }
             }
         }

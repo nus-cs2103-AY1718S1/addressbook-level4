@@ -124,4 +124,18 @@ public class DateUtilTest {
         assertEquals(DateUtil.generateOutdatedDebtDate(sampleDateClass4), sampleOldDateClass4);
 
     }
+
+    @Test
+    public void getNumberOfMonthBetweenDatesTest() {
+        // one month gap
+        assertEquals(DateUtil.getNumberOfMonthBetweenDates(sampleDateClass1, sampleOldDateClass1), 1);
+        // 1 month gap, but both dates have different years.
+        assertEquals(DateUtil.getNumberOfMonthBetweenDates(sampleDateClass2, sampleOldDateClass2), 1);
+        // 5 month gap, both dates have different years.
+        assertEquals(DateUtil.getNumberOfMonthBetweenDates(sampleDateClass4, sampleDateClass1), 5);
+        // Large gap between both dates.
+        assertEquals(DateUtil.getNumberOfMonthBetweenDates(new GregorianCalendar(2021, 2, 23).getTime(),
+                sampleDateClass1), 29);
+
+    }
 }

@@ -13,6 +13,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.util.DateUtil;
 
 /**
  * Represents a Person in the address book.
@@ -335,31 +336,30 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public String calcAccruedAmount() {
+    public String calcAccruedAmount(int differenceInMonths) {
         this.lastAccruedDate = new Date(); // update last accrued date
         double principal = this.getDebt().toNumber();
-        int interest = Integer.parseInt(this.getInterest().toString());
-        double accruedInterest = principal * ((double) interest) / 100;
+        double interestRate = (double)Integer.parseInt(this.getInterest().toString()) / 100;
+        double accruedInterest = principal * Math.pow((1 + interestRate), differenceInMonths) - principal;
         return String.format("%.2f", accruedInterest);
     }
 
+    /**
+     * Compares date of last accrued against current date.
+     * @return number of months the current date is ahead of last accrued date. Returns 0 if
+     * there is no need to increment debt.
+     */
     @Override
-    public boolean checkUpdateDebt(Date currentDate) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(lastAccruedDate);
-        int monthLastAccrued = cal.get(Calendar.MONTH);
-        cal.setTime(currentDate);
-        int currentMonth = cal.get(Calendar.MONTH);
-        // if currentMonth is 1 month ahead of monthLastAccrued
-        if ((currentMonth - monthLastAccrued == 1) || (currentMonth - monthLastAccrued == -11)) {
-            int currentDay = cal.get(Calendar.DAY_OF_MONTH);
-            if (currentDay == 1) { // interest rate only increments debt on 1st day of month
-                return true;
-            } else {
-                return false;
-            }
+    public int checkUpdateDebt(Date currentDate) {
+        Calendar current = Calendar.getInstance();
+        current.setTime(currentDate);
+        Calendar lastAccrued = Calendar.getInstance();
+        lastAccrued.setTime(lastAccruedDate);
+        if (lastAccruedDate.before(currentDate) && (current.get(Calendar.MONTH) != lastAccrued.get(Calendar.MONTH))
+                && (current.get(Calendar.DAY_OF_MONTH) == 1)) {
+            return DateUtil.getNumberOfMonthBetweenDates(currentDate, lastAccruedDate);
         } else {
-            return false;
+            return 0;
         }
     }
 

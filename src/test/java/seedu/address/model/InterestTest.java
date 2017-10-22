@@ -1,8 +1,6 @@
 package seedu.address.model;
 
-import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static seedu.address.model.util.DateUtil.generateOutdatedDebtDate;
 
 import java.util.Date;
@@ -30,39 +28,40 @@ public class InterestTest {
         Person personToTest = new PersonBuilder().withDebt("10000").build();
         Date lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput1));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertTrue(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput1)));
+        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput1)), 1);
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput2));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertTrue(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput2)));
+        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput2)), 1);
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput3));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertTrue(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput3)));
+        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput3)), 1);
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput4));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertTrue(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput4)));
+        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput4)), 1);
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput5));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertTrue(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput5)));
+        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput5)), 1);
+
 
         //assert should return false as it is not the first day of the month
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput6));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertFalse(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput6)));
+        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput6)), 0);
     }
 
     @Test
     public void checkAmountAccruedTest() {
         // personToTest has interest rate of 1% and debt of $10,000
         Person personToTest = new PersonBuilder().withDebt("10000").build();
-        assertEquals(personToTest.calcAccruedAmount(), "100.00");
+        assertEquals(personToTest.calcAccruedAmount(1), "100.00");
         personToTest = new PersonBuilder().withDebt("200").withInterest("3").build();
-        assertEquals(personToTest.calcAccruedAmount(), "6.00");
+        assertEquals(personToTest.calcAccruedAmount(1), "6.00");
         personToTest = new PersonBuilder().withDebt("50").withInterest("3").build();
-        assertEquals(personToTest.calcAccruedAmount(), "1.50");
+        assertEquals(personToTest.calcAccruedAmount(1), "1.50");
         personToTest = new PersonBuilder().withDebt("3").withInterest("1").build();
-        assertEquals(personToTest.calcAccruedAmount(), "0.03");
+        assertEquals(personToTest.calcAccruedAmount(1), "0.03");
         personToTest = new PersonBuilder().withDebt("11.10").withInterest("1").build();
-        assertEquals(personToTest.calcAccruedAmount(), "0.11");
+        assertEquals(personToTest.calcAccruedAmount(1), "0.11");
     }
 
     /**

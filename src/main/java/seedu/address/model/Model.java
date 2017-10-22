@@ -115,4 +115,6 @@ public interface Model {
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */
     void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException, IllegalValueException;
+
+    void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths);
 }

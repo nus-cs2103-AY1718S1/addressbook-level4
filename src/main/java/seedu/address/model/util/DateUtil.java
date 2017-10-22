@@ -3,6 +3,7 @@ package seedu.address.model.util;
 import static java.util.Objects.requireNonNull;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -148,19 +149,33 @@ public class DateUtil {
      * generate a date that is 1 month behind current date
      */
     public static Date generateOutdatedDebtDate(Date currentDate) {
-        String currentDateString = formatDate(currentDate);
-        int year = Integer.parseInt(currentDateString.substring(18, 22));
-        int day = Integer.parseInt(currentDateString.substring(5, 7));
-        int month = getMonthFromString(currentDateString.substring(8, 11));
-        if (month == JAN) { // if it is the month of Jan.
-            month = DEC; // set the month to Dec
-            year -= 1;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        cal.add(Calendar.MONTH, -1);
+        return cal.getTime();
+    }
+
+    /**
+     * Get the difference in number of months between the 2 dates.
+     * @param date1 is assumed to be AFTER date2.
+     * @return return difference. If there is no difference, return 0.
+     */
+    public static int getNumberOfMonthBetweenDates(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        // if date1 is only 1 year ahead of date2
+        if (cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR) == 1) {
+            return cal1.get(Calendar.MONTH) + 1
+                    + (11 - cal2.get(Calendar.MONTH));
+        } else if (cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR) > 1) {
+            return cal1.get(Calendar.MONTH) + 1
+                    + (11 - cal2.get(Calendar.MONTH))
+                    + (12 * (cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR) - 1));
         } else {
-            month -= 1; // go to prev month
+            return cal1.get(Calendar.MONTH) - cal2.get(Calendar.MONTH);
         }
-        month -= 1; // month is zero based
-        Date dateToReturn = new GregorianCalendar(year, month, day).getTime();
-        return dateToReturn;
     }
 
     public static int getMonthFromString(String month) {

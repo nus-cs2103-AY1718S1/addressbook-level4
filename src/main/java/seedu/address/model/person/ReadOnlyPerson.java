@@ -59,12 +59,12 @@ public interface ReadOnlyPerson {
     /**
      * Calculates new debt of debtor based on current interest rate.
      */
-    String calcAccruedAmount();
+    String calcAccruedAmount(int differenceInMonths);
 
     /**
      * Checks if person is due for an update on his/her debt.
      */
-    boolean checkUpdateDebt(Date currentDate);
+    int checkUpdateDebt(Date currentDate);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
