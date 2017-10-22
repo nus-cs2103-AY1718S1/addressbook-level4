@@ -9,8 +9,7 @@ import java.util.Vector;
 public class ValidMrt {
 
     public static final HashMap<String, Coordinates> validMrtSet = new MrtListBuilder()
-            .addLines()          //only circle, NW, NE and EW line available
-            .build();
+            .addLines().build();          //only circle, NW, NE and EW line available
 
     public ValidMrt() {
     }
