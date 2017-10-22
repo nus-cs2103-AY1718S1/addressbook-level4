@@ -335,6 +335,9 @@ public class Person implements ReadOnlyPerson {
         return other.getCluster().equals(this.getCluster());
     }
 
+    /**
+     * Calculates increase in debt based on interest rate and amount of months
+     */
     @Override
     public String calcAccruedAmount(int differenceInMonths) {
         this.lastAccruedDate = new Date(); // update last accrued date
