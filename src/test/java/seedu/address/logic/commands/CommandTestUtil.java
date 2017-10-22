@@ -21,7 +21,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
- * Contains helper methods for testing commands.
+ * Contains helper methods for Slider commands.
  */
 public class CommandTestUtil {
 

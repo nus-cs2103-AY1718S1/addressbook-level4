@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -63,6 +64,12 @@ public class MainWindow extends UiPart<Region> {
     private StackPane browserSelectorPlaceholder;
 
     @FXML
+    private StackPane themeSelectorPlaceholder;
+
+    @FXML
+    private StackPane wzpane;
+
+    @FXML
     private VBox personListBox;
 
     @FXML
@@ -94,7 +101,7 @@ public class MainWindow extends UiPart<Region> {
         String cssPath = Objects.equals(prefs.getStyle(), "light") ? "view/LightTheme.css" : "view/DarkTheme.css";
         scene.getStylesheets().add(cssPath);
 
-        setAccelerators();
+        //setAccelerators();
         registerAsAnEventHandler(this);
     }
 
@@ -158,6 +165,9 @@ public class MainWindow extends UiPart<Region> {
 
         BrowserSelector browserSelector = new BrowserSelector();
         browserSelectorPlaceholder.getChildren().add(browserSelector.getRoot());
+
+        ThemeSelector themeSelector = new ThemeSelector();
+        themeSelectorPlaceholder.getChildren().add(themeSelector.getRoot());
     }
 
     void hide() {

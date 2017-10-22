@@ -165,6 +165,21 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(KeyCode.UP);
         assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
         clearCommandBox();
+
+        //Testing whether command box helper disappears or appears appropriately
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.A);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, "ea");
+        clearCommandBox();
+
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.D);
+        guiRobot.push(KeyCode.I);
+        guiRobot.push(KeyCode.T);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
     }
 
     /**

@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
 /**
- * Provides access to a stage in a JavaFx application for GUI testing purposes.
+ * Provides access to a stage in a JavaFx application for GUI Slider purposes.
  */
 public abstract class StageHandle {
     protected final GuiRobot guiRobot = new GuiRobot();

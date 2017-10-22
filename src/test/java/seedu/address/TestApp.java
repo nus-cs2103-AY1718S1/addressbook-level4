@@ -23,7 +23,7 @@ import systemtests.ModelHelper;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for
- * testing
+ * Slider
  */
 public class TestApp extends MainApp {
 

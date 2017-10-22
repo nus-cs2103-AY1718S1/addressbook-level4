@@ -102,5 +102,5 @@ Checks whether the project has the required dependencies to compile and run the 
 See `build.gradle` ->
 `allprojects` -> `dependencies` -> `compile` for the list of dependencies required.
 * **`compileTestJava`** +
-Checks whether the project has the required dependencies to perform testing, and download any missing dependencies before compiling the test classes. +
+Checks whether the project has the required dependencies to perform Slider, and download any missing dependencies before compiling the test classes. +
 See `build.gradle` -> `allprojects` -> `dependencies` -> `testCompile` for the list of dependencies required.

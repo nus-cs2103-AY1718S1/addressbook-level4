@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import com.sun.deploy.panel.TextFieldProperty;
+
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
@@ -14,9 +17,13 @@ public class BrowserSelectorCard extends UiPart<Region> {
     @FXML
     private ImageView browserCardImage;
 
+    @FXML
+    private Label browserCardText;
+
     public BrowserSelectorCard(String imageName) {
         super(FXML);
         this.imageString = imageName;
+        browserCardText.textProperty().setValue(imageName);
         fillImage(imageName);
     }
 

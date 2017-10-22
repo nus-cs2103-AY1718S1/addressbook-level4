@@ -78,7 +78,7 @@ public class UiPartTest {
     }
 
     /**
-     * UiPart used for testing.
+     * UiPart used for Slider.
      * It should only be used with invalid FXML files or the valid file located at {@link VALID_FILE_PATH}.
      */
     private static class TestUiPart<T> extends UiPart<T> {

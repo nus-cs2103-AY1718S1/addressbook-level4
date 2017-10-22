@@ -14,7 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class TestUtil {
 
     /**
-     * Folder used for temp files created during testing. Ignored by Git.
+     * Folder used for temp files created during Slider. Ignored by Git.
      */
     private static final String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
 

@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -24,10 +25,15 @@ public class BrowserSelector extends UiPart<Region> {
     @FXML
     private ListView<BrowserSelectorCard> browserSelectorList;
 
+    @FXML
+    private Label browserSelectorTitle;
+
     public BrowserSelector() {
         super(FXML);
         setConnections();
         registerAsAnEventHandler(this);
+        browserSelectorTitle.textProperty().setValue("Display Mode :");
+        browserSelectorTitle.getStyleClass().add("label-bright-underline");
     }
 
     private void setConnections() {
