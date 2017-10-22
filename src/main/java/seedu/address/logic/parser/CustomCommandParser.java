@@ -32,10 +32,6 @@ public class CustomCommandParser implements Parser<CustomCommand> {
             } else {
                 customFieldValue = "";
             }
-            //if (!prefix.equals(PREFIX_BIRTHDAY.getPrefix())) {
-            //    throw new ParseException(
-            //            String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdayCommand.MESSAGE_USAGE));
-            //}
 
             CustomField customField = new CustomField(customFieldName, customFieldValue);
             return new CustomCommand(index, customField);
