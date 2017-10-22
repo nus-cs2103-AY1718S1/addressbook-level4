@@ -479,7 +479,7 @@ public class CommandBox extends UiPart<Region> {
     /**
      * Checks if existing input has Remark Prefix String
      */
-    private boolean containsRemark(){
+    private boolean containsRemark() {
         String currentInput = commandTextField.getText();
         return currentInput.contains(PREFIX_REMARK.getPrefix());
     }
