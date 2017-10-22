@@ -84,8 +84,8 @@ public class Photo {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Address // instanceof handles nulls
-                && this.pathName.equals(((Address) other).value)); // state check
+                || (other instanceof Photo // instanceof handles nulls
+                && this.pathName.equals(((Photo) other).pathName)); // state check
     }
 
     @Override
