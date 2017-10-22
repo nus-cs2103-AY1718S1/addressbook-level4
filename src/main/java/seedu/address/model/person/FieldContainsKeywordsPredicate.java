@@ -32,29 +32,29 @@ public class FieldContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
         String mergedNames = tagName.stream().collect(Collectors.joining(" "));
         return keywords.get(0).stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase
-                        (person.getName().fullName, keyword)) ||
-                keywords.get(1).stream()
+                        (person.getName().fullName, keyword))
+                || keywords.get(1).stream()
                         .anyMatch(keyword -> StringUtil.containsWordIgnoreCase
-                                (person.getPhone().value, keyword)) ||
-                keywords.get(2).stream()
+                                (person.getPhone().value, keyword))
+                || keywords.get(2).stream()
                         .anyMatch(keyword -> StringUtil.containsWordIgnoreCase
-                                (person.getEmail().value, keyword)) ||
-                keywords.get(3).stream()
+                                (person.getEmail().value, keyword))
+                || keywords.get(3).stream()
                         .anyMatch(keyword -> StringUtil.containsWordIgnoreCase
-                                (person.getAddress().value, keyword)) ||
-                keywords.get(4).stream()
+                                (person.getAddress().value, keyword))
+                || keywords.get(4).stream()
                         .anyMatch(keyword -> StringUtil.containsWordIgnoreCase
-                                (mergedNames, keyword)) ||
-                keywords.get(0).stream()
-                        .anyMatch(keyword -> ((person.getName().fullName).toLowerCase()).contains(keyword) ) ||
-                keywords.get(1).stream()
-                        .anyMatch(keyword -> ((person.getPhone().value).toLowerCase()).contains(keyword) ) ||
-                keywords.get(2).stream()
-                        .anyMatch(keyword -> ((person.getEmail().value).toLowerCase()).contains(keyword) ) ||
-                keywords.get(3).stream()
-                        .anyMatch(keyword -> ((person.getAddress().value).toLowerCase()).contains(keyword) ) ||
-                keywords.get(4).stream()
-                        .anyMatch(keyword -> (mergedNames.toLowerCase()).contains(keyword) );
+                                (mergedNames, keyword))
+                || keywords.get(0).stream()
+                        .anyMatch(keyword -> ((person.getName().fullName).toLowerCase()).contains(keyword))
+                || keywords.get(1).stream()
+                        .anyMatch(keyword -> ((person.getPhone().value).toLowerCase()).contains(keyword))
+                || keywords.get(2).stream()
+                        .anyMatch(keyword -> ((person.getEmail().value).toLowerCase()).contains(keyword))
+                || keywords.get(3).stream()
+                        .anyMatch(keyword -> ((person.getAddress().value).toLowerCase()).contains(keyword))
+                || keywords.get(4).stream()
+                        .anyMatch(keyword -> (mergedNames.toLowerCase()).contains(keyword));
     }
 
     @Override

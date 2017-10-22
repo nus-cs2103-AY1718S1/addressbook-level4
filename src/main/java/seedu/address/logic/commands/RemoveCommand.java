@@ -65,7 +65,7 @@ public class RemoveCommand extends UndoableCommand {
 
         if (!index.isEmpty()) {
 
-            for(Index i : index) {
+            for (Index i : index) {
                 if (i.getZeroBased() >= lastShownList.size()) {
                     throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
                 }
@@ -74,7 +74,7 @@ public class RemoveCommand extends UndoableCommand {
             notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexOut + ".", tag);
         } else {
             successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from address book.", tag);
-            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " the address book.",tag);
+            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " the address book.", tag);
         }
 
 
@@ -107,11 +107,18 @@ public class RemoveCommand extends UndoableCommand {
             return checkEqual(tag, e.tag);
         }
 
-        boolean check1 = checkEqual(tag, e.tag), check2 = checkEqual(index, e.index);
+        boolean check1 = checkEqual(tag, e.tag);
+        boolean check2 = checkEqual(index, e.index);
         return check1 && check2;
     }
 
-
+    /**
+     *
+     * @param set1
+     * @param set2
+     * @param <T>
+     * @return true if set1 and set2 are identical
+     */
     public <T> boolean checkEqual(Set<T> set1, Set<T> set2) {
         Iterator<T> it1 = set1.iterator();
         Iterator<T> it2 = set2.iterator();
@@ -122,9 +129,9 @@ public class RemoveCommand extends UndoableCommand {
             T item = it1.next();
             while (it2.hasNext()) {
                 T item2 = it2.next();
-                 if (!item.equals(item2)) {
-                     check = false;
-                 }
+                if (!item.equals(item2)) {
+                    check = false;
+                }
             }
         }
 

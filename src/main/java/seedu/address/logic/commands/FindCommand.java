@@ -6,8 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Iterator;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import seedu.address.model.person.ReadOnlyPerson;
@@ -41,7 +39,7 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-            model.updateFilteredPersonList(predicate);
+        model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

@@ -126,7 +126,7 @@ public class ParserUtil {
         requireNonNull(emails);
         final List<Email> emailList = new ArrayList<>();
         for (String emailName : emails) {
-                emailList.add(new Email(emailName));
+            emailList.add(new Email(emailName));
         }
         return emailList;
     }

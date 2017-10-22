@@ -38,11 +38,11 @@ public class FindCommandParser implements Parser<FindCommand> {
         StringTokenizer st = new StringTokenizer(trimmedArgs, " ");
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
-            if ( !((token.contains(PREFIX_NAME.getPrefix())) || (token.contains(PREFIX_PHONE.getPrefix()))
+            if (!((token.contains(PREFIX_NAME.getPrefix())) || (token.contains(PREFIX_PHONE.getPrefix()))
             || (token.contains(PREFIX_EMAIL.getPrefix())) || (token.contains(PREFIX_ADDRESS.getPrefix()))
-                    || (token.contains(PREFIX_TAG.getPrefix()))) ) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+                    || (token.contains(PREFIX_TAG.getPrefix())))) {
+                        throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
             }
         }
 
@@ -75,7 +75,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         for (int i = 0; i < keywords.size(); i++) {
             List<String> list = keywords.get(i);
             String prefix = prefixList.get(i).getPrefix();
-            if (checkNoInput(list) && trimmedArgs.contains(prefix) ) {
+            if (checkNoInput(list) && trimmedArgs.contains(prefix)) {
                 missingInput += prefix + " ";
                 checkMissingInput = true;
             }
@@ -90,7 +90,11 @@ public class FindCommandParser implements Parser<FindCommand> {
         return new FindCommand(predicate);
     }
 
-
+    /**
+     *
+     * @param list
+     * @return true of list does not contain any executable input
+     */
     private Boolean checkNoInput(List<String> list) {
         Iterator<String> it = list.iterator();
         Boolean check = true;
