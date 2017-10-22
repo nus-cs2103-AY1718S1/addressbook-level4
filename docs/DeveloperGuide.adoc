@@ -318,7 +318,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 
 
-==== Design Considerations
+==== Design considerations
 
 ---
 **Aspect:** Implementation of `UndoableCommand` +
@@ -387,7 +387,7 @@ predicate `t/friends`. The `findCommand` is then executed in LogicManager, durin
 the filtered person list with predicate tag called `friends`. This update will cause the person list displayed in GUI to be updated,
 so that the persons with tag `friends` will be displayed.
 
-==== Design Considerations
+==== Design considerations
 
 ---
 **Aspect:**  implementation of find command +
@@ -426,7 +426,7 @@ Then `Model` returns the sorted list.
 The sort command object receives the sorted list and creates `CommandResult` object and return it.
 `LogicManager` receives the result and shows it through `UI`.
 
-==== Design Considerations
+==== Design considerations
 
 **Aspect:** How sort command affects the data +
 **Alternative 1 (current choice):** Sorts the copy of contact list and return it. +
@@ -457,7 +457,7 @@ The sort command object receives the sorted list and creates `CommandResult` obj
 **Cons:** Because address/email/phone number is unique, most of time you could find them without sorting the list. +
 // end::sort[]
 
-=== Delete Event
+=== Delete event
 
 The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
 
@@ -504,16 +504,16 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -529,7 +529,7 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -570,23 +570,23 @@ e.g. `seedu.address.storage.StorageManagerTest`
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
-== Dev Ops
+== Dev ops
 
-=== Build Automation
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -595,14 +595,14 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Suggested programming tasks to get started
 
 Suggested path for new programmers:
 
@@ -743,7 +743,7 @@ Edits the remark for the first person to `Likes to drink coffee.`
 * `remark 1 r/` +
 Removes the remark for the first person.
 
-==== Step-by-step Instructions
+==== Step-by-step instructions
 
 ===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
@@ -842,12 +842,12 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 . Update `RemarkCommandTest` to test that the `execute()` logic works.
 
-==== Full Solution
+==== Full solution
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
-== User Stories
+== User stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -907,7 +907,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 {More to be added}
 
 [appendix]
-== Use Cases
+== Use cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
@@ -1231,7 +1231,7 @@ AddressBook displays an empty list.
 Use case ends.
 
 [appendix]
-== Non Functional Requirements
+== Non functional requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
@@ -1332,7 +1332,7 @@ An undoable command is a command which modifies data in address book. For exampl
 
 
 [appendix]
-== Product Survey
+== Product survey
 
 *Product Name*
 

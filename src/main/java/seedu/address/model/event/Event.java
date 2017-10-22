@@ -92,6 +92,7 @@ public class Event implements ReadOnlyEvent {
     public ObjectProperty<ParticipantList> participantProperty() {
         return participants;
     }
+
     @Override
     public Set<Person> getParticipants() {
         return Collections.unmodifiableSet(participants.get().toSet());

@@ -1,20 +1,34 @@
-= AddressBook Level 4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
+:imagesDir: images\UG_DG
 :sectnums:
-:imagesDir: images
 :stylesDir: stylesheets
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/orgs/CS2103AUG2017-W14-B4/dashboard
+image::UG_cover.png[width="750", align="left"]
+= Planno - User Guide
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
-== Quick Start
+By: `Team W14-B4`      Since: `Sep 2017`      Licence: `NUS`
+
+== About
+
+Sometimes do you feel that you have too many contacts but cannot manage them clearly? Or sometimes you have too many events but cannot remember all the participants involved in a event? Do not worry! Planno can help you to solve these problems!
+
+Planno is a assistant that helps you to manage your contacts and events. It will tell you who are the participants according to the event. Moreover, it can tell you your contacts join in which event.
+
+Planno is more powerful than the other contact managers or task managers and it combines these two types of application into one. Furthermore, Planno is very simple to use and you only need to type some short commands. There are no click buttons and the program will only execute the command according to what you type.
+
+Do you feel excited? Let's get started!
+
+== Getting Started
+
+Before we start our journey on Planno, here are some simple steps for you to launch this application:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -26,7 +40,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::UG_origin.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -36,10 +50,15 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
-
-.  Refer to the link:#features[Features] section below for details of each command.
++
+[NOTE]
+For the details of each command, please refer to Features section.
++
+.  Congratulations! If you can run Planno without any trouble, you can start trying this application. Otherwise, Please refer to FAQ and solve your problems.
 
 == Features
+
+=== General
 
 ====
 *Command Format*
@@ -48,38 +67,81 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Command key wards are *case sensitive*. e.g. only `help` means help command, while `HELP`, `HElp`, `hElP` are not.
 ====
 
-=== Viewing help : `help`
+****
+* Unless otherwise stated, all the example screenshots are operated based on the following stage:
 
-Format: `help`
+image::UG_add.png[width="790"]
+_Figure 2.1 base stage_
+****
 
-=== Adding a person: `add`
+=== Adding
 
-Adds a person to the address book +
+==== Adding a person : `add`
+
+You can use it to add a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
-[TIP]
-A person can have any number of tags (including 0)
+****
+* A person can have any number of tags (including 0)
+****
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+==== Adding an event : `addE`
+You can use it to add an event to the event list +
+Format: `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENT_TIME`
+
+****
+* You need to type EVENT_TIME as a date format DD/MM/YYYY
+****
+
+Example:
+
+* `addE en/CS2101 meeting ed/Discuss how to conduct software demo. et/30/10/2017` +
+* `addE en/Submit assignment ed/Submit programming assignment 2 et/23/10/2017`
+
+You will see the following after typing 4 above example add command to
+*an empty address book and an empty event list*:
+
+image::UG_add.png[width="790"]
+_Figure 2.2 add command result_
+
+=== Listing
+==== Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format & Example: `list`
 
-=== Sorting all persons : `sort`
+==== Listing all events : `listE`
 
-Shows a list of sorted persons in the address book according to the alphabetical order of their names.. +
-Format: `sort`
+Shows a list of all events in the event list. +
+Format & Example: `listE`
 
-=== Editing a person : `edit`
+You will see the following after typing 2 above example list command:
 
-Edits an existing person in the address book. +
+image::UG_list.png[width="790"]
+_Figure 2.3 list command result_
+
+=== Sorting all persons and events: `sort`
+
+You can use it to view a list of sorted persons in the address book according to the alphabetical order of their names,
+ and a list of sorted events in the event list according to the event time. +
+Format & Example: `sort`
+
+You will see the following after typing sort command:
+
+image::UG_sort.png[width="790"]
+_Figure 2.4 sort command result_
+
+=== Editing
+==== Editing a person : `edit`
+You can use it to edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
@@ -96,6 +158,29 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+==== Editing an event : `editE`
+You can use it to edits an existing event in the event list. +
+Format: `editE INDEX [en/NAME] [ed/DESCRIPTION] [et/TIME]`
+
+****
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* You need to type TIME as a date format DD/MM/YYYY.
+****
+
+Examples:
+
+* `editE 1 en/CS2103 project meeting et/03/11/2017` +
+Edits the event name and event time of 1st event to be `CS2103 project meeting` and `/03/11/2017` respectively.
+* `editE 2 ed/Submit handwritten assignment.` +
+Edits the event description of 2nd event to be `Submit handwritten assignment`
+
+You will see the following after typing 4 above edit command:
+
+image::UG_edit.png[width="790"]
+_Figure 2.5 edit command result_
 
 === Locating persons by name: `find`
 
@@ -123,7 +208,18 @@ Returns any person having tag `friends`
 * `find t/colleagues John`
 Returns any person having name `John` or having tag `colleagues`
 
-=== Deleting a person : `delete`
+You will see the following after typing `find John`:
+
+image::UG_find_1.png[width="790"]
+_Figure 2.6.1 find command result 1_
+
+Subsequently, you will see the following after typing `find Betsy john`:
+
+image::UG_find_2.png[width="790"]
+_Figure 2.6.2 find command result 2_
+
+=== Deleting
+==== Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -143,46 +239,145 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+==== Deleting an event : `deleteE`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Deletes the specified event from the event list. +
+Format: `deleteE INDEX`
+****
+* Deletes the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent event listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Example:
+
+* `listE` +
+`deleteE 2` +
+Deletes the 2nd event in the event list.
+
+You will see the following after typing `delete 1` and `deleteE 1`:
+
+image::UG_delete.png[width="790"]
+_Figure 2.7 delete command result_
+
+=== Connecting a person to an event : join
+You can use it to show a person is involved in an event. +
+Format : `join p/INDEX_P e/INDEX_E` +
+****
+* The person at position `INDEX_P` will be involved in the event at position `INDEX_E` .
+* The index *must be a positive integer* `1, 2, 3, ...`
+* Make sure you type the prefixes `p/` and `e/` to distinguish person index and event index.
+****
+
+Example:
+
+* `list` +
+`listE` +
+`join p/2 e/1` +
+The 2nd person in the address book will be involved in the 1st event in the event list.
+
+This command only displays a successful message. You cannot see explicit change in the panel. +
+You will see the following after typing above commands: +
+
+image::dummy_pic.png[width='790']
+_Figure 2.8 join result_
+
+=== Disconnecting a person to an event : disjoin
+You can use it to show a person is not involved in an event any more. +
+Format : `disjoin p/INDEX_P e/INDEX_E` +
+****
+* The person at position `INDEX_P` will be involved in the event at position `INDEX_E` .
+* The index *must be a positive integer* `1, 2, 3, ...`
+* Make sure you type the prefixes `p/` and `e/` to distinguish person index and event index.
+* This person *must be already involved in this event*.
+****
+
+Example:
+
+* `list` +
+`listE` +
+`disjoin p/2 e/1` +
+The 2nd person in the address book will not be involved in the 1st event in the event list any more.
+
+This command only displays a successful message. You cannot see explicit change in the panel. +
+You will see the following after typing above commands: +
+
+image::dummy_pic.png[width='790']
+_Figure 2.9 disjoin result_
+
+=== Selecting
+==== Selecting all persons who join an event : `select`
+
+You can use it to view all persons who join a certain event. +
+Format: `select e/INDEX_E`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* Shows all persons who join the event at the specified `INDEX_E`.
+* The index refers to the index number shown in the most recent event listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+* Make sure you type the prefix `e/`.
+****
+
+Example:
+
+* `listE` +
+`select e/2` +
+Shows all persons who are involved in the 2nd event of event list.
+
+You will see the following after typing above commands: +
+
+image::dummy_pic.png[width='790']
+_Figure 2.10.1 select persons result_
+
+==== Selecting all events which a person joins : `selectE`
+
+You can use it to view all events which a certain person joins. +
+Format: `selectE p/INDEX_P`
+
+****
+* Shows all events which the person at the specified `INDEX_P` joins.
+* The index refers to the index number shown in the most recent person listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+* Make sure you type the prefix `p/`.
 ****
 
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
+`selectE p/2` +
+Shows all events which the 2nd person in the address book joins.
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`delete 1` +
+Shows all events which the 1st person in the results of the `find` command joins.
+
+You will see the following after typing `list` and `selectE p/2`: +
+
+image::dummy_pic.png[width='790']
+_Figure 2.10.2 select events result_
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format & Example: `history`
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+****
+* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+****
+
+You will see the following after typing history command: +
+
+image::UG_history.png[width='790']
+_Figure 2.11 select persons result_
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the address book or event list to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+****
+* Undoable commands: those commands that modify the content in address book or event list(`add`, `delete`, `edit`, `clear`, `join` and `disjoin`).
+****
 
 Examples:
 
@@ -199,6 +394,21 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
+
+You will see the following after typing `delete 1` and `clear`:
+
+image::UG_clear.png[width='790']
+_Figure 2.12.1 before undo_
+
+You will see the following after typing `undo`:
+
+image::UG_undo1.png[width='790']
+_Figure 2.12.2 undo once_
+
+You will see the following after typing `undo` again:
+
+image::UG_undo2.png[width='790']
+_Figure 2.12.3 undo twice_
 
 === Redoing the previously undone command : `redo`
 
@@ -221,46 +431,116 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
+
+You will see the following after typing `delete 1`, `clear`, `undo` and `undo`:
+
+image::UG_undo2.png[width='790']
+_Figure 2.13.1 before redo_
+
+You will see the following after typing `redo`:
+
+image::UG_redo1.png[width='790']
+_Figure 2.12.2 redo once_
+
+You will see the following after typing `redo` again:
+
+image::UG_redo2.png[width='790']
+_Figure 2.12.2 redo twice
+
 // end::undoredo[]
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+Clears all entries from the address book and the event list. +
+Format & Example: `clear`
+
+****
+* You will clear both persons and events by typing this command.
+****
+
+You will see the following after clear command:
+
+image::UG_clear.png[width="790"]
+_Figure 2.13 clear command result_
+
+=== Viewing help : `help`
+
+Format & Example: `help` +
+The help window is same as this user guide. +
 
 === Exiting the program : `exit`
 
 Exits the program. +
-Format: `exit`
+Format & Example: `exit`
 
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Adding an event* `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENTTIME` +
+e.g. `adde en/Project Meeting ed/Project meeting with CS2103 Team Members et/20/10/2017`
+
+* *Adding a person* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+
+* *Deleting an event* : `delete INDEX` +
+e.g. `deleteE 5`
+
+* *Deleting a person* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+
+* *Disjoining an event* : `disjoin p/PERSON_INDEX e/EVENT_INDEX` +
+e.g. `disjoin p/4 e/6`
+
+* *Editing an event* : `editE INDEX [en/NAME] [ed/DESCRIPTION] [et/TIME]` +
+e.g. `edit 1 en/Lunch ed/Lunch with Albert at Bishan`
+
+* *Editing a person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 e.g. `find t/friends`
 e.g. `find t/neighbors alex`
-* *List* : `list`
-* *Sort* : `sort`
+
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
+
 * *History* : `history`
-* *Undo* : `undo`
+
+* *Joining an event* `join p/PERSON_INDEX e/EVENT_INDEX` +
+e.g. `join p/3 e/1`
+
+* *Listing every person* : `list`
+
+* *Listing every event* : `listE`
+
 * *Redo* : `redo`
+
+* *Selecting every event a person has joined* : `selectE p/INDEX` +
+e.g. `selectE p/1`
+
+* *Selecting every person in an event* : `select e/INDEX` +
+e.g.`select e/2`
+
+* *Sort* : `sort`
+
+* *Undo* : `undo`
+
+== FAQ
+*Q*: Do I need to install anything else other than Java 1.8.0_60? +
+*A*: No. Planno only needs Java 1.8.0_60 or any later versions to work.
+
+*Q*: How do i run/open Planno with the jar file? +
+*A*: Double click the jar file to run Planno.
+
+*Q*: Can I run Planno with a older version of Java? +
+*A*: No. You will not be able to run Planno.
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
