@@ -21,7 +21,10 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-W14-B4/main/tree/master
 
-By: `Team planno`      Since: `August 2017`      Licence: `MIT`
+By: Hu Wanqing, Jiang Chunhui, Hou Denghao, Leon Chow Wen Hao      Since: `August 2017`
+
+This developer guide aims to give future programmers who hope to modify this application a general description of the architecture and design of the Desktop Application Planno.
+Planno provides users a platform to store and manage people's contact information, and events related to people in Planno. This developer guide consists of the following sections:
 
 toc::[]
 
@@ -111,12 +114,12 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* (At app launch) Initializes the components in the correct sequence, and connects them up with each other.
+* (At app shut down) Shuts down the components and invokes cleanup method where necessary.
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
+link:#common-classes[*`Commons`*] represents a collection of classes used by other components. Among them, the following two classes play important roles at the architecture level:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `EventsCenter` : This class is written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]. Components communicate with each other by posting event in this class (i.e. a form of event-driven nature of design).
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
 The rest of the App consists of four major components:
@@ -126,20 +129,17 @@ The rest of the App consists of four major components:
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
-Each of the four components:
+Each of the four components above
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
-
-image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+For example, the `Logic` component defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below shows how the components interact using event center for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
@@ -154,8 +154,9 @@ _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
-
+----
 The sections below give more details of each component.
+----
 
 === Four major components
 ==== UI component
@@ -202,17 +203,30 @@ _Figure 2.2.2.3 : Interactions Inside the Logic Component for the `delete 1` Com
 
 ==== Model component
 
+The following diagram shows the class structure of the Model component.
+
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.2.3 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`:
+Generally, the `Model` is managed by a Model manager, which
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* maintains an `AddressBook` and a `EventList`.
+* stores 2 unmodifiable list: `ObservableList<ReadOnlyPerson>` and `ObservableList<ReadOnlyEvent>`. They are bounded to UI so that the UI can automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
+In detail, the `AddressBook` and the `EventList` are respectively responsible for person and event information.
+
+* The `AddressBook`
+** stores people's information as a person list with no duplicate persons. The information includes one's personal information and contact details.
+** keeps track of all the tags that had been added to some people in the person list
+** for each person in the list, the person holds a modifiable tag list that contains all the tag this person has.
+
+* The `EventList`
+** stores event's information as an event list.
+** for each event in the list, the event maintains a modifiable list to keep track of who the participants of the events are.
 
 ==== Storage component
 
@@ -334,9 +348,8 @@ image::UndoRedoActivityDiagram.png[width="200"]
 _Figure 3.1.1.8 undo/redo activity_
 
 
-
 [discrete]
-===== Design Considerations
+===== Design considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
@@ -477,29 +490,53 @@ Similar as `add` command, if the `editedPerson` causes some change in `tagList`,
 1. Assign an empty address book to the model. +
 // end::undoredo[]
 
----
-
+//tag:: find[]
 === Find mechanism
 The Find mechanism is facilitated by `NameContainsKeyWordPredicate` class, which resides in `model.person` package. This command
 supports users of finding a list of persons by tags and names. Any person that have either of the entered keyword will be filtered
 into the list. Such command will inherit from `Command`.
 
-The find command accept two types of keyword: `name` and `tag`,
+The find command accept two types of keyword:
 
-* `tag` keyword is identified by a prefix `t/`. +
+* `tag`: it is identified by a prefix `t/`. +
 e.g. `find t/friends` means to find any person that have a tag called `friends`
-* anything that do not begin with `tag` is identified as name key word. +
+* `name`: anything that do not begin with `tag` is identified as `name` key word. +
 e.g. `find friends` means to find any person whose name contains the keyword `friends`
+[NOTE]
+if a `tag name` is not preceded with a prefix `t/`, then the `tag name` will be identified as a `person name`. As a result, the people with their name containing the `tag name` will be displayed.
 
-Suppose now a user enters a find command `find t/friends` to find the persons that have the tag `friends`.
+Below is a sequence diagram for executing a find command: `find t/friends`. It will find persons that have the tag `friends`.
+
+image::findSequenceDiagram.png[width="800"]
+_Figure 3.2.1: sequence diagram for find command_
+
 The command will be sent to LogicManager, and LogicManager will call AddressBookParser to parse
 the command. Subsequently, FindCommandParser will parse argument `t/friends` and create a new `findCommand` with
 predicate `t/friends`. The `findCommand` is then executed in LogicManager, during which the `findCommand` will update
 the filtered person list with predicate tag called `friends`. This update will cause the person list displayed in GUI to be updated,
-so that the persons with tag `friends` will be displayed. +
-Below is a sequence diagram for doing command `find t/friends`
+so that the persons with tag `friends` will be displayed.
 
-image::findSequenceDiagram.png[width="800"]
+[discrete]
+==== Design considerations
+
+---
+**Aspect:**  implementation of find command +
+**Alternative 1 (current choice):** Select people that has any of the keywords +
+**Pros:**  For every person, we only need to ensure at least on keyword exist, so we don't need to go through every information of a person.   +
+**Cons:**  It is difficult to know by which keyword a person is selected +
+**Alternative 2:** Select people that has any of the keywords, and highlight selected keywords in each person's `person card`. +
+**Pros:** Shows clearly what keywords each selected person contains. +
+**Cons:**  We need to go through everything of a person, in order to highlight EVERY keyword the person has +
+
+---
+**Aspect:** Type of keywords that can be found +
+**Alternative 1 (current choice):** Only person name and tag can be used in the find command +
+**Pros:** We only need to check a person's name and tag list to find match +
+**Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
+**Alternative 2:** Include all information of a person (i.e. phone, email, address) +
+**Pros:** a person can be found in more ways +
+**Cons:** implementation is complicated
+
 
 // tag::sort[]
 === Sort mechanism
@@ -519,7 +556,8 @@ Then `Model` returns the sorted list.
 The sort command object receives the sorted list and creates `CommandResult` object and return it.
 `LogicManager` receives the result and shows it through `UI`.
 
-==== Design Considerations
+[discrete]
+==== Design considerations
 
 **Aspect:** How sort command affects the data +
 **Alternative 1 (current choice):** Sorts the copy of contact list and return it. +
@@ -565,20 +603,26 @@ The user enters an addEvent command, which is received by `LogicManager`. `Logic
 
 === ListEvent mechanism
 
-The list event command is facilitated by the `LogicManager` class. It supports listing all the events for user to process.
+=== Delete event
 
-The following sequence diagram shows how the list event operation works:
+The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
 
-image::ListEventSequenceDiagram.png[width="800"]
+The following sequence diagrams below, Figure 3.4.1 and Figure 3.4.2, show how the delete event operation works:
 
-The user enters a listE command which is received by `LogicManager`.
-`LogicManager` calls `AddressBookParser` to parse the command.
-Then `AddressBookParser` creates the list event command object and return it.
-`LogicManager` receives the command object and executes the command.
-The list event command object calls `updateFilteredEventList()` in the `Model`.
-Then `Model` process the event list.
-The list event command object creates `CommandResult` object and return it.
-`LogicManager` receives the result and shows it through `UI`.
+image::DeleteEventSD.png[width="800"]
+_Figure 3.4.1: Logic interactions for `deleteE 1` command_
+
+image::SDforDeletePersonEventHandling.png[width="800"]
+_Figure 3.4.2 : Component interactions for `deleteE 1` command_
+
+. The user enters a delete event command which is parsed from the `UI` to `Logic` by `CommandBox`.
+. `Logic` has `LogicManager` use `AddressBookParser` to parse the user command.
+. This results in a `Command` object which is executed by the `LogicManager`.
+. The execution will affect the `Model` by deleting an event.
+. `ModelManager` will raise an `AddressBookChangedEvent` to `EventsCenter`.
+. `EventsCenter` will handle the changes to `Storage` and `UI` using the `handleAddressBookChangedEvent` method.
+. The `Command` will be added to the `undoStack`.
+. The result of the command execution is encapsulated as a `CommandResult` which is passed back to `CommandBox` in `UI`.
 
 === DeleteEvent mechanism
 
@@ -645,16 +689,16 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -670,7 +714,7 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -711,23 +755,23 @@ e.g. `seedu.address.storage.StorageManagerTest`
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
-== Dev Ops
+== Dev ops
 
-=== Build Automation
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -736,14 +780,14 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Suggested programming tasks to get started
 
 Suggested path for new programmers:
 
@@ -884,7 +928,7 @@ Edits the remark for the first person to `Likes to drink coffee.`
 * `remark 1 r/` +
 Removes the remark for the first person.
 
-==== Step-by-step Instructions
+==== Step-by-step instructions
 
 ===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
@@ -983,12 +1027,12 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 . Update `RemarkCommandTest` to test that the `execute()` logic works.
 
-==== Full Solution
+==== Full solution
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
-== User Stories
+== User stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -1007,13 +1051,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |add a person's contact detail into the app
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |add a new event |add a event's date and information into the app
+
+|`* * *` |user |delete a person or event|remove entries that I no longer need
+
+|`* * *` |user |edit a person or event|change some information of the person or event
 
 |`* * *` |user |clear my address book |refresh it quickly
 
 |`* * *` |user with many friends |list all friends with a certain tag |group my friend by tag easily
 
-|`* * *` |user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
+|`* * *` |user |add a person event with link:#blank-information[blank information] |add him or the event even if I do not know some details (e.g his address)
 
 |`* * *` |user |find a person by name and tag|locate details of persons without having to go through the entire list
 
@@ -1023,27 +1071,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |list contacts |view who are my contacts
 
+|`* * *` |user |list events |view what are my events
+
 |`* * *` |secretive user |hide private details  |minimise the chance of someone else seeing them by accident
 
 |`* * *` |careless user |undo decision  |revert changes in case of mistake
-
-|`* * *` |lazy user |have auto complete when I type  |type less word
-
-|`* *` |user who share my device with others |password to lock my address book |prevent others looking at it
 
 |`* *` |frequent user |change the font and background colour |use address book comfortably
 
 |`* *` |frequent user |use non-case sensitive command |type command easily
 
-|`* *` |user with many friends |add multiple people at one time |save my time for adding
-
 |`* *` |user |sort contacts |view my list easily
 
 |`* *` |user |tag my contacts |remember who they are through tags
-
-|`* *` |security conscious user |log in with my id and password |keep my privacy
-
-|`* *` |elder user |adjust font size |see more clearly
 
 |`* *` |secretive user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -1051,28 +1091,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |create events and assign contacts |keep track of who is involved in events
 
-|`* *` |user |export contact details |share with others or transfer to other device
-
 |`* *` |user |create filter using multiple tags |make a specific search using tags
 
-|`*` |frequent user |listen some background music |address book happily
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-
 |`*` |user |add pictures to contacts |remember who they are through pictures
-
-|`*` |secretive user |alter whether information is private |make information open to everyone whenever I want
-
-|`*` |user |drag person card |sort people into my own order
-
-|`*` |user |select font style |more comfortable to read
 
 |=======================================================================
 
 {More to be added}
 
 [appendix]
-== Use Cases
+== Use cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
@@ -1396,7 +1424,7 @@ AddressBook displays an empty list.
 Use case ends.
 
 [appendix]
-== Non Functional Requirements
+== Non functional requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
@@ -1497,7 +1525,7 @@ An undoable command is a command which modifies data in address book. For exampl
 
 
 [appendix]
-== Product Survey
+== Product survey
 
 *Product Name*
 
