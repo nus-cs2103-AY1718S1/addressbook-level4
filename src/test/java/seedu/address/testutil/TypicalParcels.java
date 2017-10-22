@@ -33,7 +33,7 @@ public class TypicalParcels {
     public static final ReadOnlyParcel ALICE = new ParcelBuilder().withTrackingNumber("RR000111000SG")
             .withName("Alice Pauline").withAddress("6, Jurong West Ave 1, #08-111 S649520")
             .withEmail("alice@example.com").withPhone("85355255").withDeliveryDate("01-02-2000")
-            .withStatus("pending").withTags("friends").build();
+            .withStatus("pending").withTags("friends", "family").build();
     public static final ReadOnlyParcel BENSON = new ParcelBuilder().withTrackingNumber("RR111000111SG")
             .withName("Benson Meier").withAddress("336, Clementi Ave 2, #02-25 s120336").withEmail("johnd@example.com")
             .withPhone("98765432").withDeliveryDate("01-02-2000").withStatus("delivering")
@@ -56,7 +56,7 @@ public class TypicalParcels {
     public static final ReadOnlyParcel GEORGE = new ParcelBuilder().withTrackingNumber("RR696969696SG")
             .withName("George Best").withPhone("9482442").withEmail("anna@example.com")
             .withAddress("Block 532 HDB Upper Cross Street s050532").withDeliveryDate("07-07-2007")
-            .withStatus("delivered").build();
+            .withTags("family", "friends").withStatus("delivered").build();
 
     // Manually added
     public static final ReadOnlyParcel HOON = new ParcelBuilder().withTrackingNumber("RR121212124SG")
