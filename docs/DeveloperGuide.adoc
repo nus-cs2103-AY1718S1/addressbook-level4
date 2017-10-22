@@ -1,7 +1,16 @@
-= AddressBook Level 4 - Developer Guide
+= Planno - Developer Guide
+
+= Welcome to Planno
+
+Planno is a Java application that helps users to conveniently manage contact as well as event details. To achieve this, Planno provides a large number of easy to use commands for users. +
+
+There are many ways to contribute to Planno: coding, testing, improving the build process and tools, or contributing to the documentation. This guide provides information that will not only help you get started as a Planno contributor, but that you'll find useful to refer to even if you are already an experienced contributor. +
+
+This developer's guide consists of the following sections shown in the table of contents below. Note that certain functions may not have been impleted into the current version of Planno yet. The number beside shows which version the function was implemented in. +
+
 :toc:
 :toc-title:
-:toc-placement: preamble
+:toc-placement: macro
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -13,6 +22,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-W14-B4/main/tree/master
 
 By: `Team planno`      Since: `August 2017`      Licence: `MIT`
+
+toc::[]
 
 == Setting up
 
@@ -546,7 +557,7 @@ The following sequence diagram shows how the list event operation works:
 
 image::ListEventSequenceDiagram.png[width="800"]
 
-The user enters a listE command which is got by `LogicManager`.
+The user enters a listE command which is received by `LogicManager`.
 `LogicManager` calls `AddressBookParser` to parse the command.
 Then `AddressBookParser` creates the list event command object and return it.
 `LogicManager` receives the command object and executes the command.
@@ -554,6 +565,45 @@ The list event command object calls `updateFilteredEventList()` in the `Model`.
 Then `Model` process the event list.
 The list event command object creates `CommandResult` object and return it.
 `LogicManager` receives the result and shows it through `UI`.
+
+=== DeleteEvent mechanism
+
+The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
+
+The following sequence diagram below, Figure 3.5, show how the delete event operation works:
+
+image::DeleteEventSequenceDiagram.png[width="800"]
+_Figure 3.5: Logic interactions for `deleteE 1` command_
+
+The user enters a deleteE command which is received by `LogicManger`.
+``LogicManager` calls `AddressBookParser` to parse the user command.
+`AddressBookParser` creates an `DeleteEventCommand` object and returns it.
+`LogicManager` receives the `Command` object and executes it.
+The `DeleteEventCommand` calls `deleteEvent()` in the `Model`.
+`Model` will proceed to delete the event.
+The `DeleteEventCommand` then creates a `CommandResult` object and returns it to `LogicManager`.
+`LogicManager` receives the result anddisplays it through the `UI`
+
+===== Design Considerations
+
+**Aspect:** Implementation of `DeleteEventCommand` +
+**Alternative 1 (current choice):** Create a new command to delete events. +
+**Pros:** It is responsible only for deleting events, and not people. Easier to implement. +
+**Cons:** Users may accidentally type in "delete" for deleting a person instead of "deleteE" for deleting an event. +
+**Alternative 2:** Modify `DeleteCommand` to handle deletion for both persons and events. +
+**Pros:** Users would be less likely to type the wrong command. +
+**Cons:** Any changes to the deletion process of either a person or event may affect the other . Harder to implement. +
+
+---
+
+**Aspect:** How deleteE command executes +
+**Alternative 1 (current choice):** Deletes the event at the specified index. +
+**Pros:** Easy to imlement. +
+**Cons:** User has to list/sort event list first. +
+**Alternative 2:** Delete the event with the specified name. +
+**Pros:** Users can delete directly without having to get the index. +
+**Cons:** Users would have to type more if the event name is long. It will be more complex for developers to maintain and test. +
+// end::deleteE[]
 
 === Logging
 
@@ -573,27 +623,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
-=== Delete Event
-
-The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
-
-The following sequence diagrams below, Figure 3.4.1 and Figure 3.4.2, show how the delete event operation works:
-
-image::DeleteEventSD.png[width="800"]
-_Figure 3.4.1: Logic interactions for `deleteE 1` command_
-
-image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 3.4.2 : Component interactions for `deleteE 1` command_
-
-. The user enters a delete event command which is parsed from the `UI` to `Logic` by `CommandBox`.
-. `Logic` has `LogicManager` use `AddressBookParser` to parse the user command.
-. This results in a `Command` object which is executed by the `LogicManager`.
-. The execution will affect the `Model` by deleting an event.
-. `ModelManager` will raise an `AddressBookChangedEvent` to `EventsCenter`.
-. `EventsCenter` will handle the changes to `Storage` and `UI` using the `handleAddressBookChangedEvent` method.
-. The `Command` will be added to the `undoStack`.
-. The result of the command execution is encapsulated as a `CommandResult` which is passed back to `CommandBox` in `UI`.
 
 == Documentation
 
