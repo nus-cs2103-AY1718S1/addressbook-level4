@@ -25,6 +25,7 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
 /**
  * Edits the details of an existing task in the address book.
  */
+
 public class EditTaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "editTask";
