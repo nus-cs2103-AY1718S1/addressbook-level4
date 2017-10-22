@@ -12,10 +12,13 @@ import javafx.scene.input.KeyCombination;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NewCommand;
+import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 public class KeyListenerTest extends RolodexGuiTest {
+
     @Test
     public void executeKeyEventForFocusOnCommandBox() {
         guiRobot.push(KeyCode.ENTER);
@@ -40,6 +43,22 @@ public class KeyListenerTest extends RolodexGuiTest {
 
         guiRobot.push(KeyCode.ENTER);
         assertFalse(getPersonListPanel().isFocused());
+    }
+
+    @Test
+    public void executeKeyEventForOpenCommand() {
+        KeyCodeCombination openKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+O");
+
+        guiRobot.push(openKeyCode);
+        assertEquals(OpenCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+    }
+
+    @Test
+    public void executeKeyEventForNewCommand() {
+        KeyCodeCombination newKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+N");
+
+        guiRobot.push(newKeyCode);
+        assertEquals(NewCommand.COMMAND_WORD + " ", getCommandBox().getInput());
     }
 
     @Test
