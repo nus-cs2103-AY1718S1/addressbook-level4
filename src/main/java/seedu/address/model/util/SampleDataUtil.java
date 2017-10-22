@@ -2,10 +2,12 @@ package seedu.address.model.util;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.customField.CustomField;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -23,7 +25,8 @@ public class SampleDataUtil {
             return new Person[] {
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new Address("Blk 30 Geylang Street 29, #06-40"),
-                    getTagSet("friends")),
+                    getTagSet("friends"),
+                    getCustomFieldSet("Nickname Ah_lex", "Birthday 11/02/1998")),
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                     new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
                     getTagSet("colleagues", "friends")),
@@ -67,6 +70,19 @@ public class SampleDataUtil {
         }
 
         return tags;
+    }
+
+    /**
+     * Returns a custom field set containing the list of strings given.
+     */
+    public static Set<CustomField> getCustomFieldSet(String... strings) throws IllegalValueException {
+        HashSet<CustomField> customFields = new HashSet<>();
+        for (String s : strings) {
+            StringTokenizer st = new StringTokenizer(s);
+            customFields.add(new CustomField(st.nextToken(), st.nextToken()));
+        }
+
+        return customFields;
     }
 
 }
