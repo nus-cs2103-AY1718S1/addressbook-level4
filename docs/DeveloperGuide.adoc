@@ -249,7 +249,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
-Each sample code shows the correct sequence of calls and parameters in general implementation of the feature to allow you to perform modification of your own. 
+Each sample code shows the correct sequence of calls and parameters in general implementation of the feature to allow you to perform modification of your own.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -720,7 +720,7 @@ _Figure 4.4.1 : Saving documentation as PDF files in Chrome_
 
 === Running Tests
 
-This section covers the various testing framework adopted for this application. 
+This section covers the various testing framework adopted for this application.
 Testing is essential for quality assurance, verification and validation.
 There are three ways to run tests in this application.
 
