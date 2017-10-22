@@ -44,7 +44,6 @@ public class PersonCardHandle extends NodeHandle<Node> {
                 .getChildrenUnmodifiable()
                 .stream()
                 .map(Label.class::cast)
-                
                 .collect(Collectors.toList());
     }
 
