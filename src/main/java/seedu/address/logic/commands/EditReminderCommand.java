@@ -92,7 +92,7 @@ public class EditReminderCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the details of {@code reminderToEdit}
      * edited with {@code editReminderDescriptor}.
      */
-    private static Reminder createEditedPerson(ReadOnlyReminder reminderToEdit,
+    private static Reminder createEditedReminder(ReadOnlyReminder reminderToEdit,
                                              EditReminderDescriptor editReminderDescriptor) {
         assert reminderToEdit != null;
 
@@ -148,7 +148,7 @@ public class EditReminderCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.task, this.priority, this.date, this.time,
+            return CollectionUtil.isAnyNonNull(this.task, this.priority, this.date,
                     this.message, this.tags);
         }
 

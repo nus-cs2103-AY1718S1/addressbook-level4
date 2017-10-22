@@ -25,6 +25,10 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -34,10 +38,12 @@ import seedu.address.model.tag.Tag;
 public class ModelManager extends ComponentManager implements Model {
 
     public static final String MESSAGE_DUPLICATE_PERSON =  "Duplicate persons in AddressBook.";
+    public static final String MESSAGE_DUPLICATE_REMINDER =  "Duplicate reminders in AddressBook.";
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyReminder> filteredReminders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -50,6 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredReminders = new FilteredList<>(this.addressBook.getReminderList());
     }
 
     public ModelManager() {
@@ -94,7 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException  {
+    public void deletePersonTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException  {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
 
@@ -104,6 +111,41 @@ public class ModelManager extends ComponentManager implements Model {
             newPerson.setTags(newTags);
 
             addressBook.updatePerson(oldPerson, newPerson);
+        }
+    }
+
+    @Override
+    public synchronized void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException {
+        addressBook.removeReminder(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
+        addressBook.addReminder(reminder);
+        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateReminder(ReadOnlyReminder target, ReadOnlyReminder editedReminder)
+            throws DuplicateReminderException, ReminderNotFoundException {
+        requireAllNonNull(target, editedReminder);
+        addressBook.updateReminder(target, editedReminder);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteReminderTag(Tag tag) throws ReminderNotFoundException, DuplicateReminderException  {
+        for (int i = 0; i < addressBook.getReminderList().size(); i++) {
+            ReadOnlyReminder oldReminder = addressBook.getReminderList().get(i);
+
+            Reminder newReminder = new Reminder(oldReminder);
+            Set<Tag> newTags = newReminder.getTags();
+            newTags.remove(tag);
+            newReminder.setTags(newTags);
+
+            addressBook.updateReminder(oldReminder, newReminder);
         }
     }
 
@@ -125,6 +167,17 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
+        return FXCollections.unmodifiableObservableList(filteredReminders);
+    }
+
+    @Override
+    public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
+        requireNonNull(predicate);
+        filteredReminders.setPredicate(predicate);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
@@ -139,12 +192,21 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredReminders.equals(other.filteredReminders);
     }
 
     @Override
-    public Boolean checkIfListEmpty(ArrayList<ReadOnlyPerson> contactList) {
+    public Boolean checkIfPersonListEmpty(ArrayList<ReadOnlyPerson> contactList) {
         if (filteredPersons.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean checkIfReminderListEmpty(ArrayList<ReadOnlyReminder> contactList) {
+        if (filteredReminders.isEmpty()) {
             return true;
         }
         return false;

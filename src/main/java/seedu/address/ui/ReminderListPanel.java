@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.reminder.ReadOnlyReminder;
 
 import java.util.logging.Logger;
 
@@ -22,15 +23,15 @@ public class ReminderListPanel extends UiPart<Region> {
     @javafx.fxml.FXML
     private ListView<ReminderCard> reminderListView;
 
-    public ReminderListPanel(ObservableList<ReadOnlyPerson> reminderList) {
+    public ReminderListPanel(ObservableList<ReadOnlyReminder> reminderList) {
         super(FXML);
         setConnections(reminderList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> reminderList) {
+    private void setConnections(ObservableList<ReadOnlyReminder> reminderList) {
         ObservableList<ReminderCard> mappedList = EasyBind.map(
-                reminderList, (person) -> new ReminderCard(reminder, reminderList.indexOf(reminder) + 1));
+                reminderList, (reminder) -> new ReminderCard(reminder, reminderList.indexOf(reminder) + 1));
         reminderListView.setItems(mappedList);
         reminderListView.setCellFactory(listView -> new ReminderListPanel.ReminderListViewCell());
        // setEventHandlerForSelectionChangeEvent();
