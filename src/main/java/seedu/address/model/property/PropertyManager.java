@@ -50,27 +50,27 @@ public class PropertyManager {
         if (!initialized) {
             try {
                 // Adds name as a pre-loaded property.
-                addNewProperty("n", "name",
+                addNewProperty("n", "Name",
                         "Person names should only contain alphanumeric characters and spaces, "
                                 + "and it should not be blank",
                         "[\\p{Alnum}][\\p{Alnum} ]*");
 
                 // Adds email as a pre-loaded property.
-                addNewProperty("e", "email",
+                addNewProperty("e", "Email",
                         "Person emails should be 2 alphanumeric/period strings separated by '@'",
                         "[\\w\\.]+@[\\w\\.]+");
 
                 // Adds phone number as a pre-loaded property.
-                addNewProperty("p", "phone",
+                addNewProperty("p", "Phone",
                         "Phone numbers can only contain numbers, and should be at least 3 digits long",
                         "\\d{3,}");
 
                 // Adds address as a pre-loaded property.
-                addNewProperty("a", "address",
+                addNewProperty("a", "Address",
                         String.format(DEFAULT_MESSAGE, "Address"), DEFAULT_REGEX);
 
                 // Adds time/date as a pre-loaded property.
-                addNewProperty("dt", "dateTime", "Event date & time must be numbers "
+                addNewProperty("dt", "DateTime", "Event date & time must be numbers "
                         + "followed by ddmmyyyy hh:mm",
                         "^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[012])[0-9]{4}"
                                 + "(\\s((0[1-9]|1[0-9]|2[0-3]):([0-5][0-9]))?$)");
