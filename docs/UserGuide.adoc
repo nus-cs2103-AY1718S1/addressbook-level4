@@ -16,9 +16,16 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Welcome to ModU, a time slot booking system for professors and administrators in tertiary institutions. +
+Many universities have timetable committee to create and deal with all matters concerning timetabling tasks. +
+
+However, perfect scheduling is not easy and there are many concerns need to take into consideration.
+The optimal timetable is able to meet the needs of the students and faculty.
+It also needs to maximise the space usage of classrooms while meeting the demand for course offerings. +
+Welcome to ModU, a school scheduling software for professors and administrators in tertiary institutions. +
+
 ModU brings easy-to-use graphic user interface(GUI). With ModU, you can see time slots that are available.
-You can also build your own timetable and manage them anytime. +
+You can also build the timetable for each module and make any changes anytime. +
+
 The command line interface(CLI) is the primary mode of input. We believe that when you can control ModU by typing,
 many tasks can be performed more quickly and therefore save you loads of time.
 
@@ -34,7 +41,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your ModU.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::mainUi.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -75,6 +82,8 @@ Examples:
 * `add m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/Ma Siu Lun`
 * `add m/CS2100 ct/LEC v/LT19 gp/1 ts/MON[1400-1600] l/Wong WEng Fa l/Suppiah `
 
+image::video/add.gif[width="790"]
+
 === Listing all lesson : `list`
 
 Shows a list of all modules in the ModU. +
@@ -82,6 +91,8 @@ Format: `list module`
 
 Shows a list of all location in the ModU. +
 Format: `List location`
+
+image::video/list.gif[width="790"]
 
 === Viewing specific lesson from the list: `view`
 
@@ -101,6 +112,8 @@ View the detail information with the second index shown in the module list.
 `view 2` +
 View the detail information with the second index shown in the location list.
 
+image::video/view.gif[width="790"]
+
 === Editing a lesson : `edit`
 
 Edits an existing lesson in the ModU list. +
@@ -112,6 +125,8 @@ Format: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VENUE] [gp/GROUP] [ts/TIM
 * Existing values will be updated to the input values.
 * When editing lecturers, the existing lecturers of the lesson will be removed i.e adding of lecturers is not cumulative.
 ****
+
+image::video/edit.gif[width="790"]
 
 Edits an existing attribute(module/location) in the ModU list. +
 Format: `edit INDEX [CODE/LOCATION]...`
@@ -129,10 +144,14 @@ Examples:
 * `edit 1 m/CS2101` +
 Edits the module code of the 1st lesson to be `CS2101`.
 
+image::video/editModule.gif[width="790"]
+
 * `list location` +
  Returns a list of location +
 * `edit 3 LT27` +Assume
 Edits all the lessons with the third location shown in the location list to be `LT27`.
+
+image::video/editLocation.gif[width="790"]
 
 === Locating lessons by module code: `find`
 
@@ -154,6 +173,8 @@ Returns `MA1101R`
 * `find MA1101R CS2101 CS2103T +
 Returns module having code `MA1101R`, `CS2101`, or `CS2103T`
 
+image::video/find.gif[width="790"]
+
 === Sorting lesson by module code: `sort`
 
  Sort the existing list. +
@@ -171,11 +192,14 @@ Returns module having code `MA1101R`, `CS2101`, or `CS2103T`
  `sort` +
  Return a list of location sorted lexicographically
 
+image::video/sortLocation.gif[width="790"]
+
  * `list lesson` +
  Returns whole module +
  `sort` +
  Return a list sorted by code lexicographically
 
+image::video/sortModule.gif[width="790"]
 
 === Deleting a lesson : `delete`
 
@@ -200,6 +224,7 @@ Deletes the 1st lesson in the results of the `find` command.
 `delete 2` +
 Deletes the 2nd lesson in the ModU location list.
 
+image::video/delete.gif[width="790"]
 
 === Selecting a lesson : `select`
 
@@ -221,6 +246,8 @@ Selects the 2nd lesson in the ModU list.
 `select 1` +
 Selects the 1st lesson in the results of the `find` command.
 
+image::video/select.gif[width="790"]
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -230,6 +257,8 @@ Format: `history`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+image::video/history.gif[width="790"]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -258,6 +287,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+image::video/undo.gif[width="790"]
+
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
@@ -281,15 +312,21 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+image::video/redo.gif[width="790"]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the ModU list. +
 Format: `clear`
 
+image::video/clear.gif[width="790"]
+
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
+
+image::video/edit.gif[width="790"]
 
 === Customising the font size : `customise fs/FONT-SIZE`
 
@@ -305,6 +342,8 @@ Examples:
 * `customise fs\small`
 * `customise fs\xlarge`
 
+image::video/customise.gif[width="790"]
+
 === Highlighting keywords : `color`
 
 Highlight the command keywords. +
@@ -315,10 +354,130 @@ Examples:
 * `color enable`
 * `color disable`
 
+image::video/color.gif[width="790"]
+
 === Saving the data
 
 ModU data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+== Tutorial
+
+Assume now you are an new member of the Timetable Committee of NUS, your duty is to
+prepare teaching timetables for all lesson in School of Computing.
+A friend recommend you ModU, an effective school scheduling software.
+
+This is the screen when you opened ModU. +
+
+* `Command Box`: type command in this box
+* `Resust Display Box`: command result displayed in this bax
+* `Module/Lesson Display Panel`: list of module or lesson displayed in this panel
+* `Timetable/Browser`: timetable of a module shows up in this panel.
+Browser will appear when a location is selected
+
+image::tutorial/NewUi.png[width="790"]
+
+Since this is the first you are using this software,
+you are not sure what are the available commands. You want to see all the available commands.
+
+Type `help` in the command box. ModU will automatically open up user guide to help you
+
+image::tutorial/Help.png[width="790"]
+
+After you read through all the commands, you realised that it is hard to remember all the commands.
+You want to be able to identify key words, prefix and check the validity of command.
+
+Type `color enable` in the command box. ModU will highlight for you all the commands and prefix.
+It will display a tick when your command is valid and display a cross when your command is invalid
+
+image::tutorial/colorEnable.png[width="790"]
+
+After you have received course information from CS2101 and MA1101R,
+and you want to enter these information into ModU
+
+Type `add m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/ Ma Siu Lun` in the command box.
+ModU will create a module MA1101R for you and automatically insert the lesson into this module
+
+image::tutorial/addModule.png[width="790"]
+
+Now you want to enter CS2101 information into ModU. You did not notice that one of the lesson
+has the same time slot and same location as MA1101R lesson
+
+Type `add CS2101 ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/ Ma Siu Lun` in the command box.
+ModU will inform you that the time slot is already booked
+
+image::tutorial/addDup.png[width="790"]
+
+After you added all the lessons for MA1101R , you want to know what is the current time table for MA1101R looks like
+
+Type `view 1` in the command box.
+ModU will show you the all the lesson information about MA1101R.
+ModU will also also display the timetable for this module.
+In addition, you also can continue adding MA1101R module in the command box
+
+image::tutorial/viewMod.png[width="790"]
+image::tutorial/viewAdd.png[width="790"]
+
+One of the lecturer from MA1101R just informed you that MA1101R has renamed to MA1010 this semester.
+He needs you to update the timetable
+
+Type `edit 1 MA1010` in the command box.
+In the module view, ModU allows you to change the name of the module.
+All the lessons with MA1101R will be changed to MA1010
+
+image::tutorial/editMod.png[width="790"]
+
+One of the lecturer from CS2101 lost her timetable and she wants
+you to send her a new one. You need to find CS2101 from a list of module
+
+Type `find CS2101` then +
+Type `view 1` in the command box.
+ModU will show you the timetable for CS2101.
+
+image::tutorial/findMod.png[width="790"]
+image::tutorial/findTimetable.png[width="790"]
+
+After you have added many modules into ModU, you want to arrange them in alphabetical order
+
+Type `sort` in the command box.
+ModU sort the current list based on alphabetical order
+Take note that you also can do the same for lesson list
+
+image::tutorial/sort.png[width="790"]
+
+You were informed that LT19 needs reconstruction and will not be able to open for this semester.
+Now you need to delete LT19 from ModU.
+
+Type `list location` then +
+Type `delete 2` in the command box.
+ModU will delete all the lessons in LT19
+
+image::tutorial/delete.png[width="790"]
+
+Almost immediate after you deleted LT19, you received a call saying is LT19 will
+still open for this semester. Now you want to undo deletion
+
+Type `undo` in the command box.
+Modu will undo the deletion and restore LT19.
+
+image::tutorial/undo.png[width="790"]
+
+A moment later, you were informed that LT 19 is not open as well.
+You want to redo the delete
+
+Type `redo` in the command box.
+Modu will delete LT19.
+
+image::tutorial/redo.png[width="790"]
+
+After you have completed the time table, you were informed that you are actually
+in charging another faculty. Before you exit, you want to clear all the module
+
+Type `clear` in the command box then+
+Type  `exit` in the command box
+
+image::tutorial/clear.png[width="790"]
+
 
 == FAQ
 

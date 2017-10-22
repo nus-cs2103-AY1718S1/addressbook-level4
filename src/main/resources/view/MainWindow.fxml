@@ -30,13 +30,12 @@
          <VBox prefHeight="170.0" prefWidth="440.0" styleClass="split-pane:horizontal .split-pane-divider" SplitPane.resizableWithParent="false">
             <children>
             
-              <StackPane fx:id="commandBoxPlaceholder" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="452.0" styleClass="pane-with-border" stylesheets="@DarkTheme.css" VBox.vgrow="NEVER">
-                <padding>
-                  <Insets top="20.0" />
-                </padding>
-              </StackPane>
+              <StackPane fx:id="commandBoxPlaceholder" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" styleClass="pane-without-border" stylesheets="@DarkTheme.css" VBox.vgrow="NEVER" />
             
-              <StackPane fx:id="resultDisplayPlaceholder" maxHeight="133.0" minHeight="133.0" prefHeight="133.0" styleClass="pane-with-border" stylesheets="@DarkTheme.css" VBox.vgrow="NEVER" />
+              <StackPane fx:id="resultDisplayPlaceholder" maxHeight="133.0" minHeight="133.0" prefHeight="133.0" styleClass="pane-with-border" stylesheets="@DarkTheme.css" VBox.vgrow="NEVER">
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin></StackPane>
             </children>
             <padding>
                <Insets left="170.0" top="20.0" />
