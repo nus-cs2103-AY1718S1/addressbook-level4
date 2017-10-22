@@ -85,6 +85,8 @@ Format: `list module`
 Shows a list of all location in the ModU. +
 Format: `List location`
 
+image::video/list.gif[width="790"]
+
 === Viewing specific lesson from the list: `view`
 
 Views the detail information about a lesson. +
@@ -103,6 +105,8 @@ View the detail information with the second index shown in the module list.
 `view 2` +
 View the detail information with the second index shown in the location list.
 
+image::video/view.gif[width="790"]
+
 === Editing a lesson : `edit`
 
 Edits an existing lesson in the ModU list. +
@@ -114,6 +118,8 @@ Format: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VENUE] [gp/GROUP] [ts/TIM
 * Existing values will be updated to the input values.
 * When editing lecturers, the existing lecturers of the lesson will be removed i.e adding of lecturers is not cumulative.
 ****
+
+image::video/view.gif[width="790"]
 
 Edits an existing attribute(module/location) in the ModU list. +
 Format: `edit INDEX [CODE/LOCATION]...`
