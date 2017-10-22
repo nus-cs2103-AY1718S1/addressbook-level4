@@ -217,7 +217,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Clearing all entries : `sort`
+=== Sorting all entries : `sort`
 
 Sorts all entries in the address book by alphabetical order. +
 Format: `sort`
@@ -231,6 +231,71 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Adding / Editing / Removing birthday to person: `birthday` (Since v1.2)
+
+Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
+Format: `birthday INDEX [b/dd/mm/yyyy]`
+
+****
+* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
+* For removing : input nothing after " `b/` "
+****
+
+Examples:
+
+* `birthday 1 b/20/07/1995` +
+Adds / changes birthday of the 1st person to be `20/07/1995`
+* `birthday 3 b/` +
+Removes the birthday of the 3rd person.
+
+=== Sort all entries by age : `sortAge`    (Since v1.2)
+
+Sorts all entries in the address book by their age, from the oldest to youngest. +
+Format: `sortAge`
+
+=== Sort all entries by birthday: `sortBirthday`    (Since v1.2)
+
+Sorts all entries in the address book by their birthday, from 1st Jan to 31st Dec. +
+Format: `sortBirthday`
+
+=== List the birthday of contacts in calendar mode (Coming in v2.0)
+Able to view contacts in calendar mode so that users can look at who's birthday is coming up soon.
+Contacts with birthday within a week will have a special colour or icon to notify user of upcoming birthdays.
+
+=== Retrieving all persons having an existing tag : `retrieve`    (Since v1.2)
+
+Lists all contacts having a certain existing tag in the address book. +
+Format: `retrieve TAGNAME`
+
+****
+* Retrieves all person having the specified `TAGNAME` tag.
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `retrieve friends` +
+Retrieves all persons with friends tag in the address book.
+
+=== Tagging multiple persons : `tag`    (Since v1.2)
+
+Tags the persons identified by the index numbers used in the last person listing. +
+Format: `tag INDEX,[MORE_INDEXES]... TAGNAME`
+
+****
+* Tags the persons at the specified `INDEX,[MORE_INDEXES]...` with the `TAGNAME` tag.
+* The indexes refers to the index numbers shown in the most recent listing.
+* The indexes *must be positive integers* `1, 2, 3, ...`
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `list` +
+`tag 1,2,3 friends` +
+Tags the 1st and 2nd person with the friends tag in the address book.
 
 == FAQ
 
@@ -252,6 +317,10 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Retrieve* : `retrieve TAGNAME` +
+e.g.`retrieve family`
+* *Tag* : `tag INDEX,[MORE_INDEXES]... TAGNAME` +
+e.g.`tag 1,2,3 friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

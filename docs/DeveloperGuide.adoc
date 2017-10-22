@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -344,6 +344,106 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+
+=== Login Function
+
+The Login function work by using many different components. To facilitated its implementation there is a `Loginpage` inside the `UI` and a `loginLogic` inside the `logic` component. It supports the process of moving the addressbook database to a server as will be later described.
+
+The process of how the feature functions and what would happen is as follows:
+
+image::LoginSequenceDiagram.JPG[width="800"]
+
+
+
+
+As it can be seen, when the login adds an extra layer of authentication between the `Mainapp` and then `MainWindow`, such that the application can only be opened when valid credentials are received. When the `Addressbook` is opened, the `Mainapp` will call the `UImanager` which will in turn call the `Loginpage`. Once a login command has been give, the `loginpage` will pass on the logincredentials database. If authentication is valid, the LoginLogic will create a database if the user does not already have one and return the path to the database. The `loginpage` will then call on the `UImanager` to start the `MainWindow` with said database path.
+
+The User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `LoginFunction` +
+**Alternative 1 (current choice):** Create a whole new `LoginFunction` interface, with its own GUI etc +
+**Pros:** `LoginFunction will have seperate Userprofile and database. It would be a more versatile application +
+**Cons:** Diffiult to implement and even harder to test +
+**Alternative 2:** Just implement a `LoginCommand` function at the `CommandBox` +
+**Pros:** Easy to implement. Achieves the basic functions of security +
+**Cons:** Only a single user database is allowed. not a flexible system.
+
+
+=== BirthdayCommand, sortAgeCommand, sortBirthdayCommand
+
+The `BirthdayCommand`, together with `sortAgeCommand` and `sortBirthdayCommand` lies in the `commands` of `Logic`. +
+
+`BirthdayCommand` : It allows the adding, editing and removing of birthday parameter to/from a person. +
+
+`sortAgeCommand` : Sorts the contact list in terms of their age, from the oldest to youngest.
+
+`sortBirthdayCommand`: Sorts the contact list in from 1st January to 31st December, irregardless of their age.
+
+`BirthdayCommand`, `sortAgeCommand` and `sortBirthdayCommand` does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
+
+image::logic_birthday.png[width="620"]
+
+
+
+
+
+The user will not be able to enter the birthday parameter when adding contacts. +
+Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
+The user then adds the birthday through the BirthdayCommand : " `birthday 2 b/20/07/1994` "  where he adds the birthday parameter of the 2nd person in the list. +
+
+After adding the birthday parameters of contacts, the user can choose to sort the contact list according to either their ages or birthdays or leave it as it is. +
+The following sequence diagram shows how the birthday operation works:
+
+image::birthday_sd.png[width="560"]
+
+
+
+
+==== Design Considerations
+
+**Aspect:** Adding Birthday parameter +
+**Alternative 1 (current choice):** Add birthday parameter separately after person object is created. +
+**Pros:** Lesser parameters to add while creating person class and easier to implement. +
+**Cons:** Slower for users to add in all the parameters +
+**Alternative 2:**  Add birthday parameter during the creation of person object. +
+**Pros:** Faster for users to add in all the parameters. +
+**Cons:** More parameters to add while creating person class and harder to implement. +
+
+=== Retrieve and tag commands mechanism
+
+The `RetrieveCommand` and `TagCommand` reside in the `commands` of `Logic`.
+
+`RetrieveCommand` : allows user to list all persons that are holding an existing tag in the unique tags list.
+
+Suppose that the address book already has a sufficiently large number of persons, some of whom hold a certain `Tag`. The `UniqueTagList` will contain this tag. +
+The user wants to quickly find out all of the persons holding this tag, so he decides to use `retrieve`.
+
+We will now parse the command argument to get the name of the tag which user want to use `retrieve` on.
+
+[NOTE]
+If the command argument is empty, an `Exception` will be thrown to remind user about the usage of the command.
+
+We use `TagContainsKeyWordPredicate` to test whether the tag is inside the tag list of each person in the address book and get the filtered person list with `getFilteredPersonList()` of `Model` to display to user.
+
+[NOTE]
+If the filtered person list is empty, that means the tag user want to look for does not exist. User will then be notified of all existing tags.
+
+`TagCommand` : supports tagging multiple persons at the same time.
+
+`RetrieveCommand` and `TagCommand` inherit from `UndoableCommands`, thus these commands can be undone.
+
+==== Design Considerations
+
+**Aspect:** Getting the filtered person list +
+**Alternative 1 (current choice):** Go through every person in the addressbook. +
+**Pros:** Easy to implement. +
+**Cons:** Slower if the addressbook contains a large number of persons +
+**Alternative 2:**  Create a list attribute for `Tag` to store all persons having that tag. +
+**Pros:** Faster to get the persons as the filtered person list is already created. +
+**Cons:** Requires to save the lists to storage file. +
 
 === Logging
 
