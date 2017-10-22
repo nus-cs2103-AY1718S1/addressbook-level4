@@ -38,8 +38,8 @@ public class Website {
      * Returns if a given string is a valid person website.
      */
     public static boolean isValidWebsite(String test) {
-        String[] schemes = {"http","https"};
-                UrlValidator urlValidator = new UrlValidator(schemes);
+        String[] schemes = {"http", "https"};
+        UrlValidator urlValidator = new UrlValidator(schemes);
 
         return urlValidator.isValid(test);
     }
