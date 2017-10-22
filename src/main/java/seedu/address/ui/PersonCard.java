@@ -3,6 +3,8 @@ package seedu.address.ui;
 import java.util.HashMap;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -11,6 +13,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.util.AppUtil;
+import seedu.address.model.person.FavouriteStatus;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -27,6 +30,8 @@ public class PersonCard extends UiPart<Region> {
     private static final String NON_FAVOURITE_IMAGE = "/images/nonFavouriteIcon.png";
     private static Image favouritedImage = AppUtil.getImage(FAVOURITE_IMAGE);
     private static Image nonFavouritedImage = AppUtil.getImage(NON_FAVOURITE_IMAGE);
+    private static final ObjectProperty<FavouriteStatus> favouriteTrue =
+            new SimpleObjectProperty<>(new FavouriteStatus(true));
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -88,7 +93,8 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        favouriteStatus.imageProperty().bind(Bindings.when(person.favouriteBoolProperty()).then(favouritedImage).otherwise(nonFavouritedImage));
+        favouriteStatus.imageProperty().bind(Bindings.when(person.favouriteStatusProperty().isEqualTo(favouriteTrue))
+                .then(favouritedImage).otherwise(nonFavouritedImage));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);

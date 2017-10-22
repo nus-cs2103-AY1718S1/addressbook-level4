@@ -26,7 +26,6 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<ArrayList<Remark>> remark;
     private ObjectProperty<FavouriteStatus> favouriteStatus;
-    private SimpleBooleanProperty favouriteBool;
 
     private ObjectProperty<UniqueTagList> tags;
 
@@ -42,7 +41,6 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
         this.favouriteStatus = new SimpleObjectProperty<>(favouriteStatus);
-        this.favouriteBool = new SimpleBooleanProperty(favouriteStatus.getStatus());
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -138,12 +136,6 @@ public class Person implements ReadOnlyPerson {
     public FavouriteStatus getFavouriteStatus() {
         return favouriteStatus.get();
     }
-
-    @Override
-    public SimpleBooleanProperty favouriteBoolProperty() { return favouriteBool; }
-
-    @Override
-    public boolean getFavouriteBool() { return favouriteBool.get(); }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

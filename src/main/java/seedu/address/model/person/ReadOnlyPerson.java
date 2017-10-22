@@ -26,8 +26,6 @@ public interface ReadOnlyPerson {
     ArrayList<Remark> getRemark();
     ObjectProperty<FavouriteStatus> favouriteStatusProperty();
     FavouriteStatus getFavouriteStatus();
-    SimpleBooleanProperty favouriteBoolProperty();
-    boolean getFavouriteBool();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
