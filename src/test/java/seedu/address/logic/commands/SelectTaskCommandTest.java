@@ -10,7 +10,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_TASK;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTasks.getTypicalTaskbook;
 
-import org.junit.Before;g
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
