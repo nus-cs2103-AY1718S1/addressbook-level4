@@ -305,6 +305,12 @@ Unfavourites the 2nd person in the address book.
 `unfavourite 1` +
 Unfavourites the 1st person in the results of the `find` command.
 
+=== Checking for birthdays : `birthdays`
+
+Returns a list of all contacts who have their birthdays today
+
+Format: `birthdays' or `bd`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -314,6 +320,7 @@ Format: `clear`
 
 Exits the program. +
 Format: `exit`
+
 
 === Saving the data
 
