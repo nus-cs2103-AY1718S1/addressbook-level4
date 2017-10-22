@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.favouriteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -25,7 +26,7 @@ public class FavouriteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndex_success() throws Exception {
+    public void execute_validIndexValidPerson_success() throws Exception {
         ReadOnlyPerson personToFavourite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
@@ -33,6 +34,19 @@ public class FavouriteCommandTest {
         CommandResult commandResult = favouriteCommand.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_validIndexInvalidPerson_success() throws Exception {
+        favouriteFirstPerson(model);
+        FavouriteCommand favouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        try {
+            favouriteCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            assertEquals(FavouriteCommand.MESSAGE_FAVOURITE_PERSON_FAIL, e.getMessage());
+        }
     }
 
     @Test

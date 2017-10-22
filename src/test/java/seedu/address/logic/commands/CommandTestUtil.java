@@ -92,12 +92,12 @@ public class CommandTestUtil {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withHomeNumber(VALID_HOME_NUM_AMY).withEmail(VALID_EMAIL_AMY)
                 .withSchEmail(VALID_SCH_EMAIL_AMY).withWebsite(VALID_WEBSITE_AMY)
-                .withAddress(VALID_ADDRESS_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withFavourite("false")
                 .withBirthday(VALID_BIRTHDAY_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
                 .withSchEmail(VALID_SCH_EMAIL_BOB).withWebsite(VALID_WEBSITE_BOB)
-                .withAddress(VALID_ADDRESS_BOB)
+                .withAddress(VALID_ADDRESS_BOB).withFavourite("false")
                 .withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
@@ -157,6 +157,18 @@ public class CommandTestUtil {
         ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);
         try {
             model.deletePerson(firstPerson);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    /**
+     * Favourites the first person in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void favouriteFirstPerson(Model model) {
+        ReadOnlyPerson firstPerson = model.getAddressBook().getPersonList().get(0);
+        try {
+            model.favouritePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
