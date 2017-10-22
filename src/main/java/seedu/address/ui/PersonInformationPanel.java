@@ -66,14 +66,24 @@ public class PersonInformationPanel extends UiPart<Region> {
      * loads the selected person's information to be displayed.
      * @param person
      */
-    private void loadPersonInformation(ReadOnlyPerson person) {
+    private void bindListeners(ReadOnlyPerson person, int person_id) {
+        //id.textProperty().bind(Bindings.convert(person_id));
+        person.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            initTags();
+        });
+
+    }
+
+    private void loadPersonInformation(ReadOnlyPerson person, int person_id) {
         this.person = person;
+        tags.getChildren().clear();
+        initTags();
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        tags.getChildren().clear();
-        initTags();
+        id.setText(Integer.toString(person_id));
 
     }
 
@@ -92,7 +102,8 @@ public class PersonInformationPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonInformation(event.getNewSelection().person);
+        loadPersonInformation(event.getNewSelection().person, event.getNewSelection().string_id);
+        bindListeners(event.getNewSelection().person, event.getNewSelection().string_id);
     }
 
     @Override
