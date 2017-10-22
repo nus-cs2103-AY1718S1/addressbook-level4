@@ -43,18 +43,22 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_BLOODTYPE, PREFIX_REMARK, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_BLOODTYPE)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            Bloodtype bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
-            Remark remark = (ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).equals( Optional.empty())) ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+            Phone phone = (!arePrefixesPresent(argMultimap, PREFIX_PHONE))
+                    ? new Phone("000") : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+            Email email = (!arePrefixesPresent(argMultimap, PREFIX_EMAIL))
+                    ? new Email("null@null.com") : ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+            Address address = (!arePrefixesPresent(argMultimap, PREFIX_ADDRESS))
+                    ? new Address("???") : ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            Bloodtype bloodType = (!arePrefixesPresent(argMultimap, PREFIX_BLOODTYPE))
+                    ? new Bloodtype("???") : ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
+            Remark remark = (!arePrefixesPresent(argMultimap, PREFIX_REMARK))
+                    ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Appointment appointment = new Appointment(name.toString());
             ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark, appointment);
