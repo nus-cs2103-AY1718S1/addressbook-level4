@@ -24,7 +24,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Event#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection) 
+ * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniqueEventList implements Iterable<Event> {
 
