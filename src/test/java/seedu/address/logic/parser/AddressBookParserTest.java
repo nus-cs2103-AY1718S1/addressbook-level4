@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
@@ -19,6 +20,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.AddBirthdayCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -39,6 +41,7 @@ import seedu.address.logic.commands.ShowFavouriteCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -156,6 +159,22 @@ public class AddressBookParserTest {
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORDVAR_1) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
+    }
+
+    @Test
+    public void parseCommand_birthday() throws Exception {
+        final String birthdayName = "240795";
+        Birthday toAdd = new Birthday(birthdayName);
+
+        AddBirthdayCommand command = (AddBirthdayCommand) parser.parseCommand(
+                AddBirthdayCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_BIRTHDAY + birthdayName);
+        AddBirthdayCommand shortCommand = (AddBirthdayCommand) parser.parseCommand(
+                AddBirthdayCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_BIRTHDAY + birthdayName);
+
+        assertEquals(new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd), command);
+        assertEquals(new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd), shortCommand);
     }
 
     @Test
