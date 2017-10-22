@@ -246,6 +246,7 @@ Deletes the `9pmclass` tag from the 1st person in the results of the `find` comm
 If you would like to delete all instances of a particular tag from your *DummyName*: +
 
 .  Type in `all`, followed by the tag you wish to delete. (Figure 2.7.3) +
+`>> deletetag all friends`.
 image:deletetag_3.png[600] +
 _Figure 2.7.3_
 
