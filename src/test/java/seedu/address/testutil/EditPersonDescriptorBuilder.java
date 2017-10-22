@@ -7,7 +7,6 @@ import java.util.Optional;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
-import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -116,7 +115,7 @@ public class EditPersonDescriptorBuilder {
      * Parses the {@code Date} into a {@code EditPersonDescriptor}
      * that we are building.
      */
-    public EditPersonDescriptorBuilder withDate(String date ) {
+    public EditPersonDescriptorBuilder withDate(String date) {
         try {
             ParserUtil.parseDate(Optional.of(date)).ifPresent(descriptor::setDate);
         } catch (ParseException e) {
