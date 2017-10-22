@@ -360,12 +360,6 @@ There is no need to save manually.
 
 === Log in window for a user
 
-=== UniCity as an online application
-
-=== Database to check for UniCity users
-
-=== Facebook command to search for contacts on Facebook
-
 === Automatic pop-up help window for new users
 
 === Event reminders for a person
