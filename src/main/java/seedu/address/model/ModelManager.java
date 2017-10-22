@@ -107,15 +107,6 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    @Override
-    public void updateBookedSlotSet() {
-        bookedList.clear();
-        for(ReadOnlyLesson lesson : addressBook.getLessonList()) {
-            BookedSlot slot = new BookedSlot(lesson.getLocation(), lesson.getTimeSlot());
-            bookedList.add(slot);
-        }
-    }
-
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
@@ -174,6 +165,20 @@ public class ModelManager extends ComponentManager implements Model {
         } else {
             throw new DuplicateBookedSlotException();
         }
+    }
+
+    @Override
+    public void updateBookedSlotSet() {
+        bookedList.clear();
+        for(ReadOnlyLesson lesson : addressBook.getLessonList()) {
+            BookedSlot slot = new BookedSlot(lesson.getLocation(), lesson.getTimeSlot());
+            bookedList.add(slot);
+        }
+    }
+
+    @Override
+    public void unbookAllSlot(){
+        bookedList.clear();
     }
 
     @Override
