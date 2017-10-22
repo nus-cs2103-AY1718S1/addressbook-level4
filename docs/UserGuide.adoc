@@ -197,9 +197,6 @@ Examples:
 Shows a list of all meetings in the address book. +
 Format: `listMeeting`
 
-****
-
-
 === Editing a meeting : `editmeeting`
 
 Edits an existing meeting in the address book. +
@@ -215,6 +212,41 @@ Examples:
 
 * `edit 1 n/John l/Clementi` +
 Edits the name and location of the 1st meeting to be `John` and `Clementi` respectively.
+
+To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+* `darkRed` : Meeting is in next 24 hours.
+
+image::MeetingCard1.png[width="250"]
+
+* `red` : Meeting is in next 48 hours.
+
+image::MeetingCard2.png[width="250"]
+
+* `orangeRed` : Meeting is in next 72 hours.
+
+image::MeetingCard3.png[width="250"]
+
+=== Locating meetings by name: `findMeeting`
+
+Finds meetings whose names contain any of the given keywords. +
+Format: `findMeeting KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Name of meeting or the name of person user is meeting is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Meetings matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `findMeeting John` +
+Returns `john` and `John Doe`
+* `findMeeting Betsy Tim John` +
+Returns any meeting having names `Betsy`, `Tim`, or `John` as the person to meet
+* `findMeeting Shopping Study John` +
+Returns any meeting having `John` as the person to meet and any meetings having names `Study` and `Shopping`
 
 === Listing entered commands : `history`
 
@@ -310,9 +342,11 @@ e.g. `find James Jake`
 * *List* : `list`
 * *Add Meeting* `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]` +
 e.g. `addmeeting 5 n/Mary Jane d/22-11-2017 l/Vivo City`
-* *Delete Meeting* `dm INDEX` + e.g. `dm 1`
+* *Delete Meeting* `deletemeeting INDEX` + e.g. `dm 1`
 * *Edit Meeting* `editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
-* *List Meeting* : `lm`
+* *List Meeting* : `listmeeting`
+* *Find Meeting* : `findmeeting KeyWORD [MORE_KEYWORDS]` +
+e.g. `find Shopping Study Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
