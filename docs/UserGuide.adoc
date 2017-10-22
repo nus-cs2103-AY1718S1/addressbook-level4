@@ -9,7 +9,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/orgs/CS2103AUG2017-W14-B4/dashboard
+:repoURL: https://github.com/CS2103AUG2017-W14-B4/main
 image::UG_cover.png[width="750", align="left"]
 = Planno - User Guide
 

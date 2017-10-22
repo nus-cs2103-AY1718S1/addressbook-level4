@@ -538,6 +538,19 @@ The sort command object receives the sorted list and creates `CommandResult` obj
 **Cons:** Because address/email/phone number is unique, most of time you could find them without sorting the list. +
 // end::sort[]
 
+=== AddEvent mechanism
+The add event command is facilitated by `LogicManager` class. It allows user to add a new event to the event list. +
+
+The following sequence diagram shows how add event command works:
+
+image::AddEventCommandSequenceDiagram.png[width="800"]
+_Figure 3.4 AddEvent command sequence diagram_
+
+The user enters an addEvent command, which is received by `LogicManager`. `LogicManager` calls `AddressBookParser` to parse the command. +
+`AddressBookParser` will firstly check the format of the parameters. If format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object. +
+`Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses model interface to execute adding operation, and returns `CommandResult`. +
+`Logic Manager` receives the `CommandResult`, and returns to `UI`. +
+
 === ListEvent mechanism
 
 The list event command is facilitated by the `LogicManager` class. It supports listing all the events for user to process.
