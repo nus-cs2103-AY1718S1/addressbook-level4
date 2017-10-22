@@ -19,8 +19,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToTaskListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.tasks.SelectTaskCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.tasks.SelectTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -111,8 +111,8 @@ public class SelectTaskCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToTaskListRequestEvent lastEvent
-            = (JumpToTaskListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        JumpToTaskListRequestEvent lastEvent =
+            (JumpToTaskListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
     }
 

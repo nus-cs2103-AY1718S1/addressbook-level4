@@ -4,17 +4,17 @@ import static seedu.address.commons.core.Messages.MESSAGE_TASK_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalTasks.ASSIGNMENT;
 import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
 import static seedu.address.testutil.TypicalTasks.GYM;
-import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
 import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
+import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.tasks.DeleteTaskCommand;
-import seedu.address.logic.commands.tasks.FindTaskCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.tasks.DeleteTaskCommand;
+import seedu.address.logic.commands.tasks.FindTaskCommand;
 import seedu.address.model.Model;
 
 public class FindTaskCommandSystemTest extends AddressBookSystemTest {
@@ -123,7 +123,7 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertSelectedTaskCardUnchanged();
 
         /* Case: find while a task is selected -> selected card deselected */
-        showALLTasks();
+        showAllTasks();
         selectTask(Index.fromOneBased(1));
         assert !getTaskListPanel().getHandleToSelectedCard()
             .getDescription().equals(BUY_TICKETS.getDescription().taskDescription);

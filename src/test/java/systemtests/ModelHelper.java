@@ -26,19 +26,19 @@ public class ModelHelper {
     }
 
     /**
+     * @see ModelHelper#setFilteredList(Model, List)
+     */
+    public static void setFilteredList(Model model, ReadOnlyPerson... toDisplay) {
+        setFilteredList(model, Arrays.asList(toDisplay));
+    }
+
+    /**
      * Update {@code model}'s filtered task list to display only {@code toDisplay}.
      */
     public static void setFilteredTaskList(Model model, List<ReadOnlyTask> toDisplay) {
         Optional<Predicate<ReadOnlyTask>> predicate =
             toDisplay.stream().map(ModelHelper::getTaskPredicateMatching).reduce(Predicate::or);
         model.updateFilteredTaskList(predicate.orElse(PREDICATE_MATCHING_NO_TASKS));
-    }
-
-    /**
-     * @see ModelHelper#setFilteredList(Model, List)
-     */
-    public static void setFilteredList(Model model, ReadOnlyPerson... toDisplay) {
-        setFilteredList(model, Arrays.asList(toDisplay));
     }
 
     /**

@@ -6,9 +6,9 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_TASK_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTasks.ASSIGNMENT;
-import static seedu.address.testutil.TypicalTasks.QUIZ;
 import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
+import static seedu.address.testutil.TypicalTasks.QUIZ;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,8 +23,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.task.TaskContainsKeywordsPredicate;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.TaskContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindTaskCommand}.
@@ -89,7 +89,8 @@ public class FindTaskCommandTest {
      *     - the {@code FilteredList<ReadOnlyTask>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindTaskCommand command, String expectedMessage, List<ReadOnlyTask> expectedList) {
+    private void assertCommandSuccess(FindTaskCommand command,
+                                      String expectedMessage, List<ReadOnlyTask> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 

@@ -151,7 +151,7 @@ public abstract class AddressBookSystemTest {
     /**
      * Displays all tasks in the address book.
      */
-    protected void showALLTasks() {
+    protected void showAllTasks() {
         executeCommand(ListTasksCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getTaskList().size() == getModel().getFilteredTaskList().size();
     }
