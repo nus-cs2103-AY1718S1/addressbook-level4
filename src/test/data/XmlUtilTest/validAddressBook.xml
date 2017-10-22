@@ -5,8 +5,9 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
-        <birthday isPrivate="false">01/01/1991</birthday>
         <remark></remark>
+        <birthday>01/01/1991</birthday>
+        <favorite></favorite>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -15,6 +16,7 @@
         <address isPrivate="false">81th street</address>
         <birthday isPrivate="false">01/01/1991</birthday>
         <remark></remark>
+        <favorite></favorite>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -23,6 +25,7 @@
         <address isPrivate="false">wall street</address>
         <birthday isPrivate="false">01/01/1991</birthday>
         <remark></remark>
+        <favorite></favorite>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -31,6 +34,7 @@
         <address isPrivate="false">10th street</address>
         <birthday isPrivate="false">01/01/1991</birthday>
         <remark></remark>
+        <favorite></favorite>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -39,6 +43,7 @@
         <address isPrivate="false">michegan ave</address>
         <birthday isPrivate="false">01/01/1991</birthday>
         <remark></remark>
+        <favorite></favorite>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -47,6 +52,7 @@
         <address isPrivate="false">little tokyo</address>
         <birthday isPrivate="false">01/01/1991</birthday>
         <remark></remark>
+        <favorite></favorite>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -55,6 +61,7 @@
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">01/01/1991</birthday>
         <remark></remark>
+        <favorite></favorite>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -63,6 +70,7 @@
         <address isPrivate="false">little india</address>
         <birthday isPrivate="false">01/01/1991</birthday>
         <remark></remark>
+        <favorite></favorite>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -71,5 +79,6 @@
         <address isPrivate="false">chicago ave</address>
         <birthday isPrivate="false">01/01/1991</birthday>
         <remark></remark>
+        <favorite></favorite>
     </persons>
 </addressbook>

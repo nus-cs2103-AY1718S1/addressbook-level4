@@ -150,10 +150,9 @@ class AddressBookTest extends Test {
 
 //help me with my gradle test:p
 task giangTests(type: AddressBookTest) {
-    exclude 'seedu/address/model/**'
-    include 'systemtests/**'
+    include 'seedu/address/ui/**'
+    exclude 'systemtests/**'
     exclude 'guitests/**'
-    exclude 'seedu/address/ui/**'
 
     jacoco {
         destinationFile = new File("${buildDir}/jacoco/test.exec")

@@ -9,6 +9,7 @@
         <postalCode></postalCode>
         <city></city>
         <remark></remark>
+        <birthday>01/01/1991</birthday>
         <birthday></birthday>
     </persons>
     <tags>

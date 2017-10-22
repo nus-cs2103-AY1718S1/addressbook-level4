@@ -67,6 +67,12 @@ public class CommandBoxTest extends GuiUnitTest {
 
         guiRobot.push(KeyCode.A);
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+
+        commandBoxHandle.setText("fi");
+        assertInputHistory(KeyCode.TAB, "find");
+
+        commandBoxHandle.setText("del");
+        assertInputHistory(KeyCode.TAB, "delete");
     }
 
     @Test

@@ -3,7 +3,6 @@ package systemtests;
 
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
@@ -21,6 +20,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FavoriteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Person;
@@ -122,7 +122,8 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(FavoriteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_FAVORITE_COMMAND_FORMAT);
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("FaVORIte 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("FaVORIte 1",
+                AddressBookParser.getUnknownRecommendedCommand("FavORIte"));
     }
 
     /**
