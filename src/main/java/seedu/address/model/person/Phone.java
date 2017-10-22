@@ -18,7 +18,7 @@ public class Phone {
 
     /**
      * Validates given phone number.
-     *
+     * An exception to the ILLegalValueException is the String "Unspecified phone number"
      * @throws IllegalValueException if given phone string is invalid.
      */
     public Phone(String phone) throws IllegalValueException {

@@ -59,7 +59,8 @@ public class ParserUtil {
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(new Phone("<Unspecified phone number>"));
+        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(
+                new Phone("<Unspecified phone number>"));
     }
 
     /**
@@ -69,7 +70,8 @@ public class ParserUtil {
      */
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
         requireNonNull(address);
-        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.of(new Address("<Unspecified address>"));
+        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.of(
+                new Address("<Unspecified address>"));
     }
 
     /**

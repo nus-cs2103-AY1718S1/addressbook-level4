@@ -18,7 +18,7 @@ public class Email {
 
     /**
      * Validates given email.
-     *
+     * An exception to the ILLegalValueException is the String "Unspecified email"
      * @throws IllegalValueException if given email address string is invalid.
      */
     public Email(String email) throws IllegalValueException {
