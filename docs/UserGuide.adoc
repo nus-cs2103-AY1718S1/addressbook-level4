@@ -81,15 +81,15 @@ Format: `help`
 === Adding a parcel: `add`
 
 Adds a parcel to Ark +
-Format: `add #/TRACKING_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERYDATE s/STATUS [t/TAG]...`
+Format: `add #/TRACKING_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERYDATE [t/TAG]...`
 
 [TIP]
 A parcel can have any number of tags (including 0)
 
 Examples:
 
-* `add #/RR000000000SG n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001 s/pending`
-* `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 s/pending e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
+* `add #/RR000000000SG n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001`
+* `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
  t/fragile`
 
 === Listing all parcels : `list`
@@ -169,7 +169,7 @@ Deletes the 1st parcel in the results of the `find` command.
 
 Selects the parcel identified by the index number used in the last parcel listing
 and expands the browser section in th main window. The browser section will then show a google map search
-of the selected parcel's delivery address. +
+of the selected parcel's delivery address (postal code). +
 Format: `select INDEX`
 
 [TIP]
@@ -185,7 +185,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd parcel in the Ark.
+Selects the 2nd parcel in the Ark. Expands browser section.
 * `find Betsy` +
 `select 1` +
 Selects the 1st parcel in the results of the `find` command.
@@ -308,7 +308,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [#/TRACKING_NUMBER] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERY_DATE] [s/STATUS] [t/TAG]...` +
+* *Edit* : `edit INDEX [#/TRACKING_NUMBER] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERY_DATE] [t/TAG]...` +
 e.g. `edit 2 #/RR000000000SG n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
