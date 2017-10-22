@@ -25,6 +25,10 @@ public interface ReadOnlyLesson {
     Group getGroup();
     ObjectProperty<Code> codeProperty();
     Code getCode();
+    ObjectProperty<Boolean> isMarkedProperty();
+    void setAsMarked();
+    void setAsUnmarked();
+    boolean isMarked();
     ObjectProperty<UniqueLecturerList> lecturersProperty();
     Set<Lecturer> getLecturers();
 

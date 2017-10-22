@@ -96,7 +96,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the given lesson {@code target} in the list with {@code editedReadOnlyLesson}.
+     * Adds a lesson to the favourite list.
+     * Only person exists in the Address Book can be added into the favourite list.
+     *
+     * @throws DuplicateLessonException if an equivalent lesson already exists.
+     */
+    public void bookmarkLesson(ReadOnlyLesson m) throws DuplicateLessonException {
+        m.setAsMarked();
+    }
+
+    /**
+     * Replaces the given lesson {@code target} in the list with {@code editedReadOnlyLesson}, and updates favourite
+     * list.
      * {@code AddressBook}'s lecturers list will be updated with the lecturers of {@code editedReadOnlyLesson}.
      *
      * @throws DuplicateLessonException if updating the lesson's details causes the lesson to be equivalent to
