@@ -1,7 +1,10 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Rule;
@@ -62,5 +65,31 @@ public class BorrowCommandTest {
         thrown.expectMessage(Debt.MESSAGE_DEBT_CONSTRAINTS);
 
         Debt debtAmount = new Debt(INVALID_DEBT_FIGURE);
+    }
+
+    @Test
+    public void equals() {
+        try {
+            BorrowCommand borrowFirstCommand = new BorrowCommand(INDEX_FIRST_PERSON, new Debt("50000"));
+            BorrowCommand borrowSecondCommand = new BorrowCommand(INDEX_SECOND_PERSON, new Debt("20000"));
+
+            // same object -> returns true
+            assertTrue(borrowFirstCommand.equals(borrowFirstCommand));
+
+            // same values -> returns true
+            BorrowCommand borrowFirstCommandCopy = new BorrowCommand(INDEX_FIRST_PERSON, new Debt("50000"));
+            assertTrue(borrowFirstCommand.equals(borrowFirstCommandCopy));
+
+            // different types -> returns false
+            assertFalse(borrowFirstCommand.equals(1));
+
+            // null -> returns false
+            assertFalse(borrowFirstCommand.equals(null));
+
+            // different person -> returns false
+            assertFalse(borrowFirstCommand.equals(borrowSecondCommand));
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        }
     }
 }
