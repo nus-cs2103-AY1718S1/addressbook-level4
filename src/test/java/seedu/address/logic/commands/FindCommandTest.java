@@ -89,21 +89,21 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_Keyword_noPersonFound() throws Exception{
+    public void execute_keyword_noPersonFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand(" n/Bob");
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() throws Exception{
+    public void execute_multipleKeywords_multiplePersonsFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand(" n/Kurz n/Elle n/Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     @Test
-    public void execute_multipleTagKeywords_multiplePersonFound() throws Exception{
+    public void execute_multipleTagKeywords_multiplePersonFound() throws Exception {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         FindCommand command = prepareCommand(" t/owesMoney");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
@@ -112,7 +112,7 @@ public class FindCommandTest {
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private FindCommand prepareCommand(String userInput) throws Exception{
+    private FindCommand prepareCommand(String userInput) throws Exception {
         FindCommandParser parser = new FindCommandParser();
 
         FindCommand command = parser.parse(userInput);

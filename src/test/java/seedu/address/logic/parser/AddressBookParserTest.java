@@ -8,7 +8,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -38,7 +37,6 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.FieldContainsKeywordsPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
@@ -142,7 +140,7 @@ public class AddressBookParserTest {
     public void parseCommand_remove() throws Exception {
         Tag tag = new Tag("friends");
         RemoveCommand command = (RemoveCommand) parser.parseCommand(
-                RemoveCommand.COMMAND_WORD + " friends 1" );
+                RemoveCommand.COMMAND_WORD + " friends 1");
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tag);

@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.FieldContainsKeywordsPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 
