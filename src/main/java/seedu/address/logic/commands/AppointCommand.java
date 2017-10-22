@@ -37,7 +37,7 @@ public class AppointCommand extends UndoableCommand {
     private final Appoint appoint;
 
     /**
-     * @param index of the person in the filtered person list to edit the appoint
+     * @param index   of the person in the filtered person list to edit the appoint
      * @param appoint of the person
      */
     public AppointCommand(Index index, Appoint appoint) {
