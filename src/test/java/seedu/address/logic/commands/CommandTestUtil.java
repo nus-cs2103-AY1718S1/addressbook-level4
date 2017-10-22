@@ -63,17 +63,17 @@ public class CommandTestUtil {
     public static final String INVALID_BIRTHDAY_DESC = " " + PREFIX_BIRTHDAY; //empty String not allowed for birthday
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
-    public static final String VALID_DESCRIPTION_INTERNSHIP = "Apply for Google internship";
-    public static final String VALID_DESCRIPTION_GRAD_SCHOOL = "Graduate school applications";
-    public static final String VALID_STARTDATE_INTERNSHIP = "20-10-2017";
-    public static final String VALID_STARTDATE_GRAD_SCHOOL = "12-09-2017";
+    public static final String VALID_DESCRIPTION_INTERNSHIP = " " + "Apply for Google internship" + " ";
+    public static final String VALID_DESCRIPTION_GRAD_SCHOOL = " " + "Graduate school applications" + " ";
+    public static final String VALID_STARTDATE_INTERNSHIP = "20-10-2017  ";
+    public static final String VALID_STARTDATE_GRAD_SCHOOL = "12-09-2017 ";
     public static final String VALID_DEADLINE_INTERNSHIP = "03-12-2017";
     public static final String VALID_DEADLINE_GRAD_SCHOOL = "01-01-2018";
 
-    public static final String STARTDATE_DESC_INTERNSHIP = PREFIX_START_DATE + VALID_STARTDATE_INTERNSHIP;
-    public static final String STARTDATE_DESC_GRAD_SCHOOL = PREFIX_START_DATE + VALID_STARTDATE_GRAD_SCHOOL;
-    public static final String DEADLINE_DESC_INTERNSHIP = PREFIX_DEADLINE + VALID_STARTDATE_INTERNSHIP;
-    public static final String DEADLINE_DESC_GRAD_SCHOOL = PREFIX_DEADLINE + VALID_STARTDATE_GRAD_SCHOOL;
+    public static final String STARTDATE_DESC_INTERNSHIP = PREFIX_START_DATE + " " + VALID_STARTDATE_INTERNSHIP;
+    public static final String STARTDATE_DESC_GRAD_SCHOOL = PREFIX_START_DATE + " " + VALID_STARTDATE_GRAD_SCHOOL;
+    public static final String DEADLINE_DESC_INTERNSHIP = PREFIX_DEADLINE + " " + VALID_DEADLINE_INTERNSHIP;
+    public static final String DEADLINE_DESC_GRAD_SCHOOL = PREFIX_DEADLINE + " " + VALID_DEADLINE_GRAD_SCHOOL;
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

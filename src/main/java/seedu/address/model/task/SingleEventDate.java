@@ -17,7 +17,7 @@ public class SingleEventDate extends TaskDates {
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public SingleEventDate(String date) throws IllegalValueException {
+    public SingleEventDate(String date) {
         requireNonNull(date);
         this.date = date.trim();
     }

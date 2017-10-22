@@ -61,11 +61,7 @@ public class TaskBuilder {
      * Sets the {@code StartDate} of the {@code Task} that is being built.
      */
     public TaskBuilder withStartDate(String startDate) {
-        try {
-            this.task.setStartDate(new StartDate(startDate));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("Date is expected to be in the format dd-MM-yyyy.");
-        }
+        this.task.setStartDate(new StartDate(startDate));
         return this;
     }
 
@@ -73,11 +69,7 @@ public class TaskBuilder {
      * Sets the {@code Deadline} of the {@code Task} that is being built.
      */
     public TaskBuilder withDeadline(String deadline) {
-        try {
-            this.task.setDeadline(new Deadline(deadline));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("Date is expected to be in the format dd-MM-yyyy.");
-        }
+        this.task.setDeadline(new Deadline(deadline));
         return this;
     }
 
@@ -85,11 +77,7 @@ public class TaskBuilder {
      * Sets the {@code SingleEventDate} of the {@code Task} that is being built.
      */
     public TaskBuilder withSingleEventDate(String singleEventDate) {
-        try {
-            this.task.setSingleEventDate(new SingleEventDate(singleEventDate));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("Date is expected to be in the format dd-MM-yyyy.");
-        }
+        this.task.setSingleEventDate(new SingleEventDate(singleEventDate));
         return this;
     }
 

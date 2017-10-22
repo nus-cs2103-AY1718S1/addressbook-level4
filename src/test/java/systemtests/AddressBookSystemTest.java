@@ -130,6 +130,14 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Displays all tasks in the address book.
+     */
+    protected void showAllTasks() {
+        executeCommand(ListCommand.COMMAND_WORD);
+        assert getModel().getAddressBook().getTaskList().size() == getModel().getFilteredTaskList().size();
+    }
+
+    /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
@@ -170,6 +178,7 @@ public abstract class AddressBookSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
+        getTaskListPanel().rememberSelectedTaskCard();
     }
 
     /**
@@ -256,6 +265,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
+            assertTaskListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
