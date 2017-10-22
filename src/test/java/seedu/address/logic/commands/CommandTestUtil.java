@@ -52,6 +52,14 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_ADDRESS_BLOCK_DESC = " "
+            + PREFIX_ADDRESS + "$, Cray, 43"; // '$' not allowed in block
+    public static final String INVALID_ADDRESS_STREET_DESC = " "
+            + PREFIX_ADDRESS + "21, %Cray, 43"; // '%' not allowed in street
+    public static final String INVALID_ADDRESS_UNIT_DESC = " "
+            + PREFIX_ADDRESS + "2, Cray, #90-@, 90"; // '@' not allowed in unit
+    public static final String INVALID_ADDRESS_POSTALCODE_DESC = " "
+            + PREFIX_ADDRESS + "1, Cray, $"; // '$' not allowed in postal code
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
