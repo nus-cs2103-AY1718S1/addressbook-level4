@@ -31,7 +31,7 @@
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <FlowPane fx:id="schedules"/>
+      <FlowPane fx:id="schedules" orientation="VERTICAL" prefWrapLength="-NaN"/>
     </VBox>
   </GridPane>
 </HBox>
