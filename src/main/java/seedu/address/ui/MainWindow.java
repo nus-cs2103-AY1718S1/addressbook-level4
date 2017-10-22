@@ -213,24 +213,28 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleSwitchToContacts() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
     @Subscribe
     public void handleSwitchToContacts(SwitchToContactsListEvent event) {
+        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
     @FXML
     private void handleSwitchToEvents() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
     }
 
     @Subscribe
     public void handleSwitchToEvents(SwitchToEventsListEvent event) {
+        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
     }

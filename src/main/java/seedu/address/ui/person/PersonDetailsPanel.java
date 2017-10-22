@@ -1,8 +1,13 @@
 package seedu.address.ui.person;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.UiPart;
@@ -18,11 +23,35 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
     @FXML
     private Label name;
+    @FXML
+    private ListView<Label> propertyListKeys;
+    @FXML
+    private ListView<Label> propertyListValues;
 
     public PersonDetailsPanel(ReadOnlyPerson person) {
         super(FXML);
         this.person = person;
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        person.properties().addListener((observable, oldValue, newValue) -> bindProperties());
+        bindProperties();
     }
 
+    /**
+     * Binds all properties of this person to a {@link ListView} of key-value pairs.
+     */
+    private void bindProperties() {
+        List<Label> keys = new ArrayList<>();
+        List<Label> values = new ArrayList<>();
+
+        person.getProperties().forEach(property -> {
+            Label newPropertyKey = new Label(property.getFullName());
+            Label newPropertyValue = new Label(property.getValue());
+
+            keys.add(newPropertyKey);
+            values.add(newPropertyValue);
+        });
+
+        propertyListKeys.setItems(FXCollections.observableList(keys));
+        propertyListValues.setItems(FXCollections.observableList(values));
+    }
 }

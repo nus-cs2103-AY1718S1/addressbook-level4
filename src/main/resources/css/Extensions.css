@@ -30,5 +30,11 @@
 .details-name-huge-label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 40px;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #fffde7;
+}
+
+.details-property-key {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
 }
