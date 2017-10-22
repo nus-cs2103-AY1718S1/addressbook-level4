@@ -20,7 +20,9 @@ To be filled.
 
 == About
 
-To be filled.
+This user guide serves as an overview on using PIMP. This user guide also gives a reference of commands available within the application, as well as tips and examples on using it.
+
+This user guide is simple and intuitive enough for anyone to understand. Gone are the days of you asking your techie friends what a certain technical jargon means.
 
 == Quick Start
 
