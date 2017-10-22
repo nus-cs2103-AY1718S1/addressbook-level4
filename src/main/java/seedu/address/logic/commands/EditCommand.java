@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -103,7 +104,7 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> updatedTags = editPersonDescriptor.getXorTags(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
     }
@@ -188,6 +189,26 @@ public class EditCommand extends UndoableCommand {
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
+        }
+
+        /**
+         * Returns a union-exclusive set between the {@code tags}
+         * of the {@code EditPersonDescriptor} and an arbitrary
+         * Set of tags {@code otherSet} to be exclusive against.
+         *
+         * @param otherSet to be XOR-ed to.
+         * @return a new union-exclusive set of tags.
+         */
+        public Set<Tag> getXorTags(Set<Tag> otherSet) {
+            if (tags == null) {
+                return otherSet;
+            }
+            Set<Tag> tagsCopy = new HashSet<>(tags);
+            Set<Tag> xorSet = new HashSet<>(tagsCopy);
+            xorSet.addAll(otherSet);
+            tagsCopy.retainAll(otherSet);
+            xorSet.removeAll(tagsCopy);
+            return xorSet;
         }
 
         public Optional<Set<Tag>> getTags() {
