@@ -30,13 +30,24 @@ image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
++
+image::Ui_help.png[width="790"]
++
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
+.  The following is an example of a successful execution of commands.
++
+image::Ui_success.PNG[width="790"]
++
 
+.  The following is an example of a unsuccessful execution of commands.
++
+image::Ui_short_error.PNG[width="790"]
++
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
@@ -48,6 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Autocomplete options show up upon input
 ====
 
 === Viewing help : `help`
@@ -66,6 +78,41 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+
+=== Adding a temporary person:
+
+Adds a temporary person to the address book which will be deleted the next time address book opens +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/temporary [t/TAG]...`
+
+[TIP]
+User can supply the temporary tag before or after any other tag
+
+Examples:
+
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/temporary t/criminal`
+
+=== Adding a picture: `GUI image`
+
+Adds a picture of a person to the address book +
+Format: `click on the placeholder image after adding the person into the addressbook`
+
+[TIP]
+One person can only have 1 picture, adding additional images replaces the current one
+
+Examples:
+
+image::add_person.png[width="400"]
+
+=== Deleting a picture: `GUI button`
+
+Deletes a person's picture from the address book +
+Format: `click on the placeholder image after adding the person into the addressbook`
+
+Examples:
+
+image::delete_person.png[width="400"]
+
 
 === Listing all persons : `list`
 
@@ -227,6 +274,30 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Back up of data : `backup`
+
+Address book data can be stored in a back up file when necessary. This is good in case any the existing address book is corrupted. +
+Format: `backup`
+
+=== Import data : `import` (Since v1.2)
+
+Add contact details from external xml file into current address book. +
+Format: import FILE_PATH
+
+****
+* Adds all person that is not already in the address book.
+* The FILE_PATH must contain a valid xml file.
+****
+
+Examples:
+
+* `import C:\Desktop\colleagues.xml` +
+Imports colleagues.xml into current address book.
+
+=== Facebook Search (coming in V2.0)
+
+Query Facebook using list of emails from address book.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -250,3 +321,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Backup* : `backup`

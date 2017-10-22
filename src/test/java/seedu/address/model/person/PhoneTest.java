@@ -21,5 +21,8 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
         assertTrue(Phone.isValidPhone("93121534"));
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
+
+        // default empty phone
+        assertTrue(Phone.isValidPhone("Not Set"));
     }
 }

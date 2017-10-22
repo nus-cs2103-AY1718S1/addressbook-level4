@@ -44,6 +44,7 @@ public class MainApp extends Application {
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
+    private static Storage backup;
     protected Ui ui;
     protected Logic logic;
     protected Storage storage;
@@ -63,6 +64,7 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        backup = storage;
 
         initLogging(config);
 
@@ -204,6 +206,10 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
+    }
+
+    public static Storage getBackup() {
+        return backup;
     }
 
     public static void main(String[] args) {

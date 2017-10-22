@@ -23,12 +23,24 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private AutoComplete autoCompleteList;
 
     public LogicManager(Model model) {
         this.model = model;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+        this.autoCompleteList = new AutoComplete(model);
+    }
+
+    @Override
+    public void updateAutoCompleteList(String userInput) {
+        autoCompleteList.updateAutoCompleteList(userInput);
+    }
+
+    @Override
+    public String[] getAutoCompleteList() {
+        return autoCompleteList.getAutoCompleteList();
     }
 
     @Override
@@ -39,6 +51,8 @@ public class LogicManager extends ComponentManager implements Logic {
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
+            autoCompleteList.resetAutocompleteList();
+            autoCompleteList.updatePersonsArray();
             return result;
         } finally {
             history.add(commandText);

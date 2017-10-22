@@ -1,7 +1,11 @@
 package seedu.address.ui;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
+import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -29,6 +33,7 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
+    private SuggestionProvider suggestions;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -36,6 +41,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        suggestions = SuggestionProvider.create((Arrays.asList(logic.getAutoCompleteList())));
+        TextFields.bindAutoCompletion(commandTextField, suggestions);
     }
 
     /**
@@ -56,7 +63,10 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-            // let JavaFx handle the keypress
+            // Update textfield autocomplete options
+            logic.updateAutoCompleteList(commandTextField.getText());
+            suggestions.clearSuggestions();
+            suggestions.addPossibleSuggestions(Arrays.asList(logic.getAutoCompleteList()));
         }
     }
 
