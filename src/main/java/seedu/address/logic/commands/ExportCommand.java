@@ -27,7 +27,6 @@ public class ExportCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_EXPORT_PERSON_SUCCESS = "Export Success";
     private final Index targetIndex;
 
     /**
@@ -65,6 +64,13 @@ public class ExportCommand extends Command {
         personToExport.getTags().forEach(builder::append);
         return new CommandResult(builder.toString());
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExportCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ExportCommand) other).targetIndex)); // state check
     }
 
 }
