@@ -22,13 +22,13 @@ public class UnfavouriteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_UNFAVOURITE_PERSON_SUCCESS = "Unfavourited Person: %1$s";
+    public static final String MESSAGE_UNFAVOURITE_PERSON_FAIL = "Person is not favourited";
 
     private final Index targetIndex;
 
     public UnfavouriteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
-
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -40,6 +40,10 @@ public class UnfavouriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToUnfavourite = lastShownList.get(targetIndex.getZeroBased());
+
+        if (personToUnfavourite.getFavourite().equals(false)) {
+            throw new CommandException(MESSAGE_UNFAVOURITE_PERSON_FAIL);
+        }
 
         try {
             model.unfavouritePerson(personToUnfavourite);

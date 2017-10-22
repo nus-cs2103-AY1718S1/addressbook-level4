@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.favouriteFirstPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -25,15 +26,28 @@ public class UnfavouriteCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndex_success() throws Exception {
-        ReadOnlyPerson personToFavourite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+    public void execute_validIndexValidPerson_success() throws Exception {
+        favouriteFirstPerson(model);
+        ReadOnlyPerson personToUnfavourite = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         UnfavouriteCommand unfavouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(UnfavouriteCommand.MESSAGE_UNFAVOURITE_PERSON_SUCCESS,
-                personToFavourite);
+                personToUnfavourite);
         CommandResult commandResult = unfavouriteCommand.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_validIndexInvalidPerson_success() throws Exception {
+        UnfavouriteCommand unfavouriteCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+        try {
+            unfavouriteCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException e) {
+            assertEquals(UnfavouriteCommand.MESSAGE_UNFAVOURITE_PERSON_FAIL, e.getMessage());
+        }
     }
 
     @Test

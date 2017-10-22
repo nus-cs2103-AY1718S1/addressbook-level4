@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new UnfavouriteCommand object
  */
-public class UnfavouriteCommandParser {
+public class UnfavouriteCommandParser implements Parser<UnfavouriteCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the UnfavouriteCommand

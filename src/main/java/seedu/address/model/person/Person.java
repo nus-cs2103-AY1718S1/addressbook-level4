@@ -28,15 +28,15 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Website> website;
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
-    private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Boolean> favourite;
+    private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, HomeNumber homeNumber, Email email, SchEmail schEmail,
                   Website website, Address address,
-                  Birthday birthday, Set<Tag> tags) {
+                  Birthday birthday, Boolean favourite, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, birthday, tags);
 
         this.name = new SimpleObjectProperty<>(name);
@@ -47,9 +47,9 @@ public class Person implements ReadOnlyPerson {
         this.website = new SimpleObjectProperty<>(website);
         this.address = new SimpleObjectProperty<>(address);
         this.birthday = new SimpleObjectProperty<>(birthday);
+        this.favourite = new SimpleObjectProperty<>(favourite);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.favourite = new SimpleObjectProperty<>(false);
     }
 
     /**
@@ -59,7 +59,7 @@ public class Person implements ReadOnlyPerson {
 
         this(source.getName(), source.getPhone(), source.getHomeNumber(), source.getEmail(), source.getSchEmail(),
                 source.getWebsite(), source.getAddress(),
-                source.getBirthday(), source.getTags());
+                source.getBirthday(), source.getFavourite(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -220,7 +220,7 @@ public class Person implements ReadOnlyPerson {
         // use this method for custom fields hashing instead of implementing your own
 
         return Objects.hash(name, phone, email, schEmail, website,
-                address, birthday, tags);
+                address, birthday, favourite, tags);
     }
 
     @Override
