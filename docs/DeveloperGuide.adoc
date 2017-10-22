@@ -1,4 +1,4 @@
-= ConnectUs - Developer Guide
+= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-W15-B3/main
+:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `W15-B3`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -218,88 +218,6 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-=== Email Function
-
-The email function allows a user to email the selected person by opening an email client on the user's
-PC with the 'to:' field filled with the receiver's email.
-
-This function has been mapped to `EmailButton`
-
-Once a `PersonPanelSelectionChangedEvent` is raised, `EmailButton` will save the currently selected
-email under the "email" attribute.
-[source,java]
-----
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        this.selectedEmail = event.getNewSelection().person.emailProperty().getValue().toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    }
-----
-
-
-The following sequence diagram describes how `OpenEmailClient` passes in the "email" attribute to `Desktop`
-
-image::OpenEmailClientSequenceDiagram.png[width="800"]
-
-
-=== Mapping a command to a JavaFX Button
-
-This section describes how a command can be mapped to a JavaFX button.
-
-We will use the `DeleteButton` as an example but it can work for any command currently availble
-in the application.
-
-To initialise the button, we have to create a `StackPane` placeholder for it in `MainWindow`
-[source,java]
-----
-@FXML
-    private StackPane deleteButtonPlaceholder;
-----
-Next, we create the `DeleteButton` class with the following constructor:
-[source,java]
-----
-    public DeleteButton(Logic logic, int selectedIn) {
-        super(FXML);
-        this.logic = logic;
-        this.selectedIndex = selectedIn;
-        registerAsAnEventHandler(this);
-    }
-----
-
-The `DeleteButton` will be instatiated in `MainWindow` where the
-placeholder adds the corresponding button element:
-[source,java]
-----
-
-        deleteButton = new DeleteButton(logic, 0);
-        deleteButtonPlaceholder.getChildren().add(deleteButton.getRoot());
-----
-
-Once a `PersonPanelSelectionChangedEvent` is raised, `DeleteButton` will save the currently selected
-index under the "selectedIndex" attribute.
-
-The `DeleteButton` has an instance of  `Logic` and `CommandResult` which performs a similar function
-to `CommandBox`.
-
-When the DeleteButton is pressed, it will be handled by the handleDeleteButtonPressed() function:
-
-[source,java]
-----
- @FXML
-    private void handleDeleteButtonPressed() throws CommandException, ParseException {
-        CommandResult commandResult = logic.execute("delete " + getSelectedIndex());
-        logger.info("Result: " + commandResult.feedbackToUser);
-    }
-----
-
-
-
-
-
-
-
-
-
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -445,131 +363,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
-// tag::ImportCommand[]
-=== Import Command
-
-The import command is a new feature implemented that allows the user to import contact details directly from some external source.
-
-The logic is implemented by reading the external source file and then retrieving the relevant contact details by reading the file line by line.
-
-Once the required information (name, email, address, phone number) is retrieved from the data, a Person object will be created and the Model will then add the person into the address book.
-
-* The user will first enter the command `import FILENAME.vcf` where the `FILENAME` is the name of the file.
-
-* Next, the `AddressBookParser` class will retrieve the command as well as the argument and then call the `ImportCommandParser` class with the `FILENAME` as the argument.
-
-* Then, in the `ImportCommandParser` class the file will be retrieved by the java `FILE` class which will access and convert the file into a byte stream using `bufferedReader` and `fileReader` class.
-
-* Once the file is loaded into the `bufferedReader`, the `ImportCommandParser` class will read the file line by line to identify the required contact information that is inside the file.
-
-* The class uses simple String comparison to identify key words such as "FN" for name and "EMAIL" for email address etc.
-
-* Once the line reads the keyword "END", it means that the end of the first contact has been accessed and all its required values were all retrieved by the class.
-
-* Then using the informaton the class retrieved, it will then create a `Person` object. This object is then stored inside a `ReadOnlyPerson` array.
-
-* When all the contact in the file has been accessed and created as a `Person` object and stored inside the array, the `ImportCommandParser` will then return a new `ImportCommand()` will will parse the array to the `ImportCommand` class for execution.
-
-* The `ImportCommand` class will retrieve the `ReadOnlyPerson` array that was parsed into its' constructor and then loop through the array and add each `Person` object into the addressbook.
-
-* Lastly, the `ImportCommand` class will return a success message to inform the user that all the contacts has been imported.
-
-==== Design Considerations
-
-**Aspect:** The types of file that can be imported using the Import command. +
-**Alternative 1 (current choice):** Currently, the import command can only read files that has the extension `.vcf`. +
-**Pros:** Multi platform compatibility and the format in `.vcf` file enables the program to retrieve the information easily. +
-**Cons:** Since the logic is written specifically for `.vcf` files, we will have to rewrite the logic if we want to support other file types in the future. +
-**Alternative 2:** use `.csv` file as the import source +
-**Pros:** Format is simple, each value is separated by a comma. +
-**Cons:** Values in the file will have a hard time to be mapped into each variable as each value is only separated by a comma, mistakes can be made when trying to map each values into each category. +
-
----
-
-**Aspect:** Which directory to access the source file. +
-**Alternative 1 (current choice):** Currently, the file has to be stored in /main directory. +
-**Pros:** Easy to develop the logic as there is only one filepath . +
-**Cons:** User will have to specifically place the file in the /main directory which does not really make sense. +
-**Alternative 2:** Create a `File upload` function. +
-**Pros:** User friendly. User can upload a file that is residing in any part of the user's PC. Does not require user to specifically place the file at the /data directory. +
-**Cons:** Requires an `Upload` button to be created, involves UI component. Requires more time to develop the upload function. +
-
-// end::ImportCommand[]
-
-// tag::filtertag[]
-
-=== Filter by tag mechanism
-
-The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. The keywords inputted by the user is put into a List<String> and
-then parses into `TagContainsKeywordsPredicate` which will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person
-that has the tags similar to the keywords. +
-After which, the predicate returned by `TagContainsKeywordsPredicate` will then update the filtered list when it is parsed into the method updateFilteredPersonList(Predicate) which belongs to the `Model` class. +
-The filtered list size is then parsed into the getMessageForPersonListShownSummary(int) which will return the `CommandResult` to show to the user. +
-The result will be the message showing the amount of persons in the filtered list and the display of the filtered list. +
-The tag command is not undoable so it will just override execute().
-
-==== Design Considerations
-**Aspect:** Implementation logic of `TagCommand` +
-**Alternative 1 (current choice):** Keywords(case-insensitive) that are substrings or equal to the tag names will match +
-**Pros:** Easy and convenient for users to search for specific tags. +
-**Cons:** If the user only type a common letter or substring found in all tag names, more persons will be returned which makes it difficult to search for the specific tag. +
-**Alternative 2:** Only keywords(case-sensitive) that are exactly equal to the tag names will match +
-**Pros:** Results in an accurate filtered list  +
-**Cons:** Requires user to type the exact tag name which makes it inconvenient. As convenience is more important, Alternative 1 is chosen. +
-
-// tag::removetag[]
-=== Remove tag mechanism
-
-The remove tag mechanism is implemented by `Logic` and `Model`. When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
-The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
-In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
-`ModelManager` which implements `Model`. The method removes any tags of a person that matches the tag in the ArrayList. +
-The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
-and then removes the `Tag` that is parsed into the method. The setTags is then set for the newPerson and the updatePerson(oldPerson, newPerson) method is subsequently called to update the `Person` in the `AddressBook`.
-`RemoveTagCommand` also handles the checking of whether the Tag(keyword) matches any of the existing tags in ConnectUs.
-[NOTE]
-If the keywords is not identical to any of the existing tag names, 'CommandResult' will notify the user that no tags has been removed. Otherwise, a success message will be shown.
-
-The remove tag command is undoable so it will execute and override executeUndoableCommand() instead of overriding execute().
-
-The following sequence diagram shows how the remove tag operation works:
-
-image::removeTag_sequenceDiagram.png[width="800"]
-
-==== Design Considerations
-**Aspect:** Implementation logic of `RemoveTagCommand` +
-**Alternative 1 (current choice):** Only keywords(case-sensitive) that are exactly equal to the tag names will match +
-**Pros:** Ensures that only the tag specified by the user gets deleted.  +
-**Cons:** Requires user to type the exact tag name which makes it inconvenient. +
-**Alternative 2 (current choice):** Keywords(case-insensitive) that are substrings or equal to the tag names will match +
-**Pros:** More convenient for users to type. +
-**Cons:** If the user only type a common letter or substring found in all tag names, some tags which may not be what the user wanted may get deleted.
- Even though the command can be undone, it is undesirable to have this logic when deleting. +
-
----
-
-**Aspect:** Data structure to support the `RemoveTagCommand` +
-**Alternative 1 (current choice):** Use an ArrayList<Tag> to store the keywords +
-**Pros:** Compares between the same object Tag which can ensure that only the tag specified by the user gets deleted.  +
-**Cons:** Requires more overhead at creating the object Tag for each keyword +
-**Alternative 2 (current choice):** Use an ArrayList<String> to store the keywords +
-**Pros:** Less overhead as can compare between keyword strings and tag name strings +
-**Cons:** Further implementation and checks required to check that the keyword is identical to the tag name +
-
-=== Change colour theme mechanism
-The changing of colour theme feature is added for users to choose their preferred colour theme. The colour theme options are implemented by the `UI`
-on the `MainWindow` MenuBar as MenuItems. +
-When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem
-will trigger the onAction method "handleWhiteTheme". The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets
-that belongs to other colours. +
-The diagrams shows the UI of the additional colour themes:
-
-image::whiteThemeUI.png[width="800"]
-_Figure 3.6.1 : White Theme_
-
-image::greenThemeUI.png[width="800"]
-_Figure 3.6.2 : Green Theme_
 
 == Documentation
 
@@ -984,7 +777,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all link:#use-case[use cases] below, the *System* is the `ConnectUs` and the *Actor* is the `user`, unless specified otherwise)
+(For all link:#use-case[use cases] below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -992,9 +785,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  ConnectUs shows a list of persons
+2.  AddressBook shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  ConnectUs deletes the person
+4.  AddressBook deletes the person
 +
 Use case ends.
 
@@ -1008,7 +801,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. ConnectUs shows an error message.
+** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1017,7 +810,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to add person
-2.  ConnectUs adds the person
+2.  AddressBook adds the person
 +
 Use case ends.
 
@@ -1025,12 +818,14 @@ Use case ends.
 
 [none]
 * 1a. The given command is invalid.
-** 1a1. ConnectUs shows an error message.
+** 1a1. AddressBook shows an error message.
 +
 Use case resumes at step 1.
 
-* 1b. The given person is a duplicate of an existing person.
-** 1b1. ConnectUs shows an error message.
+* 1b. The given person is a duplicate.
++
+[none]
+** 1b1. AddressBook shows an error message.
 +
 Use case resumes at step 1.
 
@@ -1039,9 +834,9 @@ Use case resumes at step 1.
 *MSS*
 
 1.  User requests to list persons
-2.  ConnectUs shows a list of persons
+2.  AddressBook shows a list of persons
 3.  User requests to edit a specific person in the list
-4.  ConnectUs edits the person
+4.  AddressBook edits the person
 +
 Use case ends.
 
@@ -1055,19 +850,19 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. ConnectUs shows an error message.
+** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
 * 3b. The given changes are a duplicate of an existing person.
 +
-** 3b1. ConnectUs shows an error message.
+** 3b1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
 * 3c. The given command is invalid.
 +
-** 3c1. ConnectUs shows an error message.
+** 3c1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1076,7 +871,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to redo command
-2.  ConnectUs redoes the command
+2.  AddressBook redoes the command
 +
 Use case ends.
 
@@ -1085,7 +880,7 @@ Use case ends.
 [none]
 * 1a. There is no command to redo.
 +
-** 1a1. ConnectUs shows an error message.
+** 1a1. AddressBook shows an error message.
 +
 Use case ends.
 
@@ -1094,7 +889,7 @@ Use case ends.
 *MSS*
 
 1.  User requests to undo command
-2.  ConnectUs undoes the command
+2.  AddressBook undoes the command
 +
 Use case ends.
 
@@ -1103,7 +898,7 @@ Use case ends.
 [none]
 * 1a. There is no command to undo.
 +
-** 1a1. ConnectUs shows an error message.
+** 1a1. AddressBook shows an error message.
 +
 Use case ends.
 
@@ -1112,9 +907,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to list persons
-2.  ConnectUs shows a list of persons
+2.  AddressBook shows a list of persons
 3.  User requests to select a specific person in the list
-4.  ConnectUs selects the person
+4.  AddressBook selects the person
 +
 Use case ends.
 
@@ -1128,16 +923,17 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. ConnectUs shows an error message.
+** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
-=== Use case: Find person
+=== Use case: Finds person
 
 *MSS*
 
 1.  User requests to find person by name
-2.  ConnectUs finds and displays the list of person(s) with their names similar to the keywords
+2.  AddressBook finds the person
+3.  AddressBook displays the list of person(s) with the keywords
 +
 Use case ends.
 
@@ -1146,7 +942,7 @@ Use case ends.
 * 1a. The given command is invalid.
 +
 [none]
-** 1a1. ConnectUs shows an error message.
+** 1a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
