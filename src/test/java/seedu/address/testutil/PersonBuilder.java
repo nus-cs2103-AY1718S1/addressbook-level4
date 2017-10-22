@@ -106,7 +106,8 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code customFields} into a {@code Set<CustomField>} and set it to the {@code Person} that we are building.
+     * Parses the {@code customFields} into a {@code Set<CustomField>}
+     * and set it to the {@code Person} that we are building.
      */
     public PersonBuilder withCustomFields(String ... customFields) {
         try {
