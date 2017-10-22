@@ -516,6 +516,7 @@ predicate `t/friends`. The `findCommand` is then executed in LogicManager, durin
 the filtered person list with predicate tag called `friends`. This update will cause the person list displayed in GUI to be updated,
 so that the persons with tag `friends` will be displayed.
 
+[discrete]
 ==== Design considerations
 
 ---
@@ -555,6 +556,7 @@ Then `Model` returns the sorted list.
 The sort command object receives the sorted list and creates `CommandResult` object and return it.
 `LogicManager` receives the result and shows it through `UI`.
 
+[discrete]
 ==== Design considerations
 
 **Aspect:** How sort command affects the data +
@@ -585,6 +587,36 @@ The sort command object receives the sorted list and creates `CommandResult` obj
 **Pros:** It provides more choices for users +
 **Cons:** Because address/email/phone number is unique, most of time you could find them without sorting the list. +
 // end::sort[]
+
+=== AddEvent mechanism
+The add event command is facilitated by `LogicManager` class. It allows user to add a new event to the event list. +
+
+The following sequence diagram shows how add event command works:
+
+image::AddEventCommandSequenceDiagram.png[width="800"]
+_Figure 3.4 AddEvent command sequence diagram_
+
+The user enters an addEvent command, which is received by `LogicManager`. `LogicManager` calls `AddressBookParser` to parse the command. +
+`AddressBookParser` will firstly check the format of the parameters. If format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object. +
+`Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses model interface to execute adding operation, and returns `CommandResult`. +
+`Logic Manager` receives the `CommandResult`, and returns to `UI`. +
+
+=== ListEvent mechanism
+
+The list event command is facilitated by the `LogicManager` class. It supports listing all the events for user to process.
+
+The following sequence diagram shows how the list event operation works:
+
+image::ListEventSequenceDiagram.png[width="800"]
+
+The user enters a listE command which is got by `LogicManager`.
+`LogicManager` calls `AddressBookParser` to parse the command.
+Then `AddressBookParser` creates the list event command object and return it.
+`LogicManager` receives the command object and executes the command.
+The list event command object calls `updateFilteredEventList()` in the `Model`.
+Then `Model` process the event list.
+The list event command object creates `CommandResult` object and return it.
+`LogicManager` receives the result and shows it through `UI`.
 
 === Delete event
 
