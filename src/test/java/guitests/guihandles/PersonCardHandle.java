@@ -19,7 +19,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String EMAIL_FIELD_ID = "#email";
     //private static final String SCH_EMAIL_FIELD_ID = "#schEmail";
     //private static final String WEBSITE_FIELD_ID = "#website";
-   // private static final String BIRTHDAY_FIELD_ID = "#birthday";
+    // private static final String BIRTHDAY_FIELD_ID = "#birthday";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
