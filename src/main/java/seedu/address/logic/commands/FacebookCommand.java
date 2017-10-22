@@ -4,7 +4,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
 
 /**
- * Format full help instructions for every command for display.
+ * Displays Facebook Log In page.
  */
 public class FacebookCommand extends Command {
 

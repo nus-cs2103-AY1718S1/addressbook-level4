@@ -18,6 +18,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -80,6 +81,20 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public synchronized void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
+            DuplicatePersonException {
+
+        ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex.getZeroBased());
+
+        Person newPerson = new Person(oldPerson);
+
+        newPerson.setBirthday(toAdd);
+
+        addressBook.updatePerson(oldPerson, newPerson);
+        indicateAddressBookChanged();
+    }
+
     /**
      * Removes given tag from the given indexes of the target persons shown in the last person listing.
      */
@@ -133,11 +148,15 @@ public class ModelManager extends ComponentManager implements Model {
     public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
 
         if (filteredPersons.size() == 0) {
-            return false;
+            return null;
         }
         contactList.addAll(filteredPersons);
 
         Collections.sort(contactList, Comparator.comparing(p -> p.toString().toLowerCase()));
+
+        if (contactList.equals(filteredPersons)) {
+            return false;
+        }
 
         try {
             addressBook.setPersons(contactList);

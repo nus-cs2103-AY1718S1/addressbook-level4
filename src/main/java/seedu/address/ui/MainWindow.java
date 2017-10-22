@@ -194,6 +194,10 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Opens the Facebook window in BrowserPanel.
+     */
+    @FXML
     public void handleFacebook() {
         browserPanel.loadFacebookPage();
     }
