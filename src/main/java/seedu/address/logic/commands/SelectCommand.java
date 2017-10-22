@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
@@ -15,7 +18,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
-    public static final String COMMAND_WORD_ABBREV = "s";
+    public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "s"));
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the last person listing.\n"

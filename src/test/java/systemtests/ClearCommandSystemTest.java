@@ -38,7 +38,7 @@ public class ClearCommandSystemTest extends RolodexSystemTest {
         /* Case: selects first card in person list and clears rolodex -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original rolodex
         selectPerson(Index.fromOneBased(1));
-        assertCommandSuccess(ClearCommand.COMMAND_WORD_ABBREV);
+        assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
 
         /* Case: filters the person list before clearing -> entire rolodex cleared */
@@ -48,7 +48,7 @@ public class ClearCommandSystemTest extends RolodexSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: clear empty rolodex -> cleared */
-        assertCommandSuccess(ClearCommand.COMMAND_WORD_ABBREV);
+        assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
     }
 

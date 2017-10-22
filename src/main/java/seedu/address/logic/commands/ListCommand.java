@@ -5,7 +5,10 @@ import static seedu.address.logic.parser.CliSyntax.SORT_ARGUMENT_PHONE_DESCENDIN
 import static seedu.address.logic.parser.SortUtil.MESSAGE_SORT_USAGE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.logic.parser.SortArgument;
 
@@ -15,7 +18,8 @@ import seedu.address.logic.parser.SortArgument;
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
-    public static final String COMMAND_WORD_ABBREV = "l";
+    public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "l", "show", "display"));
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
             + "Displays all persons in the rolodex, "

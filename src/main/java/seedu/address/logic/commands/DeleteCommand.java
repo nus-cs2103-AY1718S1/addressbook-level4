@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -14,7 +17,8 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
-    public static final String COMMAND_WORD_ABBREV = "d";
+    public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
+            new HashSet<>(Arrays.asList(COMMAND_WORD, "d", "-"));
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
