@@ -363,12 +363,21 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 === Add Event
 // tag::addevent[]
-Add event mechanism adds an event which stores in the AddressBook, which will then be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
+Add event mechanism adds an event which stores in the AddressBook,
+which will then be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
 
 The add event mechanism is facilitated by a `EventList`, which is stored in AddressBook. Similar to the PersonList and TagList, the list contains the
 different events with their information given by the user. This command inherits from `UndoableCommand`.
 
+From Figure 5.2.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
+can be undoable, where the previous state of the address book before sorting is saved.
+
+image::AddEventCommandLogicClassDiagram.png[width="800"]
+Figure 5.2.1 AddEventCommand Logic Class Diagram
+
 Code of AddEventCommand:
+
+----
 public class AddEventCommand extends UndoableCommand {
 
 @Override
@@ -382,8 +391,11 @@ public class AddEventCommand extends UndoableCommand {
         }
     }
 }
+----
 
-=== Design Consideration
+The new Events will be stored in UniqueEventList in AddressBook.
+
+==== Design Consideration
 **Aspect:** Implementation of `AddEventCommand` +
 **Alternative 1 (current choice):** Extends to UndoableCommand +
 **Pros:** Developer can undo their command when they do not want to add the event. +
@@ -982,6 +994,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 
 The new backUpAddressBook stores the address book at a back up location.
 
+----
 private AddressBookStorage backUpLocation;
 
 public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
@@ -1000,15 +1013,15 @@ private void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOExcepti
     logger.fine("Backing up data to: " + backupPath);
     saveAddressBook(addressBook, backupPath);
 }
+----
 
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
+//****
+//* Hint
+//** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
+//** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
+//* Solution
+//** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
+//****
 
 === Creating a new command: `remark`
 
