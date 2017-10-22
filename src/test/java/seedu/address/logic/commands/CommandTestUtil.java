@@ -66,7 +66,7 @@ public class CommandTestUtil {
     public static final String INVALID_VENUE_DESC = " " + PREFIX_VENUE; // empty string not allowed for venue
     public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "SL1"; // 'SL' not allowed for addresses
     public static final String INVALID_TIMESLOT_DESC = " " + PREFIX_TIME_SLOT + "FRIDAY[1200-1300]"; // Only 3 letters
-    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + "***"; // '*' not allowed in tags
+    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + ""; // '*' not allowed in tags
     public static final String INVALID_FONT_SIZE_DESC = " " + PREFIX_FONT_SIZE
             + "small!"; // '!' not allowed in font size
 

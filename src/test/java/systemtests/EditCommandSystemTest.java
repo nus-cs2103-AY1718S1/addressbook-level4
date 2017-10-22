@@ -1,5 +1,6 @@
 package systemtests;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import seedu.address.commons.core.Messages;
@@ -29,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
 import static seedu.address.model.ListingUnit.LESSON;
+import static seedu.address.model.ListingUnit.MODULE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
@@ -243,6 +245,15 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             assertSelectedCardUnchanged();
         }
         assertStatusBarUnchangedExceptSyncStatus();
+    }
+
+    @After
+    public void cleanUp() {
+        ListingUnit.setCurrentListingUnit(MODULE);
+        Predicate predicate = new UniqueModuleCodePredicate(getModel().getUniqueCodeSet());
+        ListingUnit.setCurrentPredicate(predicate);
+        updateFilterdList(predicate);
+
     }
 
     /**
