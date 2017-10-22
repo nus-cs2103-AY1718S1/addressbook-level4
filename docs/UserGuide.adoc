@@ -315,7 +315,6 @@ Changes the 3rd contact's note to "This is a note" +
 * `n 3 n/` +
 Removes all existing notes from the 3rd person
 
-
 === Creating a backup : `backup`
 
 Shorthand Alias: `b` +
@@ -444,6 +443,24 @@ _Figure 2.18.2_
 Another example of clearing your contacts:
 
 * c
+
+=== Resize the main window : `resize`
+
+Shorthand Alias: `rs` +
+Resize the main window to the specified width and height in pixels +
+Format: `resize WIDTH HEIGHT`
+
+****
+* Resize the MainWindows to the specified WIDTH and HEIGHT.
+* Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
+****
+
+Examples:
+
+* `resize 1280 720` +
+Resize the main window to 1280*720.
+* `rs 1000 600` +
+Resize the main window to 1000*600.
 
 === Resize the main window : `resize`
 
