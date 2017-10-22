@@ -53,7 +53,7 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         string_id = displayedIndex;
         id.setText(displayedIndex + ". ");
-        initTags(person);
+        //initTags(person);
         bindListeners(person);
     }
 
@@ -72,12 +72,13 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        /* Commented out to remove address, email and tags from Person Card
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
-        });
+        });*/
     }
 
     /**
