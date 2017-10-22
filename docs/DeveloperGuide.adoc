@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team CS2103-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
+By: `CS2103AUG2017-W13-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == Setting up
 
