@@ -2,12 +2,15 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRE;
+import static seedu.address.model.person.ExpiryDate.MESSAGE_EXPIRY_DATE_CONSTRAINTS;
 //import static seedu.address.model.person.ExpiryDate.MESSAGE_EXPIRY_DATE_CONSTRAINTS;
 
 //import seedu.address.commons.exceptions.IllegalValueException;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ExpiryDate;
 //import seedu.address.model.person.ExpiryDate;
 
 /**
@@ -29,9 +32,9 @@ public class ExpireCommand extends UndoableCommand {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Date string: %2$s";
 
     private final Index index;
-    private final String date;
+    private final ExpiryDate date;
 
-    public ExpireCommand(Index index, String date) {
+    public ExpireCommand(Index index, ExpiryDate date) {
         requireNonNull(index);
         requireNonNull(date);
 
