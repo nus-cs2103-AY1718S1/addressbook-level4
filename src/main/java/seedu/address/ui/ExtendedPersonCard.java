@@ -73,7 +73,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
      * Initializes and styles tags belonging to a person.
      * @param person must be a valid.
      */
-    private void initTags(ReadOnlyPerson person) {
+    protected void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-font-size:" + "15px");

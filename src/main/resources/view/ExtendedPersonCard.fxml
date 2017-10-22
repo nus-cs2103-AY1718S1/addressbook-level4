@@ -58,14 +58,6 @@
                   </image>
                </ImageView>
             </graphic></Label>
-            <Label fx:id="postalCode" styleClass="cell_small_label" text="\$postalCode">
-                <graphic>
-                    <ImageView>
-                        <image>
-                            <Image url="@../../../../docs/images/icons/postalCode.png" />
-                        </image>
-                    </ImageView>
-                </graphic></Label>
             <Label fx:id="formClass" styleClass="cell_small_label" text="\$formClass">
             <graphic>
                <ImageView>
@@ -82,6 +74,14 @@
                   </image>
                </ImageView>
             </graphic></Label>
+            <Label fx:id="postalCode" styleClass="cell_small_label" text="\$postalCode">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@../../../../docs/images/icons/postalCode.png" />
+                        </image>
+                    </ImageView>
+                </graphic></Label>
             <Label fx:id="email" styleClass="cell_small_label" text="\$email">
             <graphic>
                <ImageView>
