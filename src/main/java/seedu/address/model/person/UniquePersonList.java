@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -19,7 +19,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -68,6 +67,14 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.set(index, new Person(editedPerson));
+    }
+
+    /**
+     * Sorts the persons object in the list alphanumerically by name.
+     */
+    public void sort() {
+        requireNonNull(internalList);
+        Collections.sort(internalList);
     }
 
     /**

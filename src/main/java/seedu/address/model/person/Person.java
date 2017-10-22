@@ -16,7 +16,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Person implements ReadOnlyPerson {
+public class Person implements ReadOnlyPerson, Comparable<Person> {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
@@ -122,6 +122,14 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    /**
+     * Remove a tag from the person's tag list.
+     */
+    public boolean removeTag(Tag tagGettingRemoved) {
+        UniqueTagList tagsList = tags.get();
+        return tagsList.removeTag(tagGettingRemoved);
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -138,6 +146,11 @@ public class Person implements ReadOnlyPerson {
     @Override
     public String toString() {
         return getAsText();
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return this.getName().toString().compareToIgnoreCase(o.getName().toString());
     }
 
 }

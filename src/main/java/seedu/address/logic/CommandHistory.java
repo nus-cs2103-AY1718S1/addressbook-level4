@@ -24,6 +24,13 @@ public class CommandHistory {
     }
 
     /**
+     * Clear the command history.
+     */
+    public void clear() {
+        userInputHistory.clear();
+    }
+
+    /**
      * Returns a defensive copy of {@code userInputHistory}.
      */
     public List<String> getHistory() {
