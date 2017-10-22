@@ -85,7 +85,7 @@ public class AddTaskCommandTest {
         // null -> returns false
         assertFalse(addAssignmentCommand.equals(null));
 
-        // different person -> returns false
+        // different task -> returns false
         assertFalse(addAssignmentCommand.equals(addProjectCommand));
     }
 
