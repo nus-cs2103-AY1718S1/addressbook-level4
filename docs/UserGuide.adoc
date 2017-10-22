@@ -178,6 +178,25 @@ Examples:
 * `favourite 1` +
 Changes the `favourite` status of the 1st person in the latest list.
 
+==== Adding a birthday to select person : `birthday`
+
+Adds the given birthday to the specified persons . +
+Format: `birthday INDEX b/BIRTHDAY...`
+
+****
+* Adds the birthday to the person specified by the `INDEX`.
+* The birthday is case-sensitive.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The birthday *must be in positive intgers* 1, 2, 3, ...
+* The birthday *must be 4- 8 integers long* 2110, 211095, 21101995, ...
+****
+
+Examples:
+
+* `birthday 1 b/211095` +
+Adds the birthday "211095" to the 1st person in the address book.
+
 ==== Adding a tag to select persons : `addtag`
 
 Adds the given tag to the specified persons . +
