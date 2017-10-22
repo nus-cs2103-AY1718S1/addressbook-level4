@@ -239,7 +239,7 @@ the address book are removed. This command is implemented in the style of the `e
 **Aspect:** Type of command implemented +
 **Alternative 1 (current choice):** `removeTag` command extends `UndoableCommand` instead of `Command`. +
 **Pros:** Accidental removal of tags can be recovered. +
-**Cons:** Additional memory needed for recording the previous stage of the address book.
+**Cons:** Additional memory needed for recording the previous stage of the address book. +
 **Alternative 2:** `removeTag` command extends `Command`. +
 **Pros:** No additional memory needed for recording the previous stage of the address book. +
 **Cons:** As the removal of Tag is from all the persons in address book, an accidental removal can be disastrous if the user does not intend a complete removal.
@@ -249,9 +249,9 @@ the address book are removed. This command is implemented in the style of the `e
 **Aspect:** Removal of the tag from all instead of some by user's choice +
 **Alternative 1 (current choice):** The command currently does not support the removal of a tag from persons specified in the user input.
 **Pros:** Easier implementation since it does not deal with the parsing of more user input. +
-**Cons:** Inefficient if the user only aims to remove the tag from a few persons. +
+**Cons:** The user cannot remove the tags from a few specific people in one command.  +
 **Alternative 2:** The command allows the user input to specify the persons from whom the tag should be removed. +
-**Pros:** The user can remove the tags from a few people in one command. +
+**Pros:** The user can remove the tags from a few specific people in one command. +
 **Cons:** Implementation is more difficult as parsing of additional user input required. It is also unlikely for user to remove the tag from many persons at once, hence there is a function overlap with `edit` command.
 
 // tag::undoredo[]
