@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103T-T09-B1/main
+:repoURL: https://github.com/CS2103AUG2017-T09-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -279,7 +279,7 @@ Examples:
 * `retrieve friends` +
 Retrieves all persons with friends tag in the address book.
 
-=== Tagging multiple persons : `tag`    (Since v1.2)
+=== Tagging multiple persons : `tag`    (Since v1.3)
 
 Tags the persons identified by the index numbers used in the last person listing. +
 Format: `tag INDEX,[MORE_INDEXES]... TAGNAME`
