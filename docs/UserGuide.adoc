@@ -108,7 +108,7 @@ Examples:
 * `list` +
 `favourite 6` +
 Favourites/Unfavourites the 6th person in the address book.
-* `find n/ Betsy` +
+* `find n/Betsy` +
 `favourite 1` +
 Favourites/Unfavourites the 1st person in the results of the `find` command.
 
@@ -162,7 +162,7 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd person in the address book.
-* `find n/ Betsy` +
+* `find n/Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
@@ -182,7 +182,7 @@ Examples:
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
-* `find n/ Betsy` +
+* `find n/Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
