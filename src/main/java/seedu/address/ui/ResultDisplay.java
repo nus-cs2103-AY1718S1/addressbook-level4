@@ -42,7 +42,10 @@ public class ResultDisplay extends UiPart<Region> {
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (event.message.equals(Messages.MESSAGE_UNKNOWN_COMMAND)
-                || event.message.contains(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ""))) {
+                || event.message.contains(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ""))
+                || event.message.contains(Messages.MESSAGE_PERSON_ALREADY_PINNED)
+                || event.message.contains(Messages.MESSAGE_PERSON_ALREADY_UNPINNED)
+                || event.message.contains(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX)) {
             imageDisplay.setImage(new Image("/images/error.png"));
         } else {
             imageDisplay.setImage(new Image("/images/success.png"));

@@ -13,18 +13,34 @@ import seedu.address.model.tag.UniqueTagList;
 public interface ReadOnlyPerson {
 
     ObjectProperty<Name> nameProperty();
+
     Name getName();
+
     ObjectProperty<Phone> phoneProperty();
+
     Phone getPhone();
+
     ObjectProperty<Email> emailProperty();
+
     Email getEmail();
+
     ObjectProperty<Address> addressProperty();
+
     Address getAddress();
+
     ObjectProperty<Remark> remarkProperty();
+
     Remark getRemark();
+
     ObjectProperty<UniqueTagList> tagProperty();
+
     Set<Tag> getTags();
+
     boolean isPrivate();
+
+    ObjectProperty<Boolean> pinProperty();
+
+    boolean isPinned();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -35,7 +51,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress()))
+                && (other.isPinned() == this.isPinned());
     }
 
     /**

@@ -34,6 +34,8 @@ public class XmlAdaptedPerson {
     private boolean isPrivate;
     @XmlElement(required = true)
     private String remark;
+    @XmlElement(required = true)
+    private boolean isPinned;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -42,7 +44,8 @@ public class XmlAdaptedPerson {
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPerson() {
+    }
 
 
     /**
@@ -61,6 +64,7 @@ public class XmlAdaptedPerson {
             tagged.add(new XmlAdaptedTag(tag));
         }
         isPrivate = source.isPrivate();
+        isPinned = source.isPinned();
     }
 
     /**
@@ -80,6 +84,7 @@ public class XmlAdaptedPerson {
         final Remark remark = new Remark(this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
         final boolean isPrivate = this.isPrivate;
-        return new Person(name, phone, email, address, remark, tags, isPrivate);
+        final boolean isPinned = this.isPinned;
+        return new Person(name, phone, email, address, remark, tags, isPrivate, isPinned);
     }
 }

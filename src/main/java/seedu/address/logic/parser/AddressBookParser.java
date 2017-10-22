@@ -23,12 +23,15 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HideCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListPinCommand;
+import seedu.address.logic.commands.PinCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnpinCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 
@@ -91,6 +94,15 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
+        case PinCommand.COMMAND_WORD:
+            return new PinCommandParser().parse(arguments);
+
+        case ListPinCommand.COMMAND_WORD:
+            return new ListPinCommand();
+
+        case UnpinCommand.COMMAND_WORD:
+            return new UnpinCommandParser().parse(arguments);
+
         case HideCommand.COMMAND_WORD:
             return new HideCommandParser().parse(checkedArguments);
 
@@ -123,8 +135,10 @@ public class AddressBookParser {
 
         case AliasCommand.COMMAND_WORD:
             return new AliasCommandParser().parse(checkedArguments);
+
         case UnaliasCommand.COMMAND_WORD:
             return new UnaliasCommandParser().parse(checkedArguments);
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
@@ -247,6 +261,7 @@ public class AddressBookParser {
         commandMap.put("help", null);
         commandMap.put("history", null);
         commandMap.put("list", null);
+        commandMap.put("listpin", null);
         commandMap.put("redo", null);
         commandMap.put("undo", null);
     }

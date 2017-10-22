@@ -42,7 +42,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 2, 0, true);
+    public static final Version VERSION = new Version(1, 3, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -54,7 +54,6 @@ public class MainApp extends Application {
     protected UserPrefs userPrefs;
 
     private final String sortByName = "name";
-
 
     @Override
     public void init() throws Exception {

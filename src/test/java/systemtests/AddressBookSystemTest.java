@@ -35,6 +35,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListPinCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
@@ -124,6 +125,16 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Displays only persons who are pinned.
+     */
+    protected void showOnlyPinned() {
+        executeCommand(ListPinCommand.COMMAND_WORD);
+        Model filteredModel = getModel();
+        filteredModel.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_PINNED);
+        assert getModel().getAddressBook().getPersonList().size() >= filteredModel.getFilteredPersonList().size();
+    }
+
+    /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
@@ -148,6 +159,7 @@ public abstract class AddressBookSystemTest {
             Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
+
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());

@@ -121,6 +121,36 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndHidden;
     }
 
+    /**
+     * Pins the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean pin(ReadOnlyPerson toPin) throws PersonNotFoundException {
+        requireNonNull(toPin);
+        final int indexToPin = internalList.indexOf(toPin);
+        final boolean personFoundAndPinned = internalList.get(indexToPin).setPinned(true);
+        if (!personFoundAndPinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndPinned;
+    }
+
+    /**
+     * Unpins the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean unpin(ReadOnlyPerson toUnpin) throws PersonNotFoundException {
+        requireNonNull(toUnpin);
+        final int indexToPin = internalList.indexOf(toUnpin);
+        final boolean personFoundAndUnpinned = internalList.get(indexToPin).setPinned(false);
+        if (!personFoundAndUnpinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndUnpinned;
+    }
+
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

@@ -18,6 +18,9 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ONLY_PINNED = person -> person.isPinned();
+
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
 
     /**
@@ -44,6 +47,16 @@ public interface Model {
      * Hides the given person.
      */
     void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /**
+     * Pins the given person.
+     */
+    void pinPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /**
+     * Unpins the given person.
+     */
+    void unpinPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /**
      * Adds the given person
