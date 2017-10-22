@@ -1,8 +1,40 @@
 package systemtests;
 
+import guitests.guihandles.BrowserPanelHandle;
+import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.LessonListPanelHandle;
+import guitests.guihandles.MainMenuHandle;
+import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.StatusBarFooterHandle;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import seedu.address.MainApp;
+import seedu.address.TestApp;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.Model;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
+import seedu.address.ui.CommandBox;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.function.Predicate;
+
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.logic.commands.CommandTestUtil.MA1101R_CODE_PREDICATE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
@@ -10,34 +42,6 @@ import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-
-import guitests.guihandles.BrowserPanelHandle;
-import guitests.guihandles.CommandBoxHandle;
-import guitests.guihandles.MainMenuHandle;
-import guitests.guihandles.MainWindowHandle;
-import guitests.guihandles.PersonListPanelHandle;
-import guitests.guihandles.ResultDisplayHandle;
-import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
-import seedu.address.TestApp;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.model.Model;
-import seedu.address.ui.CommandBox;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -61,7 +65,7 @@ public abstract class AddressBookSystemTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws IllegalValueException {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
@@ -80,8 +84,8 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getCommandBox();
     }
 
-    public PersonListPanelHandle getPersonListPanel() {
-        return mainWindowHandle.getPersonListPanel();
+    public LessonListPanelHandle getLessonListPanel() {
+        return mainWindowHandle.getLessonListPanel();
     }
 
     public MainMenuHandle getMainMenu() {
@@ -116,45 +120,46 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Displays all persons in the address book.
+     * Displays all lessons in the address book.
      */
-    protected void showAllPersons() {
-        executeCommand(ListCommand.COMMAND_WORD);
-        assert getModel().getAddressBook().getPersonList().size() == getModel().getFilteredPersonList().size();
+    protected void showAllLessons() {
+        executeCommand(ListCommand.COMMAND_WORD + " module");
+        assert getModel().getAddressBook().getLessonList().size() >= getModel().getFilteredLessonList().size();
     }
 
     /**
-     * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
+     * Displays all lessons with any parts of their names matching {@code keyword} (case-insensitive).
      */
-    protected void showPersonsWithName(String keyword) {
+    protected void showLessonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
+        assert getModel().getFilteredLessonList().size() < getModel().getAddressBook().getLessonList().size();
     }
 
     /**
-     * Selects the person at {@code index} of the displayed list.
+     * Selects the lesson at {@code index} of the displayed list.
      */
-    protected void selectPerson(Index index) {
+    protected void selectLesson(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
-        assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
+        assert getLessonListPanel().getSelectedCardIndex() == index.getZeroBased();
     }
 
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
-     * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
-     * and the person list panel displays the persons in the model correctly.
+     * {@code expectedResultMessage}, the model and storage contains the same lesson objects as {@code expectedModel}
+     * and the lesson list panel displays the lessons in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
-        assertEquals(expectedModel, getModel());
+        Model model = getModel();
+        assertEquals(expectedModel, model);
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
-        assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+        assertListMatching(getLessonListPanel(), expectedModel.getFilteredLessonList());
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code BrowserPanelHandle}, {@code LessonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
@@ -162,27 +167,27 @@ public abstract class AddressBookSystemTest {
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
-        getPersonListPanel().rememberSelectedPersonCard();
+        getLessonListPanel().rememberSelectedLessonCard();
     }
 
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected person.
+     * of the previously selected lesson.
      * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
-        assertFalse(getPersonListPanel().isAnyCardSelected());
+        assertFalse(getLessonListPanel().isAnyCardSelected());
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
+     * Asserts that the browser's url is changed to display the details of the lesson in the lesson list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
      * @see BrowserPanelHandle#isUrlChanged()
-     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     * @see LessonListPanelHandle#isSelectedLessonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        String selectedCardName = getLessonListPanel().getHandleToSelectedCard().getCode();
         URL expectedUrl;
         try {
             expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
@@ -192,17 +197,17 @@ public abstract class AddressBookSystemTest {
         }
         assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
-        assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+        assertEquals(expectedSelectedCardIndex.getZeroBased(), getLessonListPanel().getSelectedCardIndex());
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
+     * Asserts that the browser's url and the selected card in the lesson list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
-     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     * @see LessonListPanelHandle#isSelectedLessonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
-        assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
+        assertFalse(getLessonListPanel().isSelectedLessonCardChanged());
     }
 
     /**
@@ -247,7 +252,7 @@ public abstract class AddressBookSystemTest {
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
+            assertListMatching(getLessonListPanel(), getModel().getFilteredLessonList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
@@ -261,5 +266,13 @@ public abstract class AddressBookSystemTest {
      */
     protected Model getModel() {
         return testApp.getModel();
+    }
+
+    /**
+     * Update the filtered list of test app with given predicate.
+     * @param predicate
+     */
+    protected void updateFilterdList(Predicate predicate) {
+        testApp.updateFilteredList(predicate);
     }
 }

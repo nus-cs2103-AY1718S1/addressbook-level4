@@ -30,6 +30,10 @@ public class UndoRedoStack {
         }
 
         if (!(command instanceof UndoableCommand)) {
+
+            if (!(command instanceof RedoCommand) && !(command instanceof UndoCommand)) {
+                undoStack.clear();
+            }
             return;
         }
 
@@ -41,7 +45,9 @@ public class UndoRedoStack {
      */
     public UndoableCommand popUndo() {
         UndoableCommand toUndo = undoStack.pop();
-        redoStack.push(toUndo);
+        if (toUndo.canRedo()) {
+            redoStack.push(toUndo);
+        }
         return toUndo;
     }
 
