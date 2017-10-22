@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.ui.event;
 
 import java.util.logging.Logger;
 
@@ -16,12 +16,13 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.ui.UiPart;
 
 /**
  * Panel containing the list of persons.
  */
 public class EventListPanel extends UiPart<Region> {
-    private static final String FXML = "EventListPanel.fxml";
+    private static final String FXML = "event/EventListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(EventListPanel.class);
 
     @FXML

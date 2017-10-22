@@ -18,7 +18,7 @@
                <children>
                   <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/default_person_photo.png" />
+                        <Image url="@../../images/default_person_photo.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="name" text="\\\$name" wrapText="true">
