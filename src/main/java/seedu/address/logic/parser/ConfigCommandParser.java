@@ -27,7 +27,7 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     /* Regular expressions for validation. ArgumentMultiMap not applicable here. */
     private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
     private static final Pattern TAG_COLOR_FORMAT = Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>.+)");
-    private static final Pattern RGB_FORMAT = Pattern.compile("#(?<tagNewColor>([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
+    private static final Pattern RGB_FORMAT = Pattern.compile("#(?<rgbValue>([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
     private static final Pattern URL_FORMAT =  Pattern.compile("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]"
             + "{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)");
 
@@ -35,7 +35,8 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     private static final HashMap<String, String> preDefinedColors = new HashMap<>();
 
     // Some messages ready to use.
-    private static final String CONFIG_TYPE_NOT_FOUND = "The configuration you want to change is not defined.";
+    private static final String CONFIG_TYPE_NOT_FOUND = "The configuration you want to change is not "
+            + "available or the command entered is incomplete.";
     private static final String COLOR_CODE_WRONG = "The color must be one of the pre-defined color names or "
             + "a valid hexadecimal RGB value";
     private static final String MESSAGE_REGEX_TOGETHER = "Constraint message and regular expression must be "
@@ -44,17 +45,15 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     /**
      * Loads all pre-defined colors here. If you want to define more, you can get more color codes can be obtained from
      * https://www.w3schools.com/colors/colors_names.asp Make sure you put them in alphabetical order.
-     *
-     * Notice: Do not include # before the RGB value. # is already included in the CSS file.
      */
-    public ConfigCommandParser() {
-        preDefinedColors.put("black", "000000");
-        preDefinedColors.put("blue", "0000FF");
-        preDefinedColors.put("brown", "A52A2A");
-        preDefinedColors.put("green", "008000");
-        preDefinedColors.put("red", "FF0000");
-        preDefinedColors.put("white", "FFFFFF");
-        preDefinedColors.put("yellow", "FFFF00");
+    static {
+        preDefinedColors.put("black", "#000000");
+        preDefinedColors.put("blue", "#0000FF");
+        preDefinedColors.put("brown", "#A52A2A");
+        preDefinedColors.put("green", "#008000");
+        preDefinedColors.put("red", "#FF0000");
+        preDefinedColors.put("white", "#FFFFFF");
+        preDefinedColors.put("yellow", "#FFFF00");
     }
 
     @Override
@@ -125,8 +124,9 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, COLOR_CODE_WRONG));
         }
+        String colorRgbValue = matcher.group("rgbValue").trim();
 
-        return new ChangeTagColorCommand(value, tagName, tagColor);
+        return new ChangeTagColorCommand(value, tagName, colorRgbValue);
     }
 
     /**
