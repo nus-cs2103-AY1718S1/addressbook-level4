@@ -221,18 +221,16 @@ This section describes some noteworthy details on how certain features are imple
 // tag::removeTag[]
 === removeTag command
 
-The `removeTag` command is to remove a tag with name specified from address book. All the appearances of the tag in
+The removeTag command removes a tag with the specified name from the address book. All the appearances of the tag in
 the address book are removed. This command is implemented in the style of the `edit` command and `delete` command.
 
 === Design Considerations
 
 **Aspect:** Implementation for removeTag command +
-**Alternative 1 (current choice):** The command implemented using methods which remove the tag +
-from each person's tag list. +
+**Alternative 1 (current choice):** The command is implemented using methods which remove the tag from each person's tag list. +
 **Pros:** Implementation is modular and less dependent on methods used for other commands. +
-**Cons:** More tedious to implement since it is not making use of the existing resources such as +
-`edit` command. +
-**Alternative 2:** Adapt current `edit` command and removing the tag is done by editing every person's tag list. +
+**Cons:** More tedious to implement since it is not making use of the existing resources such as `edit` command. +
+**Alternative 2:** Adapt current `edit` command so that removing the tag is done by editing every person's tag list. +
 **Pros:** Making use of existing resources and easier implementation. +
 **Cons:** More dependency between commands and the relationship between `edit` and `remove` is not clear.
 
@@ -241,22 +239,20 @@ from each person's tag list. +
 **Aspect:** Type of command implemented +
 **Alternative 1 (current choice):** `removeTag` command extends `UndoableCommand` instead of `Command`. +
 **Pros:** Accidental removal of tags can be recovered. +
+**Cons:** Additional memory needed for recording the previous stage of the address book.
 **Alternative 2:** `removeTag` command extends `Command`. +
 **Pros:** No additional memory needed for recording the previous stage of the address book. +
-**Cons:** As the removal of Tag is from all the persons in address book, an accidental removal can be disastrous if +
-the user does not intend a complete removal.
+**Cons:** As the removal of Tag is from all the persons in address book, an accidental removal can be disastrous if the user does not intend a complete removal.
 
---
+---
 
 **Aspect:** Removal of the tag from all instead of some by user's choice +
-**Alternative 1(current choice):** The command currently does not limit the removal of the tag from the persons +
-which can be specified in user input. The command currently removes the tag from all persons in the address book. +
+**Alternative 1 (current choice):** The command currently does not support the removal of a tag from persons specified in the user input.
 **Pros:** Easier implementation since it does not deal with the parsing of more user input. +
 **Cons:** Inefficient if the user only aims to remove the tag from a few persons. +
 **Alternative 2:** The command allows the user input to specify the persons from whom the tag should be removed. +
 **Pros:** The user can remove the tags from a few people in one command. +
-**Cons:** Implementation is more difficult as parsing of additional user input required. It is also unlikely for user +
-to remove the tag from many persons at once, hence there is a function overlap with `edit` command.
+**Cons:** Implementation is more difficult as parsing of additional user input required. It is also unlikely for user to remove the tag from many persons at once, hence there is a function overlap with `edit` command.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
