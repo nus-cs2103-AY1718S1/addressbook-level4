@@ -634,8 +634,6 @@ If the list is in correct order, the address book will reply with `Already sorte
 [NOTE]
 The sorting process is case insensitive.
 
-
-
 ==== Design considerations
 **Aspect:** Implementation of `SortCommand` +
 **Alternative 1 (current choice):** The `SortCommand` will inherit directly from `Command` without the undo/redo mechanism. +
@@ -1156,6 +1154,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |access my contacts' social media account through address book |
 
 |`* *` |user |remove a tag from my friends' contact information |
+
+|`* *` |user |sort my contacts in alphabetical order |I can find my contacts easier
+
+|`* *` |caring user |add birthday to my close friends |celebrate their birthday with them
 
 |`* *` |lazy user |type shorter commands while ignoring their cases |access my friends' contact information faster
 
