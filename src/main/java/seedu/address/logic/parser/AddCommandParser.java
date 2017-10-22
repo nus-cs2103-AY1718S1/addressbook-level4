@@ -3,11 +3,14 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -39,7 +42,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_BLOODTYPE, PREFIX_TAG);
+                        PREFIX_BLOODTYPE, PREFIX_TAG, PREFIX_DATE);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
                 PREFIX_EMAIL, PREFIX_BLOODTYPE)) {
@@ -54,10 +57,13 @@ public class AddCommandParser implements Parser<AddCommand> {
             Bloodtype bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Remark remark = new Remark("");
-            Appointment appointment = new Appointment(name.toString());
+            Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            Appointment appointment = new Appointment(name.toString(), calendar);
             ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark, appointment);
             return new AddCommand(person);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | java.text.ParseException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
