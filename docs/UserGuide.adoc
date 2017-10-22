@@ -59,6 +59,27 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
+== Layout
+What you see in the picture below is an example of what the main window
+of the Ark application looks like. +
+
+image::Ark_Main_Window.png[width="790"]
+
+The main window is separated into 8 sections from the top to bottom:
+
+. Red - Menu Bar
+. Blue - Command Box
+. Green - Results Box
+. Yellow - Browser
+. Purple - Divider (divides the Browser from the Parcel List)
+. White - Parcel Card
+. Orange - Parcel List
+. Pink - Status Bar
+
+The Browser and Parcel List sections sizes can be changed by commands
+or by dragging the Divider part up or down to either increase or decrease either
+section's sizes.
+
 == Features
 
 ====
@@ -94,12 +115,14 @@ Examples:
 
 === Listing all parcels : `list`
 
-Shows a list of all parcels in Ark and expands the parcel list section in the main window +
-Format: `list`
+Shows a list of all parcels in Ark and expands the Parcel List section in the main window.
+The Parcel List section is scrollable and shows you all the information of a parcel.
+You can see an example in the two pictures below. +
 
-[TIP]
-The parcel list section can also be expanded or reduced by clicking and dragging the divider between the
-parcel list section and browser section.
+image::Ark_Parcel_List.png[width="790"]
+image::Ark_Parcel_List_2.png[width="790"]
+
+Format: `list`
 
 === Editing a parcel : `edit`
 
@@ -168,8 +191,11 @@ Deletes the 1st parcel in the results of the `find` command.
 === Selecting a parcel : `select`
 
 Selects the parcel identified by the index number used in the last parcel listing
-and expands the browser section in th main window. The browser section will then show a google map search
-of the selected parcel's delivery address (postal code). +
+and expands the Browser section in the main window. The Browser section will then show a google map search
+of the selected parcel's delivery address (postal code). You can see an example in the picture below. +
+
+image::Ark_Browser.png[width="790"]
+
 Format: `select INDEX`
 
 [TIP]
