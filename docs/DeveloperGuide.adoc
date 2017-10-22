@@ -364,6 +364,16 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Implementing Meeting Class
+
+The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
+such as AddMeeting, DeleteMeeting, EditMeeting and ListMeeting. These commands will inherit from UndoableCommand while FindMeeting inherits from Command.
+
+The attributes of Meeting class includes NameMeeting, DateTime, Place, PersonToMeet and PhoneNum.
+The following sequence diagram below shows how AddMeeting operation works:
+
+image::addMeetingSequenceDiagram.png[width="800"]
+
 === Edit Meeting
 
 The edit meeting command is an undoable command which allows the user to edit the `MeetingName`, `DateTime` or `Place` of
@@ -413,16 +423,6 @@ the same as one of the preexisting Meetings in the addressbook.
 **Pros:** More direct and faster way of editting the different parameters of the `Meeting` object +
 
 ---
-
-=== Implementing Meeting Class
-
-The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
-such as AddMeeting, DeleteMeeting, EditMeeting and ListMeeting. These commands will inherit from UndoableCommand while FindMeeting inherits from Command.
-
-The attributes of Meeting class includes NameMeeting, DateTime, Place, PersonToMeet and PhoneNum.
-The following sequence diagram below shows how AddMeeting operation works:
-
-image::addMeetingSequenceDiagram.png[width="800"]
 
 === Meeting Card
 
