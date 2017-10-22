@@ -1,56 +1,48 @@
 package systemtests;
 
+import org.junit.Before;
 import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
 import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ClassType;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Group;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.TimeSlot;
+import seedu.address.model.module.*;
+import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.FixedCodePredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 import seedu.address.testutil.LessonBuilder;
 import seedu.address.testutil.LessonUtil;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.CODE_DESC_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_CLASSTYPE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_CODE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_GROUP_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_LECTURER_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIMESLOT_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.LECTURER_DESC_CS2101;
-import static seedu.address.logic.commands.CommandTestUtil.LECTURER_DESC_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
-import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
+import static seedu.address.model.ListingUnit.LESSON;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
+import static seedu.address.testutil.TypicalLessons.TYPICAL_CS2101;
 import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
 
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void edit() throws Exception {
+        Predicate predicate = new FixedCodePredicate(new Code(VALID_CODE_MA1101R));
+        updateFilterdList(predicate);
+        ListingUnit.setCurrentListingUnit(LESSON);
+        ListingUnit.setCurrentPredicate(predicate);
         Model model = getModel();
 
         /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
@@ -67,21 +59,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 .withLecturers(VALID_LECTURER_MA1101R).build();
         assertCommandSuccess(command, index, editedLesson);
 
-        /* Case: undo editing the last lesson in the list -> last lesson restored */
-        command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
-
-        /* Case: redo editing the last lesson in the list -> last lesson edited again */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        model.updateLesson(
-                getModel().getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()), editedLesson);
-        assertCommandSuccess(command, model, expectedResultMessage);
-
         /* Case: edit a lesson with new values same as existing values -> edited */
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
-                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R + LECTURER_DESC_CS2101;
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, index, TYPICAL_MA1101R);
 
         /* Case: edit some fields -> edited */
@@ -121,7 +101,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: selects first card in the lesson list, edit a lesson -> edited, card selection remains unchanged but
          * browser url changes
          */
-        showAllLessons();
         index = INDEX_FIRST_LESSON;
         selectLesson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
@@ -178,18 +157,18 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
 
         /* Case: edit a lesson with new values same as another lesson's values -> rejected */
-        executeCommand(LessonUtil.getAddCommand(TYPICAL_MA1101R));
-        assertTrue(getModel().getAddressBook().getLessonList().contains(TYPICAL_MA1101R));
+        executeCommand(LessonUtil.getAddCommand(TYPICAL_CS2101));
+        assertTrue(getModel().getAddressBook().getLessonList().contains(TYPICAL_CS2101));
         index = INDEX_FIRST_LESSON;
-        assertFalse(getModel().getFilteredLessonList().get(index.getZeroBased()).equals(TYPICAL_MA1101R));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
-                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R + LECTURER_DESC_CS2101;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_LESSON);
+        assertFalse(getModel().getFilteredLessonList().get(index.getZeroBased()).equals(TYPICAL_CS2101));
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_CS2101 + CLASSTYPE_DESC_CS2101
+                + VENUE_DESC_CS2101 +  TIMESLOT_DESC_CS2101 +  GROUP_DESC_CS2101 + LECTURER_DESC_CS2101;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
 
         /* Case: edit a lesson with new values same as another lesson's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased()  + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
-                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
-        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_LESSON);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased()  + CODE_DESC_CS2101 + CLASSTYPE_DESC_CS2101
+                + VENUE_DESC_CS2101 + TIMESLOT_DESC_CS2101 + GROUP_DESC_CS2101 + LECTURER_DESC_CS2101;
+        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
     }
 
     /**
@@ -198,7 +177,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * @param toEdit the index of the current model's filtered list
      * @see EditCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyLesson, Index)
      */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson) {
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson) throws DuplicateBookedSlotException {
         assertCommandSuccess(command, toEdit, editedLesson, null);
     }
 
@@ -211,17 +190,21 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
      */
     private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson,
-            Index expectedSelectedCardIndex) {
+            Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
         Model expectedModel = getModel();
+        ReadOnlyLesson lessonToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased());
+        BookedSlot bookedSlotToEdit = new BookedSlot(lessonToEdit.getLocation(),lessonToEdit.getTimeSlot());
+        BookedSlot editedBookedSlot = new BookedSlot(editedLesson.getLocation(),editedLesson.getTimeSlot());
         try {
             expectedModel.updateLesson(
                     expectedModel.getFilteredLessonList().get(toEdit.getZeroBased()), editedLesson);
-            expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+            expectedModel.updateBookedSlot(bookedSlotToEdit,editedBookedSlot);
+            expectedModel.updateFilteredLessonList(MA1101R_CODE_PREDICATE);
         } catch (DuplicateLessonException | LessonNotFoundException e) {
             throw new IllegalArgumentException(
                     "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
         }
-
+        System.out.println("edit to " + editedLesson);
         assertCommandSuccess(command, expectedModel,
                 String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson), expectedSelectedCardIndex);
     }
@@ -252,7 +235,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
         executeCommand(command);
-        expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {

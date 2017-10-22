@@ -1,10 +1,13 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 
@@ -63,13 +66,15 @@ public class CommandTestUtil {
     public static final String INVALID_VENUE_DESC = " " + PREFIX_VENUE; // empty string not allowed for venue
     public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "SL1"; // 'SL' not allowed for addresses
     public static final String INVALID_TIMESLOT_DESC = " " + PREFIX_TIME_SLOT + "FRIDAY[1200-1300]"; // Only 3 letters
-    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + ""; // '*' not allowed in tags
+    public static final String INVALID_LECTURER_DESC = " " + PREFIX_LECTURER + "***"; // '*' not allowed in tags
     public static final String INVALID_FONT_SIZE_DESC = " " + PREFIX_FONT_SIZE
             + "small!"; // '!' not allowed in font size
 
 
     public static final EditCommand.EditLessonDescriptor DESC_MA1101R;
     public static final EditCommand.EditLessonDescriptor DESC_CS2101;
+
+    public static final FixedCodePredicate MA1101R_CODE_PREDICATE;
 
     static {
         DESC_MA1101R = new EditLessonDescriptorBuilder().withCode(VALID_CODE_MA1101R)
@@ -78,6 +83,11 @@ public class CommandTestUtil {
         DESC_CS2101 = new EditLessonDescriptorBuilder().withCode(VALID_CODE_CS2101)
                 .withClassType(VALID_CLASSTYPE_CS2101).withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_CS2101)
                 .withTimeSlot(VALID_TIMESLOT_CS2101).withLecturers(VALID_LECTURER_CS2101).build();
+        try {
+            MA1101R_CODE_PREDICATE = new FixedCodePredicate(new Code(VALID_CODE_MA1101R));
+        } catch (IllegalValueException e) {
+            throw new AssertionError("The code cannot be invalid");
+        }
     }
 
     /**

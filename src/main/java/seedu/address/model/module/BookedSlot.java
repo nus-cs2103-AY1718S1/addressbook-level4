@@ -37,4 +37,9 @@ public class BookedSlot {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(location, timeSlot);
     }
+
+    @Override
+    public String toString() {
+        return location.toString() + "  " + timeSlot.toString();
+    }
 }
