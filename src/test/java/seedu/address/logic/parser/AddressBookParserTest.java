@@ -184,6 +184,14 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_listFav() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD
+                + " " + ListCommand.COMMAND_OPTION_FAV) instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD
+                + " " + ListCommand.COMMAND_OPTION_FAV + " 3") instanceof ListCommand);
+    }
+
+    @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
