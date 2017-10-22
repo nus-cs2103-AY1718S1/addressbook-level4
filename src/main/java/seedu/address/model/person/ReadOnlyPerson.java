@@ -57,7 +57,8 @@ public interface ReadOnlyPerson {
                 .append(getBloodType())
                 .append(" Tags: ")
                 .append(getRemark())
-                .append(" Remark: ");
+                .append(" Remark: ")
+                .append((getAppointment()));
         getTags().forEach(builder::append);
         return builder.toString();
     }
