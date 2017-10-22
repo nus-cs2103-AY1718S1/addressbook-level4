@@ -221,13 +221,15 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 === Undo/Redo mechanism
 
+==== Mechanism
+
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As can be seen from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -348,7 +350,9 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::restoreandbackup[]
 === Backup / Restoring Backup
 
-The backing up of address book is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`. These commands do not support the undoing and redoing of user actions and thus, inherits from `Command`.
+==== Mechanism
+
+The backing up of DummyName is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`. These commands do not support the undoing and redoing of user actions and thus, inherits from `Command`.
 These commands require access to `Storage` from `Logic` and the way to accomplish this is to post an event to `EventCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
 The following shows a sequence diagram of how the `BackupCommand` is carried out.
 
@@ -357,7 +361,7 @@ image::BackupCommandSequenceDiagram.png[width="800"]
 [NOTE]
 `RestoreBackupCommand` shares a similar sequence diagram in terms of logic.
 
-The `BackupCommand` is executed when user input "backup" or "b". The data that is in `model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
+The `BackupCommand` is executed when the commands `backup` or `b` are entered. The data that is in `model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
 The following is the implementation of `BackupCommand`:
 [source, java]
 ----
@@ -376,7 +380,8 @@ public class BackupCommand extends Command {
 }
 ----
 
-The `RestoreBackupCommand` is executed when user input "restore" or "rb". `RestoreBackupDataEvent` is posted and `StorageManager` handles it. The data from default file path "data/addressbook-backup.xml" will be retrieved and it will replace the active address book.
+The `RestoreBackupCommand` is executed when the commands `restore` or `rb` are entered. `RestoreBackupDataEvent` is posted and `StorageManager` handles it.
+The data from default file path "data/addressbook-backup.xml" will be retrieved and it will replace the active address book.
 The following is the implementation of `RestoreBackupCommand`:
 [source, java]
 ----
@@ -416,6 +421,8 @@ A backup of address book is always created when the Address Book starts. This me
 
 // tag::addremovetag[]
 === Adding/Removing a tag
+
+==== Mechanism
 
 Adding or removing a tag is facilitated by `AddTagCommand` and `DeleteTagCommand`, which are subclasses of `UndoableCommand`. These commands work by changing the value of the `Tag` objects associated with the contact.
 
@@ -469,11 +476,12 @@ public class AddTagCommand extends UndoableCommand {
 // tag::filter[]
 === Filter mechanism
 
-==== Fundamental mechanism
+==== Mechanism
 The list of persons displayed is filtered by a [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[Predicate]]
 when the method `updateFilteredPersonList(predicate)` from the `Model` interface is invoked.
 
-The relevant methods in the Model interface:
+The relevant methods in the Model interface are as follows:
+
 [source,java]
 ----
 public interface Model {
@@ -491,13 +499,13 @@ public interface Model {
 
 
 When `updateFilteredPersonList(predicate)` is invoked, every `person` in the **AddressBook** is evaluated against the `predicate`. +
-A `person` will be added the the list for display if `predicate.test(person)` is evaluated to be TRUE. +
-All `person` that fulfill the conditions specified in `predicate` are filtered to be displayed.
+A `person` is added to the displayed list if `predicate.test(person)` is evaluated to be TRUE. +
+All `person` instances that fulfill the conditions specified in `predicate` are filtered to be displayed.
 
 ==== Filtering on the existing list
-Note that all `person` in the existing list satisfy a Predicate `currentPredicate`. +
-Given a new Predicate `newPredicate`, filtering on the existing list is equivalent to selecting `person` that satisfy both `currentPredicate` and `newPredicate`. +
-From Figure 3.2.1, it can also be viewed as the interception of two lists of `person`, each satisfying one of the two predicates respectively.
+Note that all `person` instances in the existing list satisfy a Predicate `currentPredicate`. +
+Given a new Predicate `newPredicate`, filtering on the existing list is equivalent to selecting `person` instancesthat satisfy both `currentPredicate` and `newPredicate`. +
+From Figure 3.2.1, it can also be viewed as the intersection of two lists of `person` objects, each satisfying one of the two predicates respectively.
 
 image::venn_diagram.png[height = 200, width = 250]
 _Figure 3.2.1 : Venn Diagram for Filtering_
@@ -505,11 +513,11 @@ _Figure 3.2.1 : Venn Diagram for Filtering_
 ===== Implementation
 The actual implementation of filtering on the existing list involves three steps. +
 
-.  invokes `getPersonListPredicate()` provided in the Model interface to get the `currentPredicate`.
+.  Invoke `getPersonListPredicate()` provided in the Model interface to get the `currentPredicate`.
 .  Use [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html#and-java.util.function.Predicate-[Predicate.and()]] to generated the logical AND of the two predicates.
 .  Update the list using the predicate generated in step 2.
 
-===== Design consideration
+==== Design consideration
 The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]]. +
 By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
 Making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
@@ -518,8 +526,8 @@ Making use of the logical AND of two predicates, the list can be filtered withou
 // tag::sync[]
 === Synchronisation with Google Contacts
 
-==== Basic flow summary
-Authentication and synchronisation of data with a user's Google Contacts is done via the `sync` command, which is a subclass of `UndoableCommand`. This command works in conjunction with the Google Client and People API.
+==== Mechanism
+Authentication and synchronisation of data with a user's Google Contacts is done via the `sync` command, which is a subclass of `Command`. This command works in conjunction with the Google Client and People API.
 
 Firstly, the command posts an `AuthorizationEvent` event to the EventCenter, which is then handled by a `OAuth` class, which is chiefly responsible for authorization and interaction with a user's Google Contacts. Hence, threading allows for the application to run in the background, while the user can perform other tasks. The user is redirected to login to Google via his default browser through the invoked `authorize` method. A callback is then done to create a `Credential` which is then used to instantiate a `PeopleService` instance. The `PeopleService` is then used to perform CRUD functions on the user's Google Contacts. The following diagram shows the entire sequence.
 
@@ -532,7 +540,7 @@ Below is the implementation of `SyncCommand`, where the `AuthorizationEvent` is 
 
 [source,java]
 ----
-public class SyncCommand extends UndoableCommand {
+public class SyncCommand extends Command {
     //...variables, constructor, other methods
 
     @Override
@@ -670,6 +678,7 @@ public class OAuth {
 **Alternative 1 (current choice):** An `Event` and a `Subscriber` is used to communicate between the two different components +
 **Pros:** Maintain low coupling and prevent unnecessary addition of dependencies +
 **Cons:** Handlers have to be created to handle `Events` when they occur +
+
 **Alternative 2:** Create an `OAuth` object in `Logic` +
 **Pros:** No handlers are required to process `Events` +
 **Cons:** Introduce unnecessary dependencies
