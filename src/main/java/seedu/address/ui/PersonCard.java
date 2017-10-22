@@ -97,6 +97,7 @@ public class PersonCard extends UiPart<Region> {
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue) && !colors.isEmpty()) {
             tagColors.put(tagValue, colors.get(0));
+            colors.add(colors.get(0)); // keeps the loop
             colors.remove(0);
         }
 
