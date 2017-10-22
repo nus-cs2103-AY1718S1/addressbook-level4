@@ -49,7 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Favourite favourite = new Favourite();
-            Birthday birthday = ParserUtil.parseBirthday(argMultimap.getStringValue(PREFIX_BIRTHDAY));
+            Birthday birthday = ParserUtil.parseBirthday(argMultimap.getBirthdayOptionalValue(PREFIX_BIRTHDAY)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             ReadOnlyPerson person = new Person(name, phone, email, address, favourite, birthday, tagList);
