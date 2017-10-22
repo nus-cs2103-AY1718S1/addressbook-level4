@@ -3,7 +3,6 @@ package seedu.address.model.person;
 import java.util.ArrayList;
 import java.util.Set;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
