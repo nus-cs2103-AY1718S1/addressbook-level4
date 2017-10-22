@@ -36,6 +36,20 @@ public class ImportCommandParserTest {
     }
 
     @Test
+    public void parseImportFilePath_invalidFileName_throwsIllegalValueException() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(ImportCommandParser.MESSAGE_FILE_NAME_INVALID);
+
+        new ImportCommandParser().parse("#!Hfas.xml");
+
+        // directory traversal attempt
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(ImportCommandParser.MESSAGE_FILE_NAME_INVALID);
+
+        new ImportCommandParser().parse("../addressBook.xml");
+    }
+
+    @Test
     public void parseImportFilePath_validInput_success() throws Exception {
         ImportCommand importCommand = new ImportCommandParser().parse("testValidAddressBook.xml");
         assertTrue(importCommand instanceof ImportCommand);
