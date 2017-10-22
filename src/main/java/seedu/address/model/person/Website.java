@@ -2,9 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.validator.routines.UrlValidator;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -41,13 +38,6 @@ public class Website {
      * Returns if a given string is a valid person website.
      */
     public static boolean isValidWebsite(String test) {
-        /*
-        Pattern p = Pattern.compile(
-                "(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(https://)?[a-zA-Z_0-9\\-]"
-                        + "+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?");
-
-        Matcher m = p.matcher(test);
-        */
         String[] schemes = {"http","https"};
                 UrlValidator urlValidator = new UrlValidator(schemes);
 
