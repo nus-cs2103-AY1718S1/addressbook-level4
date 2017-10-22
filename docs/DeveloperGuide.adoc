@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T15-B2`      `Aw Wen Hao2`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -1122,18 +1122,19 @@ Use case ends.
 +
 Use case ends.
 
-**Extensions**
+*Extensions*
 
-2a. The list is empty
+[none]
+* 2a. The list is empty.
++
+Use case ends.
 
-> Use case ends
-
-3a. The given phone number is invalid
-
-> 3a1. AddressBook shows an error message
-  Use case resumes at step 2
-
-> Use case ends
+* 3a. The given phone number is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 {More to be added}
 
