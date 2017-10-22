@@ -212,7 +212,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 If you want to find a person named `John Watson`:
 
 .  Type in +
-image:Ui.png[UI, 40, 40, role = "right"]`>> find john`.
+image:Ui.png[UI, 40, 40, role = "right"]`>> find john`
 .  Press `Enter` and you should see a list of persons having the name `john`:
 image:Ui.png[UI, 40, 40, role = "right"]
 
@@ -228,8 +228,9 @@ Lists any person having the name `Watson`
 ====
 Command Name: `filter` +
 Shorthand Alias: `ft` +
-Finds persons who are tagged with any of the given tags from the current list. +
+Function: finds persons who are tagged with any of the given tags from the existing list of persons. +
 Format: `filter TAG [MORE_TAGS]`
+====
 
 ****
 * The search is case insensitive. e.g `FRIENDS` will match `friends`
@@ -237,15 +238,27 @@ Format: `filter TAG [MORE_TAGS]`
 * Only the tags are searched.
 * Only full words will be matched e.g. `friend` will not match `friends`
 * Persons matching at least one tag will be returned (i.e. `OR` search). e.g. `family friends` will return persons who are tagged with family or friends
-* The filter is done on the current list. Successive `filter` makes the list smaller and smaller
+* The filter is done on the existing list. Successive `filter` makes the list smaller and smaller
 ****
 
-Examples:
+If you want to find your friends among all your colleagues: +
+
+.  Type in +
+image:Ui.png[UI, 40, 40, role = "right"]`>> filter colleague`
+.  Press `Enter` and you will see a list of persons who are tagged with `colleague`
+.  Type in +
+image:Ui.png[UI, 40, 40, role = "right"]`>> filter friends`
+.  Press `Enter` and you will see a list of persons who are tagged with both `friends` and `colleague`
+
+
+Here are some other ways you can do with `filter`:
 
 * `filter family` +
-Returns `Alice` and `Bob` provided that Alice and Bob has the family tag
+Lists any person having the `family` tag
 * `filter family friends` +
-Returns any person tagged with `family` or `friends`
+Lists any person tagged with `family` or `friends`
+
+
 
 === Selecting a person : `select`
 
