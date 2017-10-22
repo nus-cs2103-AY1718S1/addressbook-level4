@@ -1,10 +1,14 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
+
+import seedu.address.commons.events.ui.ViewedLessonEvent;
+import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
 import seedu.address.commons.events.ui.FindLessonRequestEvent;
 import seedu.address.model.module.ReadOnlyLesson;
 
 import java.util.function.Predicate;
+
 
 /**
  * Finds and lists items in address book which module or location contains any of the argument keywords.
@@ -30,6 +34,7 @@ public class FindCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredLessonList(predicate);
         EventsCenter.getInstance().post(new FindLessonRequestEvent());
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
