@@ -30,8 +30,9 @@ public interface ReadOnlyAliasToken {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getKeyword())
-                .append(" Representation: ")
+        builder.append(" keyword: ")
+                .append(getKeyword())
+                .append(" representation: ")
                 .append(getRepresentation());
         return builder.toString();
     }
