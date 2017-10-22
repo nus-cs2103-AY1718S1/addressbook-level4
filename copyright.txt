@@ -16,4 +16,4 @@ Copyright by Freepik - http://www.freepik.com
 - events.png
 
 Copyright by Flat Icon - https://www.flaticon.com/
--
+- default_person_photo.png
