@@ -414,7 +414,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 // tag::faveSystem[]
 === Favourite Contact System
 
-The commands related to the Favourite system rely on the `Favourite` attribute class which is a `model` component. 
+The commands related to the Favourite system rely on the `Favourite` attribute class which is a `model` component.
 
 ==== Add & Remove contact from Favourites (since V1.2)
 **addFave:** This command's class, `addFaveCommand`, accepts the parsed index of the contact from the current list of contacts displayed on the GUI. The contact's `Person` class is then retrieved and modified to have it's `Favourite` attribute marked as true and the in-memory model of the addressbook is updated with the modified `Person`.
