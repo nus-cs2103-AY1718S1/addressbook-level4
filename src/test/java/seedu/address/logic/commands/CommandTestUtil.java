@@ -42,7 +42,7 @@ public class CommandTestUtil {
     public static final String VALID_REMARK_AMY = "";
     public static final String VALID_REMARK_BOB = "loves coffee";
     public static final String VALID_DATE_AMY = "2020/01/01 00:00";
-    public static final String VALID_DATE_BOB = "2050/01/01 00:00";
+    public static final String VALID_DATE_BOB = "2020/01/01 00:00";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -77,7 +77,8 @@ public class CommandTestUtil {
                 .withBloodType(VALID_BLOODTYPE_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withBloodType(VALID_BLOODTYPE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withBloodType(VALID_BLOODTYPE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+                .withDate(VALID_DATE_BOB).build();
     }
 
     /**
