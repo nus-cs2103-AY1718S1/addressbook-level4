@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -29,6 +30,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_BLOODTYPE + "BLOODTYPE "
+            + "[" + PREFIX_REMARK + "REMARK]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example 1: " + COMMAND_ALIAS + " "
             + PREFIX_NAME + "John Doe "
@@ -36,6 +38,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_BLOODTYPE + "O "
+            + PREFIX_REMARK + "Broke his foot during soccer practice "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney \n"
             + "Example 2: " + COMMAND_WORD + " "
@@ -44,6 +47,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "maryj@example.com "
             + PREFIX_ADDRESS + "170, Bugis Ave 3, #01-05 "
             + PREFIX_BLOODTYPE + "A "
+            + PREFIX_REMARK + "Healthy "
             + PREFIX_TAG + "wife ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
