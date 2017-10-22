@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.ui.PersonDetailPanel.PERSON_ADDRESS_ICON;
+import static seedu.address.ui.PersonDetailPanel.PERSON_EMAIL_ICON;
+import static seedu.address.ui.PersonDetailPanel.PERSON_PHONE_ICON;
 
 import java.util.stream.Collectors;
 
@@ -44,9 +47,9 @@ public class PersonDetailPanelTest extends GuiUnitTest {
         guiRobot.pauseForHuman();
 
         assertEquals(expectedPerson.getName().toString(), actualPerson.getName());
-        assertEquals(expectedPerson.getPhone().toString(), actualPerson.getPhone());
-        assertEquals(expectedPerson.getAddress().toString(), actualPerson.getAddress());
-        assertEquals(expectedPerson.getEmail().toString(), actualPerson.getEmail());
+        assertEquals(PERSON_PHONE_ICON + expectedPerson.getPhone().toString(), actualPerson.getPhone());
+        assertEquals(PERSON_ADDRESS_ICON + expectedPerson.getAddress().toString(), actualPerson.getAddress());
+        assertEquals(PERSON_EMAIL_ICON + expectedPerson.getEmail().toString(), actualPerson.getEmail());
 
         actualPerson.updateTags();
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),

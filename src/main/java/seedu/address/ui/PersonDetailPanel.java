@@ -23,6 +23,11 @@ import seedu.address.ui.util.Avatar;
  * The Person Detail Panel of the App.
  */
 public class PersonDetailPanel extends UiPart<Region> {
+
+    public static final String PERSON_PHONE_ICON = "☎  ";
+    public static final String PERSON_ADDRESS_ICON = "\uD83C\uDFE0  ";
+    public static final String PERSON_EMAIL_ICON = "\uD83D\uDCE7  ";
+
     private static final String FXML = "PersonDetailPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -86,9 +91,9 @@ public class PersonDetailPanel extends UiPart<Region> {
         avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
 
         name.setText(person.getName().toString());
-        phone.setText("☎  " + person.getPhone().toString());
-        address.setText("\uD83C\uDFE0  " + person.getAddress().toString());
-        email.setText("\uD83D\uDCE7  " + person.getEmail().toString());
+        phone.setText(PERSON_PHONE_ICON + person.getPhone().toString());
+        address.setText(PERSON_ADDRESS_ICON + person.getAddress().toString());
+        email.setText(PERSON_EMAIL_ICON + person.getEmail().toString());
 
         tags.getChildren().clear();
         initTags(person);
