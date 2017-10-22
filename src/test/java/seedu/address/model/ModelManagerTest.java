@@ -36,12 +36,12 @@ public class ModelManagerTest {
 
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
 
-        //modelManager has one temporary person inside -> rturns false
+        //modelManager has one temporary person inside -> returns false
         assertFalse(modelManager.equals(null));
 
         modelManager.deleteTemporary(addressBook);
-        //deleted temporary person inside modelManager -> returns true
-        assertTrue(modelManager.getAddressBook().getPersonList().size() == 0);
+        //added temporary has argument of 0, so it stays permanently -> returns false
+        assertFalse(modelManager.getAddressBook().getPersonList().size() == 0);
 
     }
 

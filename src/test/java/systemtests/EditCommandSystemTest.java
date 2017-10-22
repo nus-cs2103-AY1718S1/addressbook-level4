@@ -26,6 +26,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
@@ -62,6 +63,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          * -> edited
          */
         Index index = INDEX_FIRST_PERSON;
+        Index indexAfterSorting = INDEX_SECOND_PERSON;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
                 + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
         Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -81,9 +83,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a person with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, index, BOB);
+        command = EditCommand.COMMAND_WORD + " " + indexAfterSorting.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        assertCommandSuccess(command, indexAfterSorting, BOB);
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;

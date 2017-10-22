@@ -10,7 +10,7 @@ import seedu.address.model.tag.UniqueTagList;
  * A read-only immutable interface for a Person in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
-public interface ReadOnlyPerson {
+public interface ReadOnlyPerson extends Comparable {
 
     ObjectProperty<Name> nameProperty();
     Name getName();
@@ -24,6 +24,8 @@ public interface ReadOnlyPerson {
     Picture getPicture();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Timestamp> timestampProperty();
+    Timestamp getTimestamp();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -49,6 +51,8 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Time-of-expiry: ")
+                .append(getTimestamp().getExpiryTime())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

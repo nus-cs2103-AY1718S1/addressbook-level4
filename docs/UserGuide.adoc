@@ -82,15 +82,15 @@ Examples:
 
 === Adding a temporary person:
 
-Adds a temporary person to the address book which will be deleted the next time address book opens +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS t/temporary [t/TAG]...`
+Adds a temporary person to the address book which will be deleted when the number of days specified has elapsed +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [temp/NUMBER_OF_DAYS] [t/TAG]...`
 
 [TIP]
-User can supply the temporary tag before or after any other tag
+Deletion of temporary person is done at the start up of the addressbook.
 
 Examples:
 
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/temporary t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 temp/2 t/criminal`
 
 === Adding a picture: `GUI image`
 
@@ -118,6 +118,19 @@ image::delete_person.png[width="400"]
 
 Shows a list of all persons in the address book. +
 Format: `list`
+
+=== Sorting the Address Book: `sort`
+
+Sorts the address book +
+Format: `sort `sorting-criteria``
+
+
+Examples:
+
+* `sort name`
+* `sort address`
+* `sort phone`
+* `sort email`
 
 === Editing a person : `edit`
 

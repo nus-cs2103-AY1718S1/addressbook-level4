@@ -3,8 +3,9 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
-import java.util.Set;
+
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -14,13 +15,13 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.AlreadySortedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
+
 
 /**
  * Represents the in-memory model of the address book data.
@@ -45,8 +46,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         try {
             deleteTemporary(this.addressBook);
-        } catch (IllegalValueException e) {
-            logger.warning("Invalid tag provided by program");
         } catch (PersonNotFoundException e) {
             logger.warning("no such person found");
         }
@@ -73,16 +72,17 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /** delete temporary persons on start up of the app */
-    public synchronized void deleteTemporary(AddressBook addressBook) throws IllegalValueException,
-                                                                                PersonNotFoundException {
+    public synchronized void deleteTemporary(AddressBook addressBook) throws PersonNotFoundException {
         UniquePersonList personsList = addressBook.getUniquePersonList();
         Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
         while (itr.hasNext()) {
             Person person = itr.next();
-            Set<Tag> tags = person.getTags();
-            Tag tempTag = new Tag("temporary");
-            if (tags.contains(tempTag)) {
-                itr.remove();
+            LocalDateTime personExpiry = person.getTimestamp().getExpiryTime();
+            LocalDateTime current = LocalDateTime.now();
+            if (personExpiry != null) { //if this is a temporary contact
+                if (current.compareTo(personExpiry) == 1) { //if current time is past the time of expiry
+                    itr.remove();
+                }
             }
         }
     }
@@ -142,6 +142,15 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+
+    //=========== Sorting Person List =============================================================
+    /** Sorts the Address Book by name, phone, address or phone depending on the sortCriteria */
+    public void sortBy(String sortCriteria) throws AlreadySortedException {
+        addressBook.sortBy(sortCriteria);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
     }
 
 }
