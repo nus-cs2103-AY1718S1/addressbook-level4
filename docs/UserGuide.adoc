@@ -368,9 +368,18 @@ Examples:
 * `list` +
 `unfavourite 2` +
 Unfavourites the 2nd person in the address book.
+* `favouritelist` +
+`unfavourite 1` +
+Unfavourites the 1st person in the results of the `favouritelist` command.
 * `find Betsy` +
 `unfavourite 1` +
 Unfavourites the 1st person in the results of the `find` command.
+
+=== Listing all favourited persons : `favouritelist`
+`since v1.2` `Dickson Chan`
+
+Shows a list of all favourited persons in the address book. +
+Format: `favouritelist`
 
 === Clearing all entries : `clear`
 
@@ -397,7 +406,7 @@ There is no need to save manually.
 * *Add* `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 h/65812131 e/jamesho@example.com se/jamesho@u.nus.edu w/https://www.facebook.com/jamesHo a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Access* : `access INDEX` +
-e.g.`access 2`
+e.g. `access 2`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -407,10 +416,18 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Locate* : `locate INDEX` +
-e.g.`locate 2`
+e.g. `locate 2`
+* *Favourite* : `favourite INDEX` +
+e.g. `favourite 3`
+* *Unfavourite* : `unfavourite INDEX` +
+e.g. `unfavourite 3`
+* *FavouriteList* : `favouritelist`
+* *ThemesList* : `themeslist`
+* *SwitchTheme* : `switchtheme INDEX` +
+e.g. `switchtheme 2`
 * *Help* : `help`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
