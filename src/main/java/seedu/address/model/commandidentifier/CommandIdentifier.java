@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CopyCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -29,6 +30,7 @@ public class CommandIdentifier {
             + "following (or their aliases):\n"
             + AddCommand.COMMAND_WORD + ", "
             + ClearCommand.COMMAND_WORD + ", "
+            + CopyCommand.COMMAND_WORD + ", "
             + DeleteCommand.COMMAND_WORD + ", "
             + EditCommand.COMMAND_WORD + ", "
             + ExitCommand.COMMAND_WORD + ", "
@@ -43,6 +45,7 @@ public class CommandIdentifier {
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
             AddCommand.COMMAND_WORD, AddCommand.COMMAND_ALIAS,
             ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_ALIAS,
+            CopyCommand.COMMAND_WORD, CopyCommand.COMMAND_ALIAS,
             DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_ALIAS,
             EditCommand.COMMAND_WORD, EditCommand.COMMAND_ALIAS,
             ExitCommand.COMMAND_WORD, ExitCommand.COMMAND_ALIAS,

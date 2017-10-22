@@ -571,6 +571,60 @@ image::FindCommand_Address.PNG[width="300"]
 image::FindCommand_Tag.PNG[width="300"]
 
 
+//tag::CopyCommand[]
+=== Copy email address to clipboard [Since v1.2]
+
+The `copy` function uses the Clipboard in Toolkit API to automatically copy emails of selected indexes onto the system clipboard.
+The index(es) selected must exist in the current result display window.
+
+[source,java]
+----
+// copy string to clipboard
+Toolkit toolkit = Toolkit.getDefaultToolkit();
+Clipboard clipboard = toolkit.getSystemClipboard();
+StringSelection messageOutputSelection = new StringSelection(messageOutput);
+clipboard.setContents(messageOutputSelection, null);
+
+----
+
+The selected emails are stored in a string ArrayList, then re-formatted to remove square brackets around the ArrayList and change all commas to semi-colons before sending the result to system clipboard output. This ensures that the final output string copied to clipboard has maximum compatibility with formatting conventions in email applications.
+
+[source,java]
+----
+// outputList without square brackets
+String messageOutput = outputList.toString().substring(1, outputList.toString().length() - 1);
+
+// outputList use semi-colon separator
+messageOutput = messageOutput.replace(",", ";");
+
+----
+
+Examples of copy command on UI:
+
+
+image::CopyCommand_single_index.PNG[width="300"]
+
+
+image::CopyCommand_multiple_index.PNG[width="300"]
+
+Figures 1 and 2 show the acceptable format for indexes, and the expected result. Note that the message will only be displayed if the message is already copied to the system clipboard.
+
+image::CopyCommand_browser_result.PNG[width="300"]
+
+Figure 3 shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
+
+Why it is implemented that way
+
+There was no way to copy emails from the listed contacts in the previous version, so a user would have to refer to the address book application while typing it into their email application or browser manually. As email addresses are almost always meant to be utilized in an electronic device, an automatic ‘copy’ command of all requested email addresses is the most efficient and user-friendly way of text selection for this type of information.
+
+Alternatives considered
+
+It is possible to provide the same output text in the console message to user, which was the first iteration of this feature. However, since the resultant string was only meant to be copied either way, this implementation would cause the user to perform one more action per email address output request, as they would have to manually copy the output to their system clipboard.
+
+Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
+
+
+
 == Documentation
 
 We use asciidoc for writing documentation.

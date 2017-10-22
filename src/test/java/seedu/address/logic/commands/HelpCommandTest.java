@@ -48,6 +48,11 @@ public class HelpCommandTest {
         assertEquals(EditCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
         assertEquals(EditCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
 
+        commandResultWord = getHelpCommand("copy").execute();
+        commandResultAlias = getHelpCommand("y").execute();
+        assertEquals(CopyCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(CopyCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
         commandResultWord = getHelpCommand("find").execute();
         commandResultAlias = getHelpCommand("f").execute();
         assertEquals(FindCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
