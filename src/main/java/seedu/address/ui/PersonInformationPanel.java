@@ -33,6 +33,8 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private VBox informationPane;
     @FXML
+    private FlowPane tags;
+    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -42,8 +44,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
-    @FXML
-    private FlowPane tags;
 
     public PersonInformationPanel() {
         super(FXML);
@@ -72,10 +72,9 @@ public class PersonInformationPanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            initTags();
-        });
+        tags.getChildren().clear();
+        initTags();
+
     }
 
     /**
