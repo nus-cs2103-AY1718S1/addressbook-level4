@@ -14,6 +14,15 @@ endif::[]
 
 By: `Team W13-B3`      Since: `Jun 2016`      Licence: `MIT`
 
+== Product Overview
+Product Name: *DummyName* +
+Version: 1.5 +
+{empty} +
+*DummyName* is a free desktop contact management application that helps you manage your large collection of contacts conveniently and keep track of your appointments. You can store contacts as well as other information and retrieve them efficiently with the help of *DummyName*. +
+
+*DummyName* is available for the `Linux`, `Unix`, `Windows 10`, and `Mac OS X` operating systems.
+
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -52,27 +61,39 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
+====
+Command Name: `help` +
 Shorthand Alias: `hp` +
+Function: displays the *User Guide* +
 Format: `help`
+====
+
+If you want to view the *User Guide*: +
+
+.  Type in +
+`>> help` +
+image:help.png[] +
+_Figure 3.1.1_
+.  Press `Enter` and a *User Guide* document would show up.
 
 === Adding a person: `add`
 
 ====
 Command Name: `add` +
 Shorthand Alias: `a` +
+Function: adds a person to *DummyName* +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 [TIP]
 A person can have any number of tags (including 0)
 [TIP]
 Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` are equivalent.
-
 ====
 
 If you want to add a new contact to your *DummyName*: +
 
 .  Type in +
 image:Ui.png[UI, 40, 40, role = "right"]`>> add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`.
-.  image:Ui.png[UI, width = "40", role = "right"]Press `Enter` and you should see
+.  image:Ui.png[UI, width = "40", role = "right"]Press `Enter` and you should see:
 
 
 Here are some other ways you can add contacts:
@@ -175,9 +196,12 @@ Deletes the tag `class2101` from all contacts in the address book.
 
 === Locating persons by name: `find`
 
+====
+Command Name: `find` +
 Shorthand Alias: `f` +
-Finds persons whose names contain any of the given keywords. +
+Function : finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
+====
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -187,20 +211,31 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
-Examples:
+If you want to find a person named `John Watson`:
 
-* `find John` +
-Returns `john` and `John Doe`
+.  Type in +
+`>> find john` +
+image:find_1.png[] +
+_Figure 3.8.1_
+.  Press `Enter` and you should see a list of persons having the name `john`: +
+image:find_2.png[] +
+_Figure 3.8.2_
+
+Here are some other ways you can do with `find`:
+
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `f watson` +
-Returns `John Watson`
+Lists any person having names `Betsy`, `Tim`, or `John`
+* `f Watson` +
+Lists any person having the name `Watson`
 
 === Locating persons by tags: `filter`
 
+====
+Command Name: `filter` +
 Shorthand Alias: `ft` +
-Finds persons who are tagged with any of the given tags from the current list. +
+Function: finds persons who are tagged with any of the given tags from the existing list of persons. +
 Format: `filter TAG [MORE_TAGS]`
+====
 
 ****
 * The search is case insensitive. e.g `FRIENDS` will match `friends`
@@ -208,15 +243,34 @@ Format: `filter TAG [MORE_TAGS]`
 * Only the tags are searched.
 * Only full words will be matched e.g. `friend` will not match `friends`
 * Persons matching at least one tag will be returned (i.e. `OR` search). e.g. `family friends` will return persons who are tagged with family or friends
-* The filter is done on the current list. Successive `filter` makes the list smaller and smaller
+* The filter is done on the existing list. Successive `filter` makes the list smaller and smaller
 ****
 
-Examples:
+If you want to find your friends among all your colleagues: +
+
+.  Type in +
+`>> filter colleagues` +
+image:filter_1.png[] +
+_Figure 3.9.1_
+.  Press `Enter` and you will see a list of persons who are tagged with `colleagues` +
+image:filter_2.png[] +
+_Figure 3.9.2_
+.  Type in +
+`>> filter friends` +
+image:filter_3.png[] +
+_Figure 3.9.3_
+.  Press `Enter` and you will see a list of persons who are tagged with both `friends` and `colleagues` +
+image:filter_4.png[] +
+_Figure 3.9.4_
+
+Here are some other ways you can do with `filter`:
 
 * `filter family` +
-Returns `Alice` and `Bob` provided that Alice and Bob has the family tag
+Lists any person having the `family` tag
 * `filter family friends` +
-Returns any person tagged with `family` or `friends`
+Lists any person tagged with `family` or `friends`
+
+
 
 === Selecting a person : `select`
 
@@ -283,14 +337,22 @@ Format: `sync`
 
 === Listing entered commands : `history`
 
-Shorthand Alias: `hx` +
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
 ====
+Command Name: `history` +
+Shorthand Alias: `hx` +
+Function: lists all the commands that you have entered in reverse chronological order. +
+Format: `history`
+[NOTE]
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+If you want to view the list of commands entered: +
+
+.  Type in +
+`>> history` +
+image:history.png[] +
+_Figure 3.15.1_
+.  Press `Enter` and the lists of commands that you entered before would show up.
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -350,23 +412,26 @@ Shorthand Alias: `c` +
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Resize the main window : `resize`
+=== Resizing the main window : `resize`
 
+====
+Command Name: `resize` +
 Shorthand Alias: `rs` +
-Resize the main window to the specified width and height in pixels +
+Function: resizes the main window to the specified width and height in pixels +
 Format: `resize WIDTH HEIGHT`
+[NOTE]
+Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
+[NOTE]
+You *CANNOT* `undo` a `resize` command
+====
 
-****
-* Resize the MainWindows to the specified WIDTH and HEIGHT.
-* Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
-****
+If you want to resize your main window to 1280 * 720: +
 
-Examples:
-
-* `resize 1280 720` +
-Resize the main window to 1280*720.
-* `rs 1000 600` +
-Resize the main window to 1000*600.
+.  Type in +
+`>> resize 1280 720` +
+image:resize.png[] +
+_Figure 3.19.1_
+.  Press `Enter` and the main window would be resized to 1280 * 720.
 
 === Exiting the program : `exit`
 
