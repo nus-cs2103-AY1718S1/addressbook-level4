@@ -48,6 +48,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 ====
 
 === Viewing help : `help`
@@ -115,26 +116,55 @@ Deletes the 4th person in the address book.
 
 === Editing a person : `edit`
 
+====
+Command Name: `edit` +
 Shorthand Alias: `e` +
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Function: Edits the person at the specified `INDEX`. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+[TIP]
+A person can have any number of tags (including 0)
+[TIP]
+Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` are equivalent.
+[NOTE]
+You must provide at least one of the optional fields.
+====
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
+If you want to change the details of a contact in your *DummyName*: +
+
+.  Locate the contact you want to edit and the index of the contact. +
+.  Type in the index of the contact, and the details you wish to replace. (Figure 2.5.1) +
+>> edit 1 p/91234567 e/johndoe@example.com`.
+image:Edit_1.png[600] +
+_Figure 2.5.1_
+.  Press `Enter` and you should see that the first contact that you selected has been modified. (Figure 2.5.2) +
+image:Edit_2.png[600] +
+_Figure 2.5.2_
+
+[NOTE]
+====
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+====
 
-Examples:
+You can also edit contacts in a filtered list:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-* `e 3 n/Carl Cooper` +
-Edits the name of the 3rd person to be `Carl Cooper`.
+* `>> filter friends` +
+`>> edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person in the results of the `filter` command to be `Betsy Crower`
+and clears all existing tags.
+
+[NOTE]
+====
+You can remove all the person's tags by typing `t/` without specifying any tags after it.
+====
+
+* `>> find Betsy` +
+`>> e 1 t/friend` +
+Edits the tag of the 1st person in the results of the `find` command.
+
+[NOTE]
+====
+When you edit tags, the existing tags of the person will be removed. To add tags cumulatively, use `addtag` instead. +
+====
 
 === Adding a tag to a person : `addtag`
 
