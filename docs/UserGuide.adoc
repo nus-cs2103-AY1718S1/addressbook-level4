@@ -119,7 +119,7 @@ Format: `edit INDEX [m/MODULE_CODE] [ct/CLASS_TYPE] [v/VENUE] [gp/GROUP] [ts/TIM
 * When editing lecturers, the existing lecturers of the lesson will be removed i.e adding of lecturers is not cumulative.
 ****
 
-image::video/view.gif[width="790"]
+image::video/edit.gif[width="790"]
 
 Edits an existing attribute(module/location) in the ModU list. +
 Format: `edit INDEX [CODE/LOCATION]...`
@@ -137,10 +137,14 @@ Examples:
 * `edit 1 m/CS2101` +
 Edits the module code of the 1st lesson to be `CS2101`.
 
+image::video/editModule.gif[width="790"]
+
 * `list location` +
  Returns a list of location +
 * `edit 3 LT27` +Assume
 Edits all the lessons with the third location shown in the location list to be `LT27`.
+
+image::video/editLocation.gif[width="790"]
 
 === Locating lessons by module code: `find`
 
@@ -162,6 +166,8 @@ Returns `MA1101R`
 * `find MA1101R CS2101 CS2103T +
 Returns module having code `MA1101R`, `CS2101`, or `CS2103T`
 
+image::video/find.gif[width="790"]
+
 === Sorting lesson by module code: `sort`
 
  Sort the existing list. +
@@ -179,11 +185,14 @@ Returns module having code `MA1101R`, `CS2101`, or `CS2103T`
  `sort` +
  Return a list of location sorted lexicographically
 
+image::video/sortLocation.gif[width="790"]
+
  * `list lesson` +
  Returns whole module +
  `sort` +
  Return a list sorted by code lexicographically
 
+image::video/sortModule.gif[width="790"]
 
 === Deleting a lesson : `delete`
 
@@ -208,6 +217,7 @@ Deletes the 1st lesson in the results of the `find` command.
 `delete 2` +
 Deletes the 2nd lesson in the ModU location list.
 
+image::video/delete.gif[width="790"]
 
 === Selecting a lesson : `select`
 
@@ -229,6 +239,8 @@ Selects the 2nd lesson in the ModU list.
 `select 1` +
 Selects the 1st lesson in the results of the `find` command.
 
+image::video/select.gif[width="790"]
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -238,6 +250,8 @@ Format: `history`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+image::video/history.gif[width="790"]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -266,6 +280,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+image::video/undo.gif[width="790"]
+
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
@@ -289,15 +305,21 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+image::video/redo.gif[width="790"]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the ModU list. +
 Format: `clear`
 
+image::video/clear.gif[width="790"]
+
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
+
+image::video/edit.gif[width="790"]
 
 === Customising the font size : `customise fs/FONT-SIZE`
 
@@ -313,6 +335,8 @@ Examples:
 * `customise fs\small`
 * `customise fs\xlarge`
 
+image::video/customise.gif[width="790"]
+
 === Highlighting keywords : `color`
 
 Highlight the command keywords. +
@@ -322,6 +346,8 @@ Examples:
 
 * `color enable`
 * `color disable`
+
+image::video/color.gif[width="790"]
 
 === Saving the data
 
