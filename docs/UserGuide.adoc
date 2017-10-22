@@ -36,6 +36,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
+
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -107,9 +108,29 @@ If you type in all commands shown above, you should see:
 
 === Listing all persons : `list`
 
+====
+Command Name: `list` +
 Shorthand Alias: `l` +
-Shows a list of all persons in the address book. +
+Function: List all contacts in DummyName
 Format: `list`
+
+[TIP]
+You can use `list` to view your contacts after running `filter` or `find`
+====
+
+You can view all your contacts by following the steps below:
+
+.   Type in (Figure 2.3.1) +
+`>> list` +
+image:list1.png[list1, 600] +
+_Figure 2.3.1(`filter` was run)_
+.   Press Enter. You should now see a list of all your contacts (Figure 2.3.2) +
+image:list2.png[list2, 600] +
+_Figure 2.3.2_
+
+Here is another way to list your contacts:
+
+* `l`
 
 === Deleting a person : `delete`
 
@@ -355,15 +376,31 @@ Lists any person tagged with `family` or `friends`
 
 === Selecting a person : `select`
 
+====
+Command Name: `select` +
 Shorthand Alias: `sl` +
-Selects the person identified by the index number used in the last person listing. +
+Function: `Select a contact with the specified `INDEX`` +
 Format: `select INDEX`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+[TIP]
+The index refers to the index number shown in the most recent listing.
+[TIP]
+The index *must be a positive integer* `1, 2, 3, ...`
+====
+
+You can select a contact from the displayed list by:
+
+. Typing (Figure 2.10.1) +
+`>>select 1` +
+image:select1.png[select1, 600] +
+_Figure 2.10.1_
+. Press Enter and your choice should now be selected (Figure 2.10.2) +
+image:select2.png[select2, 600] +
+_Figure 2.10.2_
+
+Here is another way to select a contact:
+
+* s 1
 
 Examples:
 
@@ -379,23 +416,38 @@ Selects the 7th person in the address book.
 
 === Making a note: `note`
 
+====
+Command Name: `note` +
 Shorthand Alias: 'n' +
-Makes a note for an existing person in the address book. +
-Format: `note INDEX [n/Note]`
+Function: Inserts the NOTE for an entry specified by INDEX in the DummyName +
+Format: `note INDEX [n/NOTE]`
 
-****
-* Adds the specified note for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* Notes can be any string, or even left blank to remove existing notes. Existing notes will be replaced by the input note
-* You can remove a note from a person by typing `n/` without any text after it.
-****
+[NOTE]
+Each contact can only have a maximum of 1 note
 
-Examples:
+[TIP]
+Notes can be blank to delete existing notes, i.e. `note n/`
+====
 
-* `note 1 n/This is an important note`
-Adds or replace the existing note for the 1st person to be `This is an important note`
-* `edit 2 n/`
-Removes all existing notes from the 2nd person
-* `e 3 n/`
+If you want to add a note for a DummyName contact:
+
+.   Locate the index of the contact +
+.   Type in your desired INDEX and NOTE (Figure 2.11.1) +
+`>> note 1 n/This is an important note` +
+image:note1.png[note1, 600] +
+_Figure 2.11.1_
+. Press Enter. Your note should now be displayed as the last row in your contact's details (Figure 2.11.2) +
+image:note2.png[note2, 600] +
+_Figure 2.11.2_
+
+Here are some other ways to change your DummyName contact's note:
+
+
+* `note 2 n/` +
+Removes all existing notes from the 2nd person +
+* `n 3 n/This is a note` +
+Changes the 3rd contact's note to "This is a note" +
+* `n 3 n/` +
 Removes all existing notes from the 3rd person
 
 === Creating a backup : `backup`
@@ -412,9 +464,33 @@ Format: `restore`
 
 === Synchronising with Google Contacts : `sync`
 
+====
+Command Name: `sync`
 Shorthand Alias: `sy` +
-Authenticates and communicates with Google Contacts via the People API to synchronise contacts +
+Function: Synchronise your contacts with Google Contacts after authentication +
 Format: `sync`
+[NOTE]
+A browser is necessary for logging in to Google
+====
+
+You can easily synchronise your DummyName contacts with Google Contacts through the following steps:
+
+.   Type (Figure 2.14.1) +
+`>> sync` +
+image:sync1.png[sync1, 600] +
+_Figure 2.14.1_ +
+.   Press Enter. Your default browser should open a login window (Figure 2.14.2) +
+image:sync2.png[sync2, 600] +
+_Figure 2.14.2_
+.   Enter your login details and press Next (Figure 2.14.3) +
+image:sync3.png[sync3, 600] +
+_Figure 2.14.3_
+.   Allow DummyName to access your Google Contacts information (Figure 2.14.4) +
+image:sync4.png[sync4, 600] +
+_Figure 2.14.4_
+.   Your contacts are now synchronised. Figure (2.14.5)
+image:sync5.png[sync5, 600] +
+_Figure 2.14.5_
 
 === Listing entered commands : `history`
 
@@ -489,9 +565,45 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
+
+====
+Command Name: `clear` +
 Shorthand Alias: `c` +
-Clears all entries from the address book. +
+Function: Clears all existing contacts in the DummyName +
 Format: `clear`
+====
+
+You can also clear all DummyName contacts. To do so,
+
+.   Type (Figure 2.18.1) +
+`>> clear` +
+image:clear1.png[clear1, 600] +
+_Figure 2.18.1_
+.   Press Enter. Your contacts should now be cleared (Figure 2.18.2) +
+image:clear2.png[clear2, 600] +
+_Figure 2.18.2_
+
+Another example of clearing your contacts:
+
+* c
+
+=== Resize the main window : `resize`
+
+Shorthand Alias: `rs` +
+Resize the main window to the specified width and height in pixels +
+Format: `resize WIDTH HEIGHT`
+
+****
+* Resize the MainWindows to the specified WIDTH and HEIGHT.
+* Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
+****
+
+Examples:
+
+* `resize 1280 720` +
+Resize the main window to 1280*720.
+* `rs 1000 600` +
+Resize the main window to 1000*600.
 
 === Resizing the main window : `resize`
 
@@ -558,22 +670,28 @@ will open up a new window in your default browser.
 *Q*: I have a question that isn't answered here. How do I get further support? +
 *A*: You can contact us by mailto:alexleegs@gmail.com[email].
 
-== Command Summary
+== Command Summary/ Cheatsheet
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Note* : `note 2 n\Have a scheduled meeting on Wed, 11 Oct 2017`
+[width="100%",cols="24%,1%, 75%",options="header",]
+|=======================================================================
+|Command | Alias| Format
+|Help |`hp` | `help`
+|Add |`a` | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+|List |`l` |`list`
+|Delete |`d` | `delete INDEX`
+|Edit |`e` | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+|Add Tag |`at` |`addtag INDEX TAG`
+|Delete Tag |`dt` |`deletetag TAGNAME`
+|Select |`sl` | `select INDEX
+|Note |`n` | `note INDEX n/NOTE`
+|Backup |`b` | `backup`
+|Restore Backup |`rb` | 'restore'
+|Synchronise with Google Contacts | `sy` | `sync`
+|History |'hx' | `history`
+|Undo | `u`| `undo`
+|Redo | `r`| `redo`
+|Clear |`c` | `clear`
+|Resize |`rs` | `resize WIDTH HEIGHT`
+|Exit |`q` | exit
+|Saving Data|
+|=======================================================================
