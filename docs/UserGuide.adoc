@@ -398,7 +398,7 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Sort* : 'sort'
+* *Sort* : `sort`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
