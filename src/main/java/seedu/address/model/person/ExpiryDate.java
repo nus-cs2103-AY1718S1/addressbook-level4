@@ -1,10 +1,10 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's expiry date in the address book.
@@ -20,7 +20,7 @@ public class ExpiryDate {
      */
     public static final String DATE_VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
-    public static final SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);
+    public static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat(DATE_FORMAT);
 
     public final Date value;
 
@@ -34,16 +34,15 @@ public class ExpiryDate {
         if (date == "") {
             this.value = null;
             return;
-        }
-        else if (!isValidExpiryDate(date)) {
+        } else if (!isValidExpiryDate(date)) {
             throw new IllegalValueException(MESSAGE_EXPIRY_DATE_CONSTRAINTS);
         }
-        // should catch invalid month/day combination
+        // catches invalid month/day combination
         ParsePosition parsePos = new ParsePosition(0);
-        this.value = dateFormatter.parse(date, parsePos);
+        this.value = DATE_FORMATTER.parse(date, parsePos);
 
         // date formatter parse error
-        if(parsePos.getIndex() == 0) {
+        if (parsePos.getIndex() == 0) {
             throw new IllegalValueException(MESSAGE_EXPIRY_DATE_CONSTRAINTS);
         }
     }
@@ -57,9 +56,13 @@ public class ExpiryDate {
 
     @Override
     public String toString() {
-        return dateFormatter.format(value);
+        return DATE_FORMATTER.format(value);
     }
 
-    //TODO: override equals and hashCode (?)
-
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ExpiryDate
+                && this.value.equals(((ExpiryDate) other).value));
+    }
 }

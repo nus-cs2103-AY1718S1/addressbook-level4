@@ -10,6 +10,8 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.trie.CommandTrie;
+import seedu.address.logic.trie.Trie;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -23,12 +25,14 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private final Trie commandTrie;
 
     public LogicManager(Model model) {
         this.model = model;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+        this.commandTrie = new CommandTrie();
     }
 
     @Override
@@ -53,5 +57,9 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    public Trie getCommandTrie() {
+        return commandTrie;
     }
 }

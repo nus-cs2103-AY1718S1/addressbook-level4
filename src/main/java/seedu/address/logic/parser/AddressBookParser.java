@@ -12,7 +12,10 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExpireCommand;
+import seedu.address.logic.commands.FilterGroupCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GroupCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -72,19 +75,27 @@ public class AddressBookParser {
         case FindCommand.SHORTHAND_COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
+        case FilterGroupCommand.COMMAND_WORD:
+            return new FilterGroupCommandParser().parse(arguments);
+
+        case GroupCommand.COMMAND_WORD:
+            return new GroupCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
         case ListCommand.SHORTHAND_COMMAND_WORD:
             return new ListCommand();
 
-        case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
+        case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.SHORTHAND_COMMAND_WORD:
             return new HistoryCommand();
 
-        case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
+        case ExitCommand.COMMAND_WORD:
+        case ExitCommand.SHORTHAND_COMMAND_WORD:
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
+        case HelpCommand.COMMAND_WORD:
+        case HelpCommand.SHORTHAND_COMMAND_WORD:
             return new HelpCommand();
-
 
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.SHORTHAND_COMMAND_WORD:
@@ -96,6 +107,9 @@ public class AddressBookParser {
 
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
+
+        case ExpireCommand.COMMAND_WORD:
+            return new ExpireCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

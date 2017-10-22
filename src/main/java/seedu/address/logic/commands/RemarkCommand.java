@@ -31,6 +31,8 @@ public class RemarkCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_REMARK + "Likes to swim.";
 
+    public static final String MESSAGE_PARAMETERS = "INDEX" + PREFIX_REMARK + "[REMARK]\n";
+
     public static final String MESSAGE_ADD_REMARK = "Added remark to person: %1$s";
     public static final String MESSAGE_DELETE_REMARK = "Deleted remark from person:  %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists";
