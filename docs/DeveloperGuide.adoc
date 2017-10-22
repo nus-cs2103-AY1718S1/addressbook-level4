@@ -851,7 +851,8 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-*Sorting*
+[discrete]
+=== Use case: Sorting
 
 1. Input 'sort <type>', replace <type> with fields (mentioned in step 2) to sort by
 * a. 'name' to sort alphabetically by name
@@ -861,7 +862,8 @@ Use case resumes at step 2.
 
 Use case ends.
 
-*Pin*
+[discrete]
+=== Use case: Pin
 
 1. User finds a specific person
 2. AddressBook displays the person's details
@@ -870,7 +872,8 @@ Use case ends.
 
 Use case ends.
 
-*Listing by [tag]*
+[discrete]
+=== Use case: Listing by [tag]
 
 1. User inputs 'list [tag]' where [tag] is any user-specified tag
 2. AddressBook filters out all persons without [tag]
@@ -878,7 +881,8 @@ Use case ends.
 
 Use case ends.
 
-*Exporting AddressBook data*
+[discrete]
+=== Use case: Exporting AddressBook data
 
 1. User inputs 'export'
 2. AddressBook prompts User to select a location on terminal to save the data file
@@ -887,7 +891,8 @@ Use case ends.
 
 Use case ends.
 
-*Importing AddressBook data*
+[discrete]
+=== Use case: Importing AddressBook data
 
 1. User inputs 'import [location]', where [location] is the location of the data file
 * example: C:/User/Documents/myAddressBook
@@ -955,16 +960,16 @@ A user interface (UI) is a platform which a user interacts with an application
 [appendix]
 == Product Survey
 
-*Product Name*
+*Circles*
 
-Author: ...
+Authors: Eldon Ng, Emil Koh, Mavis Toh
 
 Pros:
 
-* ...
-* ...
+* Helps user get used to the CLI environment and constraints while providing a comfortable UI
+* Stores and organises contacts to help user keep track of his/her social networks
 
 Cons:
 
-* ...
-* ...
+* purely CLI interface, usage has a learning curve
+* aesthetics still a work in progress
