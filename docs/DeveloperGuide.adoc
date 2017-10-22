@@ -634,8 +634,6 @@ If the list is in correct order, the address book will reply with `Already sorte
 [NOTE]
 The sorting process is case insensitive.
 
-
-
 ==== Design considerations
 **Aspect:** Implementation of `SortCommand` +
 **Alternative 1 (current choice):** The `SortCommand` will inherit directly from `Command` without the undo/redo mechanism. +
@@ -1157,6 +1155,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |remove a tag from my friends' contact information |
 
+|`* *` |user |sort my contacts in alphabetical order |I can find my contacts easier
+
+|`* *` |caring user |add birthday to my close friends |celebrate their birthday with them
+
 |`* *` |lazy user |type shorter commands while ignoring their cases |access my friends' contact information faster
 
 |`* *` |curious user |search my contacts' information online with google |
@@ -1336,6 +1338,33 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Sort all contacts
+
+*MSS*
+
+1. User requests to sort all persons in the list.
+2. UniCity displays a list of every person sorted by name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+[none]
+** 2a1. UniCity displays a message on empty list.
++
+Use case ends.
++
+[none]
+* 2a. The list is already sorted in order.
++
+** 2a1. UniCity displays a message on about the sorted list.
++
+Use case ends.
+
+[discrete]
 === Use case: Undo an action
 
 *MSS*
@@ -1382,6 +1411,41 @@ Use case ends.
 ** 2a1. UniCity displays a failure message.
 +
 Use case ends.
+
+[discrete]
+=== Use case: Add birthday to a contact
+
+*MSS*
+
+1. User requests to list persons.
+2. UniCity shows a list of persons.
+3. User requests to add birthday to a specific contact in the list.
+4. UniCity adds the birthday of that contact to the field.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. the list is empty.
++
+Use case ends.
+
+[none]
+* 3a. the given index is invalid.
++
+[none]
+** 3a1. UniCity displays an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 3a. the given birthday is invalid format.
++
+[none]
+** 3a1. UniCity shows an error message and a sample input.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: View previous commands
