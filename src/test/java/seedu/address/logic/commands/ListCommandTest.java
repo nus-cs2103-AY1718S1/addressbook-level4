@@ -12,6 +12,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.graph.GraphWrapper;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -21,14 +22,18 @@ public class ListCommandTest {
     private Model model;
     private Model expectedModel;
     private ListCommand listCommand;
+    private GraphWrapper graphWrapper;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        graphWrapper = new GraphWrapper();
+        graphWrapper.buildGraph(model);
+
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
         listCommand = new ListCommand();
-        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        listCommand.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
     }
 
     @Test

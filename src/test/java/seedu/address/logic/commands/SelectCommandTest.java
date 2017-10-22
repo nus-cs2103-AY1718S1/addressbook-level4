@@ -23,6 +23,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.graph.GraphWrapper;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -34,9 +35,13 @@ public class SelectCommandTest {
 
     private Model model;
 
+    private GraphWrapper graphWrapper;
+
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        graphWrapper = new GraphWrapper();
+        graphWrapper.buildGraph(model);
     }
 
     @Test
@@ -135,7 +140,7 @@ public class SelectCommandTest {
      */
     private SelectCommand prepareCommand(Index index) {
         SelectCommand selectCommand = new SelectCommand(index);
-        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        selectCommand.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return selectCommand;
     }
 }

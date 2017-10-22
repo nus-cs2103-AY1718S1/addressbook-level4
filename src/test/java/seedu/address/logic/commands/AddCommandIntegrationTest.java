@@ -12,6 +12,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.graph.GraphWrapper;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -48,8 +49,10 @@ public class AddCommandIntegrationTest {
      * Generates a new {@code AddCommand} which upon execution, adds {@code person} into the {@code model}.
      */
     private AddCommand prepareCommand(Person person, Model model) {
+        GraphWrapper graphWrapper = new GraphWrapper();
+        graphWrapper.buildGraph(model);
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return command;
     }
 }

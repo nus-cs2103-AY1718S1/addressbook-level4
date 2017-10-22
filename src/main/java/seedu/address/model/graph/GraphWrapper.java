@@ -155,6 +155,7 @@ public class GraphWrapper {
     }
 
     public SingleGraph buildGraph(Model model) {
+        requireNonNull(model);
         this.clear();
         this.setData(model);
         this.graph = new SingleGraph(graphId);
