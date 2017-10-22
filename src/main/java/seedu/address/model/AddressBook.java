@@ -77,7 +77,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+
         } catch (DuplicatePersonException e) {
+            assert false : "AddressBooks should not have duplicate persons";
+        }
+        try {
+            setReminders(newData.getReminderList());
+
+        } catch (Exception e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
