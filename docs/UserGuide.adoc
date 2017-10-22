@@ -115,7 +115,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by any field : `find`
+=== Locating persons by any field : `find` [Since v1.2]
 
 Alias: `f`
 
@@ -126,7 +126,7 @@ Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRES
 ****
 * The search is case insensitive. e.g `[e/google]` will match person with email of `[google.com]` domain
 * Only full words will be matched e.g. `[e/goo]` will not match person with email with `[google.com]` domain
-* Phone serch must be of either 4 or 8 digits only
+* Phone search must be of either 4 or 8 digits only e.g `[p/98989898 9227]`
 ****
 
 Examples:

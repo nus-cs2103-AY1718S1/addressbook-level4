@@ -1,8 +1,6 @@
 package seedu.address.ui;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -15,7 +13,6 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -45,16 +42,15 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * Loads google maps web page locating person's address.
      */
-    private void loadPersonPage(ReadOnlyPerson person) throws IllegalValueException {
+    private void loadPersonPage(ReadOnlyPerson person) {
         Address personAddress = person.getAddress();
-        try {
-            String urlEncodedAddress = URLEncoder.encode(personAddress.toString(), "UTF-8").replaceAll("%2C", ",");
-            loadPage(GOOGLE_MAPS_URL_PREFIX
-                    + urlEncodedAddress
-                    + GOOGLE_MAPS_URL_SUFFIX);
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalValueException("This person's address cannot be encoded into URL.");
-        }
+
+        String urlEncodedAddressIntermediate = personAddress.toString().replaceAll("#", "%23");
+        String urlEncodedAddressFinal = urlEncodedAddressIntermediate.replaceAll(" ", "+");
+
+        loadPage(GOOGLE_MAPS_URL_PREFIX
+                + urlEncodedAddressFinal
+                + GOOGLE_MAPS_URL_SUFFIX);
     }
 
     public void loadPage(String url) {
@@ -77,7 +73,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IllegalValueException {
+    private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
