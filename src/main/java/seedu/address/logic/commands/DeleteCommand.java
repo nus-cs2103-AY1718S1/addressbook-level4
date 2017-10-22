@@ -42,6 +42,7 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deleteParcel(parcelToDelete);
+            model.maintainSorted();
         } catch (ParcelNotFoundException pnfe) {
             assert false : "The target parcel cannot be missing";
         }
