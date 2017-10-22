@@ -555,7 +555,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleValidRightKeyPressLenMaxThree() {
+    public void handleValidRightKeyPressAddLenMaxThree() {
         //This test focuses on ensuring that the key press works only for the add command
         //and shortcut triggers only when "a" or "add" is detected at the front of the statement.
         //Cases like "adda" "addy" "am" or "aa" will not trigger add command shortcut
@@ -671,17 +671,20 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleValidRightKeyPressLenAboveThree() {
+    public void handleValidRightKeyPressAddLenAboveThree() {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
         String testString = "";
-        String backupTestString = "";
+        String backupTestString;
 
+        // Input: Add -> Valid
         guiRobot.write("Add");
         testString += "Add";
         assertTrue(testString.equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
         testString += " " + STRING_NAME;
         assertTrue(testString.equals(mySandBox.getText()));
+
+        // Input: a Add -> Valid
         mySandBox.positionCaret(0);
         guiRobot.write("a");
         testString = "a" + testString;
@@ -697,6 +700,8 @@ public class CommandBoxTest extends GuiUnitTest {
         testString = Character.toString(testString.charAt(0))
                 + " " + testString.substring(1);
         assertTrue(testString.equals(mySandBox.getText()));
+
+        //Blank spaces are removed
         mySandBox.positionCaret(0);
         guiRobot.write("    ");
         testString = "    " + testString;
@@ -721,7 +726,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleInvalidRightKeyPress() {
+    public void handleInvalidRightKeyPressAdd() {
         //Test to ensure add command shortcut does not trigger as long as
         //caret is within the text
 
@@ -753,7 +758,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
 
     @Test
-    public void handleValidRightKeyPressPrefixInOrder() {
+    public void handleValidRightKeyPressAddPrefixInOrder() {
         //Add Command allows users to enter the prefix in any order
         //The Add Command shortcut accounts for missing prefix or jump in prefix but for this test
         //it will focus on testing under the assumption that the prefix in the right order: n p e a b t
@@ -815,7 +820,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleValidRightKeyPressPrefixRandom() {
+    public void handleValidRightKeyPressAddPrefixRandom() {
         //The Add Command shortcut accounts for missing prefix or jump in prefix.
         //This functionality will be tested in this test
 
@@ -823,6 +828,241 @@ public class CommandBoxTest extends GuiUnitTest {
         String testString = "add";
 
         guiRobot.write("add");
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertTrue((testString).equals(mySandBox.getText()));
+
+        //Assume user skips the input of phone prefix : p/
+        guiRobot.write(" ");
+        guiRobot.write(STRING_EMAIL);
+        guiRobot.write("jeremylsw@u.nus.edu");
+        testString += " " + STRING_EMAIL + "jeremylsw@u.nus.edu";
+        assertTrue((testString).equals(mySandBox.getText()));
+
+        //Add command shortcut will detect missing p/ and concatenate it
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_PHONE;
+        assertTrue((testString).equals(mySandBox.getText()));
+        //Ensure caret positioning
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+        //Assume user jumps straight to tags, missing out address and bloodtype prefixes
+        guiRobot.write(" ");
+        guiRobot.write(STRING_TAG);
+        guiRobot.write(" ");
+        guiRobot.write(STRING_TAG);
+        testString += " " + STRING_TAG + " " + STRING_TAG;
+        assertTrue((testString).equals(mySandBox.getText()));
+
+        //Subsequent concatenation will detect missing address and bloodtype prefixes and fix it
+        guiRobot.push(KeyCode.RIGHT);
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_ADDRESS + " " + STRING_BLOODTYPE;
+        assertTrue((testString).equals(mySandBox.getText()));
+
+        //Final assurance that caret is at far right
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+    }
+
+    @Test
+    public void handleInvalidRightKeyPressEdit() {
+        //Extracts the textfield. Needed to use the caret related methods
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        String testString;
+
+        //Test stringToEvaluate.length() < 3 -> false
+        guiRobot.write("e ");
+        testString = "e ";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertFalse(testString.equals(mySandBox.getText()));
+        mySandBox.clear();
+        guiRobot.write("e1");
+        testString = "e1";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertFalse(testString.equals(mySandBox.getText()));
+        mySandBox.clear();
+
+        //Test !stringToEvaluate.contains(" ") -> false
+        guiRobot.write("edit");
+        testString = "edit";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertFalse(testString.equals(mySandBox.getText()));
+        mySandBox.clear();
+        guiRobot.write("edit1");
+        testString = "edit1";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertFalse(testString.equals(mySandBox.getText()));
+        mySandBox.clear();
+        guiRobot.write("edit1n/jeremy");
+        testString = "edit1n/jeremy";
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertFalse(testString.equals(mySandBox.getText()));
+
+    }
+
+    @Test
+    public void handleInvalidCommandWordEdit() {
+        //Test for !containsEditCommand && containsOnlyNumbers -> False
+
+        //Extracts the textfield. Needed to use the caret related methods
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        int counter = 0;
+
+        // e 1 -> Valid
+        guiRobot.write("e 1");
+        counter += 3;
+        assertTrue(mySandBox.getText().length() == counter);
+        guiRobot.push(KeyCode.RIGHT);
+        counter += 3;
+        assertTrue(mySandBox.getText().length() == counter);
+
+        // ed 1 -> Invalid
+        mySandBox.positionCaret(1);
+        guiRobot.write("d");
+        counter += 1;
+        mySandBox.positionCaret(counter);
+        guiRobot.push(KeyCode.RIGHT);
+        counter += 3;
+        assertFalse(mySandBox.getText().length() == counter);
+        counter -= 3;
+        assertTrue(mySandBox.getText().length() == counter);
+
+        // edi 1 -> Invalid
+        mySandBox.positionCaret(2);
+        guiRobot.write("i");
+        counter += 1;
+        mySandBox.positionCaret(counter);
+        guiRobot.push(KeyCode.RIGHT);
+        counter += 3;
+        assertFalse(mySandBox.getText().length() == counter);
+        counter -= 3;
+        assertTrue(mySandBox.getText().length() == counter);
+
+        // edit 1 -> Valid
+        mySandBox.positionCaret(3);
+        guiRobot.write("t");
+        counter += 1;
+        mySandBox.positionCaret(counter);
+        guiRobot.push(KeyCode.RIGHT);
+        counter += 3;
+        assertTrue(mySandBox.getText().length() == counter);
+    }
+
+    @Test
+    public void handleInvalidNumberRightKeyPressEdit() {
+        //Test for containsEditCommand && !containsOnlyNumbers -> False
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        int counter = 0;
+        //edit 1 -> Valid
+        guiRobot.write("edit 1");
+        counter +=6;
+        assertTrue(mySandBox.getText().length() == counter);
+        guiRobot.push(KeyCode.RIGHT);
+        counter += 3;
+        assertTrue(mySandBox.getText().length() == counter);
+        //edit 10 -> Valid
+        mySandBox.positionCaret(6);
+        guiRobot.write("0");
+        counter +=1;
+        mySandBox.positionCaret(counter);
+        guiRobot.push(KeyCode.RIGHT);
+        counter += 3;
+        assertTrue(mySandBox.getText().length() == counter);
+        //edit -10 -> Invalid
+        mySandBox.positionCaret(5);
+        guiRobot.write("-");
+        counter +=1;
+        mySandBox.positionCaret(counter);
+        guiRobot.push(KeyCode.RIGHT);
+        counter += 3;
+        assertFalse(mySandBox.getText().length() == counter);
+
+
+    }
+
+    @Test
+    public void handleValidRightKeyPressEditPrefixInOrder() {
+
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        String testString = "edit 1";
+
+        guiRobot.write("edit 1");
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_NAME;
+        assertTrue((testString).equals(mySandBox.getText()));
+        //Even if user did not enter any input, p/ will be automatically added
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_PHONE;
+        assertTrue((testString).equals(mySandBox.getText()));
+        //Ensure that caret is set to far right after concatenation
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+        //Ensure that shortcut does not run if caret is not at end of line
+        int currentCaretPosition = mySandBox.getCaretPosition();
+        mySandBox.positionCaret(currentCaretPosition - 1);
+        guiRobot.push(KeyCode.RIGHT);
+        assertTrue(testString.equals(mySandBox.getText()));
+        //Return caret back to original position
+        guiRobot.push(KeyCode.SHIFT, KeyCode.CONTROL);
+        //Simulate User Input
+        guiRobot.write("98765432");
+        testString += "98765432";
+        //Continue pushing
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_EMAIL;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_ADDRESS;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_BLOODTYPE;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_REMARK;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_TAG;
+        assertTrue(testString.equals(mySandBox.getText()));
+        //Ensure that even though there is a tag input, more tag are added if user requires
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_TAG;
+        assertTrue(testString.equals(mySandBox.getText()));
+        guiRobot.push(KeyCode.RIGHT);
+        testString += " " + STRING_TAG;
+        assertTrue(testString.equals(mySandBox.getText()));
+        //Final assurance that caret is at far right
+        assertTrue(mySandBox.getCaretPosition() == mySandBox.getText().length());
+        assertNotNull(mySandBox.getCaretPosition());
+        assertFalse(mySandBox.getCaretPosition() == 0);
+
+    }
+
+    @Test
+    public void handleValidRightKeyPressEditPrefixRandom() {
+        //The Edit Command shortcut accounts for missing prefix or jump in prefix.
+        //This functionality will be tested in this test
+
+        TextField mySandBox = commandBoxForTesting.getCommandTextField();
+        String testString = "edit 1";
+
+        guiRobot.write("edit 1");
         assertTrue(testString.equals(mySandBox.getText()));
         guiRobot.push(KeyCode.RIGHT);
         testString += " " + STRING_NAME;
