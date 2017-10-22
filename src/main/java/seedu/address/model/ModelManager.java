@@ -84,6 +84,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void sortPersons() {
+        addressBook.sortData();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    /**
+     * Removes a tag with the tagGettingRemoved string
+     * @param tagGettingRemoved
+     * @throws TagNotFoundException
+     * @throws IllegalValueException
+     */
     public void removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
         addressBook.removeTag(tagGettingRemoved);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
