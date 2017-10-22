@@ -466,6 +466,7 @@ public class AddTagCommand extends UndoableCommand {
 **Cons:** Problematic implementation and bad coding practice. Modifying the original values directly can cause problems if updating the `Person` instance fails in a later stage.
 // end::addremovetag[]
 
+// tag::filter[]
 === Filter mechanism
 
 ==== Fundamental mechanism
@@ -512,6 +513,167 @@ The actual implementation of filtering on the existing list involves three steps
 The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]]. +
 By providing a new extension of `getPersonListPredicate()` in the `Model` interface, the new feature is enabled. +
 Making use of the logical AND of two predicates, the list can be filtered without modification of the fundamental filtering mechanism. +
+// end::filter[]
+
+// tag::sync[]
+=== Synchronisation with Google Contacts
+
+==== Basic flow summary
+Authentication and synchronisation of data with a user's Google Contacts is done via the `sync` command, which is a subclass of `UndoableCommand`. This command works in conjunction with the Google Client and People API.
+
+Firstly, the command posts an `AuthorizationEvent` event to the EventCenter, which is then handled by a `OAuth` class, which is chiefly responsible for authorization and interaction with a user's Google Contacts. Hence, threading allows for the application to run in the background, while the user can perform other tasks. The user is redirected to login to Google via his default browser through the invoked `authorize` method. A callback is then done to create a `Credential` which is then used to instantiate a `PeopleService` instance. The `PeopleService` is then used to perform CRUD functions on the user's Google Contacts. The following diagram shows the entire sequence.
+
+image::SyncCommandSequenceDiagram.png[width="1000"]
+
+==== Methods
+
+===== SyncCommand
+Below is the implementation of `SyncCommand`, where the `AuthorizationEvent` is sent upon execution, and the command notifies the user that synchronisation has been initiated.
+
+[source,java]
+----
+public class SyncCommand extends UndoableCommand {
+    //...variables, constructor, other methods
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        try {
+            List<ReadOnlyPerson> personList = model.getFilteredPersonList();
+            AuthorizationEvent event = new AuthorizationEvent(personList);
+            EventsCenter.getInstance().post(event);
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+
+    }
+}
+----
+
+===== AuthorizationEvent Handler
+The `OAuth` class handles the AuthorizationEvent. It first runs the `authorize` method to obtain a Credential, and uses that to create a `PeopleService`. The `exportContacts` method is then invoked to export all contacts to the AddressBook to Google Contacts. Below is the code for the handler.
+
+[source,java]
+----
+public class OAuth {
+    // variables, constructor and other methods
+
+    @Subscribe
+    public static void handleAuthorizationEvent(AuthorizationEvent event) throws Throwable {
+        new Thread (() -> {
+            try {
+                // initialize the transport
+                httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+
+                // initialize the data store factory
+                dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+
+                // authorization
+                Credential credential = authorize();
+                // set up global People instance
+                client = new PeopleService.Builder(
+                        httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
+
+                exportContacts(event.getPersonList());
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }).start();
+
+
+    }
+----
+
+===== Authorize with Google servers
+Below is the `authorize` method implemented in `OAuth`, which uses the `People API` to get an authorization token, used to create a `PeopleService` to retrieve Google Contacts information. A `clients_secret.json` file is used to provide the required Client ID and Secret for the Google API. A `Credential` is returned from this method, which is then used to create a `PeopleService`.
+
+[source,java]
+----
+public class OAuth {
+    // variables, constructor and other methods
+
+    /** Authorizes the installed application to access user's protected data. */
+    private static Credential authorize() throws Exception {
+        // load client secrets
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+                new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
+        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+            System.out.println(
+                    "Enter Client ID and Secret from https://code.google.com/apis/console/?api=people "
+                            + "into seedu/address/src/main/resources/client_secrets.json");
+            System.exit(1);
+        }
+
+        // set up authorization code flow
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                httpTransport, JSON_FACTORY, clientSecrets,
+                Collections.singleton(PeopleServiceScopes.CONTACTS)).setDataStoreFactory(dataStoreFactory)
+                .build();
+
+        // authorize
+
+        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+    }
+
+}
+----
+
+===== Export contacts to Google Contacts
+Lastly, AddressBook contacts are then exported to Google Contacts via the `exportContacts` method. A `ReadOnlyPersonList` is obtained from the current AddressBook, and iterated through to add their entries into the user's Google account via the `createContact` method provided by People API. The code is shown below.
+
+[source,java]
+----
+public class OAuth {
+
+    /**Uploads AddressBook contacts to Google Contacts
+     * TODO: Prevent adding of duplicates
+     */
+    private static void exportContacts (List<ReadOnlyPerson> personList) throws IOException {
+        for (ReadOnlyPerson person : personList) {
+            Person contactToCreate = new Person();
+            List<Name> name = new ArrayList<Name>();
+            List<EmailAddress> email = new ArrayList<EmailAddress>();
+            List<Address> address = new ArrayList<Address>();
+            List<PhoneNumber> phone = new ArrayList<PhoneNumber>();
+            name.add(new Name().setGivenName(person.getName().fullName));
+            email.add(new EmailAddress().setValue(person.getEmail().value));
+            address.add(new Address().setFormattedValue(person.getAddress().value));
+            phone.add(new PhoneNumber().setValue(person.getPhone().value));
+
+            contactToCreate.setNames(name)
+                            .setEmailAddresses(email)
+                            .setAddresses(address)
+                            .setPhoneNumbers(phone);
+
+            Person createdContact = client.people().createContact(contactToCreate).execute();
+        }
+    }
+----
+
+==== Design Considerations
+**Aspect:** Google Authorization +
+**Alternative 1 (current choice):** A thread is used +
+**Pros:** Users can use the application and execute other commands asynchronously from the authorization +
+**Cons:** It is thus more difficult to show the progress of the syncCommand
+
+**Alternative 2:** Block the application while waiting for authorization +
+**Pros:** Users will know the progress of the SyncCommand +
+**Cons:** The application will freeze if authorization is done, or done in a manner not coded for by the People API (e.g. exiting the window via the 'X' or 'Close' button
+
+---
+
+**Aspect:** Accessing `OAuth` from `Logic` +
+**Alternative 1 (current choice):** An `Event` and a `Subscriber` is used to communicate between the two different components +
+**Pros:** Maintain low coupling and prevent unnecessary addition of dependencies +
+**Cons:** Handlers have to be created to handle `Events` when they occur +
+**Alternative 2:** Create an `OAuth` object in `Logic` +
+**Pros:** No handlers are required to process `Events` +
+**Cons:** Introduce unnecessary dependencies
+// end::sync[]
 
 === Logging
 

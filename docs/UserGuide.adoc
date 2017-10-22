@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W13-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B3`      Since: `Jun 2016`      Licence: `MIT`
 
 == About
 
@@ -55,7 +55,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
 === Viewing help : `help`
@@ -65,24 +64,61 @@ Format: `help`
 
 === Adding a person: `add`
 
+====
+Command Name: `add` +
 Shorthand Alias: `a` +
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 [TIP]
 A person can have any number of tags (including 0)
+[TIP]
+Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` are equivalent.
 
-Examples:
+====
+
+If you want to add a new contact to your *DummyName*: +
+
+.  Type in +
+image:Ui.png[UI, 40, 40, role = "right"]`>> add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`.
+.  image:Ui.png[UI, width = "40", role = "right"]Press `Enter` and you should see
+
+
+Here are some other ways you can add contacts:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `a n/John Watson p/83331122 e/johnw@example.com a/John Avenue, block 2, #01-01`
+
+If you type in all commands shown above, you should see:
 
 === Listing all persons : `list`
 
 Shorthand Alias: `l` +
 Shows a list of all persons in the address book. +
 Format: `list`
+
+=== Deleting a person : `delete`
+
+Shorthand Alias: `d` +
+Deletes the specified person from the address book. +
+Format: `delete INDEX`
+
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd person in the address book.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+* `list` +
+`d 4` +
+Deletes the 4th person in the address book.
 
 === Editing a person : `edit`
 
@@ -126,26 +162,23 @@ Adds the `friends` tag to the 1st person.
 * `at 2 9pmclass` +
 Adds the `9pmclass` tag to the 2nd person.
 
-=== Making a note: `note`
+=== Deleting a tag : `deletetag`
 
-Shorthand Alias: 'n' +
-Makes a note for an existing person in the address book. +
-Format: `note INDEX [n/Note]`
+Shorthand Alias: `dt` +
+Deletes the specified tag from the address book. +
+Format: `deletetag TAGNAME`
 
 ****
-* Adds the specified note for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* Notes can be any string, or even left blank to remove existing notes. Existing notes will be replaced by the input note
-* You can remove a note from a person by typing `n/` without any text after it.
+* Deletes the tag with the specified `TAGNAME`.
+* The tag name *must be alphanumeric* friend, class1, 123, ...
 ****
 
 Examples:
 
-* `note 1 n/This is an important note`
-Adds or replace the existing note for the 1st person to be `This is an important note`
-* `edit 2 n/`
-Removes all existing notes from the 2nd person
-* `e 3 n/`
-Removes all existing notes from the 3rd person
+* `deletetag buddy` +
+Deletes the tag `buddy` from all contacts in the address book.
+* `dt class2101` +
+Deletes the tag `class2101` from all contacts in the address book.
 
 === Locating persons by name: `find`
 
@@ -192,51 +225,9 @@ Returns `Alice` and `Bob` provided that Alice and Bob has the family tag
 * `filter family friends` +
 Returns any person tagged with `family` or `friends`
 
-=== Deleting a person : `delete`
-
-Shorthand Alias: `d` +
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-* `list` +
-`d 4` +
-Deletes the 4th person in the address book.
-
-=== Deleting a tag : `deletetag`
-
-Shorthand Alias: `dt` +
-Deletes the specified tag from the address book. +
-Format: `deletetag TAGNAME`
-
-****
-* Deletes the tag with the specified `TAGNAME`.
-* The tag name *must be alphanumeric* friend, class1, 123, ...
-****
-
-Examples:
-
-* `deletetag buddy` +
-Deletes the tag `buddy` from all contacts in the address book.
-* `dt class2101` +
-Deletes the tag `class2101` from all contacts in the address book.
-
 === Selecting a person : `select`
 
-Shorthand Alias: `s` +
+Shorthand Alias: `sl` +
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
 
@@ -258,23 +249,26 @@ Selects the 1st person in the results of the `find` command.
 `s 7` +
 Selects the 7th person in the address book.
 
-=== Resize the main window : `resize`
+=== Making a note: `note`
 
-Shorthand Alias: `rs` +
-Resize the main window to the specified width and height in pixels +
-Format: `resize WIDTH HEIGHT`
+Shorthand Alias: 'n' +
+Makes a note for an existing person in the address book. +
+Format: `note INDEX [n/Note]`
 
 ****
-* Resize the MainWindows to the specified WIDTH and HEIGHT.
-* Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
+* Adds the specified note for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Notes can be any string, or even left blank to remove existing notes. Existing notes will be replaced by the input note
+* You can remove a note from a person by typing `n/` without any text after it.
 ****
 
 Examples:
 
-* `resize 1280 720` +
-Resize the main window to 1280*720.
-* `rs 1000 600` +
-Resize the main window to 1000*600.
+* `note 1 n/This is an important note`
+Adds or replace the existing note for the 1st person to be `This is an important note`
+* `edit 2 n/`
+Removes all existing notes from the 2nd person
+* `e 3 n/`
+Removes all existing notes from the 3rd person
 
 === Creating a backup : `backup`
 
@@ -324,6 +318,12 @@ _Figure 2.14.3_ +
 . Press `Enter` and you should see that the backup data is restored. (Figure 2.14.4) +
 image:Restore_4.png[600] +
 _Figure 2.16.4_ +
+
+=== Synchronising with Google Contacts : `sync`
+
+Shorthand Alias: `sy` +
+Authenticates and communicates with Google Contacts via the People API to synchronise contacts +
+Format: `sync`
 
 === Listing entered commands : `history`
 
@@ -482,6 +482,24 @@ Shorthand Alias: `c` +
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Resize the main window : `resize`
+
+Shorthand Alias: `rs` +
+Resize the main window to the specified width and height in pixels +
+Format: `resize WIDTH HEIGHT`
+
+****
+* Resize the MainWindows to the specified WIDTH and HEIGHT.
+* Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
+****
+
+Examples:
+
+* `resize 1280 720` +
+Resize the main window to 1280*720.
+* `rs 1000 600` +
+Resize the main window to 1000*600.
+
 === Exiting the program : `exit`
 
 ====
@@ -506,13 +524,17 @@ Do not worry about losing your contacts as they will be saved automatically.
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Coming in v2.0
+== Since v1.2
+* Adding and deleting of tags
+* Resize window size
+* Restore to a AddressBook backup
+* Synchronise with Google Contacts
+
+== Coming in v2.0
 
 * Add tags cumulatively
 * Add a person without all his/her parameters
-* Restore to a AddressBook backup
 * Hide private contact details
-* Synchronise with Google Contacts
 * Access a contact's Facebook profile
 * Get direction to a contact's address
 * Upload pictures

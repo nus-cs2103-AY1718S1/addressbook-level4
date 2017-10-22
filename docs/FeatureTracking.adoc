@@ -17,12 +17,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 [width="100%",cols="50%,<25%,<25%",options="header",]
 |=======================================================================
-|Feature |Developer |Delivery Date
+|Feature |Developer |Merged Date
 |Add `deleteTags` command |Alex |11 Oct
-|Add `note` command |Derrick| 11 Oct
-|Backup AddressBook database|Yang Sheng| 11 Oct
-|Add `filter` command| Zeyong| 11 Oct
-
+|Add `note` command |Derrick |11 Oct
+|Backup AddressBook database|Yang Sheng |11 Oct
+|Add `filter` command|Zeyong |11 Oct
+|Add and delete tags |Alex |18 Oct
+|Add `resize` command|Zeyong |18 Oct
+|Restore AddressBook backup |Yang Sheng|18 Oct
 |=======================================================================
 
 == In progress
@@ -30,9 +32,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 [width=100%",cols="50%,<25%,<25%",options="header",]
 |=======================================================================
 |Feature |Developer |Delivery Date
-|Add tags |Alex | In progress
-|Google Contacts API integration| Derrick| In progress
-|Add `resize` command| Zeyong| In progress
+|Google People API integration| Derrick| In progress
+|Allow wildcard symbol * in find command| Zeyong| In progress
 
 |=======================================================================
 
