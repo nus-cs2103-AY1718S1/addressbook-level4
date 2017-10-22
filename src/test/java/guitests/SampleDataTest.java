@@ -40,7 +40,7 @@ public class SampleDataTest extends AddressBookGuiTest {
 
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Lesson[] expectedList = SampleDataUtil.getSampleLessons();
+        Lesson[] expectedList = SampleDataUtil.getSampleLeswsons();
         assertListMatching(getLessonListPanel(), expectedList);
     }
 }
