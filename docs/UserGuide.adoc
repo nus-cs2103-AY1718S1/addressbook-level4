@@ -14,6 +14,15 @@ endif::[]
 
 By: `Team W13-B3`      Since: `Jun 2016`      Licence: `MIT`
 
+== Product Overview
+Product Name: *DummyName* +
+Version: 1.5 +
+{empty} +
+*DummyName* is a free desktop contact management application that helps you manage your large collection of contacts conveniently and keep track of your appointments. You can store contacts as well as other information and retrieve them efficiently with the help of *DummyName*. +
+
+*DummyName* is available for the `Linux`, `Unix`, `Windows 10`, and `Mac OS X` operating systems.
+
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
