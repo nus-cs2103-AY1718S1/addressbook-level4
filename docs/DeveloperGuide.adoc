@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -363,6 +363,102 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Locating a person's address [Since v1.2]
+
+This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
+
+When the LocateCommand is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`:
+[source,java]
+----
+public class LocateCommand extends Command {
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        //... check targetIndex ...
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+
+        //... return CommandResult ...
+    }
+}
+----
+The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it:
+[source,java]
+----
+public class PersonListPanel extends UiPart<Region> {
+    /**
+     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            personListView.scrollTo(index);
+            personListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+
+    // Handling method for JumpToListRequestEvent
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+}
+----
+The UI outcome of scrolling and selecting a PersonCard in the `PersonListPanel` is shown below:
+
+image::PersonListPanelSelect.png[width="200"]
+
+When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below:
+[source,java]
+----
+public class PersonListPanel extends UiPart<Region> {
+
+    public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+        super(FXML);
+        setConnections(personList); // calls addListenerForSelectionChangeEvent() method
+        registerAsAnEventHandler(this);
+    }
+
+     /**
+     * Creates a list of {@code PersonCard} from {@code personList}, sets them to the {@code personListView}
+     * and adds listener to {@code personListView} for selection change.
+     */
+    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+        //... set up personListView with personList ...
+        addListenerForSelectionChangeEvent();
+    }
+
+    /**
+     * Adds a listener to {@code personListView} so that
+     * selected item raises {@code PersonPanelSelectionChangedEvent}.
+     */
+    private void addListenerForSelectionChangeEvent() {
+        personListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+}
+----
+
+The `BrowserPanel` contains a `WebView` which displays a web page of the google map location of the selected person's address. It is able to do so as it is an event subscriber for the `PersonPanelSelectionChangedEvent` as shown below:
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+
+    @Subscribe
+    private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IllegalValueException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
+    }
+}
+----
+By being a subscriber to this event, the `WebView` in `BrowserPanel` will load the corresponding web page whenever a new
+`PersonPanelSelectionChangedEvent` is posted to the `EventBus`.
 
 == Documentation
 
@@ -727,11 +823,58 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |delete multiple persons at once  |avoid going through the hassle of removing one at each time
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |select multiple person |perform the same command to multiple contacts at once
+
+|`* * *` |user |update my contact |I do not have to recreate a contact whenever there are changes
+
+|`* * *` |user |store multiple information of the same kind for a contact |accommodate contacts with multiple addresses, e-mail addresses or phone numbers
+
+|`* * *` |user |get suggestions on the tags I have used |be consistent with the tags I use
+
+|`* *` |user |see a sorted list of my contacts |it will save time and energy on my end
+
+|`* *` |user |use shortcut to any command |it will be easier for me to find someone in my contact list
+
+|`* *` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
+
+|`* *` |user |rename any field |update my relationship with contact
+
+|`* *` |user |check the usage of commands easily |it will save time and energy on my end
+
+|`* *` |user |view the location of an address on google maps |make plans to travel there
+
+|`* *` |user |link my contact's saved email to a 'compose email page' |send an email to him/her with a click
+
+|`* *` |user |find my contact's address on google map |locate my contact
+
+|`* *` |user |filter my contact based on any search field |I do not have to go through the whole list of addressbook to find a contact
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |be able to link my addressbook to my google calendar |set events and reminders related to my contacts
+
+|`* *` |user |create a timeline with a contact |record and store activities with them
+
+|`* *` |user |see my contacts' social media profile pictures |identify them more easily
+
+|`* *` |user |write down remarks for a contact |record specific information about the contact
+
+|`* *` |user |to create new task|keep track on ongoing task and stay on track
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |choose the colour for my contact's tag |differentiate contact's with different tags just by looking at them
+
+|`*` |user |sort persons by birthday |view whose birthdays are in the upcoming months
+
+|`*` |user |key in a contact's birthday and be reminded about it when the time comes |wish him/her happy birthday
+
+|`*` |user |be prompted to confirm my input whenever I add a person |avoid adding a person with the wrong details
+
 |=======================================================================
 
 {More to be added}
@@ -743,7 +886,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 [discrete]
 === Use case: Delete person
-
 *MSS*
 
 1.  User requests to list persons
@@ -767,6 +909,67 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Add remark
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add remark to a specific person in the list
+4.  AddressBook successfully adds remark to contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index or format is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Rename existing tag
+#Pre-condition :The identitifed tag exists in Addressbook
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to rename the tag and key in the new input
+4. AddressBook prompts user to confirm the changes
+5. User confirms changes
+6. AddressBook successfully replaces the name of the existing tag to the newer version
++
+Use case ends.
+
+=== Use case: Search by phone
+#Pre-condition :The identitifed phone exist in AddressBook
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to search for phone number by inputting 4 or 8 digits
+4. AddressBook successfully find the persons with matching phone numbers
++
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given phone number is invalid
+
+> 3a1. AddressBook shows an error message
+  Use case resumes at step 2
+
+> Use case ends
+
 {More to be added}
 
 [appendix]
@@ -775,6 +978,9 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Respond time should be less than 10s
+.  Should be able to automatically create a backup file for the contacts data stored
+.  The project is expected to adhere to a schedule that delivers a feature set every week
 
 {More to be added}
 
