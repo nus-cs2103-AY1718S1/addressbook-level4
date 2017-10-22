@@ -450,9 +450,10 @@ public CommandResult execute() {
     // ... default case: opens help window ...
 }
 ----
-The `HelpCommand` execution is done in `AddressBookParser`. Below shows the output of this function.
+The `HelpCommand` execution is done in `AddressBookParser`. _Figure 3.4.1_ below shows the output of this function.
 
 image::HelpEnhancementScreenShot.PNG[width="800"]
+_Figure 3.4.1 : Output of `HelpCommand` execution_
 
 === Locating a person's address [Since v1.2]
 
@@ -495,9 +496,11 @@ public class PersonListPanel extends UiPart<Region> {
     }
 }
 ----
-The UI outcome of scrolling and selecting a PersonCard in the `PersonListPanel` is shown below:
+
+The UI outcome of scrolling and selecting a `PersonCard` in the `PersonListPanel` is shown in `Figure 3.5.1` below:
 
 image::PersonListPanelSelect.png[width="200"]
+_Figure 3.5.1 : UI outcome of scrolling and selecting a `PersonCard`_
 
 When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below:
 [source,java]
@@ -584,23 +587,23 @@ Also,the input will first have to be tokenised in order to extract the prefix fo
 
 A successful tokenism of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model` . The methods takes in the user input and returns a `containsKeyWordPredicate`. Addressbook will search for the keywords in the revelvant parameters.
 
-Upon any successful match, the particulars of the contact will be displayed. The sketch belows indicates the various outcome of search function by  using `FindCommand` .
+Upon any successful match, the particulars of the contact will be displayed. _Figures 3.6.1a to 3.6.1e_ below indicate the various outcomes of search function by  using `FindCommand` .
 
 
 image::FindCommand_Name.PNG[width="300"]
-
+_Figure 3.6.1a : Find by name_
 
 image::FindCommand_Phone.PNG[width="300"]
-
+_Figure 3.6.1b : Find by phone_
 
 image::FindCommand_Email.PNG[width="300"]
-
+_Figure 3.6.1c : Find by email_
 
 image::FindCommand_Address.PNG[width="300"]
-
+_Figure 3.6.1d : Find by address_
 
 image::FindCommand_Tag.PNG[width="300"]
-
+_Figure 3.6.1e : Find by tag_
 
 //tag::CopyCommand[]
 === Copy email address to clipboard [Since v1.2]
@@ -630,19 +633,20 @@ messageOutput = messageOutput.replace(",", ";");
 
 ----
 
-Examples of copy command on UI:
+_Figures 3.7.1a and 3.7.1b_ below show examples of copy command on display in the UI, showing the acceptable format for indexes, and the expected result. Note that the message will only be displayed if the message is already copied to the system clipboard.:
 
 
 image::CopyCommand_single_index.PNG[width="300"]
-
+_Figure 3.7.1a : Copy from a single contact_
 
 image::CopyCommand_multiple_index.PNG[width="300"]
+_Figure 3.7.1b : Copy from multiple contacts_
 
-Figures 1 and 2 show the acceptable format for indexes, and the expected result. Note that the message will only be displayed if the message is already copied to the system clipboard.
+_Figure 3.7.2_ below shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
 
 image::CopyCommand_browser_result.PNG[width="300"]
+_Figures 3.7.2: Applied use of command in email application_
 
-Figure 3 shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
 
 Why it is implemented that way
 
@@ -681,10 +685,10 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in _Figure 4.4.1_ below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 4.4.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -819,15 +823,17 @@ The following are some suggestions for the local enhancements in the `Ui` compon
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
+. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red. The before and after screenshots can be seen in _Figure A.1.1a_ and _Figure A.1.1b_ below.
 +
 **Before**
 +
 image::getting-started-ui-tag-before.png[width="300"]
+_Figure A.1.1a : `PersonListPanel` before enhancement_
 +
 **After**
 +
 image::getting-started-ui-tag-after.png[width="300"]
+_Figure A.1.1b : `PersonListPanel` after enhancement_
 +
 ****
 * Hints
@@ -837,15 +843,17 @@ image::getting-started-ui-tag-after.png[width="300"]
 ** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
 ****
 
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
+. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors). The before and after screenshots can be seen in _Figure A.1.2a_ and _Figure A.1.2b_ below.
 +
 **Before**
 +
 image::getting-started-ui-result-before.png[width="200"]
+_Figure A.1.2a : `CommandBox` and `ResultDisplay` before enhancement_
 +
 **After**
 +
 image::getting-started-ui-result-after.png[width="200"]
+_Figure A.1.2b : `CommandBox` and `ResultDisplay` after enhancement_
 +
 ****
 * Hints
@@ -857,15 +865,17 @@ image::getting-started-ui-result-after.png[width="200"]
 ** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book. The before and after screenshots can be seen in _Figure A.1.3a_ and _Figure A.1.3b_ below.
 +
 **Before**
 +
 image::getting-started-ui-status-before.png[width="500"]
+_Figure A.1.3a : `StatusBarFooter` before enhancement_
 +
 **After**
 +
 image::getting-started-ui-status-after.png[width="500"]
+_Figure A.1.3b : `StatusBarFooter` after enhancement_
 +
 ****
 * Hints
