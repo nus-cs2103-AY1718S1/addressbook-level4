@@ -85,7 +85,10 @@ public class BrowserPanel extends UiPart<Region> {
         cir.setStrokeDashOffset(20);
         Image img = new Image("images/maleIcon.png");
         cir.setFill(new ImagePattern(img));
-        cir.radiusProperty().bind(Bindings.min(contactImagePlaceholder.widthProperty().divide(3), contactImagePlaceholder.heightProperty().divide(3)));
+        cir.radiusProperty().bind(Bindings.min(
+                contactImagePlaceholder.widthProperty().divide(3),
+                contactImagePlaceholder.heightProperty().divide(3))
+        );
         contactImagePlaceholder.setCenter(cir);
         easeIn(cir);
     }
@@ -120,7 +123,10 @@ public class BrowserPanel extends UiPart<Region> {
             cir.setStroke(Color.valueOf("#3fc380"));
             cir.setStrokeWidth(5);
             cir.setStrokeDashOffset(20);
-            cir.radiusProperty().bind(Bindings.min(socialIconPlaceholders[i].widthProperty().divide(3), socialIconPlaceholders[i].heightProperty().divide(3)));
+            cir.radiusProperty().bind(Bindings.min(
+                    socialIconPlaceholders[i].widthProperty().divide(3),
+                    socialIconPlaceholders[i].heightProperty().divide(3))
+            );
             cir.setFill(new ImagePattern(new Image(imgUrls[i])));
             socialIconPlaceholders[i].setCenter(cir);
             easeIn(cir);
