@@ -18,6 +18,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
+    private static final String HOME_PHONE_FIELD_ID = "#homePhone";
     private static final String SCHOOL_EMAIL_FIELD_ID = "#schoolEmail";
     private static final String BIRTHDAY_FIELD_ID = "#birthday";
     private static final String WEBSITE_FIELD_ID = "#website";
@@ -68,7 +69,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
         this.schEmailLabel = getChildNode(SCHOOL_EMAIL_FIELD_ID);
         this.birthdayLabel = getChildNode(BIRTHDAY_FIELD_ID);
         this.websiteLabel = getChildNode(WEBSITE_FIELD_ID);
-        this.homePhoneLabel = getChildNode(HOME_PHONE_FIELD_FIELD_ID);
+        this.homePhoneLabel = getChildNode(HOME_PHONE_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
