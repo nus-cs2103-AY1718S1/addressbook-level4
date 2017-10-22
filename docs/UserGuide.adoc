@@ -238,10 +238,10 @@ If you want to add a single tag to a contact in your *DummyName*: +
 .  Locate the contact you want to add a tag to and the index of the contact. +
 .  Type in the index of the contact, and the tag you wish to add. (Figure 2.6.1) +
 `>> addtag 1 classmate`.
-image:Addtag_1.png[600] +
+image:addtag_1.png[addtag1, 600] +
 _Figure 2.6.1_
 .  Press `Enter` and you should see that the contact that you selected has been modified. (Figure 2.6.2) +
-image:Addtag_2.png[600] +
+image:addtag_2.png[addtag2, 600] +
 _Figure 2.6.2_
 
 [NOTE]
@@ -400,7 +400,7 @@ You can select a contact from the displayed list by:
 `>>select 1` +
 image:select1.png[select1, 600] +
 _Figure 2.10.1_
-. Press Enter and your choice should now be selected (Figure 2.10.2) +
+. Pressing Enter. Your choice should now be selected (Figure 2.10.2) +
 image:select2.png[select2, 600] +
 _Figure 2.10.2_
 
@@ -424,7 +424,7 @@ Selects the 7th person in the address book.
 
 ====
 Command Name: `note` +
-Shorthand Alias: 'n' +
+Shorthand Alias: `n` +
 Function: Inserts the NOTE for an entry specified by INDEX in the DummyName +
 Format: `note INDEX [n/NOTE]`
 
@@ -442,8 +442,8 @@ If you want to add a note for a DummyName contact:
 `>> note 1 n/This is an important note` +
 image:note1.png[note1, 600] +
 _Figure 2.11.1_
-. Press Enter. Your note should now be displayed as the last row in your contact's details (Figure 2.11.2) +
-image:note2.png[note2, 600] +
+. Press `Enter`. Your note should now be displayed as the last row in your contact's details (Figure 2.11.2) +
+image:note2.png[note2, 600, 40] +
 _Figure 2.11.2_
 
 Here are some other ways to change your DummyName contact's note:
@@ -522,7 +522,7 @@ You can easily synchronise your DummyName contacts with Google Contacts through 
 `>> sync` +
 image:sync1.png[sync1, 600] +
 _Figure 2.14.1_ +
-.   Press Enter. Your default browser should open a login window (Figure 2.14.2) +
+.   Press `Enter`. Your default browser should open a login window (Figure 2.14.2) +
 image:sync2.png[sync2, 600] +
 _Figure 2.14.2_
 .   Enter your login details and press Next (Figure 2.14.3) +
@@ -710,7 +710,7 @@ You can also clear all DummyName contacts. To do so,
 `>> clear` +
 image:clear1.png[clear1, 600] +
 _Figure 2.18.1_
-.   Press Enter. Your contacts should now be cleared (Figure 2.18.2) +
+.   Press `Enter`. Your contacts should now be cleared (Figure 2.18.2) +
 image:clear2.png[clear2, 600] +
 _Figure 2.18.2_
 
