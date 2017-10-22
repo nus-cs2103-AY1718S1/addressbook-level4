@@ -419,6 +419,9 @@ and users do not need any additional setup steps to use them.
 own customize fields. They should have the freedom to arbitrarily choose things like short name, full name, etc. They can
 easily add/edit these properties of each contact stored in the application, just like the _pre-loaded_ ones.
 
+image::PropertyManagerSequenceDiagram.png[width="800"]
+_Figure 3.3.3 : Sequence Diagram for Adding a Customize Property_
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
