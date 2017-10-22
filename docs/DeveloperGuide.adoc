@@ -229,8 +229,8 @@ addPhotoCommandparser will then return a addPhotoCommand to be executed in the L
 
 ==== Design considerations
 
-**Aspect:** Implementation of addPhotoCommand +
-**Alternative 1(current choice):** Have addPhotoCommand implement UndoableCommand +
+**Aspect:** Implementation of AddPhotoCommand +
+**Alternative 1(current choice):** Have `AddPhotoCommand` implement `UndoableCommand` +
 **Pros:** We will retain the logic flow of how commands are executed. This option increases code reusability and retains the cohesion of each class. +
 **Cons:** Logic flow is embedded in multiple layers. New developers might find it hard to understand the complicated logic flow.
 
