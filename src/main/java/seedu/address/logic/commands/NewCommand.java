@@ -22,7 +22,7 @@ public class NewCommand extends Command {
     public static final String MESSAGE_CREATING = "Creating new file: `%1$s`";
     public static final String MESSAGE_ALREADY_EXISTS = "`%1$s` already exists. "
             + "Use the `" + OpenCommand.COMMAND_WORD + "` command for opening an existing file.";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": "
             + "Creates a new Rolodex file at the specified destination and "
             + "reloads the application using the rolodex supplied at the given file path.\n"
             + "Parameters: [FILEPATH]\n"
