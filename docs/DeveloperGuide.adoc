@@ -345,6 +345,59 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+=== Remove mechanism
+
+The remove feature allows users to remove a `Tag` either from a *single person* or from the *whole address book*.
+The distinction in execution of the command lies in the format of the user command.
+
+* Format: `remove friends` +
+Removes the `friends` tag from the *whole address book*.
+
+* Format: `remove friends 1` +
+Removes the `friend` tag from *only the first person* in the address book.
+
+The remove mechanism involves the `RemoveCommandParser`, which resides in the `LogicManager` to parse the user inputs.
+The parsing mechanism in `RemoveCommandParser` uses the `StringTokenizer` class of the Java API to obtain the required
+arguments to create a `RemoveCommand` object.
+
+`RemoveCommand` extends `UndoableCommand`, thus, uses the `UndoRedoStack`, which resides in the `LogicManager`.
+This allows any changes executed from the `RemoveCommand` to be undone, as specified by the `Undo/Redo` mechanism.
+
+Execution of `RemoveCommand` is governed by the `removeTag` method located in the `Model` interface and implemented by
+`ModelManager`.
+
+==== Design Considerations
+**Aspect:** Execution of remove command  +
+**Alternative 1 (current choice):** Only accepts one `Tag` as parameter (Only removes one `Tag`). +
+**Pros:** Complements the use of `Undo/Redo` command for removal of each `Tag`. +
+**Cons:** May be an inconvenience to user who wants to remove multiple `Tags`. +
+**Alternative 2:** Allow multiple `Tags` as parameters (Removes multiple `Tags`). +
+**Pros:** Better efficiency in mass removal of `Tags` from a person or the address book. +
+**Cons:** Users may face inconvenience in undoing removal of a *single* `Tag` after the removal of *multiple* `Tags`. +
+
+---
+
+**Aspect:** Execution of remove command for specified user. +
+**Alternative 1 (current choice):** Only accepts one `Index` as parameter. +
+**Pros:** Allows further user-customisations by removing `Tag` from intended person. +
+**Cons:** Inconvenience for users to remove specified `Tag` from multiple persons. +
+**Alternative 2:** Allow for multiple `Index` to be accepted as parameters. +
+**Pros:** More convenient for users to remove a `Tag` from multiple users. +
+**Cons:** Current implementation updates the address book immediately after each removal of `Tag`. This alternative may
+result in errors or inaccurate execution of command. +
+
+---
+
+**Aspect:** +
+**Alternative 1:** +
+**Pros:** +
+**Cons:** +
+**Alternative 2:** +
+**Pros:** +
+**Cons:** +
+
+// end::remove[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
