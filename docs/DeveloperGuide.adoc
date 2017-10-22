@@ -374,6 +374,16 @@ The following sequence diagram below shows how AddMeeting operation works:
 
 image::addMeetingSequenceDiagram.png[width="800"]
 
+==== Design Considerations
+
+**Aspect:** Creation of Meeting class +
+**Alternative 1 (current choice):** Meeting class that is created with 'PersonToMeet' and 'PhoneNum' class +
+**Pros:** Easy to implement +
+**Cons:** More codes for developers to write and change +
+**Alternative 2:** Input a person class in Meeting class to retrieve their name and phone number +
+**Pros:** Allows developers to be more flexible to implement with meeting class  +
+**Cons:** It is difficult to implement.
+
 === Edit Meeting
 
 The edit meeting command is an undoable command which allows the user to edit the `MeetingName`, `DateTime` or `Place` of
@@ -430,6 +440,9 @@ The implementation of meeting card starts of from creating 'Meeting' class which
 
 * Firstly, the Meeting class is created with object properties like 'Name of meeting', 'DateTime'(which uses java.time), 'person to meet', 'phone number' and 'location of meeting'. We want all these object properties to facilitate the users' ability to retrieve these information of his/her scheduled meeting. This is handled by ModelManager.
 * These properties of are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
+
+image::UiMeetingCardSequenceDiagram.png[width="800"]
+
 * The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first.
 
 image::MeetingCard.png[width="250"]
@@ -449,21 +462,11 @@ image::MeetingCard3.png[width="250"]
 
 ==== Design Considerations
 
-**Aspect:** Creation of Meeting class +
-**Alternative 1 (current choice):** Meeting class that is created with 'PersonToMeet' and 'PhoneNum' class +
-**Pros:** Easy to implement +
-**Cons:** More codes for developers to write and change +
-**Alternative 2:** Input a person class in Meeting class to retrieve their name and phone number +
-**Pros:** Allows developers to be more flexible to implement with meeting class  +
-**Cons:** It is difficult to implement.
-
----
-
 **Aspect:** Ways to be implemented as a reminder of the urgency of the meeting +
 **Alternative 1 (current choice):** Colour is applied to meeting card +
 **Pros:** Easy to implement but further developers can enhance the colors easily. +
 **Cons:** Might not be as appealing to some users. +
-**Alternative 2 (future choice):** A pop-up reminder to show meeting on the current day. +
+**Alternative 2 (future choice):** A pop-up reminder to show meeting on the current day and with the colours applied to meeting card +
 **Pros:** Will be a better reminder to users.
 
 == Documentation
