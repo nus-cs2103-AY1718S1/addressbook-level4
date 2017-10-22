@@ -1,7 +1,19 @@
 :imagesDir: docs\images
 = Planno
 
+ifdef::env-github,env-browser[:relfileprefix: docs/]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
 image::Ui.png[width="600"]
+
+ifdef::env-github[]
+image::docs/images/Ui.png[width="600"]
+endif::[]
+
+
+ifndef::env-github[]
+image::images/Ui.png[width="600"]
+endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
