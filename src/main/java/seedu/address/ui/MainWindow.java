@@ -46,7 +46,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
-    private BrowserPanel browserPanel;
+    private BrowserPanel dataDetailsPanel;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -137,15 +137,13 @@ public class MainWindow extends UiPart<Region> {
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        dataDetailsPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(dataDetailsPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                                                               logic.getFilteredPersonList().size(),
                                                               logic.getFilteredEventList().size());
         statusBarPlaceholder.getChildren().add(statusBarFooter.getRoot());
-
-
     }
 
     void hide() {
@@ -219,7 +217,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        dataDetailsPanel.freeResources();
     }
 
     @FXML
