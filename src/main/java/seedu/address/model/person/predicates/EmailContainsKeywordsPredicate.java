@@ -1,4 +1,4 @@
-//@@author: giang
+//@@author 0143832J
 package seedu.address.model.person.predicates;
 
 import java.util.List;
@@ -31,3 +31,4 @@ public class EmailContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
     }
 
 }
+//@@author

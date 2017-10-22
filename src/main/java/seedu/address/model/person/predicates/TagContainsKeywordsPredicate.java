@@ -1,10 +1,10 @@
-//@@author: giang
+//@@author 0143832J
 package seedu.address.model.person.predicates;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -20,7 +20,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return !Collections.disjoint(person.getTags(), tags);
+        return CollectionUtil.mutualOrContains(person.getTags(), tags);
     }
 
     @Override
@@ -31,3 +31,4 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 
 }
+//author

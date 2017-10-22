@@ -88,15 +88,8 @@ public class StringUtil {
      * @param searchStr Substring
      * @return true if {@code str} contains {@code searchStr}, false otherwise
      */
-    public static boolean containsIgnoreCase(String str, String searchStr)     {
-        if (str == null || searchStr == null) {
-            return false;
-        }
+    public static boolean containsIgnoreCase(String str, String searchStr) {
         final int length = searchStr.length();
-        if (length == 0) {
-            return true;
-        }
-
         for (int i = str.length() - length; i >= 0; i--) {
             if (str.regionMatches(true, i, searchStr, 0, length)) {
                 return true;
