@@ -16,7 +16,7 @@ import seedu.address.ui.person.PersonCard;
  * An UI component that displays information of a {@code Event}.
  */
 public class EventCard extends UiPart<Region> {
-    private static final String FXML = "EventListCard.fxml";
+    private static final String FXML = "event/EventListCard.fxml";
 
     /**
      * The upper (exclusive) bound should be equal to {@code Math.pow(16, 6)}.

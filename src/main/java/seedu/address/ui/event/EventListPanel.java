@@ -22,7 +22,7 @@ import seedu.address.ui.UiPart;
  * Panel containing the list of persons.
  */
 public class EventListPanel extends UiPart<Region> {
-    private static final String FXML = "EventListPanel.fxml";
+    private static final String FXML = "event/EventListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(EventListPanel.class);
 
     @FXML

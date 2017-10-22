@@ -18,7 +18,7 @@ import seedu.address.ui.UiPart;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "person/PersonListCard.fxml";
 
     // Keep a record of the displayed persons.
     public final ReadOnlyPerson person;

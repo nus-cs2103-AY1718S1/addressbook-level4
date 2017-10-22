@@ -13,7 +13,7 @@ import seedu.address.ui.UiPart;
  * properties) of a specific person (selected on the {@link PersonListPanel}).
  */
 public class PersonDetailsPanel extends UiPart<Region> {
-    private static final String FXML = "PersonDetailsPanel.fxml";
+    private static final String FXML = "person/PersonDetailsPanel.fxml";
 
     private ReadOnlyPerson person;
 
