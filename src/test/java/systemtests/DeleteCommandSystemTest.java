@@ -48,7 +48,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
         /* Case: mixed case command word -> deleted */
-        //assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
         Model modelAfterDeletingLast = getModel();
         ReadOnlyPerson removedPerson = removePerson(modelAfterDeletingLast, lastPersonIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, removedPerson);

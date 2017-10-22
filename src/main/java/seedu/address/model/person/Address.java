@@ -41,6 +41,16 @@ public class Address {
         return test.matches(ADDRESS_VALIDATION_REGEX);
     }
 
+    /**
+     * Return the street name of selected person's address
+     */
+    public String getStreetName() {
+        if (value.indexOf("#") < 0) {
+            return value;
+        }
+        return value.substring(0, value.indexOf("#"));
+    }
+
     @Override
     public String toString() {
         return value;

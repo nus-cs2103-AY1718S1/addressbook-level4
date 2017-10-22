@@ -73,5 +73,4 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
-
 }
