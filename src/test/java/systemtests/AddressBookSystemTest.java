@@ -182,16 +182,6 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardAddress = getPersonListPanel().getHandleToSelectedCard().getAddress();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(GOOGLE_DIR_URL_PREFIX + selectedCardAddress.replaceAll(" ", "+")
-                    .replaceAll(",", "+")
-                    .replaceAll("#", "+")
-                    .replaceAll("-", "+"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.");
-        }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
