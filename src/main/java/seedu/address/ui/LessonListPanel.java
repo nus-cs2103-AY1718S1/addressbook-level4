@@ -1,23 +1,22 @@
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
-import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-
+import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
+import seedu.address.commons.events.ui.FindLessonRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 import seedu.address.model.module.ReadOnlyLesson;
+
+import java.util.logging.Logger;
 
 
 /**
@@ -80,6 +79,13 @@ public class LessonListPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleChangeListingUnitEvent(ChangeListingUnitEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setConnections(lessonList);
+    }
+
+
+    @Subscribe
+    private void handleFindLessonRequestEvent(FindLessonRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setConnections(lessonList);
     }
