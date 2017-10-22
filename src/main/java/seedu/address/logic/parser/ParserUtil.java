@@ -5,15 +5,12 @@ import static java.util.Objects.requireNonNull;
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 import org.ocpsoft.prettytime.nlp.parse.DateGroup;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -127,40 +124,37 @@ public class ParserUtil {
      * Parses a {@code Optional<String> date} into an {@code Optional<StartDate>} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static StartDate parseStartDate(Optional<String> date) throws IllegalValueException {
+    public static Optional<StartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        if (!date.isPresent()) {
-            return new StartDate("");
-        }
-        return new StartDate(TaskDates.formatDate(parseDate(date.get())));
+        return date.isPresent() ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())))) :
+                Optional.empty();
     }
 
     /**
      * Parses a {@code Optional<String> date} into an {@code Deadline} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Deadline parseDeadline(Optional<String> date) throws IllegalValueException {
+    public static Optional<Deadline> parseDeadline(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        if (!date.isPresent()) {
-            return new Deadline("");
-        }
-        return new Deadline(TaskDates.formatDate(parseDate(date.get())));
+        return date.isPresent() ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())))) :
+                Optional.empty();
     }
 
     /**
      * Parses a {@code Optional<String> date} into an {@code SingleEventDate} if {@code date} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static SingleEventDate parseSingleEventDate(Optional<String> date) throws IllegalValueException {
+    public static Optional<SingleEventDate> parseSingleEventDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        if (!date.isPresent()) {
-            return new SingleEventDate("");
-        }
-        return new SingleEventDate(TaskDates.formatDate(parseDate(date.get())));
+        return date.isPresent() ? Optional.of(new SingleEventDate(TaskDates.formatDate(parseDate(date.get())))) :
+                Optional.empty();
     }
     
-    public static DateGroup parseDate(String naturalLanguageInput) {
+    public static DateGroup parseDate(String naturalLanguageInput) throws IllegalValueException {
         List<DateGroup> dates = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
+        if (dates.isEmpty()) {
+            throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        }
         System.out.println(dates.get(0).getDates());
         return dates.get(0);
     }

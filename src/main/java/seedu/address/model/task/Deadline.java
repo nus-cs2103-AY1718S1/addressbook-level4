@@ -17,13 +17,9 @@ public class Deadline extends TaskDates {
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public Deadline(String date) throws IllegalValueException {
+    public Deadline(String date) {
         requireNonNull(date);
-        String trimmedDate = date.trim();
-        if (!trimmedDate.isEmpty() && !TaskDates.isDateValid(trimmedDate)) {
-            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
-        }
-        this.date = trimmedDate;
+        this.date = date.trim();
     }
 
     public boolean isEmpty() {

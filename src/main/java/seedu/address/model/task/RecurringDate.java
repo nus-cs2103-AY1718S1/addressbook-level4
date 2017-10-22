@@ -22,9 +22,6 @@ public class RecurringDate extends TaskDates {
     public RecurringDate(String date) throws IllegalValueException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        if (!trimmedDate.isEmpty() && !TaskDates.isDateValid(date)) {
-            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
-        }
         this.date = trimmedDate;
     }
 

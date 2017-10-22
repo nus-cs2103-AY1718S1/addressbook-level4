@@ -22,6 +22,7 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.SingleEventDate;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskDates;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -43,13 +44,16 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         }
 
         try {
-            StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_START_DATE));
-            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE));
-            SingleEventDate singleEventDate = 
-                    ParserUtil.parseSingleEventDate(argMultimap.getValue(PREFIX_SINGLE_EVENT_DATE));
             Description description = ParserUtil.parseDescription(argMultimap.getPreamble());
+            StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_START_DATE))
+                    .orElse(new StartDate(""));
+            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE))
+                    .orElse(new Deadline(""));
+            SingleEventDate singleEventDate = 
+                    ParserUtil.parseSingleEventDate(argMultimap.getValue(PREFIX_SINGLE_EVENT_DATE))
+                            .orElse(new SingleEventDate(""));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            
+
             ReadOnlyTask task = new Task(description, startDate, deadline, singleEventDate, tagList);
 
             return new AddTaskCommand(task);

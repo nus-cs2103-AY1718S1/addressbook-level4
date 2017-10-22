@@ -19,11 +19,7 @@ public class SingleEventDate extends TaskDates {
      */
     public SingleEventDate(String date) throws IllegalValueException {
         requireNonNull(date);
-        String trimmedDate = date.trim();
-        if (!trimmedDate.isEmpty() && !TaskDates.isDateValid(date)) {
-            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
-        }
-        this.date = trimmedDate;
+        this.date = date.trim();
     }
 
     public boolean isEmpty() {

@@ -6,7 +6,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents the Starting Date of a given task in the application.
- * Guarantees: immutable; is valid as declared in {@link TaskDates#isDateValid(String)}
+ * Guarantees: immutable; is valid as determined when parsing occurs in 
+ * {@link ParserUtil.parseDate(String)}
  */
 public class StartDate extends TaskDates {
 
@@ -17,13 +18,9 @@ public class StartDate extends TaskDates {
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public StartDate(String date) throws IllegalValueException {
+    public StartDate(String date) {
         requireNonNull(date);
-        String trimmedDate = date.trim();
-        if (!trimmedDate.isEmpty() && !TaskDates.isDateValid(trimmedDate)) {
-            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
-        }
-        this.date = trimmedDate;
+        this.date = date.trim();
     }
 
     public boolean isEmpty() {

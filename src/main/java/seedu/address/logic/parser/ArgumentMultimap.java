@@ -50,13 +50,15 @@ public class ArgumentMultimap {
         }
         return new ArrayList<>(argMultimap.get(prefix));
     }
-    
-    /*public List<String> getAllValuesSeparatedByWhitespace(Prefix prefix) {
-        if (!argMultimap.containsKey(prefix)) {
-            return new ArrayList<>();
-        }
-        i
-    }*/
+
+    /**
+     * Returns all values of {@code prefix} in a single string.
+     * If the prefix does not exist or has no values, this will make a call to {@code getPreamble()}.
+     * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
+     */
+    public String getValues(Prefix prefix) {
+        return getValue(new Prefix("'")).orElse(getPreamble());
+    }
 
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.

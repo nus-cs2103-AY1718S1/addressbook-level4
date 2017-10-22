@@ -4,12 +4,9 @@ import org.ocpsoft.prettytime.nlp.parse.DateGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.ParserUtil;
 
 /**
  * Represents a date for a task which can be formatted.
@@ -20,24 +17,26 @@ public class TaskDates {
             "Dates can only contain a String in the format dd-MM-yyyy";
 
     /**
-     * Returns true if the given String is a valid date. If the input date format is invalid, an exception is thrown.
+     * Formats the first date of a given DateGroup into a String formatted for display.
      */
-    public static boolean isDateValid(String date) throws IllegalValueException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        try {
-            LocalDate.parse(date, formatter);
-            return true;
-        } catch (DateTimeParseException pe) {
-            return false;
-        }
+    public static String formatDate(DateGroup dates) throws IllegalValueException {
+        Date date = dates.getDates().get(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, MMM d, ''yy");
+        return sdf.format(date);
     }
 
     /**
-     * Formats the first date of a given DateGroup into a String.
+     * Returns true if the {@code startDate} is before the {@code deadline}} or if one of the parameters is empty.
+     * Otherwise, an exception is thrown.
      */
-    public static String formatDate(DateGroup date) throws IllegalValueException {
-        List<Date> dates = date.getDates();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        return sdf.format(dates.get(0));
+    public static boolean isStartDateBeforeDeadline(ReadOnlyTask task) {
+        if (task.getStartDate().isEmpty() | task.getDeadline().isEmpty()) {
+            return true;
+        }
+        Date dateone = new Date();
+        Date datetwo = new Date();
+        System.out.println(dateone.after(datetwo));
+        return true;
+       // if (task.startDateProperty().)
     }
 }
