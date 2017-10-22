@@ -34,7 +34,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your ModU.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::NewUi.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -74,6 +74,8 @@ Examples:
 
 * `add m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/Ma Siu Lun`
 * `add m/CS2100 ct/LEC v/LT19 gp/1 ts/MON[1400-1600] l/Wong WEng Fa l/Suppiah `
+
+image::video/add.gif[width="790"]
 
 === Listing all lesson : `list`
 
