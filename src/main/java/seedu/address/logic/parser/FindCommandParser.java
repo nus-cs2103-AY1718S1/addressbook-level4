@@ -41,6 +41,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
+        String[] keywords;
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
@@ -58,22 +59,22 @@ public class FindCommandParser implements Parser<FindCommand> {
             Optional<Set<Tag>> tags = parseTagsForFind(argMultimap.getAllValues(PREFIX_TAG));
 
             if (name.isPresent()) {
-                return new FindCommand(new NameContainsKeywordsPredicate(
-                        Collections.singletonList(name.get().toString())));
+                keywords = name.get().toString().trim().split("\\s+");
+                return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
             } else if (phone.isPresent()) {
-                return new FindCommand(new PhoneContainsKeywordsPredicate(
-                        Collections.singletonList(phone.get().toString())));
+                keywords = phone.get().toString().trim().split("\\s+");
+                return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
             } else if (address.isPresent()) {
-                return new FindCommand(new AddressContainsKeywordsPredicate(
-                        Collections.singletonList(address.get().toString())));
+                keywords = address.get().toString().trim().split("\\s+");
+                return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
             } else if (email.isPresent()) {
-                return new FindCommand(new EmailContainsKeywordsPredicate(
-                        Collections.singletonList(email.get().toString())));
+                keywords = email.get().toString().trim().split("\\s+");
+                return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
             } else if (tags.isPresent()) {
                 return new FindCommand(new TagContainsKeywordsPredicate(tags.get()));
             } else {
-                String[] nameKeywords = trimmedArgs.split("\\s+");
-                return new FindCommand(new AnyContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+                keywords = trimmedArgs.split("\\s+");
+                return new FindCommand(new AnyContainsKeywordsPredicate(Arrays.asList(keywords)));
             }
             //@@author
         } catch (IllegalValueException ive) {

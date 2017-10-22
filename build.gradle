@@ -87,7 +87,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "ContactPlusPro.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
@@ -150,8 +150,8 @@ class AddressBookTest extends Test {
 
 //help me with my gradle test:p
 task giangTests(type: AddressBookTest) {
-    include 'seedu/address/logic/parser/Add*'
-    include 'systemtests/Add*'
+    exclude 'seedu/address/model/**'
+    include 'systemtests/**'
     exclude 'guitests/**'
     exclude 'seedu/address/ui/**'
 

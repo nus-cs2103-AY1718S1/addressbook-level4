@@ -33,8 +33,10 @@ public class StringUtil {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
+
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.equalsIgnoreCase(preppedWord)) {
+            if (wordInSentence.equalsIgnoreCase(preppedWord)
+                    || containsIgnoreCase(wordInSentence, preppedWord)) {
                 return true;
             }
         }
@@ -78,4 +80,29 @@ public class StringUtil {
                 .replaceAll(",", "%2C")
                 .replaceAll("#", "%23");
     }
+
+    //@@author A0143832J
+    /**
+     * check if a string contains another substring, ignoring case
+     * @param str String to be checked
+     * @param searchStr Substring
+     * @return true if {@code str} contains {@code searchStr}, false otherwise
+     */
+    public static boolean containsIgnoreCase(String str, String searchStr)     {
+        if (str == null || searchStr == null) {
+            return false;
+        }
+        final int length = searchStr.length();
+        if (length == 0) {
+            return true;
+        }
+
+        for (int i = str.length() - length; i >= 0; i--) {
+            if (str.regionMatches(true, i, searchStr, 0, length)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //@@author
 }

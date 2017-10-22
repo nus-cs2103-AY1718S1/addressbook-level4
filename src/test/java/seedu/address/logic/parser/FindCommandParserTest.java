@@ -52,9 +52,9 @@ public class FindCommandParserTest {
                 new FindCommand(new EmailContainsKeywordsPredicate(Collections.singletonList("Alice@gmail.com")));
         FindCommand expectedFindCommand3 =
                 new FindCommand(new PhoneContainsKeywordsPredicate(Collections.singletonList("85355255")));
+        String[] keywords = "123, Jurong West Ave 6, #08-111".trim().split("\\s+");
         FindCommand expectedFindCommand4 =
-                new FindCommand(new AddressContainsKeywordsPredicate(
-                        Collections.singletonList("123, Jurong West Ave 6, #08-111")));
+                new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
 
         ObservableList<Tag> tagList = FXCollections.observableArrayList();
         tagList.add(new Tag("friends"));
