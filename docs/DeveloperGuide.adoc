@@ -221,11 +221,13 @@ This section describes some noteworthy details on how certain features are imple
 // 3.3tag::addPhoto[]
 === addPhoto mechanism
 
-The addPhoto feature is facilitated mainly by the Logic component where most of the process is executed.
-It adds an image to the contact indicated by the user using the addPhotoCommand. addPhotoCommand inherits from UndoableCommand and therefore can be undone using the UndoCommand.
+The `addphoto` feature is facilitated mainly by the `Logic` component where most of the process is executed.
+It adds an image to the contact indicated by the user using `AddPhotoCommand`. `AddPhotoCommand` inherits from `UndoableCommand` and is therefore undoable using the `undo` function.
+The diagram below shows the inheritance diagram for commands: 
 
-Suppose that the user wishes to append an image to a desired contact. The user will execute addPhotoCommand 1 f/C:/Users/PhotoBook/myFace.png to add a photo to the first person in Peersonal. Peersonal will parse the user input into their proper parameters in addPhotoCommandparser.
-addPhotoCommandparser will then return a addPhotoCommand to be executed in the LogicManager. A new Person object, editedPerson is created with all the same field as the personToEdit with the addition of the new Photo field. The editedPerson will replace personToEdit within the UniquePersonList.
+
+Suppose that the user wishes to append an image to a desired contact. The user will execute `addphoto 1 f/C:/Users/PhotoBook/myFace.png` to add a photo to the first person in Peersonal. Peersonal will parse the user input into their proper parameters in `AddPhotoCommandParser`.
+`AddPhotoCommandParser` will then return a `AddPhotoCommand` to be executed in the `LogicManager`. Upon the `execute()` method of `AddPhotoCommand`, a new `Person` object, `editedPerson` is created with all the same field as the `personToEdit` with the addition of the new `Photo` field. The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful.
 
 ==== Design considerations
 
