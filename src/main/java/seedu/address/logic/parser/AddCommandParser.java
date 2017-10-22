@@ -13,11 +13,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.property.Address;
-import seedu.address.model.property.Email;
-import seedu.address.model.property.Name;
-import seedu.address.model.property.Phone;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.PropertyManager;
+import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -32,26 +30,21 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+        Set<Prefix> prefixes = PropertyManager.getAllPrefixes();
+        prefixes.add(PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, prefixes);
 
+        // TODO: Keep this checking for now. These pre-loaded properties are compulsory.
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
-            // TODO: Implement and use generic ParserUtil::parseProperty method here.
-            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            Set<Property> propertyList = ParserUtil.parseProperties(argMultimap.getAllValues());
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-
-            ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
-
-            return new AddCommand(person);
-        } catch (IllegalValueException | PropertyNotFoundException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+            return new AddCommand(new Person(propertyList, tagList));
+        } catch (IllegalValueException | PropertyNotFoundException | DuplicatePropertyException e) {
+            throw new ParseException(e.getMessage(), e);
         }
     }
 }

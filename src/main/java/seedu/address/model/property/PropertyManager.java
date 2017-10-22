@@ -1,10 +1,13 @@
 package seedu.address.model.property;
 
+import static seedu.address.commons.core.Messages.PROPERTY_EXISTS;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 
 /**
@@ -21,11 +24,13 @@ import seedu.address.model.property.exceptions.DuplicatePropertyException;
  */
 public class PropertyManager {
     // Default constraint setting for all properties.
-    public static final String DEFAULT_MESSAGE = "%1$s can take any values, but it should not be blank";
+    public static final String DEFAULT_MESSAGE = "%1$s can take any values, but it should not be blank.";
     public static final String DEFAULT_REGEX = "[^\\s].*";
 
-    // A collection of the short names of all available properties.
-    private static final HashSet<String> propertyShortNames = new HashSet<>();
+    private static final String DEFAULT_PREFIX = "%1$s/";
+
+    // Mapping from property short name to its prefixes (for all available properties).
+    private static final HashMap<String, Prefix> propertyPrefixes = new HashMap<>();
 
     // Mapping from property short name to its full name.
     private static final HashMap<String, String> propertyFullNames = new HashMap<>();
@@ -95,13 +100,13 @@ public class PropertyManager {
     public static void addNewProperty(String shortName, String fullName, String message, String regex)
             throws DuplicatePropertyException, PatternSyntaxException {
         // Checks whether there exists a property with the same name.
-        if (propertyShortNames.contains(shortName)) {
-            throw new DuplicatePropertyException();
+        if (propertyPrefixes.containsKey(shortName)) {
+            throw new DuplicatePropertyException(String.format(PROPERTY_EXISTS, shortName));
         }
         // Checks whether the regular expression is valid.
         Pattern.compile(regex);
 
-        propertyShortNames.add(shortName);
+        propertyPrefixes.put(shortName, new Prefix(String.format(DEFAULT_PREFIX, shortName)));
         propertyFullNames.put(shortName, fullName);
         propertyConstraintMessages.put(shortName, message);
         propertyValidationRegex.put(shortName, regex);
@@ -111,21 +116,14 @@ public class PropertyManager {
      * Clears all properties stored in the {@link PropertyManager}.
      */
     public static void clearAllProperties() {
-        propertyShortNames.clear();
+        propertyPrefixes.clear();
         propertyFullNames.clear();
         propertyConstraintMessages.clear();
         propertyValidationRegex.clear();
-
-        /*
-         * This is for defensive programming purpose. Whenever you want to clear all properties in the
-         * PropertyManager, it must have been initialized with preLoaded properties, or load properties
-         * from the local storage file.
-         */
-        initialized = true;
     }
 
     public static boolean containsShortName(String shortName) {
-        return propertyShortNames.contains(shortName);
+        return propertyPrefixes.containsKey(shortName);
     }
 
     public static String getPropertyFullName(String shortName) {
@@ -141,6 +139,10 @@ public class PropertyManager {
     }
 
     public static HashSet<String> getAllShortNames() {
-        return propertyShortNames;
+        return new HashSet<>(propertyPrefixes.keySet());
+    }
+
+    public static HashSet<Prefix> getAllPrefixes() {
+        return new HashSet<>(propertyPrefixes.values());
     }
 }

@@ -28,7 +28,7 @@ public class Property {
      */
     public Property(String shortName, String value) throws IllegalValueException, PropertyNotFoundException {
         if (!PropertyManager.containsShortName(shortName)) {
-            throw new PropertyNotFoundException();
+            throw new PropertyNotFoundException(shortName);
         }
 
         this.shortName = shortName;

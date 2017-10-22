@@ -1,7 +1,5 @@
 package seedu.address.logic.commands.configs;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CONFIG_TYPE;
-
 import java.util.HashMap;
 
 import seedu.address.logic.commands.Command;
@@ -14,11 +12,9 @@ public abstract class ConfigCommand extends Command {
     public static final String COMMAND_ALIAS = "cfg";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes the configuration of the application. "
-            + "Parameters: "
-            + PREFIX_CONFIG_TYPE + "CONFIG_TYPE "
+            + "Parameters: " + "--CONFIG_TYPE "
             + "NEW_CONFIG_VALUE\n"
-            + "Example: " + COMMAND_WORD + " "
-            + PREFIX_CONFIG_TYPE + "set-tag-color "
+            + "Example: " + COMMAND_WORD + " --set-tag-color "
             + "friends #9381a0";
 
     public static final String MESSAGE_SUCCESS = "Configuration changed: %1$s";
