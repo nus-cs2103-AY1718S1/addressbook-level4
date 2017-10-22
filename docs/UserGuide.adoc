@@ -382,16 +382,15 @@ you are not sure what are the available commands. You want to see all the availa
 
 Type `help` in the command box. ModU will automatically open up user guide to help you
 
-image::tutorial/help.png[width="790"]
+image::tutorial/Help.png[width="790"]
 
 After you read through all the commands, you realised that it is hard to remember all the commands.
 You want to be able to identify key words, prefix and check the validity of command.
 
-
 Type `color enable` in the command box. ModU will highlight for you all the commands and prefix.
 It will display a tick when your command is valid and display a cross when your command is invalid
 
-image::tutorial/colorENable.png[width="790"]
+image::tutorial/colorEnable.png[width="790"]
 
 After you have received course information from CS2101 and MA1101R,
 and you want to enter these information into ModU
