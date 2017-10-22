@@ -114,7 +114,7 @@ public class EditCommandParserTest {
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY
-                        + VALID_BLOODTYPE_AMY, Name.MESSAGE_NAME_CONSTRAINTS);
+                + VALID_BLOODTYPE_AMY, Name.MESSAGE_NAME_CONSTRAINTS);
     }
 
     @Test
@@ -195,9 +195,12 @@ public class EditCommandParserTest {
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased()
-                + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + BLOODTYPE_DESC_AMY + REMARK_DESC_AMY + TAG_DESC_FRIEND
-                + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + BLOODTYPE_DESC_AMY + REMARK_DESC_AMY + TAG_DESC_FRIEND
-                + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + BLOODTYPE_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_HUSBAND;
+                + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
+                + BLOODTYPE_DESC_AMY + REMARK_DESC_AMY + TAG_DESC_FRIEND
+                + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
+                + BLOODTYPE_DESC_AMY + REMARK_DESC_AMY + TAG_DESC_FRIEND
+                + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB
+                + BLOODTYPE_DESC_BOB + REMARK_DESC_BOB + TAG_DESC_HUSBAND;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBloodType(VALID_BLOODTYPE_BOB)
