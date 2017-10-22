@@ -64,6 +64,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 Command Name: `help` +
 Shorthand Alias: `hp` +
+Function: displays the *User Guide* +
 Format: `help`
 ====
 
@@ -78,6 +79,7 @@ image:Ui.png[UI, 40, 40, role = "right"]`>> help`
 ====
 Command Name: `add` +
 Shorthand Alias: `a` +
+Function: adds a person to *DummyName* +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 [TIP]
 A person can have any number of tags (including 0)
