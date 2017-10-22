@@ -1015,13 +1015,13 @@ private void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOExcepti
 }
 ----
 
-//****
-//* Hint
-//** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-//** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-//* Solution
-//** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-//****
+****
+* Hint
+** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
+** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
+* Solution
+** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
+****
 
 === Creating a new command: `remark`
 
