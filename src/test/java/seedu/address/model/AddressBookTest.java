@@ -33,6 +33,7 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getBlacklistedPersonList());
+        assertEquals(Collections.emptyList(), addressBook.getWhitelistedPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
     }
 
