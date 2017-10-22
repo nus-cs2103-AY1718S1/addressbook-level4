@@ -681,13 +681,13 @@ We will be using asciidoc for writing documentation.
 
 *Advatnages of using  asciidoc over Markdown:*
 
-asciidoc uses the same number of markup characters or less when compared to Markdown in nearly all cases.
+*asciidoc uses the same number of markup characters or less when compared to Markdown in nearly all cases.
 
-asciidoc uses a consistent formatting scheme (i.e., it has consistent patterns).
+* asciidoc uses a consistent formatting scheme (i.e., it has consistent patterns).
 
-asciidoc can handle all permutations of nested inline (and block) formatting, whereas Markdown often falls down.
+* asciidoc can handle all permutations of nested inline (and block) formatting, whereas Markdown often falls down.
 
-asciidoc handles cases that Markdown doesn’t, such as a proper approach to inner-word markup, source code blocks and block-level images.
+* asciidoc handles cases that Markdown doesn’t, such as a proper approach to inner-word markup, source code blocks and block-level images.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
