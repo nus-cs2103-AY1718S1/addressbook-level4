@@ -409,7 +409,7 @@ public class CommandBox extends UiPart<Region> {
         case "remark":
             return (!containsRemark() && (addPollSuccessful() || editPollSuccessful()));
         default:
-            return (containsAllCompulsoryPrefix() && addPollSuccessful());
+            return (containsAllCompulsoryPrefix() && (addPollSuccessful() || editPollSuccessful()));
 
         }
     }
