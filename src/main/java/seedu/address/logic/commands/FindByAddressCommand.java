@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import seedu.address.model.person.AddressContainsKeywordsPredicate;
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Finds and lists all persons in address book whose address contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class FindByAddressCommand extends Command {

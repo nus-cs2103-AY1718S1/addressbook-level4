@@ -7,6 +7,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class SortCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "so";
     public static final String MESSAGE_USAGE = "Sort the Addressbook alphabetically.\n"
             + "Example: " + COMMAND_WORD;
 
