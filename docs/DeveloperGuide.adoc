@@ -1221,7 +1221,6 @@ link:#the-myths-book---developer-guide[Back To Top]
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
 === Use case: Delete person
 
 *MSS*
@@ -1281,8 +1280,6 @@ Use case ends.
 Use case ends.
 
 *Extensions*
-
-[none]
 
 === Use case: Add person
 
