@@ -91,6 +91,11 @@ public interface Model {
     void updateBookedSlot(BookedSlot target, BookedSlot newBookingSlot) throws DuplicateBookedSlotException;
 
     /**
+     * clear all booked slot of a location
+     */
+    void unbookAllSlot();
+
+    /**
      * Replaces the given lesson {@code target} with {@code editedLesson}.
      *
      * @throws DuplicateLessonException if updating the lesson's details causes the lesson to be equivalent to
