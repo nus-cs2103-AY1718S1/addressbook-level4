@@ -506,7 +506,7 @@ the previously hidden indices from the list storing all hidden persons.
 **Alternative 2**: The indices are deleted one by one, without using a list. +
 **Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
 **Cons:** User has to repeatedly type the command multiple times, and application has to display the result repeatedly
-after every person is hidden successfully. 
+after every person is hidden successfully.
 // end::hide[]
 
 == Documentation
