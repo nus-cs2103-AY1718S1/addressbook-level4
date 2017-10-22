@@ -8,6 +8,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -30,15 +33,17 @@ public class RemoveCommandTest {
     @Test
     public void execute_removeValidTagAll_success() throws Exception {
         Tag tagToRemove = new Tag("friends");
-        Index index = null;
+        Set<Index> indexSet = new HashSet<>();
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(tagToRemove);
 
-        RemoveCommand removeCommand = prepareCommand(tagToRemove, index);
+        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
 
         String expectedMessage = String.format(RemoveCommand.MESSAGE_REMOVE_SUCCESS
-                        + " from address book.", tagToRemove);
+                        + " from address book.", tagSet);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeTag(tagToRemove, index);
+        expectedModel.removeTag(tagSet, indexSet);
 
         assertCommandSuccess(removeCommand, model, expectedMessage, expectedModel);
     }
@@ -46,12 +51,14 @@ public class RemoveCommandTest {
     @Test
     public void execute_removeInvalidTagAll_throwsCommandException() throws Exception {
         Tag tagToRemove = new Tag("enemy");
-        Index index = null;
+        Set<Index> indexSet = new HashSet<>();
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(tagToRemove);
 
-        RemoveCommand removeCommand = prepareCommand(tagToRemove, index);
+        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
 
-        String expectedMessage =  "Tag: " + tagToRemove.toString() + RemoveCommand.MESSAGE_TAG_NOT_FOUND
-                + " address book.";
+        String expectedMessage =  String.format(
+                RemoveCommand.MESSAGE_TAG_NOT_FOUND + " the address book.", tagSet);
 
         assertCommandFailure(removeCommand, model, expectedMessage);
     }
@@ -59,14 +66,18 @@ public class RemoveCommandTest {
     @Test
     public void execute_validTagValidIndexUnfilteredList_success() throws Exception {
         Tag tagToRemove = new Tag("friends");
+        Set<Index> indexSet = new HashSet<>();
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(tagToRemove);
+        indexSet.add(INDEX_FIRST_PERSON);
 
-        RemoveCommand removeCommand = prepareCommand(tagToRemove, INDEX_FIRST_PERSON);
+        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
 
         String expectedMessage = String.format(RemoveCommand.MESSAGE_REMOVE_SUCCESS + " from index "
-                + INDEX_FIRST_PERSON.getOneBased() + ".", tagToRemove);
+                + INDEX_FIRST_PERSON.getOneBased() + ".", tagSet);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeTag(tagToRemove, INDEX_FIRST_PERSON);
+        expectedModel.removeTag(tagSet, indexSet);
 
         assertCommandSuccess(removeCommand, model, expectedMessage, expectedModel);
     }
@@ -75,29 +86,46 @@ public class RemoveCommandTest {
     public void execute_validTagInvalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Tag tagToRemove = new Tag("friends");
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Set<Index> indexSet = new HashSet<>();
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(tagToRemove);
+        indexSet.add(outOfBoundIndex);
 
-        RemoveCommand removeCommand = prepareCommand(tagToRemove, outOfBoundIndex);
+        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
         assertCommandFailure(removeCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_invalidTagValidIndexUnfilteredList_throwsCommandException() throws Exception {
         Tag tagToRemove = new Tag("enemy");
+        Set<Index> indexSet = new HashSet<>();
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(tagToRemove);
+        indexSet.add(INDEX_FIRST_PERSON);
 
-        RemoveCommand removeCommand = prepareCommand(tagToRemove, INDEX_FIRST_PERSON);
-        assertCommandFailure(removeCommand, model, "Tag: " + tagToRemove.toString()
-                + RemoveCommand.MESSAGE_TAG_NOT_FOUND + " index " + INDEX_FIRST_PERSON.getOneBased() + ".");
+        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
+        assertCommandFailure(removeCommand, model, String.format(
+                RemoveCommand.MESSAGE_TAG_NOT_FOUND + " index: " + INDEX_FIRST_PERSON.getOneBased() + ".", tagSet));
     }
 
     @Test
     public void equals() throws Exception {
         Tag firstTag = new Tag("friends");
         Tag secondTag = new Tag("owesMoney");
-        RemoveCommand removeFirstCommand = new RemoveCommand(firstTag, null);
-        RemoveCommand removeSecondCommand = new RemoveCommand(secondTag, null);
-        RemoveCommand removeThirdCommand = new RemoveCommand(firstTag, INDEX_FIRST_PERSON);
-        RemoveCommand removeFourthCommand = new RemoveCommand(firstTag, INDEX_SECOND_PERSON);
-        RemoveCommand removeFifthCommand = new RemoveCommand(secondTag, INDEX_FIRST_PERSON);
+        Set<Index> indexSet1 = new HashSet<>();
+        Set<Tag> tagSet1 = new HashSet<>();
+        tagSet1.add(firstTag);
+        indexSet1.add(INDEX_FIRST_PERSON);
+        Set<Index> indexSet2 = new HashSet<>();
+        Set<Tag> tagSet2 = new HashSet<>();
+        tagSet2.add(secondTag);
+        indexSet2.add(INDEX_SECOND_PERSON);
+        Set<Index> emptySet = new HashSet<>();
+        RemoveCommand removeFirstCommand = new RemoveCommand(tagSet1, emptySet);
+        RemoveCommand removeSecondCommand = new RemoveCommand(tagSet2, emptySet);
+        RemoveCommand removeThirdCommand = new RemoveCommand(tagSet1, indexSet1);
+        RemoveCommand removeFourthCommand = new RemoveCommand(tagSet1, indexSet2);
+        RemoveCommand removeFifthCommand = new RemoveCommand(tagSet2, indexSet1);
 
         // same object -> returns true (no Index)
         assertTrue(removeFirstCommand.equals(removeFirstCommand));
@@ -128,7 +156,7 @@ public class RemoveCommandTest {
     /**
      * Returns a {@code RemoveCommand} with the parameter {@code tag}.
      */
-    private RemoveCommand prepareCommand(Tag tag, Index index) {
+    private RemoveCommand prepareCommand(Set<Tag> tag, Set<Index> index) {
         RemoveCommand removeCommand = new RemoveCommand(tag, index);
         removeCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return removeCommand;

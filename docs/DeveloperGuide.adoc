@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Contact List Pro v1.3 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -345,6 +345,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::favourite[]
 === Favourite mechanism
 
 The favourite feature allows users to favourite or unfavourite a *single person* depending on whether the person is currently favourited or not. Favourited persons are all sorted to the top of the list in the user interface.
@@ -375,59 +376,109 @@ image::FavouritePersonSequenceDiagram.png[width="800"]
 **Alternative 2:** Implement additional methods in `Model`, `AddressBook`, etc. to specifically toggle a person's favourite status +
 **Pros:** Makes clear what the method is trying to do +
 **Cons:** Is not necessary when existing code is able to perform the same action +
+// end::favourite[]
 
-=== Remove mechanism
+// tag::remove[]
+=== Tag removal mechanism
 
-The remove feature allows users to remove a `Tag` either from a *single person* or from the *whole address book*.
+The remove feature allows users to either remove a `Tag` from a multiple persons, remove multiple `Tags` from
+a single person or remove `Tag(s)` from the whole address book.
 The distinction in execution of the command lies in the format of the user command.
 
-* Format: `remove friends` +
-Removes the `friends` tag from the *whole address book*.
+The following sequence diagram shows how the remove operation works:
 
-* Format: `remove friends 1` +
-Removes the `friend` tag from *only the first person* in the address book.
-
-The remove mechanism involves the `RemoveCommandParser`, which resides in the `LogicManager` to parse the user inputs.
-The parsing mechanism in `RemoveCommandParser` uses the `StringTokenizer` class of the Java API to obtain the required
-arguments to create a `RemoveCommand` object.
-
-`RemoveCommand` extends `UndoableCommand`, thus, uses the `UndoRedoStack`, which resides in the `LogicManager`.
-This allows any changes executed from the `RemoveCommand` to be undone, as specified by the `Undo/Redo` mechanism.
-
-Execution of `RemoveCommand` is governed by the `removeTag` method located in the `Model` interface and implemented by
+image::removeTag.png[width="800"]
+As seen above, execution of `RemoveCommand` is governed by the `removeTag` method located in the `Model` interface and implemented by
 `ModelManager`.
 
 ==== Design Considerations
 **Aspect:** Execution of remove command  +
-**Alternative 1 (current choice):** Only accepts one `Tag` as parameter (Only removes one `Tag`). +
-**Pros:** Complements the use of `Undo/Redo` command for removal of each `Tag`. +
-**Cons:** May be an inconvenience to user who wants to remove multiple `Tags`. +
-**Alternative 2:** Allow multiple `Tags` as parameters (Removes multiple `Tags`). +
-**Pros:** Better efficiency in mass removal of `Tags` from a person or the address book. +
-**Cons:** Users may face inconvenience in undoing removal of a *single* `Tag` after the removal of *multiple* `Tags`. +
+**Alternative 1 (current choice):** Accepts multiple `Tags` and *one* `Index` or *one* `Tag` and multiple `Index` as a single command input. +
+**Pros:** Allows greater efficiency in removing multiple `Tags` instead of doing it singly. +
+**Cons:** May pose an inconvenience for users to remove `Tag` a wide range of `Index`. +
+**Alternative 2:** Allow range of `Index` to be accepted as parameters. +
+**Pros:** Better efficiency in mass removal of `Tags` from persons that are listed consecutively. +
+**Cons:** Pose the same inconvenience to users if the person whose `Tag` to be removed are widely scattered. +
 
 ---
 
-**Aspect:** Execution of remove command for specified user. +
-**Alternative 1 (current choice):** Only accepts one `Index` as parameter. +
-**Pros:** Allows further user-customisations by removing `Tag` from intended person. +
-**Cons:** Inconvenience for users to remove specified `Tag` from multiple persons. +
-**Alternative 2:** Allow for multiple `Index` to be accepted as parameters. +
-**Pros:** More convenient for users to remove a `Tag` from multiple users. +
-**Cons:** Current implementation updates the address book immediately after each removal of `Tag`. This alternative may
-result in errors or inaccurate execution of command. +
-
----
-
-**Aspect:** +
-**Alternative 1:** +
-**Pros:** +
-**Cons:** +
-**Alternative 2:** +
-**Pros:** +
-**Cons:** +
+**Aspect:** Implementation of remove command. +
+**Alternative 1 (current choice):** Executes user input and provides one result of command output. +
+**Pros:** With current implementation, it allows for multiple removal of `Tags` in one command execution. +
+**Cons:** The use of the `Undo/Redo` command may not be applicable. +
+**Alternative 2:** Incorporate mechanism such as Stacks to store individual removal of `Tag`. +
+**Pros:** Complements the use of `Undo/Redo`. +
+**Cons:** Current method of removing tags has to accommodate the use of the new mechanism. +
 
 // end::remove[]
+
+// tag:: remark[]
+=== Remark CheckList Implementation
+
+The remark checklist serves as command to allow users to keep notes on individual persons. +
+We want our remark command to function like a todo list, which enables users to add remarks to a person based on a specific task they want to do with the person. +
+Since remarks can be different for different persons, it was placed under the Person class to allow for easy retrieval. +
+Since it is saved under the Person class, we are able to utilise the ReadOnlyPerson to compare persons, or extract specific information without risking a corruption in the storage file. +
+
+As users accomplish tasks that were associated with specific persons, we want to allow them to remove remarks at any point in time. +
+To help with this feature, we planned to use an ArrayList to store the remarks under each person, as it would help with indexing the remarks for easy removal and additions. +
+As ArrayLists naturally update the index of the its list, we do not need additional functions to handle indexing. +
+On top of this, we decided that remarks should be updated with any changes, either to selection or file storage. +
+Thus, we subscribed the remark panel UI to any person selection changes or person storage changes to allow for a constantly updated UI. +
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        tempPerson = event.getNewSelection().person;
+        String printedString = "Remarks regarding " + String.valueOf(event.getNewSelection().person.getName()) + ":\n"
+                + "---------------------------------------------------\n";
+        for (int i = 0; i < event.getNewSelection().person.getRemark().size(); i++) {
+            if (!event.getNewSelection().person.getRemark().get(i).value.equals("")) {
+                printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
+                        + event.getNewSelection().person.getRemark().get(i).value + "\n");
+            }
+        }
+        final String finalString = printedString;
+        Platform.runLater(() -> displayed.setValue(finalString));
+    }
+
+
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ObservableList<ReadOnlyPerson> personList = event.data.getPersonList();
+        for (int i = 0; i < personList.size(); i++) {
+            if (personList.get(i).getName().fullName.equals(tempPerson.getName().fullName)) {
+                String printedString = "Remarks regarding " + String.valueOf(personList.get(i).getName()) + ":\n"
+                        + "---------------------------------------------------\n";
+                for (int j = 0; j < personList.get(i).getRemark().size(); j++) {
+                    if (!personList.get(i).getRemark().get(j).value.equals("")) {
+                        printedString = printedString.concat(j + 1 + "). "
+                                + personList.get(i).getRemark().get(j).value + "\n");
+                    }
+                }
+                final String finalString = printedString;
+                Platform.runLater(() -> displayed.setValue(finalString));
+                break;
+            }
+        }
+    }
+----
+Since remarks tend to be lengthy, we decided that a large amount of space on the app should be dedicated to them. +
+Instead of implementing similar UI design as the tags feature, we decided to display the remarks using a large stackpane. +
+
+image::remarkUI.png[width="800"]
+
+[NOTE]
+Remarks can not be added when adding a person. It can only be done to a person already existing in the address book.
+
+[NOTE]
+If a person is without a remark, he/she still contains an ArrayList or empty remarks. +
+ArrayList should never contain null objects.
+
+
+// end::remark[]
 
 === Logging
 

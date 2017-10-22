@@ -12,7 +12,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
 
@@ -21,14 +21,15 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose specified field contain "
             + "any of the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: PREFIX KEYWORD [MORE_KEYWORDS] (KEYWORD must not be partial words)\n"
+            + "Parameters: [PREFIX KEYWORD]... (Keywords must not contain whitespaces)\n"
             + "PREFIX: \n"
             + "Name - " + PREFIX_NAME + "\n"
             + "Phone - " + PREFIX_PHONE + "\n"
             + "Address - " + PREFIX_ADDRESS + "\n"
             + "Email - " + PREFIX_EMAIL + "\n"
             + "Tag - " + PREFIX_TAG + "\n"
-            + "Example: " + COMMAND_WORD + PREFIX_NAME + " alice bob charlie";
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NAME + "alice " + PREFIX_TAG + "friends "
+            + PREFIX_ADDRESS + "Serangoon";
 
     private final Predicate<ReadOnlyPerson> predicate;
 
