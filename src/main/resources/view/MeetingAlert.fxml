@@ -9,7 +9,7 @@
    <children>
       <StackPane prefHeight="600.0" prefWidth="1000.0">
          <children>
-            <Button layoutX="750.0" layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onKeyPressed="#handleExit" onMouseClicked="#handleExit" prefHeight="35.0" prefWidth="80.0" text="Ok !" StackPane.alignment="BOTTOM_CENTER">
+            <Button layoutX="750.0" layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onKeyPressed="#handleExit" onMouseClicked="#handleExit" prefHeight="40.0" prefWidth="90.0" text="Got it!" StackPane.alignment="BOTTOM_CENTER">
                <StackPane.margin>
                   <Insets bottom="20.0" />
                </StackPane.margin>
