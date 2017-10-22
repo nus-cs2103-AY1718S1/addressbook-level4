@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Planno - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,10 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team planno`      Since: `August 2017`      Licence: `MIT`
+By: Hu Wanqing, Jiang Chunhui, Hou Denghao, Leon Chow Wen Hao      Since: `August 2017`
+
+This developer guide aims to give future programmers who hope to modify this application a general description of the architecture and design of the Desktop Application Planno.
+Planno provides users a platform to store and manage people's contact information, and events related to people in Planno. This developer guide consists of the following sections:
 
 == Setting up
 
@@ -100,12 +103,12 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* (At app launch) Initializes the components in the correct sequence, and connects them up with each other.
+* (At app shut down) Shuts down the components and invokes cleanup method where necessary.
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+link:#common-classes[*`Commons`*] represents a collection of classes used by other components. Among them, the following two classes play important roles at the architecture level:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `EventsCenter` : This class is written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]. Components communicate with each other by posting event in this class (i.e. a form of event-driven nature of design).
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
 The rest of the App consists of four components.
@@ -115,20 +118,17 @@ The rest of the App consists of four components.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the four components above
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
-
-image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+For example, the `Logic` component defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below shows how the components interact using event center for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
@@ -143,8 +143,9 @@ _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
-
+----
 The sections below give more details of each component.
+----
 
 === UI component
 
@@ -185,18 +186,31 @@ image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
+The following diagram shows the class structure of the Model component.
 
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+Generally, the `Model` is managed by a Model manager, which
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* maintains an `AddressBook` and a `EventList`.
+* stores 2 unmodifiable list: `ObservableList<ReadOnlyPerson>` and `ObservableList<ReadOnlyEvent>`. They are bounded to UI so that the UI can automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
+
+In detail, the `AddressBook` and the `EventList` are respectively responsible for person and event information.
+
+* The `AddressBook`
+** stores people's information as a person list with no duplicate persons. The information includes one's personal information and contact details.
+** keeps track of all the tags that had been added to some people in the person list
+** for each person in the list, the person holds a modifiable tag list that contains all the tag this person has.
+
+* The `EventList`
+** stores event's information as an event list.
+** for each event in the list, the event maintains a modifiable list to keep track of who the participants of the events are.
 
 === Storage component
 
@@ -302,11 +316,11 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
-----
+
 
 ==== Design Considerations
 
-----
+---
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
 **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
@@ -346,29 +360,53 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
-----
 
+//tag:: find[]
 === Find mechanism
 The Find mechanism is facilitated by `NameContainsKeyWordPredicate` class, which resides in `model.person` package. This command
 supports users of finding a list of persons by tags and names. Any person that have either of the entered keyword will be filtered
 into the list. Such command will inherit from `Command`.
 
-The find command accept two types of keyword: `name` and `tag`,
+The find command accept two types of keyword:
 
-* `tag` keyword is identified by a prefix `t/`. +
+* `tag`: it is identified by a prefix `t/`. +
 e.g. `find t/friends` means to find any person that have a tag called `friends`
-* anything that do not begin with `tag` is identified as name key word. +
+* `name`: anything that do not begin with `tag` is identified as `name` key word. +
 e.g. `find friends` means to find any person whose name contains the keyword `friends`
+[NOTE]
+if a `tag name` is not preceded with a prefix `t/`, then the `tag name` will be identified as a `person name`. As a result, the people with their name containing the `tag name` will be displayed.
 
-Suppose now a user enters a find command `find t/friends` to find the persons that have the tag `friends`.
+Below is a sequence diagram for executing a find command: `find t/friends`. It will find persons that have the tag `friends`.
+
+image::findSequenceDiagram.png[width="800"]
+_Figure 3.2.1: sequence diagram for find command_
+
 The command will be sent to LogicManager, and LogicManager will call AddressBookParser to parse
 the command. Subsequently, FindCommandParser will parse argument `t/friends` and create a new `findCommand` with
 predicate `t/friends`. The `findCommand` is then executed in LogicManager, during which the `findCommand` will update
 the filtered person list with predicate tag called `friends`. This update will cause the person list displayed in GUI to be updated,
-so that the persons with tag `friends` will be displayed. +
-Below is a sequence diagram for doing command `find t/friends`
+so that the persons with tag `friends` will be displayed.
 
-image::findSequenceDiagram.png[width="800"]
+==== Design Considerations
+
+---
+**Aspect:**  implementation of find command +
+**Alternative 1 (current choice):** Select people that has any of the keywords +
+**Pros:**  For every person, we only need to ensure at least on keyword exist, so we don't need to go through every information of a person.   +
+**Cons:**  It is difficult to know by which keyword a person is selected +
+**Alternative 2:** Select people that has any of the keywords, and highlight selected keywords in each person's `person card`. +
+**Pros:** Shows clearly what keywords each selected person contains. +
+**Cons:**  We need to go through everything of a person, in order to highlight EVERY keyword the person has +
+
+---
+**Aspect:** Type of keywords that can be found +
+**Alternative 1 (current choice):** Only person name and tag can be used in the find command +
+**Pros:** We only need to check a person's name and tag list to find match +
+**Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
+**Alternative 2:** Include all information of a person (i.e. phone, email, address) +
+**Pros:** a person can be found in more ways +
+**Cons:** implementation is complicated
+
 
 // tag::sort[]
 === Sort mechanism
@@ -419,25 +457,6 @@ The sort command object receives the sorted list and creates `CommandResult` obj
 **Cons:** Because address/email/phone number is unique, most of time you could find them without sorting the list. +
 // end::sort[]
 
-=== Logging
-
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
-
-*Logging Levels*
-
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
 === Delete Event
 
 The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
@@ -458,6 +477,25 @@ _Figure 3.4.2 : Component interactions for `deleteE 1` command_
 . `EventsCenter` will handle the changes to `Storage` and `UI` using the `handleAddressBookChangedEvent` method.
 . The `Command` will be added to the `undoStack`.
 . The result of the command execution is encapsulated as a `CommandResult` which is passed back to `CommandBox` in `UI`.
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 == Documentation
 
@@ -820,13 +858,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |add a person's contact detail into the app
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |add a new event |add a event's date and information into the app
+
+|`* * *` |user |delete a person or event|remove entries that I no longer need
+
+|`* * *` |user |edit a person or event|change some information of the person or event
 
 |`* * *` |user |clear my address book |refresh it quickly
 
 |`* * *` |user with many friends |list all friends with a certain tag |group my friend by tag easily
 
-|`* * *` |user |add a person with link:#blank-information[blank information] |add him even if I do not know some details (e.g his address)
+|`* * *` |user |add a person event with link:#blank-information[blank information] |add him or the event even if I do not know some details (e.g his address)
 
 |`* * *` |user |find a person by name and tag|locate details of persons without having to go through the entire list
 
@@ -836,27 +878,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |list contacts |view who are my contacts
 
+|`* * *` |user |list events |view what are my events
+
 |`* * *` |secretive user |hide private details  |minimise the chance of someone else seeing them by accident
 
 |`* * *` |careless user |undo decision  |revert changes in case of mistake
-
-|`* * *` |lazy user |have auto complete when I type  |type less word
-
-|`* *` |user who share my device with others |password to lock my address book |prevent others looking at it
 
 |`* *` |frequent user |change the font and background colour |use address book comfortably
 
 |`* *` |frequent user |use non-case sensitive command |type command easily
 
-|`* *` |user with many friends |add multiple people at one time |save my time for adding
-
 |`* *` |user |sort contacts |view my list easily
 
 |`* *` |user |tag my contacts |remember who they are through tags
-
-|`* *` |security conscious user |log in with my id and password |keep my privacy
-
-|`* *` |elder user |adjust font size |see more clearly
 
 |`* *` |secretive user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -864,21 +898,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |create events and assign contacts |keep track of who is involved in events
 
-|`* *` |user |export contact details |share with others or transfer to other device
-
 |`* *` |user |create filter using multiple tags |make a specific search using tags
 
-|`*` |frequent user |listen some background music |address book happily
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-
 |`*` |user |add pictures to contacts |remember who they are through pictures
-
-|`*` |secretive user |alter whether information is private |make information open to everyone whenever I want
-
-|`*` |user |drag person card |sort people into my own order
-
-|`*` |user |select font style |more comfortable to read
 
 |=======================================================================
 
