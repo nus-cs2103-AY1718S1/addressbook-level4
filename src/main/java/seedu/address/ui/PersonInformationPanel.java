@@ -67,7 +67,6 @@ public class PersonInformationPanel extends UiPart<Region> {
      * @param person
      */
     private void bindListeners(ReadOnlyPerson person, int person_id) {
-        //id.textProperty().bind(Bindings.convert(person_id));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags();
