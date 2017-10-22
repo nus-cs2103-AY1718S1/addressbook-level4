@@ -970,7 +970,7 @@ public class CommandBoxTest extends GuiUnitTest {
         int counter = 0;
         //edit 1 -> Valid
         guiRobot.write("edit 1");
-        counter +=6;
+        counter += 6;
         assertTrue(mySandBox.getText().length() == counter);
         guiRobot.push(KeyCode.RIGHT);
         counter += 3;
@@ -978,7 +978,7 @@ public class CommandBoxTest extends GuiUnitTest {
         //edit 10 -> Valid
         mySandBox.positionCaret(6);
         guiRobot.write("0");
-        counter +=1;
+        counter += 1;
         mySandBox.positionCaret(counter);
         guiRobot.push(KeyCode.RIGHT);
         counter += 3;
@@ -986,7 +986,7 @@ public class CommandBoxTest extends GuiUnitTest {
         //edit -10 -> Invalid
         mySandBox.positionCaret(5);
         guiRobot.write("-");
-        counter +=1;
+        counter += 1;
         mySandBox.positionCaret(counter);
         guiRobot.push(KeyCode.RIGHT);
         counter += 3;
