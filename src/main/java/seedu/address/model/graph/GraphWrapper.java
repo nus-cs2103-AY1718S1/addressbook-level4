@@ -12,7 +12,10 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
+
+import java.util.Set;
 
 
 /**
@@ -35,7 +38,7 @@ public class GraphWrapper {
         this.graph = new SingleGraph(graphId);
     }
 
-    public void setData(Model model) {
+    private void setData(Model model) {
         this.model = model;
         this.filteredPersons = model.getFilteredPersonList();
     }
@@ -134,13 +137,30 @@ public class GraphWrapper {
         }
     }
 
-    public void clear() {
+    private void clear() {
         this.graph = null;
         this.model = null;
         this.filteredPersons = null;
     }
 
     private SingleGraph initiateGraphEdges() {
+        for (ReadOnlyPerson person: filteredPersons) {
+            Set<Relationship> relationshipSet = person.getRelationships();
+            for (Relationship relationship: relationshipSet) {
+                addEdge(relationship.getFromPerson(), relationship.getToPerson(), relationship.getDirection());
+            }
+        }
+
+        return graph;
+    }
+
+    public SingleGraph buildGraph(Model model) {
+        this.clear();
+        this.setData(model);
+        this.graph = new SingleGraph(graphId);
+        this.initiateGraphNodes();
+        this.initiateGraphEdges();
+
         return graph;
     }
 }

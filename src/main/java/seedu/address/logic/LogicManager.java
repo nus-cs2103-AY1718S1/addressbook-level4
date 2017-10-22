@@ -32,7 +32,7 @@ public class LogicManager extends ComponentManager implements Logic {
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
         this.graphWrapper = new GraphWrapper();
-        graphWrapper.setData(model);
+        graphWrapper.buildGraph(model);
     }
 
     @Override

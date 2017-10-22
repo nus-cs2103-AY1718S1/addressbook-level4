@@ -50,7 +50,7 @@ public class Relationship {
             idCheck = (this.fromPerson.equals(((Relationship) other).getFromPerson())
                     && this.toPerson.equals(((Relationship) other).getToPerson()))
                     || (this.fromPerson.equals(((Relationship) other).getToPerson())
-                    || this.toPerson.equals(((Relationship) other).getFromPerson()));
+                    && this.toPerson.equals(((Relationship) other).getFromPerson()));
         }
 
         return other == this // short circuit if same object

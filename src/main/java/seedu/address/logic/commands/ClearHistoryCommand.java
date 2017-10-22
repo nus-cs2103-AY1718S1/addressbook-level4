@@ -4,6 +4,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.graph.GraphWrapper;
 
 /**
  * Clears the command history and the undo/redo stack.
@@ -22,8 +23,8 @@ public class ClearHistoryCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
-        super.setData(model, history, undoRedoStack);
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, GraphWrapper graphWrapper) {
+        super.setData(model, history, undoRedoStack, graphWrapper);
         this.history = history;
         this.undoRedoStack = undoRedoStack;
     }
