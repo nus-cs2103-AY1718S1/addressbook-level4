@@ -16,7 +16,19 @@ image::UG_cover.png[width="750", align="left"]
 
 By: `Team W14-B4`      Since: `Sep 2017`      Licence: `NUS`
 
-== Quick Start
+== About
+
+Sometimes do you feel that you have too many contacts but cannot manage them clearly? Or sometimes you have too many events but cannot remember all the participants involved in a event? Do not worry! Planno can help you to solve these problems!
+
+Planno is a assistant that helps you to manage your contacts and events. It will tell you who are the participants according to the event. Moreover, it can tell you your contacts join in which event.
+
+Planno is more powerful than the other contact managers or task managers and it combines these two types of application into one. Furthermore, Planno is very simple to use and you only need to type some short commands. There are no click buttons and the program will only execute the command according to what you type.
+
+Do you feel excited? Let's get started!
+
+== Getting Started
+
+Before we start our journey on Planno, here are some simple steps for you to launch this application:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -38,8 +50,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
-
-.  Refer to the link:#features[Features] section below for details of each command.
++
+[NOTE]
+For the details of each command, please refer to Features section.
++
+.  Congratulations! If you can run Planno without any trouble, you can start trying this application. Otherwise, Please refer to FAQ and solve your problems.
 
 == Features
 
