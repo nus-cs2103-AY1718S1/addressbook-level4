@@ -44,7 +44,7 @@
     <VBox>
       <children>
       
-        <StackPane fx:id="resultDisplayPlaceholder">
+        <StackPane fx:id="resultDisplayPlaceholder" prefHeight="450.0">
           <padding>
             <Insets bottom="15.0" left="10.0" right="25.0" top="20.0" />
           </padding>
@@ -53,7 +53,7 @@
           </VBox.margin>
         </StackPane>
       
-              <StackPane fx:id="personDetailPlaceholder" minWidth="400.0" prefHeight="450.0">
+              <StackPane fx:id="personDetailPlaceholder" minWidth="400.0" prefHeight="630.0">
           <opaqueInsets>
             <Insets />
           </opaqueInsets>
@@ -65,5 +65,5 @@
     </VBox>
   </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+  <StackPane fx:id="statusbarPlaceholder" minHeight="30.0" VBox.vgrow="NEVER" />
 </VBox>

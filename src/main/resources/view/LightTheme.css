@@ -130,16 +130,22 @@
     -fx-text-fill: #444344;
 }
 
-.cell_small_label {
-    -fx-font-family: "Segoe UI", Optima;
-    -fx-font-size: 14px;
-    -fx-text-fill: derive(gray, 10%);
-}
-
 .cell_id_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: derive(gray, 35%);
     -fx-font-size: 15px;
+}
+
+.person_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 26px;
+    -fx-text-fill: #444344;
+}
+
+.person_small_label {
+    -fx-font-family: "Lucida Grande", "Segoe UI", Optima;
+    -fx-font-size: 15px;
+    -fx-text-fill: #848484;
 }
 
 .anchor-pane {
@@ -173,12 +179,8 @@
 .result-display {
     -fx-background-color: transparent;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-size: 12pt;
     -fx-text-fill: gray;
-}
-
-.result-display .label {
-    -fx-text-fill: black !important;
 }
 
 .status-bar .label {
@@ -340,6 +342,10 @@
     -fx-image: url("../images/avatarGray.png");
 }
 */
+#phone {
+    -fx-image: url("../images/phone.png");
+}
+
 #initial_small {
     -fx-font-family: "Roboto";
     -fx-text-fill: #ffffff;
@@ -373,7 +379,7 @@
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 1, 2);
 }
 
-#filterField, #personListPanel, #personWebpage {
+#filterField, #personListPanel {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
@@ -391,7 +397,5 @@
     -fx-font-family: "Segoe UI", Optima;
     -fx-text-fill: derive(gray, 20%);
     -fx-padding: 1 0 1 0;
-    -fx-border-radius: 0;
-    -fx-background-radius: 2;
     -fx-font-size: 14px;
 }

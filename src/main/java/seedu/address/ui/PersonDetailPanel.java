@@ -86,9 +86,9 @@ public class PersonDetailPanel extends UiPart<Region> {
         avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
 
         name.setText(person.getName().toString());
-        phone.setText(person.getPhone().toString());
-        address.setText(person.getAddress().toString());
-        email.setText(person.getEmail().toString());
+        phone.setText("☎  " + person.getPhone().toString());
+        address.setText("\uD83C\uDFE0  " + person.getAddress().toString());
+        email.setText("\uD83D\uDCE7  " + person.getEmail().toString());
 
         tags.getChildren().clear();
         initTags(person);

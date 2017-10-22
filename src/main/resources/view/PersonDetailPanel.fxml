@@ -13,9 +13,9 @@
 
 <StackPane fx:id="personDetailPanel" minHeight="100.0" minWidth="200.0" styleClass="person-detail-panel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox fx:id="cardPane">
+      <HBox fx:id="cardPane" alignment="CENTER">
          <children>
-            <GridPane HBox.hgrow="ALWAYS">
+            <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -23,7 +23,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <children>
@@ -35,7 +35,7 @@
                               </StackPane>
                               <VBox alignment="CENTER_LEFT">
                                  <children>
-                                    <Label fx:id="name" alignment="TOP_LEFT" styleClass="cell_big_label" text="\$first">
+                                    <Label fx:id="name" alignment="TOP_LEFT" styleClass="person_big_label" text="\$first" wrapText="true">
                                        <padding>
                                           <Insets left="20.0" />
                                        </padding>
@@ -57,9 +57,21 @@
                         </HBox>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label fx:id="phone" text="\$phone" />
-                              <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-                              <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
+                              <Label fx:id="phone" styleClass="person_small_label" text="\$phone">
+                                 <padding>
+                                    <Insets bottom="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="email" styleClass="person_small_label" text="\$email">
+                                 <padding>
+                                    <Insets bottom="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="address" styleClass="person_small_label" text="\$address">
+                                 <padding>
+                                    <Insets bottom="2.0" right="2.0" top="2.0" />
+                                 </padding>
+                              </Label>
                            </children>
                            <padding>
                               <Insets left="20.0" />
