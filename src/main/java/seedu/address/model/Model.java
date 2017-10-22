@@ -42,19 +42,19 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
-    /** Deletes the given person from blacklist. */
+    /** Deletes the given person from blacklist and returns the deleted person */
     ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
-    /** Removes the given person from whitelist. */
+    /** Removes the given person from whitelist and returns the updated person */
     ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
-    /** Adds the given person into blacklist */
+    /** Adds the given person into blacklist and returns the added person*/
     ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
-    /** Adds the given person into whitelist */
+    /** Adds the given person into whitelist and returns the added person */
     ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /**
@@ -94,8 +94,14 @@ public interface Model {
      */
     void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Retrieves the full list of persons nearby a particular person.
+     */
     ObservableList<ReadOnlyPerson> getNearbyPersons();
 
+    /**
+     * Obtains and returns the list of persons that share the same cluster as {@param person}.
+     */
     void updateSelectedPerson(ReadOnlyPerson person);
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;

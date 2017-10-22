@@ -138,6 +138,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a person to the blacklist in the address book.
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
+     * ReadOnly {@code newBlacklistedPerson} is returned
      */
     public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         int index;
@@ -159,8 +160,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the whitelist in the address book.
-     *
      * @throws DuplicatePersonException if an equivalent person already exists.
+     * ReadOnly {@code newWhitelistedPerson} is returned
      */
     public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         int index;
@@ -240,6 +241,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Updates {@code key} to exclude {@code key} from the blacklist in this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * ReadOnly {@code newUnBlacklistedPerson} is returned
      */
     public ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
         int index;
@@ -266,6 +268,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Updates {@code key} to exclude {@code key} from the whitelist in this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * ReadOnly {@code newWhitelistedPerson} is returned
      */
     public ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
         int index;
@@ -342,6 +345,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *               two decimal places
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
+     * ReadOnly {@editPerson} is returned
      */
     public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
             IllegalValueException {
@@ -374,6 +378,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Resets person's debt field to zero, in the masterlist of the addressbook.
      *
      *  @throws PersonNotFoundException if person does not exist in list.
+     *  ReadOnly {@code existingPerson} is returned
      */
     public ReadOnlyPerson resetPersonDebt(ReadOnlyPerson p) throws PersonNotFoundException {
         int index;
@@ -401,6 +406,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Resets person's {@code dateRepaid} field to current date, in the masterlist of the addressbook.
      *
      *  @throws PersonNotFoundException if person does not exist in list.
+     *  ReadOnly {@code existingPerson} is returned
      */
     public ReadOnlyPerson setDateRepaid(ReadOnlyPerson p) throws PersonNotFoundException {
         int index;

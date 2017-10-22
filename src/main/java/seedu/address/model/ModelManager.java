@@ -118,6 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Deletes a specific person from blacklist in the AddressBook.
      * @param target to be removed from blacklist.
      * @throws PersonNotFoundException if no person is found.
+     * @code removedBlacklistedPerson is returned
      */
     @Override
     public synchronized ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -132,6 +133,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Deletes a specific person from whitelist in the AddressBook.
      * @param target to be removed from whitelist.
      * @throws PersonNotFoundException if no person is found.
+     * @code whitelistedPerson is returned
      */
     @Override
     public synchronized ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -152,6 +154,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Adds a specific person to blacklist in the AddressBook.
      * @param person to be updated.
      * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
+     * @code newBlacklistedPerson is returned
      */
     @Override
     public synchronized ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -166,6 +169,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Adds a specific person to whitelist in the AddressBook.
      * @param person to be updated.
      * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
+     * @code whitelistedPerson is returned
      */
     @Override
     public synchronized ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -287,6 +291,7 @@ public class ModelManager extends ComponentManager implements Model {
      *               two decimal places
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
+     * @code repayingPerson is returned
      */
     @Override
     public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
@@ -374,6 +379,9 @@ public class ModelManager extends ComponentManager implements Model {
                 .collect(toCollection(FXCollections::observableArrayList));
     }
 
+    /**
+     * Retrieves the full list of persons nearby a particular person.
+     */
     @Override
     public ObservableList<ReadOnlyPerson> getNearbyPersons() {
         return nearbyPersons;
