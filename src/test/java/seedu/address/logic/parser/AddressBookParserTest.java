@@ -162,16 +162,16 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_Birthday() throws Exception {
+    public void parseCommand_birthday() throws Exception {
         final String birthdayName = "240795";
         Birthday toAdd = new Birthday(birthdayName);
 
         AddBirthdayCommand command = (AddBirthdayCommand) parser.parseCommand(
-                AddBirthdayCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased() + " " +
-                        PREFIX_BIRTHDAY + birthdayName);
+                AddBirthdayCommand.COMMAND_WORDVAR_1 + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_BIRTHDAY + birthdayName);
         AddBirthdayCommand shortCommand = (AddBirthdayCommand) parser.parseCommand(
-                AddBirthdayCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased() + " " +
-                        PREFIX_BIRTHDAY + birthdayName);
+                AddBirthdayCommand.COMMAND_WORDVAR_2 + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + PREFIX_BIRTHDAY + birthdayName);
 
         assertEquals(new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd), command);
         assertEquals(new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd), shortCommand);

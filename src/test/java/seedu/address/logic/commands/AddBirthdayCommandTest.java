@@ -43,6 +43,9 @@ public class AddBirthdayCommandTest {
         assertCommandSuccess(addBirthdayCommand, model, expectedMessage, expectedModel);
     }
 
+    /**
+     * Returns an {@code AddBirthdayCommand} with parameter {@code index}
+     */
     private AddBirthdayCommand prepareCommand (Index index, Birthday toAdd) {
         AddBirthdayCommand addBirthdayCommand = new AddBirthdayCommand(index, toAdd);
         addBirthdayCommand.setData(model, new CommandHistory(), new UndoRedoStack());
