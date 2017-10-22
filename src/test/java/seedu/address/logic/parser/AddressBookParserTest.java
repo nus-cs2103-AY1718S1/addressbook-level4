@@ -29,13 +29,17 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.ScheduleBuilder;
+import seedu.address.testutil.ScheduleUtil;
 
 public class AddressBookParserTest {
     @Rule
@@ -142,6 +146,17 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_schedule() throws Exception {
+        Schedule schedule = new ScheduleBuilder().build();
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleUtil.getScheduleCommand(
+                INDEX_FIRST_PERSON, schedule));
+        ScheduleCommand commandUsingAlias = (ScheduleCommand) parser.parseCommand(ScheduleUtil
+                .getScheduleCommandUsingAlias(INDEX_FIRST_PERSON, schedule));
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), command);
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), commandUsingAlias);
     }
 
     @Test

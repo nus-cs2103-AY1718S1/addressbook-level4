@@ -15,10 +15,17 @@ public class Schedule {
     /**
      * Every field must be present and not null.
      */
-    public Schedule(ScheduleDate date, Activity activity) {
-        requireAllNonNull(date, activity);
-        this.scheduleDate = date;
+    public Schedule(ScheduleDate scheduleDate, Activity activity) {
+        requireAllNonNull(scheduleDate, activity);
+        this.scheduleDate = scheduleDate;
         this.activity = activity;
+    }
+
+    /**
+     * Creates a copy of the given Schedule.
+     */
+    public Schedule(Schedule source) {
+        this(source.getScheduleDate(), source.getActivity());
     }
 
     public ScheduleDate getScheduleDate() {

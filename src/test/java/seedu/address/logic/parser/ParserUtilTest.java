@@ -23,6 +23,8 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.schedule.Activity;
+import seedu.address.model.schedule.ScheduleDate;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -32,6 +34,9 @@ public class ParserUtilTest {
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
     private static final String INVALID_COMMAND_IDENTIFIER = "evolve";
+    private static final String INVALID_SCHEDULE_DATE_1 = "29-02-2017";
+    private static final String INVALID_SCHEDULE_DATE_2 = "2017-02-02";
+    private static final String INVALID_ACTIVITY = " ";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -42,6 +47,9 @@ public class ParserUtilTest {
     private static final String VALID_COMMAND_IDENTIFIER_1 = "";
     private static final String VALID_COMMAND_IDENTIFIER_2 = "delete";
     private static final String VALID_COMMAND_IDENTIFIER_3 = "d";
+    private static final String VALID_SCHEDULE_DATE_1 = "01-01-1997";
+    private static final String VALID_SCHEDULE_DATE_2 = "01-01";
+    private static final String VALID_ACTIVITY = "Team meeting";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -166,6 +174,48 @@ public class ParserUtilTest {
         Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL));
 
         assertEquals(expectedEmail, actualEmail.get());
+    }
+
+    @Test
+    public void parseScheduleDate_invalidValue_throwIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseScheduleDate(Optional.of(INVALID_SCHEDULE_DATE_1));
+        ParserUtil.parseScheduleDate(Optional.of(INVALID_SCHEDULE_DATE_2));
+    }
+
+    @Test
+    public void parseScheduleDate_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseScheduleDate(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseScheduleDate_validValue_returnsScheduleDate() throws Exception {
+        ScheduleDate expectedScheduleDate1 = new ScheduleDate(VALID_SCHEDULE_DATE_1);
+        ScheduleDate expectedScheduleDate2 = new ScheduleDate(VALID_SCHEDULE_DATE_2);
+        Optional<ScheduleDate> actualScheduleDate1 = ParserUtil.parseScheduleDate(Optional.of(VALID_SCHEDULE_DATE_1));
+        Optional<ScheduleDate> actualScheduleDate2 = ParserUtil.parseScheduleDate(Optional.of(VALID_SCHEDULE_DATE_2));
+
+        assertEquals(expectedScheduleDate1, actualScheduleDate1.get());
+        assertEquals(expectedScheduleDate2, actualScheduleDate2.get());
+    }
+
+    @Test
+    public void parseActivity_invalidValue_throwIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseActivity(Optional.of(INVALID_ACTIVITY));
+    }
+
+    @Test
+    public void parseActivity_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseActivity(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseActivity_validValue_returnsScheduleDate() throws Exception {
+        Activity expectedActivity = new Activity(VALID_ACTIVITY);
+        Optional<Activity> actualActivity = ParserUtil.parseActivity(Optional.of(VALID_ACTIVITY));
+
+        assertEquals(expectedActivity, actualActivity.get());
     }
 
     @Test
