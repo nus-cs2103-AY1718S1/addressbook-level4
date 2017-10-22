@@ -20,7 +20,7 @@ Bluebird is a Java-based address book and task organisation software application
 descriptions, our developer guide aims to provide an inside look as to how the Bluebird team created the software, should
 any fellow developers be interested to contribute to our application. In addition, with diagrams to illustrate
 the architectural flow of how components interact with one another and beginner-friendly explanations, our developer
-guide aims to also serve as an avenue for beginners to software application building. 
+guide aims to also serve as an avenue for beginners to software application building.
 
 == Setting up
 
