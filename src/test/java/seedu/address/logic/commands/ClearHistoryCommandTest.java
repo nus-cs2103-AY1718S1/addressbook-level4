@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.ModelManager;
+import seedu.address.testutil.StorageStub;
 
 public class ClearHistoryCommandTest {
     private ClearHistoryCommand clearHistoryCommand;
@@ -22,7 +23,7 @@ public class ClearHistoryCommandTest {
         history = new CommandHistory();
         undoRedoStack = new UndoRedoStack();
         clearHistoryCommand = new ClearHistoryCommand();
-        clearHistoryCommand.setData(new ModelManager(), history, undoRedoStack);
+        clearHistoryCommand.setData(new ModelManager(), history, undoRedoStack, new StorageStub());
     }
 
     @Test

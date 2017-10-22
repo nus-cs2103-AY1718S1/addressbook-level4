@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -24,7 +25,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.StorageStub;
 
 public class AddCommandTest {
 
@@ -88,7 +91,7 @@ public class AddCommandTest {
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 
@@ -120,6 +123,15 @@ public class AddCommandTest {
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        public void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersons() {
             fail("This method should not be called.");
         }
 
