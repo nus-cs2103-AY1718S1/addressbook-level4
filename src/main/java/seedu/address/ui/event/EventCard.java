@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.ui.event;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.ui.UiPart;
+import seedu.address.ui.person.PersonCard;
 
 /**
  * An UI component that displays information of a {@code Event}.

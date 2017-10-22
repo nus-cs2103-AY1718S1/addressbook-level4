@@ -1,10 +1,12 @@
-package seedu.address.ui;
+package seedu.address.ui.person;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.UiPart;
 
 /**
  * The panel on the right side of {@link PersonListPanel}. Used to show the details (including photo and all
@@ -21,5 +23,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     public PersonDetailsPanel(Person person) {
         super(FXML);
         this.person = person;
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
     }
+
 }

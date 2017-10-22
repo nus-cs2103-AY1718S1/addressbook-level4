@@ -1,4 +1,4 @@
-package seedu.address.ui;
+package seedu.address.ui.person;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -12,6 +12,7 @@ import seedu.address.commons.events.model.TagColorChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.TagColorManager;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
+import seedu.address.ui.UiPart;
 
 /**
  * An UI component that displays information of a {@code Person}.

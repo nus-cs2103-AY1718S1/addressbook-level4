@@ -24,6 +24,8 @@ import seedu.address.commons.events.ui.SwitchToEventsListEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.event.EventListPanel;
+import seedu.address.ui.person.PersonListPanel;
 
 /**
  * The Main Window. Provides the basic application layout containing
