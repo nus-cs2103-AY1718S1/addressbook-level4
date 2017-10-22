@@ -579,7 +579,7 @@ Figure 5.2.3 SortCommand Model Sequence Diagram
 ---
 //end::sort[]
 
-// tag::accessWebsite[]
+// tag::access[]
 === Access Website mechanism
 
 The access website mechanism has an `AccessCommand` that allows user to access the website by stating the
@@ -668,15 +668,117 @@ Figure 5.6.1 Access Command Model/EventsCenter/UI Sequence Diagram
 ==== Design Considerations
 **Aspect:** How accessing a website of a person executes +
 **Alternative 1 (current choice):** Create a new event request and event handler for AccessCommand. +
-**Pros:** Able to have more features as AccessWebsite and Select feature is able to exist concurrently in the application. +
+**Pros:** Able to have more features like AccessWebsite and Select feature that is able to exist concurrently in the application. +
 **Cons:** Having the current select feature which is to search for names of contact of Google is quite unnecessary. +
 **Alternative 2:** Change the code of event request and event handler related to SelectCommand to allow users to access website of their contacts instead
-of creating a search on contacts name through he browser panel. +
+of creating a search on contacts name through the browser panel. +
 **Pros:** Select feature which seems unnecessary is replaced with a more useful feature of AccessWebsite. +
 **Cons:** Will not be able to replace the select feature anymore which might be important for other aspects such as creating a Person Card Viewer
 which is important for GUI enhancement. +
 
-//end::accessWebsite[]
+//end::access[]
+
+// tag::locate[]
+=== Location mechanism
+The location mechanism has an `LocationCommand` that allows user to access the address through Google Maps Search
+by stating the index of the desired contact in the contact list viewed.
+The implementation of the location mechanism is mostly done in the `UI`, `Model`, and `Logic` component
+and is very similar to the access website mechanism in terms of implementation and sequential process.
+The `LocationCommand` class inherits from the `Command` class.
+
+Suppose a user would like to access one of his contacts address that is listed in the `PersonListPanel` of the address book
+and executes the `LocationCommand` to access the location using the address attained.
+
+The execution of LocationCommand is processed in this way:
+
+. User will input `locate index` where `index` refers to the index of the person listed in the `PersonListPanel` in GUI.
+. Input of user will be parse as an argument through the AddressBookParser and LocationCommandParser to extract the index.
+. A new `LocationCommand` with the index inputted will be created.
+. The method `execute()` of the `LocationCommand` will then be processed,
+ where the person of the address that the user wants to find on Google Maps Search will be obtained through the
+ index of the `lastShownList` and stored into `person` variable which is of `ReadOnlyPerson` data-type.
+. The `EventsCenter` will then post a new `AccessLocationRequestEvent` with parameter input of the `address` of the `person` variable.
+. The `AccessLocationRequestEvent` event would then be handled by an event handler `handleAccessLocationEvent` in `BrowserPanel`.
+. The event handler will help to load the address of the person through Google Maps Search in the browser panel.
+
+Code of `LocationCommand` and its method `execute()`:
+[source,java]
+----
+public class LocationCommand extends Command {
+    private final Index targetIndex;
+
+    public LocationCommand(Index targetIndex) {
+            this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        EventsCenter.getInstance().post(new AccessLocationRequestEvent(person.getAddress().toString()));
+        return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased()));
+    }
+}
+----
+
+Code of how accessing location event is handled in `BrowserPanel`:
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+
+    private void loadPersonLocation(String location) {
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + location.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
+    }
+
+    public void loadPage(String url) {
+            Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    @Subscribe
+    private void handleAccessLocationEvent(AccessLocationRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonLocation(event.location);
+    }
+}
+----
+
+Through the sequence diagram, you can see how the code executes when a user
+inputs `locate 1` into the command line.
+
+Sequence diagram for `Logic` Component for `LocationCommand` and how it is executed:
+
+image::LocationCommandLogicSequenceDiagram.PNG[width="800"]
+Figure 5.7.1 Location Command Logic Sequence Diagram
+
+After creating a new `LocationCommand`, `LogicManager` will call execute on `LocationCommand`
+and this will result in the address of the person at the index inputted to be called through an event request and event handler.
+The address will then be loaded onto Google Maps Search of the browser of the `MainWindow`.
+
+Sequence diagram for `execute()` method of `LocationCommand` and its event handling:
+
+image::LocationCommandEventsSequenceDiagram.PNG[width="800"]
+Figure 5.6.1 Access Command Model/EventsCenter/UI Sequence Diagram
+
+==== Design Considerations
+**Aspect:** How accessing a location of a person executes +
+**Alternative 1 (current choice):** Create a new event request and event handler for LocationCommand. +
+**Pros:** Able to have more features like Location, AccessWebsite and Select feature that is able to exist concurrently in the application. +
+**Cons:** Having the current select feature which is to search for names of contact of Google is quite unnecessary. +
+**Alternative 2:** Change the code of event request and event handler related to SelectCommand to allow users to access the address through Google Maps Search instead
+of processing a search on contact's name through the google search using browser. +
+**Pros:** Select feature which seems unnecessary is replaced with a more useful feature of AccessWebsite. +
+**Cons:** Will not be able to replace the select feature anymore which might be important for other aspects such as creating a PersonCard Viewer
+which is important for GUI enhancement. +
+
+//end::locate[]
 
 // tag::find[]
 === Find Mechanism
