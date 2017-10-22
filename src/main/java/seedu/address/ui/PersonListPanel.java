@@ -32,7 +32,7 @@ public class PersonListPanel extends UiPart<Region> {
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
-    
+
     public void setFocus() {
         personListView.requestFocus();
     }
