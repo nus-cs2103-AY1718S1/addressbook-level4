@@ -120,7 +120,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Partial words will also be matched. For eg: "Han" will be matched to "Hans".
+* Partial words will also be matched. For eg: "Han" will be matched to "Hans". `since v1.0` `Archana Pradeep`
 * If search word is smaller than name, it has to be the first n character of the name.
 * It cannot be the middle n or the last n characters of the name.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
@@ -305,7 +305,13 @@ Unfavourites the 2nd person in the address book.
 `unfavourite 1` +
 Unfavourites the 1st person in the results of the `find` command.
 
+=== Details Panel
+`since v1.2` `Archana Pradeep`
+
+UI that shows all details of a person that is not shown in person card
+
 === Checking for birthdays : `birthdays`
+`since v1.3` `Archana Pradeep`
 
 Returns a list of all contacts who have their birthdays today
 
