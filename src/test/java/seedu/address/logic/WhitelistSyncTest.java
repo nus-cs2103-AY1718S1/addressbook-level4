@@ -1,10 +1,14 @@
 package seedu.address.logic;
 
+import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_WHITELISTED_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +18,10 @@ import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.PaybackCommand;
+import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.UnbanCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.WhitelistCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -28,6 +34,9 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class WhitelistSyncTest {
+
+    private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
+    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
 
     private Model model;
 
@@ -273,6 +282,7 @@ public class WhitelistSyncTest {
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
 
+
     @Test
     public void execute_unbanCommandAddsUnBlacklistedPersonIntoWhitelistIfDebtCleared_success()
             throws Exception {
@@ -282,6 +292,7 @@ public class WhitelistSyncTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
+        // Preparation done on actual model
         RepaidCommand repaidCommand = prepareRepaidCommand(index);
         repaidCommand.execute();
 
@@ -309,6 +320,69 @@ public class WhitelistSyncTest {
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
+
+    @Test
+    public void execute_undoCommandRemovesWhitelistedPerson_success()
+            throws Exception {
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        // Preparation done on actual model
+        model.changeListTo("whitelist");
+
+        // Preparation done on actual model
+        RepaidCommand repaidCommand = new RepaidCommand(INDEX_FIRST_PERSON);
+        repaidCommand.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+
+        // Preparation done on actual model
+        UndoRedoStack undoRedoStack = prepareStack(
+                Arrays.asList(repaidCommand), Collections.emptyList());
+        UndoCommand undoCommand = new UndoCommand();
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+
+        // Preparation done on actual model
+        repaidCommand.execute();
+
+        // Preparation done on actual model
+        undoCommand.execute();
+
+        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+
+        // Operation to be done on actual model
+        WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+
+        assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_redoCommandRemovesWhitelistedPerson_success()
+            throws Exception {
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.addWhitelistedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+
+        // Preparation done on actual model
+        model.changeListTo("whitelist");
+
+        // Preparation done on actual model
+        RepaidCommand repaidCommand = new RepaidCommand(INDEX_FIRST_PERSON);
+        repaidCommand.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+
+        // Preparation done on actual model
+        UndoRedoStack undoRedoStack = prepareStack(
+                Collections.emptyList(), Arrays.asList(repaidCommand));
+        RedoCommand redoCommand = new RedoCommand();
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        redoCommand.execute();
+
+        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+
+        // Operation to be done on actual model
+        WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+
+        assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
+    }
+
 
     /**
      * Returns a {@code BorrowCommand} with the parameter {@code index} & {@code amount}.
@@ -365,7 +439,7 @@ public class WhitelistSyncTest {
     }
 
     /**
-     * Returns a {@code DeleteCommand} with the parameter {@code payingPerson}.
+     * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
     private DeleteCommand prepareDeleteCommand(Index index) {
         DeleteCommand deleteCommand = new DeleteCommand(index);
