@@ -9,13 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ClassType;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Group;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.TimeSlot;
+import seedu.address.model.module.*;
 
 /**
  * Stores lesson data in an XML file

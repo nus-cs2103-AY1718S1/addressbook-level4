@@ -58,6 +58,7 @@ public class ModelManager extends ComponentManager implements Model {
         bookedList = new HashSet<BookedSlot>();
         initializeBookedSlot();
         currentViewingAttribute = "default";
+
     }
 
     public ModelManager() {
