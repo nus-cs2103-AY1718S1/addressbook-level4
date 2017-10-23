@@ -19,7 +19,7 @@ By: `W15-B1`      Since: `Jun 2016`      Licence: `MIT`
 === What is Rubrika?
 
 Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
-Rubrika has a simple GUI interface and focuses on using CLI to interact.
+Rubrika has a simple GUI interface and focuses on using link:#CLI[CLI] to interact.
 
 
 == Setting up
@@ -1135,6 +1135,7 @@ Form
 
 ....
 A panel that is also called a 'window' in Windows operating systems.
+....
 
 [[RAM]]
 RAM
@@ -1142,6 +1143,14 @@ RAM
 ....
 Random Access Memory
 ....
+
+[[CLI]]
+CLI
+
+....
+Command Line Interface
+....
+
 
 [appendix]
 == Product Survey
