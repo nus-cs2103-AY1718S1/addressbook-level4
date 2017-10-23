@@ -3,6 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
 import org.junit.Test;
@@ -22,6 +23,35 @@ public class PersonCardTest extends GuiUnitTest {
         PersonCard personCard = new PersonCard(personWithRightAttributes, 1);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithRightAttributes, 1);
+    }
+
+    @Test
+    public void displayPerson() {
+        // no tags
+        Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
+        PersonCard personCard = new PersonCard(personWithNoTags, 1);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithNoTags, 1);
+
+        // with tags
+        Person personWithTags = new PersonBuilder().build();
+        personCard = new PersonCard(personWithTags, 2);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithTags, 2);
+
+        // changes made to Person reflects on card
+        guiRobot.interact(() -> {
+            personWithTags.setName(ALICE.getName());
+            personWithTags.setPhone(ALICE.getPhone());
+            personWithTags.setAddress(ALICE.getAddress());
+            personWithTags.setFormClass(ALICE.getFormClass());
+            personWithTags.setGrades(ALICE.getGrades());
+            personWithTags.setEmail(ALICE.getEmail());
+            personWithTags.setPostalCode(ALICE.getPostalCode());
+            personWithTags.setRemark(ALICE.getRemark());
+            personWithTags.setTags(ALICE.getTags());
+        });
+        assertCardDisplay(personCard, personWithTags, 2);
     }
 
     @Test
