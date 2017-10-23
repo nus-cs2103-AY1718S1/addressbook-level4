@@ -260,10 +260,6 @@ Format: `sortAge`
 Sorts all entries in the address book by their birthday, from 1st Jan to 31st Dec. +
 Format: `sortBirthday`
 
-=== List the birthday of contacts in calendar mode (Coming in v2.0)
-Able to view contacts in calendar mode so that users can look at who's birthday is coming up soon.
-Contacts with birthday within a week will have a special colour or icon to notify user of upcoming birthdays.
-
 === Retrieving all persons having an existing tag : `retrieve`    (Since v1.2)
 
 Lists all contacts having a certain existing tag in the address book. +
@@ -296,6 +292,10 @@ Examples:
 * `list` +
 `tag 1,2,3 friends` +
 Tags the 1st and 2nd person with the friends tag in the address book.
+
+=== List the birthday of contacts in calendar mode (Coming in v2.0)
+Able to view contacts in calendar mode so that users can look at who's birthday is coming up soon.
+Contacts with birthday within a week will have a special colour or icon to notify user of upcoming birthdays.
 
 == FAQ
 

@@ -384,7 +384,7 @@ The `BirthdayCommand`, together with `sortAgeCommand` and `sortBirthdayCommand` 
 
 `BirthdayCommand`, `sortAgeCommand` and `sortBirthdayCommand` does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
 
-image::logic_birthday.png[width="620"]
+image::logic_birthday.png[width="700"]
 
 
 
