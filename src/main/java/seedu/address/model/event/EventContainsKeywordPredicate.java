@@ -1,6 +1,7 @@
 package seedu.address.model.event;
 
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.person.ReadOnlyPerson;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -18,8 +19,12 @@ public class EventContainsKeywordPredicate implements Predicate<ReadOnlyEvent> {
     public boolean test(ReadOnlyEvent event) {
         Boolean isSelected = false;
         if(!event.getParticipants().isEmpty()) {
-            isSelected = keywords.stream().anyMatch(keyword ->
-            StringUtil.containsWordIgnoreCase(event.getParticipants().iterator().next().getName().fullName, keyword));
+            for(ReadOnlyPerson person : event.getParticipants()) {
+                if(!isSelected) {
+                    isSelected = keywords.stream().anyMatch(keyword ->
+                            StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+                }
+            }
         }
 
         return isSelected;
