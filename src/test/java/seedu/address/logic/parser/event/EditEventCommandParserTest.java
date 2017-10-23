@@ -1,3 +1,4 @@
+//@@author A0162268B
 package seedu.address.logic.parser.event;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;

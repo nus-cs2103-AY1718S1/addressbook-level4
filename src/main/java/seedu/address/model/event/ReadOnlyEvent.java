@@ -1,6 +1,8 @@
+//@@author A0162268B
 package seedu.address.model.event;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 
 /**
@@ -11,6 +13,10 @@ public interface ReadOnlyEvent {
     ObjectProperty<Title> titleProperty();
 
     Title getTitle();
+
+    ObjectProperty<Date> dateProperty();
+
+    Date getDate();
 
     ObjectProperty<Timeslot> timeslotProperty();
 

@@ -1,3 +1,4 @@
+//@@author A0162268B
 package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
@@ -7,6 +8,7 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 
 /**
@@ -16,8 +18,10 @@ import seedu.address.model.event.timeslot.Timeslot;
 public class Event implements ReadOnlyEvent {
 
     private ObjectProperty<Title> title;
+    private ObjectProperty<Date> date;
     private ObjectProperty<Timeslot> timeslot;
     private ObjectProperty<Description> description;
+
 
     /**
      * Every field must be present and not null.
@@ -25,6 +29,7 @@ public class Event implements ReadOnlyEvent {
     public Event(Title title, Timeslot timeslot, Description description) {
         requireAllNonNull(title, timeslot, description);
         this.title = new SimpleObjectProperty<>(title);
+        this.date = new SimpleObjectProperty<>(timeslot.getDate());
         this.timeslot = new SimpleObjectProperty<>(timeslot);
         this.description = new SimpleObjectProperty<>(description);
     }
@@ -48,6 +53,20 @@ public class Event implements ReadOnlyEvent {
 
     public void setTitle(Title title) {
         this.title.set(requireNonNull(title));
+    }
+
+    @Override
+    public ObjectProperty<Date> dateProperty() {
+        return date;
+    }
+
+    @Override
+    public Date getDate() {
+        return date.get();
+    }
+
+    public void setDate(Date date) {
+        this.date.set(requireNonNull(date));
     }
 
     @Override

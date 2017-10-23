@@ -1,3 +1,4 @@
+//@@author A0162268B
 package seedu.address.testutil;
 
 import java.util.ArrayList;
@@ -7,9 +8,8 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
 
-
 /**
- * @@reginleiff A utility class containing a list of {@code Event} objects to be used in tests.
+ * A utility class containing a list of {@code Event} objects to be used in tests.
  */
 public class TypicalEvents {
 

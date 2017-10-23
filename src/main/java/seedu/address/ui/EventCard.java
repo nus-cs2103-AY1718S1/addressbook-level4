@@ -34,6 +34,8 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label timeslot;
     @FXML
+    private Label date;
+    @FXML
     private Label description;
 
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
