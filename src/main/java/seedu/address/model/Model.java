@@ -11,6 +11,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -20,6 +22,7 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ReadOnlyEvent> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
+    Predicate<ReadOnlyReminder> PREDICATE_SHOW_ALL_REMINDERS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -71,17 +74,26 @@ public interface Model {
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws DuplicateEventException, EventNotFoundException;
 
+    /** Adds a reminder */
+    void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException;
+
     //=========== Filtered Person/Activity List support =============================================================
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    /** Returns an unmodifiable view of the filtered person list */
+    /** Returns an unmodifiable view of the filtered event list */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
+
+    /** Returns an unmodifiable view of the filtered reminder list */
+    ObservableList<ReadOnlyReminder> getFilteredReminderList();
 
     /** Updates the filter of the filtered person list to filter by the given {@code predicate}. */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /** Updates the filter of the filtered event list to filter by the given {@code predicate}. */
     void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate);
+
+    /** Updates the filter of the filtered event list to filter by the given {@code predicate}. */
+    void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate);
 }

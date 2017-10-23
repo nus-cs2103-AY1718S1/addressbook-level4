@@ -20,6 +20,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.UniqueReminderList;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -32,6 +36,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueEventList events;
+    private final UniqueReminderList reminders;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -44,6 +49,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         events = new UniqueEventList();
+        reminders = new UniqueReminderList();
     }
 
     public AddressBook() {
@@ -234,6 +240,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         events.sortEvents();
     }
 
+    /*****************************************************
+     * Reminder-level operations
+     *****************************************************/
+
+    /**
+     * Adds a reminder to the address book.
+     * Also checks the new reminder's tags and updates {@link #tags} with any new tags found,*
+     * @throws DuplicateReminderException if an equivalent reminder already exists.
+     */
+    public void addReminder(ReadOnlyReminder r) throws DuplicateReminderException {
+        Reminder newReminder = new Reminder(r);
+        reminders.add(newReminder);
+    }
+
+
 
     /*****************************************************
      * Tag-level operations
@@ -261,6 +282,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyReminder> getReminderList() {
+        return reminders.asObservableList();
     }
 
     @Override
