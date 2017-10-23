@@ -425,6 +425,7 @@ In version v1.3, users will be able to: +
 
 * Add one of three Status to parcels. i.e. `PENDING`, `DELIVERING`, `DELIVERED`
 * Import parcels stored in an Ark storage file in xml format into Ark.
+* Have Ark maintain a sorted list of parcels according to when they need to be delivered.
 
 {{More to be added}}
 
