@@ -173,7 +173,7 @@ The `UI` component,
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
 
-image::NewLogicCommandClassDiagram.png[width="800"]
+image::LogicCommandClassDiagram.png[width="800"]
 _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
@@ -191,7 +191,7 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
-image::NewModelClassDiagram.png[width="800"]
+image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -228,7 +228,7 @@ This section describes some noteworthy details on how certain features are imple
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
@@ -424,8 +424,6 @@ The remark checklist serves as command to allow users to keep notes on individua
 We want our remark command to function like a todo list, which enables users to add remarks to a person based on a specific task they want to do with the person. +
 Since remarks can be different for different persons, it was placed under the Person class to allow for easy retrieval. +
 Since it is saved under the Person class, we are able to utilise the ReadOnlyPerson to compare persons, or extract specific information without risking a corruption in the storage file. +
-
-image::UpdatedRemarkSequenceDiagram.png[width ="900"]
 
 As users accomplish tasks that were associated with specific persons, we want to allow them to remove remarks at any point in time. +
 To help with this feature, we planned to use an ArrayList to store the remarks under each person, as it would help with indexing the remarks for easy removal and additions. +
