@@ -7,7 +7,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.person.Bloodtype.NON_COMPULSORY_BLOODTYPE;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -43,21 +45,26 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_BLOODTYPE, PREFIX_TAG, PREFIX_DATE);
+                        PREFIX_BLOODTYPE, PREFIX_REMARK, PREFIX_DATE, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_BLOODTYPE)) {
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            Bloodtype bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Remark remark = new Remark("");
+            Phone phone = (!arePrefixesPresent(argMultimap, PREFIX_PHONE))
+                    ? new Phone("000") : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+            Email email = (!arePrefixesPresent(argMultimap, PREFIX_EMAIL))
+                    ? new Email("null@null.com") : ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+            Address address = (!arePrefixesPresent(argMultimap, PREFIX_ADDRESS))
+                    ? new Address("???") : ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            Bloodtype bloodType = (!arePrefixesPresent(argMultimap, PREFIX_BLOODTYPE))
+                    ? new Bloodtype(NON_COMPULSORY_BLOODTYPE)
+                    : ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
+            Remark remark = (!arePrefixesPresent(argMultimap, PREFIX_REMARK))
+                    ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             Optional<Date> date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE));
             Appointment appointment;
             if (date.isPresent()) {
@@ -67,6 +74,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             } else {
                 appointment = new Appointment(name.toString());
             }
+            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             ReadOnlyPerson person = new Person(name, phone, email, address, bloodType, tagList, remark, appointment);
             return new AddCommand(person);
         } catch (IllegalValueException | java.text.ParseException ive) {

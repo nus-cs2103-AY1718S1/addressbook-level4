@@ -92,8 +92,8 @@ image::helpUI.png[width="500"]
 === Adding a person: `add`
 
 You can add a person to the address book by following the format below. +
-*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE d/APPOINTMENTDATE [t/TAG]...` +
-*Shorthand Format:* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE d/APPOINTMENTDATE [t/TAG]...`
+*Format:* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...` +
+*Shorthand Format:* `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...`
 
 [TIP]
 You can add any number of tags for a person or none at all. +
@@ -138,8 +138,8 @@ BLOODTYPE is case insensitive.
 === Editing a person : `edit`
 
 You can edit the information of a person you have added in the address book. +
-*Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
-*Shorthand Format:* `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
+*Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...` +
+*Shorthand Format:* `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...`
 
 [width="59%",cols="22%,<30%",options="header",]
 |=======================================================================
