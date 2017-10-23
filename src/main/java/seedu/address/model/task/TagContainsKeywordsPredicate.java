@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.task;
 
 import java.util.Arrays;
 
@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Tags} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code tags} matches any of the keywords given.
  */
 
 public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {

@@ -48,6 +48,8 @@ public class TypicalTasks {
             .withDeadline(VALID_DEADLINE_GRAD_SCHOOL)
             .build();
 
+    public static final String KEYWORD_MATCHING_FINISH = "Finish"; // A keyword that matches Finish
+
     private TypicalTasks() {}
 
     public static List<ReadOnlyTask> getTypicalTasks() {

@@ -35,9 +35,12 @@ import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.persons.FindCommand;
+import seedu.address.logic.commands.persons.ListCommand;
+import seedu.address.logic.commands.persons.SelectCommand;
+import seedu.address.logic.commands.tasks.FindTaskCommand;
+import seedu.address.logic.commands.tasks.ListTasksCommand;
+import seedu.address.logic.commands.tasks.SelectTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
 
@@ -146,6 +149,31 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Displays all tasks in the address book.
+     */
+    protected void showAllTasks() {
+        executeCommand(ListTasksCommand.COMMAND_WORD);
+        assert getModel().getAddressBook().getTaskList().size() == getModel().getFilteredTaskList().size();
+    }
+
+    /**
+     * Displays all tasks with any parts of their names matching {@code keyword} (case-insensitive).
+     */
+    protected void showTasksWithDescription(String keyword) {
+        executeCommand(FindTaskCommand.COMMAND_WORD + " " + keyword);
+        executeCommand(FindCommand.COMMAND_WORD + " " + "Alice");
+        assert getModel().getFilteredTaskList().size() < getModel().getAddressBook().getTaskList().size();
+    }
+
+    /**
+     * Selects the task at {@code index} of the displayed list.
+     */
+    protected void selectTask(Index index) {
+        executeCommand(SelectTaskCommand.COMMAND_WORD + " " + index.getOneBased());
+        assert getTaskListPanel().getSelectedCardIndex() == index.getZeroBased();
+    }
+
+    /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
      * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
      * and the person list panel displays the persons in the model correctly.
@@ -170,6 +198,7 @@ public abstract class AddressBookSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
+        getTaskListPanel().rememberSelectedTaskCard();
     }
 
     /**
@@ -211,6 +240,30 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
+    }
+
+    /**
+     * Asserts that the previously selected card is now deselected
+     */
+    protected void assertSelectedTaskCardDeselected() {
+        assertFalse(getTaskListPanel().isAnyCardSelected());
+    }
+
+    /**
+     * Asserts that the task card selected is changed
+     * {@code expectedSelectedTaskCardIndex}, and only the card at {@code expectedSelectedTaskCardIndex} is selected.
+     * @see TaskListPanelHandle#isSelectedTaskCardChanged()
+     */
+    protected void assertSelectedTaskCardChanged(Index expectedSelectedTaskCardIndex) {
+        assertEquals(expectedSelectedTaskCardIndex.getZeroBased(), getTaskListPanel().getSelectedCardIndex());
+    }
+
+    /**
+     * Asserts that the selected card in the task list panel remain unchanged.
+     * @see TaskListPanelHandle#isSelectedTaskCardChanged()
+     */
+    protected void assertSelectedTaskCardUnchanged() {
+        assertFalse(getTaskListPanel().isSelectedTaskCardChanged());
     }
 
     /**
