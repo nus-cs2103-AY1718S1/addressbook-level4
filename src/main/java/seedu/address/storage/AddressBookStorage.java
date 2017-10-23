@@ -47,4 +47,16 @@ public interface AddressBookStorage {
      * @throws IOException if there was any problem writing to the file.
      */
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+    /**
+     * Merge the given {@link String} to the default storage.
+     * @param newFilePath cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
+    void mergeAddressBook(String newFilePath) throws DataConversionException, IOException;
+
+    /**
+     * @see #mergeAddressBook(String)
+     */
+    void mergeAddressBook(String newFilePath, String defaultFilePath) throws DataConversionException, IOException;
 }
