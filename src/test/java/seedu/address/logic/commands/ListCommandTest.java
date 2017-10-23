@@ -26,7 +26,7 @@ public class ListCommandTest {
     private Model expectedModel;
     private ListCommand listModuleCommand;
     private ListCommand listLocationCommand;
-    private ListCommand listFavouriteCommand;
+    private ListCommand listMarkedCommand;
 
     @Before
     public void setUp() {
@@ -35,19 +35,19 @@ public class ListCommandTest {
 
         listModuleCommand = new ListCommand("module");
         listLocationCommand = new ListCommand("location");
-        listFavouriteCommand = new ListCommand("favouriteList");
+        listMarkedCommand = new ListCommand("marked");
 
         listModuleCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         listLocationCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        listFavouriteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        listMarkedCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
     @Test
     public void execute_list_marked_list() throws DuplicateLessonException {
 
         expectedModel.updateFilteredLessonList(new FavouriteListPredicate());
-        assertCommandSuccess(listFavouriteCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
-                ListCommand.FAVOURITE_LIST_KEYWORD), expectedModel);
+        assertCommandSuccess(listMarkedCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
+                ListCommand.MARKED_LIST_KEYWORD), expectedModel);
     }
 
     @Test

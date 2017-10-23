@@ -30,7 +30,7 @@ public class ListCommand extends Command {
 
     public static final String MODULE_KEYWORD = "module";
     public static final String LOCATION_KEYWORD = "location";
-    public static final String FAVOURITE_LIST_KEYWORD = "marked";
+    public static final String MARKED_LIST_KEYWORD = "marked";
 
     private final String parameter;
 
@@ -53,7 +53,7 @@ public class ListCommand extends Command {
             ListingUnit.setCurrentPredicate(locationPredicate);
             EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(locationPredicate);
-        } else if (parameter.equals(FAVOURITE_LIST_KEYWORD)) {
+        } else if (parameter.equals(MARKED_LIST_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LESSON);
             FavouriteListPredicate favouriteListPredicate = new FavouriteListPredicate();
             ListingUnit.setCurrentPredicate(favouriteListPredicate);

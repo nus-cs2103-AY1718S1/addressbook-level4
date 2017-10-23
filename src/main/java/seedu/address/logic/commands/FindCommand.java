@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.FindLessonRequestEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
@@ -30,7 +29,6 @@ public class FindCommand extends Command {
     public static final String MESSAGE_SUCCESS = "find command executed";
 
     private Predicate<ReadOnlyLesson> previousPredicate;
-    private Predicate<ReadOnlyLesson> predicate;
     private ReadOnlyLesson currentViewingLesson;
     private final List<String> keywords;
     private List<String> oldKeywordList;
@@ -45,6 +43,7 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
 
+        Predicate<ReadOnlyLesson> predicate;
         previousPredicate = ListingUnit.getCurrentPredicate();
 
         newKeywordList.addAll(keywords);
@@ -56,17 +55,17 @@ public class FindCommand extends Command {
         }
 
         switch (ListingUnit.getCurrentListingUnit()) {
-        case LOCATION:
-            predicate = new LocationContainsKeywordsPredicate(newKeywordList);
-            break;
-        case LESSON:
-            currentViewingLesson = model.getCurrentViewingLesson();
-            predicate = new LessonContainsKeywordsPredicate
-                    (keywords, oldKeywordList, currentViewingLesson, model.getCurrentViewingAttribute());
-            break;
-        default:
-            predicate = new ModuleContainsKeywordsPredicate(newKeywordList);
-            break;
+            case LOCATION:
+                predicate = new LocationContainsKeywordsPredicate(newKeywordList);
+                break;
+            case LESSON:
+                currentViewingLesson = model.getCurrentViewingLesson();
+                predicate = new LessonContainsKeywordsPredicate
+                        (keywords, oldKeywordList, currentViewingLesson, model.getCurrentViewingAttribute());
+                break;
+            default:
+                predicate = new ModuleContainsKeywordsPredicate(newKeywordList);
+                break;
         }
 
         model.updateFilteredLessonList(predicate);
@@ -79,6 +78,9 @@ public class FindCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof FindCommand // instanceof handles nulls
-                && this.predicate.equals(((FindCommand) other).predicate)); // state check
+                && this.keywords.equals(((FindCommand) other).keywords)
+                && this.oldKeywordList.equals(((FindCommand) other).oldKeywordList)
+                && this.newKeywordList.equals(((FindCommand) other).newKeywordList)); // state check
+
     }
 }
