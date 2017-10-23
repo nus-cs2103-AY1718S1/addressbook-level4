@@ -45,6 +45,9 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Merges the given two addressbook data into one data file
+     */
     public static void mergeDataToFile(XmlSerializableAddressBook defaultFileData, XmlSerializableAddressBook newFileData) throws IOException {
         ObservableList<ReadOnlyPerson> defaultFilePersonList = defaultFileData.getPersonList();
         ObservableList<ReadOnlyPerson> newFilePersonList = newFileData.getPersonList();
