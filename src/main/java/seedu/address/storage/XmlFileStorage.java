@@ -50,8 +50,6 @@ public class XmlFileStorage {
     public static void mergeDataToFile(XmlSerializableAddressBook defaultFileData, XmlSerializableAddressBook newFileData) throws IOException {
         ObservableList<ReadOnlyPerson> defaultFilePersonList = defaultFileData.getPersonList();
         ObservableList<ReadOnlyPerson> newFilePersonList = newFileData.getPersonList();
-        ObservableList<Tag> defaultFileTagList = defaultFileData.getTagList();
-        ObservableList<Tag> newFileTagList = newFileData.getTagList();
 
         AddressBook mergedAddressBook = new AddressBook();
         
@@ -76,23 +74,6 @@ public class XmlFileStorage {
                     mergedAddressBook.addPerson(new Person(newDataPerson));
                 } catch (DuplicatePersonException dpe) {
                     throw new IOException(dpe.getMessage());
-                }
-            }
-        }
-
-        for (Tag newDataTag: newFileTagList) {
-            boolean isSameTag = false;
-            for (Tag defaultDataTag: defaultFileTagList) {
-                if (defaultDataTag.equals(newDataTag)) {
-                    isSameTag = true;
-                    break;
-                }
-            }
-            if (!isSameTag) {
-                try {
-                    mergedAddressBook.addTag(newDataTag);
-                } catch (IllegalValueException ive) {
-                    throw new IOException(ive.getMessage());
                 }
             }
         }
