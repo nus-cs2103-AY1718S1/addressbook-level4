@@ -14,17 +14,17 @@ import seedu.address.model.tag.UniqueTagList;
 public interface ReadOnlyPerson {
 
     Comparator<ReadOnlyPerson> NAMESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
-            -> o1.getName().compareTo(o2.getName());
+        -> o1.getName().compareTo(o2.getName());
     Comparator<ReadOnlyPerson> PHONESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
-            -> o1.getPhone().compareTo(o2.getPhone());
+        -> o1.getPhone().compareTo(o2.getPhone());
     Comparator<ReadOnlyPerson> EMAILSORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
-            -> o1.getEmail().compareTo(o2.getEmail());
+        -> o1.getEmail().compareTo(o2.getEmail());
     Comparator<ReadOnlyPerson> NAMESORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
-            -> o2.getName().compareTo(o1.getName());
+        -> o2.getName().compareTo(o1.getName());
     Comparator<ReadOnlyPerson> PHONESORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
-            -> o2.getPhone().compareTo(o1.getPhone());
+        -> o2.getPhone().compareTo(o1.getPhone());
     Comparator<ReadOnlyPerson> EMAILSORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
-            -> o2.getEmail().compareTo(o1.getEmail());
+        -> o2.getEmail().compareTo(o1.getEmail());
 
     ObjectProperty<Name> nameProperty();
     Name getName();
