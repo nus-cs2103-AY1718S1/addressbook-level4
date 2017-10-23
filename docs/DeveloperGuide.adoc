@@ -495,12 +495,12 @@ and has to be updated whenever we edit other parcel details as well.
 
 === Backup Mechanism
 
-The back up mechanism is facilitated by a `backupAddressBook` method within the `StorageManager`. It supports the
+The back up mechanism is facilitated by a `backupAddressBook()` method within the `StorageManager`. It supports the
 backing up of AddressBook data in Ark. +
 
 image::BackupSequenceDiagram.png[width="600"]
 
-The `backupAddressBook` method is called automatically when `storageManager` is initialised in `MainApp#init()`,
+The `backupAddressBook()` method is called automatically when `storageManager` is initialised in `MainApp#init()`,
 a method that is called when `Ark` is launched. The method utilises the `StorageManager#saveAddressBook()` method and
 stores the backup in the same directory as the main `AddressBook` storage file. The backup file is saved and named with
 the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e. If the main `AddressBook` storage file
@@ -510,13 +510,13 @@ the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e
 
 **Aspect: Implementation of `StorageManager#backupAddressBook`** +
 
-* **Alternative 1 (current choice):** use the `StorageManger#saveAddressBook()` method to implement logic. +
-** **Pros:** It becomes easier to implement method rather than writing out a separate logic for saveAddressBook. It
+* **Alternative 1 (current choice):** use the `aveAddressBook()` method to implement logic. +
+** **Pros:** It becomes easier to implement method rather than writing out a separate logic for `backupAddressBook()`. It
 makes updates easier since enhancements to `saveAddressBook()` will also enhance `backupAddressBook()`. +
-** **Cons:** This implementation increases the coupling of `StorageManager#backupAddressBook()` and
-`StorageManager#saveAddressBook()` where changes in `saveAddressBook()` will cause changes in `backupAddressBook()`. +
-* **Alternative 2:** Separate the implementation of `Storage#backupAddressBook()` from `StorageManager#saveAddressBook()` +
-** **Pros:** Reduced coupling of saveAddressBook() and backupAddressBook() and allows the backup file to be saved at a
+** **Cons:** This implementation increases the coupling of `backupAddressBook()` and
+`saveAddressBook()` where changes in `saveAddressBook()` are likely to cause changes in `backupAddressBook()`. +
+* **Alternative 2:** Separate the implementation of `backupAddressBook()` from `saveAddressBook()` +
+** **Pros:** Reduced coupling of `saveAddressBook()` and `backupAddressBook()` and allows the backup file to be saved at a
 different location from the main save file. This prevents the backup file from being corrupted if the folder of the
 main save file becomes corrupted. +
 ** **Cons:** More tedious to implement and maintain `backupAddressBook()` since enhancements to the saving feature has to
@@ -524,7 +524,7 @@ be implemented in both `saveAddressBook()` and `backupAddressBook()` +
 
 ---
 
-**Aspect: Trigger to execute `StorageManager#backupAddressBook`** +
+**Aspect: Trigger to execute `backupAddressBook`** +
 * **Alternative 1 (current choice):** Automatically backup data on Ark on launch of the software. +
 ** **Pros:** This implementation ensures that the if the user corrupts the data of Ark during a session. The user will be
 able to revert to the start of the session, which is ensured to be a workable instance of the Ark software. +
