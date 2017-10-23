@@ -330,6 +330,9 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
+[TIP]
+You can view what command you have undone from the user feedback message.
+
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
@@ -351,6 +354,9 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
+
+[TIP]
+You can view what command you have redone from the user feedback message.
 // end::undoredo[]
 
 === Clearing all entries : `clear`
