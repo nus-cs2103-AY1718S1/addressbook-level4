@@ -448,6 +448,7 @@ image::UiMeetingCardSequenceDiagram.png[width="800"]
 image::MeetingCard.png[width="250"]
 
 To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+
 * `darkRed` : Meeting is in next 24 hours.
 
 image::MeetingCard1.png[width="250"]
