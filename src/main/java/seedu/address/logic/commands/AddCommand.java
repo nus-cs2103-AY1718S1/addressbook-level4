@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -26,11 +27,12 @@ public class AddCommand extends UndoableCommand {
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_BLOODTYPE + "BLOODTYPE "
-            + PREFIX_DATE + "DATE "
+            + "[" + PREFIX_PHONE + "PHONE]"
+            + "[" + PREFIX_EMAIL + "EMAIL]"
+            + "[" + PREFIX_ADDRESS + "ADDRESS]"
+            + "[" + PREFIX_BLOODTYPE + "BLOODTYPE]"
+            + "[" + PREFIX_REMARK + "REMARK]"
+            + "[" + PREFIX_DATE + "DATE]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example 1: " + COMMAND_ALIAS + " "
             + PREFIX_NAME + "John Doe "
@@ -38,15 +40,17 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_BLOODTYPE + "O "
+            + PREFIX_REMARK + "Broke his foot during soccer practice "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney "
-            + PREFIX_DATE + "2020/10/10 00:00 "
+            + PREFIX_DATE + "2020/10/10 00:00\n"
             + "Example 2: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Mary Jane "
             + PREFIX_PHONE + "87678977 "
             + PREFIX_EMAIL + "maryj@example.com "
             + PREFIX_ADDRESS + "170, Bugis Ave 3, #01-05 "
             + PREFIX_BLOODTYPE + "A "
+            + PREFIX_REMARK + "Healthy "
             + PREFIX_TAG + "wife ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
