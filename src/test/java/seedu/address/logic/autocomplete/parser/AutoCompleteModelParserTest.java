@@ -21,7 +21,6 @@ import static seedu.address.testutil.TypicalPersons.GEORGE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -66,12 +65,20 @@ public class AutoCompleteModelParserTest {
     @Test
     public void testParseName() {
         parser.setPrefix(PREFIX_NAME);
-        assertEquals(parser.parseForPossibilities("a"),
-                Arrays.asList(new String[] {ALICE.getName().toString(), AMY.getName().toString(), "a"}));
-        assertEquals(parser.parseForPossibilities("f"),
-                Arrays.asList(new String[] {FIONA.getName().toString(), "f"}));
-        assertEquals(parser.parseForPossibilities("r"),
-                Collections.emptyList());
+        //multiple possibilities matched
+        assertEquals(parser.parseForPossibilities("add n/a"),
+                Arrays.asList(new String[] {"add n/" + ALICE.getName().toString(),
+                                            "add n/" + AMY.getName().toString(),
+                                            "add n/a"}));
+
+        //single possibility matched
+        assertEquals(parser.parseForPossibilities("add n/f"),
+                Arrays.asList(new String[] {"add n/" + FIONA.getName().toString(),
+                                            "add n/f"}));
+
+        //no possibility matched
+        assertEquals(parser.parseForPossibilities("add n/r"),
+                Arrays.asList(new String[] {"add n/r"}));
     }
 
     @After
