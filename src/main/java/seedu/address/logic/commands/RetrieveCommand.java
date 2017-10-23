@@ -31,8 +31,8 @@ public class RetrieveCommand extends Command {
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
         final int personListSize = model.getFilteredPersonList().size();
-        StringJoiner joiner = new StringJoiner(", ");
         if (personListSize == 0) {
+            StringJoiner joiner = new StringJoiner(", ");
             for (Tag tag: model.getAddressBook().getTagList()) {
                 joiner.add(tag.toString());
             }

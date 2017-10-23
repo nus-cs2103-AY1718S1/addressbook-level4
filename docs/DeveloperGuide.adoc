@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103T-T09-B1/main/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T09-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -412,33 +412,36 @@ image::birthday_sd.png[width="560"]
 **Pros:** Faster for users to add in all the parameters. +
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
-=== Retrieve and tag commands mechanism
+=== Retrieve mechanism
 
-The `RetrieveCommand` and `TagCommand` reside in the `commands` of `Logic`.
+The `RetrieveCommand` reside in the `commands` of `Logic`.
 
-`RetrieveCommand` : allows user to list all persons that are holding an existing tag in the unique tags list.
+`RetrieveCommand` : allows user to list all persons that have been assigned an existing tag in the unique tags list.
 
-Suppose that the address book already has a sufficiently large number of persons, some of whom hold a certain `Tag`. The `UniqueTagList` will contain this tag. +
-The user wants to quickly find out all of the persons holding this tag, so he decides to use `retrieve`.
+The command inherit from `UndoableCommand`, thus these commands can be undone.
+
+Suppose that the address book already has a sufficiently large number of persons, some of whom have a certain `Tag`. The `UniqueTagList` will contain this tag. +
+
+The user wants to quickly find out all of the those persons with this tag, so he decides to use `retrieve`.
 
 We will now parse the command argument to get the name of the tag which user want to use `retrieve` on.
 
 [NOTE]
-If the command argument is empty, an `Exception` will be thrown to remind user about the usage of the command.
+If the tag name provided by user is empty or invalid, an `Exception` will be thrown during parsing.
 
 We use `TagContainsKeyWordPredicate` to test whether the tag is inside the tag list of each person in the address book and get the filtered person list with `getFilteredPersonList()` of `Model` to display to user.
 
 [NOTE]
 If the filtered person list is empty, that means the tag user want to look for does not exist. User will then be notified of all existing tags.
 
-`TagCommand` : supports tagging multiple persons at the same time.
+The following sequence diagram shows how the retrieve operation works:
 
-`RetrieveCommand` and `TagCommand` inherit from `UndoableCommands`, thus these commands can be undone.
+image::RetrieveSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-**Aspect:** Getting the filtered person list +
-**Alternative 1 (current choice):** Go through every person in the addressbook. +
+**Aspect:** Updating the filtered person list +
+**Alternative 1 (current choice):** Go through every person in the addressbook to filter out those having the tag. +
 **Pros:** Easy to implement. +
 **Cons:** Slower if the addressbook contains a large number of persons +
 **Alternative 2:**  Create a list attribute for `Tag` to store all persons having that tag. +
@@ -823,23 +826,23 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |basic user |add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |basic user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |basic user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user with many people in the address book |list all people in address book |see whose contacts the address book already has
+|`* * *` |basic user |list all people in address book |see whose contacts the address book already has
 
-|`* * *` |user |clear all people in the address book |remove all contacts conveniently
+|`* * *` |basic user |clear all people in the address book |remove all contacts conveniently
 
-|`* * *` |user |list the command history |view all commands already entered
+|`* * *` |basic user |list the command history |view all commands already entered
 
-|`* * *` |user |undo previous command |amend any mistakes
+|`* * *` |basic user |undo previous command |amend any mistakes
 
-|`* * *` |user |redo the previously undone command |amend any mistakes
+|`* * *` |basic user |redo the previously undone command |amend any mistakes
 
-|`* * *` |user |edit a person's information |update changes to their particulars
+|`* * *` |basic user |edit a person's information |update changes to their particulars
 
 |`* * *` |user with many people in the address book |make relation links between contacts |link up contacts that have connections with each other
 
@@ -847,45 +850,45 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with many people in the address book |sort contacts to my preference |arrange them according to their importance / significance
 
-|`* * *` |user |find users based on tags |locate different groups easily
+|`* * *` |user with many people in the address book |find users based on tags |locate different groups easily
 
-|`* * *` |user |rename an existing tag |update a tag which is no longer suitable to describe the people who have them
-
-|`* * *` |user |run the executable file of the address book |access the application conveniently
+|`* * *` |user with many people in the address book |rename an existing tag |update a tag which is no longer suitable to describe the people who have it
 
 |`* *` |user with many people in the address book |delete people in address book by tags |remove people of the same group
 
 |`* *` |user with many people in the address book |change the view mode of GUI |display different number of contacts per page
 
-|`* *` |user |change font size, colours, etc |customize the layout according to preference
+|`* *` |user with many people in the address book |sort people by birthday |check for upcoming birthdays
+
+|`* *` |user with many people in the address book |highlight contacts |place it at the top
+
+|`* *` |user with many people in the address book |displays the most searched contacts |display the most searched contacts
+
+|`* *` |user with many people in the address book |tag multiple people at the same time |quickly tag all people who share the similarities conveniently
+
+|`* *` |creative user |change font size, colours, etc |customize the layout according to preference
+
+|`* *` |careful user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |careful user |view [private contact details](#private-contact-detail) |view details of hidden contacts
 
 |`* *` |original user |set password for access |enhance the security of Address Book
 
-|`* *` |user |view [private contact details](#private-contact-detail) |view details of hidden contacts
+|`* *` |business-man |set reminders for tasks that need to be done |be constantly reminded about the upcoming deadlines
 
-|`* *` |user with many people in the address book |sort people by birthday |check for upcoming birthdays
-
-|`* *` |user |highlight contacts |place it at the top
-
-|`* *` |user |displays the most searched contacts |display the most searched contacts
-
-|`* *` |user |tag multiple people at the same time |quickly tag all people who share the similarities conveniently
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`*` | user | update data to server | access it from any device
-
-|`*` | user | add photos to contacts in GUI | recognize the contacts easily
-
-|`*` | user | add speech recognition | make it a hands-free device
-
-|`*` | user | display contacts address on map | access their location
-
-|`*` | user | import data file from another device | access from different devices
-
-|`*` | user | export data file to another format | transfer to different devices
+|`* *` |business-man | display addresses in contacts and reminders on map | access their locations
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user | update data to server | access it from any device
+
+|`*` |user | add photos to contacts in GUI | recognize the contacts easily
+
+|`*` |user | add speech recognition | make it a hands-free device
+
+|`*` |expert user | import data file from another device | access from different devices
+
+|`*` |expert user | export data file to another format | transfer to different devices
 |=======================================================================
 
 {More to be added}
