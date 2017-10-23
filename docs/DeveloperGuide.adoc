@@ -52,7 +52,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
+. Fork this repo, and clone the fork onto your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project
 dialog first)
 . Set up the correct JDK version for Gradle
@@ -154,7 +154,7 @@ The rest of the App consists of four components.
 Each of the four components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+* Exposes its functionality using a `{Component Name}Manager` class. i.e. `LogicManager`
 
 For example, the `Logic` component (see the <<logic_class_diagram>> given below) defines it's API in the `Logic.java`
 interface and exposes its functionality using the `LogicManager.java` class.
@@ -166,8 +166,8 @@ image::LogicClassDiagram.png[width="800"]
 [discrete]
 ==== Events-Driven nature of the design
 
-The <<sequence_diagram_for_delete_person>> below shows how the components interact for the scenario where the user
-issues the command `delete 1`.
+The <<sequence_diagram_for_delete_person>> diagram below shows how the components interact for the scenario where the
+user issues the command `delete 1`.
 
 [[sequence_diagram_for_delete_person]]
 .Component Interactions for `delete 1` Command (Part 1)
