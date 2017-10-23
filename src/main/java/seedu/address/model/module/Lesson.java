@@ -24,6 +24,7 @@ public class Lesson implements ReadOnlyLesson {
     private ObjectProperty<Location> location;
     private ObjectProperty<TimeSlot> timeSlot;
     private ObjectProperty<Code> code;
+    private ObjectProperty<Boolean> isMarked;
 
     private ObjectProperty<UniqueLecturerList> lecturers;
 
@@ -38,6 +39,7 @@ public class Lesson implements ReadOnlyLesson {
         this.group = new SimpleObjectProperty<>(group);
         this.code = new SimpleObjectProperty<>(code);
         this.timeSlot = new SimpleObjectProperty<>(timeSlot);
+        this.isMarked = new SimpleObjectProperty<>(false);
         // protect internal lecturers from changes in the arg list
         this.lecturers = new SimpleObjectProperty<>(new UniqueLecturerList(lecturers));
     }
@@ -48,6 +50,9 @@ public class Lesson implements ReadOnlyLesson {
     public Lesson(ReadOnlyLesson source) {
         this(source.getClassType(), source.getLocation(), source.getGroup(), source.getTimeSlot(),
                 source.getCode(), source.getLecturers());
+        if (source.isMarked()) {
+            isMarked = new SimpleObjectProperty<>(true);
+        }
     }
 
     public void setLocation(Location location) {
@@ -118,6 +123,26 @@ public class Lesson implements ReadOnlyLesson {
     @Override
     public Code getCode() {
         return code.get();
+    }
+
+    @Override
+    public ObjectProperty<Boolean> isMarkedProperty() {
+        return isMarked;
+    }
+
+    @Override
+    public boolean isMarked() {
+        return isMarked.get();
+    }
+
+    @Override
+    public void setAsMarked() {
+        isMarked = new SimpleObjectProperty<>(true);
+    }
+
+    @Override
+    public void setAsUnmarked() {
+        isMarked = new SimpleObjectProperty<>(false);
     }
 
     @Override

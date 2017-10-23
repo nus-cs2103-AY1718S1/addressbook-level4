@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import com.google.common.eventbus.Subscribe;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -17,6 +18,8 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
 
 
 /**
@@ -60,23 +63,9 @@ public class LessonListCard extends UiPart<Region> {
         initLecturers(lesson);
         bindListeners(lesson);
         registerAsAnEventHandler(this);
-        ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
         FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
         setFontSizeUnit(currFontSize);
-
-        switch (currentUnit) {
-        case LOCATION:
-            switchToLocationCard();
-            break;
-
-        case MODULE:
-            switchToModuleCard();
-            break;
-
-        default:
-            switchToLessonCard();
-
-        }
+        switchCard();
     }
 
     /**
@@ -136,6 +125,22 @@ public class LessonListCard extends UiPart<Region> {
         timeSlot.setVisible(true);
         classType.setVisible(true);
         lecturers.setVisible(true);
+    }
+
+    private void switchCard() {
+        switch (ListingUnit.getCurrentListingUnit()) {
+        case LOCATION:
+            switchToLocationCard();
+            break;
+
+        case MODULE:
+            switchToModuleCard();
+            break;
+
+        default:
+            switchToLessonCard();
+
+        }
     }
 
     @Override

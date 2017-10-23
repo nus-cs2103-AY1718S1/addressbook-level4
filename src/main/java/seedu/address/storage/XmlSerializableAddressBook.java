@@ -45,7 +45,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
         lessons.addAll(src.getLessonList().stream().map(XmlAdaptedLesson::new).collect(Collectors.toList()));
         lecturers.addAll(src.getLecturerList().stream().map(XmlAdaptedLecturer::new).collect(Collectors.toList()));
-
     }
 
     @Override
@@ -75,4 +74,5 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(lecturers);
     }
+
 }

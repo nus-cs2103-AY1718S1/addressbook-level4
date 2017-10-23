@@ -58,7 +58,7 @@ public class ListCommand extends Command {
             return executeListByAttribute(locationPredicate);
         } else if (parameter.equals(FAVOURITE_LIST_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LESSON);
-            FavouriteListPredicate favouriteListPredicate = model.getFavouriteListPredicate();
+            FavouriteListPredicate favouriteListPredicate = new FavouriteListPredicate();
             ListingUnit.setCurrentPredicate(favouriteListPredicate);
             EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(favouriteListPredicate);
