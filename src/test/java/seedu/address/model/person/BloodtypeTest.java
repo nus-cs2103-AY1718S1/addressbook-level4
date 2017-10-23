@@ -26,6 +26,10 @@ public class BloodtypeTest {
         assertFalse(Bloodtype.isValidBloodType("?"));
         assertFalse(Bloodtype.isValidBloodType("BB"));
         assertFalse(Bloodtype.isValidBloodType("BA"));
+        assertFalse(Bloodtype.isValidBloodType("A B"));
+        assertFalse(Bloodtype.isValidBloodType("A +"));
+        assertFalse(Bloodtype.isValidBloodType("A+ "));
+        assertFalse(Bloodtype.isValidBloodType(" A+"));
 
         // valid blood types
         assertTrue(Bloodtype.isValidBloodType("AB")); // all caps
