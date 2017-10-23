@@ -363,6 +363,28 @@ Format: `clear`
 Use `clear --all` if you want to clear data in all components (all contacts and events).
 ====
 
+=== Exporting address book data : `export`
+
+Exports the current data in the address book, including data from all three components: *Contacts*, *Events* and
+*Calendar*, to an external location. +
+Format: `export FILEPATH`
+
+****
+* Exports data to the location and file name specified by `FILEPATH`.
+* `FILEPATH` must end with an extension of `.xml`.
+* If a relative path is provided, the data will be exported to the *BoNUS* installation directory.
+* Existing data file at `FILEPATH` will be overwritten.
+* Parent directories, if specified in `FILEPATH`, will be created if they do not exist.
+****
+
+Examples:
+
+* For `Windows` users: +
+`export C:\Users\John Doe\Documents\addressbook.xml`
+
+* For `macOS` and `Linux` users: +
+`export /Users/John Doe/Documents/addressbook.xml`
+
 === Advance setting : `config`
 
 Changes the configuration of the application or applies some advance settings to the data. Make sure you know what you
@@ -449,4 +471,7 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Export* : `export FILEPATH` +
+eg. For `Windows` users: `export C:\Users\John Doe\Documents\addressbook.xml` +
+eg. For `macOS` and `Linux` users: `export /Users/John Doe/Documents/addressbook.xml`
 * *Config* : `config --add-property` `config --set-tag-color` `config --import-calendar`
