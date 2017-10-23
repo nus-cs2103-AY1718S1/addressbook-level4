@@ -40,10 +40,14 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    private MapPanel mapPanel;
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    @FXML
+    private StackPane mapPlaceholder;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -126,6 +130,9 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        mapPanel = new MapPanel();
+        mapPlaceholder.getChildren().add(mapPanel.getRoot());
+
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
@@ -210,6 +217,7 @@ public class MainWindow extends UiPart<Region> {
 
     void releaseResources() {
         browserPanel.freeResources();
+        mapPanel.freeResources();
     }
 
     @Subscribe
