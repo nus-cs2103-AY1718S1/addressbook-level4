@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.ExtendedPersonCardHandle;
+import javafx.application.Platform;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -55,8 +57,11 @@ public class ExtendedPersonCardTest extends GuiUnitTest {
         assertEquals(expectedPerson.getRemark().toString(), extendedPersonCardHandle.getRemark());
 
         //update tag information displayed
-        extendedPersonCard.initTags(expectedPerson);
-        assertTagsDisplayed(expectedPerson, extendedPersonCardHandle);
+        Platform.runLater((Runnable) () -> {
+            extendedPersonCard.loadPersonDetails(expectedPerson);
+            assertTagsDisplayed(expectedPerson, extendedPersonCardHandle);
+        });
+
     }
 
     /*
@@ -93,5 +98,18 @@ public class ExtendedPersonCardTest extends GuiUnitTest {
 
         // same person, different index -> returns false
         assertFalse(personCard.equals(new PersonCard(person, 1)));
+    }
+
+    /**
+     * Asserts that {@code ExtendedPersonCard} displays the details of {@code expectedPerson} correctly and matches
+     * {@code expectedId}.
+     */
+    private void assertCardDisplay(ExtendedPersonCard extendedpersonCard, ReadOnlyPerson expectedPerson) {
+        guiRobot.pauseForHuman();
+
+        ExtendedPersonCardHandle extendedPersonCardHandle = new ExtendedPersonCardHandle(extendedPersonCard.getRoot());
+
+        // verify person details are displayed correctly
+        assertCardDisplaysPerson(expectedPerson, extendedPersonCardHandle);
     }
 }
