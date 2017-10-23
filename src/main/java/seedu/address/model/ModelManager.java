@@ -54,6 +54,7 @@ public class ModelManager extends ComponentManager implements Model {
         ListingUnit.setCurrentPredicate(predicate);
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
         bookedList = new HashSet<BookedSlot>();
+        initializeBookedSlot();
     }
 
     public ModelManager() {
@@ -177,6 +178,12 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedLesson);
         addressBook.updateLesson(target, editedLesson);
         indicateAddressBookChanged();
+    }
+
+    public void initializeBookedSlot(){
+        for(int i=0; i<filteredLessons.size(); i++){
+            bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(),filteredLessons.get(i).getTimeSlot()));
+        }
     }
 
     @Override
