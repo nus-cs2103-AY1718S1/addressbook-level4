@@ -69,8 +69,16 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Shows a list of all persons or all persons with a specified `tag` in the address book. +
+Format:
+
+* `list all` lists all persons in the address book
+* `list friends` lists all persons with the `[t/TAG] friends`
+
+=== Sorting the list of persons : `sort`
+
+Sorts by specified type and shows a list of persons in the address book. +
+Format: `sort [type]`
 
 === Editing a person : `edit`
 
@@ -94,7 +102,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose names, phone number, email, address and tags contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -111,16 +119,30 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find johndoe@gmail.com` +
+Returns any person with the email `johndoe@gmail.com`
+* `find johndoe` +
+Returns any person with the email username `johndoe`
+* `find gmail.com` +
+Returns any person with the email domain from `gmail.com`
+* `find Bukit` +
+Returns names of addresses containing `Bukit Batok` and `Bukit Timah`
+* `find street` +
+Returns any person having addresses with `street`
+* `find friends` +
+Returns any person with the tag `friends`
 
-=== Deleting a person : `delete`
+=== Deleting a person /multiple people : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` for single deletion or +
+`delete INDEX, INDEX` for multiple deletions.
 
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* For multiple deletions, indexes stated must be in ascending order.
 ****
 
 Examples:
@@ -131,6 +153,45 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list` +
+`delete 1, 3, 5` +
+Deletes the 1st, 3rd and 5th persons in the address book.
+
+=== Pinning a person: `pin`
+
+Pins a person on top of the addressbook. +
+Format: `pin INDEX`
+
+****
+* A person can only be pinned if they are not pinned previously.
+* Pins the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`pin 2` +
+Pins the 2nd person to the top of the address book.
+
+=== Unpinning a person: `unpin`
+
+Unpins a person from the top of the addressbook. +
+Format: `unpin INDEX`
+
+****
+* A person can only be unpinned if they are pinned previously.
+* Unpins the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`unpin 1` +
+Unpins the 1st person from the top of the address book.
 
 === Selecting a person : `select`
 
@@ -163,6 +224,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
+
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
