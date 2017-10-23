@@ -10,9 +10,14 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T09-B4/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
+
+[big]#*Introduction*#
+
+Contact List Pro is a software address book that allows users to store contacts and manage them using a variety of features.
+This guide provides information for you to set up and get started as a Contact List Pro developer, and is detailed enough to be useful to experienced developers as well.
 
 == Setting up
 
@@ -602,8 +607,9 @@ Here are the steps to create a new release.
 === Managing Dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+
+* Include those libraries in the repo (this bloats the repo size) +
+* Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
 == Suggested Programming Tasks to Get Started
@@ -888,7 +894,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |delete person using other fields such as name |delete contact without knowing the index number
 
-|`* *` |user |undo/redo amendments made to the address book |immediately revert to previous version if mistakes are made
+|`* *` |user |undo/redo amendments made to the Contact List Pro |immediately revert to previous version if mistakes are made
 
 |`* *` |user |clear temporary storage upon exit |reduce memory used
 
@@ -904,9 +910,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |add profile pictures to contacts |recognize the contact by their face
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |user with many persons in the Contact List Pro |sort persons by name |locate a person easily
 
-|`*` |user |view recent contacts added/searched |keep a log of the operations done in the address book
+|`*` |user |view recent contacts added/searched |keep a log of the operations done in the Contact List Pro
 
 |`*` |user |sync contact details with social media |receive notification if contact details are not updated
 
@@ -926,19 +932,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user who is farsighted| be able to customise font size| be able to see the text clearly
 
-|`*` |user| sort certain persons by where they stay| know where is a convenient meetup location
+|`*` |user| sort certain persons by where they stay| know where is a convenient meet up location
 
 |`*` |user| save birthdays| retrieve more information about the person later
 
 
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Contact List Pro` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -946,9 +951,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Contact List Pro deletes the person
 +
 Use case ends.
 
@@ -962,7 +967,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -972,9 +977,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to favourite a specific person in the list
-4.  AddressBook sets the person as a favourite contact
+4.  Contact List Pro sets the person as a favourite contact
 +
 Use case ends.
 
@@ -988,7 +993,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -998,9 +1003,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to add a specific person in the list to a specific group
-4.  AddressBook adds the person into the group
+4.  Contact List Pro adds the person into the group
 +
 Use case ends.
 
@@ -1014,13 +1019,13 @@ Use case ends.
 * 3a. The given index is invalid
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 * 3b. The given group is invalid
 +
 [none]
-** 3b1. AddressBook shows an error message.
+** 3b1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1030,15 +1035,15 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to enable password
-2.  AddressBook confirms the request, yes or no
+2.  Contact List Pro confirms the request, yes or no
 3.  User enters password
-4.  AddressBook requests for password again to confirm
+4.  Contact List Pro requests for password again to confirm
 5.  User enters password again
-6.  AddressBook sets up password and stores data in a .xml file
-7.  AddressBook requests for answer to a predetermined security question.
+6.  Contact List Pro sets up password and stores data in a .xml file
+7.  Contact List Pro requests for answer to a predetermined security question.
 8.  User enters answer
-9.  AddressBook stores security answer in a .xml file linked to the account
-10.  User needs to type in login to get his private addressbook, else it will show a public addressbook
+9.  Contact List Pro stores security answer in a .xml file linked to the account
+10.  User needs to type in login to get his private address book, else it will show a public address book
 +
 Use case ends.
 
@@ -1050,27 +1055,27 @@ Use case ends.
 
 * 3a. Password entered is invalid.
 +
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
 * 4a. Confirmation password does not match password entered before.
 +
-** 4a1. AddressBook shows an error message.
+** 4a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
 * 10a. User type wrong password
 +
-** 10a1. AddressBook reveals first and last letter of password.
+** 10a1. Contact List Pro reveals first and last letter of password.
 +
 ** 10a2. User has forgotten the password
 +
-** 10a3. AddressBook prompts user to provide security answer
+** 10a3. Contact List Pro prompts user to provide security answer
 +
-** 10a4. AddressBook check if it match the answer from .xml file
+** 10a4. Contact List Pro check if it match the answer from .xml file
 +
-** 10a4. AddressBook reveals the password if correct
+** 10a4. Contact List Pro reveals the password if correct
 +
 Use case resumes at step 10.
 
@@ -1080,11 +1085,11 @@ Use case resumes at step 10.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to only show certain persons, by index, in the list
-4.  AddressBook shows restricted list
+4.  Contact List Pro shows restricted list
 5.  User requests to sort persons by address
-6.  AddressBook shows a list of persons sorted by address
+6.  Contact List Pro shows a list of persons sorted by address
 +
 Use case ends.
 
@@ -1096,7 +1101,7 @@ Use case ends.
 
 * 3a. The given index is invalid.
 +
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1106,10 +1111,10 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list person
-2.  AddressBook shows a list of person
+2.  Contact List Pro shows a list of person
 3.  User requests to edit a field, followed by new field details
-4.  AddressBook edits specified contact's details
-5.  AddressBook shows amended contact's details
+4.  Contact List Pro edits specified contact's details
+5.  Contact List Pro shows amended contact's details
 +
 Use case ends.
 
@@ -1121,7 +1126,7 @@ Use case ends.
 
 * 3a. The given field is invalid.
 +
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1131,9 +1136,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to delete persons, by name, in the list
-4.  AddressBook shows message for successful deletion
+4.  Contact List Pro shows message for successful deletion
 +
 Use case ends.
 
@@ -1145,7 +1150,7 @@ Use case ends.
 
 * 3a. The given field is invalid.
 +
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1155,7 +1160,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons with partial inputs
-2.  AddressBook shows a list of persons with fields containing given input
+2.  Contact List Pro shows a list of persons with fields containing given input
 +
 Use case ends.
 
@@ -1163,12 +1168,37 @@ Use case ends.
 
 * 2a. The list is empty.
 +
-** 2a1. AddressBook shows an error message.
+** 2a1. Contact List Pro shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Remove tags from contacts
+
+*MSS*
+
+1.  User requests to remove specified tags from selected indexes or from the whole Contact List Pro.
+2.  Contact List Pro shows a successful message and a list of updated contacts.
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+** 2a1. Contact List Pro shows an error message.
++
+* 2b. Tag does not exist.
++
+** 2b1. Contact List Pro shows an error message.
++
+* 2c. Invalid index is given.
++
+** 2c1. Contact List Pro shows an error message.
 +
 Use case ends.
 
 
-{More to be added}
 
 [appendix]
 == Non Functional Requirements
@@ -1186,9 +1216,6 @@ Use case ends.
 .  Should have a feature to transfer contacts from one account to another.
 
 
-
-
-{More to be added}
 
 [appendix]
 == Glossary
@@ -1210,7 +1237,7 @@ A contact detail that is not meant to be shared with others
 [[command-line]]
 
 ....
-The text bar where user types in when AddressBook is opened up
+The text bar where user types in when Contact List Pro is opened up
 ....
 
 [[fields]]
