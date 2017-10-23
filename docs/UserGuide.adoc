@@ -31,16 +31,12 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to store Mobilize in.
 .  Double click on the icon to launch the application.
 
-+
-+
 
 === Knowing the Interface
 
 Mobilize comes with a simple interface to facilitate easy planning. It contains six main components that allow you to interact with the application: +
 
 image::Ui.png[width="790"]
-
-+
 
 Each component has different functions:
 
@@ -67,9 +63,10 @@ For the following tutorials, command formatting will be explained using the foll
 * Parameters that are preceded by a prefix, can occur in any order. +
   For example, if a command syntax contains the item add n/NAME p/PHONE a/ADDRESS, then the final command can contain these items in mixed order, such as add a/ADDRESS n/NAME p/PHONE.
 
-  [NOTE]
-  This is not applicable for parameters without a prefix.
-  For example, if a command syntax uses: edit INDEX n/NAME, then the INDEX parameter MUST be in the exact position as in the syntax, in this case, after the command word i.e. edit.
+[NOTE]
+This is not applicable for parameters without a prefix.
+For example, if a command syntax uses: edit INDEX n/NAME, then the INDEX parameter MUST be in the
+exact position as in the syntax, in this case, after the command word i.e. edit.
 
 === Managing Contacts
 
@@ -85,19 +82,17 @@ Hit enter and you should see a success message in the Result Display: +
 
 * `New Person Added: NAME Phone: PHONE Email: EMAIL Address: ADDRESS Birthday: BIRTHDAY Tags: [TAG1][TAG2]…` +
 
-+
-
 Here is an example to illustrate: +
 
 `add n/John Doe p/92435671 e/john_d888@gmail.com a/ 207 Upper Street, Islington, LONDON, N1 1RL b/15111986 t/friend t/roommate` +
 
 Result Display: +
 
-`New Person Added: John Doe Phone: 92435671 Email: john_d888@gmail.com Address: 207 Upper Street, Islington, LONDON, N1 1RL Birthday: 15111986 Tags: [friend][roommate]` +
+`New Person Added: John Doe Phone: 92435671 Email: john_d888@gmail.com Address: 207 Upper Street, Islington, LONDON, N1 1RL Birthday: 15111986 Tags: [friend][roommate]`
 
 +
 
-Congratulations, you now have your first contact! +
+Congratulations, you now have your first contact! 
 
 +
 
