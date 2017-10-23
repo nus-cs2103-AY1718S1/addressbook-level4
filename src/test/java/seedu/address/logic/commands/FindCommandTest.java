@@ -27,6 +27,7 @@ import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
 public class FindCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+    /**
     @Test
     public void equals() {
         NameContainsKeywordsPredicate firstPredicate =
@@ -53,7 +54,7 @@ public class FindCommandTest {
         // different find command -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
-    /***
+
     @Test
     public void execute_zeroKeywords_noLessonFound() {
         String expectedMessage = String.format(MESSAGE_LESSONS_LISTED_OVERVIEW, 0);
@@ -67,10 +68,11 @@ public class FindCommandTest {
         FindCommand command = prepareCommand("MA1101R");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(MA1101R_L1, MA1101R_L2, MA1101R_T1, MA1101R_T2));
     }
-    ***/
+
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
+/**
     private FindCommand prepareCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
@@ -78,6 +80,7 @@ public class FindCommandTest {
         return command;
     }
 
+**/
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>

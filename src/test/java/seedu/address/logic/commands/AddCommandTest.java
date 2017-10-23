@@ -158,7 +158,6 @@ public class AddCommandTest {
 
         @Override
         public void bookingSlot(BookedSlot booking) throws DuplicateBookedSlotException {
-            fail("This method should not be called.");
         }
 
         @Override
