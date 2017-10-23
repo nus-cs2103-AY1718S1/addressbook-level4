@@ -103,6 +103,15 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    /**
+     * Sorts the list
+     */
+    public void sort() {
+        internalList.sort((person1, person2) ->(
+                person1.getName().fullName
+                        .compareToIgnoreCase(person2.getName().fullName)));
+    }
+
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();
@@ -119,4 +128,5 @@ public class UniquePersonList implements Iterable<Person> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
 }

@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -29,7 +30,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/connectus_icon.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -38,18 +39,35 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Scene scene;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-
+    private DeleteButton deleteButton;
+    private EmailButton emailButton;
+    private EditButton editButton;
+    private NameTextField nameTextField;
+    private PhoneTextField phoneTextField;
+    private EmailTextField emailTextField;
+    private AddressTextField addressTextField;
+    private TagTextField tagTextField;
     @FXML
     private StackPane browserPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private MenuItem blackMenuItem;
+
+    @FXML
+    private MenuItem whiteMenuItem;
+
+    @FXML
+    private MenuItem greenMenuItem;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -63,6 +81,29 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane deleteButtonPlaceholder;
+
+    @FXML
+    private StackPane emailButtonPlaceholder;
+    @FXML
+    private StackPane editButtonPlaceholder;
+    @FXML
+    private StackPane editNameTextfieldPlaceholder;
+
+    @FXML
+    private StackPane editPhoneTextfieldPlaceholder;
+
+    @FXML
+    private StackPane editEmailTextfieldPlaceholder;
+
+    @FXML
+    private StackPane editAddressTextfieldPlaceholder;
+
+    @FXML
+    private StackPane editTagTextfieldPlaceholder;
+    @FXML
+    private VBox vBox;
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -78,6 +119,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        this.scene = scene;
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -94,6 +136,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -126,6 +169,30 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        nameTextField = new NameTextField();
+        editNameTextfieldPlaceholder.getChildren().add(nameTextField.getRoot());
+
+        phoneTextField = new PhoneTextField();
+        editPhoneTextfieldPlaceholder.getChildren().add(phoneTextField.getRoot());
+
+        emailTextField = new EmailTextField();
+        editEmailTextfieldPlaceholder.getChildren().add(emailTextField.getRoot());
+
+        addressTextField = new AddressTextField();
+        editAddressTextfieldPlaceholder.getChildren().add(addressTextField.getRoot());
+
+        tagTextField = new TagTextField();
+        editTagTextfieldPlaceholder.getChildren().add(tagTextField.getRoot());
+        editButton = new EditButton(logic, nameTextField, phoneTextField,
+                emailTextField, addressTextField, tagTextField);
+        editButtonPlaceholder.getChildren().add(editButton.getRoot());
+
+        deleteButton = new DeleteButton(logic, 0);
+        deleteButtonPlaceholder.getChildren().add(deleteButton.getRoot());
+        emailButton = new EmailButton();
+        emailButtonPlaceholder.getChildren().add(emailButton.getRoot());
+
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
@@ -152,6 +219,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -191,7 +259,6 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
-
     void show() {
         primaryStage.show();
     }
@@ -202,6 +269,46 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
+    }
+
+    /**
+     * Changes to default dark theme.
+     */
+    @FXML
+    private void handleBlackTheme() {
+        if (vBox.getStylesheets().contains("view/DarkTheme.css")) {
+            vBox.getStylesheets().remove("view/DarkTheme.css");
+        }
+        vBox.getStylesheets().remove("view/WhiteTheme.css");
+        vBox.getStylesheets().remove("view/GreenTheme.css");
+        vBox.getStylesheets().add("view/DarkTheme.css");
+    }
+
+    /**
+     * Changes to white theme.
+     */
+    @FXML
+    private void handleWhiteTheme() {
+        if (vBox.getStylesheets().contains("view/WhiteTheme.css")) {
+            vBox.getStylesheets().remove("view/WhiteTheme.css");
+        }
+        vBox.getStylesheets().remove("view/DarkTheme.css");
+        vBox.getStylesheets().remove("view/GreenTheme.css");
+        vBox.getStylesheets().add("view/WhiteTheme.css");
+    }
+
+
+    /**
+     * Changes to green theme.
+     */
+    @FXML
+    private void handleGreenTheme() {
+        if (vBox.getStylesheets().contains("view/GreenTheme.css")) {
+            vBox.getStylesheets().remove("view/GreenTheme.css");
+        }
+        vBox.getStylesheets().remove("view/WhiteTheme.css");
+        vBox.getStylesheets().remove("view/DarkTheme.css");
+        vBox.getStylesheets().add("view/GreenTheme.css");
     }
 
     public PersonListPanel getPersonListPanel() {

@@ -6,10 +6,13 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="vBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -18,36 +21,104 @@
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
       <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+         <MenuItem mnemonicParsing="false" onAction="#handleBlackTheme" text="Black Theme" />
+         <MenuItem mnemonicParsing="false" onAction="#handleWhiteTheme" text="White Theme" />
+         <MenuItem mnemonicParsing="false" onAction="#handleGreenTheme" text="Green Theme" />
     </Menu>
     <Menu mnemonicParsing="false" text="Help">
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>
   </MenuBar>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
+      <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-      minHeight="100" prefHeight="100" maxHeight="100">
+  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
+      <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4352226720647773, 0.569838056680162" VBox.vgrow="ALWAYS">
+    <VBox fx:id="personList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="323.0">
+            <children>
+               <StackPane fx:id="deleteButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="168.0" />
+               <StackPane fx:id="emailButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="167.0" />
+            </children>
+         </HBox>
     </VBox>
+      <VBox prefHeight="667.0" prefWidth="113.0">
+         <children>
+            <StackPane fx:id="editNamePlaceholder" prefHeight="10.0" prefWidth="64.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                     <font>
+                        <Font name="Helvetica" size="14.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets top="3.0" />
+                     </StackPane.margin>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane fx:id="editNameTextfieldPlaceholder" alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="64.0" />
+            <StackPane fx:id="editPhonePlaceholder" layoutX="10.0" layoutY="10.0" prefHeight="10.0" prefWidth="64.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                     <font>
+                        <Font name="Helvetica" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane fx:id="editPhoneTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="55.0" prefWidth="64.0" />
+            <StackPane fx:id="editEmailPlaceholder" layoutX="10.0" layoutY="139.0" prefHeight="10.0" prefWidth="64.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                     <font>
+                        <Font name="Helvetica" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane fx:id="editEmailTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="174.0" prefHeight="55.0" prefWidth="64.0" />
+            <StackPane fx:id="editAddressPlaceholder" layoutX="10.0" layoutY="268.0" prefHeight="10.0" prefWidth="64.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                     <font>
+                        <Font name="Helvetica" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane fx:id="editAddressTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="303.0" prefHeight="55.0" prefWidth="64.0" />
+            <StackPane fx:id="editTagPlaceholder" layoutX="10.0" layoutY="397.0" prefHeight="10.0" prefWidth="64.0">
+               <children>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                     <font>
+                        <Font name="Helvetica" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane fx:id="editTagTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="432.0" prefHeight="115.0" prefWidth="64.0" />
+            <StackPane fx:id="editButtonPlaceholder" prefHeight="32.0" prefWidth="64.0">
+               <padding>
+                  <Insets top="15.0" />
+               </padding></StackPane>
+         </children></VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+    <StackPane fx:id="browserPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="593.0">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
     </StackPane>
   </SplitPane>
