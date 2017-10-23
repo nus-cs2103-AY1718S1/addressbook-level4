@@ -60,12 +60,6 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private Tab calendarItem;
-
-    @FXML
-    private Tab mapItem;
-
-    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
