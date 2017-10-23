@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.tasks.DeleteTaskCommand;
 import seedu.address.logic.commands.tasks.FindTaskCommand;
 import seedu.address.model.Model;
@@ -68,6 +70,16 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         command = FindTaskCommand.COMMAND_WORD + " art enhancement NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
+
+        /* Case: undo previous find command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous find command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
 
         /* Case: find same tasks in address book after deleting 1 of them -> 1 task found */
         executeCommand(DeleteTaskCommand.COMMAND_WORD + " 1");
