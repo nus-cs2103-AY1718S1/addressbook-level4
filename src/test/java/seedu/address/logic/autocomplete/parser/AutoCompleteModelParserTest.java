@@ -1,0 +1,238 @@
+package seedu.address.logic.autocomplete.parser;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.BOB;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import javafx.collections.ObservableList;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+
+public class AutoCompleteModelParserTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private AutoCompleteModelParser parser;
+    private ModelStubWithRequiredMethods mockModel;
+
+    @Before
+    public void fillMockModel() {
+        mockModel = new ModelStubWithRequiredMethods();
+        try {
+            mockModel.addAllPersons(Arrays.asList(
+                    new ReadOnlyPerson[]{ALICE, AMY, BENSON, BOB, CARL, DANIEL, ELLE, FIONA, GEORGE}));
+        } catch (DuplicatePersonException ex) {
+            fail("This exception should not be thrown.");
+        }
+        parser = new AutoCompleteModelParser(mockModel);
+    }
+
+    @Test
+    public void testParseName() {
+        parser.setPrefix(PREFIX_NAME);
+        assertEquals(parser.parseForPossibilities("a"),
+                Arrays.asList(new String[] {ALICE.getName().toString(), AMY.getName().toString(), "a"}));
+        assertEquals(parser.parseForPossibilities("f"),
+                Arrays.asList(new String[] {FIONA.getName().toString(), "f"}));
+        assertEquals(parser.parseForPossibilities("r"),
+                Collections.emptyList());
+    }
+
+    @After
+    public void cleanUpMockModel() {
+        mockModel = null;
+        parser = null;
+    }
+
+    /**
+     * A default model stub that have all of the methods failing.
+     */
+    private class ModelStub implements Model {
+        @Override
+        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetData(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllNamesInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllPhonesInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllEmailsInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllAddressesInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllTagsInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public List<String> getAllRemarksInAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+                throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeTag(Tag tag) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void removeTag(Index index, Tag tag) {
+            fail("This method should not be called");
+        }
+    }
+
+    /**
+     * A Model stub that allows calling of certain methods used in the test,
+     * including some required accessors and addPerson
+     */
+    private class ModelStubWithRequiredMethods extends ModelStub {
+        final ArrayList<Person> personsAdded = new ArrayList<>();
+
+        @Override
+        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            personsAdded.add(new Person(person));
+        }
+
+        public void addAllPersons(List<ReadOnlyPerson> persons) throws DuplicatePersonException {
+            for (ReadOnlyPerson person : persons) {
+                this.addPerson(person);
+            }
+        }
+
+        @Override
+        public List<String> getAllNamesInAddressBook() {
+            return personsAdded.stream()
+                    .map(person -> person.getName().toString())
+                    .collect(Collectors.toList());
+        }
+
+        @Override
+        public List<String> getAllPhonesInAddressBook() {
+            return personsAdded.stream()
+                    .map(person -> person.getPhone().toString())
+                    .collect(Collectors.toList());
+        }
+
+        @Override
+        public List<String> getAllEmailsInAddressBook() {
+            return personsAdded.stream()
+                    .map(person -> person.getEmail().toString())
+                    .collect(Collectors.toList());
+        }
+
+        @Override
+        public List<String> getAllAddressesInAddressBook() {
+            return personsAdded.stream()
+                    .map(person -> person.getAddress().toString())
+                    .collect(Collectors.toList());
+        }
+
+        @Override
+        public List<String> getAllTagsInAddressBook() {
+            return personsAdded.stream()
+                    .map(tag -> tag.toString().substring(1, tag.toString().length() - 1))
+                    .collect(Collectors.toList());
+        }
+
+        @Override
+        public List<String> getAllRemarksInAddressBook() {
+            return personsAdded.stream()
+                    .map(person -> person.getRemark().toString())
+                    .collect(Collectors.toList());
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+}
