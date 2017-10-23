@@ -1,6 +1,14 @@
 package systemtests;
 
+import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
+import static seedu.address.logic.commands.tasks.DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS;
+import static seedu.address.testutil.TestUtil.*;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
+
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
@@ -9,13 +17,6 @@ import seedu.address.logic.commands.tasks.DeleteTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
-
-import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
-import static seedu.address.logic.commands.tasks.DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS;
-import static seedu.address.testutil.TestUtil.*;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
-import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
 
 public class DeleteTaskCommandSystemTest extends AddressBookSystemTest {
 
@@ -28,7 +29,8 @@ public class DeleteTaskCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first task in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteTaskCommand.COMMAND_WORD + "      " + INDEX_FIRST_TASK.getOneBased() + "       ";
+        String command = "     " + DeleteTaskCommand.COMMAND_WORD + "      "
+                + INDEX_FIRST_TASK.getOneBased() + "       ";
         ReadOnlyTask deletedTask = removeTask(expectedModel, INDEX_FIRST_TASK);
         String expectedResultMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, deletedTask);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
@@ -133,7 +135,8 @@ public class DeleteTaskCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * DeleteTasks the task at {@code toDeleteTask} by creating a default {@code DeleteTaskCommand} using {@code toDeleteTask} and
+     * DeleteTasks the task at {@code toDeleteTask} by creating a default
+     * {@code DeleteTaskCommand} using {@code toDeleteTask} and
      * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
      * @see DeleteTaskCommandSystemTest#assertCommandSuccess(String, Model, String)
      */
@@ -143,7 +146,8 @@ public class DeleteTaskCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, deletedTask);
 
         assertCommandSuccess(
-                DeleteTaskCommand.COMMAND_WORD + " " + toDeleteTask.getOneBased(), expectedModel, expectedResultMessage);
+                DeleteTaskCommand.COMMAND_WORD + " " + toDeleteTask.getOneBased(), expectedModel,
+                expectedResultMessage);
     }
 
     /**
