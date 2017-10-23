@@ -534,6 +534,75 @@ other. +
 the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
 provides a workable copy of the data of Ark.
 
+=== Import Mechanism
+
+To use this command, type `import (FILE_NAME)` into the `CommandBox`.
+
+The `Import` mechanism allows users to import `Parcel`s from valid `Ark` storage files stored as `.xml` files into the
+current instance of `Ark`. This mecahnism is facilitated by a `readAddressBook` method within`XmlAddressBookStorage` to
+load the parcels stored in the `xml` file and an `addAllParcels` method defined in `ModelMnanager` to add the parcels in
+the storage file into the current instance of `Ark`. +
+
+Since the `Import` mechanism modifies the state of the data in `Ark`, it has to be undoable. Thus, it inherits from
+`UndoableCommands` interface rather than inherit from the `Command` interface directly. +
+
+[NOTE]
+The file to be imported has to be stored in the `./data/import` folder. i.e. calling `import ark.xml` will import the
+file `./data/import/ark.xml`. +
+If the user enters a file name that is not alphanumeric or a file name that is not in a `.xml` format, the parcel will
+throw an Exception. This is to prevent a directory traversal attack on Ark. Read more about directory traversal
+attacks link:https://www.acunetix.com/websitesecurity/directory-traversal/[here] +
+
+The following sequence diagram shows how the `import` operation works:
+
+image::ImportSequenceDiagram.png[width="1000"]
+
+[NOTE]
+The `ImportCommand` will only add parcels non-duplicate parcels. Duplicate parcels are ignored. If all the parcels to be
+ imported into Ark are duplicates, then no parcels are imported and an Exception is thrown.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ImportCommand` +
+
+* **Alternative 1 (current choice): using `readAddressBook()` to implement the logic `ImportCommand`** +
+** **Pros:** It becomes easier to implement method rather than writing out a separate logic to import files. It
+makes updates easier since enhancements to `readAddressBook()` will also enhance the import command such as
+more supported save file formats. +
+** **Cons:** This implementation increases the coupling of the `readAddressBook()` and `ImportCommand` such that changes
+ in `readAddressBook()` is likely to cause a change in `ImportCommand`. +
+* **Alternative 2:** Implement a parsing logic for `ImportCommand`.
+** **Pros:** Reduced coupling of `readAddressBook()` and `ImportCommand`. This gives the developers more freedom on
+ adding more file formats that can be imported. +
+** **Cons:** More tedious to implement and maintain `ImportCommand` since enhancements to the `readAddressBook()`
+feature has to be manually implemented in `ImportCommand` as well.
+
+---
+
+**Aspect: Arguments to import files** +
+
+* **Alternative 1 (current choice):** Backup save files from only one location +
+** **Pros:** User will only stored his save files at one location, he will not store them at random locations and lose
+track of them. User only has to type the name of the file and does not need to type the full file path to locate
+the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
+** **Cons:** The user has restrictions on where he can import files from. +
+* **Alternative 2:** User can load the files from any directory +
+** **Pros:** Allows user to import from his own archived folders anywhere in this computer. +
+** **Cons:** More tedious for the user to type in the full file path to locate the .xml file that he wants to import. +
+
+---
+
+**Aspect: Allowed file names that can be imported** +
+
+* **Alternative 1 (current choice):** File Names can only be alphanumeric and be in the `.xml` format. +
+** **Pros:** Ark is protected from directory traversal attacks. +
+** **Cons:** The user has restrictions on the file naming conventions he can use to name his import files +
+* **Alternative 2:** No file name check +
+** **Pros:** Allows user to name his files following any conventions and be successfully imported into Ark. +
+** **Cons:** Makes Ark vulnerable to simple directory traversal attack where user can access files outside the
+`data/import/` directory. +
+
+
 === Tab autocomplete mechanism
 
 image::SDforTabAutocomplete.png[width="600"]
