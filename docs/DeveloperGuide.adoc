@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Mobilize - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,6 +13,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T11-B3/main
 
 By: `Team T11-B3`      Since: `Aug 2017`      Licence: `MIT`
+
+== Welcome to Mobilize!
+
+Mobilize is a desktop application built to help people organize their contacts and tasks. It is primarily written
+in Java and uses the Object Oriented Paradigm. Continuous Integration is done by the Travis-CI. Code quality checks are maintained
+by Codacy and Coveralls tests the coverage of tests in the application.
+
+This Developer Guide will help you get started in understanding the architecture of the software and the mechanism of its features.
+It assumes prior knowledge of Java and Object Oriented Programming.
 
 == Setting up
 
@@ -84,7 +93,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 When you are ready to start coding,
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+2. Take a look at the section link:#implementation[Implementation] to understand how some of the key features are implemented.
 
 == Design
 
