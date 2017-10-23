@@ -11,13 +11,17 @@ import java.util.function.Predicate;
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
  */
-public class ModuleContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
+public class ModuleContainsKeywordsPredicate extends FindPredicate {
 
     private final List<String> keywords;
     private ArrayList<String> duplicateCodes = new ArrayList<String>();
 
     public ModuleContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
+    }
+
+    public List<String> getKeywords(){
+        return keywords;
     }
 
     @Override

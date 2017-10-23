@@ -1,32 +1,32 @@
 package seedu.address.model;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
-
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.logging.Logger;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
-import seedu.address.model.module.*;
-import seedu.address.model.module.exceptions.BookedSlotNotFoundException;
+import seedu.address.model.module.BookedSlot;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.*;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -38,6 +38,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyLesson> filteredLessons;
     private final HashSet<BookedSlot> bookedList;
+    private ReadOnlyLesson currentViewingLesson;
+    private String currentViewingAttribute;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -55,6 +57,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
         bookedList = new HashSet<BookedSlot>();
         initializeBookedSlot();
+        currentViewingAttribute = "default";
     }
 
     public ModelManager() {
@@ -191,6 +194,21 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortLessons();
     }
 
+    @Override
+    public void setCurrentViewingLesson(ReadOnlyLesson lesson){ this.currentViewingLesson = lesson; }
+
+    @Override
+    public ReadOnlyLesson getCurrentViewingLesson(){ return this.currentViewingLesson; }
+
+    @Override
+    public void setViewingPanelAttribute(String attribute){
+        this.currentViewingAttribute = attribute;
+    }
+
+    @Override
+    public String getCurrentViewingAttribute(){
+        return this.currentViewingAttribute;
+    }
 
     //=========== Filtered Module List Accessors =============================================================
 

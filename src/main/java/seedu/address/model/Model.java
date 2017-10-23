@@ -122,4 +122,16 @@ public interface Model {
      */
     void sortLessons();
 
+    /** Set lesson that is viewing currently **/
+    void setCurrentViewingLesson(ReadOnlyLesson lesson);
+
+    /** Get the lesson  viewing currently **/
+    ReadOnlyLesson getCurrentViewingLesson();
+
+    /** Get the viewing panel attribute**/
+    void setViewingPanelAttribute(String attribute);
+
+    /** Get the current viewing panel attribute **/
+    String getCurrentViewingAttribute();
+
 }
