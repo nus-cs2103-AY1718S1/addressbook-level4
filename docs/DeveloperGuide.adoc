@@ -14,6 +14,20 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team PIMP (W10-B1)`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+
+=== Software Outline
+
+PIMP (Personal Information Manager Program) is a command line interface (CLI) address book that allows users to maintain their contacts. This program allows users to store various properties of their contacts, such as their home addresses, email addresses, phone numbers, or even custom tags. The program has four main components, namely the `User Interface (UI)`, `Logic`, `Model` and `Storage` components. Addressbook data is stored locally in an .xml file.
+
+=== Purpose of Developer Guide
+
+This developer guide aims to give an overview to any developer who wishes to modify this addressbook to include more features, or to better suit their own needs. This developer guide will help any aspiring developer set up a suitable Java environment to develop this program in, as well as understand the different components of the addressbook and how they interact with each other. The functions available to the user will also be included, and various implementation details will be described. Various test cases have been made available to other developers, and a brief overview of the usage of these tests will also be included.
+
+A few documentation guidelines will also be described, so that any improvements made can be documented in a consistent style for the convenience of future developers.
+
+Various user profiles, user stories and use cases have also been included, so that future developers can gain some insight as to the design decisions made during the development process. Potential improvements that can be made to the addressbook can also be found in this section.
+
 == Setting up
 
 === Prerequisites
