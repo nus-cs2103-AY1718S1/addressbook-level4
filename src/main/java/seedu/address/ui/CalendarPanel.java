@@ -31,11 +31,7 @@ import seedu.address.model.task.ReadOnlyTask;
 public class CalendarPanel extends UiPart<Region> {
     private static String FXML = "CalendarPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-
-    @FXML
     private DatePickerSkin datePickerSkin;
-
-    @FXML
     private DatePicker datePicker;
 
     @FXML
@@ -45,6 +41,7 @@ public class CalendarPanel extends UiPart<Region> {
         super(FXML);
         setDate(personList, taskList);
         loadDefaultPage();
+        registerAsAnEventHandler(this);
     }
 
     /**
