@@ -4,11 +4,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Codii
-Codii is a desktop address book application specially designed for debt collectors to manage debtors in a simple manner. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+[https://github.com/CS2103AUG2017-T17-B1/main[Codii]] is a desktop address book application specially designed for debt collectors to manage debtors in a simple manner. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 
 Debt collectors can store information such as the amount owed, debt borrow date and debt cleared date in addition to debtor’s personal information.
 
 Unique features such as an interest calculator help debt collectors manage debts more efficiently.
+
+Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook - Level 4]] which is a desktop address book application used for teaching Software Engineering principles.
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
