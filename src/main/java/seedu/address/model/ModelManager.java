@@ -136,10 +136,9 @@ public class ModelManager extends ComponentManager implements Model {
             ReadOnlyPerson searchedPerson = filteredPersons.get(i);
             SearchData updatedSearchData = searchedPerson.getSearchData();
             updatedSearchData.incrementSearchCount();
-            Person modifiedPerson = new Person(searchedPerson.getName(), searchedPerson.getPhone(),
-                    searchedPerson.getEmail(), searchedPerson.getAddress(), searchedPerson.getTags(),
-                    updatedSearchData);
-
+            Person modifiedPerson = new Person(searchedPerson.getInternalId(), searchedPerson.getName(),
+                    searchedPerson.getPhone(), searchedPerson.getEmail(), searchedPerson.getAddress(),
+                    searchedPerson.getTags(), updatedSearchData);
             try {
                 updatePerson(searchedPerson, modifiedPerson);
             } catch (DuplicatePersonException dpe) {
