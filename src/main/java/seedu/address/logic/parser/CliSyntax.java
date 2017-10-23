@@ -15,6 +15,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_REMARK = new Prefix("r/");
 
     /* Prefix set */
     public static final Set<Prefix> POSSIBLE_PREFIXES =
@@ -23,7 +24,8 @@ public class CliSyntax {
                     PREFIX_PHONE,
                     PREFIX_EMAIL,
                     PREFIX_ADDRESS,
-                    PREFIX_TAG
+                    PREFIX_TAG,
+                    PREFIX_REMARK
             ));
 
     /* Postfix definitions */
