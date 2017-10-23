@@ -224,7 +224,7 @@ This section describes some noteworthy details on how certain features are imple
 The removeTag command removes a tag with the specified name from the address book. All the appearances of the tag in
 the address book are removed. This command is implemented in the style of the `edit` command and `delete` command.
 
-=== Design Considerations
+==== Design Considerations
 
 **Aspect:** Implementation for removeTag command +
 **Alternative 1 (current choice):** The command is implemented using methods which remove the tag from each person's tag list. +
@@ -247,7 +247,7 @@ the address book are removed. This command is implemented in the style of the `e
 ---
 
 **Aspect:** Removal of the tag from all instead of some by user's choice +
-**Alternative 1 (current choice):** The command currently does not support the removal of a tag from persons specified in the user input.
+**Alternative 1 (current choice):** The command currently does not support the removal of a tag from persons specified in the user input. +
 **Pros:** Easier implementation since it does not deal with the parsing of more user input. +
 **Cons:** The user cannot remove the tags from a few specific people in one command.  +
 **Alternative 2:** The command allows the user input to specify the persons from whom the tag should be removed. +
