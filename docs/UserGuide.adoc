@@ -14,6 +14,17 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction/Product overview
+The ScheduBook V1.3 is a program that helps you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with other people. You can use Schedubook to remind you of a certain meeting you have on a day and Schedubook will remind you, furthermore providing you information about the location you planned to meet.
+
+== About
+
+This user guide provides an overview of all commands that you can use in ScheduBook to set up or schedule your meetings and shows you how to get started using ScheduBook.
+
+This user guide gives you the information of how the urgency of your scheduled meetings are presented to you.
+
+All commands are explained and demonstrated with examples that shows you the results of each command input by you.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
