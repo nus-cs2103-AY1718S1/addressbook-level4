@@ -15,7 +15,6 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
-        model.maintainSorted();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

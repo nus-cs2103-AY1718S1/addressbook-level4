@@ -136,10 +136,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void selectParcel(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
-        System.out.println("INDEX: " + index.getZeroBased());
-        System.out.println("3: " + getParcelListPanel().getSelectedCardIndex());
-        System.out.println("4: " + index.getZeroBased());
-//        assert getParcelListPanel().getSelectedCardIndex() == index.getZeroBased();
+        assert getParcelListPanel().getSelectedCardIndex() == index.getZeroBased();
     }
 
     /**
@@ -149,7 +146,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
-//        assertEquals(expectedCommandInput, getCommandBox().getInput());
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
