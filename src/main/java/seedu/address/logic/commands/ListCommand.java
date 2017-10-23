@@ -1,5 +1,11 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.ListingUnit.LESSON;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
+
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
@@ -7,15 +13,6 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
-
-import java.util.function.Predicate;
-
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
-
-
-
 
 /**
  * Lists unique locations or unique module codes of all lessons according to user's specification.

@@ -1,10 +1,10 @@
 package seedu.address.model.module.exceptions;
 
+import seedu.address.commons.exceptions.DuplicateDataException;
+
 /**
  * Signals that the operation will result in duplicate BookedSlot objects.
  */
-import seedu.address.commons.exceptions.DuplicateDataException;
-
 public class DuplicateBookedSlotException extends DuplicateDataException {
 
     public DuplicateBookedSlotException() {

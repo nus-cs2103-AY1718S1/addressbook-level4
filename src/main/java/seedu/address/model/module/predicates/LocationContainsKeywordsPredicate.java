@@ -18,7 +18,7 @@ public class LocationContainsKeywordsPredicate extends FindPredicate {
 
     }
 
-    public List<String> getKeywords(){
+    public List<String> getKeywords() {
         return keywords;
     }
 
