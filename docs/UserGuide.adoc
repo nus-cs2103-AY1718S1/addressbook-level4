@@ -211,12 +211,12 @@ Locates the 2nd person's address in the address book.
 `select 1` +
 Locates the 1st person's address in the results of the `find` command.
 
-=== Scheduling an activity: `schedule` [Coming in v2.0]
+=== Scheduling an activity: `schedule` [Since v1.3]
 
 Alias: `sc`
 
 Schedules an activity with a person in the contact list. +
-Format: `schedule INDEX d/DATE act/ACTIVITY
+Format: `schedule INDEX d/DATE act/ACTIVITY`
 
 ****
 * DATE must follow DD-MM-YYYY or DD-MM format
@@ -358,7 +358,7 @@ e.g. `find James Jake`
 * *Locate* : `locate INDEX` +
 e.g.`locate 2`[Coming in v2.0]
 * *Schedule* : `schedule INDEX d/DATE act/ACTIVITY` +
-e.g. `schedule 1 d/25-12 act/Christmas dinner` [Coming in v2.0]
+e.g. `schedule 1 d/25-12 act/Christmas dinner`
 * *Copy* : `copy INDEX [OTHER INDICES]...` +
 e.g.`copy 1 2` [Coming in v2.0]
 * *History* : `history`

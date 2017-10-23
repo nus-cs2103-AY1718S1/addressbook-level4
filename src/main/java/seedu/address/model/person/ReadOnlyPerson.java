@@ -3,8 +3,11 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+
 import seedu.address.model.person.email.Email;
 import seedu.address.model.person.email.UniqueEmailList;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,6 +25,8 @@ public interface ReadOnlyPerson {
     Set<Email> getEmails();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<UniqueScheduleList> scheduleProperty();
+    Set<Schedule> getSchedules();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -39,6 +44,7 @@ public interface ReadOnlyPerson {
 
     /**
      * Formats the person as text, showing all contact details.
+     * Excludes all schedules.
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();

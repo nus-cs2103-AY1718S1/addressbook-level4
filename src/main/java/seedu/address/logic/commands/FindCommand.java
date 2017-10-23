@@ -23,7 +23,6 @@ public class FindCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + "(alias: " + COMMAND_ALIAS + ")"
             + ": Finds all persons who match any of "
             + "the specified searched keywords (case-sensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "

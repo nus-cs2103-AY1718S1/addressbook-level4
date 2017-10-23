@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import static java.util.Arrays.asList;
+
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -9,6 +11,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.email.Email;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -21,6 +24,8 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, Singapore 408769";
+    public static final String DEFAULT_SCHEDULE_DATE = "15-01-1997";
+    public static final String DEFAULT_ACTIVITY = "Play basketball";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -31,8 +36,11 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Set<Email> defaultEmail = SampleDataUtil.getEmailSet(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            Set<Schedule> defaultSchedule = SampleDataUtil.getScheduleSet(asList(DEFAULT_SCHEDULE_DATE),
+                    asList(DEFAULT_ACTIVITY));
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultSchedule,
+                    defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -60,7 +68,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
+    public PersonBuilder withTags(String... tags) {
         try {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {

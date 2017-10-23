@@ -92,6 +92,11 @@ public class HelpCommandTest {
         commandResultAlias = getHelpCommand("q").execute();
         assertEquals(ExitCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
         assertEquals(ExitCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("schedule").execute();
+        commandResultAlias = getHelpCommand("sc").execute();
+        assertEquals(ScheduleCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(ScheduleCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
     }
 
     @Test

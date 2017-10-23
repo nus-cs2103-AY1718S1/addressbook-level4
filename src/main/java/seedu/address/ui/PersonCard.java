@@ -45,6 +45,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox emails;
     @FXML
+    private FlowPane schedules;
+
+    @FXML
     private FlowPane tags;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
@@ -53,6 +56,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initEmails(person);
         initTags(person);
+        initSchedules(person);
         bindListeners(person);
     }
 
@@ -72,14 +76,26 @@ public class PersonCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
+
         person.emailProperty().addListener((observable, oldValue, newValue) -> {
             emails.getChildren().clear();
             initEmails(person);
         });
+
+        person.scheduleProperty().addListener((observable, oldValue, newValue) -> {
+            schedules.getChildren().clear();
+            initSchedules(person);
+        });
+
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
         });
+    }
+
+    private void initSchedules(ReadOnlyPerson person) {
+        person.getSchedules().forEach(schedule -> schedules.getChildren().add(new Label(
+                "Date: " + schedule.getScheduleDate() + " Activity: " + schedule.getActivity())));
     }
 
     /**
