@@ -19,6 +19,13 @@ public class BloodtypeTest {
         assertFalse(Bloodtype.isValidBloodType("ABCDE")); // more than three characters
         assertFalse(Bloodtype.isValidBloodType("+")); // "+" or "-" alone
         assertFalse(Bloodtype.isValidBloodType("-")); // "+" or "-" alone
+        assertFalse(Bloodtype.isValidBloodType("B++"));
+        assertFalse(Bloodtype.isValidBloodType("+B"));
+        assertFalse(Bloodtype.isValidBloodType("+F"));
+        assertFalse(Bloodtype.isValidBloodType("N"));
+        assertFalse(Bloodtype.isValidBloodType("?"));
+        assertFalse(Bloodtype.isValidBloodType("BB"));
+        assertFalse(Bloodtype.isValidBloodType("BA"));
 
         // valid blood types
         assertTrue(Bloodtype.isValidBloodType("AB")); // all caps
@@ -26,8 +33,17 @@ public class BloodtypeTest {
         assertTrue(Bloodtype.isValidBloodType("aB")); // case insensitive
         assertTrue(Bloodtype.isValidBloodType("O")); // one character
         assertTrue(Bloodtype.isValidBloodType("B+")); // inclusive of + or - symbol
-        
+
         //Placeholder blood type if no input detected
         assertTrue(Bloodtype.isValidBloodType(NON_COMPULSORY_BLOODTYPE));
+
+        //Potential weird cases which could be improved on in the future
+        assertTrue(Bloodtype.isValidBloodType(NON_COMPULSORY_BLOODTYPE + "+"));
+        assertTrue(Bloodtype.isValidBloodType("O+"));
+        assertTrue(Bloodtype.isValidBloodType("AB+"));
+        assertTrue(Bloodtype.isValidBloodType("ab+"));
+        assertTrue(Bloodtype.isValidBloodType("aB+"));
+
+
     }
 }
