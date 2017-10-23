@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W11-B4/main
 
 By: `W-11 B4`      Since: `Sep 2017`      Licence: `MIT`
 
@@ -18,25 +18,25 @@ By: `W-11 B4`      Since: `Sep 2017`      Licence: `MIT`
 Unify is a Command Line Interface AddressBook that helps manage your contacts efficiently.
 
 === Do More with Less
-Unlike conventional Address Books, Unify adopts a CLI (Command Line Interface).
-By having a CLI, you can navigate and manage Unify efficiently by typing `Commands`.
-These `Commands` concisely capture the important details of your action into a single line.
+Unlike conventional Address Books, Unify adopts a Command-Line Interface (CLI).
+By having a CLI, you can navigate and manage Unify efficiently by typing commands.
+Commands capture the important details of your action into a concise line.
 With just one line, you can traverse your large network to find your old pal John or update your Mum's phone number.
 Now you can spend less time in your Address Book, and more time on what matters most to you.
 
 
 === First Time CLI User?
 
-* Don't fret! Unify offers inline hints to prompt you on what to type next,
+* Don't fret! Unify offers inline hints to prompt you what to type next,
 +
 image::UG_Hints.png[width="300"]
 +
-and will validate your input as you type away. +
+and will validate your input as you type. +
 +
 image::UG_Validation.png[width="300"]
 +
 * Afraid you will accidentally delete your girlfriend's details? We've got you covered! The `undo` command lets you revert any important changes to prevent any future embarrassment/pain. +
-* Still lost? You can type `help` to access the User Guide whenever you need to. +
+* Still lost? You can type `help` to access the User Guide whenever you need. +
 * Unify will guide you along the way so that you can turn from Novice to Master in no time! +
 
 
@@ -50,7 +50,7 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. You should see the application open in a few seconds:
 +
 image::UG_introui.png[width="790"]
 +
@@ -81,6 +81,7 @@ image::UG_help.png[width="590"]
 
 === Viewing help : `help`
 
+Opens the User Guide +
 Format: `help`
 
 . Type `help` into the command box, and press kbd:[Enter] to execute it.
@@ -92,7 +93,7 @@ image::UG_help2.png[width="790"]
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 Alias: `a`
 
 [TIP]
@@ -116,7 +117,7 @@ image::UG_add2.png[width="790"]
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` +
 Alias: `l`
 
 . Type `list` into the command box, and press kbd:[Enter] to execute it.
@@ -129,7 +130,7 @@ image::UG_list2.png[width="790"]
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 Alias: `e`
 
 ****
@@ -168,11 +169,11 @@ to search for people based on their details, which include: +
 * Tags
 
 Find people whose names contain any of the given keywords. +
-Format: `find PREFIX/KEYWORD [MORE_PREFIX/KEYWORDS]...`
+Format: `find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 Alias: `f`
 
 IMPORTANT: Only people matching all the keywords will be returned (i.e. `AND` search).
-e.g. `n/Hans n/Bo` will not return `Hans Gruber`, `Bo Yang` but will return `Hans Holbo`.
+e.g. `n/Hans n/Bo` will not return `Hans Gruber` or `Bo Yang` but will return `Hans Holbo`.
 
 ****
 * The search is case insensitive. e.g `n/hans` will match `Hans`
@@ -201,7 +202,7 @@ Searches for all people with the same tag. image:UG_ClickTagOutput.png[width="30
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` +
 Alias: `d`
 
 ****
@@ -237,7 +238,7 @@ image::UG_delete2.png[width="790"]
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` +
 Alias: `s`
 
 ****
@@ -284,12 +285,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
 Alias: `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -311,7 +312,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
 Alias: `r`
 
 Examples:
@@ -340,10 +341,10 @@ Format: `clear`
 === Playing background music : `music play`
 
 Plays a specific genre music track from a list of built in mp3 music from Unify or resumes playing currently paused music track. +
-Format: `music play GENRE`
+Format: `music play [GENRE]`
 
 [NOTE]
-The genre can only be pop, dance or classic. "music play" alone will play pop songs as default.
+The genre can only be pop, dance or classic. `music play` alone will play pop songs as default.
 
 === Stopping background music : `music stop`
 
@@ -371,7 +372,6 @@ Examples:
 * `remark 1 r/Likes to drink coffee` +
 Add / Edits the remark for the first person to Likes to drink coffee.
 
-
 === Remove a remark : `remark`
 
 Edits the remark for a person specified in the INDEX. +
@@ -384,8 +384,10 @@ Removes the remark for the first person.
 
 === Adding aliases : `alias`
 
-Adds an alias to another command. +
-Format: `alias ALIAS COMMAND`
+If you find yourself forgetting your commands often, you can define aliases to make them mean the same thing! +
+
+Adds an alias to another command. If unspecified, lists all aliases. +
+Format: `alias [ALIAS COMMAND]`
 
 Examples:
 
@@ -397,10 +399,10 @@ Lists all your previously defined aliases.
 === Deleting aliases : `unalias`
 
 Deletes a previously defined alias. +
-Format: `unalias ALIAS COMMAND`
+Format: `unalias ALIAS`
 Examples:
 
-* `alias -d show` +
+* `unalias show` +
 `show` +
 The `show` command fails as there is no longer such a command.
 
@@ -411,8 +413,7 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+Unify knows that your contacts are important and automatically saves them to your hard disk. There is no need to save manually.
 
 == FAQ
 
@@ -437,6 +438,6 @@ e.g. `find James Jake`
 e.g.`select 2`
 * *History* : `history`
 * *Music* : `music [MUSIC COMMAND]`
+* *Redo* : `redo`
 * *Undo* : `undo`
 * *Unalias* `unalias ALIAS`
-* *Redo* : `redo`
