@@ -1,9 +1,10 @@
 package seedu.address.logic.parser;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.util.Calendar;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appointment;
 
-import java.util.Calendar;
+
 
 public class AddAppointmentParserTest {
 
