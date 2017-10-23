@@ -854,9 +854,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add birthday to person and be reminded when date is near |know the birthday and prepare in advance
 
-|`* * *` |user |find a person by address, birthday, phone, tags |locate details of persons when name is forgetten
+|`* * *` |user |find a person by address, birthday, phone, tags |locate details of persons when name is forgotten
 
-|`* * *` |user |add a new person leaving out any details other than name |add a person that I am not familar with
+|`* * *` |user |add a new person leaving out any details other than name |add a person that I am not familiar with
 
 |`* * *` |user |edit details of a person |change person's details without removing and adding the person again
 
@@ -869,10 +869,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |tag people using any tag |organize my contacts and add other pertinent information about them
 
 |`* * *` |user |use case-insensitive commands |type or retype commands in a specific case
-
-|`* * *` |user |add contacts while leaving one or more fields blank, except for the name |save contacts without having to know every detail
-
-|`* * *` |user |search my contacts by name, number, tag or address |find people more easily
 
 |`* * *` |user |conduct the search quickly and efficiently |save time
 
