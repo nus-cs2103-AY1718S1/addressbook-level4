@@ -130,6 +130,14 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Displays all tasks in the address book.
+     */
+    protected void showAllTasks() {
+        executeCommand(ListCommand.COMMAND_WORD);
+        assert getModel().getAddressBook().getTaskList().size() == getModel().getFilteredTaskList().size();
+    }
+
+    /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
@@ -138,11 +146,27 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Displays all tasks with any parts of their description matching {@code keyword} (case-insensitive).
+     */
+    protected void showTasksWithDescription(String keyword) {
+        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
+        assert getModel().getFilteredTaskList().size() < getModel().getAddressBook().getTaskList().size();
+    }
+
+    /**
      * Selects the person at {@code index} of the displayed list.
      */
     protected void selectPerson(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
         assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
+    }
+
+    /**
+     * Selects the task at {@code index} of the displayed list.
+     */
+    protected void selectTask(Index index) {
+        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        assert getTaskListPanel().getSelectedCardIndex() == index.getZeroBased();
     }
 
     /**
@@ -256,7 +280,8 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE),
+                    getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
