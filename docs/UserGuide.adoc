@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-T16-B1/main
+:repoURL: https://github.com/CS2103AUG2017-T16-B1/main/tree/master
 
-By: `Team T16-B1`      Since: `Oct 2017`      Licence: `MIT`
+By: `Team T16-B1`      Since: `Sept 2017`      Licence: `MIT`
 
 == Introduction
 Unable to keep track of all your deliveries?
