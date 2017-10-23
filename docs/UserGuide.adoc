@@ -111,7 +111,7 @@ Selects the 2nd person in the address book and attains the website of the 2nd pe
 The website details is then loaded into the browser.
 * `find Betsy` +
 `access 1` +
-Selects the 1st person in the results of the `find` command and attains the website of the 2nd person.
+Selects the 1st person in the results of the `find` command and attains the website of the 1st person.
 The website details is then loaded into the browser.
 
 === Listing all persons : `list`
@@ -327,9 +327,12 @@ Format: `add n/NAME d/DATE a/ADDRESS`
 
 Examples:
 
-* `addevent n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach`
-* `addevent n/Orbital d/1/5/2018 a/NUS School Of Computing`
-* `addevent n/Halloween Horror Night d/31/10/2017 a/Universal Studios Singapore
+* `addevent n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach` +
+Adds an event `ZoukOut` in the address book.
+* `addevent n/Orbital d/1/5/2018 a/NUS School Of Computing` +
+Adds an event `Orbital` in the address book.
+* `addevent n/Halloween Horror Night d/31/10/2017 a/Universal Studios Singapore` +
+Adds an event `Halloween Horror Night` in the address book.
 
 === Favouriting a person : `favourite`
 `since v1.2` `Dickson Chan`
