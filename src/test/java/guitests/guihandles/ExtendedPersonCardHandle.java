@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
  * Provides a handle to a person card in the person list panel.
  */
 public class ExtendedPersonCardHandle extends NodeHandle<Node> {
-    public static final String EXTENDED_PERSON_CARD_ID = "#extendedPersonCard";
+    public static final String EXTENDED_PERSON_CARD_ID = "#extendedPersonCardPlaceholder";
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
