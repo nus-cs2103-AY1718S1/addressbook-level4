@@ -323,20 +323,24 @@ There is no need to save manually.
 [width="90%",cols="10%,<10%,<70%",options="header",]
 |=======================================================================
 |Feature |Alias |Command Format
-| *Add* | *a* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-| *Edit* | *e* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-| *Find* | *f* | `find [PREFIX KEYWORD]...` +
-| *Favourite* | *fav* | `favourite INDEX` +
-| *List* | *l* | `list` +
-| *Select* | *s* | `select INDEX` +
-| *Help* | *h* | `help` +
-| *Remove* | *rm* | `remove [TAG]... [INDEX]...` +
-| *Delete* | *d* | `delete INDEX` +
-| *Clear* | *c* | `clear` +
-| *History* | *hs* | `history` +
-| *Undo* | *u* | `undo` +
-| *Redo* | *r* | `redo` +
+| *Help* | *h* | `[.underline]#help#` +
+| *Add* | *a* | `[.underline]#add# n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+| *List* | *l* | `[.underline]#list#` +
+| *Edit* | *e* | `[.underline]#edit# INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+| *Favourite* | *fav* | `[.underline]#favourite# INDEX` +
+| *Find* | *f* | `[.underline]#find# [PREFIX KEYWORD]...` +
+| *Delete* | *d* | `[.underline]#delete# INDEX` +
+| *Select* | *s* | `[.underline]#select# INDEX` +
+| *History* | *hs* | `[.underline]#history#` +
+| *Undo* | *u* | `[.underline]#undo#` +
+| *Redo* | *r* | `[.underline]#redo#` +
+| *Remove* | *rm* | `[.underline]#remove# [TAG]... [INDEX]...` +
+| *Clear* | *c* | `[.underline]#clear#` +
+| *exit* | *x* | `[.underline]#exit#` +
 |=======================================================================
+
+The underlined command keywords can be substituted by their aliases. +
+For e.g. to favourite the person at INDEX 4: `fav 4` instead of `favourite 4` can be used.
 
 == *Since v1.2*
 
