@@ -10,7 +10,7 @@ import static java.util.Objects.requireNonNull;
 public class Website {
 
     public static final String MESSAGE_WEBSITE_CONSTRAINTS =
-            "Person's website should start with \"https://\" and end with a top-level domain ";
+            "Person's website should end one or more top-level domain and include no special characters.";
 
     public final String value;
 
