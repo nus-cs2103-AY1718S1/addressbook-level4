@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.ListingUnit.LESSON;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -8,9 +10,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
-
-import static seedu.address.model.ListingUnit.LESSON;
-
 
 /**
  * Bookmark a lesson identified using it's last displayed index from the address book into the favourite list.

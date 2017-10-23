@@ -12,20 +12,32 @@ public enum ListingUnit {
     private static ListingUnit currentListingUnit = MODULE;
     private static Predicate currentPredicate;
 
-    /** Get current Listing unit */
+    /**
+     * Get current Listing unit
+     */
     public static ListingUnit getCurrentListingUnit() {
         return currentListingUnit;
     }
 
-    /** Reset listing unit in the panel with the new ListingUnit and set previous listing unit */
+    /**
+     * Reset listing unit in the panel with the new ListingUnit and set previous listing unit
+     */
     public static void setCurrentListingUnit(ListingUnit unit) {
         currentListingUnit = unit;
     }
 
-    /** Get current predicate */
-    public static Predicate getCurrentPredicate() { return currentPredicate; }
+    /**
+     * Get current predicate
+     */
+    public static Predicate getCurrentPredicate() {
+        return currentPredicate;
+    }
 
-    /** Set current predicate */
-    public static void setCurrentPredicate(Predicate predicate) { currentPredicate = predicate; }
+    /**
+     * Set current predicate
+     */
+    public static void setCurrentPredicate(Predicate predicate) {
+        currentPredicate = predicate;
+    }
 
 }

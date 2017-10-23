@@ -2,6 +2,9 @@ package seedu.address.model.module;
 
 import java.util.Objects;
 
+/**
+ * Represents a Booked time slot of a venue
+ */
 public class BookedSlot {
 
     public final Location location;
@@ -20,6 +23,9 @@ public class BookedSlot {
         return timeSlot;
     }
 
+    /**
+     * Returns true if both booked slot have the same location and time slot
+     * */
     public boolean isSameStateAs(BookedSlot other) {
         return other == this || (other != null && other.getLocation().equals(this.location)
                 && other.getTimeSlot().equals(this.timeSlot));
