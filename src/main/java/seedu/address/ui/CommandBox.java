@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -381,6 +382,8 @@ public class CommandBox extends UiPart<Region> {
             finalText = concatPrefix(PREFIX_BLOODTYPE);
         } else if (containsPrefix("remark")) {
             finalText = concatPrefix(PREFIX_REMARK);
+        } else if (containsPrefix("date")) {
+            finalText = concatPrefix(PREFIX_DATE);
         } else if (containsPrefix("all")) {
             finalText = concatPrefix(PREFIX_TAG);
         } else {
@@ -408,6 +411,8 @@ public class CommandBox extends UiPart<Region> {
             return (!containsBloodtype() && (addPollSuccessful() || editPollSuccessful()));
         case "remark":
             return (!containsRemark() && (addPollSuccessful() || editPollSuccessful()));
+        case "date":
+            return (!containsDate() && (addPollSuccessful() || editPollSuccessful()));
         default:
             return (containsAllCompulsoryPrefix() && (addPollSuccessful() || editPollSuccessful()));
 
@@ -479,7 +484,8 @@ public class CommandBox extends UiPart<Region> {
      */
     private boolean containsAllCompulsoryPrefix() {
         return containsAddress() && containsEmail() && containsBloodtype()
-                && containsName() && containsPhone() && containsRemark();
+                && containsName() && containsPhone() && containsRemark()
+                && containsDate();
     }
 
     /**
@@ -503,6 +509,14 @@ public class CommandBox extends UiPart<Region> {
     private boolean containsRemark() {
         String currentInput = commandTextField.getText();
         return currentInput.contains(PREFIX_REMARK.getPrefix());
+    }
+
+    /**
+     * Checks if existing input has Remark Prefix String
+     */
+    private boolean containsDate() {
+        String currentInput = commandTextField.getText();
+        return currentInput.contains(PREFIX_DATE.getPrefix());
     }
 
     /**
