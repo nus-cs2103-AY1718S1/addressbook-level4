@@ -147,7 +147,8 @@ __Constraints__
 * Only full words will be matched e.g `Han` will not match `Hans`
 
 
-==== Finding contacts by tag : `findtag`
+==== Finding contacts by tag: `findtag`
+
 
 You can even find people whose tags contain any of the given keywords. +
 
@@ -244,17 +245,15 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-
-__Constraints__ 
+__Constraints__
 
 ****
-* The index refers to the index number shown in the most recent listing.
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. 
+* INDEX *must be a positive integer* 1, 2, 3, ...
 * If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
-* The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
-==== Tagging multiple contacts : `tag`
-+
+==== Tagging multiple contacts : `tag` +
 
 Tags are a useful way of grouping and labeling contacts. But editing them manually, one by one, can be a tedious process.
 Instead, use:
@@ -376,9 +375,72 @@ _Constraints_ +
 * Dates MUST be preceded by one of the prefixes.
 ****
 
+==== Finding tasks by description: `findtask`
+
+Finds persons whose description contain any of the given keywords. +
+Format: `findtask KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `finish` will match `Finish`
+* The order of the keywords does not matter. e.g. `Finish task` will match `task finish`
+* Only the description is searched.
+* Only full words will be matched e.g `Finish` will not match `Finished`
+****
+
+Examples:
+
+* `findtask finish` +
+Returns `finish task tonight` and `finish task tomorrow`
+
+* `findtask finish task tonight` +
+Returns any task having descriptions `finish`, `task`, or `tonight`
+
 ==== Editing tasks
 ==== Archiving completed tasks
-==== Deleting tasks
+==== Listing all tasks : `listtask`
+
+Shows a list of all taks in the task manager. +
+Format: `listtask`
+
+==== Selecting a task: `selecttask`
+
+Selects the task identified by the index number used in the last task listing. +
+Formate: `selecttask INDEX`
+
+****
+* Selects the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `listtask` +
+`select 2` +
+Selects the 2nd task in the task manager.
+* `findtask finish` +
+`select 1` +
+Selects the 1st task in the results of the `findtask` command.
+
+
+==== Deleting tasks : `deletetask`
+
+Deletes the specified task from the task manager. +
+Formate: `deletetask INDEX`
+
+****
+* Deletes the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* the index *must be a positive integer* 1, 2, 3, ...
+****
+
+__Constraints__ 
+
+****
+* The index refers to the index number shown in the most recent listing.
+* If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
 
 === Managing Common Features
 
@@ -468,18 +530,26 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/040697 t/friend t/colleague`
-* *Clear* : `clear`
+* *Clear addressbook* : `clear addressbook`
+* *Clear tasks* : `clear tasks`
+* *Clear contacts* : `clear contacts`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Deletetask* `deletetask INDEX` +
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Findtask* : `findtask KEYWORD [MORE_KEYWORDS]` +
+e.g. `findtask finish task`
 * *Findtag* : `findtag KEYWORD [MORE_KEYWORDS]` +
 e.g. `findtag friends`
 * *List* : `list`
+* *Listtask* : `listtask`
 * *Help* : `help`
 * *Select* : `select INDEX` +
+e.g.`select 2`
+* *Selecttask* : `selecttask INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
