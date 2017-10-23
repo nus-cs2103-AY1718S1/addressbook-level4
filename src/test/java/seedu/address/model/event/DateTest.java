@@ -15,7 +15,7 @@ public class DateTest {
         assertFalse(Date.isValidDate("2001/2/11")); // not dd/mm/yyyy format
 
         // valid date
-        assertTrue(Date.isValidDate("11/12/1998"));
+        assertTrue(Date.isValidDate("1998-11-12"));
         assertTrue(Date.isValidDate("12/01/1971"));
         assertTrue(Date.isValidDate("14/01/1986"));
     }
