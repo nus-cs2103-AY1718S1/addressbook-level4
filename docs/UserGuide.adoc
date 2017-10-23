@@ -104,6 +104,11 @@ You can add appointment or none at all.
 * `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/O+`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/AB d/2018/01/01 00:00 t/criminal`
 
+[NOTE]
+You can only use the following twelve inputs for BLOODTYPE. +
+A, A+, A-, B, B+, B-, AB, AB+, AB-, O, O+, O-. +
+Both capital letters and small letters are can be entered.
+
 <<<
 
 === Listing persons - All / By tag : `list`

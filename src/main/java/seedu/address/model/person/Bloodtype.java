@@ -11,8 +11,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Bloodtype {
 
     public static final String MESSAGE_BLOODTYPE_CONSTRAINTS =
-            "Person blood type should only contain one or two alpha characters, and it should not be blank";
+            "Person blood type should not be blank.\n" +
+            "Valid inputs are: A, A+, A-, B, B+, B-, O, O+, O-, AB, AB+, AB-. \n" +
+            "Both capital letters and small letters are allowed.";
 
+    // Checks for a, b, ab, or o at start of string.
+    // Characters are case insensitive.
+    // Next check is for "+" or "-". "+" and "-" does not have to be added.
+    // Credit to lena15n for assistance with regex
     public static final String BLOODTYPE_VALIDATION_REGEX = "(?i)^(a|b|ab|o)[\\+|\\-]{0,1}$";
 
     public final String type;
