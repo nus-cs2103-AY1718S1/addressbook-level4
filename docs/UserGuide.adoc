@@ -56,6 +56,9 @@ image::UG_introui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. Typing *`help`* and pressing kbd:[Enter] will open the help window.
++
+image::UG_help.png[width="790"]
++
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
@@ -79,6 +82,12 @@ e.g. Typing *`help`* and pressing kbd:[Enter] will open the help window.
 === Viewing help : `help`
 
 Format: `help`
+
+image::UG_help1.png[width="790"]
+image::UG_help2.png[width="790"]
+
+. Type `help` into the command box, and press kbd:[Enter] to execute it.
+. The help window will appear as shown above.
 
 === Adding a person: `add`
 
