@@ -29,11 +29,11 @@ Now you can spend less time in your Address Book, and more time on what matters 
 
 * Don't fret! Unify offers inline hints to prompt you on what to type next,
 +
-image::Hints.png[width="300"]
+image::UG_Hints.png[width="300"]
 +
 and will validate your input as you type away. +
 +
-image::Validation.png[width="300"]
+image::UG_Validation.png[width="300"]
 +
 * Afraid you will accidentally delete your girlfriend's details? We've got you covered! The `undo` command lets you revert any important changes to prevent any future embarrassment/pain. +
 * Still lost? You can type `help` to access the User Guide whenever you need to. +
@@ -144,8 +144,8 @@ e.g. `n/Hans n/Bo` will not return `Hans Gruber`, `Bo Yang` but will return `Han
 * The order of the keywords does not matter. e.g. `n/Hans n/Bo` will match `Bo Hans`
 * You may search for different fields by adding a prefix. ([n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG])
 * If the first field is a name, you do not need a prefix. (find NAME [MORE_PREFIX/KEYWORDS]...) +
-image:FindByNameInput.png[width="300"] +
-image:FindByNameOutput.png[width="300"] +
+image:UG_FindByNameInput.png[width="300"] +
+image:UG_FindByNameOutput.png[width="300"] +
 * Words will be matched if the keyword is contained by the peron's details e.g. `n/Han` will identify `Hans`, `n/Gabrielle` will not identify `Gabriel`.
 ****
 
@@ -159,8 +159,8 @@ Returns any person who's name contains `john`, has a tag which contains `friend`
 Returns any person who's address contains `Blk 100 Street` (case-insensitive). Does not return person who's address is `Street Blk 100`.
 
 TIP: You may also click on tags to do a search for that tag. (ie. find t/CLICKED_TAG); +
-Clicking on a tag, image:ClickTagInput.png[width="300"] +
-Searches for all people with the same tag. image:ClickTagOutput.png[width="300"] +
+Clicking on a tag, image:UG_ClickTagInput.png[width="300"] +
+Searches for all people with the same tag. image:UG_ClickTagOutput.png[width="300"] +
 
 
 === Deleting a person : `delete`
