@@ -5,10 +5,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.Calendar;
+import java.util.List;
 
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Appointment;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 
@@ -32,53 +36,69 @@ public class AddAppointmentCommand extends Command {
     public static final String INVALID_PERSON = "This person is not in your address book";
     public static final String INVALID_DATE = "Invalid Date. Please enter a valid date.";
 
-    private final Appointment appointment;
+
+    private final Index index;
+    private final Calendar date;
 
     public AddAppointmentCommand() {
-        appointment = null;
+        date = null;
+        index = null;
     }
 
-    public AddAppointmentCommand(Appointment appointment) {
-        this.appointment = appointment;
+    public AddAppointmentCommand(Index index, Calendar date) {
+        this.index = index;
+        this.date = date;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
 
-        if (appointment == null) {
+        if (date == null || index == null) {
             model.listAppointment();
             return new CommandResult("Rearranged contacts to show upcoming appointments.");
         }
-        requireNonNull(appointment);
+        requireNonNull(date);
+        requireNonNull(index);
+
         if (!isDateValid()) {
             return new CommandResult(INVALID_DATE);
         }
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToAddAppointment = lastShownList.get(index.getZeroBased());
+        Appointment appointment = new Appointment(personToAddAppointment.getName().toString(), date);
         try {
             model.addAppointment(appointment);
         } catch (PersonNotFoundException e) {
             return new CommandResult(INVALID_PERSON);
         }
-        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.toString());
+        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName().toString()
+                + " on "
+                +  appointment.getDate().toString());
     }
 
     /**
      * @return is appointment date set to after current time
      */
     private boolean isDateValid() {
+        requireNonNull(date);
         Calendar calendar = Calendar.getInstance();
-        return !appointment.getDate().before(calendar.getTime());
+        return !date.getTime().before(calendar.getTime());
     }
 
-    public Appointment getAppointment() {
-        return this.appointment;
+    public Index getIndex() {
+        return this.index;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddAppointmentCommand // instanceof handles nulls
-                && this.appointment.getPersonName()
-                .equals((((AddAppointmentCommand) other).getAppointment().getPersonName())));
+                && this.index.getZeroBased() ==  ((AddAppointmentCommand) other).index.getZeroBased());
     }
 
     /**

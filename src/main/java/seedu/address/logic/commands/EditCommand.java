@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -10,6 +11,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -49,6 +52,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_BLOODTYPE + "BLOODTYPE] "
+            + "[" + PREFIX_DATE + "DATE]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "[" + PREFIX_REMARK + "REMARK]...\n"
             + "Example 1: " + COMMAND_ALIAS + " 1 "
@@ -116,7 +120,15 @@ public class EditCommand extends UndoableCommand {
         Bloodtype updatedBloodType = editPersonDescriptor.getBloodType().orElse(personToEdit.getBloodType());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
-        Appointment appointment = personToEdit.getAppointment();
+        Date date = editPersonDescriptor.getDate().orElse(personToEdit.getAppointment().getDate());
+        Appointment appointment;
+        if (date == null) {
+            appointment = new Appointment(personToEdit.getName().toString());
+        } else {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            appointment = new Appointment(updatedName.toString(), calendar);
+        }
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedBloodType, updatedTags, updatedRemark, appointment);
 
@@ -152,6 +164,7 @@ public class EditCommand extends UndoableCommand {
         private Bloodtype bloodType;
         private Remark remark;
         private Set<Tag> tags;
+        private Date date;
 
         public EditPersonDescriptor() {
         }
@@ -164,6 +177,7 @@ public class EditCommand extends UndoableCommand {
             this.bloodType = toCopy.bloodType;
             this.remark = toCopy.remark;
             this.tags = toCopy.tags;
+            this.date = toCopy.date;
         }
 
         /**
@@ -171,7 +185,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
-                    this.bloodType, this.remark, this.tags);
+                    this.bloodType, this.remark, this.date, this.tags);
         }
 
         public void setName(Name name) {
@@ -230,6 +244,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
+        public void setDate(Date date) {
+            this.date = date;
+        }
+
+        public Optional<Date> getDate() {
+            return Optional.ofNullable(date);
+        }
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -251,7 +273,9 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getBloodType().equals(e.getBloodType())
                     && getRemark().equals(e.getRemark())
+                    && getDate().equals(e.getDate())
                     && getTags().equals(e.getTags());
+
         }
     }
 }

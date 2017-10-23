@@ -29,6 +29,7 @@ public class PersonBuilder {
     public static final String DEFAULT_BLOODTYPE = "O";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
+    public static final String DEFAULT_DATE = "2018/01/01 00:00";
     private Person person;
 
     public PersonBuilder() {
@@ -40,7 +41,13 @@ public class PersonBuilder {
             Bloodtype defaultBloodType = new Bloodtype(DEFAULT_BLOODTYPE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
-            Appointment  appointment = new Appointment(defaultName.toString());
+            Calendar calendar = Calendar.getInstance();
+            try {
+                calendar.setTime(Appointment.DATE_FORMATTER.parse(DEFAULT_DATE));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Appointment  appointment = new Appointment(defaultName.toString(), calendar);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
                 defaultAddress, defaultBloodType, defaultTags, defaultRemark, appointment);
         } catch (IllegalValueException ive) {

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -36,7 +37,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_BLOODTYPE, PREFIX_REMARK, PREFIX_TAG);
+                        PREFIX_BLOODTYPE, PREFIX_REMARK,PREFIX_DATE, PREFIX_TAG);
+
 
         Index index;
 
@@ -56,8 +58,9 @@ public class EditCommandParser implements Parser<EditCommand> {
                     .ifPresent(editPersonDescriptor::setBloodType);
             ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK))
                     .ifPresent(editPersonDescriptor::setRemark);
+            ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).ifPresent(editPersonDescriptor::setDate);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | java.text.ParseException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 

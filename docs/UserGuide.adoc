@@ -92,16 +92,17 @@ image::helpUI.png[width="500"]
 === Adding a person: `add`
 
 You can add a person to the address book by following the format below. +
-*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` +
-*Shorthand Format:* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...`
+*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE d/APPOINTMENTDATE [t/TAG]...` +
+*Shorthand Format:* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE d/APPOINTMENTDATE [t/TAG]...`
 
 [TIP]
-You can add any number of tags for a person or none at all.
+You can add any number of tags for a person or none at all. +
+You can add appointment or none at all.
 
 *Examples:*
 
 * `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/O+`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/AB t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/AB d/2018/01/01 00:00 t/criminal`
 
 <<<
 
@@ -325,9 +326,9 @@ Color name input can be in english or hexadecimal form.
 
 === Set appointment: `appointment`
 
-You can set an appointment to a specific contact. +
-*Format:* `appointment n/NAME d/YYYY/MM/DD HH:MM` +
-*Shorthand format:* `apt n/NAME d/YYYY/MM/DD HH:MM`
+You can set an appointment to a specific contact at a given index. +
+*Format:* `appointment INDEX d/YYYY/MM/DD HH:MM` +
+*Shorthand format:* `apt INDEX d/YYYY/MM/DD HH:MM`
 
 You can sort list by appointment dates. +
 *Format:* `appointment` +

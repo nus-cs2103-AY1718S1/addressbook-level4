@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -26,11 +27,12 @@ public class AddCommand extends UndoableCommand {
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_BLOODTYPE + "BLOODTYPE "
+            + "[" + PREFIX_PHONE + "PHONE]"
+            + "[" + PREFIX_EMAIL + "EMAIL]"
+            + "[" + PREFIX_ADDRESS + "ADDRESS]"
+            + "[" + PREFIX_BLOODTYPE + "BLOODTYPE]"
             + "[" + PREFIX_REMARK + "REMARK]"
+            + PREFIX_DATE + "DATE "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example 1: " + COMMAND_ALIAS + " "
             + PREFIX_NAME + "John Doe "
@@ -40,7 +42,8 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_BLOODTYPE + "O "
             + PREFIX_REMARK + "Broke his foot during soccer practice "
             + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney \n"
+            + PREFIX_TAG + "owesMoney "
+            + PREFIX_DATE + "2020/10/10 00:00 "
             + "Example 2: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Mary Jane "
             + PREFIX_PHONE + "87678977 "
