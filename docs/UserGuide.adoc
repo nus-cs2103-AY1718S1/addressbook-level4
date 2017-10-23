@@ -115,6 +115,7 @@ image::UG_add.png[width="790"]
 _Figure 3.2 add command result_
 
 === Listing
+
 ==== Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
