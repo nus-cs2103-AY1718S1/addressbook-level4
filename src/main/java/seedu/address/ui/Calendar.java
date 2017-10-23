@@ -42,8 +42,11 @@ public class Calendar {
             }
         }
         // Days of the week labels
-        Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
-                new Text("Wednesday"), new Text("Thursday"), new Text("Friday"), new Text("Saturday") };
+        Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"),
+                                      new Text("Tuesday"), new Text("Wednesday"), new Text("Thursday"),
+                                      new Text("Friday"), new Text("Saturday") };
+
+
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         Integer col = 0;
