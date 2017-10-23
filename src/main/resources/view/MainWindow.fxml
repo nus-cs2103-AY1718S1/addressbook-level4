@@ -45,7 +45,6 @@
     </VBox>
       <SplitPane dividerPositions="0.4">
         <items>
-      
                 <StackPane fx:id="browserPlaceholder" prefWidth="340.0" stylesheets="@DarkTheme.css">
             <padding>
               <Insets bottom="5.0" top="5.0" />
