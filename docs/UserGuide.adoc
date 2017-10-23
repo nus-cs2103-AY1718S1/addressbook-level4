@@ -126,13 +126,6 @@ Consequently: +
 
 * The list of Contact Cards is filtered to display only the card(s) of the contact(s) who are found.
 
-For example, the command: +
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
 [TIP]
 The search is case insensitive. e.g `hans` will match `Hans` +
  
@@ -142,6 +135,13 @@ The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans` +
 [TIP]
 Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang` +
 
+For example, the command: +
+
+* `find John` +
+Returns `john` and `John Doe`
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+
 __Constraints__
 
 * Only full words will be matched e.g `Han` will not match `Hans`
@@ -149,95 +149,181 @@ __Constraints__
 
 ==== Finding contacts by tag : `findtag`
 
-Finds persons whose tags contain any of the given keywords. +
+You can even find people whose tags contain any of the given keywords. +
+
 Format: `findtag KEYWORD [MORE_KEYWORDS]`
 
-****
-* The search is case insensitive. e.g `friends will match `Friends`
-* Only the tag is searched.
-* Only full words will be matched e.g `Friend` will not match `Friends`
-* Multiple tags could be searched together e.g `findtag friends family`
-* Persons matching at least one keyword will be returned
-****
+[TIP]
+The search is case insensitive. e.g `friends will match `Friends`
 
-Examples:
+[TIP]
+Multiple tags can be searched together e.g `findtag friends family`
+
+[TIP]
+Persons matching at least one keyword will be returned  
+
++
+
+For example:
 
 * `findtag friends` +
 Returns `Alex` and `Bernice Yu`
+
 * `findtag friends family colleagues` +
 Returns any person containing tags `friends`, `family` or `colleagues`
 
-==== Listing contacts : `list`
+__Constraints__ +
 
-Shows a list of all persons in the address book. +
-Format: `list`
+* Only full words will be matched e.g `Friend` will not match `Friends`
 
-==== Editing contacts : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
+==== Editing contacts : `edit` +
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
 
-Examples:
+Editing existing contacts is an easy way to keep track of people who might be changing                numbers, addresses or even their role in your life.
+All you need to do is input a command in the following format to edit a person’s details:
+
+Format: `edit INDEX n/NAME p/PHONE a/ADDRESS e/EMAIL b/BIRTHDAY t/TAG`
+
+When the command succeeds, the Result Display shows:
+
+`Edited Person: NAME Phone: PHONE Email: EMAIL Address: ADDRESS Birthday: BIRTHDAY Tags: [TAG]`
+
+[TIP]
+All items are NOT mandatory for editing. Any number between one and multiple items might be given for successful edit. All items left out will continue to have their original PARAMETERS.
+
+An example to illustrate this shows:
+
+`edit 1 n/Jane Doe p/92413567 a/Singapore e/jane@gmail.com b/09081997 t/sister`
+
+Result Display:
+
+`Edited Person: Jane Doe Phone: 92413567 Email: jane@gmail.com Address: Singapore Birthday: 09081997 Tags: [sister]`
+
+
+Other examples include:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+
+
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
++
+So there you have it; an easy, editable contact!
+
+__Constraints__
+
+****
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. 
+* INDEX *must be a positive integer* 1, 2, 3, ...
+* If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* If a tag prefix is given without a TAG PARAMETER, then the tags will be replaced by a blank (deleted) i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+****
+
 ==== Selecting contacts : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+Selecting a contact is an easy way to click on their Contact Card without having to use the pointer on the screen. 
+To execute this command, type:
+
 Format: `select INDEX`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+This triggers the browser to display the location of the contact in the index.
 
 Examples:
 
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
+
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+
+__Constraints__ 
+
+****
+* The index refers to the index number shown in the most recent listing.
+* If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
 ==== Tagging multiple contacts : `tag`
++
+
+Tags are a useful way of grouping and labeling contacts. But editing them manually, one by one, can be a tedious process.
+Instead, use:
+Format: `tag [INDEX]… t/[TAG]…`
+
+Multiple contacts will be tagged by the tag(s) set in the parameter. 
+
+The Contact Cards will be updated to display the new tags.
+
+[TIP]
+You can add multiple tags to multiple contacts by repeating the tag prefix.
+
+To illustrate, the command:
+
+`tag 1, 2, 3 t/friend t/family`
+Results in all contacts in indices 1, 2 and 3 to be tagged with both [friend] and [family].
+
+__Constraints__
+
+****
+* Each index MUST be valid according to the current list of contacts.
+* If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
+* Every INDEX must be separated by a comma.
+* Every TAG must have a prefix.
+****
 
 ==== Removing tags from multiple contacts : `detag`
 
-Deletes the specified tag of persons identified by the index number. +
-Format: `detag INDEX, INDEX, ... [t/TAG]`
+To delete the specified tag of persons identified by the index number, use: +
 
-***
-* Deletes the tag of the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-***
+Format: `detag [INDEX]... [t/TAG]`
 
-Examples:
+For example:
 
 * `list` +
 `detag 2 t/friends` +
 Deletes the `friends` tag of the 2nd person in the address book.
+
 * `find Betsy` +
 `detag 1, 2, 4 t/OwesMoney` +
 Deletes the `OwesMoney` tag of the 1st, 2nd and 4th person in the results of the `find` command.
 
+__Constraints__
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
 ==== Deleting contacts : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deleting contacts requires just one simple command:
+
+Format : `delete INDEX`
+
+
+All information associated with the contact will be wiped away.
+
+To illustrate:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd person in the address book.
+
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+
+__Constraints__
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -245,30 +331,28 @@ Format: `delete INDEX`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
 === Managing Tasks
 
 ==== Adding tasks: `addtask`
 
 Whether it is a host of pending submissions, a get-together or a multiday program, adding it to Mobilize can easily help you keep track of it all. +
 
+
 Use prefixes:
 ****
 * `from` to denote the date in which the event begins
-* `to` to denote the date in which the task is due to be completed
-* `on` to denote the date of a single event
+* `to`, `on` or `by` to denote the date in which the task is due to be completed
 ****
 
-[NOTE]
+The command follows: +
 
+Format: `addtask DESCRIPTION from START DATE to DEADLINE t/[TAG]…`
+
+As the task is added to a new Task Card, the Result Display shows:
+
+`Task has been added: DESCRIPTION From: START DATE To: DEADLINE`
+
+[NOTE]
 Dates can be in any format as long as the month precedes the date.
 
 [TIP]
@@ -277,18 +361,21 @@ Words or phrases like 'tomorrow', 'yesterday', 'Tue', 'Tuesday', 'next Mon', 'da
 [TIP]
 A person can opt to leave out a single or all dates.
 
+
 Examples:
 
-* `addtask internship applications open from 11-10-2017 to 13-12-2017`
+* `addtask recess week from tomorrow to 15 Sep`
+Sets the description to "recess week" start date to the next day and the deadline to the 15th of September in the current or upcoming year.
+
 * `addtask get groceries`
+Sets the description to "get groceries" leaving the other parameters blank
 
 _Constraints_ +
 
-* All parameters except for the DESCRIPTION are optional.
+****
 * Dates MUST be preceded by one of the prefixes.
+****
 
-
-==== Finding tasks by date
 ==== Editing tasks
 ==== Archiving completed tasks
 ==== Deleting tasks
