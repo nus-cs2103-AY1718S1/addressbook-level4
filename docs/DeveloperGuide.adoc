@@ -362,23 +362,17 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 === Find by Person Details
 
-Unify offers users the option to find people by their details. For example, `find a/NUS t/tutor` searches for person whose `Address` contains `NUS`
-*and* has the Tag `tutor`. This is achieved by setting a `Predicate` on the `filteredPersons` in `Model` by calling `ModelManager#updateFilteredPersonList()`.
-
-To implement the new command syntax, `FindCommandParser` makes use of the `ArgumentTokenizer#tokenize` to generate an `ArgumentMultimap`. The `ArgumentMultimap's`
+Unify offers users the option to find people by their details. To implement the new command syntax,
+`FindCommandParser` makes use of the `ArgumentTokenizer#tokenize` to generate an `ArgumentMultimap`. The `ArgumentMultimap's`
 `key` contains the detail's prefix and `value` contains the keywords that succeed that prefix.
 
 For each detail, there are specific `Predicates` that are defined. They are `AddressContainsKeywordPredicate`, `EmailContainsKeywordPredicate`,
-`NameContainsKeywordPredicate`, `PhoneContainsKeywordPredicate` and `TagsContainKeywordPredicate`. The implementation is as follows:
+`NameContainsKeywordPredicate`, `PhoneContainsKeywordPredicate` and `TagsContainKeywordPredicate`. The implementation for `Predicate#test` is as follows:
 [source,java]
 ----
 public class DetailContainsKeywordPredicate implements Predicate<ReadOnlyPerson> {
 
-    private final String keyword;
-
-    public DetailContainsKeywordPredicate(String keyword) {
-        this.keyword = keyword; //this is the keyword parsed from FindCommandParser
-    }
+    ...
 
     @Override
     public boolean test(ReadOnlyPerson person) {
@@ -394,16 +388,17 @@ public class DetailContainsKeywordPredicate implements Predicate<ReadOnlyPerson>
 [NOTE]
 For Tags, we test for all tags and check for at least one `String#contains` match.
 
-However, just by having a specific `Predicate` for each detail is insufficient. `ModelManager#updateFilteredPersonList()` and the underlying
-link:https://docs.oracle.com/javase/8/javafx/api/javafx/collections/transformation/FilteredList.html[`FilteredList`]
-representing the list of people only takes in one `Predicate` as an argument. As such, to accept multiple details in one query, we need to encapsulate multiple
-`Predicates` into one `Predicate`. This is encapsulated by `PersonContainsFieldsPredicate` which takes in a list of `Predicates` as an argument.
+However, just having a specific `Predicate` for each detail is insufficient as `ModelManager#updateFilteredPersonList()`
+only takes only a single `Predicate` as an argument.
+As such, to accept multiple details in one query, we need to encapsulate multiple `Predicates` into one `Predicate`.
+This is encapsulated by `PersonContainsFieldsPredicate` which takes in a list of `Predicates` as an argument.
 Internally, the `Predicates` are stored in a `HashSet`.
 
 [source,java]
 ----
 public class PersonContainsFieldsPredicate implements Predicate<ReadOnlyPerson> {
-    private final Set<Predicate> predicates;
+
+    ...
 
     public PersonContainsFieldsPredicate(List<Predicate> predicates) {
         this.predicates = predicates.stream().collect(Collectors.toSet()); //Collects in a HashSet
@@ -944,7 +939,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |user |see my contacts while managing my address book |remember what I need to do without flipping back and forth
 |`* * *` |user |backup the contacts into a xml file |transfer my contact details with another user or load the existing details to another computer of mine
-|`* * *` |user |create new contacts in the address book |add more new contacts in the future
+|`* * *` |user |create new contacts in the address book |add new contacts
 |`* * *` |user |type commands that do not follow the format |use them without memorizing the formats
 |`* * *` |user |merge duplicate contacts |use my addressbook without clutter
 |`* * *` |user |group my contacts in more than one grouping |search my contacts easily by groups
@@ -952,14 +947,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |update existing contacts from the address book |update existing contacts if they have changed their contact number or details
 |`* * *` |user |add a short description  |recall details about them
 |`* * *` |user |view all my contacts |organise my contacts easily
-|`* * *` |user |group my users |organize my address book
 |`* * *` |user |delete contacts from the address book |remove unwanted contacts
 |`* *` |user |be prompted about upcoming birthdays |prepare a gift for my friends
 |`* *` |user |see an aesthetically pleasing application |use the app daily and not get bored of it so quickly
 |`* *` |user |have ways to enter commands with shortcuts |update and traverse my address book quickly
 |`* *` |user |sync my contacts from my phone |skip adding users manually
 |`* *` |user |star my favourite contacts |quickly access my most important contacts
-|`* *` |user |easily input the commands as the systems learn the behaviour and common commands that I had in the past |auto-correct my words
+|`* *` |user |easily input the commands as the systems learn the behaviour and common commands that I had in the past |auto-complete my words
 |`* *` |user |use link:#natural-language[natural language] to perform actions |use it without memorising the syntax of commands
 |`* *` |user |easily input commands into the link:#command-line-interface[Command Line Interface (CLI)] with the system prompting me with options of each command |easily input commands without having to refer to the user guide
 |`* *` |user |store my contact's birthday |know when to prepare a gift
@@ -1093,13 +1087,13 @@ Use case resumes at step 2.
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Text to Speech and Speech to Text features should works on Windows 10.
+.  Text to Speech and Speech to Text features should work on Windows 10.
 .  Speech to Text should work with any microphone enabled computer.
 .  Program should have a clean design, that is still readable with low brightness.
 .  Should encompass most point of possible failures.
 .  System should be modular, able to add, remove or improve features anytime without disruption.
 .  Should be user friendly, such that a young child can use it without any supervision.
-.  Should be portable and easily transferable.
+.  Should be link:#portable-app[portable] and easily transferable.
 .  Should be able to hold up to 1000 persons without a noticeable link:#response-time[sluggishness] in performance for typical usage.
 .  A user with above link:#average-typing-speed[average typing speed] for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
@@ -1138,6 +1132,12 @@ Natural Language
 link:http://whatis.techtarget.com/definition/natural-language[Full Definition]
 ....
 In computing, natural language refers to a human language such as English, Russian, German, or Japanese as distinct from the typically artificial command or programming language with which one usually talks to a computer.
+....
+
+[[portable-app]]
+Portable Application
+....
+A portable application (portable app) is a software product designed to be easily moved from one computing environment to another. They include portable versions of regular applications – such as browsers, for example – as well as specialized apps designed to enhance mobile computing.
 ....
 
 [[private-contact-detail]]
