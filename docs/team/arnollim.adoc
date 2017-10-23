@@ -1,0 +1,46 @@
+= Arnol Lim - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== LISA: Levels Integrated Secretarial Agent
+LISA: Levels Integrated Secretarial Agent is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: 'why' command easter egg
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+
+=== Other contributions
+
+=== Additional Information
+Switched to addressbook-level2 without the group; unable to cope with the depth of addressbook-level4.
+Will contribute to administrative matters such as documentation and testing wherever necessary.
