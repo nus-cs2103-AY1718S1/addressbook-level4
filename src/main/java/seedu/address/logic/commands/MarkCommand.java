@@ -4,8 +4,10 @@ import static seedu.address.model.ListingUnit.LESSON;
 
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
@@ -47,6 +49,7 @@ public class MarkCommand extends UndoableCommand {
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
             try {
                 model.bookmarkLesson(lessonToCollect);
+                EventsCenter.getInstance().post(new RefreshPanelEvent());
             } catch (DuplicateLessonException pnfe) {
                 throw new CommandException(pnfe.getMessage());
             }

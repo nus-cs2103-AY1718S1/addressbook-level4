@@ -6,6 +6,7 @@
         <group isPrivate="false">1</group>
         <code isPrivate="false">MA1101R</code>
         <timeSlot isPrivate="false">MON[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
         <lecturerList isPrivate="false">Cao Liang</lecturerList>
     </lessons>
     <lessons>
@@ -14,6 +15,7 @@
         <group isPrivate="false">2</group>
         <code isPrivate="false">CS1020</code>
         <timeSlot isPrivate="false">TUE[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
         <lecturerList isPrivate="false">Wang Jun Ming</lecturerList>
     </lessons>
     <lessons>
@@ -22,6 +24,7 @@
         <group isPrivate="false">3</group>
         <code isPrivate="false">CS1000</code>
         <timeSlot isPrivate="false">WED[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
         <lecturerList isPrivate="false">Daniel Chew</lecturerList>
     </lessons>
     <lessons>
@@ -30,6 +33,7 @@
         <group isPrivate="false">4</group>
         <code isPrivate="false">CS1020</code>
         <timeSlot isPrivate="false">TUES[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
         <lecturerList isPrivate="false">Ang Tian Lan</lecturerList>
     </lessons>
     <lessons>
@@ -38,6 +42,7 @@
         <group isPrivate="false">5</group>
         <code isPrivate="false">CS1010</code>
         <timeSlot isPrivate="false">FRI[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
         <lecturerList isPrivate="false">Chua Wei Wen</lecturerList>
     </lessons>
     <lessons>
@@ -46,6 +51,7 @@
         <group isPrivate="false">6</group>
         <code isPrivate="false">CS2010</code>
         <timeSlot isPrivate="false">MON[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
         <lecturerList isPrivate="false">Justin Poh</lecturerList>
     </lessons>
     <lessons>
@@ -54,6 +60,7 @@
         <group isPrivate="false">7</group>
         <code isPrivate="false">GER1000</code>
         <timeSlot isPrivate="false">TUES[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
         <lecturerList isPrivate="false">Leon</lecturerList>
     </lessons>
     <lessons>
@@ -62,6 +69,7 @@
         <group isPrivate="false">8</group>
         <code isPrivate="false">GEQ1000</code>
         <timeSlot isPrivate="false">WED[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
         <lecturerList isPrivate="false">Zhao Yun</lecturerList>
     </lessons>
     <lessons>
@@ -70,6 +78,7 @@
         <group isPrivate="false">9</group>
         <code isPrivate="false">MA1521</code>
         <timeSlot isPrivate="false">WED[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
         <lecturerList isPrivate="false">Guan Yu</lecturerList>
     </lessons>
 </addressbook>

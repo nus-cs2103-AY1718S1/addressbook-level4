@@ -41,7 +41,7 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_duplicateLesson_throwsCommandException() {
         Lesson lessonInList = new Lesson(model.getAddressBook().getLessonList().get(0));
-        assertCommandFailure(prepareCommand(lessonInList, model), model, AddCommand.MESSAGE_DUPLICATE_LESSON);
+        assertCommandFailure(prepareCommand(lessonInList, model), model, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
     }
 
     /**

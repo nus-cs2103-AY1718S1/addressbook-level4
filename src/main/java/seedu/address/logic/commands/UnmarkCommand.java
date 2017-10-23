@@ -4,8 +4,10 @@ import static seedu.address.model.ListingUnit.LESSON;
 
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
@@ -47,7 +49,7 @@ public class UnmarkCommand extends UndoableCommand {
 
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
             model.unBookmarkLesson(lessonToCollect);
-            model.updateFilteredLessonList(new FavouriteListPredicate());
+            EventsCenter.getInstance().post(new RefreshPanelEvent());
             return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToCollect));
         } else {
             throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);

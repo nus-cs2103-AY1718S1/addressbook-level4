@@ -1,5 +1,17 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -19,22 +31,9 @@ import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.Lesson;
-import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 import seedu.address.testutil.LessonBuilder;
 import seedu.address.testutil.LessonUtil;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 
 public class AddressBookParserTest {
     @Rule
@@ -83,7 +82,7 @@ public class AddressBookParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(keywords), command);
     }
 
     @Test

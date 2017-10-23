@@ -202,7 +202,7 @@ public class EditCommandTest {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_LESSON);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
     }
 
     @Test

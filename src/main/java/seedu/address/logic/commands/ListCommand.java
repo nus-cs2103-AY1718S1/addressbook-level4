@@ -7,7 +7,7 @@ import static seedu.address.model.ListingUnit.MODULE;
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ChangeListingUnitEvent;
+import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
@@ -30,7 +30,7 @@ public class ListCommand extends Command {
 
     public static final String MODULE_KEYWORD = "module";
     public static final String LOCATION_KEYWORD = "location";
-    public static final String FAVOURITE_LIST_KEYWORD = "marked";
+    public static final String MARKED_LIST_KEYWORD = "marked";
 
     private final String parameter;
 
@@ -53,7 +53,7 @@ public class ListCommand extends Command {
             ListingUnit.setCurrentPredicate(locationPredicate);
             EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(locationPredicate);
-        } else if (parameter.equals(FAVOURITE_LIST_KEYWORD)) {
+        } else if (parameter.equals(MARKED_LIST_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LESSON);
             FavouriteListPredicate favouriteListPredicate = new FavouriteListPredicate();
             ListingUnit.setCurrentPredicate(favouriteListPredicate);
@@ -70,7 +70,7 @@ public class ListCommand extends Command {
      */
     private CommandResult executeListByAttribute(Predicate predicate) {
         model.updateFilteredLessonList(predicate);
-        EventsCenter.getInstance().post(new ChangeListingUnitEvent());
+        EventsCenter.getInstance().post(new RefreshPanelEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS, parameter));
     }
 
