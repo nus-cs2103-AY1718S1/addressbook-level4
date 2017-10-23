@@ -2,6 +2,7 @@ package seedu.address.model.module.predicates;
 
 import java.util.function.Predicate;
 
+import javafx.collections.ObservableList;
 import seedu.address.model.module.ReadOnlyLesson;
 
 /**

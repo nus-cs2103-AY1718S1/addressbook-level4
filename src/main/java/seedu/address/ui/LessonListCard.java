@@ -1,24 +1,23 @@
 package seedu.address.ui;
 
+import com.google.common.eventbus.Subscribe;
+import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.model.FontSizeUnit;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.module.ReadOnlyLesson;
+
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
-
-import com.google.common.eventbus.Subscribe;
-
-import javafx.beans.binding.Bindings;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-
-import seedu.address.commons.events.ui.ChangeFontSizeEvent;
-import seedu.address.model.FontSizeUnit;
-import seedu.address.model.ListingUnit;
-import seedu.address.model.module.ReadOnlyLesson;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -37,6 +36,8 @@ public class LessonListCard extends UiPart<Region> {
 
     public final ReadOnlyLesson lesson;
 
+    private final ImageView star = new ImageView("/images/bookmark.png");
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -53,6 +54,10 @@ public class LessonListCard extends UiPart<Region> {
     private Label timeSlot;
     @FXML
     private FlowPane lecturers;
+
+    @FXML
+    private Label bookmark;
+
 
     public LessonListCard(ReadOnlyLesson lesson, int displayedIndex) {
         super(FXML);
@@ -110,6 +115,7 @@ public class LessonListCard extends UiPart<Region> {
         timeSlot.setVisible(false);
         classType.setVisible(false);
         lecturers.setVisible(false);
+        bookmark.setVisible(false);
 
     }
 
@@ -118,7 +124,10 @@ public class LessonListCard extends UiPart<Region> {
      */
     private void switchToLessonCard() {
         if (lesson.isMarked()) {
-            System.out.println("we do something");
+            star.setFitWidth(30);
+            star.setFitHeight(30);
+            bookmark.setGraphic(star);
+            bookmark.setVisible(true);
         }
     }
 

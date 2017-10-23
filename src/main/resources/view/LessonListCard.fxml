@@ -27,9 +27,10 @@
                <Region fx:constant="USE_PREF_SIZE" />
              </minWidth>
            </Label>
+               <Label fx:id="bookmark" />
            <Label fx:id="code" alignment="CENTER" contentDisplay="CENTER" styleClass="cell_big_label" stylesheets="@DarkTheme.css" text="\$code">
                   <padding>
-                     <Insets left="45.0" />
+                     <Insets left="10.0" />
                   </padding></Label>
             </children>
          </FlowPane>

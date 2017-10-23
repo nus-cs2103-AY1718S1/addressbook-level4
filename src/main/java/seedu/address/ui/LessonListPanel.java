@@ -14,10 +14,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ChangeListingUnitEvent;
-import seedu.address.commons.events.ui.FindLessonRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.model.module.ReadOnlyLesson;
 
 /**
@@ -79,7 +78,7 @@ public class LessonListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleChangeListingUnitEvent(ChangeListingUnitEvent event) {
+    private void handleRefreshPanelEvent(RefreshPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setConnections(lessonList);
     }
