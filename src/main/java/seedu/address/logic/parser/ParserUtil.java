@@ -24,7 +24,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
-import seedu.address.model.task.SingleEventDate;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.TaskDates;
 
@@ -38,7 +37,7 @@ import seedu.address.model.task.TaskDates;
  * {@code Optional} return value inside {@code ParserUtil} methods.
  */
 public class ParserUtil {
-
+    
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
@@ -138,16 +137,6 @@ public class ParserUtil {
     public static Optional<Deadline> parseDeadline(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
         return date.isPresent() ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())))) :
-                Optional.empty();
-    }
-
-    /**
-     * Parses a {@code Optional<String> date} into an {@code SingleEventDate} if {@code date} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<SingleEventDate> parseSingleEventDate(Optional<String> date) throws IllegalValueException {
-        requireNonNull(date);
-        return date.isPresent() ? Optional.of(new SingleEventDate(TaskDates.formatDate(parseDate(date.get())))) :
                 Optional.empty();
     }
     

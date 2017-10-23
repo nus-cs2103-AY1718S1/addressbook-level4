@@ -12,7 +12,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.model.task.SingleEventDate;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
 

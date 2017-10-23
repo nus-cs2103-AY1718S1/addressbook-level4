@@ -12,6 +12,8 @@ import java.util.List;
  *    in the above example.<br>
  */
 public class ArgumentTokenizer {
+    
+    private static final String DOUBLE_QUOTE_REGEX = "\"";
 
     /**
      * Tokenizes an arguments string and returns an {@code ArgumentMultimap} object that maps prefixes to their
@@ -22,8 +24,15 @@ public class ArgumentTokenizer {
      * @return           ArgumentMultimap object that maps prefixes to their arguments
      */
     public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
-        List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
+        String unquotedArgsString = extractUnquotedArgsString(argsString);
+        System.out.println(unquotedArgsString);
+        List<PrefixPosition> positions = findAllPrefixPositions(unquotedArgsString, prefixes);
         return extractArguments(argsString, positions);
+    }
+    
+    private static String extractUnquotedArgsString(String argsString) {
+        String[] unquotedArgsString = argsString.split(DOUBLE_QUOTE_REGEX);
+        return (unquotedArgsString[1] == null) ? unquotedArgsString[0] : unquotedArgsString[2];
     }
 
     /**
