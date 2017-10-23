@@ -350,6 +350,7 @@ Keyboard shortcut: kbd:[Ctrl+Shift+D]
 === Opening an existing Rolodex storage file: `open`, `o`, `cd`, `ls`, `<`
 Reloads the application with data from a rolodex at the specified filepath. +
 Format: `open FILEPATH` or `o FILEPATH`
+Keyboard Shortcut: kbd:[Ctrl+O]
 
 ****
 * Loads the rolodex at the specified `FILEPATH`.
@@ -378,6 +379,7 @@ Loads the application with the data in `default.rldx` in the folder `data`.
 === Creating a new Rolodex storage file: `new`, `n`, `touch` or `>`
 Creates a new Rolodex at the specified filepath and reloads the application with new sample data. +
 Format: `new FILEPATH` or `n FILEPATH`
+Keyboard Shortcut: kbd:[Ctrl+N]
 
 ****
 * Creates the rolodex at the specified `FILEPATH`.
@@ -472,6 +474,8 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 | kbd:[Ctrl + Y] | Redo last command
 | kbd:[Ctrl + Shift + D] | Clear contact list
 | kbd:[F1] | View help window
+| kbd:[Ctrl + O] | Open a Rolodex file
+| kbd:[Ctrl + N] | Create new Rolodex file
 |===
 
 === Navigation/Selection Shortcuts
@@ -481,7 +485,8 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 | Shortcut | Purpose
 
 | kbd:[Enter] | Select the command box
-| kbd:[Esc] | Deselect the command box
+| kbd:[Esc] or kbd:[Ctrl + ←]| Select the contact list panel
+| kbd:[Ctrl + →]| Select the result display panel
 2.+| When the command box is not in selection:
 | kbd:[↑] and kbd:[↓] | Scroll the contact list
 | kbd:[Ctrl + D] | Delete the selected contact _(Coming in V2.0)_

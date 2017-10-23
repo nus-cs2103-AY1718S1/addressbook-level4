@@ -12,10 +12,13 @@ import javafx.scene.input.KeyCombination;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NewCommand;
+import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 public class KeyListenerTest extends RolodexGuiTest {
+
     @Test
     public void executeKeyEventForFocusOnCommandBox() {
         guiRobot.push(KeyCode.ENTER);
@@ -29,6 +32,14 @@ public class KeyListenerTest extends RolodexGuiTest {
 
     @Test
     public void executeKeyEventForFocusOnPersonListPanel() {
+        KeyCodeCombination focusKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Left");
+
+        guiRobot.push(focusKeyCode);
+        assertTrue(getPersonListPanel().isFocused());
+
+        guiRobot.push(KeyCode.ENTER);
+        assertFalse(getPersonListPanel().isFocused());
+
         guiRobot.push(KeyCode.ESCAPE);
         assertTrue(getPersonListPanel().isFocused());
 
@@ -37,9 +48,32 @@ public class KeyListenerTest extends RolodexGuiTest {
         assertTrue(getPersonListPanel().isFocused());
         guiRobot.push(KeyCode.DOWN);
         assertTrue(getPersonListPanel().isFocused());
+    }
+
+    @Test
+    public void executeKeyEventForFocusOnResultDisplayPanel() {
+        KeyCodeCombination focusKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Right");
+        guiRobot.push(focusKeyCode);
+        assertTrue(getResultDisplay().isFocused());
 
         guiRobot.push(KeyCode.ENTER);
         assertFalse(getPersonListPanel().isFocused());
+    }
+
+    @Test
+    public void executeKeyEventForOpenCommand() {
+        KeyCodeCombination openKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+O");
+
+        guiRobot.push(openKeyCode);
+        assertEquals(OpenCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+    }
+
+    @Test
+    public void executeKeyEventForNewCommand() {
+        KeyCodeCombination newKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+N");
+
+        guiRobot.push(newKeyCode);
+        assertEquals(NewCommand.COMMAND_WORD + " ", getCommandBox().getInput());
     }
 
     @Test
