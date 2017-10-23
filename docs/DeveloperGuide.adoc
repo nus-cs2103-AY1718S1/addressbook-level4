@@ -17,6 +17,7 @@ By: `CS2103AUG2017 Team T16-B1`      Since: `Jun 2016`      Licence: `MI
 == Introduction
 
 === What is Ark?
+[.text-justify]
 Ark is a Command Line Interface software that helps delivery and shipping vendors manage their parcels and deliveries.
 Ark allows these delivery companies to track the parcels that they have to deliver to their customers, and empowers
 delivery vendors with simple end-to-end management of these deliveries. Ark also provides route optimization features
@@ -235,7 +236,9 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
+[.text-center]
 image::ModelClassDiagram.png[width="800"]
+[.text-center]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
