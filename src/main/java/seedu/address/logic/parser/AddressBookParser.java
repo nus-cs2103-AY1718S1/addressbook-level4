@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.AddFaveCommand;
+import seedu.address.logic.commands.AddFavouriteCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CreateGroupCommand;
@@ -20,7 +20,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.RemoveFaveCommand;
+import seedu.address.logic.commands.RemoveFavouriteCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -111,12 +111,12 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_ALT:
             return new RedoCommand();
 
-        case AddFaveCommand.COMMAND_WORD:
-        case AddFaveCommand.COMMAND_ALT:
+        case AddFavouriteCommand.COMMAND_WORD:
+        case AddFavouriteCommand.COMMAND_ALT:
             return new AddFaveCommandParser().parse(arguments);
 
-        case RemoveFaveCommand.COMMAND_WORD:
-        case RemoveFaveCommand.COMMAND_ALT:
+        case RemoveFavouriteCommand.COMMAND_WORD:
+        case RemoveFavouriteCommand.COMMAND_ALT:
             return new RemoveFaveCommandParser().parse(arguments);
 
         default:
