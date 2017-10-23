@@ -304,6 +304,40 @@ Suppose the user has just executed the `deletetask` command using `deletetask 2`
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `DeleteTask` feature is being evoked and calls the `DeleteTaskCommandParser` to parse the index and validate that the index provided is not out of bounds and returns a new task object to call the `DeleteTaskCommand` class. The `LogicManager` then calls the `executeUndoableFunction()` in the `DeleteTaskCommand` class which creates and return a `CommandResult` object.
 
 // tag::undoredo[]
+
+== FindTask mechanism
+
+The FindTask mechanism is facilitated by the `FindTaskCommand` class which inherits from `Command` class. It allows the user to find tasks using descriptions. User can search using multiple descriptions too.
+
+Suppose the user has just executed the `FindTaskCommand` using `findtask finish cs2103`.
+
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTaskCommand` feature is being evoked and calls the `FindTaskCommandParser` to parse the string and compare the descriptions. These are validated and formatted by the `TaskContainsKeywordsPredicate` and return as a `TaskContainsKeywordsPredicate` object to be used to call the `FindTaskCommand` class. The `LogicManager` then calls the `execute()` in the `FindTaskCommand` class which creates and return a `CommandResult` object.
+
+==== Design Considerations
+**Aspect:** Implementation of FindTaskCommand +
+**Alternative 1 (current choice):** Use String Util.contansword() to find tasks. +
+**Pros:** Easy to find matching descriptions among all the tasks accurately. +
+**Cons:** The keywords have to be exactly the save i.e friend is not the same as friends. +
+**Alternative 2:** Use string.contains() to find tasks. +
+**Pros:** Keywords do not have to be exactly the same as descriptions in tasks. +
+**Cons:** The search result might not be accurate if the user search using the keyword 'a' all the tasks'descriptions that contains the character 'a' will appear.
+
+== ListTask mechanism
+
+The ListTask mechanism is facilitated by the `ListTaskCommand` class which inherits from `Command` class. It allows the user to list out all the current tasks.
+
+Suppose the user has just executed the `ListTaskCommand` using `listtask`.
+
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `ListTaskCommand` feature is being evoked and calls the `execute()` in the `ListTaskCommand` class which update the current list to show all tasks creates and return a `CommandResult` object.
+
+== SelectTask mechanism
+
+The SelectTask mechanism is facilitated by the `SelectTaskCommand` class which inherits from `Command` class. It allows the user to select the task at specific index.
+
+Suppose the user has just executed the `SelectTaskCommand` using `selecttask`.
+
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `SelectTaskCommand` feature is being evoked and calls the `SelectTaskCommandParser` to parse the string and check if the index is valid. After validation the `SelectTaskCommand` class is been called. The `LogicManager` then calls the `execute()` in the `SelectTaskCommand` class which calls `EventCenter` with the parameter of `JumpToTaskListRequestEvent` class to highlight selected task card in Ui at target index. Then `execute()` creates and return a `CommandResult` object.
+
 === Undo/Redo mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
