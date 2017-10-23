@@ -18,7 +18,8 @@ public class Bloodtype {
     // Characters are case insensitive.
     // Next check is for "+" or "-". "+" and "-" does not have to be added.
     // Credit to lena15n for assistance with regex
-    public static final String BLOODTYPE_VALIDATION_REGEX = "(?i)^(a|b|ab|o)[\\+|\\-]{0,1}$";
+    public static final String NON_COMPULSORY_BLOODTYPE = "xxx";
+    public static final String BLOODTYPE_VALIDATION_REGEX = "(?i)^(a|b|ab|o|xxx)[\\+|\\-]{0,1}$";
 
     public final String type;
 

@@ -2,9 +2,11 @@ package seedu.address.ui;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.logging.Logger;
@@ -378,6 +380,10 @@ public class CommandBox extends UiPart<Region> {
             finalText = concatPrefix(PREFIX_ADDRESS);
         } else if (containsPrefix("bloodtype")) {
             finalText = concatPrefix(PREFIX_BLOODTYPE);
+        } else if (containsPrefix("remark")) {
+            finalText = concatPrefix(PREFIX_REMARK);
+        } else if (containsPrefix("date")) {
+            finalText = concatPrefix(PREFIX_DATE);
         } else if (containsPrefix("all")) {
             finalText = concatPrefix(PREFIX_TAG);
         } else {
@@ -394,24 +400,27 @@ public class CommandBox extends UiPart<Region> {
     private boolean containsPrefix(String element) {
         switch (element) {
         case "name":
-            return (!containsName() && addPollSuccessful());
+            return (!containsName() && (addPollSuccessful() || editPollSuccessful()));
         case "phone":
-            return (!containsPhone() && addPollSuccessful());
+            return (!containsPhone() && (addPollSuccessful() || editPollSuccessful()));
         case "email":
-            return (!containsEmail() && addPollSuccessful());
+            return (!containsEmail() && (addPollSuccessful() || editPollSuccessful()));
         case "address":
-            return (!containsAddress() && addPollSuccessful());
+            return (!containsAddress() && (addPollSuccessful() || editPollSuccessful()));
         case "bloodtype":
-            return (!containsBloodtype() && addPollSuccessful());
+            return (!containsBloodtype() && (addPollSuccessful() || editPollSuccessful()));
+        case "remark":
+            return (!containsRemark() && (addPollSuccessful() || editPollSuccessful()));
+        case "date":
+            return (!containsDate() && (addPollSuccessful() || editPollSuccessful()));
         default:
-            return (containsAllCompulsoryPrefix() && addPollSuccessful());
+            return (containsAllCompulsoryPrefix() && (addPollSuccessful() || editPollSuccessful()));
 
         }
     }
 
     /**
      * Polls the input statement to check if sentence starts with " add " or " a "
-     * Spacing before and after command is required else words like "adda" or "adam" is counted as a add command
      * <p>
      * Additional Note: Polling method accounts for blank spaces in front
      */
@@ -429,6 +438,28 @@ public class CommandBox extends UiPart<Region> {
         } else {
             return containsAInFirstTwoChar(stringToEvaluate)
                     || containsAddInFirstFourChar(stringToEvaluate);
+        }
+    }
+
+    /**
+     * Polls the input statement to check if
+     * 1. sentence starts with " edit " or " e " and
+     * 2. is followed by a valid INDEX
+     * <p>
+     * Additional Note: Polling method accounts for blank spaces in front
+     */
+    private boolean editPollSuccessful() {
+        String stringToEvaluate = commandTextField.getText().trim();
+        if (stringToEvaluate.length() < 3 || !stringToEvaluate.contains(" ")) {
+            return false;
+        } else {
+            String[] splittedString = stringToEvaluate.split(" ");
+            boolean containsEditWord = splittedString[0].equalsIgnoreCase("edit");
+            boolean containsEditShorthand = splittedString[0].equalsIgnoreCase("e");
+            boolean containsEditCommand = containsEditShorthand || containsEditWord;
+            String regex = "[0-9]+";
+            boolean containsOnlyNumbers = splittedString[1].matches(regex);
+            return containsEditCommand && containsOnlyNumbers;
         }
     }
 
@@ -453,7 +484,8 @@ public class CommandBox extends UiPart<Region> {
      */
     private boolean containsAllCompulsoryPrefix() {
         return containsAddress() && containsEmail() && containsBloodtype()
-                && containsName() && containsPhone();
+                && containsName() && containsPhone() && containsRemark()
+                && containsDate();
     }
 
     /**
@@ -469,6 +501,22 @@ public class CommandBox extends UiPart<Region> {
     private boolean containsBloodtype() {
         String currentInput = commandTextField.getText();
         return currentInput.contains(PREFIX_BLOODTYPE.getPrefix());
+    }
+
+    /**
+     * Checks if existing input has Remark Prefix String
+     */
+    private boolean containsRemark() {
+        String currentInput = commandTextField.getText();
+        return currentInput.contains(PREFIX_REMARK.getPrefix());
+    }
+
+    /**
+     * Checks if existing input has Remark Prefix String
+     */
+    private boolean containsDate() {
+        String currentInput = commandTextField.getText();
+        return currentInput.contains(PREFIX_DATE.getPrefix());
     }
 
     /**

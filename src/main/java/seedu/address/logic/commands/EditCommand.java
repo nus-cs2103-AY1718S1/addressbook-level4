@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -51,14 +52,17 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_BLOODTYPE + "BLOODTYPE] "
+            + "[" + PREFIX_REMARK + "REMARK]..."
             + "[" + PREFIX_DATE + "DATE]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example 1: " + COMMAND_ALIAS + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com \n"
+            + PREFIX_EMAIL + "johndoe@example.com "
+            + PREFIX_REMARK + "Broke his foot during soccer practice \n"
             + "Example 2: " + COMMAND_WORD + " 2 "
             + PREFIX_PHONE + "92873847 "
-            + PREFIX_EMAIL + "maryjane@example.com ";
+            + PREFIX_EMAIL + "maryjane@example.com "
+            + PREFIX_TAG + "student ";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -68,7 +72,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -115,7 +119,7 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Bloodtype updatedBloodType = editPersonDescriptor.getBloodType().orElse(personToEdit.getBloodType());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Remark updatedRemark = personToEdit.getRemark();
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
         Date date = editPersonDescriptor.getDate().orElse(personToEdit.getAppointment().getDate());
         Appointment appointment;
         if (date == null) {
@@ -158,10 +162,12 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Bloodtype bloodType;
+        private Remark remark;
         private Set<Tag> tags;
         private Date date;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
@@ -169,6 +175,7 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.bloodType = toCopy.bloodType;
+            this.remark = toCopy.remark;
             this.tags = toCopy.tags;
             this.date = toCopy.date;
         }
@@ -178,7 +185,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
-                    this.bloodType, this.tags, this.date);
+                    this.bloodType, this.remark, this.date, this.tags);
         }
 
         public void setName(Name name) {
@@ -221,6 +228,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(bloodType);
         }
 
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -257,8 +272,10 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getBloodType().equals(e.getBloodType())
-                    && getTags().equals(e.getTags())
-                    && getDate().equals(e.getDate());
+                    && getRemark().equals(e.getRemark())
+                    && getDate().equals(e.getDate())
+                    && getTags().equals(e.getTags());
+
         }
     }
 }
