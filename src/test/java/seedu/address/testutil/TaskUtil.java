@@ -3,7 +3,7 @@ package seedu.address.testutil;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 
-import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.task.ReadOnlyTask;
 
 /**

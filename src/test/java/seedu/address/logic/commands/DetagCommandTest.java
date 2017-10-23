@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.index.Index.fromOneBased;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.DetagCommand.MESSAGE_DETAG_PERSONS_SUCCESS;
+import static seedu.address.logic.commands.tags.DetagCommand.MESSAGE_DETAG_PERSONS_SUCCESS;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -17,6 +17,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.tags.DetagCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
