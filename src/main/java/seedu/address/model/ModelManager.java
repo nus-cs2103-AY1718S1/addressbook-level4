@@ -116,6 +116,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        sortPersonList();
         indicateAddressBookChanged();
     }
     @Override
@@ -171,6 +172,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortEventList() {
         addressBook.sortEventList();
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortPersonList() {
+        addressBook.sortPersonList();
         indicateAddressBookChanged();
     }
 

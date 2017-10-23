@@ -234,6 +234,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         events.sortEvents();
     }
 
+    /**
+     * Sorts the persons according to name
+     */
+    public void sortPersonList() { persons.sortPersons(); }
+
 
     /*****************************************************
      * Tag-level operations
