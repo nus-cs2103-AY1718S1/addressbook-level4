@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == *Introduction*
 The `Contact List Pro v1.3` is a program to maintain your contact list. You can use the `Contact List Pro`
@@ -26,7 +26,7 @@ teaches you to perform the various commands with the aid of examples.
 
 Each feature stated in the guide also gives user suggestions on the suitable use of the features and functions.
 
-== *Quick Start*
+== *Getting Started*
 
 .  Ensure that you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -313,6 +313,38 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== *Command Summary*
+
+[width="90%",cols="10%,<10%,<70%",options="header",]
+|=======================================================================
+|Feature |Alias |Command Format
+| *Help* | *h* | `help` +
+| *Add* | *a* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+| *List* | *l* | `list` +
+| *Edit* | *e* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+| *Favourite* | *fav* | `favourite INDEX` +
+| *Find* | *f* | `find [PREFIX KEYWORD]...` +
+| *Delete* | *d* | `delete INDEX` +
+| *Select* | *s* | `select INDEX` +
+| *History* | *hs* | `history` +
+| *Undo* | *u* | `undo` +
+| *Redo* | *r* | `redo` +
+| *Remove* | *rm* | `remove [TAG]... [INDEX]...` +
+| *Clear* | *c* | `clear` +
+| *exit* | *x* | `exit` +
+|=======================================================================
+
+The command keywords can be substituted by their aliases. +
+For example:
+
+* To favourite the person at INDEX 4: `fav 4` instead of `favourite 4` can be used. +
+* To undo a command : `u` instead of `undo` can be used.
+
+== *FAQ*
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
 == *Since v1.2*
 
 === Enhanced `find` command to accept different fields
@@ -439,32 +471,4 @@ image::highlight.png[width=""]
 Import/Export contact lists from/to the give path. +
 
 Format: `import PATH`
-
-
-
-== *FAQ*
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
-== *Command Summary*
-
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find [PREFIX KEYWORD]...` +
-e.g. `find n/James n/Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Remove* : `remove [TAG]... [INDEX]...` +
-e.g. `remove friends 1`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
 
