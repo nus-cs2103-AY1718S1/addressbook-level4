@@ -1,10 +1,12 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.tasks;
 
 import static java.util.Objects.requireNonNull;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
 
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
