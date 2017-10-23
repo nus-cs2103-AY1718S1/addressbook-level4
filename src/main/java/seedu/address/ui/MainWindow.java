@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -42,6 +43,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private Calendar calendar;
     private Config config;
     private UserPrefs prefs;
 
@@ -58,6 +60,12 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private Tab calendarItem;
+
+    @FXML
+    private Tab mapItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -65,6 +73,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane calendarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -131,6 +142,9 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        calendar = new Calendar(logic.getFilteredPersonList(), logic.getFilteredTaskList());
+        calendarPlaceholder.getChildren().add(calendar.getRoot());
 
         TaskListPanel taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
         taskListPanelPlaceHolder.getChildren().add(taskListPanel.getRoot());
