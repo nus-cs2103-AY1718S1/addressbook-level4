@@ -232,6 +232,10 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Sorting contacts mechanism
+
+The sorting contacts mechanism uses the `sort` method which resides inside `List` interface to sort the contacts by name. It is called when adding a new contact (e.g. 'add` command), thus placing the contact in the list alphabetically by name.
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -434,6 +438,69 @@ easily add/edit these properties of each contact stored in the application, just
 
 image::PropertyManagerSequenceDiagram.png[width="800"]
 _Figure 3.3.4 : Sequence Diagram for Adding a Customize Property_
+
+=== Auto Reminders
+
+We are adding reminders to events whenever an event is added. Reminders will automatically be set to a day before
+event itself.
+
+As we are targeting NUS students, in view of the busy schedules of students, students should be able to set reminders
+for events that they have to attend to. In the case that students forget to set reminders themselves, we automatically
+preset the reminder to a day before the event such that students have ample time to be aware and prepared for the event
+itself.
+
+Also, users can add their own reminders as well.
+
+Learning from many modern applications, the logic behind the applications are usually efficient and is able to handle
+multiple tasks at once. By automatically adding reminders alongside the addition of events, it makes it more
+convenient for the users themselves. We have set the default reminders to a day before the actual event to remind
+users of their upcoming events via notifications on System Tray.
+
+image::SystemTrayNotifications.png[width="300"]
+_Figure 3.3.5 : Notifications via System Tray
+
+
+==== Design consideration
+**Aspect:**  How to implement the idea of reminders into Events +
+**Alternative 1 (current choice):** Create a new reminder class that contains an event parameter to it. Events have a +
+list of reminders within them.
+**Pros:** Independent. Reminder class is on its own and easy for future usage since it is already a class by itself. +
+Each reminder is tagged to an event, such that if we want to access the reminders in an event, it is easy to do so. +
+**Cons:** Require major changes to Logic and Model components for Event +
+**Alternative 2:** Add a new parameter for Event called Reminders to display time till event. +
+**Pros:** Less changes as it is just an implementation of a new parameter. +
+**Cons:** Less versatile and reminders cannot be applied anywhere else if needed. +
+
+image::ReminderClassDiagram.png[width="200"]
+_Figure 3.3.6 : Class Diagram for `Reminder`
+
+Therefore we have decided to adopt alternative 1 of creating a Reminder class as it is more versatile for future usage.
+
+==== Implementation outline
+
+1. Create a ReadOnlyReminder class such that it only contains immutable instances of Reminders.
+
+2. Create a general class such that Reminder that implements ReadOnlyReminder. It can inherit properties
+such as `DateTime` from PropertyClass as well. In the event that a new property needs to be added, it can be done.
+Such a design makes Reminder class more adaptable to changes and ready for future code usage.
+
+3. `Reminder` is now more open to changes if needed and can easily add parameters and methods now that it is a class
+on its own.
+
+4. Have a list of reminders in `Event` class. Since `Event` can have multiple reminders, each reminder is instantiated
+with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself.
+
+image::EventClassDiagram.png[width="200"]
+_Figure 3.3.7 : Class Diagram for `Event`
+
+image::EventReminderRS.png[width="300"]
+_Figure 3.3.8 : Relationship of Event and Reminder
+
+The following sequence diagram shows how the automatic adding of reminders work
+
+image::SDaddEventLogicReminder.png[width="700"]
+_Figure 3.3.9 : Sequence Diagram for Adding an event (reminders are automatically added)_
+
 
 === Configuration
 
