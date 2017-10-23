@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -345,6 +345,91 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::eventcrud[]
+=== Events CRUD Mechanism
+The events CRUD (Create, Read, Update, Delete) mechanism is very similar to the persons CRUD system.  Four commands `AddEventCommand`, `FindEventCommand`, `DeleteEventCommand`, `EditEventCommand` are used to execute their respective functions through the `LogicManager`. +
+
+Commands are first read from `CommandBox` which then calls upon the `LogicManager` to detect the type of command. `LogicManager` then creates a `AddressBookParser` which uses `CheckCommandsParser` to detect any synonymous alternatives for their respective commands and returns the specific command type if available. +
+
+The specific command type is passed through its specific parser along with its arguments (E.g. `AddEventCommand` is parsed via `AddEventCommandParser`). The specific parser creates a specific command to return to `LogicManager` (E.g. `AddEventCommandParser` returns `AddEventCommand` with the `Event` to be be added once executed). +
+
+`LogicManager` proceeds to exectute the received command. In this implementation, the Command will call upon `ModelManager` to do complete the CRUD operations onto its internal database. (E.g. `AddEventCommand` calls `model.addEvent(event)` to add the event created by `AddEventCommandParser` to the event list in `AddressBook`. +
+
+Once this is complete, an update is sent to the the `filteredEventList` which updates the `UI` Component. +
+
+Additionally, an `AddressBookChangedEvent` is also raised to the `EventsCenter` to indicate a change into so that `XmlAddressBookStorage` can begin saving the new information. It calls on `XmlSerializableAddressBook` to serialize the new event information and saves it to the data file via `XmlFileStorage`.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Storage +
+**Alternative 1 (current choice):** Saving to a single data file shared with Person Data +
+**Pros:** We do not need a separate data file to save event information. Additionally, reading data is only done once. +
+**Cons:** Not very modular and intuitive. +
+**Alternative 2:** Create new data file to record events. +
+**Pros:** Modular and intuitive to new developers. Manual additions to the data file will also be easier. +
+**Cons:** Separate files are harder to manage.
+
+---
+
+
+
+// end::eventcrud[]
+
+// tag::Scheduling[]
+=== Event Scheduling
+
+Whenever an event is created, it will be added into a `TreeMap` of
+events, ranked by the scheduled date and time. This will enable us to
+implement the event scheduling feature comprised of three essential
+sub-features：
+
+* A GUI displaying all the events scheduled for the current week
+* A reminder feature to alert user of the upcoming events
+* A scheduling check mechanism to prevent events with time clash to be
+scheduled at the same time
+
+==== Schedule for the week
+
+When a `Check Schedule` command is typed into the command box, or the
+`Calendar` button on the main window is clicked, a
+`ShowCalendarEvent` will be sent to the EventsCenter. In response, the calendar
+GUI will appear in the main window, and events with a scheduled `timing`
+within the week will be identified from the `TreeMap` of events and reflected
+ in the  calendar GUI. A corresponding List of events will also appear in the
+  `EventListPanel`, just like with a `List` command for event.
+
+==== Event Reminder
+
+When the Sales Nagivator app is opened, a `ShowUrgentEvents` event will
+automatically be sent, which will find all the events scheduled before the
+end of the next day. After identifying these events, a small circle will
+appear on the `notification` button on the main window to alert users of the
+number of urgent events he/she should attend to. Upon clicking the
+`notification` button, a list of urgent events will then appear in the
+`EventListPanel`.
+
+==== Avoid time clash
+
+When a new event is added to the TreeMap, if the `timing` of the event has
+any overlap with an existing event, this will generate a `ConflictingEvent`
+exception that prevents the event from being added.
+
+==== Design Considerations
+
+**Aspect:** Date structure implementation of saved events +
+**Alternative 1:** use an `ArrayList` +
+**Pros:** Easy to implement and easy to access individual element +
+**Cons:** Will be very slow for searching urgent events. +
+**Alternative 2:** use a `HashMap` +
+**Pros:** Very fast search (O(1)) if a good hash function is used +
+**Cons:** Since a long period of time needs to be covered (at least 1 year),
+the hash table size could be very big, which is not space efficient.
+**Alternative 3 (current choice):** use a `TreeMap` +
+**Pros:** Reasonably fast search operations +
+**Cons:** Not as fast as a well-implemented `HashMap`.
+
+// end::Scheduling[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -363,6 +448,76 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::optionalfields[]
+=== Adding optional fields: Company, Position, Status, Priority, and Note
+
+When adding a new person, the basic fields `Name`, `Phone`, `Email`, and `Address` (not including `Tags`) are compulsory fields as they apply to everyone. However, for extended sales functionality, we have included additional optional fields, namely `Company`, `Position`, `Status`, `Priority`, and `Note`.
+
+These fields are not necessarily applicable to everyone, as persons in a non-business context do not need to have these information included. Hence when adding a person, any number of these fields can be excluded and the person will still be able to be added.
+
+The primary logic that deals with these optional fields appears in the `parse` function of the `AddCommandParser` class:
+[source,java]
+----
+if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
+    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+}
+
+try {
+    Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+    Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+    Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+    Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+    //Initialize company, position, status, and note to NIL, priority to L
+    Company company = new Company("NIL");
+    Position position = new Position("NIL");
+    Status status = new Status("NIL");
+    Priority priority = new Priority("L");
+    Note note = new Note("NIL");
+
+    Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+    //Since Company, Position, Status and Priority are optional parameters, set them if they are present
+    if (arePrefixesPresent(argMultimap, PREFIX_COMPANY)) {
+        company = ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_POSITION)) {
+        position = ParserUtil.parsePosition(argMultimap.getValue(PREFIX_POSITION)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_STATUS)) {
+        status = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_PRIORITY)) {
+        priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_NOTE)) {
+        note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE)).get();
+    }
+
+    ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,
+            note, tagList);
+----
+The 4 required fields are checked to see if they are present. If any of them are missing, a `ParseException` is thrown and the add command is invalid.
+
+The 5 optional fields are handled differently. They are first initialized to a placeholder value ("NIL" for Company, Position, Status and Note, "L" for Priority, indicating the lowest priority). Each field is then checked to see if it has been entered in the user command through its prefix. If it has, the placeholder value is replaced by the entered string. This way, the user is able to selectively enter any of these fields (or none at all) and the `ReadOnlyPerson` object created will still have all fields initialized properly.
+
+// tag::Sorting[]
+=== Sorting of persons list
+
+When viewing the persons list, user is able to sort them according to `Name`, `Tags`, `Priority` or `Status`. This
+allows the user to be able to view the list much easier by sorting them to whichever preference he/she wants/needs.
+
+This enhancement is achieved by first creating a new SortCommand and SortCommandParser that processes the user input
+command and calls the suitable method to achieve it. Since this enhancement is not able to reuse some of the method
+in other components, new methods have to be created.
+
+[NOTE]
+Explanation of how this is achieved will be done soon. A sequence diagram will be updated here to illustrate how the
+SortCommand and SortCommandParser operates.
 
 == Documentation
 
@@ -533,7 +688,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels ar created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 * Solution
 ** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
@@ -729,9 +884,105 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user with many persons in the address book |sort persons by name
+|locate a person easily
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |sales executive |save client's company, position and work contact
+information
+ |do proper follow up
+
+|`* * *` |sales executive |be able to label clients with level of priority
+ |I know better which one to prioritise
+
+|`* * *` |sales executive |be able to set the status of my client |I can better
+manage them
+
+|`* * *` |sales executive |add note to a client's contact |remember key details
+about this client
+
+|`* * *` |user who is prone to making mistakes |be able to undo any command that I
+previously made
+ |correct my own mistake
+
+|`* * *` |user who is prone to making mistakes |be able to redo any command that I
+previously undid
+ |correct my own mistake
+
+|`* * *` |sales executive |be able to add events |better manage my client
+meetings and events
+
+|`* * *` |sales executive |be able to edit events |better manage my client
+meetings and events
+
+|`* * *` |sales executive |be able to delete events |better manage my client
+meetings and events
+
+|`* * *` |sales executive |be able to query all my events |better manage my
+client
+meetings and events
+
+|`* * *` |sales executive |be reminded to follow up on clients after events
+|follow up on time
+
+|`* * *` |sales executive |receive notifications and reminders on upcoming
+events
+|can prepare in advance
+
+|`* * *` |sales executive |be warned when adding events that clash with my
+schedule |don't schedule clashing events
+
+|`* *` |sales executive |be able to associate events with clients
+|can better manage events related to specific clients
+
+|`* *` |sales executive |be able to disassociate events with clients
+|can update event relations with specific clients
+
+|`* *` |user who is particular about aesthetics|be able to change the font of
+the app
+|
+
+|`* *` |user who is particular about aesthetics|be able to change the color
+scheme of the app
+|
+
+|`* *` |user who has bad eyesight |be able to change the font size of the app
+|can see better
+
+|`* *` |sales executive |be able to check my schedule for the day|know what I
+need to do for the day
+
+|`* *` |sales executive |be able to view a list of my contacts with a specific
+tag
+ |can better manage my client information
+
+|`* *` |sales executive |be able to view a list of my contacts from a specific
+company|can better manage my client information
+
+|`* *` |sales executive |be able to view client's address on Google Maps in
+the app |I don't have to manually search for it in the browser
+
+|`* *` |sales executive |be able to directly send an email on clicking the
+email address in the app|can send email faster and more easily
+
+|`*` |sales executive |be able to upload images of my client |can remember how
+they look like
+
+|`*` |lazy user |the app to open on startup of my OS |
+
+|`*` |sales executive |be able to mass export client data |can share it with
+others
+
+|`*` |sales executive |be able to mass import client data |can quickly add
+contact into the app
+
+|`*` |forgetful user |be able to type shorter commands |
+
+|`*` |sales executive |be able to indicate the relationship between my contacts
+ |I can manage the clients better
+
+|`*` |sales executive |be able to see the relationship between my clients in a
+relationship diagram
+ |I can manage the clients better
 |=======================================================================
 
 {More to be added}
@@ -740,6 +991,26 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person with information
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The information inputted is in the wrong format.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
 
 [discrete]
 === Use case: Delete person
@@ -767,6 +1038,245 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit person
+2.  AddressBook shows a list of information field to change
+3.  User requests to edit a specific information field
+4.  User enters new information for chosen field
+5.  AddressBook changes the information field for person to new information
++
+Use case ends.
+
+*Extensions*
+[none]
+* 1a. The person requested to be edit does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 1b. The AddressBook is empty.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 3a. The information field selected is not on the list.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 3.
+
+[none]
+* 4a. The information entered is of incorrect format.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+[discrete]
+=== Use case: Query person
+
+*MSS*
+
+1.  User requests to query person
+2.  AddressBook displays the person's information
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The person requested to be queried does not exist in AddressBook
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 1b. The AddressBook is empty.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo
+
+*MSS*
+
+1.  User enters a command that modifies the list of people (e.g. add, delete, edit)
+2.  AddressBook performs the command
+3.  User enters the undo command
+4.  AddressBook reverses the modifying command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No previous modifying command.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1.  User enters undo command
+2.  AddressBook reverses the last modifying command
+3.  User enters the redo command
+4.  AddressBook redoes the last modifying command that was undone
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Last command entered was not undo.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add an event
+
+*MSS*
+
+1.  User requests to add an event
+2.  User enters event name, date, time, location
+3.  AddressBook adds event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User enters the wrong input format.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit an event
+
+*MSS*
+
+1.  User requests to edit an event
+2.  AddressBook shows all event
+3.  User choose on the specific event that he/she wants to edit
+4.  User edits the event either by name, date or time
+5.  AddressBook edits event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. User enters the wrong input format for edited part
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete event
+
+*MSS*
+
+1.  User requests to delete an event
+2.  AddressBook shows all events
+3.  User types specific event name
+4.  AddressBook deletes event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. User enters wrong input format.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Query an event
+
+*MSS*
+
+1.  User requests to list all events
+2.  User enters the event name that he/she wants to query
+3.  AddressBook display all information of the chosen event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User enters wrong input format.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+== Use case: Warnings when adding event
+
+*MSS*
+
+1.  User requests to add an event
+2.  User enters event name, time, date and location
+3.  AddressBook pops out a warning
+4.  AddressBook prevents user from adding
++
+Use case ends.
+
+[discrete]
+== Use case: Reminders to follow-up on clients after events
+
+*MSS*
+
+1.  AddressBook pops out a reminder after event has passed
+2.  AddressBook shows which event and client the user has to follow up
+3.  User enters 'yes' or 'no' to indicate whether it has been done or not
+4.  AddressBook stops reminder once user enters 'yes'
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User enters wrong input format.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,11 +1285,21 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
+.  Should perform any command within 0.1 second
+.  Program size should not exceed 100 MB
 {More to be added}
 
 [appendix]
 == Glossary
+
+.  Events: Meetings and scheduled activities with clients
+.  Reminder: Pop-up message that reminds the user of an event or a need to
+follow up
+.  Priority: A special label applied to clients to differentiate clients with
+highest, medium and low priority
+.  Status: A special label applied to clients to differentiate clients that are
+ potential leads, booked meeting, finished meeting and signed contract
+
 
 [[mainstream-os]]
 Mainstream OS

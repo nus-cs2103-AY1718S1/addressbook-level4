@@ -12,9 +12,13 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.InvalidSortTypeException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyEvent> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
     }
 
     public ModelManager() {
@@ -54,10 +60,14 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
+
+    //=========== Person Operations =============================================================
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -81,6 +91,22 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    /**
+     * Removes specified tag from all the persons in the address book.
+     *
+     * @param tag Tag to be removed
+     */
+    public void removeTag(Tag tag) {
+        addressBook.removeTagFromAll(tag);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortPerson(int type) throws InvalidSortTypeException {
+        addressBook.sortPerson(type);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -97,6 +123,43 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //=========== Filtered Event List Accessors  ==============================================================
+
+    @Override
+    public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    //=========== Event Operations  ===========================================================================
+
+    @Override
+    public synchronized void addEvent(ReadOnlyEvent event) {
+        addressBook.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+        addressBook.removeEvent(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws EventNotFoundException {
+        addressBook.updateEvent(target, editedEvent);
+        indicateAddressBookChanged();
+    }
+
+    //=========== Miscellaneous Operations  ====================================================================
 
     @Override
     public boolean equals(Object obj) {

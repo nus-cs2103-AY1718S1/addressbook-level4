@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+﻿= Sales Navigator - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T14-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T14-B3`      Since: `Oct 2017`
 
 == Quick Start
 
@@ -40,6 +40,19 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
+*Information on each of the commands*
+
+* 22 different types of commands available for a more user-friendly environment.
+* Each of the command has at least one synonyms/aliases.
+** This allows the user to have a variety of choices of commands instead of having to remember or to execute the `help`
+window every time one forgets it.
+* In the examples given below for each command, note that all commands written there are interchangeable with its synonyms/aliases
+====
+
+[NOTE]
+====
+Most command can be interchangeable with the relevant substitute command listed below.
+====
 
 ====
 *Command Format*
@@ -56,8 +69,10 @@ Format: `help`
 
 === Adding a person: `add`
 
+Synonyms/Aliases for the command: `a`, `create`, `input`, `insert` +
+`COMPANY, POSITION, PRIORITY Coming in v2.0` +
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [pr/PRIORITY] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -65,17 +80,20 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison c/ABC Foods po/Manager pr/L p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
+Synonyms/Aliases for the command: `l`, `show`, `display` +
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` / `show` / `display`
 
 === Editing a person : `edit`
 
+Synonyms/Aliases for the command: `e`, `change`, `modify`, `revise` +
+`COMPANY, POSITION, PRIORITY Coming in v2.0` +
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/COMPANY] [po/POSITION] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -92,8 +110,26 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Exporting of person's data command: `export`
+
+`Coming in v2.0` +
+Synonyms/Aliases: `ex` +
+Exports the data into an excel file. +
+Format: `export` / `ex`
+
+****
+* Export persons data
+* Client(s) data will be stored in an excel format
+****
+
+Examples:
+
+* `export` +
+Exports the data of everyone in the list in an excel file.
+
 === Locating persons by name: `find`
 
+Synonyms/Aliases for the command: `f`, `look`, `search`, `check` +
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -114,6 +150,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
+Synonyms/Aliases for the command: `d`, `remove`, `throw`, `erase` +
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
@@ -134,6 +171,7 @@ Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
+Synonyms/Aliases for the command: `s`, `choose`, `pick` +
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
 
@@ -154,13 +192,24 @@ Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
+Synonyms/Aliases for the command: `h`, `past` +
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` / `h` / `past
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+
+=== Sorting all entries : `sort`
+
+Synonyms/Aliases for the command: `arrange`, `organise` +
+Sorts list by name, tag or address. +
+That are represented by 1, 2 and 3 respectively +
+Format: `sort [NUMBER]`
+
+Examples:
+* `sort 1`
+
+* `sort 2`
+
+* `sort 3`
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -219,8 +268,172 @@ Format: `clear`
 
 === Exiting the program : `exit`
 
+Synonyms/Aliases for the command: `quit` +
 Exits the program. +
-Format: `exit`
+Format: `exit` / `quit`
+
+=== Adding an event: `eventadd`
+
+`Since v1.1` +
+Synonyms/Aliases for the command: `addevent`, `ea`, `ae` +
+Adds an event to Sales Navigator +
+Format: `eventadd n/TITLE time/TIMING d/DESCRIPTION`
+
+Examples:
+
+* `eventadd n/Alice's Birthday time/1300-1830 d/Bestie's 21st, bring drinks!`
+* `eventadd n/CS2103 Final Exam time/1730-1930 d/Doomsday`
+
+=== Editing an event : `eventedit`
+
+`Since v1.2` +
+Synonyms/Aliases for the command: `editevent`, `ee` +
+Edits an existing event in Sales Navigator. +
+Format: `eventedit INDEX [n/TITLE] [time/TIMING] [d/DESCRIPTION]`
+
+****
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Example:
+
+* `edit 1 time/1400-1830 d/Bring drinks and buy cake!` +
+Edits the timing and description of the 1st event to be `1400-1830` and `Bring drinks and buy cake!` respectively.
+
+=== Deleting an event : `eventdel`
+
+`Since v1.1` +
+Synonyms/Aliases for the command: `delevent`, `eventdelete`, `deleteevent`, `ed`, `de` +
+Deletes the specified event from Sales Navigator. +
+Format: `delete INDEX`
+
+****
+* Deletes the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `delete 2` +
+Deletes the 2nd event in Sales Navigator.
+* `find Bob's Birthday` +
+`delete 1` +
+Deletes the 1st event in the results of the `find` command.
+
+=== Locating events by name: `eventfind`
+
+`Since v1.2` +
+Synonyms/Aliases for the command: `findevent`, `fe`, `ef` +
+Finds events whose titles contain any of the given keywords. +
+Format: `eventfind KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The search will not account for apostrophes. e.g searching `Bob` will not match `Bob's birthday`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the title is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `cs2103 midterm` will return `Submission for CS2103 Week 9`, `CS2106 Midterm`
+****
+
+Examples:
+
+* `find Bob's` +
+Returns `Bob's Birthday` and `Party at Bob's`
+* `find Birthday` +
+Returns any event having titles that contain `Birthday`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+== Mass import of person's data command: `import`
+
+`Coming in v2.0` +
+Imports the data into a ... +
+Format: `import`
+
+****
+* Import persons data
+****
+
+Examples:
+
+* `import` [filename] +
+Imports the file and store it in [app].
+
+=== Displaying user's schedule command: `schedule`
+
+`Coming in v2.0` +
+Displays user's schedule
+Format: `schedule` / `calendar`
+
+Example:
+
+* `schedule` +
+Displays user's schedule.
+
+=== App opens at startup of user's OS command: `startup`
+
+`Coming in v2.0` +
+Set the app to open at the startup of user's OS by typing yes/no after the command +
+Format: `startup` ANSWER
+
+Example:
+
+* `startup` ANSWER +
+Checks if ANSWER is yes/no and perform the relevant answer choice. +
+* `startup` yes +
+Sets opening app at startup of user's OS yes.
+
+=== Adding notes to persons : `note`
+
+`Coming in v2.0` +
+Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
+Format: `note [PERSON] [STRING]`
+
+Examples:
+* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
+
+=== View all persons with a specific tag : `tag`
+
+`Coming in v2.0` +
+Displays a list of all persons with a specific tag. +
+Format: `tag [TAG]`
+
+Examples:
+* `tag friend`
+
+=== View all persons from a specific company : `company`
+
+`Coming in v2.0` +
+Displays a list of all persons from a specific company. +
+Format: `company [COMPANY]`
+
+Examples:
+* `company ABC Foods`
+
+=== View a person's address on Google Maps within the app : `address`
+
+`Coming in v2.0` +
+Searches for the person's address on Google Maps and displays the result within the app. +
+Format: `address [PERSON]`
+
+Examples:
+* `address John Doe`
+
+=== Send an email to a person : `email`
+
+`Coming in v2.0` +
+Opens the user's default email client loaded with the person's email in the To: field. +
+Format: `email [PERSON]`
+
+Examples:
+* `email John Doe`
 
 === Saving the data
 
@@ -233,16 +446,28 @@ There is no need to save manually.
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
+[NOTE]
+====
+Most commands are interchangeable with the relevant substitute command listed above.
+====
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [pr/PRIORITY] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/ABC Foods po/CEO pr/HIGH t/friend t/colleague`
+* *Add Event* `eventadd n/TITLE time/TIMING d/DESCRIPTION` +
+e.g. `eventadd n/Alice's Birthday time/1300-1830 d/Bestie's 21st, bring drinks!`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete Event* : `eventdel INDEX` +
+e.g. `delete 1`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit Event* : `eventedit INDEX [n/TITLE] [time/TIMING] [d/DESCRIPTION]` +
+e.g. `edit 1 time/1400-1830 d/Bring drinks and buy cake!`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find Event* : `eventfind KEYWORD [MORE_KEYWORDS]` +
+e.g. `find Bob's`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -250,3 +475,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Sort* : `sort`
+* *Note* : `note`
+* *View tag* : `tag`
+* *View company* : `company`
+* *View address* : `address`
+* *Email* : `email`

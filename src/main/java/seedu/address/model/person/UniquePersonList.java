@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,11 +12,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.InvalidSortTypeException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
@@ -52,7 +54,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -97,6 +99,31 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     *
+     */
+    public void sortPersonList(int type) throws InvalidSortTypeException {
+        final Comparator<Person> sortByName = (
+                Person a, Person b) -> a.getName().toString().compareToIgnoreCase(b.getName().toString());
+        final Comparator<Person> sortByTags = (Person a, Person b) -> a.getTags().toString().compareToIgnoreCase((b
+                .getTags().toString()));
+        final Comparator<Person> sortByAdd = (Person a, Person b) -> a.getAddress().toString().compareToIgnoreCase(b
+                .getAddress().toString());
+        switch (type) {
+        case 1:
+            internalList.sort(sortByName);
+            break;
+        case 2:
+            internalList.sort(sortByTags);
+            break;
+        case 3:
+            internalList.sort(sortByAdd);
+            break;
+        default:
+            System.out.printf("Sorting type entered not found!\n");
+        }
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
@@ -112,7 +139,7 @@ public class UniquePersonList implements Iterable<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                && this.internalList.equals(((UniquePersonList) other).internalList));
     }
 
     @Override
