@@ -116,12 +116,6 @@ public class AddCommandTest {
         }
 
         @Override
-        public FavouriteListPredicate getFavouriteListPredicate() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -158,6 +152,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void unBookmarkLesson(ReadOnlyLesson lesson) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void bookingSlot(BookedSlot booking) throws DuplicateBookedSlotException {
             fail("This method should not be called.");
         }
@@ -169,6 +168,11 @@ public class AddCommandTest {
 
         @Override
         public void updateBookedSlot(BookedSlot target, BookedSlot newBookingSlot) throws DuplicateBookedSlotException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unbookAllSlot() {
             fail("This method should not be called.");
         }
 
@@ -196,6 +200,26 @@ public class AddCommandTest {
         @Override
         public void sortLessons() {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void setCurrentViewingLesson(ReadOnlyLesson lesson) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyLesson getCurrentViewingLesson() {
+            return null;
+        }
+
+        @Override
+        public void setViewingPanelAttribute(String attribute) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public String getCurrentViewingAttribute() {
+            return null;
         }
     }
 
