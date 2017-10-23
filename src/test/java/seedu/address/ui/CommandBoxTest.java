@@ -14,6 +14,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.testutil.StorageStub;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -28,7 +29,7 @@ public class CommandBoxTest extends GuiUnitTest {
     @Before
     public void setUp() {
         Model model = new ModelManager();
-        Logic logic = new LogicManager(model);
+        Logic logic = new LogicManager(model, new StorageStub());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
@@ -39,6 +40,27 @@ public class CommandBoxTest extends GuiUnitTest {
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    @Test
+    public void commandBox_multipleSuggestions() {
+        String input = "l";
+        commandBoxHandle.enterInput(input);
+        assertEquals("clear", commandBoxHandle.getInput());
+    }
+
+    @Test
+    public void commandBox_singleSuggestion() {
+        String input = "li";
+        commandBoxHandle.enterInput(input);
+        assertEquals("list", commandBoxHandle.getInput());
+    }
+
+    @Test
+    public void commandBox_noSuggestion() {
+        String input = "abc";
+        commandBoxHandle.enterInput(input);
+        assertEquals("abc", commandBoxHandle.getInput());
     }
 
     @Test

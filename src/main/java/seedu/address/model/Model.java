@@ -38,6 +38,9 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    /** Sorts the persons object alphanumerically by name. */
+    void sortPersons();
+
     /**
      * @throws TagNotFoundException if the tag is not found in tag list of address book
      * @throws IllegalValueException if the input value is not alphanumeric
