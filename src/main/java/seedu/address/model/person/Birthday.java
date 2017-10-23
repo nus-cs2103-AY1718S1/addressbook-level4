@@ -74,4 +74,3 @@ public class Birthday {
         return value.hashCode();
     }
 }
-

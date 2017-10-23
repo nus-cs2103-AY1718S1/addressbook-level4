@@ -383,7 +383,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 === Open new AddressBook mechanism
 
-image::OpenAddressBookEvent.png[width="200"]
+image::OpenAddressBookEvent.png[width="800"]
 
 As you can see from the diagram, when the `Open` button is clicked in the Application, it raises an event and triggers
 `MainApp` to update new Application metadata and restart the UI.
@@ -396,10 +396,10 @@ As you can see from the diagram, when the `Open` button is clicked in the Applic
 
 === Add new person with optional fields
 
-Adding new person in DeathNote requires only name, other fields are optional. This is done by allowing the creation of
+Adding new person in DeathNote requires only name. All other fields are optional. This is done by allowing the creation of
 `Phone`, `Email`, etc. objects with `null` parameter.
 
-Problem arises when these field class can create with `null` parameter. Necessary changes are mostly about additional
+Problems arise when these field classes can created with a `null` parameter. Necessary changes are mostly about additional
 checks of `null` in its respective class:
 
 ----
@@ -446,6 +446,55 @@ can have `null` in their `value` field. +
 **Cons:** Since many components rely on each field object being non-null, this design will fail the other components. +
 
 === Adding new parameters to person
+Adding a new parameter to a person requires updates in multiple files as well as the inclusion
+of new tests. The existing files that need to be modified are as follows: +
+
+*Main:*
+
+. Userguide.adoc (for usage instructions)
+.<yournewparameter>.java (Creation of your new parameter)
+. CliSyntax.java (add the prefix your would like your parameter to use here)
+. ParserUtil.java (Teach Deathnote how to interprete your new parameter)
+. AddCommand.java (if there is a need for the new parameter to be used upon adding a new person)
+. AddCommandParser.java (Ensure your parameter is present in the parser)
+. EditCommand.java (if the parameter can be editted)
+. EditCommandParser.java (ensure your parameter is present in the parser)
+. RemarkCommand.java (ensure your parameter is compatible with the Remark command)
+. Person.java (add your parameter to the model)
+. ReadOnlyPerson.java (add instructions on how to read your parameter from saved file)
+. XMLAdaptedPerson.java (Ensure the XML file Deathnote keeps data in can recognise your parameter)
+. SampleData.util (modify this if you want to have initial sample data shown upon load)
+. PersonCard.java (Modify this so that your parameter will be displayed in the GUI if needed)
+. PersonCardHandle.java (Teaches the program how to read off the xml file and what to do)
+. PersonListCard.fxml (Modify this so that your parameter will be displayed in the GUI if needed)
+
+*Tests:*
+
+. <yourparametername>test.java (To check if your parameter accepts illegal values)
+. CommandTestUtil.java (Add your parameter to the test case builder)
+. PersonBuilder.java (Add your parameter to the test person model)
+. PersonUtil.java (Add your Parameter to this test)
+. TypicalPersons.java (Sample test people)
+. PersonCardTest.java (Add your Parameter to this test)
+. GuiTestAssert.java (Add your Parameter to this test)
+. EditCommandSystemTest.java (Add new tests to check for odd behaviour)
+. EditPersonDescriptorTest.java (Add your parameter to this test)
+. EditPersonDescriptorBuilder.java (Add your Parameter to this test)
+. AddCommandSystemTest.java (Add new tests to check for odd behaviour)
+. AddCommandParserTest (Add your Parameter to this test)
+
+The general Steps to take are as follows:+
+.Create your new Parameter in a unique java file (e.g. Birthday.java)
+.Add your parameter in the the person model
+.Add code to "teach" Deathnote how to parse your parameter.Be sure to include examples
+.Ensure that your parameter can be saved
+.Create test to ensure that there are no corner cases that can cause crashes or bugs
+
+You may need to create a new java file in logic/commands if your parameter requires a command to use (e.g. remarks.java) +
+
+Please refer to the following links to get an idea on how to add a new parameter: +
+https://github.com/CS2103AUG2017-W10-B3/main/pull/16/files[Adding website parameter] +
+https://github.com/CS2103AUG2017-W10-B3/main/pull/8/files[Adding birthday parameter]
 
 ==== Design consideration
 
