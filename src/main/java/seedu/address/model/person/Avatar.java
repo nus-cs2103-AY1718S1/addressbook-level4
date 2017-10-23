@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,11 +18,27 @@ public class Avatar {
 
 
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar file path must be .jpg or .png and must exist";
-    private static final String AVATAR_FILE_PATH = "src\\main\\resources\\pictures\\";
-    private String value;
+    private static final String AVATAR_SAVE_LOCATION = "src/main/resources/images/avatars/";
+    private static final String AVATAR_RESOURCE_LOCATION = "/images/avatars/";
+    public static final String AVATAR_DEFAULT_LOCATION = AVATAR_RESOURCE_LOCATION + "default.png";
+    public String value;
+    public BufferedImage loadedImage = null;
+
+    public Avatar(String filePath) {
+        if (filePath == null) {
+            this.value = AVATAR_DEFAULT_LOCATION;
+            return;
+        }
+        this.value = filePath;
+    }
 
     public Avatar(String filePath, String name) throws IllegalValueException {
-        requireNonNull(filePath);
+
+        if (filePath == null) {
+            this.value = AVATAR_DEFAULT_LOCATION;
+            return;
+        }
+
         String isTrimmedFilePath = filePath.trim();
         if (!isValidFilePath(isTrimmedFilePath)) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
@@ -29,7 +46,7 @@ public class Avatar {
 
         String formattedName = formatName(name);
         if (saveFile(isTrimmedFilePath, formattedName)) {
-            this.value = AVATAR_FILE_PATH + formattedName + getFormat(filePath);
+            this.value = AVATAR_RESOURCE_LOCATION + formattedName + getFormat(filePath);
         } else {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
@@ -40,14 +57,14 @@ public class Avatar {
         String format = "png";
 
         if (isJpg(filePath)) {
-            format = "jpg;";
+            format = "jpg";
         }
 
         try {
             File imageFile = new File(filePath);
             BufferedImage image = ImageIO.read(imageFile);
-            ImageIO.write(image, format, new File(AVATAR_FILE_PATH + name + "." + format));
-
+            loadedImage = image;
+            ImageIO.write(image, format, new File(AVATAR_SAVE_LOCATION + name + "." + format));
         } catch (IOException exception) {
             return false;
         }

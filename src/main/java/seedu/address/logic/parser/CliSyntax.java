@@ -16,6 +16,7 @@ public class CliSyntax {
     public static final String PREFIX_ADDRESS_STRING = "a/";
     public static final String PREFIX_TAG_STRING = "t/";
     public static final String PREFIX_REMARK_STRING = "r/";
+    public static final String PREFIX_AVATAR_STRING = "i/";
 
     /* Prefix definitions */
     public static final Prefix PREFIX_EMPTY = new Prefix(PREFIX_EMPTY_STRING);
@@ -25,9 +26,10 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix(PREFIX_ADDRESS_STRING);
     public static final Prefix PREFIX_TAG = new Prefix(PREFIX_TAG_STRING);
     public static final Prefix PREFIX_REMARK = new Prefix(PREFIX_REMARK_STRING);
+    public static final Prefix PREFIX_AVATAR = new Prefix(PREFIX_AVATAR_STRING);
 
     public static final List<Prefix> LIST_OF_PREFIXES =
             Arrays.asList(
                     PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                    PREFIX_TAG, PREFIX_REMARK, PREFIX_EMPTY);
+                    PREFIX_TAG, PREFIX_REMARK, PREFIX_AVATAR, PREFIX_EMPTY);
 }

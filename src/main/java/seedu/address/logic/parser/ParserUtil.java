@@ -37,6 +37,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -129,6 +130,11 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    public static Optional<Avatar> parseAvatar(Optional<String> avatar, String name) throws IllegalValueException {
+        requireNonNull(avatar);
+        return avatar.isPresent() ? Optional.of(new Avatar(avatar.get(), name)) : Optional.of(new Avatar(null, name));
     }
 
     /**

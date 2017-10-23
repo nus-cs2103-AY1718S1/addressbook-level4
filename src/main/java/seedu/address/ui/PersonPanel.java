@@ -1,9 +1,12 @@
 package seedu.address.ui;
 
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -14,6 +17,7 @@ import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.util.AppUtil;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -61,8 +65,21 @@ public class PersonPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        Image image = AppUtil.getImage("/images/address_book_32.png");
-        avatar.setImage(image);
+        try {
+            Image image = AppUtil.getImage(event.getNewSelection().person.getAvatar().value);
+            avatar.setImage(image);
+        } catch (NullPointerException e) {
+            BufferedImage loadedImage = event.getNewSelection().person.getAvatar().loadedImage;
+
+            if(loadedImage == null) {
+                Image image = AppUtil.getImage(Avatar.AVATAR_DEFAULT_LOCATION);
+                avatar.setImage(image);
+            } else {
+                avatar.setImage(SwingFXUtils.toFXImage(event.getNewSelection().person.getAvatar().loadedImage, null));
+            }
+
+        }
+
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
     }

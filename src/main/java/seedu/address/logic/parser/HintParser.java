@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.parser.CliSyntax.LIST_OF_PREFIXES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS_STRING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL_STRING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMPTY;
@@ -320,11 +321,11 @@ public class HintParser {
      */
     private static String generateAddHint() {
 
-        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_REMARK);
+        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
         if (endHintOptional.isPresent()) {
             return endHintOptional.get();
         }
-        return offerHint("", PREFIX_EMPTY, PREFIX_REMARK);
+        return offerHint("", PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
     }
 
     /**
@@ -336,24 +337,25 @@ public class HintParser {
             return indexHintOptional.get();
         }
 
-        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_REMARK);
+        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
         if (endHintOptional.isPresent()) {
             return endHintOptional.get();
         }
 
-        return offerHint("prefix/KEYWORD", PREFIX_EMPTY, PREFIX_REMARK);
+        return offerHint("prefix/KEYWORD", PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
     }
 
     /**
      * returns a hint specific to the find command
      */
     private static String generateFindHint() {
-        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY);
+        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
 
         if (endHintOptional.isPresent()) {
             return endHintOptional.get();
         }
-        return offerHint("prefix/KEYWORD", PREFIX_EMPTY);
+
+        return offerHint("prefix/KEYWORD", PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
     }
 
     /**

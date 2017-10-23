@@ -23,18 +23,20 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
+    private ObjectProperty<Avatar> avatar;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Avatar avatar, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
+        this.avatar = new SimpleObjectProperty<>(avatar);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -44,7 +46,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getTags());
+                source.getAvatar(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -116,6 +118,15 @@ public class Person implements ReadOnlyPerson {
         return remark;
     }
 
+    @Override
+    public Avatar getAvatar() {
+        return avatar.get();
+    }
+
+    @Override
+    public ObjectProperty<Avatar> avatarProperty() {
+        return avatar;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
