@@ -438,8 +438,8 @@ the same as one of the preexisting Meetings in the addressbook.
 
 The implementation of meeting card starts of from creating 'Meeting' class which resides in the Model component of this application. This meeting card also requires the UI component for this cards to be properly shown to the users.
 
-* Firstly, the Meeting class is created with object properties like 'Name of meeting', 'DateTime'(which uses java.time), 'person to meet', 'phone number' and 'location of meeting'. We want all these object properties to facilitate the users' ability to retrieve these information of his/her scheduled meeting. This is handled by ModelManager.
-* These properties of are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
+* Firstly, the Meeting class is created with object properties like `MeetingName`, `DateTime`, `Place`, `PersonToMeet` and `PhoneNum` . We want all these object properties to facilitate the users' ability to retrieve these information of his/her scheduled meeting. This is handled by ModelManager.
+* These object properties of the meeting class are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
 
 image::UiMeetingCardSequenceDiagram.png[width="800"]
 
