@@ -34,9 +34,12 @@ import seedu.address.model.task.ReadOnlyTask;
  * The CalendarPanel panel of the App.
  */
 public class CalendarPanel extends UiPart<Region> {
-    private static String FXML = "CalendarPanel.fxml";
+
+    private static final String FXML = "CalendarPanel.fxml";
+
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
+
     private DatePickerSkin datePickerSkin;
     private DatePicker datePicker;
 
