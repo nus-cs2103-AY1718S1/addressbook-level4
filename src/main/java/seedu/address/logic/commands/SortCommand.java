@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.util.Comparator;
+
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -11,10 +13,15 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Sorted all person";
 
+    private final Comparator<ReadOnlyPerson> comparator;
+
+    public SortCommand(Comparator<ReadOnlyPerson> comparator) {
+        this.comparator = comparator;
+    }
 
     @Override
     public CommandResult execute() {
-        model.sortFilteredPersonList(ReadOnlyPerson.NAMESORT);
+        model.sortFilteredPersonList(comparator);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
