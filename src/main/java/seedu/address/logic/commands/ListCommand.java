@@ -7,7 +7,7 @@ import static seedu.address.model.ListingUnit.MODULE;
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ChangeListingUnitEvent;
+import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
@@ -70,7 +70,7 @@ public class ListCommand extends Command {
      */
     private CommandResult executeListByAttribute(Predicate predicate) {
         model.updateFilteredLessonList(predicate);
-        EventsCenter.getInstance().post(new ChangeListingUnitEvent());
+        EventsCenter.getInstance().post(new RefreshPanelEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS, parameter));
     }
 

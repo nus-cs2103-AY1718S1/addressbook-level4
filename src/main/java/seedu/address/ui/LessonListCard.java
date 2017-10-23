@@ -123,16 +123,12 @@ public class LessonListCard extends UiPart<Region> {
      * Change the card state to hide irrelevant information and only show lesson
      */
     private void switchToLessonCard() {
-        code.setVisible(true);
-        venue.setVisible(true);
-        group.setVisible(true);
-        timeSlot.setVisible(true);
-        classType.setVisible(true);
-        lecturers.setVisible(true);
-        star.setFitWidth(30);
-        star.setFitHeight(30);
-        bookmark.setGraphic(star);
-        bookmark.setVisible(true);
+        if (lesson.isMarked()) {
+            star.setFitWidth(30);
+            star.setFitHeight(30);
+            bookmark.setGraphic(star);
+            bookmark.setVisible(true);
+        }
     }
 
     /**

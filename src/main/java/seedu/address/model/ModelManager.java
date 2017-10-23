@@ -7,7 +7,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.ChangeListingUnitEvent;
+import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.model.module.BookedSlot;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
@@ -252,7 +252,7 @@ public class ModelManager extends ComponentManager implements Model {
                 updateFilteredLessonList(predicate);
                 ListingUnit.setCurrentPredicate(predicate);
                 ListingUnit.setCurrentListingUnit(MODULE);
-                EventsCenter.getInstance().post(new ChangeListingUnitEvent());
+                EventsCenter.getInstance().post(new RefreshPanelEvent());
             }
         }
     }
