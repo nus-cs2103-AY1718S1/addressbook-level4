@@ -392,9 +392,11 @@ Format: `(c)clear`
 Use `clear --all` if you want to clear data in all components (both contacts and events).
 ====
 
-=== Exporting address book data : `(p)export`
+=== Exporting data : `(p)export`
 
-Exports the current data in the address book, including data from all three components: *Contacts*, *Events* and
+==== To `.xml` format
+
+Exports the current data in the application, including data from all three components: *Contacts*, *Events* and
 *Calendar*, to an external location. +
 Format: `(p)export FILEPATH`
 
@@ -409,10 +411,30 @@ Format: `(p)export FILEPATH`
 Examples:
 
 * For `Windows` users: +
-`export C:\Users\John Doe\Documents\addressbook.xml`
+`export C:\Users\John Doe\Documents\bonus.xml`
 
 * For `macOS` and `Linux` users: +
-`export /Users/John Doe/Documents/addressbook.xml`
+`export /Users/John Doe/Documents/bonus.xml`
+
+==== To Microsoft Excel^TM^ Worksheet
+
+_(Coming in v2.0)_
+
+Exports the current data in the application to an external file of Microsoft Excel^TM^ format. +
+Format: `(p)export --excel FILEPATH`
+
+****
+* The file name should follow similar rules to the section above.
+* However, it must end with an extension of `.xls` (`.xlsx` is currently not supported).
+****
+
+Examples:
+
+* For `Windows` users: +
+`export C:\Users\John Doe\Documents\bonus.xls`
+
+* For `macOS` and `Linux` users: +
+`export /Users/John Doe/Documents/bonus.xls`
 
 === Advance setting : `(cfg)config`
 
@@ -517,7 +539,7 @@ e.g.`select 2`
 * *Undo* : `(u)undo`
 * *Redo* : `(r)redo`
 * *Exit* : `(x)exit`
-* *Export* : `(p)export FILEPATH` +
+* *Export* : `(p)export [--excel] FILEPATH` +
 eg. For `Windows` users: `export C:\Users\John Doe\Documents\addressbook.xml` +
 eg. For `macOS` and `Linux` users: `export /Users/John Doe/Documents/addressbook.xml`
 * *Config* : `(cfg)config --add-property` `(cfg)config --set-tag-color` `(cfg)config --import-calendar`
