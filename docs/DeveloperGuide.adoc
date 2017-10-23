@@ -12,10 +12,10 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
 
-By: `T15-B2`      `Aw Wen Hao2`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
+By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
 
 
-Welcome to the ConTag's Developer Guide! Fret not if you are a developer or user, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
+Welcome to the ConTag's Developer Guide! Fret not if you are a developer or user,regardless if you are a beginner or experts, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
 
 == Setting up
 
@@ -386,27 +386,6 @@ _Figure 3.1.8 : UndoRedoStack Activity Diagram_
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== Logging
-
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
-
-*Logging Levels*
-
-The logging levels used in this project include:
-
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
 === Displaying the Usage of a Specific Command [Since v1.2]
 
 This function is an enhancement of the exisitng help function, which opens the help command. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Model and Logic components of the application.
@@ -670,13 +649,31 @@ It is possible to provide the same output text in the console message to user, w
 
 Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
 
+=== Logging
 
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+The logging levels used in this project include:
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 == Documentation
 
 This section indicates the type of file we use for writing documentation.
 We will be using asciidoc for writing documentation.
-
 
 
 *Advatnages of using  asciidoc over Markdown:*
@@ -1072,21 +1069,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |select multiple person |perform the same command to multiple contacts at once
 
-|`* * *` |user |update my contact |I do not have to recreate a contact whenever there are changes
+|`* * *` |user |update my contact |update changes to my contact's details
 
 |`* * *` |user |store multiple information of the same kind for a contact |accommodate contacts with multiple addresses, e-mail addresses or phone numbers
 
 |`* * *` |user |get suggestions on the tags I have used |be consistent with the tags I use
 
-|`* *` |user |see a sorted list of my contacts |it will save time and energy on my end
+|`* *` |user |see a sorted list of my contacts |save time and energy on my end
 
-|`* *` |user |use shortcut to any command |it will be easier for me to find someone in my contact list
+|`* *` |user |use shortcut to any command | find someone in my contact list easier
 
 |`* *` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
 
 |`* *` |user |rename any field |update my relationship with contact
 
-|`* *` |user |check the usage of commands easily |it will save time and energy on my end
+|`* *` |user |check the usage of commands easily |save time and energy on my end
 
 |`* *` |user |view the location of an address on google maps |make plans to travel there
 
@@ -1094,7 +1091,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |find my contact's address on google map |locate my contact
 
-|`* *` |user |filter my contact based on any search field |I do not have to go through the whole list of addressbook to find a contact
+|`* *` |user |filter my contact based on any search field |skip the process of viewing whole list of addressbook to find a contact
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -1248,6 +1245,15 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
+
+
+[[gradle]]
+gradle
+
+....
+Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven
+....
+
 
 [appendix]
 == Product Survey
