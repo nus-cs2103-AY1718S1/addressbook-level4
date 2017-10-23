@@ -22,6 +22,7 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+// import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -135,7 +136,8 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -204,6 +206,14 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //    @FXML
+    //    private void handleChangeTheme() {
+    //        MenuItem theme1 = new MenuItem("Dark Theme");
+    //        theme1.setOnAction(ae -> {
+    //
+    //        });
+    //    }
+
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
@@ -217,4 +227,10 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //    @Subscribe
+    //    public void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+    //        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    //        handleChangeTheme();
+    //    }
 }
