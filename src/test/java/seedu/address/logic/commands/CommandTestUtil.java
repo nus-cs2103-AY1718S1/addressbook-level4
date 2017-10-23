@@ -16,6 +16,8 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -141,6 +143,17 @@ public class CommandTestUtil {
         try {
             model.addPerson(person);
         } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("Impossible.", dpe);
+        }
+    }
+
+    /**
+     * Adds the event at the back in the event list.
+     */
+    public static void addEvent(Model model, ReadOnlyEvent event) {
+        try {
+            model.addEvent(event);
+        } catch (DuplicateEventException dpe) {
             throw new AssertionError("Impossible.", dpe);
         }
     }

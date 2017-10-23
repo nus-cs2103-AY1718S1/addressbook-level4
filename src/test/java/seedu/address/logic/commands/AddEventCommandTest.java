@@ -18,7 +18,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.EventList;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyEventList;
@@ -33,70 +33,70 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.EventBuilder;
 
-public class AddCommandTest {
+public class AddEventCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullEvent_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddEventCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
+        Event validEvent = new EventBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddEventCommandForEvent(validEvent, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateEvent_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
+        Event validEvent = new EventBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddEventCommand.MESSAGE_DUPLICATE_EVENT);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddEventCommandForEvent(validEvent, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        Event first = new EventBuilder().withName("First Meeting").build();
+        Event second = new EventBuilder().withName("Second Meeting").build();
+        AddEventCommand addFirstCommand = new AddEventCommand(first);
+        AddEventCommand addSecondCommand = new AddEventCommand(second);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addFirstCommand.equals(addFirstCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddEventCommand addFirstCommandCopy = new AddEventCommand(first);
+        assertTrue(addFirstCommand.equals(addFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addFirstCommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different event -> returns false
+        assertFalse(addFirstCommand.equals(addSecondCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddEventCommand with the details of the given event.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddEventCommand getAddEventCommandForEvent(Event event, Model model) {
+        AddEventCommand command = new AddEventCommand(event);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -105,15 +105,6 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addPerson(int position, ReadOnlyPerson person) {
-            fail("This method should not be called.");
-        }
 
         @Override
         public void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyEventList newEventList) {
@@ -128,6 +119,7 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyEventList getEventList() {
+            fail("This method should not be called.");
             return null;
         }
 
@@ -137,9 +129,30 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException {
+        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void addPerson(int position, ReadOnlyPerson person) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersons() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+                throws DuplicatePersonException, PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public Set<Tag> extractNewTag(ReadOnlyPerson person) {
+            fail("This method should not be called.");
+            return null;
         }
 
         @Override
@@ -200,31 +213,20 @@ public class AddCommandTest {
         public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
             fail("This method should not be called.");
         }
-
-        @Override
-        public Set<Tag> extractNewTag(ReadOnlyPerson person) {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void sortPersons() {
-            fail("This method should not be called.");
-        }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicateEventException when trying to add a event.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateEventException extends ModelStub {
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+            throw new DuplicateEventException();
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyEventList getEventList() {
+            return new EventList();
         }
 
         @Override
@@ -234,19 +236,19 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the event being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingEventAdded extends ModelStub {
+        final ArrayList<Event> eventsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
+        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+            eventsAdded.add(new Event(event));
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyEventList getEventList() {
+            return new EventList();
         }
 
         @Override

@@ -24,6 +24,18 @@ public class TypicalEvents {
     public static final ReadOnlyEvent FORTH = new EventBuilder().withName("Forth meeting")
             .withDescription("Discuss demo").withTime("03/11/2017").build();
 
+    public static final ReadOnlyEvent FIFTH = new EventBuilder().withName("Fifth meeting")
+            .withDescription("Discuss Q & A").withTime("13/11/2017").build();
+
+    public static final ReadOnlyEvent SIXTH = new EventBuilder().withName("Sixth meeting")
+            .withDescription("Discuss attire").withTime("05/11/2017").build();
+
+    public static final ReadOnlyEvent SEVENTH = new EventBuilder().withName("Seventh meeting")
+            .withDescription("Debug").withTime("04/09/2015").build();
+
+    public static final ReadOnlyEvent EIGHTH = new EventBuilder().withName("Eighth meeting")
+            .withDescription("Sleeping").withTime("25/01/2017").build();
+
     /**
      * Returns an {@code AddressBook} with all the typical events.
      */
