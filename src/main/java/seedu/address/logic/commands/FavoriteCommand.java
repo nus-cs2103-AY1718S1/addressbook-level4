@@ -34,7 +34,7 @@ public class FavoriteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        String names = "";
+        StringBuilder names = new StringBuilder();
 
         /*
          * First, efficiently check whether user input any index larger than address book size with Collections.max
@@ -62,7 +62,8 @@ public class FavoriteCommand extends UndoableCommand {
 
             try {
                 model.toggleFavoritePerson(personToFavorite, COMMAND_WORD);
-                names += "\n★ " + personToFavorite.getName().toString();
+                names.append("\n★ ");
+                names.append(personToFavorite.getName().toString());
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException(EditCommand.MESSAGE_DUPLICATE_PERSON);
             } catch (PersonNotFoundException pnfe) {
