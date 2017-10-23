@@ -111,11 +111,8 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
-
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get
-Started].
+Before you get ready to start coding, get some sense of the overall design by reading the
+link:#architecture[Architecture] section.
 
 == Design
 
@@ -128,9 +125,10 @@ The *_Architecture Diagram_* given above explains the high-level design of the A
 each component.
 
 [TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams]
-folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save
-as picture`.
+The `.pptx` files used to create diagrams in this document can be found in the
+link:{repoURL}/tree/master/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the powerpoint
+files located in the link:{repoURL}/tree/master/docs/diagrams/[diagrams] folder, select the objects of the diagram,
+'right click`, and choose `Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible
 for,
