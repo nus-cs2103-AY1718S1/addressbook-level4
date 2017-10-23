@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 //import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 //import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-//import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 //import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 //import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -79,6 +79,25 @@ public class AutoCompleteModelParserTest {
         //no possibility matched
         assertEquals(parser.parseForPossibilities("add n/r"),
                 Arrays.asList(new String[] {"add n/r"}));
+    }
+
+    @Test
+    public void testParsePhone() {
+        parser.setPrefix(PREFIX_PHONE);
+        //multiple possibilities matched
+        assertEquals(parser.parseForPossibilities("edit 1 p/8"),
+                Arrays.asList(new String[] {"edit 1 p/" + ALICE.getPhone().toString(),
+                                            "edit 1 p/" + DANIEL.getPhone().toString(),
+                                            "edit 1 p/8"}));
+
+        //single possibility matched
+        assertEquals(parser.parseForPossibilities("add p/111"),
+                Arrays.asList(new String[] {"add p/" + AMY.getPhone().toString(),
+                                            "add p/111"}));
+
+        //no possibility matched, even if some phone numbers contain the sequence
+        assertEquals(parser.parseForPossibilities("add p/482"),
+                Arrays.asList(new String[] {"add p/482"}));
     }
 
     @After
