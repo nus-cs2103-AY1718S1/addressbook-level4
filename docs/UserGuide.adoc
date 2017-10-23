@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103AUG2017-F11-B1`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -57,25 +57,41 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... [c/CUSTOMFIEILD_KEY:CUSTOMFIELD_VALUE]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags or custom fields (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/School:NUS c/Company:Google`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Henry Harry`
+* `add n/Tim Tom p/12356923 a/Timmy street`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Shows a list of persons according to the tag given in the address book. +
+Format: `list [TAG]`
+
+****
+* The search is case insensitive. e.g `friends` will match `friends`
+* Only full words will be matched e.g. `Friend` will not match `Friends`
+****
+
+Examples:
+
+* `list Friends` +
+Returns any persons with tag `friends`
+* `'list all` +
+Returns all persons with or without tags
+* `list Friends Colleagues` +
+Returns any persons with tag `friends` or/and `Colleagues`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... [c/CUSTOMFIEILD_KEY:CUSTOMFIELD_VALUE]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -83,6 +99,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing custom fields, the existing custom fields of the person will be removed i.e adding of custom fields is not cumulative.
+* You can remove all the person's custom fields by typing `c/` without specifying any custom fields after it.
 ****
 
 Examples:
@@ -91,26 +109,31 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 3 c/School:NUS` +
+Clears all existing custom fields and adds the custom field `School:NUS`.
 
-=== Locating persons by name: `find`
+=== [Since v1.2] Locating persons by other fields: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose field matches any of the given fields, with the exception of tags.
+Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `Email@Email.com` will match `email@email.com`
+* Any field, with the exception of tags, will be searched.
+* The order of the keywords does not matter. e.g. `find n\Hans n\Bo` will match `find n\Bo n\Hans`
+* For name, phone, and address, partial words will also be matched.
+e.g. `find p/9004` will match anyone whose phone number contains `9004`.
+* For email, the given email must also be in the correct form of an email.
+e.g. `find e/gmail` is invalid. `find e\_lee@nus.edu.sg` is valid.
+* Persons matching at least one field will be returned (i.e. `OR` search).
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/John` +
+Returns `Johnathan Kim` and `John Doe`
+* `find n/Bet p/9999 e/helloTim@gmail.com` +
+Returns any person having names containing `Bet`, a phone number containing `9999`, or email address `helloTim@gmail.com`
 
 === Deleting a person : `delete`
 
@@ -227,6 +250,107 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Features v1.5
+
+=== [Coming in v1.5] Sorts and lists all persons : `sort`
+
+Sorts all persons in the address book by their names in alphabetical order. +
+Format: `sort`
+
+=== [Coming in v1.5] Sorts and lists all persons using fields : `sort`
+
+Sorts all persons in the address book by the given parameter(s) in lexicographic order. +
+Format: `sort [n/] [p/] [e/] [a/] [t/]...`
+
+***
+* If more than one parameter is given, address book will sort by the first parameter first, then the next, and so on.
+***
+
+Examples:
+
+* `sort n/ a/`
+Contacts are sorted by name first and then sorted by address.
+
+=== [Coming in v1.5] Locating and listing persons by tag and/or group: `find`
+
+Finds persons who belongs to at least one of the given tags and/or groups. +
+Format: `find [t/TAG] [t/MORE_TAGS] [g/GROUP] [g/MORE_GROUPS]...`
+
+****
+* The search is case insensitive. e.g `Friend` will match `friend`
+* Only full words will be matched e.g. `Enem` will not match `Enemy`
+* Persons matching at least one tag or group will be returned (i.e. `OR` search). e.g. `t/Friend t/NUS g/Google` will return `John Smith ... t/friend g/google` and `Sarah Li ... t/NUS`
+****
+
+=== [Coming in v1.5] Deleting one or more field(s) of a person : `delete`
+
+Deletes the specified field(s) from the person identified by the index number used in the last person listing. +
+Format: `delete INDEX [p/] [e/] [a/] [t/TAG]...`
+
+***
+* Name cannot be deleted.
+* Tag(s) to be deleted must be specified. However, other fields do not have to be specified.
+***
+
+Examples:
+
+* `delete 1 p/ e/` +
+Deletes phone and email of person index 1.
+* `delete 2 a/ t/friend` +
+Deletes address and 'friend' tag of person index 2.
+
+=== [Coming in v1.5] Listing the edit history of a contact : `edit_history`
+
+Lists all edit history of the person, identified by the index number used in the last person listing, in reverse chronological order. +
+Format: `edit_history INDEX`
+
+Examples:
+
+* `edit 1 p/12341234` +
+`edit_history 1` (prints: `phone number changed from ******** to 12341234`
+
+=== [Coming in v1.5] Creating groups : `create`
+
+Creates a group and adds contacts, identified by indices from the last persons listing, to the group.
+Format: `create GROUP_NAME [INDEX] [MORE_INDICES]...`
+
+***
+* An empty group with no persons can be created.
+***
+
+=== [Coming in v1.5] Setting a password to humanDEX : `set_password`
+
+Sets a password for humanDEX.
+Format: `set_password PASSWORD PASSWORD_CONFIRMATION`
+
+***
+* A password must be at least 8 characters long.
+* A password must contain at least one lowercase letter, at least one uppercase letter, and at least one special character.
+* The password and password_confirmation inputs must be the same.
+***
+
+== Features v2.0
+
+=== [Coming in v2.0] Creating a new humanDEX : `new_humanDEX`
+
+Creates a new humanDEX.
+Format: `new_humanDEX NAME`
+
+***
+* If you do not specify the name, the default name will be set to `humanDEX_#`
+* You can perform all commands in any humanDEX.
+* Modifying a contact in one humanDEX will be reflected in all other humanDEXes.
+***
+
+=== [Coming in v2.0] Switching to another humanDEX : `switch`
+
+Switches to another humanDEX.
+Format: `switch NAME`
+
+***
+* A new humanDEX interface will popup.
+***
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -241,12 +365,25 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find by Name* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Find by Phone / Email / Address* : `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]...` +
+e.g. `find p/99991234`
+* *Find by Tag or Group* : `find [t/TAG] [t/MORE_TAGS] [g/GROUP] [g/MORE_GROUPS]...` +
+e.g. `find t/friend`
 * *List* : `list`
+* *Sort (by name)* : `sort`
+* *Sort* : `sort [n/] [p/] [e/] [a/] [t/]...` +
+e.g. `sort n/ a/`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Delete Field* : `delete INDEX [p/] [e/] [a/] [t/TAG]...` +
+e.g. `delete 4 p/ a/ t/friend`
 * *History* : `history`
+* *Edit History* : `edit_history INDEX` +
+e.g. `edit_history 1`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Create Group* : `create GROUP_NAME [INDEX] [MORE_INDICES]...`
+e.g. `create Car Insurance Buyers 1 3 5 7`

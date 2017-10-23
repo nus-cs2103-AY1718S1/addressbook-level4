@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103AUG2017-F11-B1`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -364,6 +364,131 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Find
+
+The `find` command was enhanced to allow a more rigorous search. The new find command allows users to search for Persons in the humanDEX using fields such as Name, Email, Phone, and Address.
+It supports partial search and users are required to input fields using prefixes.
+
+==== Implementation
+
+The enhanced `find` command was implemented by first, modifying the parsing mechanism in `FindCommandParser`. After checking whether any of the prefixes exist in the `argMultiMap`, the parser uses four methods to parse each field. An example of the method is as follows: +
+
+[source,java]
+----
+/**
+ * Parses {@code List<String> names} into a {@code List<Name>} if {@code names} is non-empty.
+ * If {@code names} contain only one element which is an empty string, it will be parsed into a
+ * {@code Set<Name>} containing zero names.
+ */
+private Optional<List<Name>> parseNamesForSearch(List<String> names) throws IllegalValueException {
+    assert names != null;
+
+    if (names.isEmpty()) {
+        return Optional.empty();
+    }
+    List<String> nameList = names.size() == 1 && names.contains("") ? Collections.emptyList() : names;
+    return Optional.of(ParserUtil.parseNames(nameList));
+}
+----
+
+The method above returns an Optional so that when a user does not input any name fields to search, the method still returns. ++
+
+These parsed arguments are delivered to the `PersonContainsKeywordsPredicate` (`Predicate`) by creating a `FindFields` class within the `PersonContainsKeywordsPredicate` class. The `FindFields` class uses four lists to store the search inputs for each of the `Name`, `Email`, `Phone`, and `Address` fields, as such: +
+
+[source,java]
+----
+private List<Name> nameKeywords;
+private List<Phone> phoneKeywords;
+private List<Email> emailKeywords;
+private List<Address> addressKeywords;
+----
+
+The class also provides one 'setter' method and two 'getter' methods for each of the fields. The former 'getter' method returns a Optional, while the latter returns a Stream, for various uses. The latter was implemented so that the string of `getNameKeywords().map(List::stream).orElseGet(Stream::empty)` commands do not have to be repeated multiple times. Below is an example of the two 'getter' methods for `Name`: +
+
+[source,java]
+----
+public Optional<List<Name>> getNameKeywords() {
+    return Optional.ofNullable(nameKeywords);
+}
+
+public Stream<Name> getNameKeywordsStream() {
+    return this.getNameKeywords().map(List::stream).orElseGet(Stream::empty);
+}
+----
+
+After a successful parsing, the execution of the `find` command can be continued. To return partial matches for the search command, a different `match` mechanism was used. Instead of using `StringUtil.containsWordIgnoreCase` to check for matches, the new code uses a simple `String.toLowerCase().contains(String.toLowerCase())` method to search for partial matches as well. Below is a line extracted from `PersonContainsKeywordPredicate.java`. +
+
+[source,java]
+----
+(findFields.getNameKeywordsStream().anyMatch(keyword
+                -> person.getName().toString().toLowerCase().contains(keyword.toString().toLowerCase())));
+----
+
+==== Design Considerations
+
+**Aspect:** Parsing of emails as parameters +
+**Alternative 1 (current choice):** Parses and creates email classes with the current validation method. +
+**Pros:** Quick to implement, consistent validation throughout. +
+**Cons:** Does not allow users to search using email suffixes (e.g., `find e/@comp.nus.edu.sg`). +
+**Alternative 2:** Implement an overloaded constructor for `Email` that surpasses validation. +
+**Pros:** Will allow more flexible uses for users. +
+**Cons:** The team needs to agree on whether implementing an overloaded constructor is useful in terms of the entire software. Not having enough uses for the constructor may call for other solutions.
+
+=== Custom Fields
+
+Custom fields is implemented to give the users more control over the data they are keeping about their contacts.
+The main purpose of this feature is idealised to allow users to store data that does not seem to fit the use of tags and groups.
+Some examples of fields could be birthdays, the company the contact works under etc.
+
+==== Variables
+The CustomField class holds 2 variables:
+
+* key : name of the field
+* value : value of the field
+
+==== Design considerations
+During development the use of Hashmap was considered as a way to store these fields, limiting the keys to be unique. However, the user may have a need to store 2 different values under a same key.
+
+=====
+For Example:
+
+* HashMap Method:
+
+ Phone:98765432
+ Phone1:84434663
+
+* HashSet Method:
+
+ Phone:98765432
+ Phone:84434663
+
+From a Ui perspective, the HashSet method may look more aethestically pleasing as compared to the HashMap method.
+
+Therefore, HashSet is used as it is able to allow the user to fully choose which display method they prefer giving them more flexibility.
+
+=====
+
+==== Implementation
+The CustomField class was developed first and added to Person class. Then the necessary classes are created and developed such that it fits into the existing code. The add and edit command are then updated to support this new feature and finally, test cases are updated to check that this feature have been integrated seamlessly with the existing code.
+
+=== List
+
+The `list` command allow user to list the contacts by tag(s).
+The following sequence diagram shows how the `list` operation works:
+
+image::SDforListPerson.png[width="691"]
+_Figure 2.1.1 : `list` Diagram_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ListCommandParser` +
+**Alternative 1 (current choice):** Add a class to parse command from `AddressBookParser` +
+**Pros:** A better usage for listing +
+**Cons:** New class will be added in, need to add more test cases. +
+**Alternative 2:** Use `find` command for finding tags +
+**Pros:** Easier to implement as `find` function is already available. +
+**Cons:** If contact's details contains same word as tag, contact will be listed. For example if May mail is mayfriend@hotmail.com but does not contain tag "friend", May will be found even though she does not inclulde tag "friend".
+
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -504,14 +629,14 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 [TIP]
 Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified link:#tag[tag] will be removed from everyone in the address book.
 +
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the link:#tag[tag] removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the link:#tag[tags].
 * Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
+** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `link:#tag[tag]` from each person.
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
@@ -521,7 +646,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
+. Use different colors for different link:#tag[tags] inside person cards. For example, `friends` link:#tag[tags] can be all in grey, and `colleagues` link:#tag[tags] can be all in red.
 +
 **Before**
 +
@@ -715,6 +840,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 [appendix]
 == User Stories
+**Target user**
+
+Our target user is insurance agents that has lots of contacts. They may need different address book for their different types of clients. If the insurance agents plans on retiring and wants to past the contacts to his/her fellow colleagues, he/she will be able to export the address book and the colleague will be able to import it.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -723,15 +851,78 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person specifying their name, phone, home address and email address |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |list a contact according to the link:#tag[tag](s) |find my friends better
+
+|`* * *` |user |find contacts based on the different fields, for instance 'find /p 123 /e @hotmail.com' |locate details of persons without having to go through the entire list
+
+|`* * *` |user |remove a link:#tag[tag] |manage the link:#tag[tag]
+
+|`* * *` |user |list a contact according to the link:#tag[tag](s) |find my friends better
+
+|`* * *` |forgetful user |filter my contacts based on their link:#tag[tag](s), affiliations, gender, age et cetera |find someone even when I forget their name
+
+|`* * *` |user |edit details base on parameters, for instance 'edit user /p 12345678' |edit a contact more easily and in a shorter way
+
+|`* * *` |user with many persons in the address book |create link:#group[group](s) in my address book |categorize my acquaintances neatly
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |set and change my password to my address book |hide link:#private-contact-detail[private contact details] and prevent others from seeing those details
+
+|`* *` |user |undo an addition, deletion, or edit of a contact |
+
+|`* *` |user |know if I am adding a duplicate name but with different details |store people with same names
+
+|`* *` |user |view my edit history of each contact that I edited at least once |old data can be kept for posterity
+
+|`* *` |user |export my address book as a file |use the file in other applications
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |delete some details |
+
+|`*` |user |sort according to multiple different parameters |locate a person easier
+
+|`*` |user |choose to add my contacts to my acquaintance's address book when I add their contacts to mine |allow my contacts to easily add me
+
+|`*` |user |display my contact's address using Google Map |navigate my way
+
+|`*` |user |have a temp delete 'folder' after I delete a contact and contact will be deleted after a week |re-add the contact back if I change my mind
+
+|`*` |user |have multiple address books |further categorize contacts
+
+|`*` |user |delete a person from multiple address books |not have to delete them multiple times
+
+|`*` |user |update a user across all address books |not have to update them multiple times
+
+|`*` |user |search for a user across multiple address books |find people more efficiently
+
+|`*` |user |delete address books I do not need |organize my contacts better
+
+|`*` |user |edit the look and feel of the GUI |change it according to my favorite color, icon, font size et cetera
+
+|`*` |user |add LinkedIn or Facebook profile links to my contacts |navigate to their social media profiles easily
+
+|`*` |user |drag-and-drop my contacts around the address book |sort or manage my contacts manually
+
+|`*` |user |retrieve my address book on any device |access my address book anywhere
+
+|`*` |user |add a person into multiple address books |not have to add them multiple times
+
+|`*` |user |add people and it will be reflected on other devices |not have to add the contact to multiple devices
+
+|`*` |user |delete people and it will reflected on other devices |not have to delete multiple times
+
+|`*` |user |edit my address book anywhere, from any device, |keep the most up-to-date copy of it
+
+|`*` |user |customize my profile with a photo and descriptions |allow my contacts to easily recognize me when I am in their address book
+
 |=======================================================================
 
 {More to be added}
@@ -767,6 +958,82 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User request to add person by specifying their name, phone, home address and email address.
+2.  AddressBook adds the person
+3.  AddressBook shows success message
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Person already exists in address book.
++
+Use case ends.
+
+* 2b. Input is invalid.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1. User requests to edit person by giving person's name and new parameter(s)
+2. AddressBook shows confirm message.
+3. User confirms to edit the Person.
+4. AddressBook edits the Person's given parameter(s).
+5. AddressBook shows the edited person entry.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No person in the user's AddressBook matches the given person (invalid input).
++
+[none]
+** 2a1. AddressBook shows error message.
++
+Use case ends.
+
+[none]
+* 2b. The given person does not have the stated parameter(s) (invalid input).
++
+[none]
+** 2b1. AddressBook shows error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Export Address Book
+
+*MSS*
+
+1.	User requests to export Address Book
+2.	AddressBook prompts for export location
+3.	User requests a certain location on their computer
+4.	AddressBook exports the address Book to the specified location
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given location is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,8 +1042,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  New functions must be added regularly.
+.  The system should work on both windows and unix.
+.  The system should be responsive to user inputs
+.  The product should be usable by any user who has an adequate experience of computer usage.
+.  Database should be easily convertible to a JSON format.
+.  Database should be able to be exported to a common file type (eg. csv).
 
 [appendix]
 == Glossary
@@ -793,6 +1064,19 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[tag]]
+Tag
+
+....
+A 'tag' is a temporary label that can be used as a casual, mental-note for users to quickly remember who the contact is. For instance, a tag can include detailed relationships ('BFF') or short description about that person ('cool professor').
+....
+
+[[group]]
+Group
+....
+A 'Group' is a broad category that users can categorize their contacts into. For instance, these can include school names ('NUS') or relationships ('work').
 ....
 
 [appendix]

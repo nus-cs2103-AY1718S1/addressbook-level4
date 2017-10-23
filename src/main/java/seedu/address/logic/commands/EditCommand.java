@@ -16,6 +16,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.customfields.CustomField;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -32,6 +33,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -54,7 +56,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -99,9 +101,10 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Set<CustomField> updatedFields = editPersonDescriptor.getFieldsList().orElse(personToEdit.getFields());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFields, updatedTags);
     }
 
     @Override
@@ -131,15 +134,18 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Set<CustomField> fieldsList;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.fieldsList = toCopy.fieldsList;
             this.tags = toCopy.tags;
         }
 
@@ -147,7 +153,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
+                    this.fieldsList, this.tags);
         }
 
         public void setName(Name name) {
@@ -182,6 +189,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setFieldsList(Set<CustomField> fieldsList) {
+            this.fieldsList = fieldsList;
+        }
+
+        public Optional<Set<CustomField>> getFieldsList() {
+            return Optional.ofNullable(fieldsList);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -209,6 +224,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getFieldsList().equals(e.getFieldsList())
                     && getTags().equals(e.getTags());
         }
     }

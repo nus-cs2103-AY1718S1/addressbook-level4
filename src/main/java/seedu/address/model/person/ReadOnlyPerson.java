@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.customfields.CustomField;
+import seedu.address.model.customfields.CustomFieldsList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,6 +22,8 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<CustomFieldsList> fieldsListProperty();
+    Set<CustomField> getFields();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -32,7 +36,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getFields().equals(this.getFields()));
     }
 
     /**
@@ -49,6 +54,9 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+
+        builder.append(" Fields: ").append(getFields());
+
         return builder.toString();
     }
 

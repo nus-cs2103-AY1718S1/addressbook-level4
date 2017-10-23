@@ -74,6 +74,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
 
+    /**
+     * Sorts addressbook according to name
+     */
+    public void sortPersonsList() {
+        persons.sortPersons();
+    }
+
     //// person-level operations
 
     /**

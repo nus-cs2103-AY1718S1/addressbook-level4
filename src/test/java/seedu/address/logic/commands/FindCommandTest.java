@@ -21,8 +21,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.testutil.FindFieldsBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -32,10 +33,12 @@ public class FindCommandTest {
 
     @Test
     public void equals() {
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
+        PersonContainsKeywordsPredicate.FindFields firstField = new FindFieldsBuilder().withName("first").build();
+        PersonContainsKeywordsPredicate firstPredicate =
+                new PersonContainsKeywordsPredicate(firstField);
+        PersonContainsKeywordsPredicate.FindFields secondField = new FindFieldsBuilder().withName("second").build();
+        PersonContainsKeywordsPredicate secondPredicate =
+                new PersonContainsKeywordsPredicate(secondField);
 
         FindCommand findFirstCommand = new FindCommand(firstPredicate);
         FindCommand findSecondCommand = new FindCommand(secondPredicate);
@@ -75,8 +78,10 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand prepareCommand(String userInput) {
+        PersonContainsKeywordsPredicate.FindFields fields = new FindFieldsBuilder().withName(userInput
+                .split("\\s+")).build();
         FindCommand command =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new FindCommand(new PersonContainsKeywordsPredicate(fields));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

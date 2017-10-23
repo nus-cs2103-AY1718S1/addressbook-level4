@@ -6,14 +6,13 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
-import java.util.Arrays;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.FindFieldsBuilder;
 
 public class ModelManagerTest {
     @Rule
@@ -50,8 +49,9 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
 
         // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        String[] alice = ALICE.getName().fullName.split("\\s+");
+        PersonContainsKeywordsPredicate.FindFields fieldToFind = new FindFieldsBuilder().withName(alice).build();
+        modelManager.updateFilteredPersonList(new PersonContainsKeywordsPredicate(fieldToFind));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests

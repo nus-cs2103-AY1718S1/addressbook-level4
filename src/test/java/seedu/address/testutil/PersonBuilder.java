@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.customfields.CustomField;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -21,6 +22,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_FIELDS = "school:NUS";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -32,7 +34,9 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            Set<CustomField> defaultFields = SampleDataUtil.getFieldsSet(DEFAULT_FIELDS);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultFields, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -99,6 +103,18 @@ public class PersonBuilder {
     public PersonBuilder withEmail(String email) {
         try {
             this.person.setEmail(new Email(email));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("email is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Email} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withFields(String ... fields) {
+        try {
+            this.person.setFields(SampleDataUtil.getFieldsSet(fields));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }

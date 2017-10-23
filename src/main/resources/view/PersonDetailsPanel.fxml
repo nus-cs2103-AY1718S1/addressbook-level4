@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<ScrollPane VBox.vgrow="ALWAYS" minHeight="250" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@DarkTheme.css">
+  <content>
+    <VBox stylesheets="@DarkTheme.css">
+      <padding>
+        <Insets top="5" right="5" bottom="5" left="15" />
+      </padding>
+    <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+    <FlowPane fx:id="tags" />
+    <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+    <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
+    <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+    <!--fields are generated and added in the codes as they are of a variable number-->
+    <VBox fx:id="fields" styleClass="cell_small_label"/>
+    </VBox>
+  </content>
+</ScrollPane>
