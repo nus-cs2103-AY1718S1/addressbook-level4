@@ -32,7 +32,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
 
     /**
-     * Every field must be present and not null.
+     * Only the name field is required
      */
     public Person(Name name, Phone phone, Email email, Address address, DateOfBirth dob, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, dob, tags);
