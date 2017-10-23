@@ -14,9 +14,14 @@ public class Config {
     private String appTitle = "Address App";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
+    private String accounts = "accounts.json";
 
     public String getAppTitle() {
         return appTitle;
+    }
+
+    public String getAccountsPath() {
+        return accounts;
     }
 
     public void setAppTitle(String appTitle) {
