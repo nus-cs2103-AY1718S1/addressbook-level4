@@ -63,9 +63,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-            person.tagProperty().addListener((observable, oldValue, newValue) -> {
-                setTags(person);
-            });
+        person.tagProperty().addListener((observable, oldValue, newValue) -> setTags(person));
     }
 
     private void setTags(ReadOnlyPerson person) {
