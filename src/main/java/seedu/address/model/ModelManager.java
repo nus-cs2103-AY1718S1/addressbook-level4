@@ -44,6 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        logger.info(String.format("Maximum index in the address book: %d", addressBook.getMaxInternalIndex()));
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.userPrefs = userPrefs;
     }

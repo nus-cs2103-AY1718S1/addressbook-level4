@@ -27,6 +27,7 @@ public class UniquePersonList implements Iterable<Person> {
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
+    private int maxInternalIndex = 0;
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -47,6 +48,9 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+        if (toAdd.getInternalId().getId() > maxInternalIndex) {
+            maxInternalIndex = toAdd.getInternalId().getId();
+        }
     }
 
     /**
@@ -59,8 +63,8 @@ public class UniquePersonList implements Iterable<Person> {
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
-        int index = internalList.indexOf(target);
-        if (index == -1) {
+        int displayedIndex = internalList.indexOf(target);
+        if (displayedIndex == -1) {
             throw new PersonNotFoundException();
         }
 
@@ -68,7 +72,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
 
-        internalList.set(index, new Person(editedPerson));
+        internalList.set(displayedIndex, new Person(editedPerson));
     }
 
     /**
@@ -81,6 +85,10 @@ public class UniquePersonList implements Iterable<Person> {
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
+        }
+        // Internal Index should be distinct; check if removed person is the max
+        if (personFoundAndDeleted && toRemove.getInternalId().getId() == maxInternalIndex) {
+            this.maxInternalIndex = updateMaxInternalIndex();
         }
         return personFoundAndDeleted;
     }
@@ -95,6 +103,13 @@ public class UniquePersonList implements Iterable<Person> {
             replacement.add(new Person(person));
         }
         setPersons(replacement);
+    }
+
+    /**
+     * Returns the maximum internal index among all persons in the address book
+     */
+    public int getMaxInternalIndex() {
+        return maxInternalIndex;
     }
 
     /**
@@ -121,7 +136,20 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-
+    /**
+     *
+     * Updates the maximum internal index among all persons in the person list
+     * @return the maximum internal index
+     */
+    private int updateMaxInternalIndex() {
+        int maxIndex = 0;
+        for (Person p : internalList) {
+            if (p.getInternalId().getId() > maxIndex) {
+                maxIndex = p.getInternalId().getId();
+            }
+        }
+        return maxIndex;
+    }
 
 
     /***
@@ -159,10 +187,6 @@ public class UniquePersonList implements Iterable<Person> {
             } else {
                 return 0;
             }
-
         }
-
     }
-
-
 }

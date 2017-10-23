@@ -71,4 +71,14 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    @Override
+    public int getMaxInternalIndex() {
+        int maxIndex = 0;
+        for (XmlAdaptedPerson p : persons) {
+            if (p.getInternalId() > maxIndex) {
+                maxIndex = p.getInternalId();
+            }
+        }
+        return maxIndex;
+    }
 }

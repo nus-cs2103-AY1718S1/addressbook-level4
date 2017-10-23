@@ -83,4 +83,12 @@ public class XmlAdaptedPerson {
         final SearchData searchCount = new SearchData(this.searchCount);
         return new Person(internalId, name, phone, email, address, tags, searchCount);
     }
+
+    /**
+     * Returns the internal id of the person as read from the xml file
+     * This is needed for address book initialization
+     */
+    public int getInternalId() {
+        return internalId;
+    }
 }
