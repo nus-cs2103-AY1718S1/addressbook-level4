@@ -13,7 +13,6 @@ endif::[]
 image::UG_cover.png[width="750", align="left"]
 = Planno - User Guide
 
-
 By: `Team W14-B4`      Since: `Sep 2017`      Licence: `NUS`
 
 toc::[]
@@ -116,6 +115,7 @@ image::UG_add.png[width="790"]
 _Figure 3.2 add command result_
 
 === Listing
+
 ==== Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
