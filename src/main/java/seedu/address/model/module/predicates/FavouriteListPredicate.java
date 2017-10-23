@@ -5,7 +5,6 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.model.module.ReadOnlyLesson;
 
-
 /**
  * Tests that if a {@code ReadOnlyLesson} if in the favourite list.
  */
