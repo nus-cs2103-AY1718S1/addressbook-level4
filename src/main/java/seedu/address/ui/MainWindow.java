@@ -44,6 +44,7 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private ResultDisplay resultDisplay;
     private CommandBox commandBox;
     private Config config;
     private UserPrefs prefs;
@@ -99,7 +100,7 @@ public class MainWindow extends UiPart<Region> {
      * Set key listeners for handling keyboard shortcuts.
      */
     protected void setKeyListeners() {
-        KeyListener keyListener = new KeyListener(getRoot(), personListPanel, commandBox);
+        KeyListener keyListener = new KeyListener(getRoot(), resultDisplay, personListPanel, commandBox);
         keyListener.handleKeyPress();
     }
 
@@ -148,7 +149,7 @@ public class MainWindow extends UiPart<Region> {
         PersonDetailPanel personDetailPanel = new PersonDetailPanel();
         personDetailPlaceholder.getChildren().add(personDetailPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getRolodexFilePath());
