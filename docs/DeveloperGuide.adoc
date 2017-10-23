@@ -360,7 +360,6 @@ A separate parser for phone, email and address are used to accommodate this enha
 **Alternative 2:** Modify existing parser method `parsePhone`, `parseEmail` and `parseAddress` +
 **Pros:** Easier to implement as we can re-use existing tests and codes and just add minor modifications +
 **Cons:** The behaviour of edit command overlaps with the behaviour of the add command, causing unintended overwrite of other fields such as address when we don't want to. +
-
 // end::EnhancedAddCommand[]
 === Logging
 

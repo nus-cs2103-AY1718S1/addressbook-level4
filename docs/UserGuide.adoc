@@ -62,8 +62,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 [TIP]
 A person can have any number of tags (including 0)
 A person can be added with just the name being specified
-Phone number, email and address are optional during the addition of a person
-The Order in which name, phone number, email, address and tag are specified is non-specific
+The Order of name, phone number, email, address and tags being added does not matter
 
 Examples:
 
