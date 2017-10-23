@@ -273,7 +273,7 @@ Executing command without the INDEX field will remove the given tag(s) from the 
 * The index refers to the index number shown in the last person listing.
 * The index must be a positive integer `1, 2, 3, ...`
 * Removes the specified tags from *ONE* specified index.
-* Removes *ONE* tag frin the specified indexes.
+* Removes *ONE* tag from the specified indexes.
 * Multiple tags and indexes input are *NOT* allowed.
 ****
 
