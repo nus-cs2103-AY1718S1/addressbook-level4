@@ -5,13 +5,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-
-import javax.swing.text.DateFormatter;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
@@ -59,7 +54,6 @@ public class AddEventCommand extends UndoableCommand {
         try {
             model.addEvent(toAdd);
             DateTime temp = toAdd.getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
             LocalDate tempDate = LocalDate.parse(temp.toString().substring(0, 7));
             LocalDate dateNow = LocalDate.now();
             long tempMsg = dateNow.until(tempDate, ChronoUnit.DAYS);

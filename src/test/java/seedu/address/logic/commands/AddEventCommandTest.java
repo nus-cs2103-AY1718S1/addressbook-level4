@@ -1,11 +1,9 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,6 +24,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.EventBuilder;
 
+
 public class AddEventCommandTest {
 
     @Rule
@@ -36,18 +35,6 @@ public class AddEventCommandTest {
         thrown.expect(NullPointerException.class);
         new AddEventCommand(null);
     }
-
-    @Test
-    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingEventAdded modelStub = new ModelStubAcceptingEventAdded();
-        Event validEvent = new EventBuilder().build();
-
-        CommandResult commandResult = getAddCommandForEvent(validEvent, modelStub).execute();
-
-        assertEquals(String.format(AddEventCommand.MESSAGE_SUCCESS, validEvent), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validEvent), modelStub.eventsAdded);
-    }
-
     @Test
     public void execute_duplicateEvent_throwsCommandException() throws Exception {
         AddEventModelStub modelStub = new ModelStubThrowingDuplicateEventException();
