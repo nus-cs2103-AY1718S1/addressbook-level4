@@ -16,8 +16,47 @@ endif::[]
 By: `Team T11-B3`      Since: `Sep 2017`      Licence: `MIT`
 
 ==  Introduction +
+
+Mobilize is a organizing and planning application for the desktop, that allows you to manage your contacts
+and tasks easily. Using the default Command Line Interface, you can store, edit, filter and remove contacts
+and to-do lists without using the touch pad or a mouse.
+
+With its sophisticated yet user-friendly features, Mobilize can help you easily plan and organize your day
+with only a few clicks on the keyboard.
+
 ==  About +
+
+This User Guide will lead you through the process of downloading and using Mobilize, along with a brief overview of its features and
+the different commands which will help you use these features.
+
+A summary of all commands can be found at the end of the guide.
+
 ==  Key Features +
+
+=== Contact Manager
+
+The contact manager allows you to add, remove, tag, list, filter and edit contacts.
+
+It offers the following parameters:
+
+* Name
+* Phone
+* Address
+* Birthday
+* Email
+* Tags
+
+=== Task Manager
+
+The task manager allows you to add, remove, edit, tag, archive and remove tasks.
+
+It offers the following parameters:
+
+* Task Description
+* Starting Date
+* Deadline
+* Tags
+
 ==  Getting Started +
 
 === Launching the Application
