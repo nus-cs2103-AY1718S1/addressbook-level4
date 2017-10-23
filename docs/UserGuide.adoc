@@ -313,34 +313,37 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== *FAQ*
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
 == *Command Summary*
 
 [width="90%",cols="10%,<10%,<70%",options="header",]
 |=======================================================================
 |Feature |Alias |Command Format
-| *Help* | *h* | `[.underline]#help#` +
-| *Add* | *a* | `[.underline]#add# n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-| *List* | *l* | `[.underline]#list#` +
-| *Edit* | *e* | `[.underline]#edit# INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-| *Favourite* | *fav* | `[.underline]#favourite# INDEX` +
-| *Find* | *f* | `[.underline]#find# [PREFIX KEYWORD]...` +
-| *Delete* | *d* | `[.underline]#delete# INDEX` +
-| *Select* | *s* | `[.underline]#select# INDEX` +
-| *History* | *hs* | `[.underline]#history#` +
-| *Undo* | *u* | `[.underline]#undo#` +
-| *Redo* | *r* | `[.underline]#redo#` +
-| *Remove* | *rm* | `[.underline]#remove# [TAG]... [INDEX]...` +
-| *Clear* | *c* | `[.underline]#clear#` +
-| *exit* | *x* | `[.underline]#exit#` +
+| *Help* | *h* | `help` +
+| *Add* | *a* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+| *List* | *l* | `list` +
+| *Edit* | *e* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+| *Favourite* | *fav* | `favourite INDEX` +
+| *Find* | *f* | `find [PREFIX KEYWORD]...` +
+| *Delete* | *d* | `delete INDEX` +
+| *Select* | *s* | `select INDEX` +
+| *History* | *hs* | `history` +
+| *Undo* | *u* | `undo` +
+| *Redo* | *r* | `redo` +
+| *Remove* | *rm* | `remove [TAG]... [INDEX]...` +
+| *Clear* | *c* | `clear` +
+| *exit* | *x* | `exit` +
 |=======================================================================
 
-The underlined command keywords can be substituted by their aliases. +
-For e.g. to favourite the person at INDEX 4: `fav 4` instead of `favourite 4` can be used.
+The command keywords can be substituted by their aliases. +
+For example:
+
+* To favourite the person at INDEX 4: `fav 4` instead of `favourite 4` can be used. +
+* To undo a command : `u` instead of `undo` can be used.
+
+== *FAQ*
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == *Since v1.2*
 
