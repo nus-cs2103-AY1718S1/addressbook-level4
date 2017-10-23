@@ -117,7 +117,7 @@ public class CommentCommandTest {
      */
     private CommentCommand prepareCommand(Index index, String comment) {
         CommentCommand commentCommand = new CommentCommand(index, new Comment(comment));
-        commentCommand.setData(model, new CommandHistory(), new UndoRedoStack(), null);
+        commentCommand.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
         return commentCommand;
     }
 }

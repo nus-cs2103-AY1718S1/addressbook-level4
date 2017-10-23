@@ -16,7 +16,7 @@ public class EmailLoginCommandTest {
     @Test
     public void wrongCredentials() throws CommandException {
         command = new EmailLoginCommand("phungtuanhoang1996@gmail.com", "thispasswordiswrong");
-        command.setData(null, null, null, emailManager);
+        command.setData(null, null, null, emailManager, null);
         CommandResult result = command.execute();
         assertEquals(EmailLoginCommand.MESSAGE_FAILED + EmailManager.MESSAGE_LOGIN_FAILED,
                 result.feedbackToUser);
@@ -27,7 +27,7 @@ public class EmailLoginCommandTest {
     public void correctCredentials() throws CommandException {
         String email = "cs2103testacc@gmail.com";
         command = new EmailLoginCommand(email, "testpass");
-        command.setData(null, null, null, emailManager);
+        command.setData(null, null, null, emailManager, null);
         CommandResult result = command.execute();
         assertEquals(MESSAGE_SUCCESS + email,
                 result.feedbackToUser);
