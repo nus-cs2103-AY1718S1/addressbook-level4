@@ -1,12 +1,23 @@
 package seedu.address.storage;
 
+import static seedu.address.storage.XmlAddressBookStorage.DEFAULT_MERGE_FILE_PATH;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
+import seedu.address.model.AddressBook;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Stores addressbook data in an XML file
@@ -36,4 +47,65 @@ public class XmlFileStorage {
         }
     }
 
+    public static void mergeDataToFile(XmlSerializableAddressBook defaultFileData, XmlSerializableAddressBook newFileData) throws IOException {
+        ObservableList<ReadOnlyPerson> defaultFilePersonList = defaultFileData.getPersonList();
+        ObservableList<ReadOnlyPerson> newFilePersonList = newFileData.getPersonList();
+        ObservableList<Tag> defaultFileTagList = defaultFileData.getTagList();
+        ObservableList<Tag> newFileTagList = newFileData.getTagList();
+
+        AddressBook mergedAddressBook = new AddressBook();
+        
+        for (ReadOnlyPerson defaultDataPerson: defaultFilePersonList) {
+            try {
+                mergedAddressBook.addPerson(new Person(defaultDataPerson));
+            } catch (DuplicatePersonException dpe) {
+                throw new IOException(dpe.getMessage());
+            }
+        }
+        
+        for (ReadOnlyPerson newDataPerson: newFilePersonList) {
+            boolean isSamePerson = false;
+            for (ReadOnlyPerson defaultDataPerson: defaultFilePersonList) {
+                if (defaultDataPerson.equals(newDataPerson)) {
+                    isSamePerson = true;
+                    break;
+                }
+            }
+            if (!isSamePerson) {
+                try {
+                    mergedAddressBook.addPerson(new Person(newDataPerson));
+                } catch (DuplicatePersonException dpe) {
+                    throw new IOException(dpe.getMessage());
+                }
+            }
+        }
+
+        for (Tag newDataTag: newFileTagList) {
+            boolean isSameTag = false;
+            for (Tag defaultDataTag: defaultFileTagList) {
+                if (defaultDataTag.equals(newDataTag)) {
+                    isSameTag = true;
+                    break;
+                }
+            }
+            if (!isSameTag) {
+                try {
+                    mergedAddressBook.addTag(newDataTag);
+                } catch (IllegalValueException ive) {
+                    throw new IOException(ive.getMessage());
+                }
+            }
+        }
+        
+        File mergeFile = new File(DEFAULT_MERGE_FILE_PATH);
+        FileUtil.createIfMissing(mergeFile);
+        
+        try {
+            XmlUtil.saveDataToFile(mergeFile, new XmlSerializableAddressBook(mergedAddressBook));
+        } catch (FileNotFoundException fnfe) {
+            assert false : "Unexpected exception " + fnfe.getMessage();
+        } catch (JAXBException e) {
+            throw new IOException(e.getMessage());
+        }
+    }
 }
