@@ -3,7 +3,9 @@ package systemtests;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.tasks.DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS;
-import static seedu.address.testutil.TestUtil.*;
+import static seedu.address.testutil.TestUtil.getLastTask;
+import static seedu.address.testutil.TestUtil.getMidTask;
+import static seedu.address.testutil.TestUtil.getTask;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
 
