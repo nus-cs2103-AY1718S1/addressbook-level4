@@ -86,7 +86,8 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane emailButtonPlaceholder;
-    @FXML 
+    
+    @FXML
     private StackPane editButtonPlaceholder;
     @FXML
     private StackPane editNameTextfieldPlaceholder;
