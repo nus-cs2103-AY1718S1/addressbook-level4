@@ -52,15 +52,22 @@ public class AddCommandParser implements Parser<AddCommand> {
             TrackingNumber trackingNumber = ParserUtil.parseTrackingNumber(argMultimap
                     .getValue(PREFIX_TRACKING_NUMBER)).get();
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             DeliveryDate deliveryDate = ParserUtil.parseDeliveryDate(argMultimap.getValue(PREFIX_DELIVERYDATE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Optional<Email> emailOptional = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL));
             Optional<Status> statusOptional = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS));
             Optional<Phone> phoneOptional = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE));
 
+            Email email;
             Status status;
             Phone phone;
+
+            if (emailOptional.isPresent()) {
+                email = emailOptional.get();
+            } else {
+                email = new Email();
+            }
 
             if (statusOptional.isPresent()) {
                 status = statusOptional.get();
