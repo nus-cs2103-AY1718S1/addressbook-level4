@@ -323,20 +323,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear addressbook`
+=== Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear addressbook`
-
-=== Clearing all entries of the task manager: `clear tasks`
-
-Clears all entries from the task manager. +
-Format: `clear tasks`
-
-=== Clearing all entries of the contacts: `clear contacts`
-
-Clears all entries from the contact list. +
-Format: `clear contacts`
+Format: `clear`
 
 === Exiting the program : `exit`
 
