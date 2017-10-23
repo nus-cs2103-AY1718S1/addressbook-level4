@@ -48,7 +48,12 @@ public class MainWindow extends UiPart<Region> {
     private UserPrefs prefs;
     private DeleteButton deleteButton;
     private EmailButton emailButton;
-
+    private EditButton editButton;
+    private NameTextField nameTextField;
+    private PhoneTextField phoneTextField;
+    private EmailTextField emailTextField;
+    private AddressTextField addressTextField;
+    private TagTextField tagTextField;
     @FXML
     private StackPane browserPlaceholder;
 
@@ -81,6 +86,22 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane emailButtonPlaceholder;
+    @FXML
+    private StackPane editButtonPlaceholder;
+    @FXML
+    private StackPane editNameTextfieldPlaceholder;
+
+    @FXML
+    private StackPane editPhoneTextfieldPlaceholder;
+
+    @FXML
+    private StackPane editEmailTextfieldPlaceholder;
+
+    @FXML
+    private StackPane editAddressTextfieldPlaceholder;
+
+    @FXML
+    private StackPane editTagTextfieldPlaceholder;
     @FXML
     private VBox vBox;
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
@@ -148,6 +169,24 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        nameTextField = new NameTextField();
+        editNameTextfieldPlaceholder.getChildren().add(nameTextField.getRoot());
+
+        phoneTextField = new PhoneTextField();
+        editPhoneTextfieldPlaceholder.getChildren().add(phoneTextField.getRoot());
+
+        emailTextField = new EmailTextField();
+        editEmailTextfieldPlaceholder.getChildren().add(emailTextField.getRoot());
+
+        addressTextField = new AddressTextField();
+        editAddressTextfieldPlaceholder.getChildren().add(addressTextField.getRoot());
+
+        tagTextField = new TagTextField();
+        editTagTextfieldPlaceholder.getChildren().add(tagTextField.getRoot());
+        editButton = new EditButton(logic, nameTextField, phoneTextField,
+                emailTextField, addressTextField, tagTextField);
+        editButtonPlaceholder.getChildren().add(editButton.getRoot());
 
         deleteButton = new DeleteButton(logic, 0);
         deleteButtonPlaceholder.getChildren().add(deleteButton.getRoot());

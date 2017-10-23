@@ -219,6 +219,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 === Email Function
+(added in v1.2)
 
 The email function allows a user to email the selected person by opening an email client on the user's
 PC with the 'to:' field filled with the receiver's email.
@@ -243,6 +244,7 @@ image::OpenEmailClientSequenceDiagram.png[width="800"]
 
 
 === Mapping a command to a JavaFX Button
+(added in v1.2)
 
 This section describes how a command can be mapped to a JavaFX button.
 
@@ -448,6 +450,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 // tag::ImportCommand[]
 === Import Command
+(added in v1.2)
 
 The import command is a new feature implemented that allows the user to import contact details directly from some external source.
 
@@ -494,12 +497,13 @@ Once the required information (name, email, address, phone number) is retrieved 
 **Alternative 2:** Create a `File upload` function. +
 **Pros:** User friendly. User can upload a file that is residing in any part of the user's PC. Does not require user to specifically place the file at the /data directory. +
 **Cons:** Requires an `Upload` button to be created, involves UI component. Requires more time to develop the upload function. +
----
 
 // end::ImportCommand[]
-=======
+
 // tag::filtertag[]
+
 === Filter by tag mechanism
+(added in v1.2)
 
 The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. The keywords inputted by the user is put into a List<String> and
 then parses into `TagContainsKeywordsPredicate` which will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person
@@ -520,6 +524,7 @@ The tag command is not undoable so it will just override execute().
 
 // tag::removetag[]
 === Remove tag mechanism
+(added in v1.2)
 
 The remove tag mechanism is implemented by `Logic` and `Model`. When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
 The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
@@ -558,6 +563,8 @@ image::removeTag_sequenceDiagram.png[width="800"]
 **Cons:** Further implementation and checks required to check that the keyword is identical to the tag name +
 
 === Change colour theme mechanism
+(added in v1.2)
+
 The changing of colour theme feature is added for users to choose their preferred colour theme. The colour theme options are implemented by the `UI`
 on the `MainWindow` MenuBar as MenuItems. +
 When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem

@@ -144,6 +144,7 @@ Another way to delete a contact in the list:
 ****
 
 === Email a person
+(added in v1.2)
 
 Opens an email client with the recipient's email address.
 
@@ -152,7 +153,6 @@ Opens an email client with the recipient's email address.
 2. Click the "Email" Button
 3. Proceed to compose email on email client
 ****
-
 
 
 === Selecting a person : `select`
@@ -236,11 +236,13 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 === Sorting contacts in the Address Book : `sort`
+(added in v1.2)
 
 Sorts the contacts in the address book based on the name. +
 Format: `sort` or `ss`
 
 === Filtering list by tags : `tag`
+(added in v1.2)
 
 Finds and filter list of persons with tags that is specified by the keywords. +
 Format: `tag KEYWORD [MORE_KEYWORDS]` or `t KEYWORD [MORE_KEYWORDS]`
@@ -260,6 +262,7 @@ Returns any person having tags `friends` or `bestFriends`
 Returns any person having tags `friends`, `classmates`, or `colleagues`
 
 === Removing tags : `rtag`
+(added in v1.2)
 
 Removes tag from all persons with tags that is specified by the keywords. +
 Format: `rtag KEYWORD [MORE_KEYWORDS]` or `rt KEYWORD [MORE_KEYWORDS]`
@@ -278,6 +281,7 @@ Removes "friends" tag from all persons
 Removes "friends", "classmates", "colleagues" tag from all persons
 
 === Importing Contacts from external source : `import`
+(added in v1.2)
 
 Imports contact from external source into the addressbook. Source must be in `.vcf` format. +
 File must also be placed in the main folder.
@@ -299,6 +303,7 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 == Upcoming Features
+(added in v1.2)
 
 === View address location on map `Coming in v2.0`
 ConnectUs will display the address location of the contact you selected on a map.
