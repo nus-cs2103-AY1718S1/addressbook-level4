@@ -262,7 +262,7 @@ Examples:
 * `findmeeting Clementi` +
 Returns `Clementi` and `Clementi Road`
 * `findmeeting Clementi NUS` +
-Returns any meeting having names `Betsy`, `Tim`, or `John` as the person to meet
+Returns any meeting having names `Clementi` or `NUS`
 * `findmeeting Shopping Study John` +
 Returns any meeting having `John` as the person to meet and any meetings having names `Study` and `Shopping`
 
