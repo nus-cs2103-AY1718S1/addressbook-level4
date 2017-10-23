@@ -1,47 +1,130 @@
 package seedu.address.model.module.predicates;
 
-import seedu.address.model.module.Lesson;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
  */
-public class LessonContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
+public class LessonContainsKeywordsPredicate extends FindPredicate {
     private final List<String> keywords;
-    private ArrayList<ReadOnlyLesson> duplicateLesson = new ArrayList<ReadOnlyLesson>();
+    private final List<String> oldKeywords;
+    private ArrayList<ReadOnlyLesson> filteredLesson;
+    private ReadOnlyLesson currentViewingLesson;
+    private ArrayList<String> inforList;
 
-    public LessonContainsKeywordsPredicate(List<String> keywords) {
+    public LessonContainsKeywordsPredicate(List<String> keywords, List<String> oldKeyword, ReadOnlyLesson lesson) {
 
         this.keywords = keywords;
-        duplicateLesson.clear();
+        this.oldKeywords = oldKeyword;
+        this.currentViewingLesson = lesson;
+        filteredLesson = new ArrayList<ReadOnlyLesson>();
+        inforList = new ArrayList<>();
+
+    }
+
+    public void initializeInforList(ReadOnlyLesson lesson) {
+        inforList.add(lesson.getCode().fullCodeName);
+        inforList.add(lesson.getLocation().value);
+        inforList.add(lesson.getTimeSlot().value);
+        inforList.add(lesson.getGroup().value);
+        inforList.add(lesson.getClassType().value);
+    }
+
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    void filterOldKeyWords(ReadOnlyLesson lesson) {
+
+        initializeInforList(lesson);
+        boolean valid = true;
+
+        for (int i = 0; i < oldKeywords.size(); i++) {
+
+            if (!inforList.contains(oldKeywords.get(i))) {
+                valid = false;
+                break;
+            }
+        }
+
+        if (valid)
+            filteredLesson.add(lesson);
 
     }
 
     @Override
     public boolean test(ReadOnlyLesson lesson) {
 
-        for (int i = 0; i < keywords.size(); i++) {
-            if (lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                    || lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                    || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                    || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                    || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase())){
+        if (!oldKeywords.isEmpty()) {
 
-                if (duplicateLesson.contains(lesson)) {
-                    return false;
-                } else {
-                    duplicateLesson.add(lesson);
-                    return true;
+            filterOldKeyWords(lesson);
+
+
+            for (int i = 0; i < keywords.size(); i++) {
+
+                switch (ListingUnit.getCurrentListingUnit()) {
+                case LESSON_MODULE:
+                case MODULE:
+                    if ((lesson.getCode().equals(currentViewingLesson.getCode())) && filteredLesson.contains(lesson)
+                            && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
+
+                        return true;
+
+                    }
+                case LESSON_LOCATION:
+                    if (lesson.getLocation().equals(currentViewingLesson.getLocation()) && filteredLesson.contains(lesson)
+                            && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
+
+                        return true;
+                    }
+
                 }
 
             }
-        }
-        return false;
 
+        } else {
+
+            for (int i = 0; i < keywords.size(); i++) {
+
+                switch (ListingUnit.getCurrentListingUnit()) {
+                case LESSON_MODULE:
+                case MODULE:
+                    if ((lesson.getCode().equals(currentViewingLesson.getCode()))
+                            && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
+
+                        return true;
+
+                    }
+                case LESSON_LOCATION:
+                    if (lesson.getLocation().equals(currentViewingLesson.getLocation())
+                            && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                            || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
+
+                        return true;
+                    }
+
+                }
+
+            }
+
+        }
+
+        return false;
     }
 
     @Override

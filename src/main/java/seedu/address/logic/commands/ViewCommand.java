@@ -15,7 +15,7 @@ import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static seedu.address.model.ListingUnit.LESSON;
+import static seedu.address.model.ListingUnit.*;
 
 
 /**
@@ -50,9 +50,22 @@ public class ViewCommand extends Command {
 
         ReadOnlyLesson toView = lastShownList.get(targetIndex.getZeroBased());
 
+        model.setCurrentViewingLesson(toView);
+
         String resultMessage = updateFilterList(toView);
 
-        ListingUnit.setCurrentListingUnit(LESSON);
+        switch (getCurrentListingUnit()) {
+        case MODULE:
+            ListingUnit.setCurrentListingUnit(LESSON_MODULE);
+            break;
+        case LOCATION:
+            ListingUnit.setCurrentListingUnit(LESSON_LOCATION);
+            break;
+        default:
+            ListingUnit.setCurrentListingUnit(LESSON);
+            break;
+        }
+
         EventsCenter.getInstance().post(new ChangeListingUnitEvent());
         EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(resultMessage);
