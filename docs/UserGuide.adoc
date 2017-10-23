@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
 == *Introduction*
 The `Contact List Pro v1.3` is a program to maintain your contact list. You can use the `Contact List Pro`
