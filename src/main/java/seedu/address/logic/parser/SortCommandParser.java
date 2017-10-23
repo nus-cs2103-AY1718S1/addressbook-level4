@@ -7,7 +7,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Parses input arguments and creates a new RemoveTagCommand object
+ * Parses input arguments and creates a new SortCommand object
  */
 public class SortCommandParser implements Parser<SortCommand> {
 
@@ -20,8 +20,8 @@ public class SortCommandParser implements Parser<SortCommand> {
 
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns an RemoveTagCommand ob   ject for execution.
+     * Parses the given {@code String} of arguments in the context of the SortCommand
+     * and returns an SortCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
 

@@ -12,8 +12,8 @@ public class SortCommand extends Command {
     public static final String COMMAND_USAGE = COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS = "Sorted all person";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the list by PARAMETER\n"
-            + "Parameters: name/email/phone (must be a either)";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the list by FIELD\n"
+            + "Parameters: FIELD (name/phone/email) ORDER (asc/dsc)";
 
     private final Comparator<ReadOnlyPerson> comparator;
 
