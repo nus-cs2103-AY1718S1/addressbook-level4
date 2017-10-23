@@ -1,8 +1,10 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.exceptions.EmptyFieldException;
 
 /**
  * Represents a Person's date of birth in the address book.
@@ -35,6 +37,9 @@ public class DateOfBirth {
      */
     public DateOfBirth(String dob) throws IllegalValueException {
         requireNonNull(dob);
+        if (dob.isEmpty()) {
+            throw new EmptyFieldException(PREFIX_DOB);
+        }
         if (!isValidDateOfBirth(dob)) {
             throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
         }
