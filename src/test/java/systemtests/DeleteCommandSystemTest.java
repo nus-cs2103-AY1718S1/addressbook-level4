@@ -32,6 +32,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first parcel in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
+        expectedModel.maintainSorted();
         String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PARCEL.getOneBased() + "       ";
         ReadOnlyParcel deletedParcel = removeParcel(expectedModel, INDEX_FIRST_PARCEL);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedParcel);
@@ -45,14 +46,12 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: undo deleting the last parcel in the list -> last parcel restored */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        modelBeforeDeletingLast.maintainSorted();
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
         /* Case: redo deleting the last parcel in the list -> last parcel deleted again */
         command = RedoCommand.COMMAND_WORD;
         removeParcel(modelBeforeDeletingLast, lastParcelIndex);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        modelBeforeDeletingLast.maintainSorted();
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
         /* Case: delete the middle parcel in the list -> deleted */
@@ -79,10 +78,9 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the selected parcel -> parcel list panel selects the parcel before the deleted parcel */
         showAllParcels();
-        Index selectedIndex = Index.fromZeroBased(3);//getLastIndex(expectedModel);
-        System.out.println("LOOK HERE: " + getLastIndex(expectedModel).getZeroBased());
+        expectedModel = getModel();
+        Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-//        expectedModel.forceSelect(selectedIndex);
         selectParcel(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedParcel = removeParcel(expectedModel, selectedIndex);
@@ -136,7 +134,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
-        expectedModel.maintainSorted();
         ReadOnlyParcel deletedParcel = removeParcel(expectedModel, toDelete);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedParcel);
 
@@ -167,7 +164,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-            Index expectedSelectedCardIndex) {
+                                      Index expectedSelectedCardIndex) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
