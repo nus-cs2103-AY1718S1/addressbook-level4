@@ -40,6 +40,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
+    private Label expiryDate;
+    @FXML
     private Label remark;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
