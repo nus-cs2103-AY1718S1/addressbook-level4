@@ -137,6 +137,12 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void unBookmarkLesson(ReadOnlyLesson target) {
+        addressBook.unBookmarkLesson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void unbookBookedSlot(BookedSlot target) {
         if(bookedList.contains(target))
             bookedList.remove(target);

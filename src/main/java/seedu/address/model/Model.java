@@ -8,9 +8,7 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.FavouriteListPredicate;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
@@ -69,6 +67,11 @@ public interface Model {
      * Bookmarks the given lesson into favourite list
      */
     void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
+
+    /**
+     * Unbookmarks the given lesson from favourite list
+     */
+    void unBookmarkLesson(ReadOnlyLesson lesson);
 
     /**
      * Booked a location with a given timeslot

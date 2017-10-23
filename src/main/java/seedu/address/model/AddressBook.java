@@ -102,7 +102,20 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws DuplicateLessonException if an equivalent lesson already exists.
      */
     public void bookmarkLesson(ReadOnlyLesson m) throws DuplicateLessonException {
-        m.setAsMarked();
+        if (m.isMarked()) {
+            throw new DuplicateLessonException();
+        } else {
+            m.setAsMarked();
+        }
+    }
+
+    /**
+     * Removes a lesson from the favourite list.
+     * Only person exists in the favourite List can be unbookmarked from the favourite list.
+     */
+    public void unBookmarkLesson(ReadOnlyLesson m) {
+        m.setAsUnmarked();
+
     }
 
     /**

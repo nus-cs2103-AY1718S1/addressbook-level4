@@ -70,7 +70,7 @@ public class FindCommand extends Command {
         }
 
         model.updateFilteredLessonList(predicate);
-        EventsCenter.getInstance().post(new FindLessonRequestEvent());
+        ListingUnit.setCurrentPredicate(predicate);
         EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }

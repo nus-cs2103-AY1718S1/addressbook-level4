@@ -85,12 +85,6 @@ public class LessonListPanel extends UiPart<Region> {
     }
 
 
-    @Subscribe
-    private void handleFindLessonRequestEvent(FindLessonRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        setConnections(lessonList);
-    }
-
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
