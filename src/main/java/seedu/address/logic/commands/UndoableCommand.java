@@ -3,16 +3,12 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.function.Predicate;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.module.BookedSlot;
-import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.function.Predicate;
 
 
 /**
@@ -60,9 +56,13 @@ public abstract class UndoableCommand extends Command {
         }
     }
 
+    /**
+     * THis method will determine if is redoable
+     * @return
+     */
     public boolean canRedo() {
-        return previousListingUnit.equals(ListingUnit.getCurrentListingUnit()) &&
-                previousPredicate.equals(ListingUnit.getCurrentPredicate());
+        return previousListingUnit.equals(ListingUnit.getCurrentListingUnit())
+                && previousPredicate.equals(ListingUnit.getCurrentPredicate());
     }
 
 

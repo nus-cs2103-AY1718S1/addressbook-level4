@@ -1,9 +1,11 @@
 package seedu.address.model.module.predicates;
 
-import seedu.address.model.module.ReadOnlyLesson;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import seedu.address.model.module.ReadOnlyLesson;
+
+
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
@@ -16,8 +18,8 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
     private ArrayList<String> inforList;
     private String attribute;
 
-    public LessonContainsKeywordsPredicate
-            (List<String> keywords, List<String> oldKeyword, ReadOnlyLesson lesson, String attribute) {
+    public LessonContainsKeywordsPredicate (List<String> keywords, List<String> oldKeyword,
+                                            ReadOnlyLesson lesson, String attribute) {
 
         this.keywords = keywords;
         this.oldKeywords = oldKeyword;
@@ -28,6 +30,10 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
 
     }
 
+    /**
+     * This method initialize the infomation for list
+     * @param lesson
+     */
     public void initializeInforList(ReadOnlyLesson lesson) {
         inforList.add(lesson.getCode().fullCodeName);
         inforList.add(lesson.getLocation().value);
@@ -40,6 +46,11 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
         return keywords;
     }
 
+
+    /**
+     * This method filter old keywords
+     * @param lesson
+     */
     void filterOldKeyWords(ReadOnlyLesson lesson) {
 
         initializeInforList(lesson);
@@ -53,8 +64,10 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
             }
         }
 
-        if (valid)
+        if (valid) {
             filteredLesson.add(lesson);
+        }
+
 
     }
 
@@ -106,11 +119,9 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
                         || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase())
                         || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
                         || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
-
                     return true;
-
                 }
-
+                break;
             case "location":
                 if (lesson.getLocation().equals(currentViewingLesson.getLocation())
                         && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
@@ -121,9 +132,10 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
 
                     return true;
                 }
-
+                break;
+            default:
+                break;
             }
-
         }
 
         return false;

@@ -1,6 +1,11 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
+
+import java.util.List;
+
 import javafx.collections.ObservableList;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -14,13 +19,6 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
-
-import java.util.List;
-
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
-
-
-
 
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -69,7 +67,7 @@ public class DeleteCommand extends UndoableCommand {
         default:
             ReadOnlyLesson lessonToDelete = lastShownList.get(targetIndex.getZeroBased());
             try {
-                model.unbookBookedSlot(new BookedSlot(lessonToDelete.getLocation(),lessonToDelete.getTimeSlot()));
+                model.unbookBookedSlot(new BookedSlot(lessonToDelete.getLocation(), lessonToDelete.getTimeSlot()));
                 model.deleteLesson(lessonToDelete);
             } catch (LessonNotFoundException pnfe) {
                 assert false : "The target lesson cannot be missing";
@@ -90,7 +88,7 @@ public class DeleteCommand extends UndoableCommand {
             for (int i = 0; i < lessonList.size(); i++) {
                 ReadOnlyLesson l = lessonList.get(i);
                 if (l.getLocation().equals(location)) {
-                    model.unbookBookedSlot(new BookedSlot(l.getLocation(),l.getTimeSlot()));
+                    model.unbookBookedSlot(new BookedSlot(l.getLocation(), l.getTimeSlot()));
                     model.deleteLesson(l);
                     i--;
                 }
@@ -116,13 +114,13 @@ public class DeleteCommand extends UndoableCommand {
             for (int i = 0; i < lessonList.size(); i++) {
                 ReadOnlyLesson lesson = lessonList.get(i);
                 if (lesson.getCode().equals(code)) {
-                    model.unbookBookedSlot(new BookedSlot(lesson.getLocation(),lesson.getTimeSlot()));
+                    model.unbookBookedSlot(new BookedSlot(lesson.getLocation(), lesson.getTimeSlot()));
                     model.deleteLesson(lesson);
                     i--;
                 }
             }
         } catch (LessonNotFoundException e) {
-            assert false: "The target lesson cannot be missing";
+            assert false : "The target lesson cannot be missing";
         }
         model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
         EventsCenter.getInstance().post(new ViewedLessonEvent());

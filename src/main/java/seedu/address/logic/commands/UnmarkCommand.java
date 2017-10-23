@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.ListingUnit.LESSON;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -7,10 +9,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
-
-import static seedu.address.model.ListingUnit.LESSON;
 
 
 /**

@@ -6,11 +6,11 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import javafx.collections.transformation.SortedList;
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
@@ -99,34 +99,37 @@ public class UniqueLessonList implements Iterable<Lesson> {
         setLessons(replacement);
     }
 
+    /**
+     * This method will sort the lessons
+     */
     public void sortLessons() {
         switch (ListingUnit.getCurrentListingUnit()) {
-            case LESSON:
-                FXCollections.sort(internalList, new Comparator<ReadOnlyLesson>() {
-                    @Override
-                    public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
-                        return firstLesson.getClassType().value.compareTo(secondLesson.getClassType().value);
-                    }
-                });
-                break;
+        case LESSON:
+            FXCollections.sort(internalList, new Comparator<ReadOnlyLesson>() {
+                @Override
+                public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
+                    return firstLesson.getClassType().value.compareTo(secondLesson.getClassType().value);
+                }
+            });
+            break;
 
-            case LOCATION:
-                FXCollections.sort(internalList, new Comparator<ReadOnlyLesson>() {
-                    @Override
-                    public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
-                        return firstLesson.getLocation().value.compareTo(secondLesson.getLocation().value);
-                    }
-                });
-                break;
+        case LOCATION:
+            FXCollections.sort(internalList, new Comparator<ReadOnlyLesson>() {
+                @Override
+                public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
+                    return firstLesson.getLocation().value.compareTo(secondLesson.getLocation().value);
+                }
+            });
+            break;
 
-            default:
-                FXCollections.sort(internalList, new Comparator<ReadOnlyLesson>() {
-                    @Override
-                    public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
-                        return firstLesson.getCode().fullCodeName.compareTo(secondLesson.getCode().fullCodeName);
-                    }
-                });
-                break;
+        default:
+            FXCollections.sort(internalList, new Comparator<ReadOnlyLesson>() {
+                @Override
+                public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
+                    return firstLesson.getCode().fullCodeName.compareTo(secondLesson.getCode().fullCodeName);
+                }
+            });
+            break;
         }
     }
 

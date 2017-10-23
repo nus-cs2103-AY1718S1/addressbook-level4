@@ -12,13 +12,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeListingUnitEvent;
-import seedu.address.commons.events.ui.FindLessonRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 import seedu.address.model.module.ReadOnlyLesson;
+
+
 
 /**
  * Panel containing the list of info.
