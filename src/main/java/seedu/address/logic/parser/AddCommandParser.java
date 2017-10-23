@@ -42,17 +42,7 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
 
-        if (!args.contains("a/")) {
-            args = args + " a/ (Address not recorded)";
-        }
-
-        if (!args.contains("e/")) {
-            args = args + " e/ (Email not recorded)";
-        }
-
-        if (!args.contains("c/")) {
-            args = args + " c/ (Postal code not recorded)";
-        }
+        args = optionalInput(args);
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
@@ -90,6 +80,23 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Returns a appended string stating that specific optional inputs are not recorded if user decides to not enter
+     * any of the optional inputs.
+     */
+    public static String optionalInput(String input) {
+        if (!input.contains("a/")) {
+            input = input + " a/ (Address not recorded)";
+        }
+        if (!input.contains("e/")) {
+            input = input + " e/ (Email not recorded)";
+        }
+        if (!input.contains("c/")) {
+            input = input + " c/ (Postal code not recorded)";
+        }
+        return input;
     }
 
 }
