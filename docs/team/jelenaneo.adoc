@@ -1,21 +1,30 @@
-= John Doe - Project Portfolio
+= Jelena Neo Hui Ling - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Codii
+Codii is a desktop address book application specially designed for debt collectors to manage debtors in a simple manner. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+
+Debt collectors can store information such as the amount owed, debt borrow date and debt cleared date in addition to debtor’s personal information.
+
+Unique features such as an interest calculator help debt collectors manage debts more efficiently.
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added:
+* Login
+* Borrow command
+* Payback command
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=login]
+
+include::../UserGuide.adoc[tag=borrowpayback]
 
 #End of Extract#
 
@@ -30,7 +39,7 @@ include::../UserGuide.adoc[tag=undoredo]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=borrowCommand]
 
 #End of Extract#
 
@@ -42,6 +51,7 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 
 === Other contributions
 
+* Nag about code quality
 * Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
