@@ -75,7 +75,7 @@ This will generate all resources required by the application and tests.
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding
+This project follows https://oss-generic.github.io/process/codingStandards/CodingStandard-Java.html[oss-generic coding
 standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To
 rectify,
 
