@@ -61,7 +61,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = (!arePrefixesPresent(argMultimap, PREFIX_ADDRESS))
                     ? new Address("???") : ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Bloodtype bloodType = (!arePrefixesPresent(argMultimap, PREFIX_BLOODTYPE))
-                    ? new Bloodtype(NON_COMPULSORY_BLOODTYPE) : ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
+                    ? new Bloodtype(NON_COMPULSORY_BLOODTYPE)
+                    : ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
             Remark remark = (!arePrefixesPresent(argMultimap, PREFIX_REMARK))
                     ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
             Optional<Date> date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE));
