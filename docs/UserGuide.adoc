@@ -341,7 +341,7 @@ Then press kbd:[Enter] key to enter the command.
 There is more than one possibility for the autocompletion, Ark will display the possible options to you as shown in the
  below.
 
-image::TabAutocompleteMultipleExample.png[width="400"]
+image::TabAutocompleteMultipleExample.PNG[width="400"]
 
 Examples:
 
