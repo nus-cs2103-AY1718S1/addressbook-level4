@@ -70,12 +70,14 @@ public class StringUtil {
             return false;
         }
     }
+
     /**
      * Returns true if {@code s} represents a non-zero unsigned integer
      * e.g. 1, 2, 3
      * Will return false for any other non-null string input
      * e.g. empty string, "-1", "0", "+1", and " 2 " (untrimmed), "3 0" (contains whitespace), "1 a" (contains letters)
      * and integer bigger than 3
+     *
      * @throws NullPointerException if {@code s} is null.
      */
     public static boolean isUnsignedInteger(String s) {

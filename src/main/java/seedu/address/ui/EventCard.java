@@ -9,7 +9,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 
 /**
  * An UI component that displays information of a {@code Event}.
- *    //@@author yangshuang
+ * //@@author yangshuang
  */
 public class EventCard extends UiPart<Region> {
 

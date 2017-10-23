@@ -8,6 +8,7 @@ import org.junit.Test;
 public class CheckCommandsParserTest {
 
     private final CheckCommandsParser parser1 = new CheckCommandsParser();
+
     @Test
     public void checkCommand_add() {
         // Check if the synonyms  is equals to add
@@ -18,6 +19,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("add"), "add");
         assertNotEquals(parser1.matchCommand("plus"), "add");
     }
+
     @Test
     public void checkCommand_clear() {
         // Check if the synonyms  is equals to clear
@@ -38,6 +40,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("edit"), "edit");
         assertNotEquals(parser1.matchCommand("ed"), "edit");
     }
+
     @Test
     public void checkCommand_delete() {
         // Check if the synonyms  is equals to delete
@@ -48,6 +51,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("delete"), "delete");
         assertNotEquals(parser1.matchCommand("away"), "delete");
     }
+
     @Test
     public void checkCommand_exit() {
         // Check if the synonyms  is equals to exit
@@ -55,6 +59,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("exit"), "exit");
         assertNotEquals(parser1.matchCommand("out"), "exit");
     }
+
     @Test
     public void checkCommand_find() {
         // Check if the synonyms  is equals to find
@@ -65,6 +70,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("find"), "find");
         assertNotEquals(parser1.matchCommand("looked"), "find");
     }
+
     @Test
     public void checkCommand_help() {
         // Check if the synonyms  is equals to help
@@ -72,6 +78,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("help"), "help");
         assertNotEquals(parser1.matchCommand("helps"), "help");
     }
+
     @Test
     public void checkCommand_history() throws Exception {
         // Check if the synonyms  is equals to history
@@ -80,6 +87,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("h"), "history");
         assertNotEquals(parser1.matchCommand("his"), "history");
     }
+
     @Test
     public void checkCommand_list() {
         // Check if the synonyms  is equals to list
@@ -89,6 +97,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("list"), "list");
         assertNotEquals(parser1.matchCommand("showme"), "list");
     }
+
     @Test
     public void checkCommand_redo() {
         // Check if the synonyms  is equals to redo
@@ -96,6 +105,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("redo"), "redo");
         assertNotEquals(parser1.matchCommand("again"), "redo");
     }
+
     @Test
     public void checkCommand_select() {
         // Check if the synonyms  is equals to select
@@ -105,6 +115,7 @@ public class CheckCommandsParserTest {
         assertEquals(parser1.matchCommand("select"), "select");
         assertNotEquals(parser1.matchCommand("pickthis"), "select");
     }
+
     @Test
     public void checkCommand_undo() {
         // Check if the synonyms  is equals to redo

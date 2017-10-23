@@ -10,8 +10,7 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 
 
 /**
- * @@reginleiff
- * A utility class containing a list of {@code Event} objects to be used in tests.
+ * @@reginleiff A utility class containing a list of {@code Event} objects to be used in tests.
  */
 public class TypicalEvents {
 

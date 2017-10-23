@@ -22,7 +22,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         String trimmedValue = args.trim();
         if (!StringUtil.isUnsignedInteger(trimmedValue)) {
             throw new ParseException(
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
         int type = Integer.parseInt(trimmedValue);
         return new SortCommand(type);

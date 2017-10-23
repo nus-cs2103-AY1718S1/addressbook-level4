@@ -32,6 +32,7 @@ public class SortCommandTest {
     private int firstValue;
     private int secondValue;
     private int thirdValue;
+
     @Before
     public void setUp() {
         firstValue = 1;
@@ -40,30 +41,35 @@ public class SortCommandTest {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
     }
+
     // Interaction with model
     @Test
     public void execute_listIsSorted_showsEverything() {
         SortCommand command = prepareCommand(firstValue);
         assertCommandSuccess(command, model, SortCommand.MESSAGE_SUCCESS[firstValue - 1], expectedModel);
     }
+
     @Test
     public void execute_nameValue_listSorted() {
         SortCommand command = prepareCommand(firstValue);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS[firstValue - 1], Arrays.asList(ALICE, BENSON, CARL,
-            DANIEL, ELLE, FIONA, GEORGE));
+                DANIEL, ELLE, FIONA, GEORGE));
     }
+
     @Test
     public void execute_tagValue_listSorted() {
         SortCommand command = prepareCommand(secondValue);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS[secondValue - 1], Arrays.asList(ALICE, CARL, DANIEL,
-            ELLE, FIONA, GEORGE, BENSON));
+                ELLE, FIONA, GEORGE, BENSON));
     }
+
     @Test
     public void execute_addValue_listSort() {
         SortCommand command = prepareCommand(thirdValue);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS[thirdValue - 1], Arrays.asList(DANIEL, ALICE, BENSON,
-            GEORGE, FIONA, ELLE, CARL));
+                GEORGE, FIONA, ELLE, CARL));
     }
+
     @Test
     public void equals() {
         final SortCommand userCommand = new SortCommand(firstValue);
@@ -84,6 +90,7 @@ public class SortCommandTest {
         // different command -> returns false
         assertFalse(userCommand.equals(new SortCommand(2)));
     }
+
     private SortCommand prepareCommand(int type) {
         SortCommand sortCommand = new SortCommand(type);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -97,7 +104,7 @@ public class SortCommandTest {
      * - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
     private void assertSortSuccess(SortCommand command, String expectedMessage, List<ReadOnlyPerson>
-        expectedList) {
+            expectedList) {
         CommandResult commandResult = command.executeUndoableCommand();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);

@@ -25,11 +25,9 @@ public abstract class Command {
     }
 
     /**
-     * @@reginleiff
-     * Constructs a feedback message to summarise an operation that displayed a listing of events.
-     *
      * @param displaySize used to generate summary
      * @return summary message for persons displayed
+     * @@reginleiff Constructs a feedback message to summarise an operation that displayed a listing of events.
      */
     public static String getMessageForEventListShownSummary(int displaySize) {
         return String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW, displaySize);

@@ -46,6 +46,7 @@ public class ResultDisplay extends UiPart<Region> {
             setStyleToDefault();
         }
     }
+
     /**
      * Sets the {@code ResultDisplay} style to use the default style.
      */

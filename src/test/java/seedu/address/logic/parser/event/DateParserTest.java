@@ -10,12 +10,11 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 public class DateParserTest {
 
-    DateParser parser = new DateParser();
-
-    public static final String invalidDay = "9/05/1999";
-    public static final String invalidMonth ="09/5/1999";
-    public static final String invalidYear = "09/05/199";
-    public static final String validDate = "09/05/1999";
+    private static final String invalidDay = "9/05/1999";
+    private static final String invalidMonth = "09/5/1999";
+    private static final String invalidYear = "09/05/199";
+    private static final String validDate = "09/05/1999";
+    private DateParser parser = new DateParser();
 
     @Test
     public void parseInvalidDay() throws ParseException {

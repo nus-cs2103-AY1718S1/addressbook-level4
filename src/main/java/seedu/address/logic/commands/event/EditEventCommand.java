@@ -18,9 +18,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.timeslot.Timing;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.timeslot.Timing;
 
 /**
  * Edits the details of an existing event in the address book.

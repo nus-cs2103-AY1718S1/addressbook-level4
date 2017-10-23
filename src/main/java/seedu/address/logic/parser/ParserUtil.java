@@ -11,8 +11,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Description;
-import seedu.address.model.event.timeslot.Timing;
 import seedu.address.model.event.Title;
+import seedu.address.model.event.timeslot.Timing;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
@@ -132,6 +132,7 @@ public class ParserUtil {
         requireNonNull(note);
         return note.isPresent() ? Optional.of(new Note(note.get())) : Optional.empty();
     }
+
     /**
      * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.

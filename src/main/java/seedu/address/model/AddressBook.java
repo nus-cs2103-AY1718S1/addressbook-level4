@@ -50,8 +50,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         eventTags = new UniqueTagList();
     }
 
-    public AddressBook() {
-    }
+    public AddressBook() { }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -130,12 +129,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.setPerson(target, editedPerson);
     }
+
     /**
      * Sorts the list according to name
      */
     public void sortPerson(int type) throws InvalidSortTypeException {
         persons.sortPersonList(type);
     }
+
     /**
      * Ensures that every tag in this person:
      * - exists in the master list {@link #tags}

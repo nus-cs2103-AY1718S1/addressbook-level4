@@ -20,8 +20,8 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.timeslot.Timing;
 import seedu.address.model.event.Title;
+import seedu.address.model.event.timeslot.Timing;
 import seedu.address.testutil.EventBuilder;
 
 public class AddEventCommandParserTest {

@@ -10,8 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
 
 /**
- * @@reginleiff
- * Parses input arguments and creates a new FindEventCommand object
+ * @@reginleiff Parses input arguments and creates a new FindEventCommand object
  */
 public class FindEventCommandParser implements Parser<FindEventCommand> {
     /**

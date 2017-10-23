@@ -18,8 +18,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.timeslot.Timing;
 import seedu.address.model.event.Title;
+import seedu.address.model.event.timeslot.Timing;
 
 /**
  * Parses input arguments and creates a new AddEventCommand object

@@ -97,17 +97,18 @@ public class UniquePersonList implements Iterable<Person> {
         }
         setPersons(replacement);
     }
+
     /**
      *
      */
     public void sortPersonList(int type) throws InvalidSortTypeException {
         final Comparator<Person> sortByName = (
-            Person a, Person b) -> a.getName().toString().compareToIgnoreCase(b.getName().toString());
+                Person a, Person b) -> a.getName().toString().compareToIgnoreCase(b.getName().toString());
         final Comparator<Person> sortByTags = (Person a, Person b) -> a.getTags().toString().compareToIgnoreCase((b
-            .getTags().toString()));
+                .getTags().toString()));
         final Comparator<Person> sortByAdd = (Person a, Person b) -> a.getAddress().toString().compareToIgnoreCase(b
-            .getAddress().toString());
-        switch(type) {
+                .getAddress().toString());
+        switch (type) {
         case 1:
             internalList.sort(sortByName);
             break;

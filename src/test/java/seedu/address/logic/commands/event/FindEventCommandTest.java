@@ -26,8 +26,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
 
 /**
- * @@reginleiff
- * Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
+ * @@reginleiff Contains integration tests (interaction with the Model) for {@code FindEventCommand}.
  */
 public class FindEventCommandTest {
     private Model model = new ModelManager(getTypicalEventAddressBook(), new UserPrefs());

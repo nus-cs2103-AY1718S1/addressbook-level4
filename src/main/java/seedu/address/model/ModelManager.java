@@ -101,6 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTagFromAll(tag);
         indicateAddressBookChanged();
     }
+
     @Override
     public void sortPerson(int type) throws InvalidSortTypeException {
         addressBook.sortPerson(type);

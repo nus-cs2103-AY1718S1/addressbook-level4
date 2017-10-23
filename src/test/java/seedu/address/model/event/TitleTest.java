@@ -1,3 +1,4 @@
+//@@author A0162268B
 package seedu.address.model.event;
 
 import static org.junit.Assert.assertFalse;
@@ -8,7 +9,7 @@ import org.junit.Test;
 public class TitleTest {
 
     @Test
-   public void isValidTitleTest() {
+    public void isValidTitleTest() {
         // invalid title
         assertFalse(Title.isValidTitle("")); // empty string
         assertFalse(Title.isValidTitle(" ")); // spaces only

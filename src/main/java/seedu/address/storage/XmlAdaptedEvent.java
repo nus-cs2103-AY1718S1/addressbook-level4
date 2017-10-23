@@ -6,8 +6,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.timeslot.Timing;
 import seedu.address.model.event.Title;
+import seedu.address.model.event.timeslot.Timing;
 
 /**
  * JAXB-friendly version of the Event.

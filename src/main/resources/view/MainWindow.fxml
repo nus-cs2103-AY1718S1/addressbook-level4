@@ -4,118 +4,114 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.Tab?>
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121">
     <stylesheets>
-        <URL value="@BrightTheme.css" />
-        <URL value="@Extensions.css" />
+        <URL value="@BrightTheme.css"/>
+        <URL value="@Extensions.css"/>
         <URL value="@CalendarView.css"/>
     </stylesheets>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
-    <stylesheets>
-        <URL value="@BrightTheme.css" />
-        <URL value="@Extensions.css" />
-    </stylesheets>
+    <VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121">
+        <stylesheets>
+            <URL value="@BrightTheme.css"/>
+            <URL value="@Extensions.css"/>
+        </stylesheets>
 
-    <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-        <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-        </Menu>
-    </MenuBar>
+        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+            <Menu mnemonicParsing="false" text="File">
+                <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+                <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+            </Menu>
+        </MenuBar>
 
-    <SplitPane dividerPositions="0.15, 0.85" prefHeight="50.0" prefWidth="200.0">
-        <items>
-            <StackPane alignment="CENTER" >
-                <padding>
-                    <Insets bottom="20" left="20" right="10" top="10" />
-                </padding>
-                <AnchorPane  prefHeight="30" fx:id="calendarButton"
-                            maxWidth="35">
-                    <ImageView fitHeight="30.0"
-                               fitWidth="30.0" pickOnBounds="true" preserveRatio="true" >
-                        <Image url="/images/calendar.png"/>
-                    </ImageView>
-                </AnchorPane>
-            </StackPane>
-            <StackPane fx:id="commandBoxPlaceholder" minHeight="60.0"
-                       styleClass="commandBox" VBox.vgrow="NEVER">
-                <padding>
-                    <Insets bottom="5" left="10" right="10" top="5" />
-                </padding>
-            </StackPane>
-            <StackPane alignment="CENTER" >
-                <padding>
-                    <Insets bottom="10" left="10" right="20" top="10" />
-                </padding>
-                <AnchorPane  prefHeight="30" fx:id="notificationButton"
-                             maxWidth="35">
-                    <ImageView fitHeight="30.0"
-                               fitWidth="30.0" pickOnBounds="true" preserveRatio="true" >
-                        <Image url="/images/notification.png"/>
-                    </ImageView>
-                </AnchorPane>
-            </StackPane>
-        </items>
-    </SplitPane>
+        <SplitPane dividerPositions="0.15, 0.85" prefHeight="50.0" prefWidth="200.0">
+            <items>
+                <StackPane alignment="CENTER">
+                    <padding>
+                        <Insets bottom="20" left="20" right="10" top="10"/>
+                    </padding>
+                    <AnchorPane prefHeight="30" fx:id="calendarButton"
+                                maxWidth="35">
+                        <ImageView fitHeight="30.0"
+                                   fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="/images/calendar.png"/>
+                        </ImageView>
+                    </AnchorPane>
+                </StackPane>
+                <StackPane fx:id="commandBoxPlaceholder" minHeight="60.0"
+                           styleClass="commandBox" VBox.vgrow="NEVER">
+                    <padding>
+                        <Insets bottom="5" left="10" right="10" top="5"/>
+                    </padding>
+                </StackPane>
+                <StackPane alignment="CENTER">
+                    <padding>
+                        <Insets bottom="10" left="10" right="20" top="10"/>
+                    </padding>
+                    <AnchorPane prefHeight="30" fx:id="notificationButton"
+                                maxWidth="35">
+                        <ImageView fitHeight="30.0"
+                                   fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="/images/notification.png"/>
+                        </ImageView>
+                    </AnchorPane>
+                </StackPane>
+            </items>
+        </SplitPane>
 
-    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="200" prefWidth="200"
-              SplitPane.resizableWithParent="false">
+        <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+            <VBox fx:id="personList" minWidth="200" prefWidth="200"
+                  SplitPane.resizableWithParent="false">
+                <padding>
+                    <Insets bottom="5" left="5" right="5" top="5"/>
+                </padding>
+                <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE"
+                         tabMinWidth="120.0" minHeight="80" styleClass="tabPane"
+                         VBox.vgrow="ALWAYS" prefHeight="500.0" prefWidth="200.0">
+                    <tabs>
+                        <Tab fx:id="contactTab" styleClass="contactsTab"
+                             text="Contacts">
+                            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                        </Tab>
+                        <Tab fx:id="eventTab" styleClass="eventsTab"
+                             closable="false" text="Events">
+                            <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </VBox>
+
+            <StackPane fx:id="browserPlaceholder" minWidth="200" prefWidth="500"
+                       styleClass="webView">
+                <padding>
+                    <Insets bottom="10" left="10" right="10" top="10"/>
+                </padding>
+            </StackPane>
+        </SplitPane>
+
+
+        <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100"
+                   styleClass="pane-with-border" VBox.vgrow="NEVER">
             <padding>
-                <Insets bottom="5" left="5" right="5" top="5" />
-            </padding>
-            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE"
-                     tabMinWidth="120.0" minHeight="80" styleClass="tabPane"
-                     VBox.vgrow="ALWAYS" prefHeight="500.0" prefWidth="200.0">
-                <tabs>
-                    <Tab fx:id="contactTab" styleClass="contactsTab"
-                         text="Contacts">
-                        <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-                    </Tab>
-                    <Tab fx:id="eventTab" styleClass="eventsTab"
-                         closable="false" text="Events">
-                        <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-                    </Tab>
-                </tabs>
-            </TabPane>
-        </VBox>
-
-        <StackPane fx:id="browserPlaceholder" minWidth="200" prefWidth="500"
-                   styleClass="webView">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="5" left="10" right="10" top="5"/>
             </padding>
         </StackPane>
-    </SplitPane>
 
+        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
 
-    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
-    </StackPane>
-
-    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
-
-</VBox>
+    </VBox>
 
 </VBox>

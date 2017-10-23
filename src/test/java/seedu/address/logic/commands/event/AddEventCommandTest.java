@@ -112,10 +112,12 @@ public class AddEventCommandTest {
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+
         @Override
         public void sortPerson(int type) {
             fail("This method should not be called.");
         }
+
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");

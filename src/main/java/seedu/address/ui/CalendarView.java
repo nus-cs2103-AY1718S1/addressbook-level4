@@ -34,15 +34,12 @@ public class CalendarView extends UiPart<Region> {
 
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass
             .getPseudoClass("selected");
-
+    private static final String FXML = "CalendarView.fxml";
     private static Supplier<LocalDate> today = LocalDate::now;
     private static Supplier<LocalDate> startOfWeek = () -> today.get()
             .minusDays(today.get().getDayOfWeek().getValue() - 1);
     private static Supplier<LocalDate> endOfWeek = () -> startOfWeek.get()
             .plusDays(6);
-
-    private static final String FXML = "CalendarView.fxml";
-
     private final LocalTime firstSlotStart = LocalTime.of(7, 0);
     private final Duration slotLength = Duration.ofMinutes(30);
     private final LocalTime lastSlotStart = LocalTime.of(20, 59);
@@ -72,7 +69,7 @@ public class CalendarView extends UiPart<Region> {
      * Registers handlers on the time slot to manage selecting a range of
      * slots in the grid.
      *
-     * @param timeSlot selected
+     * @param timeSlot    selected
      * @param mouseAnchor where the mouse is at
      */
 
@@ -173,9 +170,9 @@ public class CalendarView extends UiPart<Region> {
     /**
      * Check whether a time slot is between the other two time slots
      *
-     * @param testSlot slot used for testing
+     * @param testSlot  slot used for testing
      * @param startSlot starting time slot
-     * @param endSlot ending time slot
+     * @param endSlot   ending time slot
      */
     private boolean isBetween(TimeSlot testSlot, TimeSlot startSlot, TimeSlot endSlot) {
 
@@ -189,7 +186,8 @@ public class CalendarView extends UiPart<Region> {
         return daysBetween && timesBetween;
     }
 
-    /** Class representing a time interval, or "Time Slot", along with a view.
+    /**
+     * Class representing a time interval, or "Time Slot", along with a view.
      * View is just represented by a region with minimum size, and style class.
      * Has a selected property just to represent selection.
      */

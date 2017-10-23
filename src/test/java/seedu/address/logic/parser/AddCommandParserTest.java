@@ -104,14 +104,14 @@ public class AddCommandParserTest {
 
         // multiple statuses - last status accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + COMPANY_DESC_AMY + COMPANY_DESC_BOB + POSITION_DESC_BOB
-                + STATUS_DESC_AMY + STATUS_DESC_BOB + PRIORITY_DESC_BOB + TAG_DESC_FRIEND,
+                        + ADDRESS_DESC_BOB + COMPANY_DESC_AMY + COMPANY_DESC_BOB + POSITION_DESC_BOB
+                        + STATUS_DESC_AMY + STATUS_DESC_BOB + PRIORITY_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
 
         // multiple priorities - last priority accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + COMPANY_DESC_AMY + COMPANY_DESC_BOB + POSITION_DESC_BOB
-                + STATUS_DESC_BOB + PRIORITY_DESC_AMY + PRIORITY_DESC_BOB + TAG_DESC_FRIEND,
+                        + ADDRESS_DESC_BOB + COMPANY_DESC_AMY + COMPANY_DESC_BOB + POSITION_DESC_BOB
+                        + STATUS_DESC_BOB + PRIORITY_DESC_AMY + PRIORITY_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
 
         // multiple tags - all accepted
