@@ -382,11 +382,6 @@ Unfavourites the 1st person in the results of the `find` command.
 Shows a list of all favourited persons in the address book. +
 Format: `favouritelist`
 
-=== Details Panel
-`since v1.2` `Archana Pradeep`
-
-UI that shows all details of a person that is not shown in person card
-
 === Checking for birthdays : `birthdays`
 `since v1.3` `Archana Pradeep`
 
@@ -411,7 +406,8 @@ There is no need to save manually.
 
 link:#the-myths-book---user-guide[Back To Top]
 
-== Other feautres
+== Other features
+
 === Details Panel
 `since v1.2` `Archana Pradeep`
 
