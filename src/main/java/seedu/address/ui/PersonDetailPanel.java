@@ -4,13 +4,11 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -32,32 +30,18 @@ public class PersonDetailPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private Image avatarImage;
-
     @FXML
-    private StackPane personDetailPanel;
-
-    @FXML
-    private HBox cardPane;
-
-    @FXML
-    private Circle avatar;
-
+    private Circle avatar; // TODO: Implement support for uploading picture from local directory
     @FXML
     private Label initial;
-
     @FXML
     private Label name;
-
     @FXML
     private Label phone;
-
     @FXML
     private Label address;
-
     @FXML
     private Label email;
-
     @FXML
     private FlowPane tags;
 
@@ -90,18 +74,20 @@ public class PersonDetailPanel extends UiPart<Region> {
         initial.setText(Avatar.getInitial(person.getName().fullName));
         avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
 
-        name.setText(person.getName().toString());
+        setTextFields(person);
+        setTags(person);
+    }
+
+    private void setTextFields(ReadOnlyPerson person) {
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.setText(PERSON_PHONE_ICON + person.getPhone().toString());
         address.setText(PERSON_ADDRESS_ICON + person.getAddress().toString());
         email.setText(PERSON_EMAIL_ICON + person.getEmail().toString());
-
-        tags.getChildren().clear();
-        initTags(person);
     }
 
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag ->
-            tags.getChildren().add(new Label(tag.tagName)));
+    private void setTags(ReadOnlyPerson person) {
+        tags.getChildren().clear();
+        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
     /**
