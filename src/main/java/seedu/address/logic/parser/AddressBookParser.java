@@ -77,7 +77,7 @@ public class AddressBookParser {
             return new ListCommand();
 
         case SortCommand.COMMAND_WORD:
-            return new SortCommand();
+            return new SortCommandParser().parse(arguments);
 
         case RemoveTagCommand.COMMAND_WORD:
             return new RemoveTagCommandParser().parse(arguments);
