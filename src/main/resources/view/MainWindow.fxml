@@ -45,12 +45,12 @@
     </VBox>
       <SplitPane dividerPositions="0.4">
         <items>
-                <StackPane fx:id="browserPlaceholder" prefWidth="340.0" stylesheets="@DarkTheme.css">
+                <StackPane fx:id="browserPlaceholder" prefWidth="340.0">
             <padding>
               <Insets bottom="5.0" top="5.0" />
             </padding>
           </StackPane>
-            <StackPane fx:id="mapPlaceholder" prefWidth="200.0" styleClass="WebView">
+            <StackPane fx:id="mapPlaceholder" prefWidth="200.0">
                <padding>
                   <Insets bottom="5.0" right="5.0" top="5.0" />
                </padding>
