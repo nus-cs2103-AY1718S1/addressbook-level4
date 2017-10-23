@@ -129,10 +129,10 @@ public class LoadCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, List<ReadOnlyPerson>)} except that the
+     * Performs the same verification as {@code assertCommandSuccess(String, List)} except that the
      * result display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}.
-     * @see LoadCommandSystemTest#assertCommandSuccess(String, List<ReadOnlyPerson>)
+     * @see LoadCommandSystemTest#assertCommandSuccess(String, List)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
