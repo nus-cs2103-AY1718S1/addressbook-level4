@@ -181,8 +181,8 @@ Input format for Date and Time is "DD-MM-YYYY HH:MM"
 
 Examples:
 
-* `addmeeting 1 n/John Doe d/31-10-2017 21:00 l/School of Computing, NUS`
-* `addmeeting 2 n/Betsy Crowe d/27-12-2017 08:30 l/iCube Auditorium, NUS`
+* `addmeeting 1 n/Study d/31-10-2017 21:00 l/School of Computing, NUS`
+* `addmeeting 2 n/Project meeting d/27-12-2017 08:30 l/iCube Auditorium, NUS`
 
 === Deleting a meeting: `deletemeeting`
 Upcoming in V2.0 (Since V1.2): deletemeeting by index of meeting in the Meeting
@@ -353,7 +353,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Add Meeting* `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]` +
-e.g. `addmeeting 5 n/Mary Jane d/22-11-2017 l/Vivo City`
+e.g. `addmeeting 5 n/Shopping d/22-11-2017 l/Vivo City`
 * *Delete Meeting* `deletemeeting INDEX` + e.g. `dm 1`
 * *Edit Meeting* `editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 * *List Meeting* : `listmeeting`
