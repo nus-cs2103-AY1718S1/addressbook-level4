@@ -58,7 +58,7 @@ public class SelectTaskCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered person list, select index within bounds of address book but out of bounds of person list
          * -> rejected
          */
-        showTasksWithName(GYM.getDescription().taskDescription);
+        showTasksWithDescription(GYM.getDescription().taskDescription);
         invalidIndex = getModel().getAddressBook().getTaskList().size();
         assertCommandFailure(SelectTaskCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 

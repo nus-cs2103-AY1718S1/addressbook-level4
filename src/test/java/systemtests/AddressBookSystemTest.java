@@ -159,7 +159,7 @@ public abstract class AddressBookSystemTest {
     /**
      * Displays all tasks with any parts of their names matching {@code keyword} (case-insensitive).
      */
-    protected void showTasksWithName(String keyword) {
+    protected void showTasksWithDescription(String keyword) {
         executeCommand(FindTaskCommand.COMMAND_WORD + " " + keyword);
         executeCommand(FindCommand.COMMAND_WORD + " " + "Alice");
         assert getModel().getFilteredTaskList().size() < getModel().getAddressBook().getTaskList().size();
@@ -172,7 +172,6 @@ public abstract class AddressBookSystemTest {
         executeCommand(SelectTaskCommand.COMMAND_WORD + " " + index.getOneBased());
         assert getTaskListPanel().getSelectedCardIndex() == index.getZeroBased();
     }
-
 
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
