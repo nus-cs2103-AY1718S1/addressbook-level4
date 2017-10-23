@@ -6,11 +6,14 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.util.AppUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -35,6 +38,9 @@ public class PersonPanel extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView avatar;
+
     public PersonPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
@@ -55,6 +61,8 @@ public class PersonPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        Image image = AppUtil.getImage("/images/address_book_32.png");
+        avatar.setImage(image);
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
     }

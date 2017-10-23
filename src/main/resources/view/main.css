@@ -10,7 +10,7 @@
     base: black;
     accent: #141E30;
     light: white;
-    -fx-font-family: "Proxima Nova Alt Rg", "Helvetica";
+    -fx-font-family: "Montserrat", "Proxima Nova Alt Rg", "Helvetica";
     -fx-background-color: transparent;
     -fx-text-fill: light;
 }
@@ -26,7 +26,7 @@
 
 .scroll-bar .thumb {
     -fx-background-color: derive(base, -5%);
-    -fx-fill-width: 5;
+    -fx-fill-width: 10;
 }
 
 /**
@@ -115,7 +115,7 @@
 }
 
 #personPanel #name {
-    -fx-font-size: 40pt;
+    -fx-font-size: 25pt;
     -fx-effect: dropshadow(gaussian, base, 10, 0, 0, 2);
 }
 
