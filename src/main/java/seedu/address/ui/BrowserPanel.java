@@ -85,7 +85,7 @@ public class BrowserPanel extends UiPart<Region> {
             // String url = FACEBOOK_URL_PREFIX + username;
             loadPage(url);
         } else {
-             loadPersonPage(event.getNewSelection().person);
+            loadPersonPage(event.getNewSelection().person);
         }
     }
 }
