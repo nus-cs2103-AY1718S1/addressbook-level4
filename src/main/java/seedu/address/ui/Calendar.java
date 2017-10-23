@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -35,15 +36,14 @@ public class Calendar {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
-                ap.setPrefSize(200,200);
+                ap.setPrefSize(200, 200);
                 calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
             }
         }
         // Days of the week labels
         Text[] dayNames = new Text[]{ new Text("Sunday"), new Text("Monday"), new Text("Tuesday"),
-                new Text("Wednesday"), new Text("Thursday"), new Text("Friday"),
-                new Text("Saturday") };
+                new Text("Wednesday"), new Text("Thursday"), new Text("Friday"), new Text("Saturday") };
         GridPane dayLabels = new GridPane();
         dayLabels.setPrefWidth(600);
         Integer col = 0;
