@@ -43,6 +43,7 @@ image::AddresbookLabels.png[width="790"]
 &#160;c. Contacts List &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
 d. Meetings List +
 &#160;e. Footer bar
+
 ..  If there is a meeting scheduled on the day of logging in, a reminder will pop up for you to acknowledge.
 +
 image::Reminder.png[width="600"]
