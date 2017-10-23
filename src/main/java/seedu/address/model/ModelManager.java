@@ -188,6 +188,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void quitEvent(ReadOnlyPerson person, ReadOnlyEvent event)
             throws PersonNotParticipateException {
         eventList.removeParticipant(person, event);
+        indicateEventListChanged();
     }
 
     /**
