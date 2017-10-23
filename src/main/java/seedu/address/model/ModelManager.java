@@ -20,6 +20,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -31,6 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyGroup> filteredGroups;
+    private final FilteredList<ReadOnlySchedule> filteredSchedules;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -44,6 +48,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredGroups = new FilteredList<>(this.addressBook.getGroupList());
+        filteredSchedules = new FilteredList<>(this.addressBook.getScheduleList());
     }
 
     public ModelManager() {
@@ -106,6 +111,19 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void addSchedule(ReadOnlySchedule schedule) throws DuplicateScheduleException {
+        addressBook.addSchedule(schedule);
+        updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteSchedule(ReadOnlySchedule target) throws ScheduleNotFoundException {
+        addressBook.removeSchedule(target);
+        indicateAddressBookChanged();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -123,6 +141,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
+        return FXCollections.unmodifiableObservableList(filteredSchedules);
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
@@ -134,6 +157,11 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGroups.setPredicate(predicate);
     }
 
+    @Override
+    public void updateFilteredScheduleList(Predicate<ReadOnlySchedule> predicate) {
+        requireNonNull(predicate);
+        filteredSchedules.setPredicate(predicate);
+    }
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

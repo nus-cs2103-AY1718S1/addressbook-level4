@@ -132,18 +132,23 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        //TODO: Edit ScheduleListPanel.java to take in schedules instead of persons,
+        //TODO: and the line below to getFilteredScheduleList().
+        //TODO: I've included CorrectScheduleListPanel.txt in dropbox, can copypaste
+        ScheduleListPanel scheduleListPanel = new ScheduleListPanel(logic.getFilteredPersonList());
+        browserPanel.getSchedulePlaceholder().getChildren().add(scheduleListPanel.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        GroupListPanel groupListPanel;
-        groupListPanel = new GroupListPanel(logic.getFilteredGroupList()); //logic needs to get groupList instead
+        GroupListPanel groupListPanel = new GroupListPanel(logic.getFilteredGroupList());
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
-                logic.getFilteredPersonList().size());
+            logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);

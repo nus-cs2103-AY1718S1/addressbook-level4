@@ -29,6 +29,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -123,6 +126,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addSchedule(ReadOnlySchedule schedule) throws DuplicateScheduleException {
+
+        }
+
+        @Override
+        public void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException {
+
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -156,12 +169,22 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
 
         @Override
         public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
+
+        }
+
+        @Override
+        public void updateFilteredScheduleList(Predicate<ReadOnlySchedule> predicate) {
 
         }
     }

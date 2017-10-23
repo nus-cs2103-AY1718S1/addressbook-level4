@@ -13,6 +13,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.schedule.ReadOnlySchedule;
 
 /**
  * The main LogicManager of the app.
@@ -54,6 +55,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyGroup> getFilteredGroupList() {
         return model.getFilteredGroupList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
+        return model.getFilteredScheduleList();
     }
 
     @Override
