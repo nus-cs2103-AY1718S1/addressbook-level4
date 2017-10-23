@@ -1,5 +1,6 @@
 package seedu.address.model.reminder;
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.DateTime;
 
 /**
@@ -12,6 +13,9 @@ public interface ReadOnlyReminder {
     DateTime getTime();
     ObjectProperty<String> messageProperty();
     String getMessage();
+    ObjectProperty<Event> eventProperty();
+    Event getEvent();
+
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

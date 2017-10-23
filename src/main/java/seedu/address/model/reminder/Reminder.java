@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.event.Event;
 import seedu.address.model.property.DateTime;
 
 /**
@@ -16,14 +17,16 @@ import seedu.address.model.property.DateTime;
 public class Reminder implements ReadOnlyReminder {
     private ObjectProperty<DateTime> time;
     private ObjectProperty<String> message;
+    private ObjectProperty<Event> event;
 
     /**
      * Every field must be present and not null.
      */
-    public Reminder(DateTime time, String message) {
-        requireAllNonNull(time, message);
+    public Reminder(DateTime time, String message, Event event) {
+        requireAllNonNull(time, message, event);
         this.time = new SimpleObjectProperty<>(time);
         this.message = new SimpleObjectProperty<>(message);
+        this.event = new SimpleObjectProperty<>(event);
     }
     public Reminder() {
     }
@@ -32,13 +35,20 @@ public class Reminder implements ReadOnlyReminder {
      * Creates a copy of the given ReadOnlyReminder.
      */
     public Reminder(ReadOnlyReminder source) {
-        this(source.getTime(), source.getMessage());
+        this(source.getTime(), source.getMessage(), source.getEvent());
+    }
+    @Override
+    public ObjectProperty<Event> eventProperty() {
+        return event;
+    }
+    @Override
+    public Event getEvent() {
+        return event.get();
     }
 
     public void setDateTime(DateTime time) {
         this.time.set(requireNonNull(time));
     }
-
     @Override
     public DateTime getTime() {
         return time.get();
