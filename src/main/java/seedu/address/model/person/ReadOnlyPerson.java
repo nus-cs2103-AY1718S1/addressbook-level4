@@ -82,10 +82,8 @@ public interface ReadOnlyPerson {
             builder.append(" Birthday: ")
                 .append(getBirthday());
         }
-        if (!(getRemark().toString() == "")) { //initialized empty
-            builder.append(" Remarks: ")
-                .append(getRemark());
-        }
+        builder.append(" Remarks: ")
+            .append(getRemark());
         if (!(getWebsite().toString() == null)) {
             builder.append(" Website: ")
                 .append(getWebsite());
