@@ -1,23 +1,24 @@
 package seedu.address.ui;
 
-import com.google.common.eventbus.Subscribe;
-import javafx.beans.binding.Bindings;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import seedu.address.commons.events.ui.ChangeFontSizeEvent;
-import seedu.address.model.FontSizeUnit;
-import seedu.address.model.ListingUnit;
-import seedu.address.model.module.ReadOnlyLesson;
-
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
 
+import com.google.common.eventbus.Subscribe;
+
+import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.model.FontSizeUnit;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.module.ReadOnlyLesson;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -60,23 +61,9 @@ public class LessonListCard extends UiPart<Region> {
         initLecturers(lesson);
         bindListeners(lesson);
         registerAsAnEventHandler(this);
-        ListingUnit currentUnit = ListingUnit.getCurrentListingUnit();
         FontSizeUnit currFontSize = FontSizeUnit.getCurrentFontSizeUnit();
         setFontSizeUnit(currFontSize);
-
-        switch (currentUnit) {
-        case LOCATION:
-            switchToLocationCard();
-            break;
-
-        case MODULE:
-            switchToModuleCard();
-            break;
-
-        default:
-            switchToLessonCard();
-
-        }
+        switchCard();
     }
 
     /**
@@ -102,7 +89,7 @@ public class LessonListCard extends UiPart<Region> {
     }
 
     /**
-     * change the card state to hide irrelevant information and only show address
+     * Change the card state to hide irrelevant information and only show address
      */
     private void switchToModuleCard() {
         code.setVisible(true);
@@ -114,7 +101,7 @@ public class LessonListCard extends UiPart<Region> {
     }
 
     /**
-     * change the card state to hide irrelevant information and only show phone
+     * Change the card state to hide irrelevant information and only show phone
      */
     private void switchToLocationCard() {
         code.setVisible(false);
@@ -127,7 +114,7 @@ public class LessonListCard extends UiPart<Region> {
     }
 
     /**
-     * change the card state to hide irrelevant information and only show lesson
+     * Change the card state to hide irrelevant information and only show lesson
      */
     private void switchToLessonCard() {
         code.setVisible(true);
@@ -136,6 +123,25 @@ public class LessonListCard extends UiPart<Region> {
         timeSlot.setVisible(true);
         classType.setVisible(true);
         lecturers.setVisible(true);
+    }
+
+    /**
+     * Change the card state depending on the current listing unit
+     */
+    private void switchCard() {
+        switch (ListingUnit.getCurrentListingUnit()) {
+        case LOCATION:
+            switchToLocationCard();
+            break;
+
+        case MODULE:
+            switchToModuleCard();
+            break;
+
+        default:
+            switchToLessonCard();
+
+        }
     }
 
     @Override

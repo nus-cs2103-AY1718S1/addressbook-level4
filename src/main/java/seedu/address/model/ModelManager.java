@@ -37,7 +37,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyLesson> filteredLessons;
-    private final HashSet<ReadOnlyLesson> favouriteList;
     private final HashSet<BookedSlot> bookedList;
 
     /**
@@ -54,8 +53,8 @@ public class ModelManager extends ComponentManager implements Model {
         Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
         ListingUnit.setCurrentPredicate(predicate);
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
-        favouriteList = new HashSet<ReadOnlyLesson>();
         bookedList = new HashSet<BookedSlot>();
+        initializeBookedSlot();
     }
 
     public ModelManager() {
@@ -88,11 +87,6 @@ public class ModelManager extends ComponentManager implements Model {
             }
         }
         return set;
-    }
-
-    @Override
-    public FavouriteListPredicate getFavouriteListPredicate() {
-        return new FavouriteListPredicate(favouriteList);
     }
 
 
@@ -135,11 +129,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void bookmarkLesson(ReadOnlyLesson target) throws DuplicateLessonException {
-        if (!favouriteList.contains(target)) {
-            favouriteList.add(target);
-        } else {
-            throw new DuplicateLessonException();
-        }
+        addressBook.bookmarkLesson(target);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -187,6 +178,12 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedLesson);
         addressBook.updateLesson(target, editedLesson);
         indicateAddressBookChanged();
+    }
+
+    public void initializeBookedSlot(){
+        for(int i=0; i<filteredLessons.size(); i++){
+            bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(),filteredLessons.get(i).getTimeSlot()));
+        }
     }
 
     @Override

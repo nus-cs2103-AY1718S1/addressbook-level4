@@ -9,13 +9,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ClassType;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Group;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.TimeSlot;
+import seedu.address.model.module.*;
 
 /**
  * Stores lesson data in an XML file
@@ -31,6 +25,8 @@ public class XmlAdaptedLesson {
     private String code;
     @XmlElement(required = true)
     private String timeSlot;
+    @XmlElement(required = true)
+    private Boolean isMarked;
 
     @XmlElement
     private List<XmlAdaptedLecturer> lecturerList = new ArrayList<>();
@@ -53,6 +49,7 @@ public class XmlAdaptedLesson {
         group = source.getGroup().value;
         code = source.getCode().fullCodeName;
         timeSlot = source.getTimeSlot().value;
+        isMarked = source.isMarked();
 
         lecturerList = new ArrayList<>();
         for (Lecturer lecturer : source.getLecturers()) {
@@ -71,12 +68,17 @@ public class XmlAdaptedLesson {
         final Group group = new Group(this.group);
         final Code code = new Code(this.code);
         final TimeSlot timeSLot = new TimeSlot(this.timeSlot);
+        final Boolean isMarked = this.isMarked;
 
         final List<Lecturer> lecturers = new ArrayList<>();
         for (XmlAdaptedLecturer lecturer : lecturerList) {
             lecturers.add(lecturer.toModelType());
         }
         final Set<Lecturer> lecturerSet = new HashSet<>(lecturers);
-        return new Lesson(classType, location, group, timeSLot, code, lecturerSet);
+        Lesson lesson = new Lesson(classType, location, group, timeSLot, code, lecturerSet);
+        if (isMarked) {
+            lesson.setAsMarked();
+        }
+        return lesson;
     }
 }

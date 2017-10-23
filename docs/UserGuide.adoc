@@ -16,18 +16,16 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-Many universities have timetable committee to create and deal with all matters concerning timetabling tasks. +
+Many universities have timetable committee to deal with all matters concerning timetabling scheduling.
+One prevalent concern of such matters would be timetable clashes while scheduling. +
 
-However, perfect scheduling is not easy and there are many concerns need to take into consideration.
-The optimal timetable is able to meet the needs of the students and faculty.
-It also needs to maximise the space usage of classrooms while meeting the demand for course offerings. +
-Welcome to ModU, a school scheduling software for professors and administrators in tertiary institutions. +
+Welcome to ModU, a timetable scheduling software for professors and administrators in tertiary institutions. +
 
-ModU brings easy-to-use graphic user interface(GUI). With ModU, you can see time slots that are available.
-You can also build the timetable for each module and make any changes anytime. +
+With ModU, you are able to easily identify timetable slots that are available for the module you are scheduling.
+Made a mistake while scheduling the timetable? Fret not, you can easily make any changes to the timetable. +
 
-The command line interface(CLI) is the primary mode of input. We believe that when you can control ModU by typing,
-many tasks can be performed more quickly and therefore save you loads of time.
+ModU uses the command line interface (CLI) as the main input. The natural language input field will allow you to
+quickly search, add, delete and edit your timetable. Just type what you want and ModU will do the rest for you!
 
 == Quick Start
 
@@ -363,121 +361,120 @@ There is no need to save manually.
 
 == Tutorial
 
-Assume now you are an new member of the Timetable Committee of NUS, your duty is to
-prepare teaching timetables for all lesson in School of Computing.
-A friend recommend you ModU, an effective school scheduling software.
+Assume you are a a professor from the National University of Singapore (NUS) and you want to start planning your
+timetable for the upcoming semester. The university then introduced you to ModU,
+an effective timetable scheduling software developed by the School of Computing (SoC) students.
 
-This is the screen when you opened ModU. +
+This is the screen when you first launch ModU. +
 
-* `Command Box`: type command in this box
-* `Resust Display Box`: command result displayed in this bax
-* `Module/Lesson Display Panel`: list of module or lesson displayed in this panel
-* `Timetable/Browser`: timetable of a module shows up in this panel.
-Browser will appear when a location is selected
+* `Command Box`: receive user command inputs
+* `Resust Display Box`: display result of the commands
+* `Module/Lesson Display Panel`: display list of modules or lessons
+* `Timetable/Browser`: display timetable of a particular module or a browser when a location is selected
 
 image::tutorial/NewUi.png[width="790"]
 
-Since this is the first you are using this software,
-you are not sure what are the available commands. You want to see all the available commands.
+Since this is the first time you are using this software,
+you are unsure of what are the available commands.
 
-Type `help` in the command box. ModU will automatically open up user guide to help you
+Type `help` in the command box. ModU will automatically open up the user guide that will list all available commands.
 
 image::tutorial/Help.png[width="790"]
 
-After you read through all the commands, you realised that it is hard to remember all the commands.
+After you have read through the commands, you realised that it is hard to remember all the commands.
 You want to be able to identify key words, prefix and check the validity of command.
 
-Type `color enable` in the command box. ModU will highlight for you all the commands and prefix.
-It will display a tick when your command is valid and display a cross when your command is invalid
+Type `color enable` in the command box. ModU will highlight the various commands and prefix.
+It will display a tick when the command is valid or a cross when the command is invalid.
 
 image::tutorial/colorEnable.png[width="790"]
 
-After you have received course information from CS2101 and MA1101R,
-and you want to enter these information into ModU
+After you have received the course information from CS2101 and MA1101R,
+you would want to enter these information into ModU.
 
 Type `add m/MA1101R ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/ Ma Siu Lun` in the command box.
-ModU will create a module MA1101R for you and automatically insert the lesson into this module
+ModU will create a module MA1101R for you and automatically insert the lesson particulars into this module
 
 image::tutorial/addModule.png[width="790"]
 
-Now you want to enter CS2101 information into ModU. You did not notice that one of the lesson
-has the same time slot and same location as MA1101R lesson
+Now you want to add a new lesson for CS2101. However, you did not notice that the lesson
+has the same time slot and location as the MA1101R lesson that you have just added.
 
-Type `add CS2101 ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/ Ma Siu Lun` in the command box.
-ModU will inform you that the time slot is already booked
+When you type `add CS2101 ct/LEC v/LT27 gp/1 ts/FRI[1400-1600] l/ Ma Siu Lun` in the command box,
+ModU will inform you that the time slot is already booked.
 
 image::tutorial/addDup.png[width="790"]
 
-After you added all the lessons for MA1101R , you want to know what is the current time table for MA1101R looks like
+After you have added all the lessons for MA1101R , you might want to know how the current time table for MA1101R
+looks like.
 
 Type `view 1` in the command box.
-ModU will show you the all the lesson information about MA1101R.
+ModU will show you all available lesson information about MA1101R.
 ModU will also also display the timetable for this module.
-In addition, you also can continue adding MA1101R module in the command box
+In addition, you can continue adding MA1101R lessons in the command box and it will reflect on the timetable
+instantaneously.
 
 image::tutorial/viewMod.png[width="790"]
 image::tutorial/viewAdd.png[width="790"]
 
-One of the lecturer from MA1101R just informed you that MA1101R has renamed to MA1010 this semester.
-He needs you to update the timetable
+Now, you received a notice that MA1101R has been renamed to MA1010 and you wish to edit the timetable.
 
 Type `edit 1 MA1010` in the command box.
 In the module view, ModU allows you to change the name of the module.
-All the lessons with MA1101R will be changed to MA1010
+All the lessons with the code MA1101R will be changed to MA1010.
 
 image::tutorial/editMod.png[width="790"]
 
-One of the lecturer from CS2101 lost her timetable and she wants
-you to send her a new one. You need to find CS2101 from a list of module
+One of the lecturers from CS2101 lost her timetable and she wants
+you to send her a new one. You need to firstly find CS2101 from a list of modules.
 
-Type `find CS2101` then +
-Type `view 1` in the command box.
+Type `find CS2101` followed by `view 1` in the command box.
 ModU will show you the timetable for CS2101.
 
 image::tutorial/findMod.png[width="790"]
 image::tutorial/findTimetable.png[width="790"]
 
-After you have added many modules into ModU, you want to arrange them in alphabetical order
+Maybe you have to take more classes during this semester.
+After you have added these lessons into ModU, you would want to have an organized view by arranging them in an
+alphabetical order
 
 Type `sort` in the command box.
-ModU sort the current list based on alphabetical order
-Take note that you also can do the same for lesson list
+ModU sorts the current list based on alphabetical order.
+Take note that you can do the same for lesson list.
 
 image::tutorial/sort.png[width="790"]
 
-You were informed that LT19 needs reconstruction and will not be able to open for this semester.
-Now you need to delete LT19 from ModU.
+You were informed that LT19 needs reconstruction and is not open for the upcoming semester.
+Now, you need to delete LT19 from ModU.
 
-Type `list location` then +
-Type `delete 2` in the command box.
-ModU will delete all the lessons in LT19
+Type `list location` followed by `delete 2` in the command box.
+ModU will delete all lessons that are scheduled in LT19.
 
 image::tutorial/delete.png[width="790"]
 
-Almost immediate after you deleted LT19, you received a call saying is LT19 will
-still open for this semester. Now you want to undo deletion
+Almost immediately after you have deleted LT19, you received a call saying that the reconstruction will only happen
+during the following semester. Don't worry, all you need to do is simply undo the previous command.
 
 Type `undo` in the command box.
-Modu will undo the deletion and restore LT19.
+ModU will undo the deletion and restore LT19.
 
 image::tutorial/undo.png[width="790"]
 
-A moment later, you were informed that LT 19 is not open as well.
-You want to redo the delete
+A moment later, you were informed to ignore the previous call and that LT19 will indeed go through reconstruction
+this upcoming semester (oh, don't we all hate workplace miscommunications). ModU got you covered this time round as
+well.
 
 Type `redo` in the command box.
-Modu will delete LT19.
+ModU will undo the previous `undo` command.
 
 image::tutorial/redo.png[width="790"]
 
-After you have completed the time table, you were informed that you are actually
-in charging another faculty. Before you exit, you want to clear all the module
+After the semester ends, you would want to clear the timetable and prepare for the next semester.
 
-Type `clear` in the command box then+
-Type  `exit` in the command box
+Type `clear` in the command box.
+ModU will clear all modules in the timetable.
 
 image::tutorial/clear.png[width="790"]
-
 
 == FAQ
 

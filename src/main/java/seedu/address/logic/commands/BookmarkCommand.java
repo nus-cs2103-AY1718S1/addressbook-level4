@@ -13,9 +13,9 @@ import static seedu.address.model.ListingUnit.LESSON;
 
 
 /**
- * Collects a lesson identified using it's last displayed index from the address book into the favourite list.
+ * Bookmark a lesson identified using it's last displayed index from the address book into the favourite list.
  */
-public class BookmarkCommand extends Command {
+public class BookmarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "bookmark";
 
@@ -24,7 +24,7 @@ public class BookmarkCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_COLLECT_LESSON_SUCCESS = "Collected Lesson:  %1$s";
+    public static final String MESSAGE_BOOKMARK_LESSON_SUCCESS = "Bookmarked Lesson:  %1$s";
     public static final String MESSAGE_WRONG_LISTING_UNIT_FAILURE = "You can only add lesson into favourite list";
 
     private final Index targetIndex;
@@ -35,7 +35,7 @@ public class BookmarkCommand extends Command {
 
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
 
@@ -51,7 +51,7 @@ public class BookmarkCommand extends Command {
             } catch (DuplicateLessonException pnfe) {
                 throw new CommandException(pnfe.getMessage());
             }
-            return new CommandResult(String.format(MESSAGE_COLLECT_LESSON_SUCCESS, lessonToCollect));
+            return new CommandResult(String.format(MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToCollect));
         } else {
             throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
         }

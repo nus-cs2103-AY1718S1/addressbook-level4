@@ -41,7 +41,6 @@ public class SampleDataUtil {
         }
     }
     
-    
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();

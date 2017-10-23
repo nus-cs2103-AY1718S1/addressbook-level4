@@ -36,11 +36,6 @@ public interface Model {
     HashSet<Code> getUniqueCodeSet();
 
     /**
-     * Get a predicate for filtering favourList
-     */
-    FavouriteListPredicate getFavouriteListPredicate();
-
-    /**
      * Clears existing backing model and replaces with the provided new data.
      */
     void resetData(ReadOnlyAddressBook newData);
