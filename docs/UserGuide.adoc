@@ -14,6 +14,15 @@ endif::[]
 
 By: `CS2103-T10-B4`      Since: `Sept 2017`      Licence: `MIT`
 
+
+== Product Overview
+
+YellowPages is a free-to-use enhanced address book application which you can use to keep track of all your contact details. The application comes in-built with multiple new features not found in regular address books which creates a more user-friendly experience for all.
+
+== About
+
+This user guide will give you a walkthrough on the most commonly used features and commands in the YellowBook AddressBook application.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -251,6 +260,15 @@ Format: `deleteMul INDEXES`
 * Note that indexes can refer to multiple indexes (ie: You can list more than one index under this one parameter). See examples below for more clarification.
 * The index *must be a positive integer* 1, 2, 3, .....
 * Note that when listing multiple indexes, you will have to list the indexes *in ascending order*.
+
+Examples:
+
+* `deleteMul 1 3` +
+deletes the contacts with the 1st and 3rd index in the address book.
+
+* `deleteMul 2 4 7 8` +
+deletes the contacts with the 2nd, 4th, 7th and 8th indexes in the address book.
+
 ****
 
 === Add photos : (Coming in v1.5)
