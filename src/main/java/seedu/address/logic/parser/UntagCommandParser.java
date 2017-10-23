@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.TagCommand.MESSAGE_EMPTY_INDEX_LIST;
+import static seedu.address.logic.commands.UntagCommand.MESSAGE_EMPTY_INDEX_LIST;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,32 +12,44 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.UntagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Parses input arguments and creates a new TagCommand object
+ * Parses input arguments and creates a new UntagCommand object
  */
-public class TagCommandParser implements Parser<TagCommand> {
+public class UntagCommandParser {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the TagCommand
-     * and returns a TagCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the UntagCommand
+     * and returns a UntagCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public TagCommand parse(String args) throws ParseException {
+    public UntagCommand parse(String args) throws ParseException {
         requireNonNull(args);
         String trimmedArgs = args.trim();
+        if (trimmedArgs.equals("-all")) {
+            return new UntagCommand();
+        }
+
         String[] splittedArgs = trimmedArgs.split("\\s+");
         if (trimmedArgs.isEmpty() || splittedArgs.length != 2) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UntagCommand.MESSAGE_USAGE));
+        }
+
+        if (splittedArgs[0].equals("-all")) {
+            try {
+                return new UntagCommand(new Tag(splittedArgs[1]));
+            } catch (IllegalValueException ive) {
+                throw new ParseException(ive.getMessage(), ive);
+            }
         }
 
         Set<String> uniqueIndexes = new HashSet<>(Arrays.asList(splittedArgs[0].split(",")));
         if (uniqueIndexes.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_EMPTY_INDEX_LIST, TagCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_EMPTY_INDEX_LIST, UntagCommand.MESSAGE_USAGE));
         }
         List<Index> indexList = new ArrayList<>();
         try {
@@ -45,16 +57,15 @@ public class TagCommandParser implements Parser<TagCommand> {
                 indexList.add(ParserUtil.parseIndex(indexArg));
             }
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UntagCommand.MESSAGE_USAGE));
         }
 
         try {
             Tag tag = new Tag(splittedArgs[1]);
-            return new TagCommand(indexList, tag);
+            return new UntagCommand(indexList, tag);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
     }
 
 }
-
