@@ -22,8 +22,8 @@ By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `bonus.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `bonus.jar` release from link:{repoURL}/releases[here].
+.  Create a folder you want to use as home folder for **BoNUS** and copy the `jar` you have downloaded there.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -42,7 +42,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Components
 
 **BoNUS** mainly consists on three components: *contacts*, *events* and *calendar*. They work independently and each is
-considered as a kind of `data items`. They are described in details as follows:
+considered as a collection of one kind of `data items`. They are described in details as follows:
 
 === Contacts
 
@@ -53,22 +53,24 @@ and `edit` command in the section below for more information.
 * You can store other information of your contacts by adding customize properties. Refer to the `config add-property`
 command in the section below for more information.
 * You can group your contacts by adding one or multiple tags to them. Contacts with the same tag will be classified
-under the same group.
+under the same group. Tag can be displayed in the color specified by `config --set-tag-color` command.
 
 === Events
 
 You can store your upcoming events (meeting with professor tomorrow, assignment deadline, lecture/tutorial time slot, etc.) in **BoNUS**.
 
 * By default, you can store and update their title, interval (starting time and end time), venue and description. Refer
-to the `add` and `edit` command in the section below for more information.
+to the `addE` and `editE` command in the section below for more information.
 * Similar to link:#contacts[contacts], you can add customize properties to events as well.
 * Similar to link:#contacts[contacts], you can add tags to events as well.
 * If you have set starting and/or end time for an event, it will be reflected accordingly on the link:#calendar[calendar] component.
 * You can set notification at specific time before an event starts (when you should arrive at the venue before a meeting
 begins) or at specific time before an event ends (when you need to finalize your assignment and submit it to your professor).
-* You can link one or more link:#contacts[contacts] to an event (if all of you are going to attend the same meeting).
+* You can link one or more link:#contacts[contacts] to an event (if they are going to attend the event together with you).
 
 === Calendar
+
+_(Coming in v2.0)_
 
 Calender provides a more convenient interface for you to view your upcoming link:#events[events]. All events are displayed
 based on their time interval. Events whose time intervals are not specified will not be displayed here.
@@ -84,6 +86,7 @@ based on their time interval. Events whose time intervals are not specified will
 
 * Import contacts from _iCloud_, _Google+_, _Facebook_, etc.
 * Import events from _Google_ _Calendar_, _Outlook_ _Calendar_, etc.
+* Export data (contacts and events) to `.xml` file (default storage format for **BoNUS**), Excel Worksheet, etc.
 * Sync between all your devices.
 * (**Exclusive**) automatically generate your school schedule by simply entering your timetable URL from _https://nusmods.com/[NUSMods]_.
 
@@ -101,9 +104,10 @@ is expected to
 The **BoNUS** developers understand our users will store personal data in the application. We value privacy and security
 a lot.
 
-* All data saved to the storage file will be encrypted using the state-of-the-art encryption scheme.
-* Users will be prompted to enter their password whenever they open the application.
-* You can set up 2FA (two-factor authentication) if there is extra security requirement.
+* All data saved to the storage file will be encrypted using the state-of-the-art encryption scheme (AES-256).
+* You will be prompted to enter their password whenever they open the application (if you has decided to lock your application
+the last time before you exited).
+* You can set up 2FA (two-factor authentication) to fulfill extra security requirement(s).
 
 == Commands
 
@@ -115,21 +119,21 @@ The listing below shows a summary of all commands currently available to users a
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Parameters can be typed in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
 ====
 *Command in different components*
 
-* Most command can be applied to either a person or an event, whose result will depend on the context e.g. `add n/NAME`
-will add a person if the user is currently in the link:#contacts[contacts] component, add an event otherwise.
-* All commands entered in the link:#calendar[calendar] component will actually be handled by the link:#contacts[contacts]
-component.
+* Most command can be applied to either a person or an event, whose result will depend on the context e.g. `add` will add
+a person if the user is currently in the link:#contacts[contacts] component, otherwise `addE` will add a new link:#events[event].
+* All commands entered in the link:#calendar[calendar] component will actually be handled by either link:#contacts[contacts]
+component or link:#events[events] component.
 ====
 
 === Viewing help : `help`
 
-Format: `help`
+Format: `help` (or press `F1` on the keyboard)
 
 === Adding a person : `add`
 
@@ -144,19 +148,29 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+[TIP]
+In a similar format, you can also add customize properties when adding a new person, as long as you have used `config
+--add-property` command to define that property before.
+
+Example:
+
+First, add a birthday property with the short name `b`
+
+* `config --add-property s/b f/birthday`
+
+Then, you can set the value of `birthday` property when you add a new person (_see `b/12091191` below_)
+
+* `add n/Chris Lee p/98765432 e/johnd@example.com a/23 Chinatown b/12091991 t/friends`
 
 === Adding an event : `addE`
 
 Adds an event to the application. +
-Format: `addE n/NAME dt/DATE_TIME a/EMAIL a/ADDRESS `
-
-[TIP]
-Events added will be automatically sorted by date/time
+Format: `addE n/NAME dt/DATE_TIME a/EMAIL a/ADDRESS`
 
 Examples:
 
-* `addE n/Does Birthday dt/25122015 20:30 a/Does crib `
-* `addE n/Betsy Birthday dt/25122016 21:30 a/Betsy crib `
+* `addE n/Does Birthday dt/25122015 20:30 a/12 Kent Ridge Drive`
+* `addE n/Betsy Birthday dt/25122016 21:30 a/23 Marina Road`
 
 
 === Listing all persons/events : `list`
@@ -164,10 +178,16 @@ Examples:
 Shows a list of all persons in the application. +
 Format: `list`
 
+[TIP]
+Contacts will be sorted by creation time (increment)
+
 === Listing all events : `listE`
 
 Shows a list of all events in the application. +
 Format: `listE`
+
+[TIP]
+Events will be sorted by date/time (increment)
 
 === Editing a person : `edit`
 
@@ -213,7 +233,7 @@ Edits the name of the 2nd event to be `Lunch with Betsy`.
 
 === Locating persons/events by any property : `find`
 
-Finds events whose corresponding field(s) contain any of the given keywords. +
+Finds persons/events whose corresponding field(s) contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
 
 ****
@@ -275,7 +295,7 @@ Deletes the 2nd event in the address book.
 
 === Selecting a person: `select`
 
-Selects the person/event identified by the index number used in the last listing. +
+Selects a person (identified by the index number used in the last listing) to view the details of that person. +
 Format: `select INDEX`
 
 ****
@@ -311,7 +331,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the application's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the application's content (`add`, `addE`, `edit`, `editE`, `delete`, `deleteE`, and `clear`).
 ====
 
 Examples:
@@ -355,12 +375,12 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the current component. +
+Clears all entries from the current component (either contacts or events). +
 Format: `clear`
 
 [NOTE]
 ====
-Use `clear --all` if you want to clear data in all components (all contacts and events).
+Use `clear --all` if you want to clear data in all components (both contacts and events).
 ====
 
 === Advance setting : `config`
@@ -370,8 +390,22 @@ are doing before using any of the following commands. These commands are intende
 
 ==== Add new property : `config --add-property`
 
-Adds a new property field available to persons/events. +
-Format: `config --add-property s/b f/birthday [m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*]`
+Adds a new property field available to all persons or events. +
+Format: `config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
+
+[NOTE]
+====
+* Short name is used as the prefix for `add`/`addE` and `edit`/`editE` commands.
+* Full name is used to display the name of each property on the right panel (to show details of the selected person, see `select` command).
+* Constraint message is the string that will be shown in result display box when the input value for this property in
+`add`/`addE` and `edit`/`editE` commands is invalid.
+* Regular expression is used to check whether the input value for this property is valid.
+====
+
+Example:
+
+* `config --add-property s/ag f/age`
+* `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*`
 
 ****
 * This command does not add a new property to a specific person. Instead, it defines a property that will be available to
@@ -393,8 +427,9 @@ Format: `config --set-tag-color TAG_NAME COLOR`
 ****
 * By default, the application will use a random color to display each tag. The same tags are displayed using the same
 color, different tags are _usually_ displayed using different colors.
-* The value of the parameter `COLOR` should be a valid RGB value (in hexadecimal, starting with a `#`). You can pick the
-RGB value of your favorite color from https://www.w3schools.com/colors/colors_rgb.asp[here].
+* The value of the parameter `COLOR` should be either one of the pre-defined color names or a valid RGB value (in hexadecimal,
+starting with a `#`). You can pick the RGB value of your favorite color from https://www.w3schools.com/colors/colors_rgb.asp[here].
+* Pre-defined color names include _black_, _blue_, _brown_, _green_, _red_, _white_, _yellow_.
 ****
 
 ==== Import calendar : `config --import-calendar`
