@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-T16-B1/main
+:repoURL: https://github.com/CS2103AUG2017-T16-B1/main/tree/master
 
-By: `CS2103AUG2017 Team T16-B1`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017 Team T16-B1`      Since: `Sept 2017`      Licence: `MIT`
 
 == Introduction
 
@@ -52,7 +52,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
+. Fork this repo, and clone the fork onto your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project
 dialog first)
 . Set up the correct JDK version for Gradle
@@ -75,7 +75,7 @@ This will generate all resources required by the application and tests.
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding
+This project follows https://oss-generic.github.io/process/codingStandards/CodingStandard-Java.html[oss-generic coding
 standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To
 rectify,
 
@@ -111,26 +111,25 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
-
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get
-Started].
+Before you get ready to start coding, get some sense of the overall design by reading the
+link:#architecture[Architecture] section.
 
 == Design
 
 === Architecture
 
+[[architecture_diagram]]
+.Architecture Diagram
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of
+The <<architecture_diagram>> given above explains the high-level design of the App. Given below is a quick overview of
 each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams]
-folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save
-as picture`.
+folder. To update a diagram, modify the diagram in the powerpoint files located in the
+link:{repoURL}/docs/diagrams/[diagrams] folder, select the objects of the diagram, 'right click`, and choose
+`Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible
 for,
@@ -155,22 +154,24 @@ The rest of the App consists of four components.
 Each of the four components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+* Exposes its functionality using a `{Component Name}Manager` class. i.e. `LogicManager`
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface
-and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the <<logic_class_diagram>> given below) defines it's API in the `Logic.java`
+interface and exposes its functionality using the `LogicManager.java` class.
 
+[[logic_class_diagram]]
+.Logic Class Diagram
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command
-`delete 1`.
+The <<sequence_diagram_for_delete_person>> diagram below shows how the components interact for the scenario where the
+user issues the command `delete 1`.
 
+[[sequence_diagram_for_delete_person]]
+.Component Interactions for `delete 1` Command (Part 1)
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the address book data are changed, instead of
@@ -179,25 +180,28 @@ asking the `Storage` to save the updates to the hard disk.
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being
 saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
+[[sequence_diagram_for_delete_person_event_handling]]
+.Component Interactions for `delete 1` Command (Part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be
-coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between
-components.
+coupled to either of them in the <<sequence_diagram_for_delete_person_event_handling>>. This is an example of how this
+Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
 === UI component
 
+[[ui_class_diagram]]
+.Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `ParcelListPanel`,
-`StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+From <<ui_class_diagram>>, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`,
+ `ParcelListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the
+ abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that
 are in the `src/main/resources/view` folder. For example, the layout of the
@@ -212,12 +216,13 @@ The `UI` component,
 
 === Logic component
 
+[[logic_class_diagram]]
+.Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
 
+[[logic_command_class_diagram]]
+.Structure of Commands in the Logic Component
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand`
-and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -230,13 +235,15 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API
 call.
 
+[[delete_parcel_sequence_diagram_for_logic]]
+.Interactions Inside the Logic Component for the `delete 1` Command
 image::DeleteParcelSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
+[[model_class_diagram]]
+.Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -250,8 +257,9 @@ so that the UI automatically updates when the data in the list change.
 
 === Storage component
 
+[[model_class_diagram]]
+.Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -278,9 +286,10 @@ and redoing of commands that modifies the state of address book (e.g. `add`, `ed
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
 The following diagram shows the inheritance diagram for commands:
 
+[[model_class_diagram]]
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and
+As you can see from the diagram above, `UndoableCommand` adds an extra layer between the abstract `Command` class and
 concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing
 a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand`
 contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute
@@ -323,13 +332,17 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th parcel in the address book. The current state
 of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto
-the `undoStack` (the current state is saved together with the command).
+the `undoStack` (the current state is saved together with the command) as seen in the diagram below.
 
+[[undo_redo_stack_diagram_1]]
+.Executing a New Command with an Empty Undo Stack.
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may
-execute `add n/David ...` to add a new parcel.
+execute `add n/David ...` to add a new parcel as seen in the diagram below.
 
+[[undo_redo_stack_diagram_2]]
+.Executing a New Command with a Non-Empty Undo Stack.
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -338,8 +351,10 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 The user now decides that adding the parcel was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the
-address book to the state before the `add` command executed.
+address book to the state before the `add` command executed. This can be visualised in the diagram below.
 
+[[undo_redo_stack_diagram_2]]
+.Undoing a Previous Command Stored in a Non-Empty Undo Stack.
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -348,6 +363,8 @@ popping the `undoStack`.
 
 The following sequence diagram shows how the undo operation works:
 
+[[undo_redo_sequence_diagram]]
+.Undo Redo Sequence Diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the
@@ -361,63 +378,73 @@ The user now decides to execute a new command, `clear`. As before, `clear` will 
 time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command
 (this is the behavior that most modern desktop applications follow).
 
+[[undo_redo_new_command_stack_digram_3]]
+.Executing a Undoable Command Clearing A Non-Empty Redo Stack
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command`
 rather than `UndoableCommand`, will not be added after execution:
 
+[[undo_redo_new_command_stack_digram_4]]
+.Redo Command Execution fail if Redo Stack is Empty
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+[[undo_redo_stack_activity_diagram]]
+.Undo Redo Command Activity Diagram
 image::UndoRedoActivityDiagram.png[width="200"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `UndoableCommand` +
-**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
-**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that
+**Aspect: Implementation of `UndoableCommand`** +
+
+* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+** **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that
 deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
-**Cons:** Hard for new developers to understand the template pattern. +
-**Alternative 2:** Just override `execute()` +
-**Pros:** Does not involve the template pattern, easier for new developers to understand. +
-**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to
+** **Cons:** Hard for new developers to understand the template pattern. +
+* **Alternative 2:** Just override `execute()` +
+** **Pros:** Does not involve the template pattern, easier for new developers to understand. +
+** **Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to
 undo/redo.
 
 ---
 
 **Aspect:** How undo & redo executes +
-**Alternative 1 (current choice):** Saves the entire address book. +
-**Pros:** Easy to implement. +
-**Cons:** May have performance issues in terms of memory usage. +
-**Alternative 2:** Individual command knows how to undo/redo by itself. +
-**Pros:** Will use less memory (e.g. for `delete`, just save the parcel being deleted). +
-**Cons:** We must ensure that the implementation of each individual command are correct.
+
+* **Alternative 1 (current choice):** Saves the entire address book. +
+** **Pros:** Easy to implement. +
+** **Cons:** May have performance issues in terms of memory usage. +
+* **Alternative 2:** Individual command knows how to undo/redo by itself. +
+** **Pros:** Will use less memory (e.g. for `delete`, just save the parcel being deleted). +
+** **Cons:** We must ensure that the implementation of each individual command are correct.
 
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
-**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
-**Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
-**Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to
+
+* Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
+** **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
+** **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to
 realize that it does not do that, after executing `undo`. +
-**Alternative 2:** Include all commands. +
-**Pros:** Might be more intuitive for the user. +
-**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and
+* **Alternative 2:** Include all commands. +
+** **Pros:** Might be more intuitive for the user. +
+** **Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and
 not the view. +
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
+** **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
 
 **Aspect:** Data structure to support the undo/redo commands +
-**Alternative 1 (current choice):** Use separate stack for undo and redo +
-**Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the
+
+* **Alternative 1 (current choice):** Use separate stack for undo and redo +
+** **Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the
 new incoming developers of our project. +
-**Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both
+** **Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both
 `HistoryManager` and `UndoRedoStack`. +
-**Alternative 2:** Use `HistoryManager` for undo/redo +
-**Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
-**Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands.
+* **Alternative 2:** Use `HistoryManager` for undo/redo +
+** **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
+** **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands.
 Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different
 things. +
 // end::undoredo[]
@@ -454,14 +481,15 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
 
 ==== Design Considerations
 
-**Aspect:** Implementation of Google Maps Search Browser +
-**Alternative 1 (current choice):** Change browser loadPage URL to Google Map search URL +
-**Pros:** Its easy to implement new methods to load a new URLs if required to display a different URL. +
-**Cons:** The map has no other functionality besides searching for the postal code. +
-**Alternative 2 (future implementation choice):** Implementing through Google Maps API +
-**Pros:** Makes it easier for implementing additional features that utilizes the Maps API which would be required +
+**Aspect: Implementation of Google Maps Search Browser** +
+
+* **Alternative 1 (current choice):** Change browser loadPage URL to Google Map search URL +
+** **Pros:** Its easy to implement new methods to load a new URLs if required to display a different URL. +
+** **Cons:** The map has no other functionality besides searching for the postal code. +
+* **Alternative 2 (future implementation choice):** Implementing through Google Maps API +
+** **Pros:** Makes it easier for implementing additional features that utilizes the Maps API which would be required +
  in future versions of the Ark application. +
-**Cons:** More difficult to implement and integrate into a command line interface.
+** **Cons:** More difficult to implement and integrate into a command line interface.
 
 === Delete Tag mechanism
 
@@ -475,15 +503,16 @@ updated list of tags.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `deleteTagCommand` +
-**Alternative 1 (current choice):** Add method to delete tags in `ModelManager` +
-**Pros:** It is easy to implement a method to remove every instance where the Tag appears, we only have to be able to
+**Aspect: Implementation of `deleteTagCommand`** +
+
+* **Alternative 1 (current choice):** Add method to delete tags in `ModelManager` +
+** **Pros:** It is easy to implement a method to remove every instance where the Tag appears, we only have to be able to
 correctly iterate through all the lists of tags. +
-**Cons:** Might be computationally expensive for large number of parcels as Ark will need to iterate through every
+** **Cons:** Might be computationally expensive for large number of parcels as Ark will need to iterate through every
 Tag to delete them. +
-**Alternative 2:** Maintain a list of tags and where the tags are located+
-**Pros:** Computationally quicker to just find the tag and remove the tag from every parcel in the list of tags +
-**Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
+* **Alternative 2:** Maintain a list of tags and where the tags are located+
+** **Pros:** Computationally quicker to just find the tag and remove the tag from every parcel in the list of tags +
+** **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
 and has to be updated whenever we edit other parcel details as well.
 
 === Backup Mechanism
@@ -491,6 +520,8 @@ and has to be updated whenever we edit other parcel details as well.
 The back up mechanism is facilitated by a `backupAddressBook` method within the `StorageManager`. It supports the
 backing up of AddressBook data in Ark. +
 
+[[back_up_sequence_diagram]]
+.Backup Sequence Diagram
 image::BackupSequenceDiagram.png[width="600"]
 
 The `backupAddressBook` method is called automatically when `storageManager` is initialised in `MainApp#init()`,
@@ -501,36 +532,37 @@ the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `StorageManager#backupAddressBook` +
-**Alternative 1 (current choice):** use the `StorageManger#saveAddressBook()` method to implement logic. +
-**Pros:** It becomes easier to implement method rather than writing out a separate logic for saveAddressBook. It
+**Aspect: Implementation of `StorageManager#backupAddressBook`** +
+
+* **Alternative 1 (current choice):** use the `StorageManger#saveAddressBook()` method to implement logic. +
+** **Pros:** It becomes easier to implement method rather than writing out a separate logic for saveAddressBook. It
 makes updates easier since enhancements to `saveAddressBook()` will also enhance `backupAddressBook()`. +
-**Cons:** This implementation increases the coupling of `StorageManager#backupAddressBook()` and
-`StorageManager#saveAddressBook()` where changes in `saveAddressBook()` will cause changes in `backupAddressBook()`. +
-**Alternative 2:** Separate the implementation of `Storage#backupAddressBook()` from `StorageManager#saveAddressBook()`
- +
-**Pros:** Reduced coupling of saveAddressBook() and backupAddressBook() and allows the backup file to be saved at a
-different location from the main save file. This prevents the backup file from being corrupted if the folder of the
+** **Cons:** This implementation increases the coupling of `#backupAddressBook()` and `#saveAddressBook()` where changes
+ in `saveAddressBook()` will cause changes in `backupAddressBook()`. +
+* **Alternative 2:** Separate the implementation of `backupAddressBook()` from `#saveAddressBook()` +
+** **Pros:** Reduced coupling of `saveAddressBook()` and `backupAddressBook()` and allows the backup file to be saved at
+ a different location from the main save file. This prevents the backup file from being corrupted if the folder of the
 main save file becomes corrupted. +
-**Cons:** More tedious to implement and maintain `backupAddressBook()` since enhancements to the saving feature has to
-be implemented in both `saveAddressBook()` and `backupAddressBook()` +
+** **Cons:** More tedious to implement and maintain `backupAddressBook()` since enhancements to the saving feature has
+to be implemented in both `saveAddressBook()` and `backupAddressBook()` +
 
 ---
 
 **Aspect:** Trigger to execute `StorageManager#backupAddressBook` +
-**Alternative 1 (current choice):** Automatically backup data on Ark on launch of the software. +
-**Pros:** This implementation ensures that the if the user corrupts the data of Ark during a session. The user will be
+
+* **Alternative 1 (current choice):** Automatically backup data on Ark on launch of the software. +
+** **Pros:** This implementation ensures that the if the user corrupts the data of Ark during a session. The user will be
 able to revert to the start of the session, which is ensured to be a workable instance of the Ark software. +
-**Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single session.
+** **Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single session.
  +
-**Alternative 2:** Backup data on Ark every few minutes +
-**Pros:** Provides a very recent copy of the data on Ark. +
-**Cons:** More tedious and difficult to implement. User may also be running another process at that point of time. It
+* **Alternative 2:** Backup data on Ark every few minutes +
+** **Pros:** Provides a very recent copy of the data on Ark. +
+** **Cons:** More tedious and difficult to implement. User may also be running another process at that point of time. It
 could cause a bottleneck if there is a lot of data to be saved, and multiple backup calls are queued one after the
 other. +
-**Alternative 3:** Backup data after a fixed number of `UndoableCommand`s. +
-**Pros:** Provides a very recent copy of the data on Ark. +
-**Cons:** More tedious and difficult to implement. Difficult to determine the optimal amount of data to restore. If
+* **Alternative 3:** Backup data after a fixed number of `UndoableCommand`s. +
+** **Pros:** Provides a very recent copy of the data on Ark. +
+** **Cons:** More tedious and difficult to implement. Difficult to determine the optimal amount of data to restore. If
 the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
 provides a workable copy of the data of Ark.
 
@@ -564,15 +596,16 @@ to replace the text in `commandFieldText` with the string. +
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `autocomplete` +
-**Alternative 1 (current choice):** Create a new `Autocompleter` class to implement `autocomplete` and its helper
+**Aspect: Implementation of `autocomplete`** +
+
+* **Alternative 1 (current choice):** Create a new `Autocompleter` class to implement `autocomplete` and its helper
 functions. +
-**Pros:** Single Responsibility Principle (SRP) is maintained +
-**Cons:** More tedious to implement and test since the feature is implemented in both `Autocompleter` and `CommandBox`.
+** **Pros:** Single Responsibility Principle (SRP) is maintained +
+** **Cons:** More tedious to implement and test since the feature is implemented in both `Autocompleter` and `CommandBox`.
 Also creates coupling between the `Autocompleter` and `CommandBox`. +
-**Alternative 2:** Implement `autocomplete` inside `CommandBox`
-**Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
-**Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +
+* **Alternative 2:** Implement `autocomplete` inside `CommandBox`
+** **Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
+** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +
 
 == Documentation
 
@@ -607,8 +640,9 @@ in the `docs/` directory to HTML format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results,
 use the settings indicated in the screenshot below.
 
+[[model_class_diagram]]
+.Saving Documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -699,7 +733,7 @@ b. Require developers to download those libraries manually (this creates extra w
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="100%",cols="8%,<17%,<30%,<45%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
@@ -775,7 +809,7 @@ information from other sources
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Ark` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete parcel
