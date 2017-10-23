@@ -25,6 +25,8 @@ public class Reminder implements ReadOnlyReminder {
         this.time = new SimpleObjectProperty<>(time);
         this.message = new SimpleObjectProperty<>(message);
     }
+    public Reminder() {
+    }
 
     /**
      * Creates a copy of the given ReadOnlyReminder.
