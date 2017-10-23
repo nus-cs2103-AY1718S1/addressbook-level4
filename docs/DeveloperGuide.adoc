@@ -27,10 +27,13 @@ The purpose of this developer guide is to help incoming developers, project mana
 high-level details of the Ark software and help them develop code in coherence with our guidelines. Such details
 include the Ark architecture and system, its components and the interaction between these components. +
 
-This guide contains information pertaining to the following issues: +
-
-{{to be added: preview of the contents of the developer guide}}
-
+This guide contains information pertaining to issues such as: +
+* Setting up the development environment for Ark.
+* Understanding the high-level components of Ark.
+* Understanding the various features and their implementations in Ark.
+* Adding documentation to document the changes you have made.
+* Running tests for the code in Ark.
+* Details on how to manage the Ark project using Version Control and Continuous Integration.
 
 == Setting up
 
