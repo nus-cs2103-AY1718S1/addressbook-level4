@@ -37,8 +37,12 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::UI(ScheduBook).png[width="790"]
+image::AddresbookLabels.png[width="790"]
 +
+&#160;a. Command Box  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; b. Message Box +
+&#160;c. Contacts List &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+d. Meetings List +
+&#160;e. Footer bar
 ..  If there is a meeting scheduled on the day of logging in, a reminder will pop up for you to acknowledge.
 +
 image::Reminder.png[width="600"]
@@ -59,11 +63,13 @@ image::MeetingCard3.png[width="200"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
 * **`add`** `n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`** `3` : deletes the 3rd contact shown in the current list
+* **`addmeeting`** `2 n/Shopping d/01-01-01-2020 12:00 l/Orchard Road` adds a meeting with the 2nd contact shown in the current list
 * *`exit`* : exits the application
 
 .  Refer to the link:#features[Features] section below for details of each command.
@@ -257,10 +263,10 @@ Format: `findMeeting KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `findmeeting John` +
-Returns `john` and `John Doe`
-* `findmeeting Betsy Tim John` +
-Returns any meeting having names `Betsy`, `Tim`, or `John` as the person to meet
+* `findmeeting Clementi` +
+Returns `Clementi` and `Clementi Road`
+* `findmeeting Clementi NUS` +
+Returns any meeting having names `Clementi` or `NUS`
 * `findmeeting Shopping Study John` +
 Returns any meeting having `John` as the person to meet and any meetings having names `Study` and `Shopping`
 
