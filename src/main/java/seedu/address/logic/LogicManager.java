@@ -2,6 +2,7 @@ package seedu.address.logic;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -79,7 +80,10 @@ public class LogicManager extends ComponentManager implements Logic {
         } else if (emptyFieldPrefix.equals(PREFIX_NAME)) {
             filledPrefix = emptyFieldPrefix.getPrefix()
                     + model.getAddressBook().getPersonList().get(index.getZeroBased()).getName().toString();
-        }  else if (emptyFieldPrefix.equals(PREFIX_TAG)) {
+        } else if (emptyFieldPrefix.equals(PREFIX_DOB)) {
+            filledPrefix = emptyFieldPrefix.getPrefix()
+                    + model.getAddressBook().getPersonList().get(index.getZeroBased()).getDateOfBirth().toString();
+        } else if (emptyFieldPrefix.equals(PREFIX_TAG)) {
             Set<Tag> tags = model.getAddressBook().getPersonList().get(index.getZeroBased()).getTags();
             for (Tag tag : tags) {
                 filledPrefix += PREFIX_TAG + tag.getTagName() + " ";
