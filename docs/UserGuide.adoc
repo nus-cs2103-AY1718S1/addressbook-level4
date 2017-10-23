@@ -32,22 +32,17 @@ This app will not work with earlier versions of Java 8.
 
 === Knowing the Interface
 
-Mobilize comes with a simple interface to facilitate easy planning. It contains six main components that allow you to 
-interact with the application: +
+Mobilize comes with a simple interface to facilitate easy planning. It contains six main components that allow you to interact with the application: +
 
 image::Ui.png[width="790"] +
 
 Each component has different functions:
 
 * *`Command Line`:* This is your primary mode of input. All major functions have a command in the command line.
-* **`Result Display`:** This is your primary mode of interaction with the application. You will be notified of all 
-successful or failed commands, along with their correct usages through the Result Display.
-* **`Contact Cards`:** These are arranged in a panel to display all the contacts you add into the application. Contact 
-Cards show you all entered fields of a contact.
-* *`Task Cards`:* These are arranged in a panel to display all the tasks you add into the application. Task Cards show 
-you all entered fields of a task.
-* *`Browser`:* This is built into the application to redirects you to the location of a contact’s address when a Contact 
-Card is clicked.
+* **`Result Display`:** This is your primary mode of interaction with the application. You will be notified of all successful or failed commands, along with their correct usages through the Result Display.
+* **`Contact Cards`:** These are arranged in a panel to display all the contacts you add into the application. Contact Cards show you all entered fields of a contact.
+* *`Task Cards`:* These are arranged in a panel to display all the tasks you add into the application. Task Cards show you all entered fields of a task.
+* *`Browser`:* This is built into the application to redirects you to the location of a contact’s address when a Contact Card is clicked.
 
 == Using Mobilize
 
@@ -56,24 +51,18 @@ Card is clicked.
 For the following tutorials, command formatting will be explained using the following syntax:
 
 * Words or letters followed by a slash (/) are prefixes, to mark the place of a specific parameter. +
-  For example, in the syntax n/NAME, the combination of “n/” forms a prefix to signal that the parameter that follows 
-  should be a name.
+  For example, in the syntax n/NAME, the combination of “n/” forms a prefix to signal that the parameter that follows should be a name.
 * Words in UPPER_CASE are parameters to be determined by the user. +
-  For example, in the command add n/NAME, the word NAME is a placeholder for the name of a contact input by a user. The 
-  final command might look like add n/John Doe.
+  For example, in the command add n/NAME, the word NAME is a placeholder for the name of a contact input by a user. The final command might look like add n/John Doe.
 * Items in square brackets are optional. +
   For example, if a command syntax contains the item [t/TAG], it means that tags can be left out in the final command.
 * Items followed by “…” can be repeated multiple times. +
-  For example, if a command syntax contains the item [t/TAG]…, then the final command can contain multiple ‘tags’, 
-  such as t/friend, t/family, t/classmate.
+  For example, if a command syntax contains the item [t/TAG]…, then the final command can contain multiple ‘tags’, such as t/friend, t/family, t/classmate.
 * Parameters that are preceded by a prefix, can occur in any order. +
-  For example, if a command syntax contains the item add n/NAME p/PHONE a/ADDRESS, then the final command can contain 
-  these items in mixed order, such as add a/ADDRESS n/NAME p/PHONE.
+  For example, if a command syntax contains the item add n/NAME p/PHONE a/ADDRESS, then the final command can contain these items in mixed order, such as add a/ADDRESS n/NAME p/PHONE.
   
   [NOTE]
-  This is not applicable for parameters without a prefix. For example, if a command syntax uses: edit INDEX n/NAME, 
-  then the INDEX parameter MUST be in the exact position as in the syntax, in this case, after the command word 
-  i.e. edit.
+  This is not applicable for parameters without a prefix. For example, if a command syntax uses: edit INDEX n/NAME, then the INDEX parameter MUST be in the exact position as in the syntax, in this case, after the command word i.e. edit.
 
 === Managing Contacts
 
