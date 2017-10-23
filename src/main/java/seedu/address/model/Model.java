@@ -68,6 +68,11 @@ public interface Model {
     void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
 
     /**
+     * Unbookmarks the given lesson from favourite list
+     */
+    void unBookmarkLesson(ReadOnlyLesson lesson);
+
+    /**
      * Booked a location with a given timeslot
      */
     void bookingSlot(BookedSlot booking) throws DuplicateBookedSlotException;
