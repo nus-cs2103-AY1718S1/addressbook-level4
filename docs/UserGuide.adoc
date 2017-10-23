@@ -52,12 +52,33 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all parcels.
+* *`list`* : lists all parcels and expands the parcel list section in the main window.
 * **`clear`**` : clears the list of parcels.
 * **`delete`**`3` : deletes the 3rd parcel shown in the current list.
 * *`exit`* : exits the app.
 
 .  Refer to the link:#features[Features] section below for details of each command.
+
+== Layout
+What you see in the picture below is an example of what the main window
+of the Ark application looks like. +
+
+image::Ark_Main_Window.png[width="790"]
+
+The main window is separated into 8 sections from the top to bottom:
+
+. Red - Menu Bar
+. Blue - Command Box
+. Green - Results Box
+. Yellow - Browser
+. Purple - Divider (divides the Browser from the Parcel List)
+. White - Parcel Card
+. Orange - Parcel List
+. Pink - Status Bar
+
+The Browser and Parcel List sections sizes can be changed by commands
+or by dragging the Divider part up or down to either increase or decrease either
+section's sizes.
 
 == Features
 
@@ -110,7 +131,13 @@ Non alphanumeric file names will not be accepted. i.e. `$addressbook#!@,xml`
 
 === Listing all parcels : `list`
 
-Shows a list of all parcels in Ark. +
+Shows a list of all parcels in Ark and expands the Parcel List section in the main window.
+The Parcel List section is scrollable and shows you all the information of a parcel.
+You can see an example in the two pictures below. +
+
+image::Ark_Parcel_List.png[width="790"]
+image::Ark_Parcel_List_2.png[width="790"]
+
 Format: `list`
 
 === Editing a parcel : `edit`
@@ -194,7 +221,12 @@ Deletes the tag "urgent" from each parcel in the address book.
 
 === Selecting a parcel : `select`
 
-Selects the parcel identified by the index number used in the last parcel listing. +
+Selects the parcel identified by the index number used in the last parcel listing
+and expands the Browser section in the main window. The Browser section will then show a google map search
+of the selected parcel's delivery address (postal code). You can see an example in the picture below. +
+
+image::Ark_Browser.png[width="790"]
+
 Format: `select INDEX`
 
 [TIP]
@@ -210,7 +242,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd parcel in the Ark.
+Selects the 2nd parcel in the Ark. Expands browser section.
 * `find Betsy` +
 `select 1` +
 Selects the 1st parcel in the results of the `find` command.
@@ -287,13 +319,20 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Google Maps Browser
+
+Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
+of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
+into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
+browser section of the main window.
+
 === Autocomplete
 
 Ark comes with tab autocompletion which is able to complete a command for you
 without requiring you to type out the command fully. +
 To make use of this feature, simply key in the first few characters of the command you with to enter and press the
  kbd:[Tab] key.
-Ark will then fill in the rest of the command for you.
+Ark will then fill in the rest of the command for you in the command box.
 Then press kbd:[Enter] key to enter the command.
 
 Examples:
@@ -373,7 +412,6 @@ In version v1.3, users will be able to: +
 In `Ark v2.0`, the delivery vendor will be able to do the following: +
 
 * Filter `Parcel` by tags
-* Automatically search for the delivery address of the selected `Parcel` in Google Maps on click.
 * Know the shortest path from one address to a delivery address.
 * Find the shortest path from the current location to a delivery address.
 * Find customer's `Parcel` by `TRACKING_NUMBER`
@@ -388,6 +426,8 @@ In `Ark v2.0`, the delivery vendor will be able to do the following: +
 * Generate the optimal route for the day's deliveries, based on shortest time, shortest distance travelled or most
  parcels delivered.
 * Archive completed deliveries
+* Add multiple parcels by importing a XML file
+* Store the sender's and receiver's details (i.e. `Name`, `Phone`, `Email Address`, `Address`)
 * Autocomplete input commands.
 * Be informed of overdue parcels.
 * Be informed of parcels that can be delivered at a specific location.
