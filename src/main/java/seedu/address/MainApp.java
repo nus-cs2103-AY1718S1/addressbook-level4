@@ -78,7 +78,7 @@ public class MainApp extends Application {
 
         email = new EmailManager();
 
-        logic = new LogicManager(model, email);
+        logic = new LogicManager(model, email, storage);
 
         ui = new UiManager(logic, config, userPrefs);
 
