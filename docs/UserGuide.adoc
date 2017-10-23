@@ -267,8 +267,8 @@ Selects the 1st person in the results of the `find` command.
 
 image::UG_list1.png[width="790"]
 image::UG_list2.png[width="790"]
-image::UG_delete1.png[width="790"]
-image::UG_delete2.png[width="790"]
+image::UG_select1.png[width="790"]
+image::UG_select2.png[width="790"]
 
 === Listing entered commands : `history`
 
