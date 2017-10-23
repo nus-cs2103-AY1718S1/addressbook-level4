@@ -497,9 +497,12 @@ The following sequence diagram shows how the automatic adding of reminders work
 image::SDaddEventLogicReminder.png[width="700"]
 _Figure 3.3.9 : Sequence Diagram for Adding an event (reminders are automatically added)_
 
-=== Sorting contacts mechanism
+=== Contacts/Event listing order by name/date time mechanism
 
-The sorting contacts mechanism uses the `sort` method which resides inside `List` interface to sort the contacts by name. It is called when adding a new contact (e.g. 'add` command), thus placing the contact in the list alphabetically by name.
+Whenever there is a command that triggers the "_refresh_" of link:{repoURL}/src/main/java/seedu/address/ui/person/PersonListPanel.java[`PersonListPanel`]
+or link:{repoURL}/src/main/java/seedu/address/ui/event/EventListPanel.java[`EventListPanel`], like when adding a new contact
+(i.e. `add` command), all the cards will be loaded in the incremental order by name or date time respectively. The sorting
+mechanism uses the `sort` method which resides inside `List` interface to sort the contacts by name.
 
 
 === Configuration
