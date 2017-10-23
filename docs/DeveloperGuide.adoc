@@ -397,7 +397,7 @@ The user then adds the birthday through the BirthdayCommand : " `birthday 2 b/20
 After adding the birthday parameters of contacts, the user can choose to sort the contact list according to either their ages or birthdays or leave it as it is. +
 The following sequence diagram shows how the birthday operation works:
 
-image::birthday_sd.png[width="560"]
+image::birthday_sd.png[width="800"]
 
 
 
