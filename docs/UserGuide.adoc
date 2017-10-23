@@ -263,7 +263,7 @@ You can add multiple tags to multiple contacts by repeating the tag prefix.
 
 To illustrate, the command:
 
-`tag 1, 2, 3 t/friend t/family`
+`tag 1, 2, 3 t/friend t/family` +
 Results in all contacts in indices 1, 2 and 3 to be tagged with both [friend] and [family].
 
 __Constraints__
@@ -403,11 +403,11 @@ One or more parameters can be specified.
 
 For example:
 
-*`edittssk 1 exams from 4th Dec to 5th Dec`
+*`edittask 1 exams from 4th Dec to 5th Dec` +
 Changes all parameters of the task at INDEX 1 to set DESCRIPTION to "exams", START DATE to "Mon, Dec 4, '17"
 and DEADLINE to "Tue, Dec 5, '17"
 
-*`edittask 2 from tomorrow`
+*`edittask 2 from tomorrow` +
 Changes the START DATE of the task at INDEX 2 to the date of the following day.
 
 __Constraints__
