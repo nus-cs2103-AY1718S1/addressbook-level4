@@ -112,8 +112,6 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-
-
         /* Case: find address of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " a/" + DANIEL.getAddress().value;
         ModelHelper.setFilteredList(expectedModel, DANIEL);

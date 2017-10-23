@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import seedu.address.model.person.email.Email;
 import seedu.address.model.tag.Tag;
 
 
@@ -57,22 +58,28 @@ public class StringUtil {
      *       containsEmailgnoreCase(("abc@example.com", "e/   EXAMPLE") == true//Case insensitive
      *       </pre>
      *
-     * @param emailSentence cannot be null
+     * @param emailSet cannot be null
      * @param searchWord    cannot be null, cannot be empty, must be a valid  email domain
      */
-    public static boolean containsEmailIgnoreCase(String emailSentence, String searchWord) {
-        requireNonNull(emailSentence);
+    public static boolean containsEmailIgnoreCase(Collection<Email> emailSet, String searchWord) {
+        requireNonNull(emailSet);
         requireNonNull(searchWord);
 
         String preppedWord = searchWord.trim();
         checkArgument(!preppedWord.isEmpty(), "Email parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Email parameter should be a single word");
 
-        String preppedEmailSentence = emailSentence.substring(emailSentence.indexOf('@') + 1);
-        String finalPreppedEmailSentence = preppedEmailSentence.substring(0, preppedEmailSentence.indexOf('.'));
+        for (Email email : emailSet) {
+            String emailString = email.value;
+            String preppedEmailSentence = emailString.substring(emailString.indexOf('@') + 1);
+            String finalPreppedEmailSentence = preppedEmailSentence.substring(0, preppedEmailSentence.indexOf('.'));
 
-        return finalPreppedEmailSentence.equalsIgnoreCase(preppedWord.toLowerCase());
+            if (finalPreppedEmailSentence.equalsIgnoreCase(preppedWord.toLowerCase())) {
+                return true;
+            }
+        }
 
+        return false;
     }
 
 

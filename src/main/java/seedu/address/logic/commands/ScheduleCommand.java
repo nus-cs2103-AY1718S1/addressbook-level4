@@ -69,7 +69,7 @@ public class ScheduleCommand extends UndoableCommand {
         schedules.add(schedule);
 
         Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
-                schedulePerson.getEmail(), schedulePerson.getAddress(), schedules, schedulePerson.getTags());
+                schedulePerson.getEmails(), schedulePerson.getAddress(), schedules, schedulePerson.getTags());
 
         try {
             model.updatePerson(schedulePerson, scheduleAddedPerson);

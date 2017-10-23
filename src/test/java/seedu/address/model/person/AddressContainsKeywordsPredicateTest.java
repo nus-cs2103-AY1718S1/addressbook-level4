@@ -44,15 +44,15 @@ public class AddressContainsKeywordsPredicateTest {
     public void test_addressContainsKeywords_returnsTrue() {
         // match any address field
         Predicate<ReadOnlyPerson> predicate = new AddressContainsKeywordsPredicate(Collections.singletonList("Jurong"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111").build()));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111, SG").build()));
 
         // match any address variables as long as there is one valid match
         predicate = new AddressContainsKeywordsPredicate(Arrays.asList("#08-111", "5"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111").build()));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111, SG").build()));
 
         // Mixed-case keywords
         predicate = new AddressContainsKeywordsPredicate(Arrays.asList("JuRONG", "WESt"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111").build()));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111, SG").build()));
 
     }
 
@@ -61,18 +61,18 @@ public class AddressContainsKeywordsPredicateTest {
     public void test_addressDoesNotContainKeywords_returnsFalse() {
         // Zero address parameter
         Predicate<ReadOnlyPerson> predicate = new AddressContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111").build()));
+        assertFalse(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111, SG").build()));
 
         // Non-matching keyword
         predicate = new AddressContainsKeywordsPredicate(Arrays.asList("#08-110"));
-        assertFalse(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111").build()));
+        assertFalse(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111, SG").build()));
 
         predicate = new AddressContainsKeywordsPredicate(Arrays.asList("100"));
-        assertFalse(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111").build()));
+        assertFalse(predicate.test(new PersonBuilder().withAddress("123, Jurong West Ave 6, #08-111, SG").build()));
 
         // Keywords match phone, name and email, but does not match address
         predicate = new AddressContainsKeywordsPredicate(Arrays.asList("12345", "Alice", "alice@gmail.com"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").build()));
+                .withEmail("alice@email.com").withAddress("123, Jurong West Ave 6, #08-111, SG").build()));
     }
 }

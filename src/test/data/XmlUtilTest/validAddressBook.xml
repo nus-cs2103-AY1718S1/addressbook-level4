@@ -43,7 +43,7 @@
     <persons>
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
-        <email isPrivate="false">lydia@example.com</email>
+        <emails isPrivate="false">lydia@example.com</emails>
         <address isPrivate="false">little tokyo</address>
         <scheduleDate></scheduleDate>
         <activity></activity>
@@ -51,7 +51,7 @@
     <persons>
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
-        <email isPrivate="false">anna@example.com</email>
+        <emails isPrivate="false">anna@example.com</emails>
         <address isPrivate="false">4th street</address>
         <scheduleDate></scheduleDate>
         <activity></activity>
@@ -59,7 +59,7 @@
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
-        <email isPrivate="false">stefan@example.com</email>
+        <emails isPrivate="false">stefan@example.com</emails>
         <address isPrivate="false">little india</address>
         <scheduleDate></scheduleDate>
         <activity></activity>
@@ -67,7 +67,7 @@
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
-        <email isPrivate="false">hans@example.com</email>
+        <emails isPrivate="false">hans@example.com</emails>
         <address isPrivate="false">chicago ave</address>
         <scheduleDate></scheduleDate>
         <activity></activity>

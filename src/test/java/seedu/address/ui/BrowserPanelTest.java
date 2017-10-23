@@ -9,7 +9,6 @@ import static seedu.address.ui.BrowserPanel.GOOGLE_MAPS_URL_PREFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
-import java.net.URLEncoder;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +42,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         // associated web page of a person
         postNow(selectionChangedEventStub);
         URL expectedPersonUrl = new URL(GOOGLE_MAPS_URL_PREFIX
-                + URLEncoder.encode(ALICE.getAddress().toString(), "UTF-8").replaceAll("%2C", ",")
+                + ALICE.getAddress().toString().replaceAll("#", "%23").replaceAll(" ", "+")
                 + "&dg=dbrw&newdg=1");
 
         waitUntilBrowserLoaded(browserPanelHandle);

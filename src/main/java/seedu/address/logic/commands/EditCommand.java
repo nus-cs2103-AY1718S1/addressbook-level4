@@ -17,11 +17,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.email.Email;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.Schedule;
@@ -99,7 +99,7 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        Set<Email> updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmails());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Schedule> updatedSchedule = personToEdit.getSchedules(); //ScheduleCommand does not allow editing schedule
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
@@ -132,7 +132,7 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
-        private Email email;
+        private Set<Email> emails;
         private Address address;
         private Set<Tag> tags;
 
@@ -141,7 +141,7 @@ public class EditCommand extends UndoableCommand {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
-            this.email = toCopy.email;
+            this.emails = toCopy.emails;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
         }
@@ -150,7 +150,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.emails, this.address, this.tags);
         }
 
         public void setName(Name name) {
@@ -169,12 +169,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setEmails(Set<Email> emails) {
+            this.emails = emails;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<Set<Email>> getEmail() {
+            return Optional.ofNullable(emails);
         }
 
         public void setAddress(Address address) {
