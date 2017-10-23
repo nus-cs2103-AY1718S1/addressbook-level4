@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team The Myths`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team The Myth`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -361,7 +361,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== Add Event
+=== Add Event mechanism
 // tag::addevent[]
 Add event mechanism adds an event which stores in the AddressBook,
 which will then be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
@@ -409,7 +409,7 @@ The new Events will be stored in UniqueEventList in AddressBook.
 // end::addevent[]
 
 // tag::switch[]
-=== Switch Theme Mechanism
+=== Switch Theme mechanism
 
 The switch theme mechanism is facilitated by a `ThemesList`, which resides inside `AddressBook`. `ThemesList` contains a list of CSS files, in which each file are of differing colour themes for the application user interface. It sets the theme of the application to the theme specified by the index given by the user. This command will inherit from `Command`.
 
@@ -793,7 +793,7 @@ which is important for GUI enhancement. +
 //end::locate[]
 
 // tag::find[]
-=== Find Mechanism
+=== Find mechanism
 The find mechanism is facilitated by the `NameContainsKeyWordsPredicate` class which resides in the person class. It supports finding any person in the address book using their full name or a part of the name.
 
 However, if a user is searching by part of a name, the substring must be in the beginning of the first name or last name and it has to be at least two characters long.

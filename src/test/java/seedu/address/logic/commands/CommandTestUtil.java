@@ -37,7 +37,7 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_EVENT_B_NAME = "Finals";
-    public static final String VALID_EVENT_B_DATE = "04/12/2017";
+    public static final String VALID_EVENT_B_DATE = "2017-12-04";
     public static final String VALID_EVENT_B_ADDRESS = "MPSH 2A, NUS";
     public static final String VALID_HOME_NUM_AMY = "65656511";
     public static final String VALID_HOME_NUM_BOB = "65656522";

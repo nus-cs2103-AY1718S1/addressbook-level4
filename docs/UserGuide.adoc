@@ -111,7 +111,7 @@ Selects the 2nd person in the address book and attains the website of the 2nd pe
 The website details is then loaded into the browser.
 * `find Betsy` +
 `access 1` +
-Selects the 1st person in the results of the `find` command and attains the website of the 2nd person.
+Selects the 1st person in the results of the `find` command and attains the website of the 1st person.
 The website details is then loaded into the browser.
 
 === Listing all persons : `list`
@@ -319,7 +319,7 @@ Examples:
 `switch 2` +
 Switches to the 2nd theme in the themes list.
 
-=== Adding an event : 'addevent'
+=== Adding an event : `addevent`
 `since v1.2` `Cherng Hann`
 
 Adds an event to the address book +
@@ -327,9 +327,12 @@ Format: `add n/NAME d/DATE a/ADDRESS`
 
 Examples:
 
-* `addevent n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach`
-* `addevent n/Orbital d/1/5/2018 a/NUS School Of Computing`
-* `addevent n/Halloween Horror Night d/31/10/2017 a/Universal Studios Singapore
+* `addevent n/ZoukOut d/23/12/2017 a/Sentosa, Siloso Beach` +
+Adds an event `ZoukOut` in the address book.
+* `addevent n/Orbital d/1/5/2018 a/NUS School Of Computing` +
+Adds an event `Orbital` in the address book.
+* `addevent n/Halloween Horror Night d/31/10/2017 a/Universal Studios Singapore` +
+Adds an event `Halloween Horror Night` in the address book.
 
 === Favouriting a person : `favourite`
 `since v1.2` `Dickson Chan`
@@ -382,17 +385,12 @@ Unfavourites the 1st person in the results of the `find` command.
 Shows a list of all favourited persons in the address book. +
 Format: `favouritelist`
 
-=== Details Panel
-`since v1.2` `Archana Pradeep`
-
-UI that shows all details of a person that is not shown in person card
-
-Checking for birthdays : `birthdays`
+=== Checking for birthdays : `birthdays`
 `since v1.3` `Archana Pradeep`
 
 Returns a list of all contacts who have their birthdays today
 
-Format: `birthdays' or `bd`
+Format: `birthdays` or `bd`
 
 === Clearing all entries : `clear`
 
@@ -410,6 +408,13 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 link:#the-myths-book---user-guide[Back To Top]
+
+== Other features
+
+=== Details Panel
+`since v1.2` `Archana Pradeep`
+
+UI that shows all details of a person that is not shown in person card
 
 == FAQ
 

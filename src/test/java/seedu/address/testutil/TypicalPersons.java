@@ -51,22 +51,22 @@ public class TypicalPersons {
             .withHomeNumber("68912301").withEmail("heinz@example.com").withSchEmail("e0014559@u.nus.edu")
             .withWebsite("https://www.facebook.com/carl")
             .withBirthday("12/11/1998").withFavourite("false")
-            .withAddress("wall street").build();
+            .withAddress("wall street").withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withHomeNumber("63123112").withEmail("cornelia@example.com").withSchEmail("daniel.meier@u.nus.edu")
             .withWebsite("https://www.facebook.com/daniel")
             .withBirthday("12/11/1998").withFavourite("false")
-            .withAddress("10th street").build();
+            .withAddress("10th street").withTags("owesMoney", "colleagues").build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withHomeNumber("65123411").withEmail("werner@example.com").withSchEmail("ellemeyer@u.ntu.edu")
             .withWebsite("https://www.facebook.com/elle")
             .withBirthday("12/11/1998").withFavourite("false")
-            .withAddress("michegan ave").build();
+            .withAddress("michegan ave").withTags("friends", "neighbours").build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withHomeNumber("62134411").withEmail("lydia@example.com").withSchEmail("fionaaa@u.nus.edu")
             .withWebsite("https://www.facebook.com/fiona")
             .withBirthday("12/11/1998").withFavourite("false")
-            .withAddress("little tokyo").build();
+            .withAddress("little tokyo").withTags("neighbours", "owesMoney").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withHomeNumber("68901234").withEmail("anna@example.com").withSchEmail("bestgeorge@u.nus.edu")
             .withWebsite("https://www.facebook.com/george")
