@@ -15,7 +15,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
 
 
-Welcome to the ConTag's Developer Guide! Fret not if you are a developer or user,regardless if you are a beginner or experts, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
+Welcome to the ConTag's Developer Guide! Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
 
 == Setting up
 
@@ -1248,7 +1248,7 @@ A contact detail that is not meant to be shared with others
 
 
 [[gradle]]
-gradle
+Gradle
 
 ....
 Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven
