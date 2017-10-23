@@ -214,7 +214,7 @@ Examples:
 Shows a list of all meetings in the address book. +
 Format: `listmeeting`
 
-To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+To show the urgency of the meeting, colours are assigned to the card by comparing the date and time of the meeting class to the date and time of the log in.
 
 * `darkRed` : Meeting is in next 24 hours.
 
@@ -259,9 +259,9 @@ Format: `findMeeting KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `findmeeting John` +
-Returns `john` and `John Doe`
-* `findmeeting Betsy Tim John` +
+* `findmeeting Clementi` +
+Returns `Clementi` and `Clementi Road`
+* `findmeeting Clementi NUS` +
 Returns any meeting having names `Betsy`, `Tim`, or `John` as the person to meet
 * `findmeeting Shopping Study John` +
 Returns any meeting having `John` as the person to meet and any meetings having names `Study` and `Shopping`
