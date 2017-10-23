@@ -156,6 +156,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     *  Sorts the address book
+     */
+    public void sort() {
+        persons.sort();
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {

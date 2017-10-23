@@ -1,0 +1,372 @@
+= ConnectUs - User Guide
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W15-B3/main
+
+By: `Team W15-B3`      Since: `Jun 2016`      Licence: `MIT`
+
+== Quick Start
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
++
+[NOTE]
+Having any Java 8 version is not enough. +
+This app will not work with earlier versions of Java 8.
++
+.  Download the latest `connectUs.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Double-click the file to start the app. The GUI should appear in a few seconds.
++
+image::Ui.png[width="790"]
++
+.  Type the command in the command box and press kbd:[Enter] to execute it. +
+e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+.  Some example commands you can try:
+
+* *`list`* : lists all contacts
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`delete`**`3` or **`d`**`3`: deletes the 3rd contact shown in the current list
+* *`exit`* : exits the app
+
+.  Refer to the link:#features[Features] section below for details of each command.
+
+== Features
+
+====
+*Command Format*
+
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+====
+
+=== Viewing help : `help`
+
+Format: `help`
+
+=== Adding a person: `add`
+
+Adds a person to the address book +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+OR +
+`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+[TIP]
+A person can have any number of tags (including 0)
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+=== Listing all persons : `list`
+
+Shows a list of all persons in the address book. +
+Format: `list` or `l`
+
+=== Editing a person : `edit`
+
+Edits an existing person in the address book. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+or +
+`e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+****
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `e 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Locating persons by name: `find`
+
+Finds persons whose names contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `f John` +
+Returns `john` and `John Doe`
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Deleting a person : `delete`
+
+Deletes the specified person from the address book. +
+Format: `delete INDEX` or `d INDEX`
+
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd person in the address book.
+* `find Betsy` +
+`d 1` +
+Deletes the 1st person in the results of the `find` command.
+
+Another way to delete a contact in the list:
+****
+1. Select a person in the list
+2. Click the delete button
+3. Selected person will be deleted from the list
+****
+
+=== Email a person
+(added in v1.2)
+
+Opens an email client with the recipient's email address.
+
+****
+1. Select a person in the list
+2. Click the "Email" Button
+3. Proceed to compose email on email client
+****
+
+
+=== Selecting a person : `select`
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX` or  `s INDEX`
+
+****
+* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the address book.
+* `find Betsy` +
+`s 1` +
+Selects the 1st person in the results of the `find` command.
+
+=== Listing entered commands : `history`
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history` or `h`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+// tag::undoredo[]
+=== Undoing previous command : `undo`
+
+Restores the address book to the state before the previous _undoable_ command was executed. +
+Format: `undo` or `u`
+
+[NOTE]
+====
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+====
+
+Examples:
+
+* `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+=== Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command. +
+Format: `redo` or `r`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredo[]
+
+=== Sorting contacts in the Address Book : `sort`
+(added in v1.2)
+
+Sorts the contacts in the address book based on the name. +
+Format: `sort` or `ss`
+
+=== Filtering list by tags : `tag`
+(added in v1.2)
+
+Finds and filter list of persons with tags that is specified by the keywords. +
+Format: `tag KEYWORD [MORE_KEYWORDS]` or `t KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+* The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
+* Only the tags is searched.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends classmates` will return persons with tags `friends`, `classmates`
+****
+
+Examples:
+
+* `tag friends` +
+Returns any person having tags `friends` or `bestFriends`
+* `t friends classmates colleagues` +
+Returns any person having tags `friends`, `classmates`, or `colleagues`
+
+=== Removing tags : `rtag`
+(added in v1.2)
+
+Removes tag from all persons with tags that is specified by the keywords. +
+Format: `rtag KEYWORD [MORE_KEYWORDS]` or `rt KEYWORD [MORE_KEYWORDS]`
+
+****
+* The keyword is case sensitive. e.g `Friends` will not match `friends`
+* The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
+* Any tags of all persons that matches the keyword will be removed e.g. `friends classmates` will remove tags `friends`, `classmates` from all persons
+****
+
+Examples:
+
+* `rtag friends` +
+Removes "friends" tag from all persons
+* `rt friends classmates colleagues` +
+Removes "friends", "classmates", "colleagues" tag from all persons
+
+=== Importing Contacts from external source : `import`
+(added in v1.2)
+
+Imports contact from external source into the addressbook. Source must be in `.vcf` format. +
+File must also be placed in the main folder.
+
+Format: `import FILENAME.vcf` or `im FILENAME.vcf` where `FILENAME` is the name of the file that you wish to import.
+
+
+=== Clearing all entries : `clear`
+
+Clears all entries from the address book. +
+Format: `clear` or `c`
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+== Upcoming Features
+(added in v1.2)
+
+=== View address location on map `Coming in v2.0`
+ConnectUs will display the address location of the contact you selected on a map.
+
+=== Adding contacts with a form `Coming in v2.0`
+Allows you to add the contact details using a form instead of typing in the command line.
+
+=== Edit contact with a click of a button `Coming in v2.0`
+Edit your contact by clicking on the `Edit` button instead of using command line.
+
+=== Lists contact with a click of a button `Coming in v2.0`
+List all contacts by clicking on the `List` button instead of using command line.
+
+=== Sorts contact with a click of a button `Coming in v2.0`
+Sorts the contact in the address book based on the name of the contact by clicking on the `Sort` button instead of using command line.
+
+== FAQ
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+== Command Summary
+
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Clear* : `clear`
+* *Delete* : `delete INDEX` +
+e.g. `delete 3`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `find James Jake`
+* *List* : `list`
+* *Help* : `help`
+* *Select* : `select INDEX` +
+e.g.`select 2`
+* *History* : `history`
+* *Undo* : `undo`
+* *Redo* : `redo`
+* *Sort* : `sort`
+* *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
+e.g. `tag friends classmates`
+* *Remove Tag* : `rtag KEYWORD [MORE_KEYWORDS]`
+
+== Command Shortcuts Summary
+
+* *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Clear* : `c`
+* *Delete* : `d INDEX` +
+e.g. `d 3`
+* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+e.g. `e 2 n/James Lee e/jameslee@example.com`
+* *Find* : `f KEYWORD [MORE_KEYWORDS]` +
+e.g. `f James Jake`
+* *List* : `l`
+* *Select* : `s INDEX` +
+e.g.`select 2`
+* *History* : `h`
+* *Undo* : `u`
+* *Redo* : `r`
+* *Sort* : `ss`
+* *Tag*  : `t`
+* *Remove Tag*  : `rt`
+* *Import* : `im FILENAME.vcf`
+
