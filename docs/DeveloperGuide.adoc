@@ -232,6 +232,10 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Sorting contacts mechanism
+
+The sorting contacts mechanism uses the `sort` method which resides inside `List` interface to sort the contacts by name. It is called when adding a new contact (e.g. 'add` command), thus placing the contact in the list alphabetically by name.
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
