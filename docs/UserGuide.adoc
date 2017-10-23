@@ -167,11 +167,10 @@ If an an index is given the tag is removed from the person +
 in the specified index shown on the list. +
 Format: `removetag TAGNAME` OR `removetag INDEX TAGNAME`
 
-****
+[NOTE]
 Remove Tag command available since v1.1 +
 Option to remove a tag for selected people since V1.2
 
-****
 
 ****
 * Deletes every tag that matches the TAGNAME.
@@ -193,9 +192,33 @@ Deletes tag `enemy` from the first person in the list shown in the address book.
 
 === Sorting the list: `sort`
 
+[NOTE]
+Sort feature available since v1.3
+
+Sorts the list of person in the addressbook. +
+You may choose to sort based on a parameter and display in +
+ascending or descending order.
+Format: `sort FIELD ORDER` +
+
 ****
+* The sort function does not save the order.
+* FIELD must be name, email or phone.
+* ORDER must be asc (ascending) or dsc (descending)
+****
+
+Examples:
+
+* `list` +
+`sort name asc` +
+Sorts the list based on name in ascending order.
+
+* `findtag owesMoney` +
+`sort email dsc` +
+Sorts the people with `owesMoney` tag based on their emails in descending order.
+
+=== Import/Export : `import`/`export`
+[NOTE]
 Coming soon in v2.0
-****
 
 === Selecting a person : `select`
 
