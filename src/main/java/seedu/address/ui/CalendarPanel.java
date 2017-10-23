@@ -22,6 +22,11 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.persons.FindCommand;
+import seedu.address.logic.commands.tasks.FindTaskCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 
@@ -31,14 +36,17 @@ import seedu.address.model.task.ReadOnlyTask;
 public class CalendarPanel extends UiPart<Region> {
     private static String FXML = "CalendarPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final Logic logic;
     private DatePickerSkin datePickerSkin;
     private DatePicker datePicker;
 
     @FXML
     private StackPane calendarPane;
 
-    public CalendarPanel(ObservableList<ReadOnlyPerson> personList, ObservableList<ReadOnlyTask> taskList) {
+    public CalendarPanel(Logic logic, ObservableList<ReadOnlyPerson> personList,
+                         ObservableList<ReadOnlyTask> taskList) {
         super(FXML);
+        this.logic = logic;
         setDate(personList, taskList);
         loadDefaultPage();
         registerAsAnEventHandler(this);
@@ -64,24 +72,33 @@ public class CalendarPanel extends UiPart<Region> {
     private void setDate(ObservableList<ReadOnlyPerson> personList, ObservableList<ReadOnlyTask> taskList) {
         datePicker = new DatePicker((LocalDate.now()));
         //ObservableList<PersonCard> mappedList = EasyBind.map(
-        //        personList, (date) -> new PersonCard(personList));
+        //        personList, (markdate) -> new PersonCard(personList));
         Callback<DatePicker, DateCell> dayCellFactory = this.getDayCellFactory(personList, taskList);
         datePicker.setDayCellFactory(dayCellFactory);
         findDateForSelection();
     }
 
     /**
-     * Makes the dateCell in datePickerSkin editable, and execute findCommand for selected date
+     * Makes the dateCell in datePickerSkin editable, and pass on the selected markdate to handler
      */
     private void findDateForSelection() {
         // Make datePicker editable (i.e. i think can select and update value)
         datePicker.setEditable(true);
-        // TODO: 23/10/17 Able to execute findCommand when new date is selected
+        // TODO: 23/10/17 Able to execute findCommand when new markdate is selected
         datePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 LocalDate date = datePicker.getValue();
                 logger.info("Date selected: " + date.toString());
+/*
+                try {
+                    logic.execute(FindTaskCommand.COMMAND_WORD + " " + markdate.toString());
+                    logic.execute(FindCommand.COMMAND_WORD + " " + markdate.toString());
+                } catch (CommandException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }*/
             }
         });
     }
@@ -107,10 +124,9 @@ public class CalendarPanel extends UiPart<Region> {
                         for (ReadOnlyPerson person: personList) {
                             // TODO: 22/10/17 change Birthday format to include full year
                             try {
-                                DateTimeFormatter format = DateTimeFormatter.ofPattern("ddMMyy");
+                                DateTimeFormatter format1 = DateTimeFormatter.ofPattern("ddMMyy");
                                 if (MonthDay.from(item).equals
-                                        (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), format)))
-                                        || MonthDay.from(item).equals(MonthDay.of(10, 23))) {
+                                        (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), format1)))) {
                                     setTooltip(new Tooltip("Birthday!"));
                                     setStyle("-fx-background-color: #f1a3ff;");
                                 }
@@ -121,11 +137,11 @@ public class CalendarPanel extends UiPart<Region> {
                         }
                         for (ReadOnlyTask task: taskList) {
                             try {
-                                DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                                // TODO: 23/10/17 ensure that Deadline/Startdate is valid, after computer is invented
-                                assert LocalDate.parse(task.getDeadline().toString(), format).getYear()
+                                DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                //ensure that Deadline/Startdate is valid, after computer is invented
+                                assert LocalDate.parse(task.getDeadline().toString(), format2).getYear()
                                         >= (LocalDate.now().getYear() - 100);
-                                if (item.equals(LocalDate.parse(task.getDeadline().toString(), format))) {
+                                if (item.equals(LocalDate.parse(task.getDeadline().toString(), format2))) {
                                     setTooltip(new Tooltip("Deadline!"));
                                     setStyle("-fx-background-color: #ff444d;");
                                 }

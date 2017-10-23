@@ -21,6 +21,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -38,6 +39,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Model model;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -70,12 +72,13 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane calendarPlaceholder;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Model model) {
         super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.model = model;
         this.config = config;
         this.prefs = prefs;
 
@@ -136,7 +139,8 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        calendarPanel = new CalendarPanel(logic.getFilteredPersonList(), logic.getFilteredTaskList());
+        calendarPanel = new CalendarPanel(logic, model.getAddressBook().getPersonList(),
+                model.getAddressBook().getTaskList());
         calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         TaskListPanel taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
