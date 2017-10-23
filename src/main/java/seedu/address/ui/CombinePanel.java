@@ -1,6 +1,14 @@
 package seedu.address.ui;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -20,23 +28,18 @@ import seedu.address.logic.Logic;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
-import java.util.logging.Logger;
+/**
+ * The UI component that is responsible for combining the web browser panel and the timetable panel.
+ */
+public class CombinePanel extends UiPart<Region> {
 
-public class CombinePanel extends UiPart<Region>{
-
-
-    private static final int ROW = 6;
-    private static final int COL = 13;
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "CombinePanel.fxml";
+    private static final int ROW = 6;
+    private static final int COL = 13;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
@@ -68,9 +71,12 @@ public class CombinePanel extends UiPart<Region>{
 
     }
 
+    /**
+     * Initialize grid data.
+     */
     private void initGridData() {
-        for(int i = 0; i < ROW; i++){
-            for (int j = 0; j < COL; j++){
+        for (int i = 0; i < ROW; i++) {
+            for (int j = 0; j < COL; j++) {
                 gridData[i][j] = new GridData();
             }
         }
@@ -80,59 +86,59 @@ public class CombinePanel extends UiPart<Region>{
     private void handleViewedLessonEvent(ViewedLessonEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         generateTimeTableGrid();
-        if(ListingUnit.getCurrentListingUnit().equals(ListingUnit.LESSON)){
+        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LESSON)) {
             timeBox.setVisible(true);
             browser.setVisible(false);
-        }else if(ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)){
+        } else if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)) {
             timeBox.setVisible(false);
             browser.setVisible(true);
-        }else{
+        } else {
             timeBox.setVisible(false);
             browser.setVisible(false);
         }
-
     }
 
+    /**
+     * Generate timetable grid.
+     */
+    public void generateTimeTableGrid() {
 
-    public void generateTimeTableGrid(){
-
-        ObservableList<ReadOnlyLesson> lessons =  logic.getFilteredLessonList();
+        ObservableList<ReadOnlyLesson> lessons = logic.getFilteredLessonList();
         initGridData();
 
         Node node = timetableGrid.getChildren().get(0);
         timetableGrid.getChildren().clear();
-        timetableGrid.getChildren().add(0,node);
+        timetableGrid.getChildren().add(0, node);
 
-        for(int i = 0;i < lessons.size(); i++){
+        for (int i = 0; i < lessons.size(); i++) {
             ReadOnlyLesson lesson = lessons.get(i);
-            String text = lesson.getCode() + " " + lesson.getClassType() +
-                    "(" + lesson.getGroup() + ") " + lesson.getLocation();
+            String text = lesson.getCode() + " " + lesson.getClassType()
+                    + "(" + lesson.getGroup() + ") " + lesson.getLocation();
             String timeText = lesson.getTimeSlot().toString();
-            int weekDayRow = getWeekDay(timeText.substring(0,3));
+            int weekDayRow = getWeekDay(timeText.substring(0, 3));
             int startHourCol = getTime(timeText.substring(4, 6));
             int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol;
-            gridData[weekDayRow][startHourCol] = new GridData(text,weekDayRow,startHourCol,endHourSpan);
-
+            gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan);
         }
 
-        for (int i = 0; i < ROW; i++){
-            for (int j = 0; j < COL; j++){
+        for (int i = 0; i < ROW; i++) {
+            for (int j = 0; j < COL; j++) {
                 GridData data = gridData[i][j];
-                String text = data.text;
-                int weekDayRow = data.weekDayRow;
-                int startHourCol = data.startHourCol;
-                int endHourSpan = data.endHourSpan;
-                if( i == weekDayRow &&  j == startHourCol ){
+                String text = data.getText();
+                int weekDayRow = data.getWeekDayRow();
+                int startHourCol = data.getStartHourCol();
+                int endHourSpan = data.getEndHourSpan();
+                if (i == weekDayRow &&  j == startHourCol) {
                     TextArea lbl = new TextArea(text);
                     lbl.setId("lbl");
                     lbl.setWrapText(true);
-                    lbl.setStyle("-fx-control-inner-background:black;" +
-                            " -fx-background-color: #383838;" +
-                            " -fx-border-color: #EEEEEE" +
-                            " -fx-border-width: 10" +
-                            " -fx-padding: 5 5 5 5; " +
-                            " -fx-font-family: Consolas; " +
-                            "-fx-text-fill: #00ff00;");
+                    lbl.setStyle("-fx-control-inner-background:black;"
+                            + " -fx-background-color: #383838;"
+                            + " -fx-border-color: #EEEEEE"
+                            + " -fx-border-width: 10"
+                            + " -fx-padding: 5 5 5 5; "
+                            + " -fx-font-family: Consolas; "
+                            + "-fx-text-fill: #00ff00;");
                     timetableGrid.setGridLinesVisible(true);
                     timetableGrid.add(lbl, j, i, endHourSpan, 1);
                 }
@@ -143,9 +149,9 @@ public class CombinePanel extends UiPart<Region>{
 
 
 
-    private int getWeekDay(String text){
+    private int getWeekDay(String text) {
         text = text.toUpperCase();
-        switch (text){
+        switch (text) {
         case "MON":
             return 0;
         case "TUE":
@@ -161,13 +167,15 @@ public class CombinePanel extends UiPart<Region>{
         }
     }
 
-    private int getTime(String text){
+    private int getTime(String text) {
         int time = Integer.parseInt(text);
         return time - 8;
     }
 
 
-
+    /**
+     * Clear timetable grid.
+     */
     private void clearGrid() {
         ObservableList<Node> list = timetableGrid.getChildren();
         final List<Node> removalCandidates = new ArrayList<>();
@@ -214,7 +222,7 @@ public class CombinePanel extends UiPart<Region>{
     private void handleLessonPanelSelectionChangedEvent(LessonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadLessonPage(event.getNewSelection().lesson);
-        if(ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)){
+        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)) {
             timeBox.setVisible(false);
             browser.setVisible(true);
         }
@@ -222,42 +230,72 @@ public class CombinePanel extends UiPart<Region>{
 
 }
 
-class GridData{
-    String text;
-    Integer weekDayRow, startHourCol, endHourSpan;
+/**
+ * Contains data related to grid object in JavaFX.
+ */
+class GridData {
+    private String text;
+    private Integer weekDayRow;
+    private Integer startHourCol;
+    private Integer endHourSpan;
 
-    public GridData(){
-        this("",-1,-1,-1);
+    public GridData() {
+        this("", -1, -1, -1);
     }
 
-    public GridData(String text, int weekDayRow, int startHourCol, int endHourSpan){
+    public GridData(String text, int weekDayRow, int startHourCol, int endHourSpan) {
         this.text = text;
         this.weekDayRow = weekDayRow;
         this.startHourCol = startHourCol;
         this.endHourSpan = endHourSpan;
     }
+
+    public String getText() {
+        return text;
+    }
+
+    public Integer getEndHourSpan() {
+        return endHourSpan;
+    }
+
+    public Integer getStartHourCol() {
+        return startHourCol;
+    }
+
+    public Integer getWeekDayRow() {
+        return weekDayRow;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(text, weekDayRow, startHourCol, endHourSpan);
     }
+
     @Override
     public boolean equals(Object obj) {
 
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         GridData other = (GridData) obj;
-        if (!text.equals(other.text))
+        if (!text.equals(other.text)) {
             return false;
-        if (!weekDayRow.equals(other.weekDayRow))
+        }
+        if (!weekDayRow.equals(other.weekDayRow)) {
             return false;
-        if (!startHourCol.equals(other.startHourCol))
+        }
+        if (!startHourCol.equals(other.startHourCol)) {
             return false;
-        if (!endHourSpan.equals(other.endHourSpan))
+        }
+        if (!endHourSpan.equals(other.endHourSpan)) {
             return false;
+        }
         return true;
     }
 }

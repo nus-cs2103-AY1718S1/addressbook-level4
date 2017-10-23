@@ -1,6 +1,21 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Logger;
+
+import org.controlsfx.control.textfield.TextFields;
+
 import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -13,7 +28,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import org.controlsfx.control.textfield.TextFields;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.ColorKeywordEvent;
@@ -25,18 +40,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Logger;
-
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -170,7 +173,7 @@ public class CommandBox extends UiPart<Region> {
      * Handles the Command input changed event.
      */
     private void listenCommandInputChanged() {
-        if(enableHighlight){
+        if (enableHighlight) {
             String allTextInput = commandTextField.getText();
             String[] inputArray = allTextInput.split(" ");
             int index = 0;
@@ -283,14 +286,13 @@ public class CommandBox extends UiPart<Region> {
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
             checkBox.setGraphic(tick);
             checkBox.toFront();
-
         } catch (ParseException e) {
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
             checkBox.setGraphic(cross);
             checkBox.toFront();
         }
     }
-    
+
     /**
      * Configure command keyword when appeared on Command Box
      * @param commandKeyword
@@ -306,7 +308,7 @@ public class CommandBox extends UiPart<Region> {
         switch (fontIndex) {
         case 1:
             keywordLabel.getStyleClass().add("keyword-label-xsmall");
-            leftInset = new Insets(0, 0, 0,11);
+            leftInset = new Insets(0, 0, 0, 11);
             break;
         case 2:
             keywordLabel.getStyleClass().add("keyword-label-small");
@@ -332,8 +334,8 @@ public class CommandBox extends UiPart<Region> {
         stackPane.setMargin(keywordLabel, leftInset);
 
         String color = keywordColorMap.get(commandKeyword);
-//        keywordLabel.setStyle("-fx-background-color: " + color + ";\n"
-//                + "-fx-text-fill: red;");
+        // keywordLabel.setStyle("-fx-background-color: " + color + ";\n"
+        // + "-fx-text-fill: red;");
         keywordLabel.setStyle(("-fx-text-fill: " + color));
         keywordLabel.toFront();
     }
@@ -357,7 +359,7 @@ public class CommandBox extends UiPart<Region> {
         case 1:
             tagLabel.getStyleClass().add("keyword-label-xsmall");
             margin = computeMargin(1, inputText);
-            leftInset = new Insets(0, 0, 0, margin +11);
+            leftInset = new Insets(0, 0, 0, margin + 11);
             break;
         case 2:
             tagLabel.getStyleClass().add("keyword-label-small");
@@ -387,8 +389,8 @@ public class CommandBox extends UiPart<Region> {
         stackPane.setAlignment(tagLabel, Pos.CENTER_LEFT);
         stackPane.setMargin(tagLabel, leftInset);
 
-//        tagLabel.setStyle("-fx-background-color:yellow;\n "
-//                + "-fx-text-fill: red; ");
+        // tagLabel.setStyle("-fx-background-color:yellow;\n"
+        // + "-fx-text-fill: red; ");
 
         tagLabel.setStyle("-fx-text-fill: yellow");
 
