@@ -210,5 +210,5 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredParcels.equals(other.filteredParcels);
     }
-    
+
 }
