@@ -56,4 +56,11 @@ public class UnlockCommand extends Command {
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UnlockCommand // instanceof handles nulls
+                && this.password.equals(((UnlockCommand) other).password)); // state check
+    }
+
 }

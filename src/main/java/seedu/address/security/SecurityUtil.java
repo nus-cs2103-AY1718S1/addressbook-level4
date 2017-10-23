@@ -25,12 +25,12 @@ public class SecurityUtil {
 
     public static final int MIN_KEY_LENGTH = 4;
 
+    public static final String XML_STARTER = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
+
     private static final String TEMP_FILE_PATH = "temp.xml";
 
-    private static final String xmlStarter = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
-
-    public static boolean isPasswordValid(String password) {
-        return !(password == null || password.length() < MIN_KEY_LENGTH);
+    public static boolean isValidPassword(String password) {
+        return password != null && password.trim().length() >= MIN_KEY_LENGTH;
     }
 
     /**
@@ -133,13 +133,13 @@ public class SecurityUtil {
      * @return true if the file is encrypted.
      */
     public static boolean isEncrypted(File file) throws IOException {
-        char[] charset = new char[xmlStarter.length()];
+        char[] charset = new char[XML_STARTER.length()];
 
         FileReader reader = new FileReader(file);
-        reader.read(charset, 0, xmlStarter.length());
+        reader.read(charset, 0, XML_STARTER.length());
         reader.close();
 
-        return !new String(charset).equals(xmlStarter);
+        return !new String(charset).equals(XML_STARTER);
     }
 
 }
