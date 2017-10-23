@@ -22,7 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "default.html";
+    public static final String DEFAULT_PAGE = "https://www.youtube.com";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     public static final String GOOGLE_MAP_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps/place/";
@@ -63,8 +63,7 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads a default HTML file with a background that matches the general theme.
      */
     private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+        loadPage(DEFAULT_PAGE);
     }
 
     /**

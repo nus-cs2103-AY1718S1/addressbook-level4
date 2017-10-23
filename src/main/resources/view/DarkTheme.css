@@ -141,7 +141,7 @@
 /*2nd portion*/
 .pane-with-border {
      -fx-background-color: derive(#3d4691, 0%);
-     -fx-border-color: derive(#000000, 10%);
+     -fx-border-color: derive(#000000, 0%);
      -fx-border-top-width: 1px;
 }
 
