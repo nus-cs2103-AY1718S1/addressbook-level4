@@ -506,6 +506,165 @@ public Phone(String phone) throws IllegalValueException {
 **Cons:** Inconsistent phone lengths displayed, might look very messy. +
 // end::studentparentcontact[]
 
+// tag:: Remark[]
+=== Add/Remove a remark mechanism
+The remark mechanism is facilitated by making changes to the Remark class in the model component. It enables the user to add or remove a single remark of the student.
+
+To avoid confusion and messy UI, only one remarks can be stored in any one person at a time
+
+image::PersonCardDifference (Remark).PNG[width="600"]
+
+`Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+
+Commands that are not undoable are implemented this way:
+[source,java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+----
+
+With the extra layer, the commands that are undoable are implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+      executeUndoableCommand();
+    }
+}
+public class DeleteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+When the user adds a new person to the address book, the person's remark field will be denoted by "(add a remark)". Users are then able to add a single remark.
+
+[NOTE]
+If user tries to add remark together with adding a new 'Person', it will display as invalid as the 'addCommand' does not allow the addition of remarks other then through the use of using the 'Remark' command.
+
+Below are examples of trying to change remark through:
+
+image::AddPersonInvalid(Remark).PNG[width="600"]
+
+add command invalid
+
+image::EditPersonInvalid (Remark).PNG[width="600"]
+
+edit command invalid
+
+[NOTE]
+Only one remark is saved at any one time, if user does 'Remark' on the same person, it will be overwritten.
+//add pic
+
+==== Design Considerations
+**Aspect:** Implementation of `UndoableCommand` +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
+**Cons:** Hard for new developers to understand the template pattern. +
+**Alternative 2:** Just override `execute()` +
+**Pros:** Does not involve the template pattern, easier for new developers to understand. +
+**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+
+---
+
+**Aspect** Implementation of 'Remark' field. +
+**Alternative 1 (current choice):** Add a field in person as well as making it a command. +
+**Pros:** Able to easily change context of the field without much hassle. +
+**Cons:** Harder to debug as it is both a field and a command. +
+**Alternative 2:** Making it a field only. +
+**Pros:** Easier to keep track and debug. +
+**Cons:** Much harder and longer to implement a feature to solely change the remarks.
+
+---
+
+//end:: Remark[]
+
+// tag::findtagsmechanism[]
+=== FindTags Mechanism
+
+The FindTags mechanism is implemented using FindTagsCommand.
+It supports searching for persons whose tags contains at least all the tags input by the user.
+
+When the user uses the FindTags feature, a `TagsContainKeywordsPredicate` is created.
+The `TagsContainKeywordsPredicate` tests whether each person's tags contain all keywords input by the user.
+Under the Model component, `TagsContainKeywordsPredicate` is used to filter the persons in the addressbook.
+After filtering, `PersonListPanel` only shows persons whose tags contain all keywords input by the user.
+
+This search operation is an AND search. Suppose the user executes `findtags friends NUS`. +
+Only persons with at least both `friends` and `NUS` will be displayed. Persons with only `friends` or only `NUS` will not be displayed. +
+
+The FindTagsCommand is implemented this way:
+
+----
+public class FindTagsCommand extends Command {
+    private final TagsContainsKeywordsPredicate predicate;
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(
+            getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+    // ... other logic ...
+}
+----
+
+`Model.updateFilteredPersonList()` updates the `PersonListPanel` display by filter using the `TagsContainsKeywordsPredicate` instance.
+
+And the `TagsContainsKeywordsPredicate` found inside `FindTagsCommand` is implemented this way:
+
+----
+public class TagsContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    private final List<String> keywords;
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .allMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getTagsAsString(), keyword));
+    }
+    // ... other logic ...
+}
+----
+[NOTE]
+The test is case insensitive as `StringUtil.containsWordIgnoreCase()` ignores case.
+
+
+The `keywords.stream().allMatch()` method in `test()` returns true if the person's tags contains all keywords in `keywords`.
+This supports the evaluation of the person by the predicate.
+
+The `PersonListPanel` will show persons whose tags contain at least all keywords input by the user.
+However if there are no persons with all keywords in the tags, the `PersonListPanel` will just be blank.
+
+This is implemented using Predicates because Predicates help move the business logic to a more central place, helping in unit-testing them separately.
+Also, the Predicate can can be reused, improving code manageability. +
+The code with Predicates is also much more readable than using if-else blocks.
+
+The following sequence diagram shows how the FindTags operation works:
+
+image::FindtagsSequenceDiagramForLogic.png[width="800"]
+
+==== Alternatives considered.
+
+**Aspect:** Having a separate predicate class to support `findtags` +
+**Alternative 1 (current choice):** Have a `TagsContainsKeywordsPredicate` to facilitate search +
+**Pros:** Easy for new Computer Science undergraduates to understand. They are likely to be the new incoming developers of our project. +
+**Cons:** Makes the application more complex to understand according to the More Is More Complex (MIMC) principle. For example, a separate `TagsContainsKeywordsPredicate` class is needed when the same can be done by inserting it as an inner class in the `FindTagsCommand` class. +
+**Alternative 2:** Create `TagsContainsKeywordsPredicate` as an inner class in `FindTagsCommand` class. +
+**Pros:** It makes the codebase less complex as there are less classes. +
+**Cons:** It adds complexity to the `FindTagsCommand` source file and reduces reusability of the predicate outside of the `FindTagsCommand` +
+// tag::findtagsmechanism[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
