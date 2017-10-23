@@ -5,12 +5,18 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
+import com.joestelmach.natty.DateGroup;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appointment;
+
+import com.joestelmach.natty.*;
+
 
 /**
  * Parse input arguments and creates a new AddAppointmentCommand Object
@@ -29,6 +35,7 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
         if (userInput.split(" ").length == 1) {
             return new AddAppointmentCommand();
         }
+
         ArgumentMultimap argumentMultimap =
                 ArgumentTokenizer.tokenize(userInput, PREFIX_DATE);
 
@@ -37,15 +44,19 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
                     AddAppointmentCommand.MESSAGE_USAGE));
         }
 
-        String[] args = userInput.split("");
+        String[] args = userInput.split(" ");
         try {
-            Index index = Index.fromOneBased(Integer.parseInt(args[1]));
-            Date date = Appointment.DATE_FORMATTER.parse(argumentMultimap.getValue(PREFIX_DATE).get());
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            return new AddAppointmentCommand(index, calendar);
 
-        } catch (java.text.ParseException | NumberFormatException e) {
+            Index index = Index.fromOneBased(Integer.parseInt(args[1]));
+            com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
+            List<DateGroup> groups = parser.parse(argumentMultimap.getValue(PREFIX_DATE).get());
+            Calendar calendar = Calendar.getInstance();
+            if(groups.size() == 0) {
+                throw new ParseException("Please be more specific with your appointment time");
+            }
+            calendar.setTime(groups.get(0).getDates().get(0));
+            return new AddAppointmentCommand(index, calendar);
+        } catch (NumberFormatException e) {
             throw new ParseException(e.getMessage(), e);
         }
     }

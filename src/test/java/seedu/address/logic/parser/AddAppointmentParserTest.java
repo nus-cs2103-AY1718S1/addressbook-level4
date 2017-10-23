@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -7,8 +9,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Appointment;
+
+import java.util.Calendar;
 
 public class AddAppointmentParserTest {
 
@@ -30,24 +36,18 @@ public class AddAppointmentParserTest {
     }
 
     @Test
-    public void parseDateExpression() throws ParseException {
+    public void nonParsableString() throws ParseException {
         thrown.expect(ParseException.class);
-        parser.parse("n/Alice d/20180210 1010");
+        parser.parse("apt 1 d/cant parse this string");
+    }
+    @Test
+    public void parseDateExpression() throws ParseException, java.text.ParseException {
 
-        thrown.expect(ParseException.class);
-        parser.parse("n/Alice d/2018/0210 1010");
+        AddAppointmentCommand command = parser.parse("apt 1 d/The 30th of April in the year 2018 12am");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/04/30 00:00"));
+        assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), calendar), command);
 
-        thrown.expect(ParseException.class);
-        parser.parse("n/Alice d/2018/02/10 1010");
-
-        thrown.expect(ParseException.class);
-        parser.parse("n/Alice d/2018/02/10 101:0");
-
-        try {
-            parser.parse("n/Alice d/2018/02/10 10:10");
-        } catch (ParseException e) {
-            fail(e.getMessage());
-        }
     }
 
     @Test

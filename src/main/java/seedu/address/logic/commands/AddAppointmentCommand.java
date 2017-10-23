@@ -98,7 +98,8 @@ public class AddAppointmentCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddAppointmentCommand // instanceof handles nulls
-                && this.index.getZeroBased() ==  ((AddAppointmentCommand) other).index.getZeroBased());
+                && this.index.getZeroBased() ==  ((AddAppointmentCommand) other).index.getZeroBased())
+                && this.date.getTimeInMillis() == ((AddAppointmentCommand) other).date.getTimeInMillis();
     }
 
     /**
