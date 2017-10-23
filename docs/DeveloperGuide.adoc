@@ -396,7 +396,7 @@ with the corresponding parameters. For example,
 
 [source,java]
 ----
-editmeeting 2 n/Lunch p/Jurong East Mall
+editmeeting 2 n/Lunch l/Jurong East Mall
 ----
 
 Creates an object with the following parameters
