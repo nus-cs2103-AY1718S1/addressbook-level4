@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class PostalCode {
     public static final String MESSAGE_POSTALCODE_CONSTRAINTS =
             "Postal code can only be 6 digits";
-    public static final String POSTAL_CODE_VALIDATION_REGEX = "\\d{6}";
+    public static final String POSTAL_CODE_VALIDATION_REGEX = "(\\d{6})|(\\(Postal code not recorded\\))";
 
     public final String value;
 
