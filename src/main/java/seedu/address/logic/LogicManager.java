@@ -31,13 +31,13 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Email emailManager;
     private final AddressBookStorage addressBookStorage;
 
-    public LogicManager(Model model, Email emailManager, Storage storage) {
+    public LogicManager(Model model, Email emailManager, String addressBookFilePath) {
         this.model = model;
         this.emailManager = emailManager;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
-        this.addressBookStorage = new XmlAddressBookStorage(storage.getAddressBookFilePath());
+        this.addressBookStorage = new XmlAddressBookStorage(addressBookFilePath);
     }
 
     @Override
