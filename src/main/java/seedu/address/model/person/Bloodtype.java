@@ -10,10 +10,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Bloodtype {
 
-    public static final String MESSAGE_BLOODTYPE_CONSTRAINTS =
-            "Person blood type should not be blank.\n" +
-            "Valid inputs are: A, A+, A-, B, B+, B-, O, O+, O-, AB, AB+, AB-. \n" +
-            "Both capital letters and small letters are allowed.";
+    public static final String MESSAGE_BLOODTYPE_CONSTRAINTS = "Person blood type should not be blank.\n"
+            + "Valid inputs are: A, A+, A-, B, B+, B-, O, O+, O-, AB, AB+, AB-. \n"
+            + "Both capital letters and small letters are allowed.";
 
     // Checks for a, b, ab, or o at start of string.
     // Characters are case insensitive.
