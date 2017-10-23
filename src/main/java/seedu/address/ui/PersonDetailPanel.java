@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -72,14 +71,14 @@ public class PersonDetailPanel extends UiPart<Region> {
     private void showPersonDetails(ReadOnlyPerson person) {
 
         initial.setText(Avatar.getInitial(person.getName().fullName));
-        avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
+        avatar.setFill(Paint.valueOf(Avatar.getColor(person)));
 
         setTextFields(person);
         setTags(person);
     }
 
     private void setTextFields(ReadOnlyPerson person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        name.setText(person.getName().toString());
         phone.setText(PERSON_PHONE_ICON + person.getPhone().toString());
         address.setText(PERSON_ADDRESS_ICON + person.getAddress().toString());
         email.setText(PERSON_EMAIL_ICON + person.getEmail().toString());
