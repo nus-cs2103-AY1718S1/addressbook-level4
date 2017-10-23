@@ -43,7 +43,7 @@ public class TagTextField extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         StringBuilder currTags = new StringBuilder();
         Set<Tag> tagSet = event.getNewSelection().person.getTags();
-        for( Tag t : tagSet) {
+        for (Tag t : tagSet) {
             if (currTags.length() != 0) {
                 currTags.append(",");
             }
