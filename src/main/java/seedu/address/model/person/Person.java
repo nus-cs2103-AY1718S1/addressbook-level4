@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -145,6 +146,10 @@ public class Person implements ReadOnlyPerson {
                 || (other instanceof ReadOnlyPerson // instanceof handles nulls
                 && this.isSameStateAs((ReadOnlyPerson) other));
     }
+
+    public static final Comparator<Person> NAMESORT = (Person o1, Person o2) -> o1.getName().compareTo(o2.getName());
+    public static final Comparator<Person> PHONESORT = (Person o1, Person o2) -> o1.getPhone().compareTo(o2.getPhone());
+    public static final Comparator<Person> EMAILSORT = (Person o1, Person o2) -> o1.getEmail().compareTo(o2.getEmail());
 
     @Override
     public int hashCode() {

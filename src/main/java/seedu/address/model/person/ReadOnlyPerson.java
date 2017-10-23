@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.Comparator;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -56,5 +57,9 @@ public interface ReadOnlyPerson {
         getTags().forEach(builder::append);
         return builder.toString();
     }
+
+    Comparator<ReadOnlyPerson> NAMESORT = (ReadOnlyPerson o1, ReadOnlyPerson o2) -> o1.getName().compareTo(o2.getName());
+    Comparator<ReadOnlyPerson> PHONESORT = (ReadOnlyPerson o1, ReadOnlyPerson o2) -> o1.getPhone().compareTo(o2.getPhone());
+    Comparator<ReadOnlyPerson> EMAILSORT = (ReadOnlyPerson o1, ReadOnlyPerson o2) -> o1.getEmail().compareTo(o2.getEmail());
 
 }
