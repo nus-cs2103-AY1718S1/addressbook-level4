@@ -46,4 +46,10 @@ public class MergeCommand extends Command {
         this.addressBookStorage = addressBookStorage;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof MergeCommand // instanceof handles nulls
+                && this.newFilePath.equals(((MergeCommand) other).newFilePath)); // state check
+    }
 }
