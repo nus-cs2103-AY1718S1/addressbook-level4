@@ -18,7 +18,6 @@ public interface ReadOnlyEvent {
     EventTime getEventTime();
     ObjectProperty<ParticipantList> participantProperty();
     Set<Person> getParticipants();
-    void setParticipants(Set<Person> replacement);
 
     /**
      * returns true if both event has the same state

@@ -9,6 +9,9 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -25,6 +28,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Birthday> birthday;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<ParticipationList> participation;
 
     /**
      * Every field must be present and not null.
@@ -38,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         this.birthday = new SimpleObjectProperty<>(birthday);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.participation = new SimpleObjectProperty<>(new ParticipationList());
     }
 
     /**
@@ -136,6 +141,21 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    public Set<Event> getParticipation() {
+        return Collections.unmodifiableSet(participation.get().toSet());
+    }
+
+    /**
+     * Replaces this event's participants with the persons in the argument set.
+     */
+    public void setParticipants(Set<Event> replacement) {
+        this.participation.set(new ParticipationList(replacement));
+    }
+
+    public void removeParticipateEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        this.participation.get().remove(event);
     }
 
     @Override

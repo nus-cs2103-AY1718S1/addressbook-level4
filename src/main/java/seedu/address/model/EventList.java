@@ -151,7 +151,7 @@ public class EventList implements ReadOnlyEventList {
     /**
      * Remove a specific person from the participant list of an event
      */
-    public void removeParticipant(ReadOnlyPerson person, ReadOnlyEvent targetEvent)
+    public void removeParticipant(ReadOnlyPerson person, Event targetEvent)
             throws PersonNotParticipateException {
 
         events.removeParticipant(person, targetEvent);

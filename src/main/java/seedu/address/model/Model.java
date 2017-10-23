@@ -4,12 +4,15 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.PersonNotParticipateException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -86,7 +89,7 @@ public interface Model {
     void sortEvents();
 
     /** A participant quit a specific event */
-    void quitEvent(ReadOnlyPerson person, ReadOnlyEvent event) throws PersonNotParticipateException;
+    void quitEvent(Person person, Event event) throws PersonNotParticipateException, NotParticipateEventException;
 
     /**
      * Replaces the given event {@code target} with {@code editedEvent}.

@@ -11,6 +11,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Represents a Event in the address book.
@@ -99,9 +101,15 @@ public class Event implements ReadOnlyEvent {
         return Collections.unmodifiableSet(participants.get().toSet());
     }
 
-    @Override
+    /**
+     * Replaces this event's participants with the persons in the argument set.
+     */
     public void setParticipants(Set<Person> replacement) {
         this.participants.set(new ParticipantList(replacement));
+    }
+
+    public void removeParticipant(ReadOnlyPerson person) throws PersonNotFoundException {
+        this.participants.get().remove(person);
     }
 
     @Override

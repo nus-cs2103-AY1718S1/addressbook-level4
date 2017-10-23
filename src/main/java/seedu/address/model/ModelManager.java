@@ -14,12 +14,15 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventStorageChangedEvent;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.PersonNotParticipateException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -185,10 +188,13 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Participant Operations =============================================================
 
     @Override
-    public void quitEvent(ReadOnlyPerson person, ReadOnlyEvent event)
-            throws PersonNotParticipateException {
+    public void quitEvent(Person person, Event event)
+            throws PersonNotParticipateException, NotParticipateEventException {
         eventList.removeParticipant(person, event);
         indicateEventListChanged();
+
+        addressBook.removeParticipation(person, event);
+        indicateAddressBookChanged();
     }
 
     /**
