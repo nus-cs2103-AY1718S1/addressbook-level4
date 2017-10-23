@@ -179,8 +179,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void quitEvent(Person person, Event event) throws PersonNotParticipateException, NotParticipateEventException {
-            
+        public void quitEvent(Person person, Event event)
+                throws PersonNotParticipateException, NotParticipateEventException {
+
         }
 
         @Override
