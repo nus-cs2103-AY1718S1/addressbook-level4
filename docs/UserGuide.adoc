@@ -313,6 +313,14 @@ The backup file is appended with `-backup.xml` and is stored in the same folder 
 The data from the backup file has to be loaded manually by copying the contents of the backup file into your main
  storage file.
 
+=== Maintaining a Sorted List
+
+The list of parcels stored in Ark is maintained to be sorted according to the delivery date of
+the parcels, with the earliest delivery date at the top. This allows the more pertinent
+deliveries to be shown quickly. +
+The list is sorted whenever there is a change in the list that may potentially disrupt the order
+of the list so that the user does not have to manually do so.
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
