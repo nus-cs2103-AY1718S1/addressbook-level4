@@ -243,14 +243,14 @@ Format: `clearhistory`
 After the command history is cleared, you will not be able to undo any previous commands.
 ====
 
-=== Adding remarks on a person: `remark`
+=== Adding remarks to a person: `remark`
 
 Adds a remark to a person in the address book +
 Format: `remark INDEX r/REMARK`
 
 [Note]
 Can be used to keep track of the relationship status between people in the address book.
-i.e. What is the relationship between person with INDEX 1 and person with INDEX 3 within
+eg. What is the relationship between person with INDEX 1 and person with INDEX 3 within
 in the address book.
 Using the same command on the same INDEX will overwrite the previous remark.
 

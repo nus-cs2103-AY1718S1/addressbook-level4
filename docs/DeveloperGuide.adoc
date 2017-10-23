@@ -349,29 +349,29 @@ image::UndoRedoActivityDiagram.png[width="200"]
 === Remark mechanism
 The remark command takes in the user input through command line in the format remark INDEX /r REMARK, where INDEX is the index of the person in the addressbook and REMARK is the remark of the relationship of that person to another person. +
 Eg. remark 1 /r is the husband of Chelsea +
-image::RemarkLogicDiagram[width="200"]
+image::RemarkLogicDiagram.png[width="200"]
 
-image::RemarkModelDiagram[width="200"]
+image::RemarkModelDiagram.png[width="200"]
 
 ==== Design Considerations
 
-**Aspect:** How remark command receive user input +
+**Aspect:** Implementation of remark command +
 **Alternative 1 (current choice):** Addition of a remarks command is a standalone +
-**Pros:** There is more flexibility and remarks does not have to be stated upon addition of Person to addressbook. +
-**Cons:** More difficult to implement as new Remark Command Class and Tests needs to be made +
-**Alternative 2:** Add in remarks together with the rest of the detail such as address, phone, email, etc +
-**Pros:** Easy to implement(Don't need to create a new command class, just modify existing add command) +
+**Pros:** There is more flexibility and remarks do not have to be stated upon addition of Person to addressbook. +
+**Cons:** More difficult to implement as new remark command and tests need to be created +
+**Alternative 2:** Add in remarks together with other Person details such as address, phone, email, etc +
+**Pros:** Easy to implement(implement spacing to create a new command class, just modify existing add command) +
 **Cons:** The user will have to key in huge amount of information before adding into the addressbook. +
 
 ---
 
-**Aspect:** Modify tag to accept sentences which can act as a remark +
+**Aspect:** Implement remark as distinct from tag +
 **Alternative 1 (current choice):** Create a new seperate remark command +
-**Pros:** Able to provide a cleaner user interface and experience and reduces complications  work in modifying existing working tag system. +
-**Cons:** More work has to be done in testing and creating a new command line. +
-**Alternative 2:** update the tag to accepts sentences for remarks +
-**Pros:** Easy to implement as we do not need to add a new command line. +
-**Cons:** The Tag may be more difficult to find and more work is needed to change the find tag command. Plus the user interface of tag command also needs to change to accommodate long tags. +
+**Pros:** Able to provide a cleaner user interface and experience.Also reduces complications in modifying existing working tag system. +
+**Cons:** More work has to be done in testing and creating a new command. +
+**Alternative 2:** update the tag to accept sentences for remarks +
+**Pros:** Easy to implement as we do not need to add a new command. +
+**Cons:** The Tag may be more difficult to find and more work is needed to change the find tag command. Additionally, the user interface of tag command also needs to be changed to accommodate long tags. +
 // end::RemarkCommand[]
 
 === Logging
