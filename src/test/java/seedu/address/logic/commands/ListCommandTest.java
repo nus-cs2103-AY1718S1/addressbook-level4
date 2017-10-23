@@ -50,7 +50,7 @@ public class ListCommandTest {
 
     @Test
     public void execute_favOptionUnfilteredList_showsAllFavoritePersons() {
-        expectedModel.updateFilteredPersonList(ListCommand.showAllFavoritePersons());
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_FAV_PERSONS);
         assertCommandSuccess(prepareCommand(ListCommand.COMMAND_OPTION_FAV),
                 model, ListCommand.MESSAGE_SUCCESS_LIST_FAV, expectedModel);
     }
@@ -58,7 +58,7 @@ public class ListCommandTest {
     @Test
     public void execute_favOptionFilteredList_showsAllFavoritePersons() {
         showFirstPersonOnly(model);
-        expectedModel.updateFilteredPersonList(ListCommand.showAllFavoritePersons());
+        expectedModel.updateFilteredPersonList(Model.PREDICATE_SHOW_FAV_PERSONS);
         assertCommandSuccess(prepareCommand(ListCommand.COMMAND_OPTION_FAV),
                 model, ListCommand.MESSAGE_SUCCESS_LIST_FAV, expectedModel);
     }

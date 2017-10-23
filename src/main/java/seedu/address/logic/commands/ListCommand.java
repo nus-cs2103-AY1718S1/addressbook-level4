@@ -1,10 +1,8 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OPTION;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
-import java.util.function.Predicate;
-
-import seedu.address.model.person.ReadOnlyPerson;
+import static seedu.address.model.Model.PREDICATE_SHOW_FAV_PERSONS;
 
 /**
  * Lists all persons in the address book to the user.
@@ -13,7 +11,7 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
     public static final String COMMAND_ALIAS = "l";
-    public static final String COMMAND_OPTION_FAV = "-" + FavoriteCommand.COMMAND_WORD;
+    public static final String COMMAND_OPTION_FAV = PREFIX_OPTION + FavoriteCommand.COMMAND_WORD;
 
     public static final String MESSAGE_SUCCESS_LIST_ALL = "Listed all persons";
     public static final String MESSAGE_SUCCESS_LIST_FAV = "Listed all favorite persons";
@@ -29,18 +27,11 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         if (hasOptionFav) {
-            model.updateFilteredPersonList(showAllFavoritePersons());
+            model.updateFilteredPersonList(PREDICATE_SHOW_FAV_PERSONS);
             return new CommandResult(MESSAGE_SUCCESS_LIST_FAV);
         } else {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             return new CommandResult(MESSAGE_SUCCESS_LIST_ALL);
         }
-    }
-
-    /**
-     * Returns a predicate consisting of all ReadOnlyPerson who has been favorited
-     */
-    public static Predicate<ReadOnlyPerson> showAllFavoritePersons() {
-        return p -> p.getFavorite().isFavorite();
     }
 }
