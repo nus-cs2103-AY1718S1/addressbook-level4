@@ -11,12 +11,12 @@ import javafx.scene.control.Label;
 public class EventCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String TITLE_FIELD_ID = "#title";
-    private static final String TIMING_FIELD_ID = "#timing";
+    private static final String TIMESLOT_FIELD_ID = "#timeslot";
     private static final String DESCRIPTION_FIELD_ID = "#description";
 
     private final Label idLabel;
     private final Label titleLabel;
-    private final Label timingLabel;
+    private final Label timeslotLabel;
     private final Label descriptionLabel;
 
     public EventCardHandle(Node cardNode) {
@@ -24,7 +24,7 @@ public class EventCardHandle extends NodeHandle<Node> {
 
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.titleLabel = getChildNode(TITLE_FIELD_ID);
-        this.timingLabel = getChildNode(TIMING_FIELD_ID);
+        this.timeslotLabel = getChildNode(TIMESLOT_FIELD_ID);
         this.descriptionLabel = getChildNode(DESCRIPTION_FIELD_ID);
     }
 
@@ -36,8 +36,8 @@ public class EventCardHandle extends NodeHandle<Node> {
         return titleLabel.getText();
     }
 
-    public String getTiming() {
-        return timingLabel.getText();
+    public String getTimeslot() {
+        return timeslotLabel.getText();
     }
 
     public String getDescription() {

@@ -1,7 +1,7 @@
 package seedu.address.model.event;
 
 import javafx.beans.property.ObjectProperty;
-import seedu.address.model.event.timeslot.Timing;
+import seedu.address.model.event.timeslot.Timeslot;
 
 /**
  * A read-only immutable interface for an Event in the addressbook.
@@ -12,9 +12,9 @@ public interface ReadOnlyEvent {
 
     Title getTitle();
 
-    ObjectProperty<Timing> timingProperty();
+    ObjectProperty<Timeslot> timeslotProperty();
 
-    Timing getTiming();
+    Timeslot getTimeslot();
 
     ObjectProperty<Description> descriptionProperty();
 
@@ -27,7 +27,7 @@ public interface ReadOnlyEvent {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getTitle().equals(this.getTitle()) // state checks here onwards
-                && other.getTiming().equals(this.getTiming())
+                && other.getTimeslot().equals(this.getTimeslot())
                 && other.getDescription().equals(this.getDescription()));
     }
 
@@ -37,8 +37,8 @@ public interface ReadOnlyEvent {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getTitle())
-                .append(" Timing: ")
-                .append(getTiming())
+                .append(" Timeslot: ")
+                .append(getTimeslot())
                 .append(" Description: ")
                 .append(getDescription());
         return builder.toString();

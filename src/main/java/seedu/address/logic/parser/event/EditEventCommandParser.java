@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +35,7 @@ public class EditEventCommandParser implements Parser<EditEventCommand> {
     public EditEventCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TIMING, PREFIX_DESCRIPTION);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TIMESLOT, PREFIX_DESCRIPTION);
 
         Index index;
 
@@ -48,7 +48,7 @@ public class EditEventCommandParser implements Parser<EditEventCommand> {
         EditEventCommand.EditEventDescriptor editEventDescriptor = new EditEventCommand.EditEventDescriptor();
         try {
             ParserUtil.parseTitle(argMultimap.getValue(PREFIX_NAME)).ifPresent(editEventDescriptor::setTitle);
-            ParserUtil.parseTiming(argMultimap.getValue(PREFIX_TIMING)).ifPresent(editEventDescriptor::setTiming);
+            ParserUtil.parseTimeslot(argMultimap.getValue(PREFIX_TIMESLOT)).ifPresent(editEventDescriptor::setTimeslot);
             ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION))
                     .ifPresent(editEventDescriptor::setDescription);
         } catch (IllegalValueException ive) {

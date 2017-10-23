@@ -7,11 +7,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.exceptions.InvalidDateException;
 
 public class DateTest {
     @Test
-    public void gregorianDatesTest() throws InvalidDateException {
+    public void gregorianDatesTest() throws IllegalValueException {
         assertFalse(isGregorianDate("29/02/2017"));
         assertFalse(isGregorianDate("00/02/2017"));
         assertFalse(isGregorianDate("07/00/2017"));
@@ -26,8 +25,6 @@ public class DateTest {
         try {
             new Date(date);
         } catch (IllegalValueException e) {
-            // Do nothing
-        } catch (InvalidDateException ide) {
             return false;
         }
         return true;

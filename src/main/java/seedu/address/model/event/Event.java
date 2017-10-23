@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.event.timeslot.Timing;
+import seedu.address.model.event.timeslot.Timeslot;
 
 /**
  * Represents an Event in the address book.
@@ -16,16 +16,16 @@ import seedu.address.model.event.timeslot.Timing;
 public class Event implements ReadOnlyEvent {
 
     private ObjectProperty<Title> title;
-    private ObjectProperty<Timing> timing;
+    private ObjectProperty<Timeslot> timeslot;
     private ObjectProperty<Description> description;
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Title title, Timing timing, Description description) {
-        requireAllNonNull(title, timing, description);
+    public Event(Title title, Timeslot timeslot, Description description) {
+        requireAllNonNull(title, timeslot, description);
         this.title = new SimpleObjectProperty<>(title);
-        this.timing = new SimpleObjectProperty<>(timing);
+        this.timeslot = new SimpleObjectProperty<>(timeslot);
         this.description = new SimpleObjectProperty<>(description);
     }
 
@@ -33,7 +33,7 @@ public class Event implements ReadOnlyEvent {
      * Creates a copy of the given ReadOnlyEvent.
      */
     public Event(ReadOnlyEvent source) {
-        this(source.getTitle(), source.getTiming(), source.getDescription());
+        this(source.getTitle(), source.getTimeslot(), source.getDescription());
     }
 
     @Override
@@ -51,17 +51,17 @@ public class Event implements ReadOnlyEvent {
     }
 
     @Override
-    public ObjectProperty<Timing> timingProperty() {
-        return timing;
+    public ObjectProperty<Timeslot> timeslotProperty() {
+        return timeslot;
     }
 
     @Override
-    public Timing getTiming() {
-        return timing.get();
+    public Timeslot getTimeslot() {
+        return timeslot.get();
     }
 
-    public void setTiming(Timing timing) {
-        this.timing.set(requireNonNull(timing));
+    public void setTimeslot(Timeslot timeslot) {
+        this.timeslot.set(requireNonNull(timeslot));
     }
 
     @Override
@@ -88,7 +88,7 @@ public class Event implements ReadOnlyEvent {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, timing, description);
+        return Objects.hash(title, timeslot, description);
     }
 
     @Override

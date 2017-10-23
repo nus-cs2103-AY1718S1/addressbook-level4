@@ -28,7 +28,7 @@ public class EditEventDescriptorBuilder {
     public EditEventDescriptorBuilder(ReadOnlyEvent event) {
         descriptor = new EditEventCommand.EditEventDescriptor();
         descriptor.setTitle(event.getTitle());
-        descriptor.setTiming(event.getTiming());
+        descriptor.setTimeslot(event.getTimeslot());
         descriptor.setDescription(event.getDescription());
     }
 
@@ -45,13 +45,13 @@ public class EditEventDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Timing} of the {@code EditEventDescriptor} that we are building.
+     * Sets the {@code Timeslot} of the {@code EditEventDescriptor} that we are building.
      */
-    public EditEventDescriptorBuilder withTiming(String timing) {
+    public EditEventDescriptorBuilder withTimeslot(String timeslot) {
         try {
-            ParserUtil.parseTiming(Optional.of(timing)).ifPresent(descriptor::setTiming);
+            ParserUtil.parseTimeslot(Optional.of(timeslot)).ifPresent(descriptor::setTimeslot);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("timing is expected to be unique.");
+            throw new IllegalArgumentException("Timeslot is expected to be unique.");
         }
         return this;
     }
@@ -63,7 +63,7 @@ public class EditEventDescriptorBuilder {
         try {
             ParserUtil.parseDescription(Optional.of(description)).ifPresent(descriptor::setDescription);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("description is expected to be unique.");
+            throw new IllegalArgumentException("Description is expected to be unique.");
         }
         return this;
     }

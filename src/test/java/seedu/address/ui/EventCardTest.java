@@ -28,7 +28,7 @@ public class EventCardTest extends GuiUnitTest {
         // changes made to Event reflects on card
         guiRobot.interact(() -> {
             event.setTitle(BIRTHDAY.getTitle());
-            event.setTiming(BIRTHDAY.getTiming());
+            event.setTimeslot(BIRTHDAY.getTimeslot());
             event.setDescription(BIRTHDAY.getDescription());
         });
         assertCardDisplay(eventCard, event, 2);

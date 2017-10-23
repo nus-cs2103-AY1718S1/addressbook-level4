@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.event.DateParser;
-import seedu.address.model.event.exceptions.InvalidDateException;
 
 /**
  * Represents an Timeslot's date in sales navigator.
@@ -15,7 +14,7 @@ import seedu.address.model.event.exceptions.InvalidDateException;
  */
 public class Date implements Comparable<Date> {
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Dates should represent";
+            "Dates should represent a valid date in the gregorian calendar";
 
     private int day;
     private int month;
@@ -27,7 +26,7 @@ public class Date implements Comparable<Date> {
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public Date(String date) throws IllegalValueException, InvalidDateException {
+    public Date(String date) throws IllegalValueException {
         requireNonNull(date);
 
         String trimmedDate = date.trim();
@@ -42,7 +41,7 @@ public class Date implements Comparable<Date> {
         if (isValidDate(year, month, day)) {
             this.date = trimmedDate;
         } else {
-            throw new InvalidDateException();
+            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
         }
 
     }

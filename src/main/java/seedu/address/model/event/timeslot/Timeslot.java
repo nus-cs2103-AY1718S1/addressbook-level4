@@ -4,7 +4,6 @@ package seedu.address.model.event.timeslot;
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.exceptions.InvalidDateException;
 
 /**
  * Timeslot contains date and time and is comparable based on year, month, day and starting time, in this order.
@@ -12,9 +11,9 @@ import seedu.address.model.event.exceptions.InvalidDateException;
 public class Timeslot implements Comparable<Timeslot> {
 
     public static final String MESSAGE_TIMESLOT_CONSTRAINTS =
-            "Event timings should contain a 6-digit date specifying date, month and year (in the format of dd/mm/yyyy) "
-                    + "followed by a 4-digit 24-hour format start timing and end timing separated by a \"-\", "
-                    + "and it should not be blank";
+            "Proper format: [dd/mm/yyyy ssss-eeee] Event timings should not be blank but contain:\n "
+                    + "1. A 6-digit date specifying day, month and year (in the format of dd/mm/yyyy) followed by\n "
+                    + "2. A 4-digit 24-hour format start timing and end timing separated by a \"-\"";
     public static final String TIMESLOT_VALIDATION_REGEX =
             "[0-2][0-9]/(0[1-9]|1[0-2])/[0-9][0-9][0-9][0-9] "
                     + "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[1-9]|1[0-9]|2[0-3])[0-5][0-9]";
@@ -27,7 +26,7 @@ public class Timeslot implements Comparable<Timeslot> {
      *
      * @throws IllegalValueException if given timeslot arguments are invalid.
      */
-    public Timeslot(String timeslot) throws IllegalValueException, InvalidDateException {
+    public Timeslot(String timeslot) throws IllegalValueException {
         requireNonNull(timeslot);
         String trimmedTimeslot = timeslot.trim();
 
@@ -44,8 +43,6 @@ public class Timeslot implements Comparable<Timeslot> {
             this.timing = new Timing(timeArgs);
         } catch (IllegalValueException e) {
             throw e;
-        } catch (InvalidDateException ide) {
-            throw ide;
         }
     }
 
@@ -66,6 +63,14 @@ public class Timeslot implements Comparable<Timeslot> {
 
     public String toString() {
         return this.date.toString() + " " + this.timing.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Timeslot // instanceof handles nulls
+                && this.date.equals(((Timeslot) other).date)) // state check
+                && this.timing.equals(((Timeslot) other).timing);
     }
 
     @Override
