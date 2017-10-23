@@ -11,7 +11,6 @@ import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.predicates.FavouriteListPredicate;
 
 
 /**
