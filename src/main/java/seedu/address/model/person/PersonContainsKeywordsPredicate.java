@@ -26,7 +26,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         if (keywords.containsKey(PREFIX_NAME.toString()) && !keywords.get(PREFIX_NAME.toString()).isEmpty()) {
             result = keywords.get(PREFIX_NAME.toString()).stream()
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
-            
+
         }
 
         if (keywords.containsKey(PREFIX_TAG.toString()) && !keywords.get(PREFIX_TAG.toString()).isEmpty()) {
@@ -37,7 +37,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
             result = result || keywords.get(PREFIX_EMAIL.toString()).stream()
                     .anyMatch(keyword -> person.getEmail().value.contains(keyword));
         }
-        
+
         return result;
     }
 

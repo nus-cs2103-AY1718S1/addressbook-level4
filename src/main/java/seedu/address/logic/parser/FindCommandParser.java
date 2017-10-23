@@ -30,7 +30,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
-        
+
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL);
 
         String trimmedArgsName;
@@ -40,7 +40,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String[] keywordTagList;
         String[] keywordEmailList;
         HashMap<String, List<String>> mapKeywords = new HashMap<>();
-        
+
         try {
             if (argumentMultimap.getValue(PREFIX_NAME).isPresent()) {
                 trimmedArgsName = ParserUtil.parseKeywords(argumentMultimap.getValue(PREFIX_NAME)).get().trim();
@@ -68,7 +68,7 @@ public class FindCommandParser implements Parser<FindCommand> {
                 keywordEmailList = trimmedArgsEmail.split("\\s+");
                 mapKeywords.put(PREFIX_EMAIL.toString(), Arrays.asList(keywordEmailList));
             }
-            
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

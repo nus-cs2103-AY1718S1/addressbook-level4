@@ -36,9 +36,9 @@ public class FindCommandParserTest {
         FindCommand expectedFindCommand =
                 new FindCommand(new PersonContainsKeywordsPredicate(expectedFindCmdMap));
         // leading whitespaces is not part of user input, but to accommodate for tokenizer
-        assertParseSuccess(parser, " n/Alice Bob r/friends family e/@gmail.com @hotmail.com", expectedFindCommand); 
+        assertParseSuccess(parser, " n/Alice Bob r/friends family e/@gmail.com @hotmail.com", expectedFindCommand);
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, "  n/ \n Alice \n \t Bob  \t  r/ \n friends \t family   \t e/ @gmail.com \n @hotmail.com", 
+        assertParseSuccess(parser, "  n/ \n Alice \n \t Bob  \t  r/ \n friends \t family   \t e/ @gmail.com \n @hotmail.com",
                 expectedFindCommand);
     }
 

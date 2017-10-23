@@ -17,7 +17,7 @@ public class FindCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + " or " + COMMAND_ALIAS + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: PREFIX_PERSON_ATTRIBUTE/KEYWORD [MORE_KEYWORDS]... [MORE_PARAMETERS]...\n"
-            + "Examples: " + System.lineSeparator() 
+            + "Examples: " + System.lineSeparator()
             + "1) " + COMMAND_WORD + " " + PREFIX_NAME.toString() + "alice bob charlie" + System.lineSeparator()
             + "2) " + COMMAND_WORD + " " + PREFIX_TAG.toString() + "family friends" + System.lineSeparator()
             + "3) " + COMMAND_WORD + " " + PREFIX_NAME.toString() + "alice bob charlie"
