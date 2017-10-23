@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+//@@author khooroko
 public class PostalCodeTest {
 
-    //@@author khooroko
     @Test
     public void isValidPostalCode() {
         // invalid postal codes

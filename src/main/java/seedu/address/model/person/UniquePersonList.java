@@ -123,6 +123,7 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    //@@author khooroko
     /**
      * Sorts the unique person list by the specified order.
      * @param order to sort the list by.
@@ -146,6 +147,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
     }
 
+    //@@author
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
