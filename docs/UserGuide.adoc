@@ -116,6 +116,7 @@ The listing below shows a summary of all commands currently available to users a
 ====
 *Command Format*
 
+* Words in parentheses represent the command shortcut e.g. in `(a)add n/NAME`, `a` is the shorthand-equivalent notation for the `add` command.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which
 can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -134,14 +135,14 @@ a person if the user is currently in the link:#contacts[contacts] component, oth
 component or link:#events[events] component.
 ====
 
-=== Viewing help : `help`
+=== Viewing help : `(h)help`
 
-Format: `help` (or press `F1` on the keyboard)
+Format: `(h)help` (or press `F1` on the keyboard)
 
-=== Adding a person : `add`
+=== Adding a person : `(a)add`
 
 Adds a person to the application. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `(a)add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0).
@@ -165,37 +166,36 @@ Then, you can set the value of `birthday` property when you add a new person (_s
 
 * `add n/Chris Lee p/98765432 e/johnd@example.com a/23 Chinatown b/12091991 t/friends`
 
-=== Adding an event : `addE`
+=== Adding an event : `(aE)addE`
 
 Adds an event to the application. +
-Format: `addE n/NAME dt/DATE_TIME a/EMAIL a/ADDRESS`
+Format: `(aE)addE n/NAME dt/DATE_TIME a/EMAIL a/ADDRESS`
 
 Examples:
 
 * `addE n/Does Birthday dt/25122015 20:30 a/12 Kent Ridge Drive`
 * `addE n/Betsy Birthday dt/25122016 21:30 a/23 Marina Road`
 
-
-=== Listing all persons/events : `list`
+=== Listing all persons/events : `(l)list`
 
 Shows a list of all persons in the application. +
-Format: `list`
+Format: `(l)list`
 
 [TIP]
 Contacts will be sorted by their names (increment).
 
-=== Listing all events : `listE`
+=== Listing all events : `(lE)listE`
 
 Shows a list of all events in the application. +
-Format: `listE`
+Format: `(lE)listE`
 
 [TIP]
 Events will be sorted by date/time (increment).
 
-=== Editing a person : `edit`
+=== Editing a person : `(e)edit`
 
 Edits an existing person in the application. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `(e)edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last listing.
@@ -213,10 +213,10 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Editing an event : `editE`
+=== Editing an event : `(eE)editE`
 
 Edits an existing event in the application. +
-Format: `editE INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]`
+Format: `(eE)editE INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]`
 
 ****
 * Edits the event at the specified `INDEX`. The index refers to the index number shown in the last listing.
@@ -234,10 +234,10 @@ Edits the name of the 2nd event to be `Lunch with Betsy`.
 
 
 
-=== Locating persons/events by any property : `find`
+=== Locating persons/events by any property : `(f)find`
 
 Finds persons/events whose corresponding field(s) contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
+Format: `(f)find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -259,10 +259,10 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `(d)delete`
 
 Deletes the specified person from the application. +
-Format: `delete INDEX`
+Format: `(d)delete INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -279,10 +279,10 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Deleting an event : `deleteE`
+=== Deleting an event : `(dE)deleteE`
 
 Deletes the specified event from the application. +
-Format: `deleteE INDEX`
+Format: `(dE)deleteE INDEX`
 
 ****
 * Deletes the event at the specified `INDEX`.
@@ -296,10 +296,10 @@ Examples:
 `deleteE 2` +
 Deletes the 2nd event in the address book.
 
-=== Selecting a person: `select`
+=== Selecting a person: `(s)select`
 
 Selects a person (identified by the index number used in the last listing) to view the details of that person. +
-Format: `select INDEX`
+Format: `(s)select INDEX`
 
 ****
 * Selects the person/event and loads the details of this data item.
@@ -316,10 +316,10 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `(i)history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `(i)history`
 
 [NOTE]
 ====
@@ -327,10 +327,10 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `(u)undo`
 
 Restores the application to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `(u)undo`
 
 [NOTE]
 ====
@@ -353,10 +353,13 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+[TIP]
+You can view what command you have undone from the user feedback message.
+
+=== Redoing the previously undone command : `(r)redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `(r)redo`
 
 Examples:
 
@@ -374,27 +377,52 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
+
+[TIP]
+You can view what command you have redone from the user feedback message.
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `(c)clear`
 
 Clears all entries from the current component (either contacts or events). +
-Format: `clear`
+Format: `(c)clear`
 
 [NOTE]
 ====
 Use `clear --all` if you want to clear data in all components (both contacts and events).
 ====
 
-=== Advance setting : `config`
+=== Exporting address book data : `(p)export`
+
+Exports the current data in the address book, including data from all three components: *Contacts*, *Events* and
+*Calendar*, to an external location. +
+Format: `(p)export FILEPATH`
+
+****
+* Exports data to the location and file name specified by `FILEPATH`.
+* `FILEPATH` must end with an extension of `.xml`.
+* If a relative path is provided, the data will be exported to the *BoNUS* installation directory.
+* Existing data file at `FILEPATH` will be overwritten.
+* Parent directories, if specified in `FILEPATH`, will be created if they do not exist.
+****
+
+Examples:
+
+* For `Windows` users: +
+`export C:\Users\John Doe\Documents\addressbook.xml`
+
+* For `macOS` and `Linux` users: +
+`export /Users/John Doe/Documents/addressbook.xml`
+
+=== Advance setting : `(cfg)config`
 
 Changes the configuration of the application or applies some advance settings to the data. Make sure you know what you
 are doing before using any of the following commands. These commands are intended for advance users.
 
-==== Add new property : `config --add-property`
+==== Add new property : `(cfg)config --add-property`
 
 Adds a new property field available to all persons or events. +
-Format: `config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
+Format: `(cfg)config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
 
 [NOTE]
 ====
@@ -422,10 +450,10 @@ if there is an existing property with the same short name.
 https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#compile-java.lang.String-[Pattern.compile] method.
 ****
 
-==== Set tag color : `config --set-tag-color`
+==== Set tag color : `(cfg)config --set-tag-color`
 
 Sets the displayed color of a certain tag (for persons/events). +
-Format: `config --set-tag-color TAG_NAME COLOR`
+Format: `(cfg)config --set-tag-color TAG_NAME COLOR`
 
 ****
 * By default, the application will use a random color to display each tag. The same tags are displayed using the same
@@ -435,21 +463,21 @@ starting with a `#`). You can pick the RGB value of your favorite color from htt
 * Pre-defined color names include _black_, _blue_, _brown_, _green_, _red_, _white_, _yellow_.
 ****
 
-==== Import calendar : `config --import-calendar`
+==== Import calendar : `(cfg)config --import-calendar`
 
 _(Coming in version 2.0)_ +
 Imports events from an online available calender. +
-Format: `config --import-calendar URL`
+Format: `(cfg)config --import-calendar URL`
 
 [NOTE]
 ====
 The supplied URL should be in either a valid ICS/iCal format or generated from your https://nusmods.com/[NUSMods].
 ====
 
-=== Exiting the program : `exit`
+=== Exiting the program : `(x)exit`
 
 Exits the program. +
-Format: `exit`
+Format: `(x)exit`
 
 === Saving the data
 
@@ -465,27 +493,31 @@ data of your previous Address Book folder.
 
 == Command Summary
 
-* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* : `(a)add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Add event* : `addE n/NAME dt/DATE_TIME a/ADDRESS` +
+* *Add event* : `(aE)addE n/NAME dt/DATE_TIME a/ADDRESS` +
 e.g. `addE n/James birthday dt/18022017 13:30 a/123, Clementi Rd, 1234665`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Clear* : `(c)clear`
+* *Delete* : `(d)delete INDEX` +
 e.g. `delete 3`
-* *Delete event* : `deleteE INDEX` +
+* *Delete event* : `(dE)deleteE INDEX` +
 e.g. `deleteE 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `(e)edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Edit event* : `edit INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]` +
+* *Edit event* : `(eE)editE INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]` +
 e.g. `editE 2 n/Lees Day`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `(f)find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
-* *List event* : `listE`
-* *Help* : `help`
-* *Select* : `select INDEX` +
+* *List* : `(l)list`
+* *List event* : `(lE)listE`
+* *Help* : `(h)help`
+* *Select* : `(s)select INDEX` +
 e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Config* : `config --add-property` `config --set-tag-color` `config --import-calendar`
+* *History* : `(i)history`
+* *Undo* : `(u)undo`
+* *Redo* : `(r)redo`
+* *Exit* : `(x)exit`
+* *Export* : `(p)export FILEPATH` +
+eg. For `Windows` users: `export C:\Users\John Doe\Documents\addressbook.xml` +
+eg. For `macOS` and `Linux` users: `export /Users/John Doe/Documents/addressbook.xml`
+* *Config* : `(cfg)config --add-property` `(cfg)config --set-tag-color` `(cfg)config --import-calendar`
