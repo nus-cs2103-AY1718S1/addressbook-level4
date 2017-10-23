@@ -36,7 +36,7 @@ This app will not work with earlier versions of Java 8.
 
 Mobilize comes with a simple interface to facilitate easy planning. It contains six main components that allow you to interact with the application: +
 
-image::ui.png[width="790"]
+image::Ui.png[width="790"]
 
 __Fig: Components of the Mobilize Interface__
 
