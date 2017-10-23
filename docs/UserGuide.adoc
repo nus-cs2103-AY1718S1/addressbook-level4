@@ -319,7 +319,7 @@ Examples:
 `switch 2` +
 Switches to the 2nd theme in the themes list.
 
-=== Adding an event : 'addevent'
+=== Adding an event : `addevent`
 `since v1.2` `Cherng Hann`
 
 Adds an event to the address book +
@@ -387,7 +387,7 @@ Format: `favouritelist`
 
 Returns a list of all contacts who have their birthdays today
 
-Format: `birthdays' or `bd`
+Format: `birthdays` or `bd`
 
 === Clearing all entries : `clear`
 
