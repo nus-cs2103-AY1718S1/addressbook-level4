@@ -387,7 +387,7 @@ Format: `favouritelist`
 
 UI that shows all details of a person that is not shown in person card
 
-Checking for birthdays : `birthdays`
+=== Checking for birthdays : `birthdays`
 `since v1.3` `Archana Pradeep`
 
 Returns a list of all contacts who have their birthdays today
@@ -410,6 +410,12 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 link:#the-myths-book---user-guide[Back To Top]
+
+== Other feautres
+=== Details Panel
+`since v1.2` `Archana Pradeep`
+
+UI that shows all details of a person that is not shown in person card
 
 == FAQ
 
