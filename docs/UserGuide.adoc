@@ -280,9 +280,11 @@ To make use of this feature, simply key in the first few characters of the comma
 Ark will then fill in the rest of the command for you.
 Then press kbd:[Enter] key to enter the command.
 
+There is more than one possibility for the autocompletion, Ark will display the possible options to you as shown in the
+ below.
 Examples:
 
-* `e` + kbd:[Tab] (auto-completes with `exit` in the command line input)
+* `a` + kbd:[Tab] (auto-completes with `add` in the command line input)
 
 === Saving the data
 
