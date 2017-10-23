@@ -29,11 +29,11 @@ public class ListCommand extends Command {
             + "Parameters: module/location/favouriteList\n"
             + "Example: " + COMMAND_WORD + " module";
 
-    public static final String MESSAGE_SUCCESS = "Listed all %1$s";
+    public static final String MESSAGE_SUCCESS = "Listed %1$s(s)";
 
     public static final String MODULE_KEYWORD = "module";
     public static final String LOCATION_KEYWORD = "location";
-    public static final String FAVOURITE_LIST_KEYWORD = "favouriteList";
+    public static final String FAVOURITE_LIST_KEYWORD = "marked";
 
     private final String parameter;
 

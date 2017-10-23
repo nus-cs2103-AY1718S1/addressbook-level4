@@ -39,10 +39,10 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
-        case BookmarkCommand.COMMAND_WORD:
+        case MarkCommand.COMMAND_WORD:
             return new BookmarkCommandParser().parse(arguments);
 
-        case UnBookmarkCommand.COMMAND_WORD:
+        case UnmarkCommand.COMMAND_WORD:
             return new UnBookmarkCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:

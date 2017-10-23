@@ -8,28 +8,29 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.predicates.FavouriteListPredicate;
 
 import static seedu.address.model.ListingUnit.LESSON;
 
 
 /**
- * Bookmark a lesson identified using it's last displayed index from the address book into the favourite list.
+ * Unbookmark a lesson identified using it's last displayed index from the address book into the favourite list.
  */
-public class BookmarkCommand extends UndoableCommand {
+public class UnmarkCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "bookmark";
+    public static final String COMMAND_WORD = "unmark";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": adds the lesson into favourite list identified by the index number used in the last lesson listing.\n"
+            + ": removes the lesson into marked list identified by the index number used in the last lesson listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_BOOKMARK_LESSON_SUCCESS = "Bookmarked Lesson:  %1$s";
-    public static final String MESSAGE_WRONG_LISTING_UNIT_FAILURE = "You can only add lesson into favourite list";
+    public static final String MESSAGE_UNBOOKMARK_LESSON_SUCCESS = "Unmarked Lesson:  %1$s";
+    public static final String MESSAGE_WRONG_LISTING_UNIT_FAILURE = "You can only remove lesson from marked list";
 
     private final Index targetIndex;
 
-    public BookmarkCommand(Index targetIndex) {
+    public UnmarkCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -46,12 +47,9 @@ public class BookmarkCommand extends UndoableCommand {
         ReadOnlyLesson lessonToCollect = lastShownList.get(targetIndex.getZeroBased());
 
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
-            try {
-                model.bookmarkLesson(lessonToCollect);
-            } catch (DuplicateLessonException pnfe) {
-                throw new CommandException(pnfe.getMessage());
-            }
-            return new CommandResult(String.format(MESSAGE_BOOKMARK_LESSON_SUCCESS, lessonToCollect));
+            model.unBookmarkLesson(lessonToCollect);
+            model.updateFilteredLessonList(new FavouriteListPredicate());
+            return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToCollect));
         } else {
             throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
         }
@@ -61,7 +59,7 @@ public class BookmarkCommand extends UndoableCommand {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof BookmarkCommand // instanceof handles nulls
-                && this.targetIndex.equals(((BookmarkCommand) other).targetIndex)); // state check
+                || (other instanceof UnmarkCommand // instanceof handles nulls
+                && this.targetIndex.equals(((UnmarkCommand) other).targetIndex)); // state check
     }
 }
