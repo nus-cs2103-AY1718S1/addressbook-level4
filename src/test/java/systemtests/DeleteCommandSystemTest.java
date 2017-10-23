@@ -32,7 +32,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the first parcel in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        expectedModel.maintainSorted();
         String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PARCEL.getOneBased() + "       ";
         ReadOnlyParcel deletedParcel = removeParcel(expectedModel, INDEX_FIRST_PARCEL);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PARCEL_SUCCESS, deletedParcel);
@@ -40,7 +39,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the last parcel in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
-        modelBeforeDeletingLast.maintainSorted();
         Index lastParcelIndex = getLastIndex(modelBeforeDeletingLast);
         assertCommandSuccess(lastParcelIndex);
 
@@ -81,9 +79,10 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: delete the selected parcel -> parcel list panel selects the parcel before the deleted parcel */
         showAllParcels();
-        Index selectedIndex = getLastIndex(expectedModel);
+        Index selectedIndex = Index.fromZeroBased(3);//getLastIndex(expectedModel);
+        System.out.println("LOOK HERE: " + getLastIndex(expectedModel).getZeroBased());
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        expectedModel.forceSelect(selectedIndex);
+//        expectedModel.forceSelect(selectedIndex);
         selectParcel(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedParcel = removeParcel(expectedModel, selectedIndex);
