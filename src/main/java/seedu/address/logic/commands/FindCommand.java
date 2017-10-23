@@ -59,11 +59,10 @@ public class FindCommand extends Command {
         case LOCATION:
             predicate = new LocationContainsKeywordsPredicate(newKeywordList);
             break;
-        case LESSON_LOCATION:
         case LESSON:
-        case LESSON_MODULE:
             currentViewingLesson = model.getCurrentViewingLesson();
-            predicate = new LessonContainsKeywordsPredicate(keywords, oldKeywordList, currentViewingLesson);
+            predicate = new LessonContainsKeywordsPredicate
+                    (keywords, oldKeywordList, currentViewingLesson, model.getCurrentViewingAttribute());
             break;
         default:
             predicate = new ModuleContainsKeywordsPredicate(newKeywordList);

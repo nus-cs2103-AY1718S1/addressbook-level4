@@ -39,6 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyLesson> filteredLessons;
     private final HashSet<BookedSlot> bookedList;
     private ReadOnlyLesson currentViewingLesson;
+    private String currentViewingAttribute;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -56,6 +57,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
         bookedList = new HashSet<BookedSlot>();
         initializeBookedSlot();
+        currentViewingAttribute = "default";
     }
 
     public ModelManager() {
@@ -198,6 +200,15 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyLesson getCurrentViewingLesson(){ return this.currentViewingLesson; }
 
+    @Override
+    public void setViewingPanelAttribute(String attribute){
+        this.currentViewingAttribute = attribute;
+    }
+
+    @Override
+    public String getCurrentViewingAttribute(){
+        return this.currentViewingAttribute;
+    }
 
     //=========== Filtered Module List Accessors =============================================================
 

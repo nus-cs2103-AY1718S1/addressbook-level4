@@ -7,7 +7,7 @@ import java.util.function.Predicate;
  * Unit in the panel.
  */
 public enum ListingUnit {
-    MODULE, LOCATION, LESSON, LESSON_LOCATION, LESSON_MODULE;
+    MODULE, LOCATION, LESSON;
 
     private static ListingUnit currentListingUnit = MODULE;
     private static Predicate currentPredicate;

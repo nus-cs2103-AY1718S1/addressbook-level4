@@ -1,6 +1,5 @@
 package seedu.address.model.module.predicates;
 
-import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 
 import java.util.ArrayList;
@@ -15,14 +14,17 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
     private ArrayList<ReadOnlyLesson> filteredLesson;
     private ReadOnlyLesson currentViewingLesson;
     private ArrayList<String> inforList;
+    private String attribute;
 
-    public LessonContainsKeywordsPredicate(List<String> keywords, List<String> oldKeyword, ReadOnlyLesson lesson) {
+    public LessonContainsKeywordsPredicate
+            (List<String> keywords, List<String> oldKeyword, ReadOnlyLesson lesson, String attribute) {
 
         this.keywords = keywords;
         this.oldKeywords = oldKeyword;
         this.currentViewingLesson = lesson;
         filteredLesson = new ArrayList<ReadOnlyLesson>();
         inforList = new ArrayList<>();
+        this.attribute = attribute;
 
     }
 
@@ -66,9 +68,8 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
 
             for (int i = 0; i < keywords.size(); i++) {
 
-                switch (ListingUnit.getCurrentListingUnit()) {
-                case LESSON_MODULE:
-                case MODULE:
+                switch (attribute) {
+                case "module":
                     if ((lesson.getCode().equals(currentViewingLesson.getCode())) && filteredLesson.contains(lesson)
                             && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
                             || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
@@ -78,7 +79,7 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
                         return true;
 
                     }
-                case LESSON_LOCATION:
+                case "location":
                     if (lesson.getLocation().equals(currentViewingLesson.getLocation()) && filteredLesson.contains(lesson)
                             && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
                             || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
@@ -96,9 +97,8 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
 
             for (int i = 0; i < keywords.size(); i++) {
 
-                switch (ListingUnit.getCurrentListingUnit()) {
-                case LESSON_MODULE:
-                case MODULE:
+                switch (attribute) {
+                case "module":
                     if ((lesson.getCode().equals(currentViewingLesson.getCode()))
                             && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
                             || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
@@ -108,7 +108,7 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
                         return true;
 
                     }
-                case LESSON_LOCATION:
+                case "location":
                     if (lesson.getLocation().equals(currentViewingLesson.getLocation())
                             && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
                             || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
