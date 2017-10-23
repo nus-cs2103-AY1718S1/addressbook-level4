@@ -13,19 +13,6 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public interface ReadOnlyPerson {
 
-    ObjectProperty<Name> nameProperty();
-    Name getName();
-    ObjectProperty<Phone> phoneProperty();
-    Phone getPhone();
-    ObjectProperty<Email> emailProperty();
-    Email getEmail();
-    ObjectProperty<Address> addressProperty();
-    Address getAddress();
-    ObjectProperty<Remark> remarkProperty();
-    Remark getRemark();
-    ObjectProperty<UniqueTagList> tagProperty();
-    Set<Tag> getTags();
-
     Comparator<ReadOnlyPerson> NAMESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
             -> o1.getName().compareTo(o2.getName());
     Comparator<ReadOnlyPerson> PHONESORTASC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
@@ -38,6 +25,19 @@ public interface ReadOnlyPerson {
             -> o2.getPhone().compareTo(o1.getPhone());
     Comparator<ReadOnlyPerson> EMAILSORTDSC = (ReadOnlyPerson o1, ReadOnlyPerson o2)
             -> o2.getEmail().compareTo(o1.getEmail());
+
+    ObjectProperty<Name> nameProperty();
+    Name getName();
+    ObjectProperty<Phone> phoneProperty();
+    Phone getPhone();
+    ObjectProperty<Email> emailProperty();
+    Email getEmail();
+    ObjectProperty<Address> addressProperty();
+    Address getAddress();
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
+    ObjectProperty<UniqueTagList> tagProperty();
+    Set<Tag> getTags();
 
 
     /**
