@@ -271,12 +271,9 @@ public class EditCommand extends UndoableCommand {
                     && getStatus().equals(e.getStatus())
                     && getTags().equals(e.getTags());
         }
-
-
     }
 
     private int findIndex(ReadOnlyParcel target) {
         return model.getAddressBook().getParcelList().indexOf(target);
     }
-
 }

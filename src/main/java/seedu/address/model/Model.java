@@ -5,9 +5,13 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
+
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagInternalErrorException;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * The API of the Model component.
@@ -32,6 +36,11 @@ public interface Model {
      * Deletes the given parcel.
      */
     void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException;
+
+    /**
+     * Deletes the given tag from every parcel.
+     */
+    void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException;
 
     /**
      * Adds the given parcel
@@ -89,10 +98,19 @@ public interface Model {
      */
     void unselect();
 
+    /**
+     * Method to set the prevIndex attribute to the specified target.
+     */
     void setPrevIndex(Index target);
 
+    /**
+     * Method to retrieve Index of last selected Parcel Card.
+     */
     Index getPrevIndex();
 
+    /**
+     * Method to force the model to select a card without using the select command.
+     */
     void forceSelect(Index target);
 }
 

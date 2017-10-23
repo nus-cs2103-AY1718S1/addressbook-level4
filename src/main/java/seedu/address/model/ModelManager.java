@@ -3,7 +3,10 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -20,6 +23,9 @@ import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagInternalErrorException;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -32,7 +38,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyParcel> filteredParcels;
-
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -70,6 +75,36 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException {
         addressBook.removeParcel(target);
+        indicateAddressBookChanged();
+    }
+
+    /** Deletes the tag from every parcel in the address book */
+    public void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException {
+
+        int tagsFound = 0;
+        Iterator it = addressBook.getParcelList().iterator();
+        while (it.hasNext()) {
+            Parcel oldParcel = (Parcel) it.next();
+            Parcel newParcel = new Parcel(oldParcel);
+            Set<Tag> newTags = new HashSet<>(newParcel.getTags());
+            if (newTags.contains(target)) {
+                newTags.remove(target);
+                tagsFound++;
+            }
+
+            newParcel.setTags(newTags);
+
+            try {
+                addressBook.updateParcel(oldParcel, newParcel);
+            } catch (DuplicateParcelException | ParcelNotFoundException dpe) {
+                throw new TagInternalErrorException();
+            }
+        }
+
+        if (tagsFound == 0) {
+            throw new TagNotFoundException();
+        }
+
         indicateAddressBookChanged();
     }
 
@@ -175,5 +210,5 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredParcels.equals(other.filteredParcels);
     }
-
+    
 }

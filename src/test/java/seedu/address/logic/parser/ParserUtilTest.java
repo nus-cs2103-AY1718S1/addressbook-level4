@@ -281,4 +281,18 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    @Test
+    public void parseTags_validInput_success() throws Exception {
+        Tag actualTag = ParserUtil.parseTag(VALID_TAG_1);
+        Tag expectedTag = new Tag(VALID_TAG_1);
+
+        assertEquals(expectedTag, actualTag);
+    }
+
+    @Test
+    public void parseTag_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTag(INVALID_TAG);
+    }
 }
