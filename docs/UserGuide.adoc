@@ -444,19 +444,19 @@ Examples:
 
 * `link 1 l/https://www.facebook.com/john.doe`
 
-=== Ability to add tags cumulatively to a person
+=== Ability to add `tags` cumulatively to a person
 
 Adds tag(s) to a person in the address book by specifying the corresponding indexes. +
 
 Format: `tag brother 1`
 
-=== Ability to remove multiple tags from multiple persons in one command
+=== Ability to remove multiple `tags` from multiple persons in one command
 
 Remove specified tags from multiple persons in the address book by specifying the corresponding indexes. +
 
 Format: `remove friends family 1 3`
 
-=== Ability to highlight keyword from the Find Command result
+=== Ability to highlight keyword from the `Find Command` result
 
 Based on the user inputs, the corresponding keywords in the result of the Find Command will be highlighted. +
 
@@ -466,7 +466,7 @@ Result:
 
 image::highlight.png[width=""]
 
-=== Ability to import and export contact list manually or using a cloud service
+=== Ability to `import` and `export` contact list manually or using a cloud service
 
 Import/Export contact lists from/to the give path. +
 
