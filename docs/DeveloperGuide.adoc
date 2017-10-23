@@ -397,7 +397,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `UndoableCommand` +
+**Aspect: Implementation of `UndoableCommand`** +
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
 ** **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that
@@ -481,7 +481,7 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
 
 ==== Design Considerations
 
-**Aspect:** Implementation of Google Maps Search Browser +
+**Aspect: Implementation of Google Maps Search Browser** +
 
 * **Alternative 1 (current choice):** Change browser loadPage URL to Google Map search URL +
 ** **Pros:** Its easy to implement new methods to load a new URLs if required to display a different URL. +
@@ -503,7 +503,7 @@ updated list of tags.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `deleteTagCommand` +
+**Aspect: Implementation of `deleteTagCommand`** +
 
 * **Alternative 1 (current choice):** Add method to delete tags in `ModelManager` +
 ** **Pros:** It is easy to implement a method to remove every instance where the Tag appears, we only have to be able to
@@ -594,7 +594,7 @@ to replace the text in `commandFieldText` with the string. +
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `autocomplete` +
+**Aspect: Implementation of `autocomplete`** +
 
 * **Alternative 1 (current choice):** Create a new `Autocompleter` class to implement `autocomplete` and its helper
 functions. +
