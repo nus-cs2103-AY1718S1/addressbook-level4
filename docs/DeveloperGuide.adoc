@@ -1,13 +1,4 @@
 = Planno - Developer Guide
-
-By: `Hu Wanqing`, `Jiang Chunhui`, `Hou Denghao`, `Leon Chow WenHao`      Since: `August 2017`
-
-= Welcome to Planno
-
-Planno is a Java application that helps users to conveniently manage contact as well as event details. To achieve this, Planno provides a large number of easy to use commands for users. +
-
-There are many ways to contribute to Planno: coding, testing, improving the build process and tools, or contributing to the documentation. This guide provides information that will not only help you get started as a Planno contributor, but that you'll find useful to refer to even if you are already an experienced contributor. +
-
 :toc:
 :toc-title:
 :toc-placement: macro
@@ -20,6 +11,14 @@ ifdef::env-github[]
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-W14-B4/main/tree/master
+
+By: `Hu Wanqing`, `Jiang Chunhui`, `Hou Denghao`, `Leon Chow WenHao`      Since: `August 2017`
+
+= Welcome to Planno
+
+Planno is a Java application that helps users to conveniently manage contact as well as event details. To achieve this, Planno provides a large number of easy to use commands for users. +
+
+There are many ways to contribute to Planno: coding, testing, improving the build process and tools, or contributing to the documentation. This guide provides information that will not only help you get started as a Planno contributor, but that you'll find useful to refer to even if you are already an experienced contributor. +
 
 This developer guide aims to give future programmers who hope to modify this application a general description of the architecture and design of the Desktop Application Planno.
 Planno provides users a platform to store and manage people's contact information, and events related to people in Planno. This developer guide consists of the following sections:
