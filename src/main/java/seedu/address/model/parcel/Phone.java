@@ -33,6 +33,7 @@ public class Phone {
 
     /**
      *  Creates a default phone class if the user does not provide any
+     *  @throws IllegalValueException
      */
     public Phone() throws IllegalValueException {
         this(PHONE_DEFAULT_VALUE);
