@@ -179,7 +179,7 @@ Shows a list of all persons in the application. +
 Format: `list`
 
 [TIP]
-Contacts will be sorted by creation time (increment)
+Contacts will be sorted by their names (increment).
 
 === Listing all events : `listE`
 
@@ -187,7 +187,7 @@ Shows a list of all events in the application. +
 Format: `listE`
 
 [TIP]
-Events will be sorted by date/time (increment)
+Events will be sorted by date/time (increment).
 
 === Editing a person : `edit`
 
