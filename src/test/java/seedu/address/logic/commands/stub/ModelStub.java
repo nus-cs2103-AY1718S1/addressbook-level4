@@ -42,7 +42,7 @@ public class ModelStub implements Model {
 
     @Override
     public void sortPersonList() {
-        fail("This method should not be called."); 
+        fail("This method should not be called.");
     }
 
     @Override
