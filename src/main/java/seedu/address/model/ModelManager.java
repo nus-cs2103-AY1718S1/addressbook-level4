@@ -25,6 +25,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.PriorityComparator;
 import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
@@ -257,6 +258,22 @@ public class ModelManager extends ComponentManager implements Model {
             indicateAddressBookChanged();
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+
+    /**
+     * @param contactList
+     * @throws CommandException
+     */
+    public void sortListByPriority(ArrayList<ReadOnlyReminder> contactList) throws CommandException {
+        contactList.addAll(filteredReminders);
+        Collections.sort(contactList, new PriorityComparator());
+
+        try {
+            addressBook.setReminders(contactList);
+            indicateAddressBookChanged();
+        } catch (DuplicateReminderException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_REMINDER);
         }
     }
 
