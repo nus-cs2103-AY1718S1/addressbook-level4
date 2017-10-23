@@ -11,10 +11,10 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
-    <URL value="@DarkTheme.css" />
-    <URL value="@Extensions.css" />
+    <URL value="@../css/DarkTheme.css" />
+    <URL value="@../css/Extensions.css" />
   </stylesheets>
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
@@ -38,7 +38,7 @@
     </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minWidth="600.0" prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" minWidth="600.0" prefWidth="1000.0" VBox.vgrow="ALWAYS">
       <VBox fx:id="sideButtonBar" alignment="CENTER" maxWidth="80.0" minWidth="80.0" prefWidth="80.0">
          <padding>
             <Insets bottom="10.0" top="10.0" />
@@ -62,14 +62,14 @@
             </ImageView>
          </children>
       </VBox>
-    <VBox fx:id="dataList" minWidth="340" SplitPane.resizableWithParent="false">
+    <VBox fx:id="dataList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="dataListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefHeight="150.0" prefWidth="271.0">
+    <StackPane fx:id="dataDetailsPanelPlaceholder" prefWidth="580.0">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>

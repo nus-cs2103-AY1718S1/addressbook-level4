@@ -14,7 +14,8 @@ import seedu.address.model.tag.Tag;
  */
 public class ChangeTagColorCommand extends ConfigCommand {
     public static final String MESSAGE_SUCCESS = "The color of tag %1$s has been changed to %2$s.";
-
+    public static final String MESSAGE_USAGE =  "Example: " + COMMAND_WORD + " --set-tag-color "
+            + "friends blue";
     private static final String MESSAGE_NO_SUCH_TAG = "There is no such tag.";
 
     private Tag tag;

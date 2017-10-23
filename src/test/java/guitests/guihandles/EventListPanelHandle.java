@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import javafx.scene.control.ListView;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.ui.EventCard;
+import seedu.address.ui.event.EventCard;
 
 /**
  * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.
