@@ -18,13 +18,13 @@ public interface Email {
      * @throws NoSuchProviderException if the email provider does not exist
      * @throws NotAnEmailException if the given email is not valid
      */
-    public void login(String email, String password) throws LoginFailedException;
+    void login(String email, String password) throws LoginFailedException;
 
     /**
      * Checks emails from the logged in email
      * @return A String array in which each element is an email
      */
-    public String[] checkEmails();
+    String[] checkEmails();
 
     /**
      *
@@ -34,17 +34,17 @@ public interface Email {
      * @throws NotAnEmailException if the given emails is/are not valid
      * @throws MessagingException if the emails were failed to send
      */
-    public void sendEmail(String[] recipients, String title, String message) throws NotAnEmailException, EmailSendFailedException;
+    void sendEmail(String[] recipients, String title, String message) throws NotAnEmailException, EmailSendFailedException;
 
     /**
      * Return the current logged in email
      * @return Email address
      */
-    public String getEmail();
+    String getEmail();
 
     /**
      * Check if there is an email logged in or not
      * @return whether there is an email logged in
      */
-    public boolean isLoggedIn();
+    boolean isLoggedIn();
 }

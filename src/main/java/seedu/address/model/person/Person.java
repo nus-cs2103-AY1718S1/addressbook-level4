@@ -130,7 +130,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<Avatar> avatarProperty() { return avatar; };
+    public ObjectProperty<Avatar> avatarProperty() { return avatar; }
 
     @Override
     public Avatar getAvatar() { return avatar.get(); }
@@ -185,7 +185,7 @@ public class Person implements ReadOnlyPerson {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
-    
+
     @Override
     public boolean containTags(List<String> tagsList) {
         int matchTagsCount = 0;
@@ -194,14 +194,10 @@ public class Person implements ReadOnlyPerson {
             boolean exist = tagsList.stream().anyMatch(tag -> t.tagName.equals(tag));
             if (exist) { matchTagsCount++; }
         }
-        
-        if (matchTagsCount == numberOfKeywords) {
-            return true;
-        } else {
-            return false;
-        }
+
+        return matchTagsCount == numberOfKeywords;
     }
-    
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
