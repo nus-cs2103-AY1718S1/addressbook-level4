@@ -130,6 +130,17 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERYDATE_DESC_AMY,
                 new AddCommand(expectedParcel));
+
+        // no phone number
+        Parcel expectedParcelDefaultPhone = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
+                .withName(VALID_NAME_BOB).withPhone(Phone.PHONE_DEFAULT_VALUE).withEmail(VALID_EMAIL_BOB)
+                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERYDATE_BOB).withStatus(VALID_STATUS_BOB)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERYDATE_DESC_BOB
+                        + STATUS_DESC_BOB + TAG_DESC_FRIEND,
+                new AddCommand(expectedParcelDefaultPhone));
+
     }
 
     @Test
