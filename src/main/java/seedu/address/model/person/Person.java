@@ -358,8 +358,7 @@ public class Person implements ReadOnlyPerson {
         current.setTime(currentDate);
         Calendar lastAccrued = Calendar.getInstance();
         lastAccrued.setTime(lastAccruedDate);
-        if (lastAccruedDate.before(currentDate) && (current.get(Calendar.MONTH) != lastAccrued.get(Calendar.MONTH))
-                && (current.get(Calendar.DAY_OF_MONTH) == 1)) {
+        if (lastAccruedDate.before(currentDate) && (current.get(Calendar.MONTH) != lastAccrued.get(Calendar.MONTH))) {
             return DateUtil.getNumberOfMonthBetweenDates(currentDate, lastAccruedDate);
         } else {
             return 0;

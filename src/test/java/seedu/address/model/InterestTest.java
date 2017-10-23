@@ -20,8 +20,6 @@ public class InterestTest {
     private final String sampleDateInput3 = "01-03-2017";
     private final String sampleDateInput4 = "01-05-2017";
     private final String sampleDateInput5 = "01-04-2017";
-
-    // dates that interest should not affect debt
     private final String sampleDateInput6 = "20-05-2017";
 
     @Test
@@ -48,10 +46,9 @@ public class InterestTest {
         personToTest.setLastAccruedDate(lastAccruedDate);
         assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput5)), 1);
 
-        //assert should return false as it is not the first day of the month
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput6));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput6)), 0);
+        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput6)), 1);
     }
 
     @Test
