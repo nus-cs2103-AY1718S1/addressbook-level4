@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,11 +23,10 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<DateOfBirth> dobProperty();
     DateOfBirth getDateOfBirth();
-
-    String getReason();
-
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    String getReason();
+    ReadOnlyInsurance getLifeInsurance();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
