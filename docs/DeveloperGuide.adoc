@@ -860,10 +860,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |edit details of a person |change person's details without removing and adding the person again
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-
 |`* * *` |new user |see suggested commands as I type them |easily remember what to write without referring to the help sheet
 
 |`* * *` |user |edit information about a contact without retyping everything |save time and work
@@ -880,13 +876,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |conduct the search quickly and efficiently |save time
 
+|`* * *` |user |tag multiple people using the same tag |save time
+
+|`* * *` |user |see my most frequently contacted people at the top of the list |contact them quickly
+
+|`* * *` |user with international contacts |see the local time of my contacts |keep from calling someone at odd hours
+
 |`* *` |advanced user |shorten commands |work efficiently
 
 |`* *` |user |send selected contacts to others |share them without others having to type it in
 
 |`* *` |user using a public computer |set a password to lock my stored data |be free of security related worries
-
-|`*` |user |see mutual contacts |find out who knows who
 
 |`* *` |user |merge multiple duplicate contacts simultaneously |save time and have a clean addressbook
 
@@ -902,15 +902,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |store multiple phone numbers or emails for the same contact |avoid making duplicate contacts with slightly different information
 
-|`*` |user |have nicknames associated with each contact while searching |recognize them better
-
 |`* *` |OTG user |access addressbook on multiple platforms and synchronize my data |have my contacts close at hand from anywhere
 
-|`* * *` |user |tag multiple people using the same tag |save time
-
 |`* *` |user |use tags to send mass emails or texts to people |save time sending them individually
-
-|`* * *` |user |see my most frequently contacted people at the top of the list |contact them quickly
 
 |`* *` |user |add tasks |manage my schedule
 
@@ -922,7 +916,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |unsure user |add tasks with or without deadlines |manage my schedule without knowing every detail
 
-|`* * *` |user with international contacts |see the local time of my contacts |keep from calling someone at odd hours
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` |user |have nicknames associated with each contact while searching |recognize them better
+
+|`*` |user |see mutual contacts |find out who knows who
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
 [appendix]
