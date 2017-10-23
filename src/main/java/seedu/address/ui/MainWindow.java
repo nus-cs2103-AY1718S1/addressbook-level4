@@ -54,8 +54,6 @@ public class MainWindow extends UiPart<Region> {
     private EmailTextField emailTextField;
     private AddressTextField addressTextField;
     private TagTextField tagTextField;
-    
-
     @FXML
     private StackPane browserPlaceholder;
 
@@ -88,10 +86,8 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane emailButtonPlaceholder;
-    
-    @FXML
+    @FXML 
     private StackPane editButtonPlaceholder;
-    
     @FXML
     private StackPane editNameTextfieldPlaceholder;
 
@@ -106,7 +102,6 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane editTagTextfieldPlaceholder;
-    
     @FXML
     private VBox vBox;
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
@@ -189,8 +184,8 @@ public class MainWindow extends UiPart<Region> {
 
         tagTextField = new TagTextField();
         editTagTextfieldPlaceholder.getChildren().add(tagTextField.getRoot());
-        
-        editButton = new EditButton(logic, nameTextField, phoneTextField, emailTextField, addressTextField, tagTextField);
+        editButton = new EditButton(logic, nameTextField, phoneTextField,
+                emailTextField, addressTextField, tagTextField);
         editButtonPlaceholder.getChildren().add(editButton.getRoot());
 
         deleteButton = new DeleteButton(logic, 0);
