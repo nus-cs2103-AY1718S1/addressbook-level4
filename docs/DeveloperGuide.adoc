@@ -348,7 +348,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 === Login Function
 
-The Login function work by using many different components. To facilitated its implementation there is a LoginCommand inside the LogicManager and AddressBook Parser. The LoginCommands works by taking the input and checking it with a database of accounts. If the inputs are verified, it will call upon the UI to restart the addressbook application with the new filepath.
+The Login function work by using many different components. To facilitated its implementation there is a `LoginCommand` inside the `LogicManager` and `AddressBook Parser`. The `LoginCommand` works by taking the input and checking it with a database of accounts. If the inputs are verified, it will call upon the `UI` to restart the addressbook application with the new filepath.
 
 The process of how the feature functions and what would happen is as follows:
 
@@ -357,7 +357,7 @@ image::LoginSequenceDiagram.JPG[width="800"]
 
 
 
-As it can be seen, when the logincommand is called, if the credentials are correct, it would call on the UiManager to restart the application with the user database and model. The Restart method created new user configs, preferences and storage according to the username. It then called on the current Mainwindow to close and closes the primary stage that the current main window is using. From there, it will call on the UiManager to initialise with the user logic, user storage, user preferences and user config. 
+As it can be seen, when the `logincommand` is called, if the credentials are correct, it would call on the `UiManager` to restart the application with the user database and model. The `Restart()` method created new user configs, preferences and storage according to the username. It then called on the current `Mainwindow` to close and closes the `primarystage` that the current `Mainwindow` is using. From there, it will call on the `UiManager` to initialise with the user `logic`, user `storage`, user `preferences` and user `config`. 
 
 The User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
 
