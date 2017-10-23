@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -18,6 +19,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Person implements ReadOnlyPerson {
 
+    public static int TEMP_ID_VALUE = 0;
     private ObjectProperty<InternalId> internalId;
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
@@ -40,6 +42,16 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.searchCount = new SimpleObjectProperty<>(searchCount);
+    }
+
+    public void setInternalId(int id) {
+        if (this.internalId.getValue().getId() == TEMP_ID_VALUE) {
+            try {
+                this.internalId = new SimpleObjectProperty<>(new InternalId(id));
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

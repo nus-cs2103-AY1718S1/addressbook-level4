@@ -20,7 +20,7 @@ public class InternalId {
      */
     public InternalId(int id) throws IllegalValueException {
         requireNonNull(id);
-        if (id <= 0) {
+        if (id < 0) {
             throw new IllegalValueException(MESSAGE_ID_CONSTRAINTS);
         }
         this.value = id;
