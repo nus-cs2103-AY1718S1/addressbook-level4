@@ -383,7 +383,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 === Open new AddressBook mechanism
 
-image::OpenAddressBookEvent.png[width="200"]
+image::OpenAddressBookEvent.png[width="800"]
 
 As you can see from the diagram, when the `Open` button is clicked in the Application, it raises an event and triggers
 `MainApp` to update new Application metadata and restart the UI.
