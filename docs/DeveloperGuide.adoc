@@ -1051,13 +1051,14 @@ Use case resumes at step 2.
 2.  AddressBook parse persons' particulars from file
 3.  AddressBook adds all persons in the file
 
+*Extensions*
+
+[none]
 * 2a. The file does not exist.
 +
 ** 2a1. AddressBook shows an error message.
 +
 Use case ends.
-
-*Extensions*
 
 [none]
 * 2b. The persons' particulars format are invalid.
@@ -1073,7 +1074,7 @@ Use case ends.
 ** 3a2. AddressBook shows an error message.
 +
 Use case ends.
-a
+
 === Use case:  History
 
 *MSS*
@@ -1202,6 +1203,44 @@ Use case ends
 +
 Use case ends
 
+[discrete]
+=== Use case: Merging storage files
+
+*MSS*
+
+1.  User requests to merge a given file to default storage file
+2.  AddressBook merges the data of the two files
+3.  AddressBook output the merged data file to a specified default path
+
+*Extensions*
+
+[none]
+* 2a. The user given file does not exist.
++
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2b. The persons' particulars format are invalid.
++
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2c. The given file contain person(s) that already exist in AddressBook.
++
+** 2c1. AddressBook ignores the duplicated person(s) and sieve out unique person(s) from the given file.
++
+Use case resumes at step 2.
+
+[none]
+* 3a. The merged data file does not exist
++
+** 3c1. AddressBook creates the file
++
+Use case resumes at step 3.
 
 [appendix]
 == Non Functional Requirements
