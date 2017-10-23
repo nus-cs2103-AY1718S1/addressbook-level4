@@ -14,11 +14,15 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventStorageChangedEvent;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonNotParticipateException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
@@ -74,10 +78,6 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
-    }
-
-    private void indicateEventListChanged() {
-        raise(new EventStorageChangedEvent(eventList));
     }
 
     @Override
@@ -145,6 +145,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Event List Modifiers =============================================================
 
+    /** Raises an event to indicate the model has changed */
+    private void indicateEventListChanged() {
+        raise(new EventStorageChangedEvent(eventList));
+    }
+
     @Override
     public synchronized void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
         eventList.removeEvent(target);
@@ -177,6 +182,18 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedEvent);
 
         eventList.updateEvent(target, editedEvent);
+        indicateAddressBookChanged();
+    }
+
+    //=========== Participant Operations =============================================================
+
+    @Override
+    public void quitEvent(Person person, Event event)
+            throws PersonNotParticipateException, NotParticipateEventException {
+        eventList.removeParticipant(person, event);
+        indicateEventListChanged();
+
+        addressBook.removeParticipation(person, event);
         indicateAddressBookChanged();
     }
 

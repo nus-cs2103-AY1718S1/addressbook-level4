@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -12,7 +13,10 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -102,6 +106,20 @@ public class UniquePersonList implements Iterable<Person> {
             throw new PersonNotFoundException();
         }
         return personFoundAndDeleted;
+    }
+
+    /**
+     * Remove a specific person from the participant list of an event
+     */
+    public void removeParticipateEvent(Person targetPerson, ReadOnlyEvent participatedEvent)
+            throws NotParticipateEventException {
+
+        try {
+            targetPerson.removeParticipateEvent(participatedEvent);
+        } catch (EventNotFoundException pnfe) {
+            throw new NotParticipateEventException();
+        }
+
     }
 
     public void setPersons(UniquePersonList replacement) {

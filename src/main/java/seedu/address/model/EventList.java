@@ -16,7 +16,9 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonNotParticipateException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -144,6 +146,15 @@ public class EventList implements ReadOnlyEventList {
         } else {
             throw new EventNotFoundException();
         }
+    }
+
+    /**
+     * Remove a specific person from the participant list of an event
+     */
+    public void removeParticipant(ReadOnlyPerson person, Event targetEvent)
+            throws PersonNotParticipateException {
+
+        events.removeParticipant(person, targetEvent);
     }
 
     /**
