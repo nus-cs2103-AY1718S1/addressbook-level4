@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.NON_COMPULSORY_BLOODTYPE;
 
 import org.junit.Test;
 
@@ -25,5 +26,8 @@ public class BloodtypeTest {
         assertTrue(Bloodtype.isValidBloodType("aB")); // case insensitive
         assertTrue(Bloodtype.isValidBloodType("O")); // one character
         assertTrue(Bloodtype.isValidBloodType("B+")); // inclusive of + or - symbol
+        
+        //Placeholder blood type if no input detected
+        assertTrue(Bloodtype.isValidBloodType(NON_COMPULSORY_BLOODTYPE));
     }
 }
