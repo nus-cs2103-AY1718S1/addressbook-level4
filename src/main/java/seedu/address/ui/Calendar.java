@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -8,10 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.util.ArrayList;
-
+/**
+ * The UI component that is responsible for implemented Calendar.
+ */
 public class Calendar {
 
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
@@ -34,7 +36,7 @@ public class Calendar {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
                 ap.setPrefSize(200,200);
-                calendar.add(ap,j,i);
+                calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
             }
         }
@@ -52,6 +54,7 @@ public class Calendar {
             ap.getChildren().add(txt);
             dayLabels.add(ap, col++, 0);
         }
+
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
         Button previousMonth = new Button("<<");
@@ -74,7 +77,7 @@ public class Calendar {
         // Get the date we want to start with on the calendar
         LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
         // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
-        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY") ) {
+        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
             calendarDate = calendarDate.minusDays(1);
         }
         // Populate the calendar with day numbers
