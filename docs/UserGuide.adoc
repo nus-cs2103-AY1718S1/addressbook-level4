@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-T16-B1/main/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T16-B1/main
 
-By: `Team T16-B1`      Since: `Sept 2017`      Licence: `MIT`
+By: `Team T16-B1`      Since: `Oct 2017`      Licence: `MIT`
 
 == Introduction
 Unable to keep track of all your deliveries?
@@ -46,8 +46,6 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Ark application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-[[ui]]
-.Labelled Ui
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
