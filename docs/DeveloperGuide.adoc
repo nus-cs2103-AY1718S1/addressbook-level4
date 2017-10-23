@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Intelli - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,10 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F10-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+Originally By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT` +
+Updated By: `CS2103 F10-B1`
 
 == Setting up
 
@@ -218,6 +219,53 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::find[]
+=== Enhanced `find` command
+
+A basic `find` command is given in the original codebase which allows persons to be found using their names.
+
+In order to enhance the `find` command, the `find` command is extended to support searches by name/email/phone number/address/tag. This is implemented in the style of the `add` command, and restricts the search to a particular aspect through parsing prefixes (`/n`, `/p`, `/e`, `/a`, `/t`). Without a prefix (i.e. `find`), the search is global, and returns any matches in any aspects (name/email/phone number/address/tag).
+
+==== Design Considerations
+
+**Aspect:** Implementation for enhanced `find` command +
+**Alternative 1 (current choice):** Adapt current `FindCommand` and add new predicates for each new type of search. +
+**Pros:** Easier to implement since we can reuse existing resources such as `ArgumentTokenizer` used in `add` command. +
+**Cons:** Implementation is less modular. +
+**Alternative 2:** Add a new subclass inheriting from `FindCommand` for each new type of search. +
+**Pros:** Implementation is more modular, and developers can update code more easily. +
+**Cons:** More tedious to implement since we cannot make use of existing resources such as `ArgumentTokenizer` used in `add` command.
+
+---
+
+**Aspect:** Type of command implemented +
+**Alternative 1 (current choice):** `find` command inherits from `Command` instead of `UndoableCommand.` +
+**Pros:** Easier to implement since we do not need to keep track of previous searches. +
+**Cons:** User has to retype all search fields if user wants to repeat a particular search. +
+**Alternative 2:** `find` command inherits from `UndoableCommand`. +
+**Pros:** `find` becomes undoable, and user can repeat a find easily by undoing the command. +
+**Cons:** It is unlikely that a user will repeat a `find` multiple times in a short period of time, rendering this option somewhat unnecessary.
+
+---
+
+**Aspect:** User input for narrowed search field in enhanced `find` command +
+**Alternative 1 (current choice):** Parse prefix in user input to narrow the search to a particular aspect (e.g. `n/`). +
+**Pros:** Easier for user for learn command since it is similar to the `add` command format. +
+**Cons:** Must remember exact prefix for each search field (i.e. `/n`, `/p`, `/e`, `/a`, `/t`). +
+**Alternative 2:** Parse full keywords in user input to narrow the search to a particular aspect (e.g. `name/`). +
+**Pros:** More intuitive for users as they can simply type what they want to look for. +
+**Cons:** User has to type longer commands.
+
+---
+
+**Aspect:** Scope of narrowed search +
+**Alternative 1 (current choice):** Users can only search within a single narrowed field, or must search through all possible fields (e.g. cannot search for names and emails only). +
+**Pros:** Easier to implement, parser only needs to check for a single prefix type and create corresponding predicate for the prefix type. +
+**Cons:** Fewer search choices available for users. +
+**Alternative 2:** Users can search within an arbitrary number of narrowed fields (e.g. can search for names and emails only, or search for names, emails, and addresses). +
+**Pros:** More search options available for users, more advanced search functions. +
+**Cons:** Harder to implement since the parser will have to handle more prefixes.
+
 // tag::undoredo[]
 === Undo/Redo mechanism
 
@@ -361,6 +409,34 @@ A separate parser for phone, email and address are used to accommodate this enha
 **Pros:** Easier to implement as we can re-use existing tests and codes and just add minor modifications +
 **Cons:** The behaviour of edit command overlaps with the behaviour of the add command, causing unintended overwrite of other fields such as address when we don't want to. +
 // end::EnhancedAddCommand[]
+
+// tag::clearhistory[]
+=== `clearhistory` command
+
+The `clearhistory` command is implemented as a regular command that calls `.clear()` methods added to `CommandHistory` and `UndoRedoStack`, which clears the command history and the undo/redo stack respectively.
+
+==== Design Considerations
+
+**Aspect:** Type of `clearhistory` command +
+**Alternative 1 (current choice):** `Command` +
+**Pros:** History is permanently cleared. +
+**Cons:** Impossible to undo accidental clearing of history, meaning all undoable changes become permanent. +
+**Alternative 2:** `UndoableCommand` +
+**Pros:** Possible to undo accidental clearing of history. +
+**Cons:** Since the most likely use for `clearhistory` is for it to be permanent, having it be undoable is counterintuitive to user expectations.
+
+---
+
+**Aspect:** Behaviour of `clearhistory` command on empty history +
+**Alternative 1 (current choice):** Clear anyway and indicate success +
+**Pros:** Simple to implement, no additional cases to take care of. +
+**Cons:** May be confusing to declare an empty history cleared. +
+**Alternative 2:** Indicate that history is empty. +
+**Pros:** Clearer messages about the state of the command history. +
+**Cons:** More complex to implement, and the end result of clearing an empty history also results in a cleared history, meaning the user intention of clearing their history is fufilled regardless of which alternative is chosen.
+
+// end::clearhistory[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -759,11 +835,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |see the people a person is related to |find people related to a person
 
-|`* * *` |user |see the history of commands I have typed |keep track of what I have done to my address book
-
 |`* * *` |user |see the network of relationships between people |visualise connections and groups in the network
 
 |`* *` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
+
+|`* *` |user |see the history of commands I have typed |keep track of what I have done to my address book
 
 4+| Find operations
 
@@ -993,6 +1069,24 @@ Use case resumes at step 2.
 ** 7a1. AddressBook shows an error message.
 +
 Use case resumes at step 6.
+
+[discrete]
+=== Use case: Sort a list of persons
+
+*MSS*
+
+1.  User requests to sort a list of persons
+2.  AddressBook sorts a list of persons alphanumerically by name
+3.  AddressBook shows all sorted persons in the sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
 
 {More to be added}
 

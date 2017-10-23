@@ -68,6 +68,14 @@ public class UndoRedoStack {
         return !redoStack.empty();
     }
 
+    /**
+     * Clears the stack of all commands.
+     */
+    public void clear() {
+        undoStack.clear();
+        redoStack.clear();
+    }
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
