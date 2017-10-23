@@ -25,6 +25,7 @@ import seedu.address.model.ReadOnlyEventList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonNotParticipateException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -172,6 +173,11 @@ public class AddCommandTest {
 
         @Override
         public void sortEvents() {
+
+        }
+
+        @Override
+        public void quitEvent(ReadOnlyPerson person, ReadOnlyEvent event) throws PersonNotParticipateException {
 
         }
 

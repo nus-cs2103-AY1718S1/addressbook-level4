@@ -13,7 +13,6 @@ endif::[]
 image::UG_cover.png[width="750", align="left"]
 = Planno - User Guide
 
-
 By: `Team W14-B4`      Since: `Sep 2017`      Licence: `NUS`
 
 toc::[]

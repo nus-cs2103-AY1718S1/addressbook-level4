@@ -638,6 +638,7 @@ The `DeleteEventCommand` calls `deleteEvent()` in the `Model`.
 The `DeleteEventCommand` then creates a `CommandResult` object and returns it to `LogicManager`.
 `LogicManager` receives the result anddisplays it through the `UI`.
 
+[discrete]
 ===== Design Considerations
 
 **Aspect:** Implementation of `DeleteEventCommand` +

@@ -8,6 +8,6 @@ import seedu.address.commons.exceptions.DuplicateDataException;
 public class DuplicateParticipationException extends DuplicateDataException {
 
     public DuplicateParticipationException() {
-            super("Operation would result in duplicate participations");
-        }
+        super("Operation would result in duplicate participants");
+    }
 }

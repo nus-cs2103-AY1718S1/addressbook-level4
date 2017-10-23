@@ -11,6 +11,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import seedu.address.model.person.Person;
+
 /**
  * Represents a Event in the address book.
  */
@@ -98,6 +99,7 @@ public class Event implements ReadOnlyEvent {
         return Collections.unmodifiableSet(participants.get().toSet());
     }
 
+    @Override
     public void setParticipants(Set<Person> replacement) {
         this.participants.set(new ParticipantList(replacement));
     }

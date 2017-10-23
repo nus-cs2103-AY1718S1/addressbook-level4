@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -14,9 +15,12 @@ import javafx.collections.ObservableList;
 
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonNotParticipateException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Represents a unique event list in the address book.
+ * Represents a unique event list in the EventList
  */
 
 public class UniqueEventList implements Iterable<Event> {
@@ -110,6 +114,31 @@ public class UniqueEventList implements Iterable<Event> {
             replacement.add(new Event(event));
         }
         setEvents(replacement);
+    }
+
+    /**
+     * Remove a specific person from the participant list of an event
+     */
+    public void removeParticipant(ReadOnlyPerson participant, ReadOnlyEvent targetEvent)
+            throws PersonNotParticipateException {
+        ReadOnlyEvent eventInList = null;
+
+        for (ReadOnlyEvent event : internalList) {
+            if (event.equals(targetEvent)) {
+                eventInList = event;
+                break;
+            }
+        }
+
+        assert eventInList != null;
+        Set<Person> participants = eventInList.getParticipants();
+
+        if (!participants.contains((Person) participant)) {
+            throw new PersonNotParticipateException();
+        }
+
+        participants.remove((Person) participant);
+        eventInList.setParticipants(participants);
     }
 
     /**

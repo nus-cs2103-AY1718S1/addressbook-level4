@@ -6,11 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.association.exceptions.ParticipationNotFoundException;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * An association list linked Person and Event
+ */
 public class UniqueParticipantList {
 
     private final ObservableList<PersonEventPair> internalList = FXCollections.observableArrayList();
@@ -30,6 +29,9 @@ public class UniqueParticipantList {
 
     }
 
+    /**
+     * Delete an existing participation (person, event) from the list
+     */
     public void delete(PersonEventPair participation) throws ParticipationNotFoundException {
         requireNonNull(participation);
         if (!contains(participation)) {

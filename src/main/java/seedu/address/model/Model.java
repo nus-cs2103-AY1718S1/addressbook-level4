@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonNotParticipateException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -83,6 +84,9 @@ public interface Model {
 
     /** Sorts the event list */
     void sortEvents();
+
+    /** A participant quit a specific event */
+    void quitEvent(ReadOnlyPerson person, ReadOnlyEvent event) throws PersonNotParticipateException;
 
     /**
      * Replaces the given event {@code target} with {@code editedEvent}.
