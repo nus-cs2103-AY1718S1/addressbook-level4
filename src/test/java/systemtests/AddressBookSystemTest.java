@@ -133,22 +133,6 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
-     */
-    protected void showPersonsWithName(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
-    }
-
-    /**
-     * Selects the person at {@code index} of the displayed list.
-     */
-    protected void selectPerson(Index index) {
-        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
-        assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
-    }
-
-    /**
      * Displays all tasks in the address book.
      */
     protected void showAllTasks() {
@@ -157,12 +141,27 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Displays all tasks with any parts of their names matching {@code keyword} (case-insensitive).
+     * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
+     */
+    protected void showPersonsWithName(String keyword) {
+        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
+        assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
+    }
+
+    /**
+     * Displays all tasks with any parts of their description matching {@code keyword} (case-insensitive).
      */
     protected void showTasksWithDescription(String keyword) {
         executeCommand(FindTaskCommand.COMMAND_WORD + " " + keyword);
-        executeCommand(FindCommand.COMMAND_WORD + " " + "Alice");
         assert getModel().getFilteredTaskList().size() < getModel().getAddressBook().getTaskList().size();
+    }
+
+    /**
+     * Selects the person at {@code index} of the displayed list.
+     */
+    protected void selectPerson(Index index) {
+        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
     }
 
     /**
@@ -309,7 +308,8 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE),
+                    getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
