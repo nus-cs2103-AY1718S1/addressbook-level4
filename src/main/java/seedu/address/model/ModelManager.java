@@ -117,6 +117,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireAllNonNull(target, editedTask);
+
+        taskBook.updateTask(target, editedTask);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
