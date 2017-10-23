@@ -18,7 +18,7 @@ import seedu.address.storage.XmlAddressBookStorage;
  */
 public class LoadCommandParser implements Parser<LoadCommand> {
 
-    private String filePath = "data/";
+    private final String filePath = "data/";
 
     /**
      * Parses the given {@code String} of arguments in the context of the LoadCommand
