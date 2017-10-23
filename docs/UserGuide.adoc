@@ -82,20 +82,16 @@ Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]…` +
 
 Here is an example to illustrate: +
 
-`add n/John Doe p/92435671 e/john_d888@gmail.com a/ 207 Upper Street, Islington, LONDON, N1 1RL b/15111986 t/friend t/roommate` +
-
-Result Display: +
-`New Person Added: John Doe Phone: 92435671 Email: john_d888@gmail.com Address: 207 Upper Street, Islington, LONDON, N1 1RL Birthday: 15111986 Tags: [friend][roommate]` +
-
+* `add n/John Doe p/92435671 e/john_d888@gmail.com a/ 207 Upper Street, Islington, LONDON, N1 1RL b/15111986 t/friend t/roommate` +
+   Result Display: +
+   `New Person Added: John Doe Phone: 92435671 Email: john_d888@gmail.com Address: 207 Upper Street, Islington, LONDON, N1 1RL Birthday: 15111986 Tags: [friend][roommate]` +
 
 
 Congratulations, you now have your first contact! +
 
 
 
-__Constraints__
-
-Note the following constraints in the requirements for adding contacts: +
+__Constraints:__
 
 ****
 * All fields must be provided and not blank.
@@ -136,7 +132,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-__Constraints__
+__Constraints:__
 
 * Only full words will be matched e.g `Han` will not match `Hans`
 
@@ -157,8 +153,6 @@ Multiple tags can be searched together e.g `findtag friends family`
 [TIP]
 Persons matching at least one keyword will be returned
 
-+
-
 For example:
 
 * `findtag friends` +
@@ -167,7 +161,7 @@ Returns `Alex` and `Bernice Yu`
 * `findtag friends family colleagues` +
 Returns any person containing tags `friends`, `family` or `colleagues`
 
-__Constraints__ +
+__Constraints:__ +
 
 * Only full words will be matched e.g `Friend` will not match `Friends`
 
@@ -247,15 +241,22 @@ __Constraints__
 * If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
 ****
 
+==== Listing contacts : `list` +
+
+To go back to the default list of contacts after a round of filtering, use:
+
+Format: `list`
+
 ==== Tagging multiple contacts : `tag` +
 
 Tags are a useful way of grouping and labeling contacts. But editing them manually, one by one, can be a tedious process.
-Instead, use:
+
+. Instead, use:
 Format: `tag [INDEX]… t/[TAG]…`
 
-Multiple contacts will be tagged by the tag(s) set in the parameter.
+. Multiple contacts will be tagged by the tag(s) set in the parameter.
 
-The Contact Cards will be updated to display the new tags.
+. The Contact Cards will be updated to display the new tags.
 
 [TIP]
 You can add multiple tags to multiple contacts by repeating the tag prefix.
@@ -337,12 +338,10 @@ Use prefixes:
 * `to`, `on` or `by` to denote the date in which the task is due to be completed
 ****
 
-The command follows: +
-
+. The command follows: +
 Format: `addtask DESCRIPTION from START DATE to DEADLINE t/[TAG]…`
 
-As the task is added to a new Task Card, the Result Display shows:
-
+. As the task is added to a new Task Card, the Result Display shows:
 `Task has been added: DESCRIPTION From: START DATE To: DEADLINE`
 
 [NOTE]
@@ -371,15 +370,8 @@ _Constraints_ +
 
 ==== Finding tasks by description: `findtask`
 
-Finds persons whose description contain any of the given keywords. +
+To find people whose description contain any of the given keywords, use +
 Format: `findtask KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `finish` will match `Finish`
-* The order of the keywords does not matter. e.g. `Finish task` will match `task finish`
-* Only the description is searched.
-* Only full words will be matched e.g `Finish` will not match `Finished`
-****
 
 Examples:
 
@@ -389,16 +381,67 @@ Returns `finish task tonight` and `finish task tomorrow`
 * `findtask finish task tonight` +
 Returns any task having descriptions `finish`, `task`, or `tonight`
 
-==== Editing tasks
-==== Archiving completed tasks
-==== Listing all tasks : `listtask`
+__Constraints:__
 
-Shows a list of all taks in the task manager. +
-Format: `listtask`
+****
+* The search is case insensitive. e.g `finish` will match `Finish`
+* The order of the keywords does not matter. e.g. `Finish task` will match `task finish`
+* Only the description is searched.
+* Only full words will be matched e.g `Finish` will not match `Finished`
+****
+
+==== Editing tasks: `edittask`
+
+Change of plans? The edit feature offers a hassle-free solution to change any parameter of an existing task.
+
+All you have to do is type in:
+
+Format: `edittask INDEX DESCRIPTION from START DATE to DEADLINE`
+
+[Tip]
+One or more parameters can be specified.
+
+For example:
+
+*`edittssk 1 exams from 4th Dec to 5th Dec`
+Changes all parameters of the task at INDEX 1 to set DESCRIPTION to "exams", START DATE to "Mon, Dec 4, '17"
+and DEADLINE to "Tue, Dec 5, '17"
+
+*`edittask 2 from tomorrow`
+Changes the START DATE of the task at INDEX 2 to the date of the following day.
+
+__Constraints__
+
+****
+* The index refers to the index number shown in the most recent listing.
+* If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* If a prefix is used with a blank parameter, the respective date associated with that prefix will be deleted.
+****
+
+==== Archiving completed tasks: `archive`
+
+Done with your task? Congratulations! To mark it as done, just key in:
+
+Format: `archive [INDEX]...`
+
+Mobilize will move it over to its archive list!
+
+[TIP]
+You can specify multiple indices to archive multiple tasks at once.
+
+__Constraints:__
+
+****
+* Multiple INDEX MUST be separated by commas.
+* The index refers to the index number shown in the most recent listing.
+* If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
 
 ==== Selecting a task: `selecttask`
 
-Selects the task identified by the index number used in the last task listing. +
+To select the task identified by the index number used in the last task listing, use: +
 Formate: `selecttask INDEX`
 
 ****
@@ -416,21 +459,22 @@ Selects the 2nd task in the task manager.
 `select 1` +
 Selects the 1st task in the results of the `findtask` command.
 
+==== Listing all tasks : `listtask`
+
+To show a list of all taks in the task manager, use: +
+
+Format: `listtask`
 
 ==== Deleting tasks : `deletetask`
 
-Deletes the specified task from the task manager. +
-Formate: `deletetask INDEX`
+To delete the specified task from the task manager, use: +
 
-****
-* Deletes the task at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* the index *must be a positive integer* 1, 2, 3, ...
-****
+Format: `deletetask INDEX`
 
 __Constraints__
 
 ****
+* Deletes the task at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
 * The index *must be a positive integer* `1, 2, 3, ...`
@@ -440,7 +484,8 @@ __Constraints__
 
 ==== Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
+To list all the commands that you have entered in reverse chronological order, use: +
+
 Format: `history`
 
 [NOTE]
@@ -451,12 +496,14 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 ==== Undoing previous commands : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Accidentally made a change you don't want anymore? To restores the address book to the state before the previous _undoable_ command was executed, use: +
+
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `addtask`, `deletetask`, `tag`, `detag`,
+`edittask`, `clear`, delete` and `edit`).
 ====
 
 Examples:
@@ -477,7 +524,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 ==== Redoing previously undone commands : `redo`
 
-Reverses the most recent `undo` command. +
+To reverse the most recent `undo` command, use: +
+
 Format: `redo`
 
 Examples:
@@ -500,17 +548,19 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 ==== Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clearing all entries from the address book requires just one command: +
+
 Format: `clear`
 
 ==== Exiting the program : `exit`
 
-Exits the program. +
+To exit the program, without using the pointer, use: +
+
 Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Mobilize data is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 == FAQ
