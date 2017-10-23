@@ -132,7 +132,7 @@ Returns `john` and `John Doe`
 * `find t/cs2103` +
 Returns any person having tags `cs2103`
 
-=== Searching all persons whose name starts with a certain alphabet: 'listalp'
+=== Searching all persons whose name starts with a certain alphabet: `listalp`
 
 Finds persons whose names start with the given alphabet. +
 Format: 'listalp ALPHABET'
