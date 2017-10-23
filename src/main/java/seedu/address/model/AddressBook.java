@@ -106,8 +106,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the given lesson {@code target} in the list with {@code editedReadOnlyLesson}, and updates favourite
-     * list.
+     * Replaces the given lesson {@code target} in the list with {@code editedReadOnlyLesson}.
      * {@code AddressBook}'s lecturers list will be updated with the lecturers of {@code editedReadOnlyLesson}.
      *
      * @throws DuplicateLessonException if updating the lesson's details causes the lesson to be equivalent to

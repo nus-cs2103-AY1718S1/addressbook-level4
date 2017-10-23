@@ -54,10 +54,6 @@ public class ModelManager extends ComponentManager implements Model {
         ListingUnit.setCurrentPredicate(predicate);
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
         bookedList = new HashSet<BookedSlot>();
-        for (int i = 0; i < filteredLessons.size(); i++) {
-            System.out.println(filteredLessons.get(i));
-            System.out.println(filteredLessons.get(i).isMarked());
-        }
     }
 
     public ModelManager() {
