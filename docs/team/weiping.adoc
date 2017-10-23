@@ -68,6 +68,10 @@ include::../UserGuide.adoc[tag=nearby]
 
 ---
 
+==== Justification
+
+Debt collectors may want to see details of nearby contacts to plan a more effective visiting schedule
+
 === Other contributions
 
 ==== Various UI enhancements
