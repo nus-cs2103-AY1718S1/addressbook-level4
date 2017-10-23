@@ -18,8 +18,6 @@ public interface ReadOnlyTask {
     StartDate getStartDate();
     ObjectProperty<Deadline> deadlineProperty();
     Deadline getDeadline();
-    ObjectProperty<SingleEventDate> singleEventDateProperty();
-    SingleEventDate getSingleEventDate();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -27,12 +25,12 @@ public interface ReadOnlyTask {
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
     default boolean isSameStateAs(ReadOnlyTask other) {
+       // System.out.println(this.getSingleEventDate().equals(other.get()));
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getDescription().equals(this.getDescription()) // state checks here onwards
                 && other.getStartDate().equals(this.getStartDate())
-                && other.getDeadline().equals(this.getDeadline())
-                && other.getSingleEventDate().equals(this.getSingleEventDate()));
+                && other.getDeadline().equals(this.getDeadline()));
     }
 
     /**
@@ -46,9 +44,6 @@ public interface ReadOnlyTask {
         }
         if (!getDeadline().isEmpty()) {
             builder.append(" To: ").append(getDeadline());
-        }
-        if (!getSingleEventDate().isEmpty()) {
-            builder.append(" On: ").append(getSingleEventDate());
         }
         if (!getTags().isEmpty()) {
             builder.append(" Tags: ");

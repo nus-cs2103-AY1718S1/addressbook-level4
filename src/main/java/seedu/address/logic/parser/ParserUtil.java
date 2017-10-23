@@ -6,6 +6,7 @@ import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 import org.ocpsoft.prettytime.nlp.parse.DateGroup;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -150,12 +151,12 @@ public class ParserUtil {
                 Optional.empty();
     }
     
-    public static DateGroup parseDate(String naturalLanguageInput) throws IllegalValueException {
-        List<DateGroup> dates = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
-        if (dates.isEmpty()) {
+    public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {
+        List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
+        if (dateGroup.isEmpty()) {
             throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
         }
-        System.out.println(dates.get(0).getDates());
-        return dates.get(0);
+        List<Date> dates = dateGroup.get(dateGroup.size()-1).getDates();
+        return dates.get(dates.size()-1);
     }
 }

@@ -6,7 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents the deadline of a task in the application.
- * Guarantees: immutable, is valid as declared in {@link #formatDate(String)}
+ * Guarantees: immutable, is valid as declared in {@link #isDateValid(String)}
  */
 public class Deadline extends TaskDates {
 
@@ -17,9 +17,10 @@ public class Deadline extends TaskDates {
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public Deadline(String date) {
+    public Deadline(String date) throws IllegalValueException {
         requireNonNull(date);
-        this.date = date.trim();
+        String trimmedDate = date.trim();
+        this.date = trimmedDate;
     }
 
     public boolean isEmpty() {

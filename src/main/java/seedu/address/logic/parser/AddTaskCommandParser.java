@@ -1,16 +1,15 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SINGLE_EVENT_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_TO;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
-import java.util.Date;
-import java.util.List;
-
-import org.ocpsoft.prettytime.nlp.parse.DateGroup;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddTaskCommand;
@@ -35,26 +34,34 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddTaskCommand parse(String args) throws ParseException {
+        requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_START_DATE, PREFIX_DEADLINE, PREFIX_SINGLE_EVENT_DATE,
-                        PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_TO, PREFIX_DEADLINE_ON,
+                        PREFIX_DEADLINE_BY, PREFIX_TAG);
 
         if (!isDescriptionPresent(argMultimap)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
+        }
+        
+        if (!areMultiplePrefixesPresent(argMultimap, PREFIX_DEADLINE_TO, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         }
 
         try {
             Description description = ParserUtil.parseDescription(argMultimap.getPreamble());
-            StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_START_DATE))
+            StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_STARTDATE))
                     .orElse(new StartDate(""));
-            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE))
+            Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_TO, PREFIX_DEADLINE_BY,
+                    PREFIX_DEADLINE_ON))
                     .orElse(new Deadline(""));
-            SingleEventDate singleEventDate = 
-                    ParserUtil.parseSingleEventDate(argMultimap.getValue(PREFIX_SINGLE_EVENT_DATE))
-                            .orElse(new SingleEventDate(""));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyTask task = new Task(description, startDate, deadline, singleEventDate, tagList);
+            if (!TaskDates.isStartDateBeforeDeadline(startDate, deadline)) {
+                throw new IllegalValueException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        AddTaskCommand.MESSAGE_USAGE));
+            }
+            
+            ReadOnlyTask task = new Task(description, startDate, deadline, tagList);
 
             return new AddTaskCommand(task);
         } catch (IllegalValueException ive) {
@@ -68,5 +75,13 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
      */
     private static boolean isDescriptionPresent(ArgumentMultimap argumentMultimap) {
         return !argumentMultimap.getPreamble().isEmpty();
+    }
+    
+    private static boolean areMultiplePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        int prefixCount = 0;
+        for (Prefix prefix : prefixes) {
+            prefixCount = (argumentMultimap.getValue(prefix).isPresent()) ? ++prefixCount : prefixCount; 
+        }
+        return prefixCount > 1 ? false : true;
     }
 }

@@ -26,8 +26,6 @@ public class XmlAdaptedTask {
     private String startDate;
     @XmlElement
     private String deadline;
-    @XmlElement
-    private String singleEventDate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -49,7 +47,6 @@ public class XmlAdaptedTask {
         description = source.getDescription().taskDescription;
         startDate = source.getStartDate().date;
         deadline = source.getDeadline().date;
-        singleEventDate = source.getSingleEventDate().date;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -69,8 +66,7 @@ public class XmlAdaptedTask {
         final Description description = new Description(this.description);
         final StartDate startDate = new StartDate(this.startDate);
         final Deadline deadline = new Deadline(this.deadline);
-        final SingleEventDate singleEventDate = new SingleEventDate(this.singleEventDate);
         final Set<Tag> tags = new HashSet<>(taskTags);
-        return new Task(description, startDate, deadline, singleEventDate, tags);
+        return new Task(description, startDate, deadline, tags);
     }
 }

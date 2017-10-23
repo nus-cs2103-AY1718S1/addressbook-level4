@@ -4,11 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_TO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -65,15 +66,21 @@ public class CommandTestUtil {
 
     public static final String VALID_DESCRIPTION_INTERNSHIP = " " + "Apply for Google internship" + " ";
     public static final String VALID_DESCRIPTION_GRAD_SCHOOL = " " + "Graduate school applications" + " ";
-    public static final String VALID_STARTDATE_INTERNSHIP = "20-10-2017  ";
-    public static final String VALID_STARTDATE_GRAD_SCHOOL = "12-09-2017 ";
-    public static final String VALID_DEADLINE_INTERNSHIP = "03-12-2017";
-    public static final String VALID_DEADLINE_GRAD_SCHOOL = "01-01-2018";
+    public static final String VALID_STARTDATE_INTERNSHIP = "Mon, Oct 23, '17";
+    public static final String VALID_STARTDATE_GRAD_SCHOOL = "Tue, Oct 24, '17";
+    public static final String VALID_DEADLINE_INTERNSHIP = "Wed, Oct 25, '17";
+    public static final String VALID_DEADLINE_GRAD_SCHOOL = "Thu, Oct 26, '17";
+    public static final String VALID_SINGLEEVENTDATE_INTERNSHIP = "Fri, Oct 27, '17";
+    public static final String VALID_SINGLEEVENT_DATE_GRAD_SCHOOL = "Sat, Oct 28, '17";
+    public static final String VALID_TAG_URGENT = "urgent";
+    public static final String VALID_TAG_GROUP = "group3";
 
-    public static final String STARTDATE_DESC_INTERNSHIP = PREFIX_START_DATE + " " + VALID_STARTDATE_INTERNSHIP;
-    public static final String STARTDATE_DESC_GRAD_SCHOOL = PREFIX_START_DATE + " " + VALID_STARTDATE_GRAD_SCHOOL;
-    public static final String DEADLINE_DESC_INTERNSHIP = PREFIX_DEADLINE + " " + VALID_DEADLINE_INTERNSHIP;
-    public static final String DEADLINE_DESC_GRAD_SCHOOL = PREFIX_DEADLINE + " " + VALID_DEADLINE_GRAD_SCHOOL;
+    public static final String STARTDATE_DESC_INTERNSHIP = " " + PREFIX_STARTDATE + " " + VALID_STARTDATE_INTERNSHIP;
+    public static final String STARTDATE_DESC_GRAD_SCHOOL = " " + PREFIX_STARTDATE + " " + VALID_STARTDATE_GRAD_SCHOOL;
+    public static final String DEADLINE_DESC_INTERNSHIP = " " + PREFIX_DEADLINE_TO + " " + VALID_DEADLINE_INTERNSHIP;
+    public static final String DEADLINE_DESC_GRAD_SCHOOL = " " + PREFIX_DEADLINE_BY + " " + VALID_DEADLINE_GRAD_SCHOOL;
+    public static final String TAG_DESC_URGENT = " " + PREFIX_TAG + " " + VALID_TAG_URGENT;
+    public static final String TAG_DESC_GROUP = " " + PREFIX_TAG + " " + VALID_TAG_GROUP;
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

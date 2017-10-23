@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -21,19 +22,17 @@ public class Task implements ReadOnlyTask {
     private ObjectProperty<Description> description;
     private ObjectProperty<StartDate> startDate;
     private ObjectProperty<Deadline> deadline;
-    private ObjectProperty<SingleEventDate> singleEventDate;
     private ObjectProperty<UniqueTagList> taskTags;
 
     /**
      * Every field must be present and not null.
      */
-    public Task(Description description, StartDate startDate, Deadline deadline, SingleEventDate singleEventDate,
+    public Task(Description description, StartDate startDate, Deadline deadline,
                 Set<Tag> taskTags) {
         requireAllNonNull(description, startDate, deadline);
         this.description = new SimpleObjectProperty<>(description);
         this.startDate = new SimpleObjectProperty<>(startDate);
         this.deadline = new SimpleObjectProperty<>(deadline);
-        this.singleEventDate = new SimpleObjectProperty<>(singleEventDate);
         // protect internal tags from changes in the arg list
         this.taskTags = new SimpleObjectProperty<>(new UniqueTagList(taskTags));
     }
@@ -42,8 +41,7 @@ public class Task implements ReadOnlyTask {
      * Creates a copy of the given ReadOnlyTask.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getDescription(), source.getStartDate(), source.getDeadline(),
-                source.getSingleEventDate(), source.getTags());
+        this(source.getDescription(), source.getStartDate(), source.getDeadline(), source.getTags());
     }
 
     public void setDescription(Description description) {
@@ -88,20 +86,6 @@ public class Task implements ReadOnlyTask {
         return deadline.get();
     }
 
-    public void setSingleEventDate(SingleEventDate singleEventDate) {
-        this.singleEventDate.set(requireNonNull(singleEventDate));
-    }
-
-    @Override
-    public ObjectProperty<SingleEventDate> singleEventDateProperty() {
-        return singleEventDate;
-    }
-
-    @Override
-    public SingleEventDate getSingleEventDate() {
-        return singleEventDate.get();
-    }
-
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -121,8 +105,7 @@ public class Task implements ReadOnlyTask {
     public void setTags(Set<Tag> replacement) {
         taskTags.set(new UniqueTagList(replacement));
     }
-
-
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

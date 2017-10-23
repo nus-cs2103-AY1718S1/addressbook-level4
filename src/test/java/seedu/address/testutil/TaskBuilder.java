@@ -18,9 +18,8 @@ import seedu.address.model.util.SampleDataUtil;
 public class TaskBuilder {
 
     public static final String DEFAULT_DESCRIPTION = "CS2103T assignment due";
-    public static final String DEFAULT_STARTDATE = "17-10-2017";
-    public static final String DEFAULT_DEADLINE = "20-10-2017";
-    public static final String DEFAULT_SINGLE_EVENT_DATE = "28-10-2018";
+    public static final String DEFAULT_STARTDATE = "Tue, Oct 24, '17";
+    public static final String DEFAULT_DEADLINE = "Thu, Oct 26, '17";
     public static final String DEFAULT_TAG = "projectGroup";
 
     private Task task;
@@ -30,9 +29,8 @@ public class TaskBuilder {
             Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
             StartDate defaultStartDate = new StartDate(DEFAULT_STARTDATE);
             Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
-            SingleEventDate singleEventDate = new SingleEventDate(DEFAULT_SINGLE_EVENT_DATE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAG);
-            this.task = new Task(defaultDescription, defaultStartDate, defaultDeadline, singleEventDate, defaultTags);
+            this.task = new Task(defaultDescription, defaultStartDate, defaultDeadline, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default task's values are invalid.");
         }
@@ -61,7 +59,11 @@ public class TaskBuilder {
      * Sets the {@code StartDate} of the {@code Task} that is being built.
      */
     public TaskBuilder withStartDate(String startDate) {
-        this.task.setStartDate(new StartDate(startDate));
+        try {
+            this.task.setStartDate(new StartDate((startDate)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("dates should be unique and in the correct format");
+        }
         return this;
     }
 
@@ -69,15 +71,11 @@ public class TaskBuilder {
      * Sets the {@code Deadline} of the {@code Task} that is being built.
      */
     public TaskBuilder withDeadline(String deadline) {
-        this.task.setDeadline(new Deadline(deadline));
-        return this;
-    }
-
-    /**
-     * Sets the {@code SingleEventDate} of the {@code Task} that is being built.
-     */
-    public TaskBuilder withSingleEventDate(String singleEventDate) {
-        this.task.setSingleEventDate(new SingleEventDate(singleEventDate));
+        try {
+            this.task.setDeadline(new Deadline(deadline));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("dates should be unique and in the correct format");
+        }
         return this;
     }
 

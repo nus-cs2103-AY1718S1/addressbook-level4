@@ -65,7 +65,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_invalidPreamble_failure() {
+    public void parse_invalidPreamble_failure() throws Exception {
         // negative index
         assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
 

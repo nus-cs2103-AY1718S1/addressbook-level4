@@ -34,9 +34,14 @@ public class ArgumentMultimap {
     /**
      * Returns the last value of {@code prefix}.
      */
-    public Optional<String> getValue(Prefix prefix) {
-        List<String> values = getAllValues(prefix);
-        return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
+    public Optional<String> getValue(Prefix... prefixes) {
+        for (Prefix prefix : prefixes) {
+            List<String> values = getAllValues(prefix);
+            if (!values.isEmpty()) {
+                return Optional.of(values.get(values.size() - 1));
+            }
+        }
+        return Optional.empty();
     }
 
     /**
