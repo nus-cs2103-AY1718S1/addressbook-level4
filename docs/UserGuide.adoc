@@ -192,12 +192,13 @@ Examples:
 * `dm 1`
 * `dm 2`
 
-=== Listing all meetings : `listMeeting`
+=== Listing all meetings : `listmeeting`
 
 Shows a list of all meetings in the address book. +
-Format: `listMeeting`
+Format: `listmeeting`
 
 To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+
 * `darkRed` : Meeting is in next 24 hours.
 
 image::MeetingCard1.png[width="250"]
@@ -226,7 +227,7 @@ Examples:
 * `edit 1 n/John l/Clementi` +
 Edits the name and location of the 1st meeting to be `John` and `Clementi` respectively.
 
-=== Locating meetings by name: `findMeeting`
+=== Locating meetings by name: `findmeeting`
 
 Finds meetings whose names contain any of the given keywords. +
 Format: `findMeeting KEYWORD [MORE_KEYWORDS]`
@@ -241,11 +242,11 @@ Format: `findMeeting KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `findMeeting John` +
+* `findmeeting John` +
 Returns `john` and `John Doe`
-* `findMeeting Betsy Tim John` +
+* `findmeeting Betsy Tim John` +
 Returns any meeting having names `Betsy`, `Tim`, or `John` as the person to meet
-* `findMeeting Shopping Study John` +
+* `findmeeting Shopping Study John` +
 Returns any meeting having `John` as the person to meet and any meetings having names `Study` and `Shopping`
 
 === Listing entered commands : `history`
