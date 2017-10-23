@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -12,6 +15,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -20,8 +24,6 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
-
-import java.util.logging.Logger;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -40,8 +42,8 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-//    private Timetable timetable;
-//    private BrowserPanel browserPanel;
+    // private Timetable timetable;
+    // private BrowserPanel browserPanel;
     private CombinePanel combinePanel;
     private LessonListPanel lessonListPanel;
     private Config config;
@@ -132,11 +134,11 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
 
-//        browserPanel = new BrowserPanel();
-//        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-//
-//        timetable = new Timetable(logic);
-//        browserPlaceholder.getChildren().add(timetable.getRoot());
+        // browserPanel = new BrowserPanel();
+        // browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //
+        // timetable = new Timetable(logic);
+        // browserPlaceholder.getChildren().add(timetable.getRoot());
 
         combinePanel = new CombinePanel(logic);
         browserPlaceholder.getChildren().add(combinePanel.getRoot());
