@@ -76,13 +76,14 @@ Examples:
 Alias: `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/OTHER EMAIL]... a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0).
+A person must have at least 1 email.
 
 [NOTE]
-ADDRESS needs to follow the format:"`BLOCK`, `STREET`, [`UNIT`,] `POSTAL CODE`" with UNIT being an optional parameter.
+ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter.
 
 Examples:
 
@@ -101,7 +102,7 @@ Format: `list`
 Alias: `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -208,7 +209,7 @@ Examples:
 `locate 2` +
 Locates the 2nd person's address in the address book.
 * `find Betsy` +
-`select 1` +
+`locate 1` +
 Locates the 1st person's address in the results of the `find` command.
 
 === Scheduling an activity: `schedule` [Since v1.3]
