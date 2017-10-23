@@ -13,14 +13,7 @@ public class Bloodtype {
     public static final String MESSAGE_BLOODTYPE_CONSTRAINTS =
             "Person blood type should only contain one or two alpha characters, and it should not be blank";
 
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     * More specific blood types and difference are taken into account.
-     * Example: O-, AB+
-
-     */
-    public static final String BLOODTYPE_VALIDATION_REGEX = "\\p{ASCII}{1,3}";
+    public static final String BLOODTYPE_VALIDATION_REGEX = "(?i)^(a|b|ab|o)[\\+|\\-]{0,1}$";
 
     public final String type;
 

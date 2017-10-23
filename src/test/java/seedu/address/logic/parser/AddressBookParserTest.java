@@ -76,10 +76,10 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandAddAppointment() throws Exception {
         AddAppointmentCommand command = (AddAppointmentCommand) parser
-                .parseCommand("appointment n/asd d/2018/08/08 20:10");
+                .parseCommand("appointment 1 d/2018/08/08 20:10");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/08/08 20:10"));
-        assertTrue(command.equals(new AddAppointmentCommand(new Appointment("asd", calendar))));
+        assertTrue(command.equals(new AddAppointmentCommand(Index.fromOneBased(1), calendar)));
     }
 
     @Test
