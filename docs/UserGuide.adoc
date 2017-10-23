@@ -46,17 +46,17 @@ image::Reminder.png[width="600"]
 ..  To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
 
     * `darkRed` : Meeting is in next 24 hours.
-
-    image::MeetingCard1.png[width="250"]
-
++
+image::MeetingCard1.png[width="200"]
++
     * `red` : Meeting is in next 48 hours.
-
-    image::MeetingCard2.png[width="250"]
-
++
+image::MeetingCard2.png[width="200"]
++
     * `orangeRed` : Meeting is in next 72 hours.
-
-    image::MeetingCard3.png[width="250"]
-    
++
+image::MeetingCard3.png[width="200"]
++
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
