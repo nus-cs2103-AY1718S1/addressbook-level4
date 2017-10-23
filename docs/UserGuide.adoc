@@ -43,6 +43,24 @@ image::AddresbookLabels.png[width="790"]
 &#160;c. Contacts List &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
 d. Meetings List +
 &#160;e. Footer bar
+..  If there is a meeting scheduled on the day of logging in, a reminder will pop up for you to acknowledge.
++
+image::Reminder.png[width="600"]
++
+..  To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+
+    * `darkRed` : Meeting is in next 24 hours.
++
+image::MeetingCard1.png[width="200"]
++
+    * `red` : Meeting is in next 48 hours.
++
+image::MeetingCard2.png[width="200"]
++
+    * `orangeRed` : Meeting is in next 72 hours.
++
+image::MeetingCard3.png[width="200"]
++
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
@@ -187,8 +205,8 @@ Input format for Date and Time is "DD-MM-YYYY HH:MM"
 
 Examples:
 
-* `addmeeting 1 n/John Doe d/31-10-2017 21:00 l/School of Computing, NUS`
-* `addmeeting 2 n/Betsy Crowe d/27-12-2017 08:30 l/iCube Auditorium, NUS`
+* `addmeeting 1 n/Study d/31-10-2017 21:00 l/School of Computing, NUS`
+* `addmeeting 2 n/Project meeting d/27-12-2017 08:30 l/iCube Auditorium, NUS`
 
 === Deleting a meeting: `deletemeeting`
 Upcoming in V2.0 (Since V1.2): deletemeeting by index of meeting in the Meeting
@@ -213,20 +231,6 @@ Examples:
 
 Shows a list of all meetings in the address book. +
 Format: `listmeeting`
-
-To show the urgency of the meeting, colours are assigned to the card by comparing the date and time of the meeting class to the date and time of the log in.
-
-* `darkRed` : Meeting is in next 24 hours.
-
-image::MeetingCard1.png[width="250"]
-
-* `red` : Meeting is in next 48 hours.
-
-image::MeetingCard2.png[width="250"]
-
-* `orangeRed` : Meeting is in next 72 hours.
-
-image::MeetingCard3.png[width="250"]
 
 === Editing a meeting : `editmeeting`
 
@@ -359,7 +363,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Add Meeting* `addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION]` +
-e.g. `addmeeting 5 n/Mary Jane d/22-11-2017 l/Vivo City`
+e.g. `addmeeting 5 n/Shopping d/22-11-2017 l/Vivo City`
 * *Delete Meeting* `deletemeeting INDEX` + e.g. `dm 1`
 * *Edit Meeting* `editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 * *List Meeting* : `listmeeting`
