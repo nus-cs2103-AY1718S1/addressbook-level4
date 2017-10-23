@@ -79,10 +79,10 @@ public class BrowserPanel extends UiPart<Region> {
         Iterator<SocialInfo> iterator = p.getSocialInfos().iterator();
         if (iterator.hasNext()) {
             SocialInfo social = iterator.next();
-//            String username = social.getUsername();
-//            String socialType = social.getSocialType()
+            // String username = social.getUsername();
+            // String socialType = social.getSocialType()
             String url = social.getSocialUrl();
-//            String url = FACEBOOK_URL_PREFIX + username;
+            // String url = FACEBOOK_URL_PREFIX + username;
             loadPage(url);
         } else {
              loadPersonPage(event.getNewSelection().person);
