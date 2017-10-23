@@ -25,11 +25,11 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 
-
-public class Calendar extends UiPart<Region>{
-
-    private static String FXML = "Calendar.fxml";
-
+/**
+ * The CalendarPanel panel of the App.
+ */
+public class CalendarPanel extends UiPart<Region> {
+    private static String FXML = "CalendarPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
@@ -41,12 +41,15 @@ public class Calendar extends UiPart<Region>{
     @FXML
     private StackPane calendarPane;
 
-    public Calendar(ObservableList<ReadOnlyPerson> personList, ObservableList<ReadOnlyTask> taskList) {
+    public CalendarPanel(ObservableList<ReadOnlyPerson> personList, ObservableList<ReadOnlyTask> taskList) {
         super(FXML);
         setDate(personList, taskList);
         loadDefaultPage();
     }
 
+    /**
+     * Load the calendar which is the datePickerSkin with DateCell from datePicker
+     */
     private void loadDefaultPage() {
         datePickerSkin = new DatePickerSkin(datePicker);
         DatePickerContent popupContent = (DatePickerContent) datePickerSkin.getPopupContent();
@@ -56,6 +59,11 @@ public class Calendar extends UiPart<Region>{
         calendarPane.getChildren().add(popupContent);
     }
 
+    /**
+     * Load datePicker with various dates, birthday from personList and deadline from taskList
+     * @param personList
+     * @param taskList
+     */
     private void setDate(ObservableList<ReadOnlyPerson> personList, ObservableList<ReadOnlyTask> taskList) {
         datePicker = new DatePicker((LocalDate.now()));
         //ObservableList<PersonCard> mappedList = EasyBind.map(
@@ -65,6 +73,9 @@ public class Calendar extends UiPart<Region>{
         findDateForSelection();
     }
 
+    /**
+     * Makes the dateCell in datePickerSkin editable, and execute findCommand for selected date
+     */
     private void findDateForSelection() {
         // Make datePicker editable (i.e. i think can select and update value)
         datePicker.setEditable(true);
@@ -72,12 +83,19 @@ public class Calendar extends UiPart<Region>{
         datePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               LocalDate date = datePicker.getValue();
+                LocalDate date = datePicker.getValue();
                 logger.info("Date selected: " + date.toString());
             }
         });
     }
 
+    /**
+     * Go through personList and taskList for birthday and deadline respectively.
+     * Update dateCell with different colour and tooltip
+     * @param personList
+     * @param taskList
+     * @return
+     */
     private Callback<DatePicker, DateCell> getDayCellFactory(ObservableList<ReadOnlyPerson> personList,
                                                              ObservableList<ReadOnlyTask> taskList) {
 
@@ -99,8 +117,7 @@ public class Calendar extends UiPart<Region>{
                                     setTooltip(new Tooltip("Birthday!"));
                                     setStyle("-fx-background-color: #f1a3ff;");
                                 }
-                            }
-                            catch (DateTimeParseException exc) {
+                            } catch (DateTimeParseException exc) {
                                 logger.warning("Not parsable: " + person.getBirthday().toString());
                                 throw exc;
                             }
@@ -115,8 +132,7 @@ public class Calendar extends UiPart<Region>{
                                     setTooltip(new Tooltip("Deadline!"));
                                     setStyle("-fx-background-color: #ff444d;");
                                 }
-                            }
-                            catch (DateTimeParseException exc) {
+                            } catch (DateTimeParseException exc) {
                                 logger.warning("Not parsable: " + task.getDeadline().toString());
                                 throw exc;
                             }

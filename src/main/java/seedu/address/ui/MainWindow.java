@@ -43,7 +43,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
-    private Calendar calendar;
+    private CalendarPanel calendarPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -143,8 +143,8 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        calendar = new Calendar(logic.getFilteredPersonList(), logic.getFilteredTaskList());
-        calendarPlaceholder.getChildren().add(calendar.getRoot());
+        calendarPanel = new CalendarPanel(logic.getFilteredPersonList(), logic.getFilteredTaskList());
+        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         TaskListPanel taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
         taskListPanelPlaceHolder.getChildren().add(taskListPanel.getRoot());
