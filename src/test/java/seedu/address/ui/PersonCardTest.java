@@ -17,28 +17,25 @@ public class PersonCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        // no tags
-        Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
-        PersonCard personCard = new PersonCard(personWithNoTags, 1);
+        // no formClass
+        Person personWithNoFormClass = new PersonBuilder().withFormClass(new String("")).build();
+        PersonCard personCard = new PersonCard(personWithNoFormClass, 1);
         uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, personWithNoTags, 1);
+        assertCardDisplay(personCard, personWithNoFormClass, 1);
 
-        // with tags
-        Person personWithTags = new PersonBuilder().build();
-        personCard = new PersonCard(personWithTags, 2);
+        // with formClass
+        Person personWithFormClass = new PersonBuilder().build();
+        personCard = new PersonCard(personWithFormClass, 2);
         uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, personWithTags, 2);
+        assertCardDisplay(personCard, personWithFormClass, 2);
 
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
-            personWithTags.setName(ALICE.getName());
-            personWithTags.setAddress(ALICE.getAddress());
-            personWithTags.setEmail(ALICE.getEmail());
-            personWithTags.setPhone(ALICE.getPhone());
-            personWithTags.setRemark(ALICE.getRemark());
-            personWithTags.setTags(ALICE.getTags());
+            personWithFormClass.setName(ALICE.getName());
+            personWithFormClass.setPhone(ALICE.getPhone());
+            personWithFormClass.setFormClass(ALICE.getFormClass());
         });
-        assertCardDisplay(personCard, personWithTags, 2);
+        assertCardDisplay(personCard, personWithFormClass, 2);
     }
 
     @Test
