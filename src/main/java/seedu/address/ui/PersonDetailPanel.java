@@ -71,7 +71,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     private void showPersonDetails(ReadOnlyPerson person) {
 
         initial.setText(Avatar.getInitial(person.getName().fullName));
-        avatar.setFill(Paint.valueOf(Avatar.getColor(person)));
+        avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
 
         setTextFields(person);
         setTags(person);

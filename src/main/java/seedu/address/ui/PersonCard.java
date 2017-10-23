@@ -52,7 +52,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(Integer.toString(displayedIndex));
 
         initial.setText(Avatar.getInitial(person.getName().fullName));
-        avatar.setFill(Paint.valueOf(Avatar.getColor(person)));
+        avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
 
         setTags(person);
     }
