@@ -17,7 +17,7 @@
    <Text fx:id="commandTextSmall" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
    <Text fx:id="commandTextLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
    <Text fx:id="commandTextXLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
-  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." styleClass="text-field" stylesheets="@DarkTheme.css" StackPane.alignment="CENTER_LEFT" />
+  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." styleClass="text-field" StackPane.alignment="CENTER_LEFT" />
    <Label fx:id="checkBox" StackPane.alignment="CENTER_RIGHT">
       <padding>
          <Insets right="2.0" />
