@@ -351,10 +351,12 @@ image::UndoRedoActivityDiagram.png[width="200"]
 The autocomplete feature searches through all command words, and looks for matches based on incomplete user input in the command box when autocomplete key is used.
 
 At the moment Autocomplete feature latches itself onto Logic component, for three reasons.
-Firstly, since Autocomplete is applied to commands mainly which all belongs under Logic, Autocomplete seems to be a better fit together with them.
-Secondly, Autocomplete itself does not model any personal data (doesn't belong under Model), nor presents itself as a separate UI component (not under UI either), and does nothing on the I/O system (nothing to do with storage).
-Thirdly, Autocomplete also has a parser, like commands, and thus behaves like an address book Logic.
-Therefore Autocomplete seems to be best fit in Logic component.
+
+* Since Autocomplete is applied to commands mainly which all belongs under Logic, Autocomplete seems to be a better fit together with them.
+* Autocomplete itself does not model any personal data (doesn't belong under Model), nor presents itself as a separate UI component (not under UI either), and does nothing on the I/O system (nothing to do with storage).
+* Autocomplete also has a parser, like commands, and thus behaves like an address book Logic.
+
+Therefore, Autocomplete seems to be best fit in Logic component.
 
 The following sequence diagram shows where autocomplete possibilities are evaluated, stored, and subsequently used to help the user with command line input:
 
@@ -409,6 +411,17 @@ At the moment command skeletons are hardcoded and every command can only have on
 **Alternative 2:** Continue to support command alias +
 **Pros:** Easier to just add another constant on top of current `COMMAND_ALIAS` constant. +
 **Cons:** Code gets messy in the long term if old features are not depreciated and removed, more constants to declare for every subsequent command added.
+
+---
+
+(added v1.3)
+**Aspect:** Implement dropdown menu UI for autocomplete +
+**Alternative 1 (current choice):** No dropdown menu
+**Pros:** No need for additional UI component. +
+**Cons:** May not be intuitive to users who have not worked with CLI before.
+**Alternative 2:** Include dropdown menu to list all autocomplete options +
+**Pros:** Easier access for users at a glance. +
+**Cons:** Inteferes with up and down button for command history.
 // end::autocomplete[]
 
 === Logging
@@ -1017,10 +1030,28 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Autocomplete
 
+*MSS*
 
+1.  User enters incomplete command.
+2.  User presses autocomplete button.
+3.  AddressBook searches for possible match based on incomplete user input.
+4.  AddressBook completes the command based on the command that matches the user input.
++
+Use case ends.
 
+*Extensions*
 
+[none]
+* 3a. No possible commands match incomplete user input.
++
+Use case ends.
+
+* 4a. User presses autocomplete button again.
++
+Use case returns to step 3.
 
 [discrete]
 === Use case: Sort list

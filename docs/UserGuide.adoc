@@ -41,9 +41,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == What's New in Version 1.2
 
-=== Optimized Autocomplete
+=== Enhanced Autocomplete
 
-Autocomplete should be running slightly faster, with slightly less strain on the processor.
+Autocomplete should now be able to autocomplete person data as well, based on the information current stored in the application.
 
 === FindTag
 
@@ -295,13 +295,18 @@ There is no need to save manually.
 // tag::autocomplete[]
 == Autocomplete
 
-Use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input.
+Use `Tab` key to automatically generate a command 'skeleton' from an incomplete command word input. +
+Besides commands, the `Tab` key can also help autocomplete person data using information from existing persons stored in Rubrika.
+There must be a prefix (`n/` or `p/`) present in order to use this autocomplete feature, and you can only use autocomplete at the end of your command input.
 
 Examples:
 
 * `c` becomes `clear` after pressing `Tab` once
 * nothing happens to `b` (no command starting with letter `b`)
 * `h` becomes `history`, and then `help` if you press `Tab` again
+* `add n/J` becomes `add n/John Hawkins` if you have a person with the name `John Hawkins` stored
+* `edit 2 t/co t/owesMoney` does not autocomplete the `t/co` because it is in the middle of the input
+* `find G` does not autocomplete because there is no prefix present
 // end::autocomplete[]
 
 == FAQ
