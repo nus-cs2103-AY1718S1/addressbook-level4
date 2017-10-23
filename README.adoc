@@ -3,6 +3,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: docs\images
 = Planno
 
+https://travis-ci.org/CS2103AUG2017-W14-B4/main[image:https://travis-ci.org/CS2103AUG2017-W14-B4/main.svg?branch=master[Build Status]]
+https://ci.appveyor.com/project/Adoby7/main/branch/master[image:https://ci.appveyor.com/api/projects/status/ua6c2lss9ooitbmj/branch/master?svg=true[Build status]]
+https://coveralls.io/github/CS2103AUG2017-W14-B4/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-W14-B4/main/badge.svg?branch=master[Coverage Status]]
+https://www.codacy.com/app/Adoby7/main?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CS2103AUG2017-W14-B4/main&amp;utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/c1d8854d87bb4042b62e4d6b7d928eff[Codacy Badge]]
+
 image::Ui.png[width="600"]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
