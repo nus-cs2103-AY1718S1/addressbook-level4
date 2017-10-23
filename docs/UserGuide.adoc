@@ -60,7 +60,7 @@ For the following tutorials, command formatting will be explained using the foll
   For example, if a command syntax contains the item [t/TAG]…, then the final command can contain multiple ‘tags’, such as t/friend, t/family, t/classmate.
 * Parameters that are preceded by a prefix, can occur in any order. +
   For example, if a command syntax contains the item add n/NAME p/PHONE a/ADDRESS, then the final command can contain these items in mixed order, such as add a/ADDRESS n/NAME p/PHONE.
-  
+
   [NOTE]
   This is not applicable for parameters without a prefix. For example, if a command syntax uses: edit INDEX n/NAME, then the INDEX parameter MUST be in the exact position as in the syntax, in this case, after the command word i.e. edit.
 
@@ -117,7 +117,7 @@ Consequently: +
 
 [TIP]
 The search is case insensitive. e.g `hans` will match `Hans` +
- 
+
 [TIP]
 The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans` +
 
@@ -150,7 +150,7 @@ The search is case insensitive. e.g `friends will match `Friends`
 Multiple tags can be searched together e.g `findtag friends family`
 
 [TIP]
-Persons matching at least one keyword will be returned  
+Persons matching at least one keyword will be returned
 
 +
 
@@ -206,7 +206,7 @@ So there you have it; an easy, editable contact!
 __Constraints__
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. 
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
 * INDEX *must be a positive integer* 1, 2, 3, ...
 * If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
 * At least one of the optional fields must be provided.
@@ -217,7 +217,7 @@ __Constraints__
 
 ==== Selecting contacts : `select`
 
-Selecting a contact is an easy way to click on their Contact Card without having to use the pointer on the screen. 
+Selecting a contact is an easy way to click on their Contact Card without having to use the pointer on the screen.
 To execute this command, type:
 
 Format: `select INDEX`
@@ -237,7 +237,7 @@ Selects the 1st person in the results of the `find` command.
 __Constraints__
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. 
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
 * INDEX *must be a positive integer* 1, 2, 3, ...
 * If a contact is first searched by the “find” feature, then the new index of the contact according to the filtered list of Contact Cards, is what must be used in the INDEX parameter.
 ****
@@ -248,7 +248,7 @@ Tags are a useful way of grouping and labeling contacts. But editing them manual
 Instead, use:
 Format: `tag [INDEX]… t/[TAG]…`
 
-Multiple contacts will be tagged by the tag(s) set in the parameter. 
+Multiple contacts will be tagged by the tag(s) set in the parameter.
 
 The Contact Cards will be updated to display the new tags.
 
@@ -423,7 +423,7 @@ Formate: `deletetask INDEX`
 * the index *must be a positive integer* 1, 2, 3, ...
 ****
 
-__Constraints__ 
+__Constraints__
 
 ****
 * The index refers to the index number shown in the most recent listing.
