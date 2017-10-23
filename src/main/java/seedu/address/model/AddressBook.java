@@ -238,7 +238,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Sorts the persons according to name
      */
     public void sortPersonList() {
-        persons.sortPersons(); 
+        persons.sortPersons();
     }
 
 
