@@ -12,7 +12,33 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W-11 B4`      Since: `Sep 2017`      Licence: `MIT`
+
+== Welcome to Unify
+Unify is a Command Line Interface AddressBook that helps manage your contacts efficiently.
+
+=== Do More with Less
+Unlike conventional Address Books, Unify adopts a CLI (Command Line Interface).
+By having a CLI, you can navigate and manage Unify efficiently by typing `Commands`.
+These `Commands` concisely capture the important details of your action into a single line.
+With just one line, you can traverse your large network to find your old pal John or update your Mum's phone number.
+Now you can spend less time in your Address Book, and more time on what matters most to you.
+
+
+=== First Time CLI User?
+
+* Don't fret! Unify offers inline hints to prompt you on what to type next,
++
+image::Hints.png[width="300"]
++
+and will validate your input as you type away. +
++
+image::Validation.png[width="300"]
++
+* Afraid you will accidentally delete your girlfriend's details? We've got you covered! The `undo` command lets you revert any important changes to prevent any future embarrassment/pain. +
+* Still lost? You can type `help` to access the User Guide whenever you need to. +
+* Unify will guide you along the way so that you can turn from Novice to Master in no time! +
+
 
 == Quick Start
 
