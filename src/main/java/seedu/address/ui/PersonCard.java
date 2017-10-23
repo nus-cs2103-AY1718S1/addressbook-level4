@@ -31,7 +31,7 @@ public class PersonCard extends UiPart<Region> {
 
     public final ReadOnlyPerson person;
 
-    public final int string_id;
+    public final int stringid;
 
     @FXML
     private HBox cardPane;
@@ -51,7 +51,7 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
-        string_id = displayedIndex;
+        stringid = displayedIndex;
         id.setText(displayedIndex + ". ");
         //initTags(person);
         bindListeners(person);

@@ -63,10 +63,11 @@ public class PersonInformationPanel extends UiPart<Region> {
         this.person = null; }
 
     /**
-     * loads the selected person's information to be displayed.
+     * binds the person's information to that of the person card.
      * @param person
+     * @param personid
      */
-    private void bindListeners(ReadOnlyPerson person, int person_id) {
+    private void bindListeners(ReadOnlyPerson person, int personid) {
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags();
@@ -74,7 +75,12 @@ public class PersonInformationPanel extends UiPart<Region> {
 
     }
 
-    private void loadPersonInformation(ReadOnlyPerson person, int person_id) {
+    /**
+     * loads the selected person's information to be displayed.
+     * @param person
+     * @param personid
+     */
+    private void loadPersonInformation(ReadOnlyPerson person, int personid) {
         this.person = person;
         tags.getChildren().clear();
         initTags();
@@ -82,7 +88,7 @@ public class PersonInformationPanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        id.setText(Integer.toString(person_id));
+        id.setText(Integer.toString(personid));
 
     }
 
@@ -101,8 +107,8 @@ public class PersonInformationPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonInformation(event.getNewSelection().person, event.getNewSelection().string_id);
-        bindListeners(event.getNewSelection().person, event.getNewSelection().string_id);
+        loadPersonInformation(event.getNewSelection().person, event.getNewSelection().stringid);
+        bindListeners(event.getNewSelection().person, event.getNewSelection().stringid);
     }
 
     @Override
