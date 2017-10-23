@@ -29,21 +29,21 @@ public class SortCommandParser implements Parser<SortCommand> {
         String trimmedArgs = args.trim();
 
         switch (trimmedArgs) {
-            case SORTBYNAMEASCENDING:
-                return new SortCommand(ReadOnlyPerson.NAMESORTASC);
-            case SORTBYEMAILASCENDING:
-                return new SortCommand(ReadOnlyPerson.EMAILSORTASC);
-            case SORTBYPHONEASCENDING:
-                return new SortCommand(ReadOnlyPerson.PHONESORTASC);
-            case SORTBYNAMEDESCENDING:
-                return new SortCommand(ReadOnlyPerson.NAMESORTDSC);
-            case SORTBYEMAILDESCENDING:
-                return new SortCommand(ReadOnlyPerson.EMAILSORTDSC);
-            case SORTBYPHONEDESCENDING:
-                return new SortCommand(ReadOnlyPerson.PHONESORTDSC);
-            default:
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        case SORTBYNAMEASCENDING:
+            return new SortCommand(ReadOnlyPerson.NAMESORTASC);
+        case SORTBYEMAILASCENDING:
+            return new SortCommand(ReadOnlyPerson.EMAILSORTASC);
+        case SORTBYPHONEASCENDING:
+            return new SortCommand(ReadOnlyPerson.PHONESORTASC);
+        case SORTBYNAMEDESCENDING:
+            return new SortCommand(ReadOnlyPerson.NAMESORTDSC);
+        case SORTBYEMAILDESCENDING:
+            return new SortCommand(ReadOnlyPerson.EMAILSORTDSC);
+        case SORTBYPHONEDESCENDING:
+            return new SortCommand(ReadOnlyPerson.PHONESORTDSC);
+        default:
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
     }
 
