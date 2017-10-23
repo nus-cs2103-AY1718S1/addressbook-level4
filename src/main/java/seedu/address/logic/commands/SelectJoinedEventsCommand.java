@@ -1,13 +1,13 @@
 package seedu.address.logic.commands;
 
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.EventContainsKeywordPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Selects a person identified using it's last displayed index from the address book
@@ -34,7 +34,7 @@ public class SelectJoinedEventsCommand extends Command {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         String temp = "";
 
-        for(Index targetIndex: indexList) {
+        for (Index targetIndex: indexList) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }

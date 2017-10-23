@@ -1,14 +1,14 @@
 package seedu.address.logic.parser;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.SelectJoinedEventsCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.SelectJoinedEventsCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new SelectJoinedEventsCommand object
@@ -29,7 +29,7 @@ public class SelectJoinedEventsCommandParser implements Parser<SelectJoinedEvent
         String[] indexes = trimmedArgs.split("\\s+");
         try {
             List<Index> indexList = new ArrayList<>();
-            for(String test : indexes) {
+            for (String test : indexes) {
                 Index index = ParserUtil.parseIndex(test);
                 indexList.add(index);
             }
