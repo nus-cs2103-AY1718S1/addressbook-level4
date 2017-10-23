@@ -1,5 +1,11 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.ListingUnit.LESSON;
+import static seedu.address.model.ListingUnit.getCurrentListingUnit;
+
+import java.util.List;
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -11,13 +17,6 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.FixedLocationPredicate;
 import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
-
-import java.util.List;
-import java.util.function.Predicate;
-
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.getCurrentListingUnit;
-
 
 /**
  * Views all persons with the selected listing unit from the address book.
@@ -66,7 +65,7 @@ public class ViewCommand extends Command {
             model.setViewingPanelAttribute("default");
             break;
         }
-        
+
         ListingUnit.setCurrentListingUnit(LESSON);
 
         EventsCenter.getInstance().post(new ChangeListingUnitEvent());
@@ -74,6 +73,10 @@ public class ViewCommand extends Command {
         return new CommandResult(resultMessage);
     }
 
+    /***
+     * Update the filterList that only returns lesson with the same location or module name
+     * base in the current listing unit
+     */
     private String updateFilterList(ReadOnlyLesson toView) {
 
         Predicate predicate;
