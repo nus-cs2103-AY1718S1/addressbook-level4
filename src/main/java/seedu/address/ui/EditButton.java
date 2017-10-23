@@ -59,6 +59,6 @@ public class EditButton extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         int baseOneIndex = event.getSelectionIndex() + 1;
-        setSelectedIndex(baseOneIndex); 
+        setSelectedIndex(baseOneIndex);
     }
 }
