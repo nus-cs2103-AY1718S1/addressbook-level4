@@ -5,7 +5,6 @@ import java.util.HashMap;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -38,49 +37,14 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
     private Label formClass;
-    @FXML
-    private Label grades;
-    @FXML
-    private Label postalCode;
-    @FXML
-    private Label email;
-    @FXML
-    private Label remark;
-    @FXML
-    private FlowPane tags;
 
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        initialiseTags(person);
         bindListeners(person);
-    }
-
-    /**
-     * Obtain tag colors
-     * @param tagValue is the String description of the tag
-     * @return the designated tag colors according to the tag description
-     */
-    private static String obtainTagColors(String tagValue) {
-
-        if (!tagColors.containsKey(tagValue)) {
-            switch(tagValue) {
-            case "friends":
-                tagColors.put(tagValue, availableColors[1]);
-                break;
-            case "colleagues":
-                tagColors.put(tagValue, availableColors[0]);
-                break;
-            default:
-                tagColors.put(tagValue, availableColors[2]);
-            }
-        }
-        return tagColors.get(tagValue);
     }
 
     /**
@@ -90,28 +54,7 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
         formClass.textProperty().bind(Bindings.convert(person.formClassProperty()));
-        grades.textProperty().bind(Bindings.convert(person.gradesProperty()));
-        postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            initialiseTags(person);
-        });
-    }
-
-    /**
-     * Initialise the {@code person} tags
-     * @param person Person to be assigned tag colour.
-     */
-    private void initialiseTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
     }
 
     @Override
