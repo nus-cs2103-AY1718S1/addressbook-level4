@@ -1,9 +1,9 @@
 package seedu.address.model.module.predicates;
 
+import seedu.address.model.module.ReadOnlyLesson;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import seedu.address.model.module.ReadOnlyLesson;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
@@ -61,63 +61,65 @@ public class LessonContainsKeywordsPredicate extends FindPredicate {
     @Override
     public boolean test(ReadOnlyLesson lesson) {
 
-        if (!oldKeywords.isEmpty()) {
+        /***
+         if (!oldKeywords.isEmpty()) {
 
-            filterOldKeyWords(lesson);
+         filterOldKeyWords(lesson);
 
 
-            for (int i = 0; i < keywords.size(); i++) {
+         for (int i = 0; i < keywords.size(); i++) {
 
-                switch (attribute) {
-                case "module":
-                    if ((lesson.getCode().equals(currentViewingLesson.getCode())) && filteredLesson.contains(lesson)
-                            && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
+         switch (attribute) {
+         case "module":
+         if ((lesson.getCode().equals(currentViewingLesson.getCode())) && filteredLesson.contains(lesson)
+         && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+         || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+         || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+         || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
 
-                        return true;
+         return true;
 
-                    }
-                case "location":
-                    if (lesson.getLocation().equals(currentViewingLesson.getLocation()) && filteredLesson.contains(lesson)
-                            && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
+         }
+         case "location":
+         if (lesson.getLocation().equals(currentViewingLesson.getLocation()) && filteredLesson.contains(lesson)
+         && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+         || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+         || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+         || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
 
-                        return true;
-                    }
+         return true;
+         }
+
+         }
+
+         }
+
+         } else {
+         ***/
+        for (int i = 0; i < keywords.size(); i++) {
+
+            switch (attribute) {
+            case "module":
+                if ((lesson.getCode().equals(currentViewingLesson.getCode()))
+                        && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
+
+                    return true;
 
                 }
 
-            }
+            case "location":
+                if (lesson.getLocation().equals(currentViewingLesson.getLocation())
+                        && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
 
-        } else {
-
-            for (int i = 0; i < keywords.size(); i++) {
-
-                switch (attribute) {
-                case "module":
-                    if ((lesson.getCode().equals(currentViewingLesson.getCode()))
-                            && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
-
-                        return true;
-
-                    }
-                case "location":
-                    if (lesson.getLocation().equals(currentViewingLesson.getLocation())
-                            && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                            || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
-
-                        return true;
-                    }
-
+                    return true;
                 }
 
             }
