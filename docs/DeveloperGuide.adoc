@@ -364,6 +364,26 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Implementing Meeting Class
+
+The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
+such as AddMeeting, DeleteMeeting, EditMeeting and ListMeeting. These commands will inherit from UndoableCommand while FindMeeting inherits from Command.
+
+The attributes of Meeting class includes NameMeeting, DateTime, Place, PersonToMeet and PhoneNum.
+The following sequence diagram below shows how AddMeeting operation works:
+
+image::addMeetingSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Creation of Meeting class +
+**Alternative 1 (current choice):** Meeting class that is created with 'PersonToMeet' and 'PhoneNum' class +
+**Pros:** Easy to implement +
+**Cons:** More codes for developers to write and change +
+**Alternative 2:** Input a person class in Meeting class to retrieve their name and phone number +
+**Pros:** Allows developers to be more flexible to implement with meeting class  +
+**Cons:** It is difficult to implement.
+
 === Edit Meeting
 
 The edit meeting command is an undoable command which allows the user to edit the `MeetingName`, `DateTime` or `Place` of
@@ -414,22 +434,15 @@ the same as one of the preexisting Meetings in the addressbook.
 
 ---
 
-=== Implementing Meeting Class
-
-The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
-such as AddMeeting, DeleteMeeting, EditMeeting and ListMeeting. These commands will inherit from UndoableCommand while FindMeeting inherits from Command.
-
-The attributes of Meeting class includes NameMeeting, DateTime, Place, PersonToMeet and PhoneNum.
-The following sequence diagram below shows how AddMeeting operation works:
-
-image::addMeetingSequenceDiagram.png[width="800"]
-
 === Meeting Card
 
 The implementation of meeting card starts of from creating 'Meeting' class which resides in the Model component of this application. This meeting card also requires the UI component for this cards to be properly shown to the users.
 
 * Firstly, the Meeting class is created with object properties like 'Name of meeting', 'DateTime'(which uses java.time), 'person to meet', 'phone number' and 'location of meeting'. We want all these object properties to facilitate the users' ability to retrieve these information of his/her scheduled meeting. This is handled by ModelManager.
 * These properties of are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
+
+image::UiMeetingCardSequenceDiagram.png[width="800"]
+
 * The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first.
 
 image::MeetingCard.png[width="250"]
@@ -449,21 +462,11 @@ image::MeetingCard3.png[width="250"]
 
 ==== Design Considerations
 
-**Aspect:** Creation of Meeting class +
-**Alternative 1 (current choice):** Meeting class that is created with 'PersonToMeet' and 'PhoneNum' class +
-**Pros:** Easy to implement +
-**Cons:** More codes for developers to write and change +
-**Alternative 2:** Input a person class in Meeting class to retrieve their name and phone number +
-**Pros:** Allows developers to be more flexible to implement with meeting class  +
-**Cons:** It is difficult to implement.
-
----
-
 **Aspect:** Ways to be implemented as a reminder of the urgency of the meeting +
 **Alternative 1 (current choice):** Colour is applied to meeting card +
 **Pros:** Easy to implement but further developers can enhance the colors easily. +
 **Cons:** Might not be as appealing to some users. +
-**Alternative 2 (future choice):** A pop-up reminder to show meeting on the current day. +
+**Alternative 2 (future choice):** A pop-up reminder to show meeting on the current day and with the colours applied to meeting card +
 **Pros:** Will be a better reminder to users.
 
 == Documentation
@@ -833,13 +836,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |undo the previous command |revert my changes
 
-|`* * *` |user |edit the particulars of a person |i can update or make amendments to the particulars of any contact
+|`* * *` |user |edit the particulars of a person |I can update or make amendments to the particulars of any contact
 
-|`* * *` |user |add multiple Tags to a person |i can filter and search for contacts with a particular keyword in their tagNames
+|`* * *` |user |add multiple Tags to a person |I can filter and search for contacts with a particular keyword in their tagNames
 
 |`* * *` |user |list out every contact's information at once |retrieve information of all my contacts
 
-|`* * *` |user |clear all contacts |have an empty addressbook
+|`* * *` |user |clear all contacts |have an empty AddressBook
+
+|`* * *` |lazy user |I want my meeting list to clear outdated meeting |I do not have to delete them myself
+
+|`* * *` |user |I want my meetings to be sorted according to nearest date | I don't have to find the more important meetings ( which have the closer dates)
+
+|`* * *` |lazy user |I want to be reminded by Meeting cards |I know I have meeting for the next few days
 
 |`* * *` |user |redo the previously undone command |retrieve the previous change
 
@@ -847,25 +856,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |heavy user |use commands in short forms |input and execute my commands faster
 
-|`* * *` |heavy user |schedule meetings with the contacts |have a record and be reminded on when i am meeting them
+|`* * *` |heavy user |schedule meetings with the contacts |have a record and be reminded on when I am meeting them
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |new user |view the list of all commands available |i can understand the functions of each command
+|`* *` |new user |view the list of all commands available |I can understand the functions of each command
 
-|`* *` |forgetful user |add multiple Tags to each contact |in case i forget the person's name, his or her contact can still be found through keywords in their Tags
+|`* *` |forgetful user |add multiple Tags to each contact |in case I forget the person's name, his or her contact can still be found through keywords in their Tags
 
-|`* *` |frequent user |save School Email Address(sub-email) to a contact |i can access the person's school email if required
+|`* *` |frequent user |save School Email Address(sub-email) to a contact |I can access the person's school email if required
 
-|`* *` |frequent user |create groups for contacts according to the keywords in their Tags |i can view all the contacts of each group with one search
+|`* *` |frequent user |create groups for contacts according to the keywords in their Tags |I can view all the contacts of each group with one search
 
-|`*` |user that is bad at recalling people by their name|insert(or link) a picture of the person |i can double check that i retrieved the correct contact and also help me to recall how the person looks like
+|`*` |user that is bad at recalling people by their name|insert(or link) a picture of the person |I can double check that I retrieved the correct contact and also help me to recall how the person looks like
 
 |`* *` |lazy and forgetful user |filter contacts by certain fields with keywords |still filter and search with certain keywords of other field instead of name only
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*` |heavy user |save Office address (sub-address) to a contact |have information about his/her office address if i need it
+|`*` |heavy user |save Office address (sub-address) to a contact |have information about his/her office address if I need it
 |=======================================================================
 
 {More to be added}
@@ -986,8 +995,10 @@ Use case ends.
 
 1.  User requests to find person with name keywords
 2.  AddressBook shows a list of persons with keywords
-3.  User requests to add schedule of a specific person in the list
-4.  AddressBook shows lists of meetings
+3.  User requests to add meeting of a specific person in the list
+4.  AddressBook adds the meeting
+5.  AddressBook sorts the meeting list
+6.  AddressBook shows lists of meetings
 +
 Use case ends.
 
@@ -1004,6 +1015,23 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: ListMeeting
+
+*MSS*
+
+1.  User requests to list meetings
+2.  AddressBook shows a list of meetings
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
