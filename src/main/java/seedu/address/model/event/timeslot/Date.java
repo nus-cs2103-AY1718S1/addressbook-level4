@@ -7,42 +7,61 @@ import java.time.LocalDate;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.event.DateParser;
+import seedu.address.model.event.exceptions.InvalidDateException;
 
 /**
- * Represents an Timings's date in sales navigator.
+ * Represents an Timeslot's date in sales navigator.
+ * Is valid as declared in {@link #isValidDate(int, int, int)}
  */
-public class Date {
+public class Date implements Comparable<Date> {
     public static final String MESSAGE_DATE_CONSTRAINTS =
             "Dates should represent";
 
-    public final LocalDate date;
-    public final String dateAsString;
+    private int day;
+    private int month;
+    private int year;
+    private String date;
 
     /**
-     * Validates given title.
+     * Validates given date.
      *
-     * @throws IllegalValueException if given title string is invalid.
+     * @throws IllegalValueException if given date string is invalid.
      */
-    public Date(String date) throws IllegalValueException {
+    public Date(String date) throws IllegalValueException, InvalidDateException {
         requireNonNull(date);
-        String trimmedDate = date.trim();
 
+        String trimmedDate = date.trim();
         DateParser parser = new DateParser();
 
-        try {
-            int[] dateInfo = parser.parse(trimmedDate);
-            LocalDate dateToSave = LocalDate.of(dateInfo[0], dateInfo[1], dateInfo[2]);
-            this.date = dateToSave;
-        } catch (IllegalValueException e) {
-            throw e;
+        int[] dateInfo = parser.parse(trimmedDate);
+        //Check if valid gregorian date
+        this.day = dateInfo[0];
+        this.month = dateInfo[1];
+        this.year = dateInfo[2];
+
+        if (isValidDate(year, month, day)) {
+            this.date = trimmedDate;
+        } else {
+            throw new InvalidDateException();
         }
 
-        this.dateAsString = trimmedDate;
+    }
+
+    /**
+     * Checks if the given arguments for a date is valid in the gregorian calendar.
+     */
+    public boolean isValidDate(int year, int month, int day) {
+        try {
+            LocalDate.of(year, month, day);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public String toString() {
-        return dateAsString;
+        return date;
     }
 
     @Override
@@ -54,6 +73,50 @@ public class Date {
 
     @Override
     public int hashCode() {
-        return dateAsString.hashCode();
+        return date.hashCode();
+    }
+
+    @Override
+    public int compareTo(Date other) {
+        int thisYear = this.getYear();
+        int comparingYear = other.getYear();
+        int thisMonth = this.getMonth();
+        int comparingMonth = other.getMonth();
+        int thisDay = this.getDay();
+        int comparingDay = other.getDay();
+
+        if (thisYear != comparingYear) {
+            return thisYear - comparingYear;
+        } else if (thisMonth != comparingMonth) {
+            return thisMonth - comparingMonth;
+        } else {
+            return thisDay - comparingDay;
+        }
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    //================================= Setter methods for testing ==========================================
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }
