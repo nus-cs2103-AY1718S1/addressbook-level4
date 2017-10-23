@@ -18,6 +18,7 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.property.PropertyManager;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -56,7 +57,16 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
+    // Manually added
+    public static final ReadOnlyPerson A1234B = new PersonBuilder().withName("HEHEHAHA").withPhone("9198756")
+            .withEmail("uniqueBoy@example2.com").withAddress("uniqueAve").withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+            .build();
+
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+
+    static {
+        PropertyManager.initializePropertyManager();
+    }
 
     private TypicalPersons() {} // prevents instantiation
 

@@ -1,0 +1,93 @@
+= Using Git
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+
+https://git-scm.com/[Git] is a popular distributed version control software (VCS). It is used to track changes in
+computer files and coordinating work on those files among multiple people. It is primarily used for source code
+management in software development,but it can be used to keep track of changes in any set of files.
+
+== Why Git?
+
+https://en.wikipedia.org/wiki/Linus_Torvalds[Linus Torvalds] created Git in 2005 and he once wrote in the `README` file:
+
+****
+The name "git" was given by Linus Torvalds when he wrote the very first version. He described the tool as "the stupid
+content tracker" and the name as (depending on your way):
+
+- random three-letter combination that is pronounceable, and not actually used by any common UNIX command. The fact that
+it is a mispronunciation of "get" may or may not be relevant.
+- stupid. contemptible and despicable. simple. Take your pick from the dictionary of slang.
+- "global information tracker": you're in a good mood, and it actually works for you. Angels sing, and a light suddenly fills the room.
+- "g*dd*mn idiotic truckload of sh*t": when it breaks
+****
+
+[[sync-your-fork]]
+
+== Sync your fork with team account
+
+Your personal fork of the repository on https://github.com/[GitHub] should always be even or ahead of `CS2103AUG2017-T09-B3:master`.
+
+image::github_sync_fork.png[width="600"]
+_Figure 2.1 : Sync your GitHub fork_
+
+Open a shell and enter the following commands:
+
+[source,shell]
+----
+# See all your remotes.
+git remote -vv
+
+# Add team repository to your list of remotes (call it upstream).
+git remote add upstream git@github.com:CS2103AUG2017-T09-B3/main.git
+
+# See all your remotes, there should be one more now.
+git remote -vv
+
+# Fetch all branches from all remotes.
+git fetch --all
+
+# Merge the master branch from team repository to your current branch.
+git merge upstream/master
+
+# Add and commit all changes to your current branch.
+git commit -am "Sync with upstream master"
+
+# Push changes to the remote branch of your current branch.
+git push
+----
+
+== Solve merge conflict
+
+When you create a pull request (PR), you may face merge conflict if the destination branch and base branch both change some common parts.
+In order to avoid merge conflict as much as possible, you should link:#sync-your-fork[sync your fork] frequently.
+
+Open a shell and enter the following commands:
+
+[source,shell]
+----
+# Fetch all branches from all remotes.
+git fetch --all
+
+# Merge the master branch from team repository to your current branch.
+git merge upstream/master
+----
+
+Git should tell you where the conflict happens now. Open your IDE or favorite text editor to change the conflicting part accordingly.
+
+[source,shell]
+----
+# Add and commit all changes to your current branch.
+git commit -am "Fix merge conflict"
+
+# Push changes to the remote branch of your current branch.
+git push
+----
+
+== Caution
+
+The commands differ every time. You should see the hints Git give you to proceed.

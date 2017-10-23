@@ -1,6 +1,9 @@
 = Contact Us
 :stylesDir: stylesheets
 
-* *Bug reports, Suggestions* : Post in our https://github.com/se-edu/addressbook-level4/issues[issue tracker] if you noticed bugs or have suggestions on how to improve.
-* *Contributing* : We welcome pull requests. Follow the process described https://github.com/oss-generic/process[here]
-* *Email us* : You can also reach us at `damith [at] comp.nus.edu.sg`
+The *_BoNUS_* project will be more successful thanks to your contribution.
+
+* *Bug reports, Suggestions* : Post in our https://github.com/CS2103AUG2017-T09-B3/main/issues[issue tracker] if you have noticed bugs or have suggestions on how to improve.
+* *Contributing* : We welcome pull requests. Follow the process described https://github.com/oss-generic/process[here].
+* *Email us* : You can reach us at mailto:team2103bot@gmail.com[team2103bot@gmail.com].
+* *Slack*: You can send an email to request for joining our slack https://team2103t.slack.com/[workspace].

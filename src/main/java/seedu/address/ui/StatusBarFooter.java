@@ -18,9 +18,9 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
  * A ui for the status bar that is displayed at the footer of the application.
  */
 public class StatusBarFooter extends UiPart<Region> {
-
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String SYNC_TOTAL = "%1$d person(s) and %2$d event(s) total";
 
     /**
      * Used to generate time stamps.
@@ -39,14 +39,17 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar syncStatus;
     @FXML
+    private StatusBar totalCount;
+    @FXML
     private StatusBar saveLocationStatus;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, int totalPersons, int totalEvents) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
+        setTotal(totalPersons, totalEvents);
     }
 
     /**
@@ -71,11 +74,15 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    private void setTotal(int totalPersons, int totalEvents) {
+        Platform.runLater(() -> this.totalCount.setText(String.format(SYNC_TOTAL, totalPersons, totalEvents)));
+    }
+
     @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        long now = clock.millis();
-        String lastUpdated = new Date(now).toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+        String lastUpdated = new Date(clock.millis()).toString();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setTotal(event.data.getPersonList().size(), event.data.getEventList().size());
     }
 }

@@ -10,10 +10,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicateEventException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -26,20 +31,24 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueEventList events;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
+     * among constructors.
      */
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        events = new UniqueEventList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -49,12 +58,27 @@ public class AddressBook implements ReadOnlyAddressBook {
         resetData(toBeCopied);
     }
 
-    //// list overwrite operations
+    /*****************************************************
+     * List overwrite operations
+     *****************************************************/
 
+    /**
+     * Replaces all persons in this list with those in the argument person list.
+     */
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
 
+    /**
+     * Replaces all events in this list with those in the argument event list.
+     */
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
+        this.events.setEvents(events);
+    }
+
+    /**
+     * Replaces all tags in this list with those in the argument tag list.
+     */
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -69,12 +93,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
+        try {
+            setEvents(newData.getEventList());
+        } catch (DuplicateEventException de) {
+            assert false : "AddressBooks should not have duplicate events";
+        }
+
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
 
-    //// person-level operations
+    /*****************************************************
+     * Person-level operations
+     *****************************************************/
 
     /**
      * Adds a person to the address book.
@@ -114,6 +146,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    /**
+     * Replaces the given event {@code target} in the list with {@code editedReadOnlyPerson}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     *
+     * @throws DuplicateEventException if updating the event's details causes the event to be equivalent to
+     *      another existing event in the list.
+     * @throws EventNotFoundException if {@code target} could not be found in the list.
+     *
+     */
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireNonNull(editedReadOnlyEvent);
+
+        Event editedEvent = new Event(editedReadOnlyEvent);
+
+        events.setEvent(target, editedEvent);
+    }
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
@@ -156,13 +205,47 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// tag-level operations
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws EventNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
+        if (events.remove(key)) {
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+
+    /**
+     * Adds an event to the address book.
+     *
+     * @throws DuplicateEventException if an equivalent event already exists.
+     */
+    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
+        Event newEvent = new Event(e);
+        events.add(newEvent);
+    }
+
+    /**
+     * Sorts the events according to time
+     */
+    public void sortEventList() {
+        events.sortEvents();
+    }
+
+
+    /*****************************************************
+     * Tag-level operations
+     *****************************************************/
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
-    //// util methods
+    /*****************************************************
+     * Util methods
+     *****************************************************/
 
     @Override
     public String toString() {
@@ -173,6 +256,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getEventList() {
+        return events.asObservableList();
     }
 
     @Override

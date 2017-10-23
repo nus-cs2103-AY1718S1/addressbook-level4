@@ -39,8 +39,8 @@ import seedu.address.ui.UiManager;
  * The main entry point to the application.
  */
 public class MainApp extends Application {
-
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    // TODO: Update the version information whenever going to make a release.
+    public static final Version VERSION = new Version(1, 2, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -68,7 +68,7 @@ public class MainApp extends Application {
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, storage);
 
         ui = new UiManager(logic, config, userPrefs);
 

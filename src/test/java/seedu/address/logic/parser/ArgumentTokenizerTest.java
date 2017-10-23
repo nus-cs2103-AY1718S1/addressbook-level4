@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashSet;
+
 import org.junit.Test;
 
 public class ArgumentTokenizerTest {
@@ -133,6 +135,22 @@ public class ArgumentTokenizerTest {
         assertPreamblePresent(argMultimap, "SomePreambleStringp/ pSlash joined-tjoined");
         assertArgumentAbsent(argMultimap, pSlash);
         assertArgumentPresent(argMultimap, dashT, "not joined^Qjoined");
+        assertArgumentAbsent(argMultimap, hatQ);
+    }
+
+    @Test
+    public void tokenize_hashSetInput() {
+        HashSet<Prefix> prefixSet = new HashSet<>();
+        prefixSet.add(pSlash);
+        prefixSet.add(dashT);
+        prefixSet.add(hatQ);
+
+        String argsString = "Something here p/123 -teat";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, prefixSet);
+
+        assertPreamblePresent(argMultimap, "Something here");
+        assertArgumentPresent(argMultimap, pSlash, "123");
+        assertArgumentPresent(argMultimap, dashT, "eat");
         assertArgumentAbsent(argMultimap, hatQ);
     }
 

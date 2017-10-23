@@ -21,18 +21,20 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         /* Case: clear non-empty address book, command with leading spaces and trailing alphanumeric characters and
          * spaces -> cleared
          */
-        assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
+        String command = "   " + ClearCommand.COMMAND_WORD + " ab12   ";
+        String inputCommand = command;
+        assertCommandSuccess(command);
         assertSelectedCardUnchanged();
 
         /* Case: undo clearing address book -> original address book restored */
-        String command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = String.format(UndoCommand.MESSAGE_SUCCESS, inputCommand);
         assertCommandSuccess(command,  expectedResultMessage, defaultModel);
         assertSelectedCardUnchanged();
 
         /* Case: redo clearing address book -> cleared */
         command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        expectedResultMessage = String.format(RedoCommand.MESSAGE_SUCCESS, inputCommand);
         assertCommandSuccess(command, expectedResultMessage, new ModelManager());
         assertSelectedCardUnchanged();
 

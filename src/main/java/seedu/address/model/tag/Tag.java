@@ -23,10 +23,28 @@ public class Tag {
     public Tag(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
+
         if (!isValidTagName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;
+
+        // Adds an entry in TagColorManager if there is no entry yet.
+        if (!TagColorManager.contains(this)) {
+            TagColorManager.setColor(this);
+        }
+    }
+
+    public Tag(String name, String color) throws IllegalValueException {
+        requireNonNull(name, color);
+        String trimmedName = name.trim();
+
+        if (!isValidTagName(trimmedName)) {
+            throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
+        }
+        this.tagName = trimmedName;
+
+        TagColorManager.setColor(this, color);
     }
 
     /**
