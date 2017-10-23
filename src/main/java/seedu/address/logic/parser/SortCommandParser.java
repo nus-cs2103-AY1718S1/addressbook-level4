@@ -11,9 +11,13 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class SortCommandParser implements Parser<SortCommand> {
 
-    public static final String SORTBYNAME = "name";
-    public static final String SORTBYEMAIL = "email";
-    public static final String SORTBYPHONE = "phone";
+    public static final String SORTBYNAMEASCENDING = "name asc";
+    public static final String SORTBYEMAILASCENDING = "email asc";
+    public static final String SORTBYPHONEASCENDING = "phone asc";
+    public static final String SORTBYNAMEDESCENDING = "name dsc";
+    public static final String SORTBYEMAILDESCENDING = "email dsc";
+    public static final String SORTBYPHONEDESCENDING = "phone dsc";
+
 
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
@@ -25,12 +29,18 @@ public class SortCommandParser implements Parser<SortCommand> {
         String trimmedArgs = args.trim();
 
         switch (trimmedArgs) {
-            case SORTBYNAME:
-                return new SortCommand(ReadOnlyPerson.NAMESORT);
-            case SORTBYEMAIL:
-                return new SortCommand(ReadOnlyPerson.EMAILSORT);
-            case SORTBYPHONE:
-                return new SortCommand(ReadOnlyPerson.PHONESORT);
+            case SORTBYNAMEASCENDING:
+                return new SortCommand(ReadOnlyPerson.NAMESORTASC);
+            case SORTBYEMAILASCENDING:
+                return new SortCommand(ReadOnlyPerson.EMAILSORTASC);
+            case SORTBYPHONEASCENDING:
+                return new SortCommand(ReadOnlyPerson.PHONESORTASC);
+            case SORTBYNAMEDESCENDING:
+                return new SortCommand(ReadOnlyPerson.NAMESORTDSC);
+            case SORTBYEMAILDESCENDING:
+                return new SortCommand(ReadOnlyPerson.EMAILSORTDSC);
+            case SORTBYPHONEDESCENDING:
+                return new SortCommand(ReadOnlyPerson.PHONESORTDSC);
             default:
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
