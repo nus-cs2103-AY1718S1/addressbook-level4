@@ -222,6 +222,8 @@ The person information panel is created using javafx. It should display detailed
 
 The event of the selection of a person is registered using the Event Bus system.
 
+The tags and various information of the person are bound to the information in PersonCard with the method bindListeners, so whenever the information updates, the information displayed in the Person Information Panel will change too.
+
 The following shows the usage of the person information panel:
 
 Before selecting a person:

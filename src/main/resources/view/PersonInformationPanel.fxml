@@ -10,8 +10,8 @@
    <children>
       <VBox>
          <children>
-            <Label fx:id="id" styleClass="label-header" text="\$id" />
-            <Label fx:id="name" styleClass="label-header" text="\$name" />
+            <Label fx:id="id" styleClass="label-header" />
+            <Label fx:id="name" styleClass="label-header" />
             <HBox>
                <children>
                   <Label styleClass="label-bright" text="Tags: " />
@@ -21,19 +21,19 @@
             <HBox>
                <children>
                   <Label styleClass="label-bright" text="Phone: " />
-                  <Label fx:id="phone" styleClass="label-bright" text="\$phone" />
+                  <Label fx:id="phone" styleClass="label-bright" />
                </children>
             </HBox>
             <HBox>
                <children>
                   <Label styleClass="label-bright" text="Address: " />
-                  <Label fx:id="address" styleClass="label-bright" text="\$address" />
+                  <Label fx:id="address" styleClass="label-bright" />
                </children>
             </HBox>
             <HBox>
                <children>
                   <Label styleClass="label-bright" text="Email: " />
-                  <Label fx:id="email" styleClass="label-bright" text="\$email" />
+                  <Label fx:id="email" styleClass="label-bright" />
                </children>
             </HBox>
          </children>
