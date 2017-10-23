@@ -19,7 +19,7 @@ By: `Team W13-B1`      Since: `AUG 2017`      Licence: `MIT`
 
 === Purpose
 
-UniCity is a contacts management desktop application implemented in Java. This developer guide aims to provide
+UniCity is a contact management desktop application implemented in Java. This developer guide aims to provide
 adequate information for a new developer to understand the underlying structure of UniCity and how it works.
 
 === Overview
