@@ -26,7 +26,7 @@ teaches you to perform the various commands with the aid of examples.
 
 Each feature stated in the guide also gives user suggestions on the suitable use of the features and functions.
 
-== *Quick Start*
+== *Getting Started*
 
 .  Ensure that you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -313,6 +313,31 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== *FAQ*
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+== *Command Summary*
+
+[width="90%",cols="10%,<10%,<70%",options="header",]
+|=======================================================================
+|Feature |Alias |Command Format
+| *Add* | *a* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+| *Edit* | *e* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+| *Find* | *f* | `find [PREFIX KEYWORD]...` +
+| *Favourite* | *fav* | `favourite INDEX` +
+| *List* | *l* | `list` +
+| *Select* | *s* | `select INDEX` +
+| *Help* | *h* | `help` +
+| *Remove* | *rm* | `remove [TAG]... [INDEX]...` +
+| *Delete* | *d* | `delete INDEX` +
+| *Clear* | *c* | `clear` +
+| *History* | *hs* | `history` +
+| *Undo* | *u* | `undo` +
+| *Redo* | *r* | `redo` +
+|=======================================================================
+
 == *Since v1.2*
 
 === Enhanced `find` command to accept different fields
@@ -439,32 +464,4 @@ image::highlight.png[width=""]
 Import/Export contact lists from/to the give path. +
 
 Format: `import PATH`
-
-
-
-== *FAQ*
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
-== *Command Summary*
-
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find [PREFIX KEYWORD]...` +
-e.g. `find n/James n/Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Remove* : `remove [TAG]... [INDEX]...` +
-e.g. `remove friends 1`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
 
