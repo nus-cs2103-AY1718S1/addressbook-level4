@@ -536,6 +536,8 @@ provides a workable copy of the data of Ark.
 
 === Tab autocomplete mechanism
 
+image::SDforTabAutocomplete.png[width="600"]
+
 The tab autocomplete mechanism is facilitated by the `autocomplete` method residing inside the `Autocompleter`.
 It supports the tab autocompletion for possible commands that that match the text in the CommandBox. +
 
