@@ -67,7 +67,6 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                  
                             <StackPane fx:id="browserPlaceholder">
                               <padding>
                                 <Insets bottom="10" left="10" right="10" top="10" />
