@@ -141,8 +141,8 @@ public class AddressBookParserTest {
 
         TagAddDescriptor descriptor = new TagAddDescriptor(person);
         descriptor.setTags(tagSet);
-        TagAddCommand command = (TagAddCommand) parser.parseCommand(TagAddCommand.COMMAND_WORD + " " +
-            INDEX_FIRST_PERSON.getOneBased() + " friend");
+        TagAddCommand command = (TagAddCommand) parser.parseCommand(TagAddCommand.COMMAND_WORD + " "
+            + INDEX_FIRST_PERSON.getOneBased() + " friend");
         assertEquals(new TagAddCommand(singlePersonIndexList, descriptor), command);
     }
 

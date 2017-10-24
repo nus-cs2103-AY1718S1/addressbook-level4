@@ -60,8 +60,7 @@ public class PersonCard extends UiPart<Region> {
         String color = colors[random.nextInt(colors.length)];
         if (!tagColorMap.containsKey(tagString)) {
             tagColorMap.put(tagString, color);
-        }
-        else {
+        } else {
             color = tagColorMap.get(tagString);
         }
         return color;
