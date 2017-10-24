@@ -142,6 +142,9 @@ public class AddCommandTest {
 
         @Override
         public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException { }
+
+        @Override
+        public void sortAllPersons () throws DuplicatePersonException { }
     }
 
     /**

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -16,6 +17,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.NameComparator;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -128,11 +130,8 @@ public class ModelManager extends ComponentManager implements Model {
                 importantPersons.add(notImportantPersons.get(j));
             }
 
-            for (int k = 0; k < importantPersons.size(); k++) {
-                if (!addressBook.removePerson(importantPersons.get(k))) {
-                    throw new PersonNotFoundException();
-                }
-            }
+            /** Clear all of the addressbook contacts. */
+            this.addressBook.resetData(new AddressBook());
 
             for (int s = 0; s < importantPersons.size(); s++) {
                 addressBook.addPerson(importantPersons.get(s));
@@ -141,6 +140,25 @@ public class ModelManager extends ComponentManager implements Model {
             updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
             indicateAddressBookChanged();
         }
+    }
+
+    @Override
+    public void sortAllPersons() throws DuplicatePersonException {
+        ArrayList<ReadOnlyPerson> toBeSortedPersonList = new ArrayList<ReadOnlyPerson>();
+
+        toBeSortedPersonList.addAll(addressBook.getPersonList());
+        Collections.sort(toBeSortedPersonList, new NameComparator());
+
+        AddressBook newAb  = new AddressBook();
+
+        for (int j = 0; j < toBeSortedPersonList.size(); j++) {
+            newAb.addPerson(toBeSortedPersonList.get(j));
+        }
+
+        this.addressBook.resetData(newAb);
+
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================
