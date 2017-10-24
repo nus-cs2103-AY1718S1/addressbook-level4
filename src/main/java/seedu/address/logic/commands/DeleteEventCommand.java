@@ -75,4 +75,12 @@ public class DeleteEventCommand extends UndoableCommand {
                     + "it should not fail now");
         }
     }
+
+    /**
+     * Assign a typical event to delete
+     * Can only be used for JUnit test
+     */
+    public void assignEvent(ReadOnlyEvent event) {
+        this.eventToDelete = event;
+    }
 }

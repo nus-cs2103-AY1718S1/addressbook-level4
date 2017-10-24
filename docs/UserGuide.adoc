@@ -39,7 +39,8 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI should appear in a few seconds, as shown in the figure below.
+   Note that you will see some initial data if it is the first time to use.
 +
 image::UG_origin.png[width="790"]
 _Figure 2 GUI_
@@ -100,7 +101,7 @@ You can use it to add an event to the event list +
 Format: `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENT_TIME`
 
 ****
-* You need to type EVENT_TIME as a date format DD/MM/YYYY
+* You need to type EVENT_TIME as a date format DD/MM/YYYY (Use "/" insetead of "-")
 ****
 
 Example:
@@ -480,6 +481,16 @@ Format & Example: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+== Features coming in V2.0
+
+[discrete]
+=== The following features are coming for version 2.0
+
+. Users can connect this app with several social media platforms, and import data from them. +
+. Users can send messages through this app. +
+. Users can be alarmed when an event is going to take place. +
+. Users can design their own GUI appearances (e.g colour, font). +
 
 == Command Summary
 

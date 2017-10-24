@@ -15,7 +15,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute() {
         model.sortPersons();
-        //model.sortEvents();
+        model.sortEvents();
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(MESSAGE_SUCCESS);
