@@ -37,6 +37,8 @@ public class SelectCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+        ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
+        personToEdit.incrementAccess();
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));

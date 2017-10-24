@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.AccessCount;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -38,6 +39,8 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement
     private Date createdAt;
+    @XmlElement
+    private int accessCount;
     @XmlElement (required = true)
     private String facebook;
     @XmlElement (required = true)
@@ -90,6 +93,7 @@ public class XmlAdaptedPerson {
         final Remark remark = new Remark(this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Date createdAt;
+        final AccessCount accessCount = new AccessCount(this.accessCount);
         final SocialMedia socialMedia = new SocialMedia(
                 facebook == null ? "" : facebook, twitter == null ? "" : twitter, instagram == null ? "" : instagram);
 
@@ -100,6 +104,7 @@ public class XmlAdaptedPerson {
             createdAt = new Date(this.createdAt.getTime());
         }
 
-        return new Person(name, phone, email, address, remark, tags, createdAt, socialMedia);
+        return new Person(name, phone, email, address, remark, tags, createdAt, socialMedia, accessCount);
+
     }
 }

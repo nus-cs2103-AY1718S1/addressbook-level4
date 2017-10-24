@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.AccessCount;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -93,25 +94,30 @@ public class AddRemoveTagsCommand extends UndoableCommand {
         HashSet<Tag> newTags = new HashSet<Tag>(personTags);
         newTags.addAll(tags);
 
+        AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
+
         return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getRemark(), newTags,
-                personToEdit.getCreatedAt(), personToEdit.getSocialMedia());
+                personToEdit.getCreatedAt(), personToEdit.getSocialMedia(), accessCount);
+
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with the {@code tags} to be removed.
      */
-    private static Person removeTagsFromPerson(ReadOnlyPerson personToEdit, Set<Tag> tags) {
+    private static Person removeTagsFromPerson(ReadOnlyPerson personToEdit, Set<Tag> tags)  {
         assert personToEdit != null;
 
         Set<Tag> personTags = personToEdit.getTags();
         HashSet<Tag> newTags = new HashSet<Tag>(personTags);
         newTags.removeAll(tags);
 
+        AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
+
         return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getRemark(), newTags, personToEdit.getCreatedAt(),
-                personToEdit.getSocialMedia());
+                personToEdit.getSocialMedia(), accessCount);
     }
 
     @Override

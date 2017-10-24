@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.AccessCount;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -54,11 +55,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Remark remark = new Remark("");
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Date createdAt = new Date();
+            AccessCount accessCount = new AccessCount(0);
             SocialMedia socialMedia = ParserUtil.parseSocialMedia(argMultimap.getValue(PREFIX_FACEBOOK),
                     argMultimap.getValue(PREFIX_TWITTER), argMultimap.getValue(PREFIX_INSTAGRAM));
-
-            ReadOnlyPerson person = new Person(name, phone, email, address, remark, tagList, createdAt, socialMedia);
-
+            ReadOnlyPerson person = new Person(name, phone, email,
+                    address, remark, tagList, createdAt, socialMedia, accessCount);
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

@@ -68,6 +68,7 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        event.getNewSelection().person.incrementAccess();
         loadPersonPage(event.getNewSelection().person);
     }
 }

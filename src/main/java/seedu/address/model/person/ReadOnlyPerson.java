@@ -27,6 +27,9 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<Date> createdAtProperty();
     Date getCreatedAt();
+    ObjectProperty<AccessCount> accessCountProperty();
+    AccessCount getAccessCount();
+    void incrementAccess();
     ObjectProperty<SocialMedia> socialMediaProperty();
     SocialMedia getSocialMedia();
 

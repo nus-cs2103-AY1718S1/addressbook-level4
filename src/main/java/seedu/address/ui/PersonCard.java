@@ -42,6 +42,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label remark;
     @FXML
+    private Label accesses;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
@@ -63,6 +65,7 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         socialMedia.textProperty().bind(Bindings.convert(person.socialMediaProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        accesses.textProperty().bind(Bindings.convert(person.accessCountProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
