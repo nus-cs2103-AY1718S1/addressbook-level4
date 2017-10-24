@@ -13,9 +13,14 @@ endif::[]
 :repoURL: https://github.com/CS2103AUG2017-W15-B4/main
 
 By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
+
 == Welcome to 3W
 
-
+3W stands for "Who, What & Where". It is an application for University students, business people and all those who have a busy daily schedule.
+3W stores information about your contact, your tasks, and build linkage between them for cross references.
+3W supports map show for contact address and task venue with a Google map window.
+3W bases on command line to interact.
+Live neat with 3W.
 
 == Quick Start
 
@@ -25,8 +30,8 @@ By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `3W.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your 3W app.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -37,7 +42,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`addTask`**`n/picnic d/have fun at Botanic Garden s/6/12/2017 12:00pm f/6/12/2017 15:00pm t/social
+* **`delete`**`3` : deletes the 3rd contact shown in the current contact list
+* **`undo`* : recover the contact deleted in the previous deletion
+* **`deleteTask`**`1` : deletes the 1st contact shown in the current task list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
