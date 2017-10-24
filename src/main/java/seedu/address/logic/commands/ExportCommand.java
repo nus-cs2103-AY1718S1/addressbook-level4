@@ -19,7 +19,7 @@ public class ExportCommand extends Command {
             + "Parameters: FILENAME \n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_SUCCESS = "Contacts successfully exported as output.vcf!!";
+    public static final String MESSAGE_SUCCESS = "Contacts successfully exported as output.vcf !!";
 
 
 
