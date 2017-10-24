@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,12 +26,14 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Note> note;
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<UniqueMeetingList> meetings;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Note note, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Note note,
+                  Set<Tag> tags, Set<Meeting> meetings) {
+        requireAllNonNull(name, phone, email, address, tags, meetings);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -37,6 +41,8 @@ public class Person implements ReadOnlyPerson {
         this.note = new SimpleObjectProperty<>(note);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protect internal meetings from changes in the arg list
+        this.meetings = new SimpleObjectProperty<>(new UniqueMeetingList(meetings));
     }
 
     /**
@@ -44,7 +50,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getNote(),
-                source.getTags());
+                source.getTags(), source.getMeetings());
     }
 
     public void setName(Name name) {
@@ -135,6 +141,26 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Meeting> getMeetings() {
+        return Collections.unmodifiableSet(meetings.get().toSet());
+    }
+
+    public ObjectProperty<UniqueMeetingList> meetingProperty() {
+        return meetings;
+    }
+
+    /**
+     * Replaces this person's tags with the tags in the argument tag set.
+     */
+    public void setMeetings(Set<Meeting> replacement) {
+        meetings.set(new UniqueMeetingList(replacement));
     }
 
     @Override

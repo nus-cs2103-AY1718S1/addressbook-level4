@@ -2,6 +2,8 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -9,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.RequestingUserPermissionEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -26,6 +29,7 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+    private boolean addressBookReplyFlag;
 
     @FXML
     private TextField commandTextField;
@@ -36,6 +40,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+        registerAsAnEventHandler(this);
+        addressBookReplyFlag = false;
     }
 
     /**
@@ -100,6 +106,40 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleCommandInputChanged() {
+        if (addressBookReplyFlag) {
+            handlePermissionCommandInputChanged();
+            addressBookReplyFlag = false;
+        } else {
+            handleCommonCommandInputChanged();
+        }
+    }
+
+    /**
+     * Executes the previous command according to the user's given permission.
+     */
+    private void handlePermissionCommandInputChanged() {
+        try {
+            CommandResult commandResult = logic.executeAfterUserPermission(commandTextField.getText());
+            initHistory();
+            historySnapshot.next();
+            // process result of the command
+            commandTextField.setText("");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+
+        } catch (CommandException | ParseException e) {
+            initHistory();
+            // handle command failure
+            setStyleToIndicateCommandFailure();
+            logger.info("Invalid command: " + commandTextField.getText());
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+    }
+
+    /**
+     * Executes the common command.
+     */
+    private void handleCommonCommandInputChanged() {
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
@@ -148,4 +188,12 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    /**
+     * Handles the event when Address Book requires user's confirmation to proceed with a command.
+     */
+    @Subscribe
+    public void handleRequestingUserPermissionEvent(RequestingUserPermissionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        addressBookReplyFlag = true;
+    }
 }
