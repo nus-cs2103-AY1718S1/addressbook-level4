@@ -14,6 +14,13 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+=== What is Rubrika?
+
+Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
+Rubrika has a simple GUI interface and focuses on using CLI to interact.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -37,7 +44,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#Features[Features] section below for details of each command.
 
 == What's New in Version 1.2
 
@@ -57,6 +64,7 @@ Searches for all persons containing `friends` tag or `family` tag.
 
 Now, you can specify which person you want to remove the tag from and not just remove from everyone on the list.
 
+[[Features]]
 == Features
 
 ====
@@ -140,6 +148,24 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Listing persons with specific tag: `findtag`
+
+Finds persons who have any of the given tags. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `friends` `colleagues` will match `colleagues` `friends`
+* Only the tag is searched.
+* Only full words will be matched e.g. `friends` will not match `friend`
+* Persons matching at least one tag will be returned (i.e. `friends` `colleagues` search). e.g. `Hans Gruber` with only `friends` tag will be returned.
+****
+
+Examples:
+
+* `findtag friends` +
+Returns all the person with the tag `friends`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
@@ -167,11 +193,10 @@ If an an index is given the tag is removed from the person +
 in the specified index shown on the list. +
 Format: `removetag TAGNAME` OR `removetag INDEX TAGNAME`
 
-****
+[NOTE]
 Remove Tag command available since v1.1 +
 Option to remove a tag for selected people since V1.2
 
-****
 
 ****
 * Deletes every tag that matches the TAGNAME.
@@ -193,9 +218,33 @@ Deletes tag `enemy` from the first person in the list shown in the address book.
 
 === Sorting the list: `sort`
 
+[NOTE]
+Sort feature available since v1.3
+
+Sorts the list of person in the addressbook. +
+You may choose to sort based on a parameter and display in +
+ascending or descending order.
+Format: `sort FIELD ORDER` +
+
 ****
+* The sort function does not save the order.
+* FIELD must be name, email or phone.
+* ORDER must be asc (ascending) or dsc (descending)
+****
+
+Examples:
+
+* `list` +
+`sort name asc` +
+Sorts the list based on name in ascending order.
+
+* `findtag owesMoney` +
+`sort email dsc` +
+Sorts the people with `owesMoney` tag based on their emails in descending order.
+
+=== Import/Export : `import`/`export`
+[NOTE]
 Coming soon in v2.0
-****
 
 === Selecting a person : `select`
 
@@ -332,10 +381,11 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : `sort FIELD ORDER` +
+e.g. `sort name asc` +
+e.g. `sort email dsc`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Remark* : `remark` +
 e.g. `remark 4 r/Sneezes a lot`
-* *RemoveTag* : `removetag TAGNAME` +
-e.g `removetag friends`

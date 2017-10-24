@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.List;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -66,6 +67,8 @@ public interface Model {
     /** Removes a tag from the specified Index on the list.*/
     void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
+    /** Sorts the filtered list.*/
+    void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator);
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.

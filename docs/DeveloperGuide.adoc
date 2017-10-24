@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Rubrika - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,21 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W15-B1/Main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W15-B1`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+=== What is Rubrika?
+
+Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
+Rubrika has a simple GUI interface and focuses on using link:#CLI[CLI] to interact.
+
 
 == Setting up
+
+What you will need to start contributing to Rubrika.
 
 === Prerequisites
 
@@ -22,14 +32,17 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+If you are missing JDK, you may download it for free [http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here]]
+
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them. +
+If you are missing IntelliJ, you may download the community version for free [https://www.jetbrains.com/idea/download/#section=windows[here]]
 
 
 === Setting up the project in your computer
@@ -346,6 +359,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // end::undoredo[]
 
 // tag::autocomplete[]
+
 === Autocomplete
 
 The autocomplete feature searches through all command words, and looks for matches based on incomplete user input in the command box when autocomplete key is used.
@@ -449,7 +463,7 @@ The remove tag function is done by calling a `removetag` function which resides 
 
 If no `INDEX` is given to the Remove Tag command, the remove tag command will run the following code during execution.
 ----
-@Override
+    @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
 
@@ -489,8 +503,43 @@ For removing tags from a specified Index we use the `getFilteredPersonList` so t
 [NOTE]
 If more than one tag is given or if `INDEX` out of the range of the shown list is given, `ParseException` will be thrown before execution of the function.
 
+==== Design Considerations
 
-=== Sorting Function
+Aspect: Which tags to remove when removing all tags. +
+Alternative 1 (current): Remove all tags from the addressbook regardless of current view. +
+Alternative 2: Remove all tags for the list shown to the user. +
+Pros: Completely removes the specified tag from the whole addressbook +
+Cons: User may want to remove only from list shown instead of the whole list.
+
+=== Sort Function
+
+The sort function is done by performing the `sortFilteredPersonList` function which resides in the `ModelManager` class. Sort currently supports sorting by name, email and phone in ascending or descending order. +
+
+Within `ModelManager`, we mask `FilteredList` with a `SortedList` object, and use `sortFilteredPersonList` sets the comparator that been parsed by `SortCommandParser` into the `SortedList` filtered list. For each different way of sorting, a different comparator is being passed into `sortFilteredPersonList`. +
+Below is the code fragemnt found in `ModelManager`.
+
+----
+    @Override
+    public void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
+        sortedPersons.setComparator(comparator);
+    }
+----
+
+[NOTE]
+If arguments given do not comply with the correct format, ParseException will be thrown before execution of the function.
+
+
+==== Design Considerations
+
+Aspect: Whether to sort the intern list of the addressBook or just the filtered list. +
+Alternative 1 (current): Sorts the filteredList found in `ModelManager`. +
+Alternative 2: Sorts the internalList found in `AddressBook`. +
+Pros: A more defensive approach as internalList in AddressBook is not modified in anyway. +
+Pros: User may have already have a preferred way of listing users and may only want to sort once for convenience. +
+Cons: More difficult to implement. +
+Cons: Other methods within ModelManager must be modified since SortedList is the list being displayed, not FilteredList. +
+
+
 
 == Documentation
 
@@ -520,7 +569,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -723,7 +772,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
-=== Creating a new command: `remark`
+=== Creating a new command: remark
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
@@ -1120,6 +1169,7 @@ Form
 
 ....
 A panel that is also called a 'window' in Windows operating systems.
+....
 
 [[RAM]]
 RAM
@@ -1127,6 +1177,14 @@ RAM
 ....
 Random Access Memory
 ....
+
+[[CLI]]
+CLI
+
+....
+Command Line Interface
+....
+
 
 [appendix]
 == Product Survey

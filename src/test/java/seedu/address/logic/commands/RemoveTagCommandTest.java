@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -49,6 +50,12 @@ public class RemoveTagCommandTest {
      */
     private RemoveTagCommand prepareCommand(String tag) throws IllegalValueException {
         RemoveTagCommand command = new RemoveTagCommand(new Tag(tag));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    private RemoveTagCommand prepareCommand(int index, String tag) throws IllegalValueException {
+        RemoveTagCommand command = new RemoveTagCommand(Index.fromZeroBased(index), new Tag(tag));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
