@@ -12,6 +12,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FavouriteStatus;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -88,6 +89,7 @@ public class XmlAdaptedPerson {
         remarks.add(new Remark(""));
         final FavouriteStatus favouriteStatus = new FavouriteStatus(this.favouriteStatus);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, remarks, favouriteStatus, tags);
+        final Link link = new Link("");   // TODO: To be fixed in Storage commit
+        return new Person(name, phone, email, address, remarks, favouriteStatus, tags, link);
     }
 }

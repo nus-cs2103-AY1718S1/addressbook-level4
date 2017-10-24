@@ -27,6 +27,8 @@ public interface ReadOnlyPerson {
     FavouriteStatus getFavouriteStatus();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Link> linkProperty();
+    Link getLink();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -38,6 +40,7 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
+                && other.getAddress().equals(this.getLink())
                 && other.getFavouriteStatus().equals(this.getFavouriteStatus()));
     }
 
@@ -59,6 +62,8 @@ public interface ReadOnlyPerson {
         getRemark().forEach(builder::append);
         builder.append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append(" Link: ")
+                .append("getLink()");
         return builder.toString();
     }
 

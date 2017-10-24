@@ -27,12 +27,13 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<FavouriteStatus> favouriteStatus;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<Link> link;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  ArrayList<Remark> remark, FavouriteStatus favouriteStatus, Set<Tag> tags) {
+                  ArrayList<Remark> remark, FavouriteStatus favouriteStatus, Set<Tag> tags, Link link) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -42,6 +43,7 @@ public class Person implements ReadOnlyPerson {
         this.favouriteStatus = new SimpleObjectProperty<>(favouriteStatus);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.link = new SimpleObjectProperty<>(link);
     }
 
     /**
@@ -49,7 +51,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getRemark(), source.getFavouriteStatus(), source.getTags());
+                source.getRemark(), source.getFavouriteStatus(), source.getTags(), source.getLink());
     }
 
     public void setName(Name name) {
@@ -154,6 +156,20 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    public void setLink(Link link) {
+        this.link.set(requireNonNull(link));
+    }
+
+    @Override
+    public ObjectProperty<Link> linkProperty() {
+        return link;
+    }
+
+    @Override
+    public Link getLink() {
+        return link.get();
     }
 
     @Override
