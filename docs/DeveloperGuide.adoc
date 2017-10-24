@@ -74,10 +74,6 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
-
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
-
 ==== Setting up CI
 
 Set up link:#travis[Travis] to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
@@ -283,7 +279,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the lesson was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack`, and check if the command is redoable now, we say a command is redoable if the listing panel has not been changed(For example, user type `list location`, then current listing element changed to location from module, or user types in `find MA1101`, then only a selected set of Module is listed.), since command like `delete 5` has different meaning when listing by module and location. However, if the listing element has not been changed, we will push it back to the `redoStack`. We will restore the ModU to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack`, and check if the command is redoable now, we say a command is redoable if the listing panel has not been changed(For example, user type `list location`, then current listing element changed to location from module, or user types in `find MA1101`, then only a selected set of Module is listed.), since command like `delete 5` has different meaning when listing by module and location, redo the command is no longer allowed. However, if the listing element has not been changed, we will push it back to the `redoStack`. We will restore the ModU to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -356,6 +352,74 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+=== ListingUnit mechanism
+
+`ListingUnit` is a enumeration class which has enumeration type `LESSON`, `MODULE` and `LOCATION`. It records the current listing element type of the lesson list panel. It has static method `getCurrentListingUnit` and `setCurrentListingUnit`. By which we can conveniently record the current listing type and get the current listing type at any time.
+It is implemented in this way:
+----
+
+public enum ListingUnit {
+    MODULE, LOCATION, LESSON;
+
+    private static ListingUnit currentListingUnit = MODULE;
+    private static Predicate currentPredicate;
+
+    //...
+}
+----
+When `list` command is used. The variable `currentListingUnit` will be set accordingly(either `LOCATION` or `MODULE`) in order for future reference of other operation.
+Similarly, when `view` command is used, the variable `currentListingUnit` will be set to `LESSON`.
+
+It facilitates the implementation of many parts of `logic component`. Such as `EditCommandParser`, `ViewCommand`, `DeleteCommand` etc.
+For example, edit command will need to know the current listing type in order to parse the arguments accordingly, the execution of delete command will need to know the current listing type in order to decide either delete a lesson specified by the index or a collection of lessons specified by the attribute.
+
+`ListingUnit` also records the current predicate used in `filteredLessonList`, it has static method `setCurrentPredicate` and `getCurrentPredicate`.
+Whenever the predicate is changed, the variable `currentPredicate` will be updated accordingly.
+
+The recorded predicate is mainly used to facilitate the implementation of `redo` command. As we discussed above about `redo` command. We are not allowing redo the previous command in a different context. Since many of the commands are Index-based, it will have different effects to execute the command again with a different listing.
+As a result, when implement the redo mechanism, we can obtain the `currentPredicate` and compare it with the predicate memoried by the command and only push it into the `redostack` if the predicate is the same.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `ListingUnit` +
+**Alternative 1 (current choice):**  Construct a enumeration class `ListingUnit` and record current listing type and predicates.
+**Pros:** It makes the implementation of many other features easier. +
+**Cons:** Hard for new developers to understand the listing unit mechanism. +
+**Alternative 2 (previous choice):** Use a variable in model manager to keep record of currentListingUnit +
+**Pros:** No need for extra enumeration class. +
+**Cons:** In order to access the variable in other components, the variable must be declared static. But we cannot define static abstract method in interface.
+// end::list[]
+
+=== List/View mechanism
+The list and view mechanisms are similar and both are facilitated by `ListingUnit` and `Predicate`.
+When user list by different attributes, the static variable `currentListingUnit` will be reset to either `MODULE` or `LOCATION`.
+When user view by index, the the static variable `currentListingUnit` will be set to `LESSON`.
+
+[NOTE]
+The default listing is to list all modules. When list by attribute, for example, `list location`, the currentListingUnit will be set to `location` and show a list of all locations.
+
+For different listing type, we always use the same lessonList but set different `Predicate` to it.
+`UniqueModuleCodePredicate` and `UniqueLocationPredicate` are used to facilitate the implementation of list.
+For example, when user types in `list module`, a `UniqueModulePredicate` will be used to filter the lessonList and UI will hide all other irrelevant information of the lesson and results in showing a list of all Modules.
+
+The following sequence diagram shows how the list command works:
+
+`FixedCodePredicate` and `FixedLocationPredicate` are used to facilitate the implementation of `view` command.
+According to current listing type, which we can obtain from `ListingUnit`, we create either a `FixedCodePredicate` or a `FixedLocationPredicate` to filter the lesson list and set `currentListingUnit` to be `Lesson`.
+
+The following sequence diagram shows how the view command works:
+
+==== Design Considerations
+
+**Aspect:** Implementation of `List` and `View` +
+**Alternative 1 (current choice):**  set different predicates to the `filteredList` and hide irrelevant information in the panel.
+**Pros:** Easy to understand and do not use extra space to store different kinds of lists(For example, location list). +
+**Cons:** Overhead of setting predicates repeatedly. +
+**Alternative 2 (previous choice):** Store lesson list, unique module list and unique location list separately. and switch to different panel list and view command is called. +
+**Pros:** More well-organized structure. +
+**Cons:** Much harder to implement and overhead of switching to different panels instead of using one.
+
 
 // tag::find[]
 === Find mechanism
@@ -482,28 +546,6 @@ image::CustomiseCommandActivityDiagram.png[width="900"]
 // end::customise[]
 
 // tag::list[]
-=== List mechanism
-
-The list mechanism is facilitated by an enumeration class `ListingUnit`. Each time user list by different attributes, the static variable `currentListingUnit` in the Enumeration class is reset.
-[NOTE]
-The default listing (without parameter) is to list all persons.
-When list by attribute, for example, `list address`, the `currentListingUnit` will be set to `ADDRESS` and show a list of all addresses.
-
-The following link:#sequence-diagram[sequence diagram] shows how the list command operation works:
-
-image::ListCommandSeqDiagram.png[width="900"]
-
-
-==== Design Considerations
-
-**Aspect:** Implementation of `ListCommand` +
-**Alternative 1 (current choice):**  Update static variable `currentListingUnit` to the corresponding listingUnit and use event bus to inform UI the change of listingUnit.
-**Pros:** One global variable that records current listingUnit. +
-**Cons:** Hard for new developers to understand the event center mechanism. +
-**Alternative 2 (previous choice):** Use a variable in model manager to keep record of currentListingUnit +
-**Pros:** No need for extra enumeration class. +
-**Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface.
-// end::list[]
 
 === Logging
 
