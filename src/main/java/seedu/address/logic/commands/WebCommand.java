@@ -1,7 +1,11 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.WebCommandParser.WEBSITES_MAP;
+
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
  * Lists all persons in the address book to the user.
@@ -25,7 +29,10 @@ public class WebCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
+        if (!WEBSITES_MAP.containsValue(targetWebsite)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_WEBLINK_TAG);
+        }
         EventsCenter.getInstance().post(new WebsiteSelectionRequestEvent(targetWebsite));
 
         return new CommandResult(MESSAGE_SUCCESS);
