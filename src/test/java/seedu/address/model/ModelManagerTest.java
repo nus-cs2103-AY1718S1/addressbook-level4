@@ -98,21 +98,6 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void sortPersonList_successfullySortPerson() throws Exception {
-        AddressBook addressBook = getTypicalAddressBook();
-        UserPrefs userPrefs = new UserPrefs();
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ModelManager modelManager1 = new ModelManager(addressBook, userPrefs);
-        modelManager.addPerson(TypicalPersons.ALICE);
-        modelManager.addPerson(TypicalPersons.BENSON);
-        modelManager1.addPerson(TypicalPersons.CARL);
-        modelManager1.addPerson(TypicalPersons.DANIEL);
-        modelManager.sortPersonList();
-        System.out.println(modelManager);
-        assertEquals(modelManager, modelManager1);
-    }
-
-    @Test
     public void addEvent_successfullyAddEvent() throws Exception {
         AddressBook addressBook = getTypicalAddressBook();
         UserPrefs userPrefs = new UserPrefs();
