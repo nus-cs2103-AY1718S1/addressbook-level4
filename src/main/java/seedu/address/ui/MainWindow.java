@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-import java.awt.AWTException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -142,7 +141,7 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() throws AWTException {
+    void fillInnerParts() {
 
         personListPanel = new PersonListPanel(logic.getLatestPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());

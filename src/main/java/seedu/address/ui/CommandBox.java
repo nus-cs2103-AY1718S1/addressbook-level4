@@ -1,11 +1,10 @@
 package seedu.address.ui;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
 import org.controlsfx.control.textfield.TextFields;
+import org.testfx.api.FxRobot;
 
 import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
@@ -13,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
@@ -39,7 +39,6 @@ public class CommandBox extends UiPart<Region> {
     private static final int TIME_SINCE_TYPING = 300;
     private static final int START_OF_FIRST_FIELD = 6;
     private static final int END_OF_FIRST_FIELD = 10;
-    private static final int CTRL = 17;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -55,7 +54,7 @@ public class CommandBox extends UiPart<Region> {
         "list", "l", "select", "s"};
     private final String[] addCommandFieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX",
         "KEYWORD"};
-    private Robot robot;
+    private FxRobot robot;
 
 
 
@@ -66,10 +65,10 @@ public class CommandBox extends UiPart<Region> {
     private ImageView keyboardIcon;
 
 
-    public CommandBox(Logic logic) throws AWTException {
+    public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
-        this.robot = new Robot();
+        this.robot = new FxRobot();
         loadKeyboardIcons();
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
@@ -126,7 +125,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-    public Robot getRobot() {
+    public FxRobot getRobot() {
         return this.robot;
     }
 
@@ -134,8 +133,12 @@ public class CommandBox extends UiPart<Region> {
      * press control key
      */
     public void pressCtrl() {
-        robot.keyPress(CTRL);
-        robot.keyRelease(CTRL);
+        pause = new PauseTransition();
+        pause.setDuration(Duration.millis(100));
+        pause.setOnFinished(event -> {
+            robot.push(KeyCode.CONTROL);
+        });
+        pause.play();
     }
 
     /**

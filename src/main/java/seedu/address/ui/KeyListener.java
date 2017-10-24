@@ -61,7 +61,6 @@ public class KeyListener {
             if (commandBox.isFocused() || !(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN)) {
                 commandBox.processInput();
             }
-            //commandBox.processInput();
             executeKeyEvent(event);
         });
     }
@@ -142,7 +141,6 @@ public class KeyListener {
      */
     private void displayCommandFormat(String command) {
         commandBox.replaceText(command);
-        commandBox.getRobot().delay(300);
         commandBox.pressCtrl();
     }
 

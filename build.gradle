@@ -66,14 +66,15 @@ allprojects {
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
         compile 'commons-net:commons-net:3.6'
-
-        testCompile "junit:junit:$junitVersion"
-        testCompile "org.testfx:testfx-core:$testFxVersion"
-        testCompile "org.testfx:testfx-junit:$testFxVersion"
-        testCompile "org.testfx:testfx-legacy:$testFxVersion", {
+        compile "org.testfx:testfx-core:$testFxVersion"
+        compile "org.testfx:testfx-junit:$testFxVersion"
+        compile "org.testfx:testfx-legacy:$testFxVersion", {
             exclude group: "junit", module: "junit"
         }
-        testCompile "org.testfx:openjfx-monocle:$monocleVersion"
+        compile "org.testfx:openjfx-monocle:$monocleVersion"
+
+        testCompile "junit:junit:$junitVersion"
+
     }
 
     sourceSets {
