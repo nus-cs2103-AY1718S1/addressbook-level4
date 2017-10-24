@@ -65,10 +65,10 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String EVENT_NAME_A_DESC = " " + PREFIX_NAME + VALID_EVENT_A_NAME;
-    public static final String EVENT_DATE_A_DESC = " " + PREFIX_DATE + VALID_EVENT_A_DATE;
-    public static final String EVENT_ADDRESS_A_DESC = " " + PREFIX_ADDRESS + VALID_EVENT_A_ADDRESS;
     public static final String EVENT_NAME_B_DESC = " " + PREFIX_NAME + VALID_EVENT_B_NAME;
+    public static final String EVENT_DATE_A_DESC = " " + PREFIX_DATE + VALID_EVENT_A_DATE;
     public static final String EVENT_DATE_B_DESC = " " + PREFIX_DATE + VALID_EVENT_B_DATE;
+    public static final String EVENT_ADDRESS_A_DESC = " " + PREFIX_ADDRESS + VALID_EVENT_A_ADDRESS;
     public static final String EVENT_ADDRESS_B_DESC = " " + PREFIX_ADDRESS + VALID_EVENT_B_ADDRESS;
     public static final String SCH_EMAIL_DESC_AMY = " " + PREFIX_SCH_EMAIL + VALID_SCH_EMAIL_AMY;
     public static final String SCH_EMAIL_DESC_BOB = " " + PREFIX_SCH_EMAIL + VALID_SCH_EMAIL_BOB;
