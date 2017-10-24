@@ -83,7 +83,7 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark);
         final Birthday birthday = new Birthday("");
-        final Photo photo = new Photo("");
+        final Photo photo = new Photo(this.filepath);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, remark, birthday, photo, tags);
     }

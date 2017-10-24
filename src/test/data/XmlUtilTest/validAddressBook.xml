@@ -7,7 +7,7 @@
         <address isPrivate="false">4th street</address>
         <remark isPrivate="false"></remark>
         <birthday isPrivate="false"></birthday>
-        <filepath>/images/noPhoto.png</filepath>
+        <filepath></filepath>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -16,7 +16,7 @@
         <address isPrivate="false">81th street</address>
         <remark isPrivate="false"></remark>
         <birthday isPrivate="false"></birthday>
-        <filepath>/images/noPhoto.png</filepath>
+        <filepath></filepath>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -25,7 +25,7 @@
         <address isPrivate="false">wall street</address>
         <remark isPrivate="false"></remark>
         <birthday isPrivate="false"></birthday>
-        <filepath>/images/noPhoto.png</filepath>
+        <filepath></filepath>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -34,7 +34,7 @@
         <address isPrivate="false">10th street</address>
         <remark isPrivate="false">Likes to eat</remark>
         <birthday isPrivate="false">11/JAN/1995</birthday>
-        <filepath>/images/noPhoto.png</filepath>
+        <filepath></filepath>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -43,7 +43,7 @@
         <address isPrivate="false">michegan ave</address>
         <remark isPrivate="false"></remark>
         <birthday isPrivate="false"></birthday>
-        <filepath>/images/noPhoto.png</filepath>
+        <filepath></filepath>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -52,7 +52,7 @@
         <address isPrivate="false">little tokyo</address>
         <remark isPrivate="false"></remark>
         <birthday isPrivate="false"></birthday>
-        <filepath>/images/noPhoto.png</filepath>
+        <filepath></filepath>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -61,7 +61,7 @@
         <address isPrivate="false">4th street</address>
         <remark isPrivate="false"></remark>
         <birthday isPrivate="false"></birthday>
-        <filepath>/images/noPhoto.png</filepath>
+        <filepath></filepath>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -70,7 +70,7 @@
         <address isPrivate="false">little india</address>
         <remark isPrivate="false">Smart friend</remark>
         <birthday isPrivate="false">12/JAN/1995</birthday>
-        <filepath>/images/noPhoto.png</filepath>
+        <filepath></filepath>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -79,6 +79,6 @@
         <address isPrivate="false">chicago ave</address>
         <remark isPrivate="false"></remark>
         <birthday isPrivate="false"></birthday>
-        <filepath>/images/noPhoto.png</filepath>
+        <filepath></filepath>
     </persons>
 </addressbook>

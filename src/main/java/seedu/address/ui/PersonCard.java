@@ -91,11 +91,11 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-    
+    /** Checks if the user has added any photo to the specific contact*/
     private void setImage(ReadOnlyPerson person) {
-        String filePath = person.getPhoto().getFilePath();
-        if(!filePath.equals("")){
-            Image image = new Image(filePath);
+        String url = person.getPhoto().getUrl();
+        if(!url.equals("")){//if url is not empty, sets the image that overrides the default photo.
+            Image image = new Image(url);
             imageView.setImage(image);
         }
     }
