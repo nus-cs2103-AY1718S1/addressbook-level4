@@ -61,10 +61,6 @@ public class MainApp extends Application {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
-        //Ui testUiObject = null;
-        //assert testUiObject != null : "WARNING: Assertions have been enabled";
-        assert false : "WARNING: Assertions have been enabled";
-
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());

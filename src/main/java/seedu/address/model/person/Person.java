@@ -55,7 +55,6 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // Use default avatar image
-        System.out.println("Storing custom image at path: " + avatar.getAvatarFilePath());
         this.avatar = new SimpleObjectProperty<>(avatar);
         this.comment = new SimpleObjectProperty<>(comment);
         this.appoint = new SimpleObjectProperty<>(appoint);
