@@ -36,7 +36,7 @@ public class DeleteCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        for (int x = 0; x< targetIndex.size(); x++) {
+        for (int x = 0; x < targetIndex.size(); x++) {
             if (targetIndex.get(x).getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
@@ -51,7 +51,7 @@ public class DeleteCommand extends UndoableCommand {
         }
 
         try {
-            for(int x = 0; x <personToDelete.size(); x++) {
+            for (int x = 0; x < personToDelete.size(); x++) {
                 model.deletePerson(personToDelete.get(x));
             }
         } catch (PersonNotFoundException pnfe) {
@@ -59,7 +59,7 @@ public class DeleteCommand extends UndoableCommand {
         }
         String outputResult = MESSAGE_DELETE_PERSON_SUCCESS;
         outputResult = String.format(outputResult, personToDelete.get(0));
-        for (int x = 1; x <personToDelete.size(); x++) {
+        for (int x = 1; x < personToDelete.size(); x++) {
             outputResult = outputResult + "\n";
             String temp = personToDelete.get(x).toString();
             outputResult += temp;
