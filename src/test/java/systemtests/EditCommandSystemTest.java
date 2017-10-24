@@ -248,7 +248,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         Predicate predicate = new UniqueModuleCodePredicate(getModel().getUniqueCodeSet());
         ListingUnit.setCurrentPredicate(predicate);
         updateFilterdList(predicate);
-
     }
 
     /**
