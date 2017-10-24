@@ -45,7 +45,7 @@ public class XmlMeetingsStorage implements MeetingsStorage {
         return readMeetingList(filePath);
     }
 
-    /*
+    /**
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
