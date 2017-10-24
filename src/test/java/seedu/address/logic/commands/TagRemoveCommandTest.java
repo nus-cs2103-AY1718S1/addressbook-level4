@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESCR_JAMES;
 import static seedu.address.logic.commands.CommandTestUtil.DESCR_LUCY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NUMBER;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -158,8 +157,8 @@ public class TagRemoveCommandTest {
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
         Set<Tag> tagSet = new HashSet<>();
         List<Tag> tagList = new ArrayList<>();
-        tagList.add(new Tag(VALID_TAG_NUMBER));
-        tagSet.add(new Tag(VALID_TAG_NUMBER));
+        tagList.add(new Tag(VALID_TAG_FRIEND));
+        tagSet.add(new Tag(VALID_TAG_HUSBAND));
         tagSet.add(new Tag(VALID_TAG_FRIEND));
         TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
         tagRemoveDescriptor.setTags(tagSet);
@@ -174,7 +173,6 @@ public class TagRemoveCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         List<Tag> tagList = new ArrayList<>();
         tagList.add(new Tag(VALID_TAG_HUSBAND));
-        tagSet.add(new Tag(VALID_TAG_NUMBER));
         tagSet.add(new Tag(VALID_TAG_FRIEND));
         TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
         tagRemoveDescriptor.setTags(tagSet);
@@ -191,7 +189,7 @@ public class TagRemoveCommandTest {
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
         Set<Tag> tagSet = new HashSet<>();
-        tagSet.add(new Tag(VALID_TAG_NUMBER));
+        tagSet.add(new Tag(VALID_TAG_HUSBAND));
         tagSet.add(new Tag(VALID_TAG_FRIEND));
         TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor();
         tagRemoveDescriptor.setTags(tagSet);
@@ -200,7 +198,7 @@ public class TagRemoveCommandTest {
         assertTrue(indexList.size() == personList.size());
     }
     /**
-     * Returns an {@code TagAddCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code TagRemoveCommand} with parameters {@code index} and {@code descriptor}
      */
     private TagAddCommand prepareCommand(ArrayList<Index> index, TagAddDescriptor descriptor) {
         TagAddCommand tagAddCommand = new TagAddCommand(index, descriptor);
@@ -209,7 +207,7 @@ public class TagRemoveCommandTest {
     }
 
     /**
-     * Returns an {@code TagAddCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code TagRemoveCommand} with parameters {@code index} and {@code descriptor}
      */
     private TagRemoveCommand prepareCommand(ArrayList<Index> index, TagRemoveDescriptor descriptor) {
         TagRemoveCommand tagRemoveCommand = new TagRemoveCommand(index, descriptor);
