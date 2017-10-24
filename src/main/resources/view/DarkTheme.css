@@ -3,6 +3,15 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+.fit { /* set relative picture size */
+    max-width: 100%;
+    max-height: 100%;
+    }
+.center {
+    display: block;
+    margin: auto;
+    }
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -121,8 +130,8 @@
 
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
-    -fx-text-fill: #010504;
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
 }
 
 .cell_small_label {
@@ -155,6 +164,13 @@
 
 .result-display .label {
     -fx-text-fill: black !important;
+}
+
+.reminder-display {
+    -fx-background-color: transparent;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: black;
 }
 
 .status-bar .label {
@@ -334,6 +350,7 @@
     -fx-background-color: transparent, #383838, transparent, #383838;
     -fx-background-radius: 0;
 }
+
 
 #tags {
     -fx-hgap: 7;
