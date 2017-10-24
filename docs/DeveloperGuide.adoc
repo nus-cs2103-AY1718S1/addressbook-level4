@@ -756,7 +756,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
-=== Creating a new command: `remark`
+=== Creating a new command: remark
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 

@@ -14,6 +14,13 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+=== What is Rubrika?
+
+Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
+Rubrika has a simple GUI interface and focuses on using CLI to interact.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -37,7 +44,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#Features[Features] section below for details of each command.
 
 == What's New in Version 1.2
 
@@ -57,6 +64,7 @@ Searches for all persons containing `friends` tag or `family` tag.
 
 Now, you can specify which person you want to remove the tag from and not just remove from everyone on the list.
 
+[[Features]]
 == Features
 
 ====
@@ -350,10 +358,11 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Sort* : `sort FIELD ORDER` +
+e.g. `sort name asc` +
+e.g. `sort email dsc`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Remark* : `remark` +
 e.g. `remark 4 r/Sneezes a lot`
-* *RemoveTag* : `removetag TAGNAME` +
-e.g `removetag friends`
