@@ -221,11 +221,9 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
-/*
+
     @Subscribe
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event){
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
     }
- */
 }
