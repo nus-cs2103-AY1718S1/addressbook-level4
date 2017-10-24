@@ -5,6 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -14,6 +15,10 @@ public class FileUtil {
 
     private static final String CHARSET = "UTF-8";
     private static final Pattern XML_FILE_FORMAT = Pattern.compile(".*\\.xml$");
+    private static final Pattern UNIX_NAME_SEPARATOR_FORMAT = Pattern.compile(".*/.*");
+    private static final Pattern WINDOWS_NAME_SEPARATOR_FORMAT = Pattern.compile(".*\\\\.*");
+    private static final Pattern INVALID_NAME_CHARACTERS_FORMAT = Pattern.compile(".*[?!%*+:|\"<>. ].*");
+    private static final Pattern CONSECUTIVE_NAME_SEPARATOR_FORMAT = Pattern.compile("(.*//.*)|(.*\\\\\\\\.*)");
 
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();
@@ -97,6 +102,38 @@ public class FileUtil {
      */
     public static boolean isValidXmlFile(String filePath) {
         return XML_FILE_FORMAT.matcher(filePath.toLowerCase()).matches();
+    }
+
+    /**
+     * Checks whether the {@code filePath} contain any invalid name separators (OS-dependent)
+     */
+    public static boolean hasInvalidNameSeparators(String filePath) {
+        Matcher unixMatcher = UNIX_NAME_SEPARATOR_FORMAT.matcher(filePath);
+        Matcher windowsMatcher = WINDOWS_NAME_SEPARATOR_FORMAT.matcher(filePath);
+
+        if (unixMatcher.matches() && File.separator.equals("\\") |
+                windowsMatcher.matches() && File.separator.equals("/")) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
+     * Checks whether the file name and folder names in {@filePath} are valid
+     */
+    public static boolean hasInvalidName(String filePath) {
+        return INVALID_NAME_CHARACTERS_FORMAT.matcher(filePath).matches();
+    }
+
+    /**
+     * Checks whether the {@filePath} contain any consecutive name separators (OS-dependent)
+     *
+     * {@link #hasConsecutiveNameSeparators(String)} should be checked prior this method
+     */
+    public static boolean hasConsecutiveNameSeparators(String filePath) {
+        return INVALID_NAME_CHARACTERS_FORMAT.matcher(filePath).matches();
     }
 
 }
