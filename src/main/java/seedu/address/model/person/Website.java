@@ -20,7 +20,7 @@ public class Website {
      * @throws IllegalValueException if given website string is invalid.
      */
     public Website(String website) throws IllegalValueException {
-        // requireNonNull(website);
+        requireNonNull(website);
         String trimmedWebsite = website.trim();
         if (!isValidWebsite(trimmedWebsite)) {
             throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINTS);
