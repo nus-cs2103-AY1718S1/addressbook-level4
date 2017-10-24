@@ -409,7 +409,7 @@ The following link:#sequence-diagram[sequence diagram] shows how the undo operat
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-_Figure 4.3.5_ : Sequence Diagram of the Undo nd Redo function._
+_Figure 4.3.5_ : Sequence Diagram of the Undo and Redo function._
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -516,7 +516,7 @@ Once the required information (name, email, address, phone number) is retrieved 
 
 * Then using the informaton the class retrieved, it will then create a `Person` object. This object is then stored inside a `ReadOnlyPerson` array.
 
-* When all the contact in the file has been accessed and created as a `Person` object and stored inside the array, the `ImportCommandParser` will then return a new `ImportCommand()` will will parse the array to the `ImportCommand` class for execution.
+* When all the contact in the file has been accessed and created as a `Person` object and stored inside the array, the `ImportCommandParser` will then return a new `ImportCommand()` that will parse the array to the `ImportCommand` class for execution.
 
 * The `ImportCommand` class will retrieve the `ReadOnlyPerson` array that was parsed into its' constructor and then loop through the array and add each `Person` object into the addressbook.
 
@@ -549,13 +549,17 @@ Once the required information (name, email, address, phone number) is retrieved 
 === Filter by tag mechanism
 (added in v1.2)
 
-The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. The keywords inputted by the user is put into a List<String> and
-then parses into `TagContainsKeywordsPredicate` which will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person
+The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. +
+
+* The keywords inputted by the user is put into a List<String> and
+then parses into `TagContainsKeywordsPredicate`. +
+* `TagContainsKeywordsPredicate` will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person
 that has the tags similar to the keywords. +
-After which, the predicate returned by `TagContainsKeywordsPredicate` will then update the filtered list when it is parsed into the method updateFilteredPersonList(Predicate) which belongs to the `Model` class. +
-The filtered list size is then parsed into the getMessageForPersonListShownSummary(int) which will return the `CommandResult` to show to the user. +
-The result will be the message showing the amount of persons in the filtered list and the display of the filtered list. +
-The tag command is not undoable so it will just override execute().
+* After which, the predicate returned by `TagContainsKeywordsPredicate` will be saved in `TagCommand`. The tag command is not undoable so it will just override execute().
+* At the method execute(), the predicate is then used to update the filtered list when it is parsed into the method updateFilteredPersonList(Predicate) which belongs to the `Model` class. +
+* The filtered list size is then parsed into the getMessageForPersonListShownSummary(int) which will return the `CommandResult` to show to the user. +
+* The result will be the message showing the amount of persons in the filtered list and the display of the filtered list. +
+
 
 ==== Design Considerations
 **Aspect:** Implementation logic of `TagCommand` +
@@ -570,13 +574,17 @@ The tag command is not undoable so it will just override execute().
 === Remove tag mechanism
 (added in v1.2)
 
-The remove tag mechanism is implemented by `Logic` and `Model`. When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
-The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
-In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
+The remove tag mechanism is implemented by `Logic` and `Model`.
+
+* When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
+* The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
+* In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
 `ModelManager` which implements `Model`. The method removes any tags of a person that matches the tag in the ArrayList. +
-The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
-and then removes the `Tag` that is parsed into the method. The setTags is then set for the newPerson and the updatePerson(oldPerson, newPerson) method is subsequently called to update the `Person` in the `AddressBook`.
-`RemoveTagCommand` also handles the checking of whether the Tag(keyword) matches any of the existing tags in ConnectUs.
+* The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
+and then removes the `Tag` that is parsed into the method. +
+* The setTags is then set for the newPerson and the updatePerson(oldPerson, newPerson) method is subsequently called to update the `Person` in the `AddressBook`.
+* `RemoveTagCommand` also handles the checking of whether the Tag(keyword) matches any of the existing tags in ConnectUs.
+
 [NOTE]
 If the keywords is not identical to any of the existing tag names, 'CommandResult' will notify the user that no tags has been removed. Otherwise, a success message will be shown.
 
@@ -585,7 +593,7 @@ The remove tag command is undoable so it will execute and override executeUndoab
 The following sequence diagram shows how the remove tag operation works:
 
 image::removeTag_sequenceDiagram.png[width="800"]
-_Figure 4.8: Remove Tag Sequence Diagram_
+_Figure 4.8.1: Remove Tag Sequence Diagram_
 
 ==== Design Considerations
 **Aspect:** Implementation logic of `RemoveTagCommand` +
@@ -612,9 +620,12 @@ _Figure 4.8: Remove Tag Sequence Diagram_
 
 The changing of colour theme feature is added for users to choose their preferred colour theme. The colour theme options are implemented by the `UI`
 on the `MainWindow` MenuBar as MenuItems. +
-When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem
-will trigger the onAction method "handleWhiteTheme". The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets
+
+* When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem
+will trigger the onAction method "handleWhiteTheme". +
+* The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets
 that belongs to other colours. +
+
 The diagrams shows the UI of the additional colour themes:
 
 image::whiteThemeUI.png[width="800"]
