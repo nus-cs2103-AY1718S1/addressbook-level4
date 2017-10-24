@@ -7,8 +7,8 @@ import static seedu.address.ui.util.KeyListenerUtil.DELETE_SELECTION_KEY_COMBINA
 import static seedu.address.ui.util.KeyListenerUtil.EDIT_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.FIND_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.FOCUS_COMMAND_BOX_KEY_COMBINATION;
-import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_ALT_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.FOCUS_RESULT_DISPLAY_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.HISTORY_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.LIST_KEY_COMBINATION;
