@@ -15,8 +15,6 @@ import java.util.Optional;
  */
 public class ArgumentMultimap {
 
-    public static final String DOUBLE_QUOTE_REGEX = "\"";
-
     /** Prefixes mapped to their respective arguments**/
     private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
 
@@ -62,6 +60,6 @@ public class ArgumentMultimap {
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
     public String getPreamble() {
-        return getValue(new Prefix("")).orElse("");
+       return getValue(new Prefix("")).orElse("");
     }
 }

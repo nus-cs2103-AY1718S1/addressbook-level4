@@ -42,7 +42,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         }
         
-        if (!areMultiplePrefixesPresent(argMultimap, PREFIX_DEADLINE_TO, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON)) {
+        if (areMultiplePrefixesPresent(argMultimap, PREFIX_DEADLINE_TO, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         }
 
@@ -51,8 +51,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
             StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_STARTDATE))
                     .orElse(new StartDate(""));
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_TO, PREFIX_DEADLINE_BY,
-                    PREFIX_DEADLINE_ON))
-                    .orElse(new Deadline(""));
+                    PREFIX_DEADLINE_ON)).orElse(new Deadline(""));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             if (!TaskDates.isStartDateBeforeDeadline(startDate, deadline)) {
@@ -81,6 +80,6 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         for (Prefix prefix : prefixes) {
             prefixCount = (argumentMultimap.getValue(prefix).isPresent()) ? ++prefixCount : prefixCount; 
         }
-        return prefixCount > 1 ? false : true;
+        return (prefixCount > 1);
     }
 }

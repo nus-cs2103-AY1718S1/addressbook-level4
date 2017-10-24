@@ -3,6 +3,9 @@ package seedu.address.logic.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.exceptions.ParseException;
+
 /**
  * Tokenizes arguments string of the form: {@code preamble <prefix>value <prefix>value ...}<br>
  *     e.g. {@code some preamble text t/ 11.00 t/12.00 k/ m/ July}  where prefixes are {@code t/ k/ m/}.<br>
@@ -24,15 +27,13 @@ public class ArgumentTokenizer {
      * @return           ArgumentMultimap object that maps prefixes to their arguments
      */
     public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
-        String unquotedArgsString = extractUnquotedArgsString(argsString);
-        System.out.println(unquotedArgsString);
-        List<PrefixPosition> positions = findAllPrefixPositions(unquotedArgsString, prefixes);
+        List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
         return extractArguments(argsString, positions);
     }
     
     private static String extractUnquotedArgsString(String argsString) {
         String[] unquotedArgsString = argsString.split(DOUBLE_QUOTE_REGEX);
-        return (unquotedArgsString[1] == null) ? unquotedArgsString[0] : unquotedArgsString[2];
+        return (unquotedArgsString.length == 1) ? argsString : unquotedArgsString[unquotedArgsString.length - 1];
     }
 
     /**
@@ -81,9 +82,11 @@ public class ArgumentTokenizer {
      * {@code fromIndex} = 0, this method returns 5.
      */
     private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
+        String unquotedArgsString = extractUnquotedArgsString(argsString);
+        int lengthOfQuotedString = argsString.length() - unquotedArgsString.length();
+        int prefixIndex = unquotedArgsString.indexOf(" " + prefix, fromIndex);
         return prefixIndex == -1 ? -1
-                : prefixIndex + 1; // +1 as offset for whitespace
+                : prefixIndex + 1 + lengthOfQuotedString; // +1 as offset for whitespace
     }
 
     /**
@@ -95,7 +98,8 @@ public class ArgumentTokenizer {
      * @param prefixPositions Zero-based positions of all prefixes in {@code argsString}
      * @return                ArgumentMultimap object that maps prefixes to their arguments
      */
-    private static ArgumentMultimap extractArguments(String argsString, List<PrefixPosition> prefixPositions) {
+    private static ArgumentMultimap extractArguments(String argsString,
+                                                     List<PrefixPosition> prefixPositions) {
 
         // Sort by start position
         prefixPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());

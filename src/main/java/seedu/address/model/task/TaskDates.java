@@ -24,10 +24,8 @@ public abstract class TaskDates {
      * Validates date.
      */
     public static boolean isDateValid(String naturalLanguageInputDate) {
-        System.out.println(naturalLanguageInputDate);
         List<DateGroup> dates = new PrettyTimeParser().parseSyntax(naturalLanguageInputDate);
-        System.out.println(dates.isEmpty());
-        return dates.isEmpty() ? false : true;
+        return !dates.isEmpty();
     }
     
     /**
@@ -36,15 +34,6 @@ public abstract class TaskDates {
     public static String formatDate(Date date) throws IllegalValueException {
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_PATTERN);
         return sdf.format(date);
-    }
-
-    /**
-     * Formats the last date of a given String.
-     */
-    public static String formatDate(String date) throws IllegalValueException {
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_PATTERN);
-        Date parsedDate = ParserUtil.parseDate(date);
-        return sdf.format(parsedDate);
     }
 
     /**
@@ -57,7 +46,7 @@ public abstract class TaskDates {
             try {
                 Date parsedStartDate = new SimpleDateFormat(DATE_FORMAT_PATTERN).parse(startDate.toString());
                 Date parsedDeadline = new SimpleDateFormat(DATE_FORMAT_PATTERN).parse(deadline.toString());
-                return parsedDeadline.after(parsedStartDate) ? true : false;
+                return parsedDeadline.after(parsedStartDate);
             } catch (ParseException p) {
                 throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
             }

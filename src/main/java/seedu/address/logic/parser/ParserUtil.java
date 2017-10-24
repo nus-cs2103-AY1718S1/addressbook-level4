@@ -117,7 +117,7 @@ public class ParserUtil {
      */
     public static Description parseDescription(String description) throws IllegalValueException {
         requireNonNull(description);
-        return new Description(description);
+        return new Description(description.replace("\"", ""));
     }
 
     /**
