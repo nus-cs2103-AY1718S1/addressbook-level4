@@ -106,7 +106,10 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addReminder(ReadOnlyReminder newData){ fail("This method should not be called.");}
+        public void addReminder(ReadOnlyReminder newData) {
+            fail("This method should not be called.");
+        }
+
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
@@ -197,7 +200,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortListByPriority(ArrayList<ReadOnlyReminder> contactList)  throws CommandException{
+        public void sortListByPriority(ArrayList<ReadOnlyReminder> contactList)  throws CommandException {
             fail("This method should not be called.");
         }
     }
