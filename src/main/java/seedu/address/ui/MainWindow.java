@@ -1,6 +1,6 @@
 package seedu.address.ui;
 
-import java.awt.*;
+import java.awt.AWTException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;

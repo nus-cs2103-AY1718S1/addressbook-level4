@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
-import java.awt.*;
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -129,6 +130,9 @@ public class CommandBox extends UiPart<Region> {
         return robot;
     }
 
+    /**
+     * press control key
+     */
     public void pressCtrl() {
         robot.keyPress(CTRL);
         robot.keyRelease(CTRL);
