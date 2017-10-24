@@ -8,25 +8,25 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.room.commons.core.ComponentManager;
 import seedu.room.commons.core.LogsCenter;
-import seedu.room.commons.events.model.RoomBookChangedEvent;
+import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.commons.events.storage.DataSavingExceptionEvent;
 import seedu.room.commons.exceptions.DataConversionException;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.UserPrefs;
 
 /**
- * Manages storage of RoomBook data in local storage.
+ * Manages storage of ResidentBook data in local storage.
  */
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private RoomBookStorage roomBookStorage;
+    private ResidentBookStorage residentBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(RoomBookStorage roomBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(ResidentBookStorage residentBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
-        this.roomBookStorage = roomBookStorage;
+        this.residentBookStorage = residentBookStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -48,50 +48,50 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
 
-    // ================ RoomBook methods ==============================
+    // ================ ResidentBook methods ==============================
 
     @Override
-    public String getRoomBookFilePath() {
-        return roomBookStorage.getRoomBookFilePath();
+    public String getResidentBookFilePath() {
+        return residentBookStorage.getResidentBookFilePath();
     }
 
     @Override
-    public Optional<ReadOnlyRoomBook> readRoomBook() throws DataConversionException, IOException {
-        return readRoomBook(roomBookStorage.getRoomBookFilePath());
+    public Optional<ReadOnlyResidentBook> readResidentBook() throws DataConversionException, IOException {
+        return readResidentBook(residentBookStorage.getResidentBookFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyRoomBook> readRoomBook(String filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyResidentBook> readResidentBook(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return roomBookStorage.readRoomBook(filePath);
+        return residentBookStorage.readResidentBook(filePath);
     }
 
     @Override
-    public void saveRoomBook(ReadOnlyRoomBook roomBook) throws IOException {
-        saveRoomBook(roomBook, roomBookStorage.getRoomBookFilePath());
+    public void saveResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
+        saveResidentBook(residentBook, residentBookStorage.getResidentBookFilePath());
     }
 
     @Override
-    public void saveRoomBook(ReadOnlyRoomBook roomBook, String filePath) throws IOException {
+    public void saveResidentBook(ReadOnlyResidentBook residentBook, String filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        roomBookStorage.saveRoomBook(roomBook, filePath);
+        residentBookStorage.saveResidentBook(residentBook, filePath);
     }
     @Override
     @Subscribe
-    public void handleRoomBookChangedEvent(RoomBookChangedEvent event) {
+    public void handleResidentBookChangedEvent(ResidentBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
-            saveRoomBook(event.data);
+            saveResidentBook(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
     }
     @Override
-    public void backupRoomBook(ReadOnlyRoomBook roomBook) throws IOException {
-        saveRoomBook(roomBook, roomBookStorage.getRoomBookFilePath() + "-backup.xml");
+    public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
+        saveResidentBook(residentBook, residentBookStorage.getResidentBookFilePath() + "-backup.xml");
     }
 
-    public Optional<ReadOnlyRoomBook> readBackupRoomBook() throws DataConversionException, IOException {
-        return readRoomBook(roomBookStorage.getRoomBookFilePath() + "-backup.xml");
+    public Optional<ReadOnlyResidentBook> readBackupResidentBook() throws DataConversionException, IOException {
+        return readResidentBook(residentBookStorage.getResidentBookFilePath() + "-backup.xml");
     }
 }

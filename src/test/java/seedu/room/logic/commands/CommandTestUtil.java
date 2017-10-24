@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.RoomBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.Model;
 import seedu.room.model.person.NameContainsKeywordsPredicate;
 import seedu.room.model.person.ReadOnlyPerson;
@@ -95,12 +95,12 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the room book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the resident book and the filtered person list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        RoomBook expectedRoomBook = new RoomBook(actualModel.getRoomBook());
+        ResidentBook expectedResidentBook = new ResidentBook(actualModel.getResidentBook());
         List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
 
         try {
@@ -108,16 +108,16 @@ public class CommandTestUtil {
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedRoomBook, actualModel.getRoomBook());
+            assertEquals(expectedResidentBook, actualModel.getResidentBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
         }
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s room book.
+     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s resident book.
      */
     public static void showFirstPersonOnly(Model model) {
-        ReadOnlyPerson person = model.getRoomBook().getPersonList().get(0);
+        ReadOnlyPerson person = model.getResidentBook().getPersonList().get(0);
         final String[] splitName = person.getName().fullName.split("\\s+");
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
@@ -125,7 +125,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s room book.
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s resident book.
      */
     public static void deleteFirstPerson(Model model) {
         ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(0);

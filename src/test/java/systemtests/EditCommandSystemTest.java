@@ -51,7 +51,7 @@ import seedu.room.model.tag.Tag;
 import seedu.room.testutil.PersonBuilder;
 import seedu.room.testutil.PersonUtil;
 
-public class EditCommandSystemTest extends RoomBookSystemTest {
+public class EditCommandSystemTest extends ResidentBookSystemTest {
 
     @Test
     public void edit() throws Exception {
@@ -102,7 +102,7 @@ public class EditCommandSystemTest extends RoomBookSystemTest {
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
-        /* Case: filtered person list, edit index within bounds of room book and person list -> edited */
+        /* Case: filtered person list, edit index within bounds of resident book and person list -> edited */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
@@ -111,11 +111,11 @@ public class EditCommandSystemTest extends RoomBookSystemTest {
         editedPerson = new PersonBuilder(personToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedPerson);
 
-        /* Case: filtered person list, edit index within bounds of room book but out of bounds of person list
+        /* Case: filtered person list, edit index within bounds of resident book but out of bounds of person list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getRoomBook().getPersonList().size();
+        int invalidIndex = getModel().getResidentBook().getPersonList().size();
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -178,7 +178,7 @@ public class EditCommandSystemTest extends RoomBookSystemTest {
 
         /* Case: edit a person with new values same as another person's values -> rejected */
         executeCommand(PersonUtil.getAddCommand(BOB));
-        assertTrue(getModel().getRoomBook().getPersonList().contains(BOB));
+        assertTrue(getModel().getResidentBook().getPersonList().contains(BOB));
         index = INDEX_FIRST_PERSON;
         assertFalse(getModel().getFilteredPersonList().get(index.getZeroBased()).equals(BOB));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -244,9 +244,9 @@ public class EditCommandSystemTest extends RoomBookSystemTest {
      * 5. Asserts that the status bar's sync status changes.<br>
      * 6. Asserts that the command box has the default style class.<br>
      * Verifications 1 to 3 are performed by
-     * {@code RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see RoomBookSystemTest#assertSelectedCardChanged(Index)
+     * {@code ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see ResidentBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
@@ -270,8 +270,8 @@ public class EditCommandSystemTest extends RoomBookSystemTest {
      * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
-     * {@code RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

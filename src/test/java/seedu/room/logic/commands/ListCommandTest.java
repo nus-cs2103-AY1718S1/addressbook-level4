@@ -2,7 +2,7 @@ package seedu.room.logic.commands;
 
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.room.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +24,8 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getRoomBook(), new UserPrefs());
+        model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
 
         listCommand = new ListCommand();
         listCommand.setData(model, new CommandHistory(), new UndoRedoStack());

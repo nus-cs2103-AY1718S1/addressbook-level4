@@ -28,7 +28,7 @@ import seedu.room.logic.parser.exceptions.ParseException;
 /**
  * Parses user input.
  */
-public class RoomBookParser {
+public class ResidentBookParser {
 
     /**
      * Used for initial separation of command word and args.

@@ -35,11 +35,11 @@ import seedu.room.testutil.EditPersonDescriptorBuilder;
 import seedu.room.testutil.PersonBuilder;
 import seedu.room.testutil.PersonUtil;
 
-public class RoomBookParserTest {
+public class ResidentBookParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final RoomBookParser parser = new RoomBookParser();
+    private final ResidentBookParser parser = new ResidentBookParser();
 
     @Test
     public void parseCommand_add() throws Exception {

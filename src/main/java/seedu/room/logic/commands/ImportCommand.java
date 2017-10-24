@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
 import seedu.room.MainApp;
 import seedu.room.commons.exceptions.DataConversionException;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 
@@ -24,7 +24,7 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "Import successful.";
     public static final String MESSAGE_ERROR = "Import error. Please check your file path or XML file.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds all persons in the XML file onto "
-            + "the current room book.\n"
+            + "the current resident book.\n"
             + "Parameters: FILE_PATH \n"
             + "Example: " + COMMAND_WORD + " friendsContacts.xml";
 
@@ -38,8 +38,8 @@ public class ImportCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
-            Optional<ReadOnlyRoomBook> newContacts = MainApp.getBackup().readRoomBook(filePath);
-            ReadOnlyRoomBook newList = newContacts.orElse(null);
+            Optional<ReadOnlyResidentBook> newContacts = MainApp.getBackup().readResidentBook(filePath);
+            ReadOnlyResidentBook newList = newContacts.orElse(null);
 
             ArrayList<String> namesAdded = new ArrayList<>();
             String namesFeedback = "";

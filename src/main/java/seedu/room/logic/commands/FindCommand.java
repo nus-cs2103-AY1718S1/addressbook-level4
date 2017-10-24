@@ -3,7 +3,7 @@ package seedu.room.logic.commands;
 import seedu.room.model.person.NameContainsKeywordsPredicate;
 
 /**
- * Finds and lists all persons in room book whose name contains any of the argument keywords.
+ * Finds and lists all persons in resident book whose name contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class FindCommand extends Command {

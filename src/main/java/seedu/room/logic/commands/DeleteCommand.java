@@ -9,7 +9,7 @@ import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Deletes a person identified using it's last displayed index from the room book.
+ * Deletes a person identified using it's last displayed index from the resident book.
  */
 public class DeleteCommand extends UndoableCommand {
 

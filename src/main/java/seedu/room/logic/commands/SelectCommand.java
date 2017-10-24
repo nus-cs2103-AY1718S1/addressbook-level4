@@ -10,7 +10,7 @@ import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.model.person.ReadOnlyPerson;
 
 /**
- * Selects a person identified using it's last displayed index from the room book.
+ * Selects a person identified using it's last displayed index from the resident book.
  */
 public class SelectCommand extends Command {
 

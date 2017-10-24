@@ -8,7 +8,7 @@ import static seedu.room.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.room.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.room.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -36,7 +36,7 @@ public class SelectCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+        model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
     }
 
     @Test
@@ -67,8 +67,8 @@ public class SelectCommandTest {
         showFirstPersonOnly(model);
 
         Index outOfBoundsIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of room book list
-        assertTrue(outOfBoundsIndex.getZeroBased() < model.getRoomBook().getPersonList().size());
+        // ensures that outOfBoundIndex is still in bounds of resident book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getResidentBook().getPersonList().size());
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }

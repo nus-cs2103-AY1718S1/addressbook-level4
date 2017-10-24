@@ -41,7 +41,7 @@ When running a Gradle task, Gradle will try to figure out if the task needs runn
 == Creating the JAR file
 
 * *`shadowJar`* +
-Creates the `roombook.jar` file in the `build/jar` folder, _if the current file is outdated_. +
+Creates the `residentbook.jar` file in the `build/jar` folder, _if the current file is outdated_. +
 e.g. `./gradlew shadowJar`
 
 ****

@@ -16,10 +16,10 @@ public interface Model {
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyRoomBook newData);
+    void resetData(ReadOnlyResidentBook newData);
 
-    /** Returns the RoomBook */
-    ReadOnlyRoomBook getRoomBook();
+    /** Returns the ResidentBook */
+    ReadOnlyResidentBook getResidentBook();
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
@@ -46,7 +46,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
-    /** Sorts the Room Book by name, phone, room or phone depending on the sortCriteria */
+    /** Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria */
     void sortBy(String sortCriteria) throws AlreadySortedException;
 
 }

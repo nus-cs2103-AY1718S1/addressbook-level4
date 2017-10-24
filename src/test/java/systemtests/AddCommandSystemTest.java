@@ -56,12 +56,12 @@ import seedu.room.model.tag.Tag;
 import seedu.room.testutil.PersonBuilder;
 import seedu.room.testutil.PersonUtil;
 
-public class AddCommandSystemTest extends RoomBookSystemTest {
+public class AddCommandSystemTest extends ResidentBookSystemTest {
 
     @Test
     public void add() throws Exception {
         Model model = getModel();
-        /* Case: add a person without tags to a non-empty room book, command with leading spaces and trailing spaces
+        /* Case: add a person without tags to a non-empty resident book, command with leading spaces and trailing spaces
          * -> added
          */
         ReadOnlyPerson toAdd = AMY;
@@ -89,33 +89,33 @@ public class AddCommandSystemTest extends RoomBookSystemTest {
         /* Case: add a duplicate person except with different tags -> rejected */
         // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
-        // RoomBook#addPerson(ReadOnlyPerson)
+        // ResidentBook#addPerson(ReadOnlyPerson)
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ROOM_DESC_AMY
                 + " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
 
-        /* Case: add a person with all fields same as another person in the room book except name -> added */
+        /* Case: add a person with all fields same as another person in the resident book except name -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withRoom(VALID_ROOM_AMY).withTemporary(0).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ROOM_DESC_AMY
                 + TIMESTAMP_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the room book except phone -> added */
+        /* Case: add a person with all fields same as another person in the resident book except phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
                 .withRoom(VALID_ROOM_AMY).withTemporary(0).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ROOM_DESC_AMY
                 + TIMESTAMP_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the room book except email -> added */
+        /* Case: add a person with all fields same as another person in the resident book except email -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
                 .withRoom(VALID_ROOM_AMY).withTemporary(0).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ROOM_DESC_AMY
                 + TIMESTAMP_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the room book except room -> added */
+        /* Case: add a person with all fields same as another person in the resident book except room -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withRoom(VALID_ROOM_BOB).withTemporary(0).withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ROOM_DESC_BOB
@@ -125,12 +125,12 @@ public class AddCommandSystemTest extends RoomBookSystemTest {
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
         assert getModel().getFilteredPersonList().size()
-                < getModel().getRoomBook().getPersonList().size();
+                < getModel().getResidentBook().getPersonList().size();
         assertCommandSuccess(IDA);
 
-        /* Case: add to empty room book -> added */
+        /* Case: add to empty resident book -> added */
         executeCommand(ClearCommand.COMMAND_WORD);
-        assert getModel().getRoomBook().getPersonList().size() == 0;
+        assert getModel().getResidentBook().getPersonList().size() == 0;
         assertCommandSuccess(ALICE);
 
         /* Case: add a person with tags, command with parameters in random order -> added */
@@ -182,10 +182,10 @@ public class AddCommandSystemTest extends RoomBookSystemTest {
      * an empty string, the result display box displays the success message of executing {@code AddCommand} with the
      * details of {@code toAdd}, and the model related components equal to the current model added with {@code toAdd}.
      * These verifications are done by
-     * {@code RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * {@code ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class, the status bar's sync status changes,
      * the browser url and selected card remains unchanged.
-     * @see RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(ReadOnlyPerson toAdd) {
         assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
@@ -231,10 +231,10 @@ public class AddCommandSystemTest extends RoomBookSystemTest {
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.
      * These verifications are done by
-     * {@code RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * {@code ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
-     * @see RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

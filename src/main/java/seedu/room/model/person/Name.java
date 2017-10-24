@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.room.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's name in the room book.
+ * Represents a Person's name in the resident book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {

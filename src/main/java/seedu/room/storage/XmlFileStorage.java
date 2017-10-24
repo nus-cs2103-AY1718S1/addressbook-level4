@@ -9,28 +9,28 @@ import seedu.room.commons.exceptions.DataConversionException;
 import seedu.room.commons.util.XmlUtil;
 
 /**
- * Stores roombook data in an XML file
+ * Stores residentbook data in an XML file
  */
 public class XmlFileStorage {
     /**
-     * Saves the given roombook data to the specified file.
+     * Saves the given residentbook data to the specified file.
      */
-    public static void saveDataToFile(File file, XmlSerializableRoomBook roomBook)
+    public static void saveDataToFile(File file, XmlSerializableResidentBook residentBook)
             throws FileNotFoundException {
         try {
-            XmlUtil.saveDataToFile(file, roomBook);
+            XmlUtil.saveDataToFile(file, residentBook);
         } catch (JAXBException e) {
             assert false : "Unexpected exception " + e.getMessage();
         }
     }
 
     /**
-     * Returns room book in the file or an empty room book
+     * Returns resident book in the file or an empty resident book
      */
-    public static XmlSerializableRoomBook loadDataFromSaveFile(File file) throws DataConversionException,
+    public static XmlSerializableResidentBook loadDataFromSaveFile(File file) throws DataConversionException,
                                                                             FileNotFoundException {
         try {
-            return XmlUtil.getDataFromFile(file, XmlSerializableRoomBook.class);
+            return XmlUtil.getDataFromFile(file, XmlSerializableResidentBook.class);
         } catch (JAXBException e) {
             throw new DataConversionException(e);
         }

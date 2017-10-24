@@ -16,15 +16,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.room.commons.events.model.RoomBookChangedEvent;
-import seedu.room.model.RoomBook;
+import seedu.room.commons.events.model.ResidentBookChangedEvent;
+import seedu.room.model.ResidentBook;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
     private static final String STUB_SAVE_LOCATION = "Stub";
     private static final String RELATIVE_PATH = "./";
 
-    private static final RoomBookChangedEvent EVENT_STUB = new RoomBookChangedEvent(new RoomBook());
+    private static final ResidentBookChangedEvent EVENT_STUB = new ResidentBookChangedEvent(new ResidentBook());
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
@@ -56,7 +56,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
         // initial state
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL);
 
-        // after room book is updated
+        // after resident book is updated
         postNow(EVENT_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));

@@ -20,18 +20,18 @@ import seedu.room.commons.util.ConfigUtil;
 import seedu.room.commons.util.StringUtil;
 import seedu.room.logic.Logic;
 import seedu.room.logic.LogicManager;
-import seedu.room.model.RoomBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.Model;
 import seedu.room.model.ModelManager;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.util.SampleDataUtil;
-import seedu.room.storage.RoomBookStorage;
+import seedu.room.storage.ResidentBookStorage;
 import seedu.room.storage.JsonUserPrefsStorage;
 import seedu.room.storage.Storage;
 import seedu.room.storage.StorageManager;
 import seedu.room.storage.UserPrefsStorage;
-import seedu.room.storage.XmlRoomBookStorage;
+import seedu.room.storage.XmlResidentBookStorage;
 import seedu.room.ui.Ui;
 import seedu.room.ui.UiManager;
 
@@ -55,15 +55,15 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing RoomBook ]===========================");
+        logger.info("=============================[ Initializing ResidentBook ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        RoomBookStorage roomBookStorage = new XmlRoomBookStorage(userPrefs.getRoomBookFilePath());
-        storage = new StorageManager(roomBookStorage, userPrefsStorage);
+        ResidentBookStorage residentBookStorage = new XmlResidentBookStorage(userPrefs.getResidentBookFilePath());
+        storage = new StorageManager(residentBookStorage, userPrefsStorage);
         backup = storage;
 
         initLogging(config);
@@ -83,25 +83,25 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s room book and {@code userPrefs}. <br>
-     * The data from the sample room book will be used instead if {@code storage}'s room book is not found,
-     * or an empty room book will be used instead if errors occur when reading {@code storage}'s room book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s resident book and {@code userPrefs}. <br>
+     * The data from the sample resident book will be used instead if {@code storage}'s resident book is not found,
+     * or an empty resident book will be used instead if errors occur when reading {@code storage}'s resident book.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyRoomBook> roomBookOptional;
-        ReadOnlyRoomBook initialData;
+        Optional<ReadOnlyResidentBook> residentBookOptional;
+        ReadOnlyResidentBook initialData;
         try {
-            roomBookOptional = storage.readRoomBook();
-            if (!roomBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample RoomBook");
+            residentBookOptional = storage.readResidentBook();
+            if (!residentBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample ResidentBook");
             }
-            initialData = roomBookOptional.orElseGet(SampleDataUtil::getSampleRoomBook);
+            initialData = residentBookOptional.orElseGet(SampleDataUtil::getSampleResidentBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty RoomBook");
-            initialData = new RoomBook();
+            logger.warning("Data file not in the correct format. Will be starting with an empty ResidentBook");
+            initialData = new ResidentBook();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty RoomBook");
-            initialData = new RoomBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty ResidentBook");
+            initialData = new ResidentBook();
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -165,7 +165,7 @@ public class MainApp extends Application {
                     + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty RoomBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty ResidentBook");
             initializedPrefs = new UserPrefs();
         }
 
@@ -185,13 +185,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting RoomBook " + MainApp.VERSION);
+        logger.info("Starting ResidentBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Room Book ] =============================");
+        logger.info("============================ [ Stopping Resident Book ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

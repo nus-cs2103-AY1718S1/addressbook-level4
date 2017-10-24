@@ -1,14 +1,14 @@
 package seedu.room.commons.events.model;
 
 import seedu.room.commons.events.BaseEvent;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ReadOnlyResidentBook;
 
-/** Indicates the RoomBook in the model has changed*/
-public class RoomBookChangedEvent extends BaseEvent {
+/** Indicates the ResidentBook in the model has changed*/
+public class ResidentBookChangedEvent extends BaseEvent {
 
-    public final ReadOnlyRoomBook data;
+    public final ReadOnlyResidentBook data;
 
-    public RoomBookChangedEvent(ReadOnlyRoomBook data) {
+    public ResidentBookChangedEvent(ReadOnlyResidentBook data) {
         this.data = data;
     }
 

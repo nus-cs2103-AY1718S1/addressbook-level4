@@ -3,7 +3,7 @@ package seedu.room.logic.commands;
 import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
- * Lists all persons in the room book to the user.
+ * Lists all persons in the resident book to the user.
  */
 public class ListCommand extends Command {
 

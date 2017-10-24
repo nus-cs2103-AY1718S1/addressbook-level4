@@ -18,9 +18,9 @@ import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.RoomBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.Model;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
@@ -104,12 +104,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyRoomBook newData) {
+        public void resetData(ReadOnlyResidentBook newData) {
             fail("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyRoomBook getRoomBook() {
+        public ReadOnlyResidentBook getResidentBook() {
             fail("This method should not be called.");
             return null;
         }
@@ -152,8 +152,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyRoomBook getRoomBook() {
-            return new RoomBook();
+        public ReadOnlyResidentBook getResidentBook() {
+            return new ResidentBook();
         }
     }
 
@@ -169,8 +169,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyRoomBook getRoomBook() {
-            return new RoomBook();
+        public ReadOnlyResidentBook getResidentBook() {
+            return new ResidentBook();
         }
     }
 

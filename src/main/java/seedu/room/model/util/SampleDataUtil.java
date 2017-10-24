@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.room.commons.exceptions.IllegalValueException;
-import seedu.room.model.RoomBook;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ResidentBook;
+import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.person.Room;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
@@ -16,7 +16,7 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.tag.Tag;
 
 /**
- * Contains utility methods for populating {@code RoomBook} with sample data.
+ * Contains utility methods for populating {@code ResidentBook} with sample data.
  */
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
@@ -46,9 +46,9 @@ public class SampleDataUtil {
         }
     }
 
-    public static ReadOnlyRoomBook getSampleRoomBook() {
+    public static ReadOnlyResidentBook getSampleResidentBook() {
         try {
-            RoomBook sampleAb = new RoomBook();
+            ResidentBook sampleAb = new ResidentBook();
             for (Person samplePerson : getSamplePersons()) {
                 sampleAb.addPerson(samplePerson);
             }

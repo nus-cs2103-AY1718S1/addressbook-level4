@@ -7,7 +7,7 @@ import seedu.room.model.tag.Tag;
 import seedu.room.model.tag.UniqueTagList;
 
 /**
- * A read-only immutable interface for a Person in the roombook.
+ * A read-only immutable interface for a Person in the residentbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyPerson extends Comparable {

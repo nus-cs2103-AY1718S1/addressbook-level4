@@ -3,7 +3,7 @@ package seedu.room.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import java.io.IOException;
 
@@ -12,10 +12,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import seedu.room.commons.events.model.RoomBookChangedEvent;
+import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.commons.events.storage.DataSavingExceptionEvent;
-import seedu.room.model.RoomBook;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ResidentBook;
+import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.UserPrefs;
 import seedu.room.ui.testutil.EventsCollectorRule;
 
@@ -30,9 +30,9 @@ public class StorageManagerTest {
 
     @Before
     public void setUp() {
-        XmlRoomBookStorage roomBookStorage = new XmlRoomBookStorage(getTempFilePath("ab"));
+        XmlResidentBookStorage residentBookStorage = new XmlResidentBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(roomBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(residentBookStorage, userPrefsStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -55,56 +55,56 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void roomBookReadSave() throws Exception {
+    public void residentBookReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link XmlRoomBookStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlRoomBookStorageTest} class.
+         * {@link XmlResidentBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlResidentBookStorageTest} class.
          */
-        RoomBook original = getTypicalRoomBook();
-        storageManager.saveRoomBook(original);
-        ReadOnlyRoomBook retrieved = storageManager.readRoomBook().get();
-        assertEquals(original, new RoomBook(retrieved));
+        ResidentBook original = getTypicalResidentBook();
+        storageManager.saveResidentBook(original);
+        ReadOnlyResidentBook retrieved = storageManager.readResidentBook().get();
+        assertEquals(original, new ResidentBook(retrieved));
     }
 
     @Test
-    public void getRoomBookFilePath() {
-        assertNotNull(storageManager.getRoomBookFilePath());
+    public void getResidentBookFilePath() {
+        assertNotNull(storageManager.getResidentBookFilePath());
     }
 
     @Test
-    public void handleRoomBookChangedEvent_exceptionThrown_eventRaised() {
+    public void handleResidentBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
-        Storage storage = new StorageManager(new XmlRoomBookStorageExceptionThrowingStub("dummy"),
+        Storage storage = new StorageManager(new XmlResidentBookStorageExceptionThrowingStub("dummy"),
                 new JsonUserPrefsStorage("dummy"));
-        storage.handleRoomBookChangedEvent(new RoomBookChangedEvent(new RoomBook()));
+        storage.handleResidentBookChangedEvent(new ResidentBookChangedEvent(new ResidentBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
     @Test
-    public void handleBackupRoomBook() throws Exception {
-        RoomBook original = getTypicalRoomBook();
-        storageManager.saveRoomBook(original);
-        ReadOnlyRoomBook retrieved = storageManager.readRoomBook().get();
+    public void handleBackupResidentBook() throws Exception {
+        ResidentBook original = getTypicalResidentBook();
+        storageManager.saveResidentBook(original);
+        ReadOnlyResidentBook retrieved = storageManager.readResidentBook().get();
 
-        storageManager.backupRoomBook(retrieved);
-        ReadOnlyRoomBook backup = storageManager.readBackupRoomBook().get();
+        storageManager.backupResidentBook(retrieved);
+        ReadOnlyResidentBook backup = storageManager.readBackupResidentBook().get();
 
-        assertEquals(new RoomBook(retrieved), new RoomBook(backup));
+        assertEquals(new ResidentBook(retrieved), new ResidentBook(backup));
     }
 
 
     /**
      * A Stub class to throw an exception when the save method is called
      */
-    class XmlRoomBookStorageExceptionThrowingStub extends XmlRoomBookStorage {
+    class XmlResidentBookStorageExceptionThrowingStub extends XmlResidentBookStorage {
 
-        public XmlRoomBookStorageExceptionThrowingStub(String filePath) {
+        public XmlResidentBookStorageExceptionThrowingStub(String filePath) {
             super(filePath);
         }
 
         @Override
-        public void saveRoomBook(ReadOnlyRoomBook roomBook, String filePath) throws IOException {
+        public void saveResidentBook(ReadOnlyResidentBook residentBook, String filePath) throws IOException {
             throw new IOException("dummy exception");
         }
     }

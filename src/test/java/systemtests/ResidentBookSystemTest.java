@@ -40,10 +40,10 @@ import seedu.room.model.Model;
 import seedu.room.ui.CommandBox;
 
 /**
- * A system test class for RoomBook, which provides access to handles of GUI components and helper methods
+ * A system test class for ResidentBook, which provides access to handles of GUI components and helper methods
  * for test verification.
  */
-public abstract class RoomBookSystemTest {
+public abstract class ResidentBookSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
@@ -116,11 +116,11 @@ public abstract class RoomBookSystemTest {
     }
 
     /**
-     * Displays all persons in the room book.
+     * Displays all persons in the resident book.
      */
     protected void showAllPersons() {
         executeCommand(ListCommand.COMMAND_WORD);
-        assert getModel().getRoomBook().getPersonList().size() == getModel().getFilteredPersonList().size();
+        assert getModel().getResidentBook().getPersonList().size() == getModel().getFilteredPersonList().size();
     }
 
     /**
@@ -128,7 +128,7 @@ public abstract class RoomBookSystemTest {
      */
     protected void showPersonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assert getModel().getFilteredPersonList().size() < getModel().getRoomBook().getPersonList().size();
+        assert getModel().getFilteredPersonList().size() < getModel().getResidentBook().getPersonList().size();
     }
 
     /**
@@ -149,7 +149,7 @@ public abstract class RoomBookSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getRoomBook(), testApp.readStorageRoomBook());
+        assertEquals(expectedModel.getResidentBook(), testApp.readStorageResidentBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 

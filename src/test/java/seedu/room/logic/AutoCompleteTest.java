@@ -1,7 +1,7 @@
 package seedu.room.logic;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ import seedu.room.model.person.ReadOnlyPerson;
 public class AutoCompleteTest {
 
     private AutoComplete autoComplete;
-    private Model model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
 
     @Before
     public void setUp() {

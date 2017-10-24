@@ -14,14 +14,14 @@ import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 
 /**
- * Adds a person to the room book.
+ * Adds a person to the resident book.
  */
 public class AddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
     public static final String COMMAND_ALIAS = "a";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the room book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the resident book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -39,7 +39,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the room book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the resident book";
     public static final String MESSAGE_TEMPORARY_PERSON = "Warning: This contact will expire after your preset time";
     private final Person toAdd;
 

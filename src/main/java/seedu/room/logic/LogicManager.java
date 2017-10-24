@@ -8,7 +8,7 @@ import seedu.room.commons.core.LogsCenter;
 import seedu.room.logic.commands.Command;
 import seedu.room.logic.commands.CommandResult;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.logic.parser.RoomBookParser;
+import seedu.room.logic.parser.ResidentBookParser;
 import seedu.room.logic.parser.exceptions.ParseException;
 import seedu.room.model.Model;
 import seedu.room.model.person.ReadOnlyPerson;
@@ -21,14 +21,14 @@ public class LogicManager extends ComponentManager implements Logic {
 
     private final Model model;
     private final CommandHistory history;
-    private final RoomBookParser roomBookParser;
+    private final ResidentBookParser residentBookParser;
     private final UndoRedoStack undoRedoStack;
     private AutoComplete autoCompleteList;
 
     public LogicManager(Model model) {
         this.model = model;
         this.history = new CommandHistory();
-        this.roomBookParser = new RoomBookParser();
+        this.residentBookParser = new ResidentBookParser();
         this.undoRedoStack = new UndoRedoStack();
         this.autoCompleteList = new AutoComplete(model);
     }
@@ -47,7 +47,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
-            Command command = roomBookParser.parseCommand(commandText);
+            Command command = residentBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
             undoRedoStack.push(command);

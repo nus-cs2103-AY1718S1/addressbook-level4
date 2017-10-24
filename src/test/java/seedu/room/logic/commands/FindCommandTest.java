@@ -7,7 +7,7 @@ import static seedu.room.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.room.testutil.TypicalPersons.CARL;
 import static seedu.room.testutil.TypicalPersons.ELLE;
 import static seedu.room.testutil.TypicalPersons.FIONA;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,7 +17,7 @@ import org.junit.Test;
 
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
-import seedu.room.model.RoomBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.Model;
 import seedu.room.model.ModelManager;
 import seedu.room.model.UserPrefs;
@@ -28,7 +28,7 @@ import seedu.room.model.person.ReadOnlyPerson;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -85,14 +85,14 @@ public class FindCommandTest {
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>
      *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
-     *     - the {@code RoomBook} in model remains the same after executing the {@code command}
+     *     - the {@code ResidentBook} in model remains the same after executing the {@code command}
      */
     private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
-        RoomBook expectedRoomBook = new RoomBook(model.getRoomBook());
+        ResidentBook expectedResidentBook = new ResidentBook(model.getResidentBook());
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredPersonList());
-        assertEquals(expectedRoomBook, model.getRoomBook());
+        assertEquals(expectedResidentBook, model.getResidentBook());
     }
 }

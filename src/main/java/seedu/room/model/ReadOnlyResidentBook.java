@@ -5,9 +5,9 @@ import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.tag.Tag;
 
 /**
- * Unmodifiable view of an room book
+ * Unmodifiable view of an resident book
  */
-public interface ReadOnlyRoomBook {
+public interface ReadOnlyResidentBook {
 
     /**
      * Returns an unmodifiable view of the persons list.

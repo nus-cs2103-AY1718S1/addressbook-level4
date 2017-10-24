@@ -3,7 +3,7 @@ package seedu.room.model.person;
 import seedu.room.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's room in the room book.
+ * Represents a Person's room in the resident book.
  * Guarantees: immutable; is valid as declared in {@link #isValidRoom(String)}
  */
 public class Room {

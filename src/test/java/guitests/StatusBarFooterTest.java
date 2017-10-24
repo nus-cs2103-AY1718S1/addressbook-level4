@@ -24,7 +24,7 @@ import seedu.room.ui.StatusBarFooter;
 /**
  * TODO: Remove this class when we have system tests.
  */
-public class StatusBarFooterTest extends RoomBookGuiTest {
+public class StatusBarFooterTest extends ResidentBookGuiTest {
 
     private Clock originalClock;
     private Clock injectedClock;

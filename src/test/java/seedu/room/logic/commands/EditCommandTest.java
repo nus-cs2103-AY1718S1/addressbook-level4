@@ -12,7 +12,7 @@ import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.room.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.room.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ import seedu.room.commons.core.index.Index;
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
 import seedu.room.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.room.model.RoomBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.Model;
 import seedu.room.model.ModelManager;
 import seedu.room.model.UserPrefs;
@@ -35,7 +35,7 @@ import seedu.room.testutil.PersonBuilder;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -45,7 +45,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new RoomBook(model.getRoomBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new ResidentBook(model.getResidentBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -66,7 +66,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new RoomBook(model.getRoomBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new ResidentBook(model.getResidentBook()), new UserPrefs());
         expectedModel.updatePerson(lastPerson, editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -79,7 +79,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new RoomBook(model.getRoomBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new ResidentBook(model.getResidentBook()), new UserPrefs());
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -95,7 +95,7 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new RoomBook(model.getRoomBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new ResidentBook(model.getResidentBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
@@ -114,8 +114,8 @@ public class EditCommandTest {
     public void execute_duplicatePersonFilteredList_failure() {
         showFirstPersonOnly(model);
 
-        // edit person in filtered list into a duplicate in room book
-        ReadOnlyPerson personInList = model.getRoomBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        // edit person in filtered list into a duplicate in resident book
+        ReadOnlyPerson personInList = model.getResidentBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
 
@@ -133,14 +133,14 @@ public class EditCommandTest {
 
     /**
      * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of room book
+     * but smaller than size of resident book
      */
     @Test
     public void execute_invalidPersonIndexFilteredList_failure() {
         showFirstPersonOnly(model);
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of room book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getRoomBook().getPersonList().size());
+        // ensures that outOfBoundIndex is still in bounds of resident book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getResidentBook().getPersonList().size());
 
         EditCommand editCommand = prepareCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());

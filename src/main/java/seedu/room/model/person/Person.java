@@ -15,7 +15,7 @@ import seedu.room.model.tag.Tag;
 import seedu.room.model.tag.UniqueTagList;
 
 /**
- * Represents a Person in the room book.
+ * Represents a Person in the resident book.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Person implements ReadOnlyPerson {

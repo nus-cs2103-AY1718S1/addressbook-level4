@@ -2,7 +2,7 @@ package seedu.room.logic.commands;
 
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,14 +24,14 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+        model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
     }
 
     @Test
     public void execute_newPerson_success() throws Exception {
         Person validPerson = new PersonBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getRoomBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
         expectedModel.addPerson(validPerson);
 
         String successMessage = String.format(AddCommand.MESSAGE_SUCCESS, validPerson);
@@ -41,7 +41,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = new Person(model.getRoomBook().getPersonList().get(0));
+        Person personInList = new Person(model.getResidentBook().getPersonList().get(0));
         assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 

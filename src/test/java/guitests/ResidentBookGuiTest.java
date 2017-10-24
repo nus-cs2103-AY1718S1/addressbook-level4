@@ -19,13 +19,13 @@ import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;
 import seedu.room.TestApp;
 import seedu.room.commons.core.EventsCenter;
-import seedu.room.model.RoomBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.testutil.TypicalPersons;
 
 /**
- * A GUI Test class for RoomBook.
+ * A GUI Test class for ResidentBook.
  */
-public abstract class RoomBookGuiTest {
+public abstract class ResidentBookGuiTest {
 
     /* The TestName Rule makes the current test name available inside test methods */
     @Rule
@@ -63,8 +63,8 @@ public abstract class RoomBookGuiTest {
      * Override this in child classes to set the initial local data.
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}
      */
-    protected RoomBook getInitialData() {
-        return TypicalPersons.getTypicalRoomBook();
+    protected ResidentBook getInitialData() {
+        return TypicalPersons.getTypicalResidentBook();
     }
 
     protected CommandBoxHandle getCommandBox() {

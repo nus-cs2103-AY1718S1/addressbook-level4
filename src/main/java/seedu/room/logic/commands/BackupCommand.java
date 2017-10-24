@@ -7,13 +7,13 @@ import seedu.room.logic.commands.exceptions.CommandException;
 
 
 /**
- * Create backup copy of room book.
+ * Create backup copy of resident book.
  */
 public class BackupCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "backup";
     public static final String COMMAND_ALIAS = "b";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates backup copy of room book.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates backup copy of resident book.";
 
     public static final String MESSAGE_SUCCESS = "New backup created";
 
@@ -22,7 +22,7 @@ public class BackupCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            MainApp.getBackup().backupRoomBook(model.getRoomBook());
+            MainApp.getBackup().backupResidentBook(model.getResidentBook());
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } catch (IOException e) {
             return new CommandResult(String.format(MESSAGE_ERROR) + e.getMessage());

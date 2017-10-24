@@ -11,13 +11,13 @@ import seedu.room.commons.core.GuiSettings;
 import seedu.room.commons.exceptions.DataConversionException;
 import seedu.room.commons.util.FileUtil;
 import seedu.room.commons.util.XmlUtil;
-import seedu.room.model.RoomBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.Model;
 import seedu.room.model.ModelManager;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.UserPrefs;
 import seedu.room.storage.UserPrefsStorage;
-import seedu.room.storage.XmlSerializableRoomBook;
+import seedu.room.storage.XmlSerializableResidentBook;
 import seedu.room.testutil.TestUtil;
 import systemtests.ModelHelper;
 
@@ -32,21 +32,21 @@ public class TestApp extends MainApp {
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
-    protected static final String ROOM_BOOK_NAME = "Test";
-    protected Supplier<ReadOnlyRoomBook> initialDataSupplier = () -> null;
+    protected static final String RESIDENT_BOOK_NAME = "Test";
+    protected Supplier<ReadOnlyResidentBook> initialDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyRoomBook> initialDataSupplier, String saveFileLocation) {
+    public TestApp(Supplier<ReadOnlyResidentBook> initialDataSupplier, String saveFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
         this.saveFileLocation = saveFileLocation;
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
-            createDataFileWithData(new XmlSerializableRoomBook(this.initialDataSupplier.get()),
+            createDataFileWithData(new XmlSerializableResidentBook(this.initialDataSupplier.get()),
                     this.saveFileLocation);
         }
     }
@@ -65,19 +65,19 @@ public class TestApp extends MainApp {
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
-        userPrefs.setRoomBookFilePath(saveFileLocation);
-        userPrefs.setRoomBookName(ROOM_BOOK_NAME);
+        userPrefs.setResidentBookFilePath(saveFileLocation);
+        userPrefs.setResidentBookName(RESIDENT_BOOK_NAME);
         return userPrefs;
     }
 
     /**
-     * Returns a defensive copy of the room book data stored inside the storage file.
+     * Returns a defensive copy of the resident book data stored inside the storage file.
      */
-    public RoomBook readStorageRoomBook() {
+    public ResidentBook readStorageResidentBook() {
         try {
-            return new RoomBook(storage.readRoomBook().get());
+            return new ResidentBook(storage.readResidentBook().get());
         } catch (DataConversionException dce) {
-            throw new AssertionError("Data is not in the RoomBook format.");
+            throw new AssertionError("Data is not in the ResidentBook format.");
         } catch (IOException ioe) {
             throw new AssertionError("Storage file cannot be found.");
         }
@@ -87,14 +87,14 @@ public class TestApp extends MainApp {
      * Returns the file path of the storage file.
      */
     public String getStorageSaveLocation() {
-        return storage.getRoomBookFilePath();
+        return storage.getResidentBookFilePath();
     }
 
     /**
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getRoomBook()), new UserPrefs());
+        Model copy = new ModelManager((model.getResidentBook()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }

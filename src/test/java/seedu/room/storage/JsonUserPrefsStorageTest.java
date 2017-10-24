@@ -82,8 +82,8 @@ public class JsonUserPrefsStorageTest {
     private UserPrefs getTypicalUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setGuiSettings(1000, 500, 300, 100);
-        userPrefs.setRoomBookFilePath("roombook.xml");
-        userPrefs.setRoomBookName("TypicalRoomBookName");
+        userPrefs.setResidentBookFilePath("residentbook.xml");
+        userPrefs.setResidentBookName("TypicalResidentBookName");
         return userPrefs;
     }
 

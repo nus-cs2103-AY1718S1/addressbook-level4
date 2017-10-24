@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.room.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Tag in the room book.
+ * Represents a Tag in the resident book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
  */
 public class Tag {

@@ -5,7 +5,7 @@ import static seedu.room.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.room.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +23,7 @@ public class UndoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
-    private final Model model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
 
@@ -43,12 +43,12 @@ public class UndoCommandTest {
         deleteCommandTwo.execute();
 
         // multiple commands in undoStack
-        Model expectedModel = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(getTypicalResidentBook(), new UserPrefs());
         deleteFirstPerson(expectedModel);
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single command in undoStack
-        expectedModel = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+        expectedModel = new ModelManager(getTypicalResidentBook(), new UserPrefs());
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in undoStack

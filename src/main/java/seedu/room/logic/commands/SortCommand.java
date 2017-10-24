@@ -6,21 +6,21 @@ import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
 
 /**
- * Adds a person to the room book.
+ * Adds a person to the resident book.
  */
 public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
     public static final String COMMAND_ALIAS = "srt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the displayed room book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the displayed resident book. "
             + "Parameters: "
             + "Sorting-Criteria" + " "
             + "Example: " + COMMAND_WORD + " "
             + "name";
 
-    public static final String MESSAGE_SUCCESS = "Sorted room book by: %1$s";
-    public static final String MESSAGE_FAILURE = "Room book already sorted by: %1$s";
+    public static final String MESSAGE_SUCCESS = "Sorted resident book by: %1$s";
+    public static final String MESSAGE_FAILURE = "Resident book already sorted by: %1$s";
 
     private final String sortCriteria;
 

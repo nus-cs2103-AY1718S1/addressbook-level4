@@ -12,7 +12,7 @@ import seedu.room.commons.core.EventsCenter;
 import seedu.room.ui.testutil.UiPartRule;
 
 /**
- * A GUI unit test class for RoomBook.
+ * A GUI unit test class for ResidentBook.
  */
 public abstract class GuiUnitTest {
     @Rule

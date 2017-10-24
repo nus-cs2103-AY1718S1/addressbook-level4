@@ -21,7 +21,7 @@ import seedu.room.model.Model;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 
-public class DeleteCommandSystemTest extends RoomBookSystemTest {
+public class DeleteCommandSystemTest extends ResidentBookSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
@@ -59,17 +59,17 @@ public class DeleteCommandSystemTest extends RoomBookSystemTest {
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered person list, delete index within bounds of room book and person list -> deleted */
+        /* Case: filtered person list, delete index within bounds of resident book and person list -> deleted */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         Index index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered person list, delete index within bounds of room book but out of bounds of person list
+        /* Case: filtered person list, delete index within bounds of resident book but out of bounds of person list
          * -> rejected
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getRoomBook().getPersonList().size();
+        int invalidIndex = getModel().getResidentBook().getPersonList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -98,7 +98,7 @@ public class DeleteCommandSystemTest extends RoomBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
-                getModel().getRoomBook().getPersonList().size() + 1);
+                getModel().getResidentBook().getPersonList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
         assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -113,7 +113,7 @@ public class DeleteCommandSystemTest extends RoomBookSystemTest {
     }
 
     /**
-     * Removes the {@code ReadOnlyPerson} at the specified {@code index} in {@code model}'s room book.
+     * Removes the {@code ReadOnlyPerson} at the specified {@code index} in {@code model}'s resident book.
      * @return the removed person
      */
     private ReadOnlyPerson removePerson(Model model, Index index) {
@@ -149,8 +149,8 @@ public class DeleteCommandSystemTest extends RoomBookSystemTest {
      * 5. Asserts that the status bar's sync status changes.<br>
      * 6. Asserts that the command box has the default style class.<br>
      * Verifications 1 to 3 are performed by
-     * {@code RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
-     * @see RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
+     * @see ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
@@ -160,7 +160,7 @@ public class DeleteCommandSystemTest extends RoomBookSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
      * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
-     * @see RoomBookSystemTest#assertSelectedCardChanged(Index)
+     * @see ResidentBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
@@ -185,8 +185,8 @@ public class DeleteCommandSystemTest extends RoomBookSystemTest {
      * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
-     * {@code RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see RoomBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see ResidentBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

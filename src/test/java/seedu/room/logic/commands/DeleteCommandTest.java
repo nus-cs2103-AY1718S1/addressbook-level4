@@ -7,7 +7,7 @@ import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.room.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.room.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ import seedu.room.model.person.ReadOnlyPerson;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -34,7 +34,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getRoomBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -57,7 +57,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
-        Model expectedModel = new ModelManager(model.getRoomBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getResidentBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
@@ -69,8 +69,8 @@ public class DeleteCommandTest {
         showFirstPersonOnly(model);
 
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of room book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getRoomBook().getPersonList().size());
+        // ensures that outOfBoundIndex is still in bounds of resident book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getResidentBook().getPersonList().size());
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 

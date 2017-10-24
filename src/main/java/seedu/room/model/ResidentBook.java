@@ -23,7 +23,7 @@ import seedu.room.model.tag.UniqueTagList;
  * Wraps all data at the room-book level
  * Duplicates are not allowed (by .equals comparison)
  */
-public class RoomBook implements ReadOnlyRoomBook {
+public class ResidentBook implements ReadOnlyResidentBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
@@ -40,12 +40,12 @@ public class RoomBook implements ReadOnlyRoomBook {
         tags = new UniqueTagList();
     }
 
-    public RoomBook() {}
+    public ResidentBook() {}
 
     /**
-     * Creates an RoomBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an ResidentBook using the Persons and Tags in the {@code toBeCopied}
      */
-    public RoomBook(ReadOnlyRoomBook toBeCopied) {
+    public ResidentBook(ReadOnlyResidentBook toBeCopied) {
         this();
         resetData(toBeCopied);
     }
@@ -61,14 +61,14 @@ public class RoomBook implements ReadOnlyRoomBook {
     }
 
     /**
-     * Resets the existing data of this {@code RoomBook} with {@code newData}.
+     * Resets the existing data of this {@code ResidentBook} with {@code newData}.
      */
-    public void resetData(ReadOnlyRoomBook newData) {
+    public void resetData(ReadOnlyResidentBook newData) {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
         } catch (DuplicatePersonException e) {
-            assert false : "RoomBooks should not have duplicate persons";
+            assert false : "ResidentBooks should not have duplicate persons";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -78,7 +78,7 @@ public class RoomBook implements ReadOnlyRoomBook {
     //// person-level operations
 
     /**
-     * Adds a person to the room book.
+     * Adds a person to the resident book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the person to point to those in {@link #tags}.
      *
@@ -95,7 +95,7 @@ public class RoomBook implements ReadOnlyRoomBook {
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
-     * {@code RoomBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * {@code ResidentBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
@@ -146,8 +146,8 @@ public class RoomBook implements ReadOnlyRoomBook {
     }
 
     /**
-     * Removes {@code key} from this {@code RoomBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code RoomBook}.
+     * Removes {@code key} from this {@code ResidentBook}.
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code ResidentBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
@@ -164,7 +164,7 @@ public class RoomBook implements ReadOnlyRoomBook {
     }
 
 
-    //// sort room book
+    //// sort resident book
     /**
      * Sorts the UniquePersonList, persons.
      * @throws AlreadySortedException if the list is already sorted by given criteria.
@@ -204,9 +204,9 @@ public class RoomBook implements ReadOnlyRoomBook {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof RoomBook // instanceof handles nulls
-                && this.persons.equals(((RoomBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((RoomBook) other).tags));
+                || (other instanceof ResidentBook // instanceof handles nulls
+                && this.persons.equals(((ResidentBook) other).persons)
+                && this.tags.equalsOrderInsensitive(((ResidentBook) other).tags));
     }
 
     @Override

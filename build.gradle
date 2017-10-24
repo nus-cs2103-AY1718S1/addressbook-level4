@@ -87,7 +87,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "roombook.jar"
+        archiveName = "residentbook.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
@@ -122,8 +122,8 @@ tasks.coveralls {
     onlyIf { System.env.'CI' }
 }
 
-class RoomBookTest extends Test {
-    public RoomBookTest() {
+class ResidentBookTest extends Test {
+    public ResidentBookTest() {
     	  forkEvery = 1
         systemProperty 'testfx.setup.timeout', '60000'
 
@@ -148,7 +148,7 @@ class RoomBookTest extends Test {
     }
 }
 
-task guiTests(type: RoomBookTest) {
+task guiTests(type: ResidentBookTest) {
     include 'guitests/**'
     include 'systemtests/**'
     include 'seedu/room/ui/**'
@@ -159,7 +159,7 @@ task guiTests(type: RoomBookTest) {
 }
 
 
-task nonGuiTests(type: RoomBookTest) {
+task nonGuiTests(type: ResidentBookTest) {
     include 'seedu/room/**'
     exclude 'seedu/room/ui/**'
 
@@ -169,7 +169,7 @@ task nonGuiTests(type: RoomBookTest) {
 }
 
 // Test mode depends on whether headless task has been run
-task allTests(type: RoomBookTest) {
+task allTests(type: ResidentBookTest) {
     jacoco {
         destinationFile = new File("${buildDir}/jacoco/test.exec")
     }

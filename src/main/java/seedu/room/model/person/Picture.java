@@ -1,7 +1,7 @@
 package seedu.room.model.person;
 
 /**
- * Represents the url of the picture of the person in the room book.
+ * Represents the url of the picture of the person in the resident book.
  */
 public class Picture {
 

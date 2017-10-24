@@ -9,6 +9,6 @@
       "z" : 99
     }
   },
-  "roomBookFilePath" : "roombook.xml",
-  "roomBookName" : "TypicalRoomBookName"
+  "residentBookFilePath" : "residentbook.xml",
+  "residentBookName" : "TypicalResidentBookName"
 }

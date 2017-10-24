@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.room.model.RoomBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 
@@ -68,10 +68,10 @@ public class TypicalPersons {
     private TypicalPersons() {} // prevents instantiation
 
     /**
-     * Returns an {@code RoomBook} with all the typical persons.
+     * Returns an {@code ResidentBook} with all the typical persons.
      */
-    public static RoomBook getTypicalRoomBook() {
-        RoomBook ab = new RoomBook();
+    public static ResidentBook getTypicalResidentBook() {
+        ResidentBook ab = new ResidentBook();
         for (ReadOnlyPerson person : getTypicalPersons()) {
             try {
                 ab.addPerson(person);

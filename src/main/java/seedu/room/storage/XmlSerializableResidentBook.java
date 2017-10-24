@@ -10,15 +10,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.room.commons.exceptions.IllegalValueException;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ReadOnlyResidentBook;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.tag.Tag;
 
 /**
- * An Immutable RoomBook that is serializable to XML format
+ * An Immutable ResidentBook that is serializable to XML format
  */
-@XmlRootElement(name = "roombook")
-public class XmlSerializableRoomBook implements ReadOnlyRoomBook {
+@XmlRootElement(name = "residentbook")
+public class XmlSerializableResidentBook implements ReadOnlyResidentBook {
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
@@ -26,10 +26,10 @@ public class XmlSerializableRoomBook implements ReadOnlyRoomBook {
     private List<XmlAdaptedTag> tags;
 
     /**
-     * Creates an empty XmlSerializableRoomBook.
+     * Creates an empty XmlSerializableResidentBook.
      * This empty constructor is required for marshalling.
      */
-    public XmlSerializableRoomBook() {
+    public XmlSerializableResidentBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
     }
@@ -37,7 +37,7 @@ public class XmlSerializableRoomBook implements ReadOnlyRoomBook {
     /**
      * Conversion
      */
-    public XmlSerializableRoomBook(ReadOnlyRoomBook src) {
+    public XmlSerializableResidentBook(ReadOnlyResidentBook src) {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));

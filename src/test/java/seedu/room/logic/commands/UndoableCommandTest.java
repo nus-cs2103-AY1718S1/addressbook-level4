@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.room.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.room.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import org.junit.Test;
 
@@ -16,10 +16,10 @@ import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 
 public class UndoableCommandTest {
-    private final Model model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
     private final DummyCommand dummyCommand = new DummyCommand(model);
 
-    private Model expectedModel = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalResidentBook(), new UserPrefs());
 
     @Test
     public void executeUndo() throws Exception {
@@ -31,7 +31,7 @@ public class UndoableCommandTest {
 
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
-        expectedModel = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+        expectedModel = new ModelManager(getTypicalResidentBook(), new UserPrefs());
         assertEquals(expectedModel, model);
     }
 

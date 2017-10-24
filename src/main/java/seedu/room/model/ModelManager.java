@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.room.commons.core.ComponentManager;
 import seedu.room.commons.core.LogsCenter;
-import seedu.room.commons.events.model.RoomBookChangedEvent;
+import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
@@ -24,56 +24,56 @@ import seedu.room.model.person.exceptions.PersonNotFoundException;
 
 
 /**
- * Represents the in-memory model of the room book data.
+ * Represents the in-memory model of the resident book data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final RoomBook roomBook;
+    private final ResidentBook residentBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
     /**
-     * Initializes a ModelManager with the given roomBook and userPrefs.
+     * Initializes a ModelManager with the given residentBook and userPrefs.
      */
-    public ModelManager(ReadOnlyRoomBook roomBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyResidentBook residentBook, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(roomBook, userPrefs);
+        requireAllNonNull(residentBook, userPrefs);
 
-        logger.fine("Initializing with room book: " + roomBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with resident book: " + residentBook + " and user prefs " + userPrefs);
 
-        this.roomBook = new RoomBook(roomBook);
-        filteredPersons = new FilteredList<>(this.roomBook.getPersonList());
+        this.residentBook = new ResidentBook(residentBook);
+        filteredPersons = new FilteredList<>(this.residentBook.getPersonList());
         try {
-            deleteTemporary(this.roomBook);
+            deleteTemporary(this.residentBook);
         } catch (PersonNotFoundException e) {
             logger.warning("no such person found");
         }
     }
 
     public ModelManager() {
-        this(new RoomBook(), new UserPrefs());
+        this(new ResidentBook(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyRoomBook newData) {
-        roomBook.resetData(newData);
-        indicateRoomBookChanged();
+    public void resetData(ReadOnlyResidentBook newData) {
+        residentBook.resetData(newData);
+        indicateResidentBookChanged();
     }
 
     @Override
-    public ReadOnlyRoomBook getRoomBook() {
-        return roomBook;
+    public ReadOnlyResidentBook getResidentBook() {
+        return residentBook;
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateRoomBookChanged() {
-        raise(new RoomBookChangedEvent(roomBook));
+    private void indicateResidentBookChanged() {
+        raise(new ResidentBookChangedEvent(residentBook));
     }
 
     /** delete temporary persons on start up of the app */
-    public synchronized void deleteTemporary(RoomBook roomBook) throws PersonNotFoundException {
-        UniquePersonList personsList = roomBook.getUniquePersonList();
+    public synchronized void deleteTemporary(ResidentBook residentBook) throws PersonNotFoundException {
+        UniquePersonList personsList = residentBook.getUniquePersonList();
         Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
         while (itr.hasNext()) {
             Person person = itr.next();
@@ -89,15 +89,15 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        roomBook.removePerson(target);
-        indicateRoomBookChanged();
+        residentBook.removePerson(target);
+        indicateResidentBookChanged();
     }
 
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-        roomBook.addPerson(person);
+        residentBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateRoomBookChanged();
+        indicateResidentBookChanged();
     }
 
     @Override
@@ -105,15 +105,15 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
 
-        roomBook.updatePerson(target, editedPerson);
-        indicateRoomBookChanged();
+        residentBook.updatePerson(target, editedPerson);
+        indicateResidentBookChanged();
     }
 
     //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
-     * {@code roomBook}
+     * {@code residentBook}
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
@@ -140,17 +140,17 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return roomBook.equals(other.roomBook)
+        return residentBook.equals(other.residentBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
 
 
     //=========== Sorting Person List =============================================================
-    /** Sorts the Room Book by name, phone, room or phone depending on the sortCriteria */
+    /** Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria */
     public void sortBy(String sortCriteria) throws AlreadySortedException {
-        roomBook.sortBy(sortCriteria);
+        residentBook.sortBy(sortCriteria);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateRoomBookChanged();
+        indicateResidentBookChanged();
     }
 
 }

@@ -8,14 +8,14 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
-import seedu.room.model.RoomBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.person.Person;
 import seedu.room.model.util.SampleDataUtil;
 import seedu.room.testutil.TestUtil;
 
-public class SampleDataTest extends RoomBookGuiTest {
+public class SampleDataTest extends ResidentBookGuiTest {
     @Override
-    protected RoomBook getInitialData() {
+    protected ResidentBook getInitialData() {
         // return null to force test app to load data from file only
         return null;
     }
@@ -40,7 +40,7 @@ public class SampleDataTest extends RoomBookGuiTest {
     }
 
     @Test
-    public void roomBook_dataFileDoesNotExist_loadSampleData() {
+    public void residentBook_dataFileDoesNotExist_loadSampleData() {
         Person[] expectedList = SampleDataUtil.getSamplePersons();
         assertListMatching(getPersonListPanel(), expectedList);
     }

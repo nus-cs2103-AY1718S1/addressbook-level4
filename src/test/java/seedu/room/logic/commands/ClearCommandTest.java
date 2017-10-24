@@ -1,7 +1,7 @@
 package seedu.room.logic.commands;
 
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.room.testutil.TypicalPersons.getTypicalRoomBook;
+import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
 
 import org.junit.Test;
 
@@ -14,14 +14,14 @@ import seedu.room.model.UserPrefs;
 public class ClearCommandTest {
 
     @Test
-    public void execute_emptyRoomBook_success() {
+    public void execute_emptyResidentBook_success() {
         Model model = new ModelManager();
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
-    public void execute_nonEmptyRoomBook_success() {
-        Model model = new ModelManager(getTypicalRoomBook(), new UserPrefs());
+    public void execute_nonEmptyResidentBook_success() {
+        Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
         assertCommandSuccess(prepareCommand(model), model, ClearCommand.MESSAGE_SUCCESS, model);
     }
 

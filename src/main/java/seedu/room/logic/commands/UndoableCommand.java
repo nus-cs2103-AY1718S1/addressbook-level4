@@ -5,33 +5,33 @@ import static seedu.room.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.RoomBook;
-import seedu.room.model.ReadOnlyRoomBook;
+import seedu.room.model.ResidentBook;
+import seedu.room.model.ReadOnlyResidentBook;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
-    private ReadOnlyRoomBook previousRoomBook;
+    private ReadOnlyResidentBook previousResidentBook;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
-     * Stores the current state of {@code model#roomBook}.
+     * Stores the current state of {@code model#residentBook}.
      */
-    private void saveRoomBookSnapshot() {
+    private void saveResidentBookSnapshot() {
         requireNonNull(model);
-        this.previousRoomBook = new RoomBook(model.getRoomBook());
+        this.previousResidentBook = new ResidentBook(model.getResidentBook());
     }
 
     /**
-     * Reverts the RoomBook to the state before this command
+     * Reverts the ResidentBook to the state before this command
      * was executed and updates the filtered person list to
      * show all persons.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousRoomBook);
-        model.resetData(previousRoomBook);
+        requireAllNonNull(model, previousResidentBook);
+        model.resetData(previousResidentBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
@@ -52,7 +52,7 @@ public abstract class UndoableCommand extends Command {
 
     @Override
     public final CommandResult execute() throws CommandException {
-        saveRoomBookSnapshot();
+        saveResidentBookSnapshot();
         return executeUndoableCommand();
     }
 }
