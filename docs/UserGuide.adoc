@@ -193,6 +193,24 @@ Updates the Nickname custom field of the 1st person to be Ahchuang.
 * `custom 1 Nickname`
 Remove the Nickname custom field of the 1st person.
 
+=== Adding/Updating a person's icon photo : `upload`
+
+Adds or updates an existing person's icon photo in the address book. +
+Format: `upload INDEX [Photo Path]`
+
+****
+* Add or update the icon photo of the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If the icon photo of the person previously does not exist, the default icon photo will be changed to the photo uploaded.
+* Existing value will be updated to the input value.
+****
+
+Examples:
+
+* `upload 1 D:\Git Projects\wolf.jpg` +
+Updates the icon photo of the 1st person to be wolf.jpg located in D:\Git Projects.
+* `custom 1`
+Remove the icon photo of the 1st person, the default photo will be shown instead.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
