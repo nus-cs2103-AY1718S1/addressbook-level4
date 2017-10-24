@@ -19,6 +19,7 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
@@ -144,6 +145,17 @@ public class CommandTestUtil {
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredPersonList().size() == 1;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first event in the {@code model}'s event list.
+     */
+    public static void showFirstEventOnly(Model model) {
+        ReadOnlyEvent event = model.getEventList().getEventList().get(0);
+        final String[] splitName = event.getEventName().fullEventName.split("\\s+");
+        model.updateFilteredEventList(new EventNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredEventList().size() == 1;
     }
 
     /**

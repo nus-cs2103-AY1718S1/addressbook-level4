@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,6 +26,7 @@ public interface ReadOnlyPerson {
     Birthday getBirthday();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    Set<Event> getParticipation();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -54,6 +57,11 @@ public interface ReadOnlyPerson {
                 .append(getBirthday())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append(" Participated events: ");
+        for (ReadOnlyEvent event : getParticipation()) {
+            builder.append(event.getEventName())
+                    .append(" ");
+        }
         return builder.toString();
     }
 

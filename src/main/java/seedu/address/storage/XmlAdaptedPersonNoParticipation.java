@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -21,7 +20,7 @@ import seedu.address.model.tag.Tag;
 /**
  * JAXB-friendly version of the Person.
  */
-public class XmlAdaptedPerson {
+public class XmlAdaptedPersonNoParticipation {
 
     @XmlElement(required = true)
     private String name;
@@ -36,14 +35,12 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
-    @XmlElement
-    private List<XmlAdaptedEventNoParticipant> participated = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPersonNoParticipation() {}
 
 
     /**
@@ -51,7 +48,7 @@ public class XmlAdaptedPerson {
      *
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
-    public XmlAdaptedPerson(ReadOnlyPerson source) {
+    public XmlAdaptedPersonNoParticipation(ReadOnlyPerson source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
@@ -60,10 +57,6 @@ public class XmlAdaptedPerson {
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
-        }
-        participated = new ArrayList<>();
-        for (Event event : source.getParticipation()) {
-            participated.add(new XmlAdaptedEventNoParticipant(event));
         }
     }
 
@@ -77,17 +70,12 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
-        final List<Event> participatedEvents = new ArrayList<>();
-        for (XmlAdaptedEventNoParticipant event : participated) {
-            participatedEvents.add(event.toModelType());
-        }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Birthday birthday = new Birthday(this.birthday);
         final Set<Tag> tags = new HashSet<>(personTags);
-        final Set<Event> events = new HashSet<>(participatedEvents);
-        return new Person(name, phone, email, address, birthday, tags, events);
+        return new Person(name, phone, email, address, birthday, tags);
     }
 }

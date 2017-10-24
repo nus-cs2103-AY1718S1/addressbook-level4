@@ -11,6 +11,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -46,11 +47,30 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday,
+                  Set<Tag> tags, Set<Event> participatedEvents) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.participation = new SimpleObjectProperty<>(new ParticipationList(participatedEvents));
+    }
+
+    /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getBirthday(), source.getTags());
+        if (source.getParticipation().size() > 0) {
+            this.setParticipants(source.getParticipation());
+        }
     }
 
     public void setName(Name name) {
@@ -143,6 +163,7 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    @Override
     public Set<Event> getParticipation() {
         return Collections.unmodifiableSet(participation.get().toSet());
     }
@@ -158,6 +179,9 @@ public class Person implements ReadOnlyPerson {
         this.participation.get().remove(event);
     }
 
+    public void addParticipateEvent(Event event) throws DuplicateEventException {
+        this.participation.get().add(event);
+    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
