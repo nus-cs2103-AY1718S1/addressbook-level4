@@ -198,7 +198,7 @@ public class KeyListenerTest extends RolodexGuiTest {
         guiRobot.push(KeyCode.A);
         assertEquals("find a", getCommandBox().getInput());
     }
-    
+
     @Test
     public void executeKeyEventForSelectCommand() {
         KeyCodeCombination selectCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+S");
