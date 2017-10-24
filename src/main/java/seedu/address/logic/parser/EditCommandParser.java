@@ -76,6 +76,10 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseCode(argMultimap.getValue(PREFIX_MODULE_CODE))
                     .ifPresent(editLessonDescriptor::setCode);
 
+            if (argMultimap.getValue(PREFIX_LECTURER).get().isEmpty()) {
+                throw new IllegalValueException(Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
+            }
+
             parseLecturersForEdit(argMultimap.getAllValues(PREFIX_LECTURER))
                     .ifPresent(editLessonDescriptor::setLecturer);
 
