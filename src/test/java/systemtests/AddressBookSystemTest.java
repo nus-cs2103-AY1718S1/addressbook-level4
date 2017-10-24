@@ -18,6 +18,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.LessonListPanelHandle;
@@ -25,10 +30,7 @@ import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
+
 import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -48,7 +50,8 @@ public abstract class AddressBookSystemTest {
     @ClassRule
     public static ClockRule clockRule = new ClockRule();
 
-    private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field", "text-field");
+    private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input",
+            "text-field", "text-field");
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", "text-field", CommandBox.ERROR_STYLE_CLASS);
 
@@ -148,8 +151,6 @@ public abstract class AddressBookSystemTest {
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
-        System.out.println(expectedResultMessage);
-        System.out.println(getResultDisplay().getText());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         Model model = getModel();
         assertEquals(expectedModel, model);

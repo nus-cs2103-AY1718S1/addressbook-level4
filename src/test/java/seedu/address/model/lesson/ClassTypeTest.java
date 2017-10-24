@@ -1,10 +1,11 @@
 package seedu.address.model.lesson;
 
-import org.junit.Test;
-import seedu.address.model.module.ClassType;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.model.module.ClassType;
 
 public class ClassTypeTest {
 

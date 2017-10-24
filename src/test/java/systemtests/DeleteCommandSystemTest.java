@@ -1,20 +1,5 @@
 package systemtests;
 
-import javafx.collections.ObservableList;
-import org.junit.Test;
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.ListingUnit;
-import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.LessonNotFoundException;
-
-import java.util.ArrayList;
-
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -26,6 +11,23 @@ import static seedu.address.testutil.TypicalLessonComponents.CS2101;
 import static seedu.address.testutil.TypicalLessonComponents.GEQ1000;
 import static seedu.address.testutil.TypicalLessonComponents.MA1101R;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
+
+import java.util.ArrayList;
+
+import org.junit.Test;
+
+import javafx.collections.ObservableList;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
@@ -59,11 +61,11 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
 
-//        /* Case: redo deleting the last lesson in the list -> last lesson deleted again */
-//        command = RedoCommand.COMMAND_WORD;
-//        lessonList = removeModule(modelNotDeleteYet, CS2101);
-//        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-//        assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
+        //        /* Case: redo deleting the last lesson in the list -> last lesson deleted again */
+        //        command = RedoCommand.COMMAND_WORD;
+        //        lessonList = removeModule(modelNotDeleteYet, CS2101);
+        //        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
+        //        assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
 
         /* Case: delete the middle lesson in the list -> deleted */
         addressBook = getModel().getAddressBook();
@@ -73,7 +75,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, modelNotDeleteYet, expectedResultMessage);
 
 
-          /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
+        /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
         executeCommand("undo");
         executeCommand("undo");
@@ -132,7 +134,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
-        
     }
 
 

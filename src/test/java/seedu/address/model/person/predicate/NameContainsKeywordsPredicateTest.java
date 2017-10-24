@@ -26,7 +26,8 @@
 //        assertTrue(firstPredicate.equals(firstPredicate));
 //
 //        // same values -> returns true
-//        NameContainsKeywordsPredicate firstPredicateCopy = new NameContainsKeywordsPredicate(firstPredicateKeywordList);
+//        NameContainsKeywordsPredicate firstPredicateCopy = new NameContainsKeywordsPredicate(
+// firstPredicateKeywordList);
 //        assertTrue(firstPredicate.equals(firstPredicateCopy));
 //
 //        // different types -> returns false
@@ -42,7 +43,8 @@
 //    @Test
 //    public void test_nameContainsKeywords_returnsTrue() {
 //        // One keyword
-//        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alice"));
+//        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.
+// singletonList("Alice"));
 //        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 //
 //        // Multiple keywords

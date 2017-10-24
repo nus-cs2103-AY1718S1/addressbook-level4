@@ -1,15 +1,5 @@
 package seedu.address.testutil;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
@@ -22,6 +12,16 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_CS2101
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MA1101R;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
+import seedu.address.model.AddressBook;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -95,7 +95,8 @@ public class TypicalLessons {
     }
 
     public static List<ReadOnlyLesson> getTypicalLessons() {
-        return new ArrayList<>(Arrays.asList(MA1101R_L1, MA1101R_L2, GEQ_T66, MA1101R_T1, MA1101R_T2, CS2101_L1, CS2101_L2));
+        return new ArrayList<>(Arrays.asList(MA1101R_L1, MA1101R_L2, GEQ_T66, MA1101R_T1,
+                MA1101R_T2, CS2101_L1, CS2101_L2));
     }
 
     public static HashSet<Code> getTypicalModuleCodeSet() {

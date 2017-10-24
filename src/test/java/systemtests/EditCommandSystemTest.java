@@ -1,19 +1,59 @@
 package systemtests;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.CODE_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.CODE_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CLASSTYPE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CODE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_GROUP_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_LECTURER_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIMESLOT_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.LECTURER_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.LECTURER_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.MA1101R_CODE_PREDICATE;
+import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MA1101R;
+import static seedu.address.model.ListingUnit.LESSON;
+import static seedu.address.model.ListingUnit.MODULE;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalLessons.TYPICAL_CS2101;
+import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
+
+import java.util.function.Predicate;
+
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
 import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.*;
+import seedu.address.model.module.BookedSlot;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.TimeSlot;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
@@ -21,21 +61,6 @@ import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 import seedu.address.testutil.LessonBuilder;
 import seedu.address.testutil.LessonUtil;
-
-import java.util.List;
-import java.util.function.Predicate;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.model.ListingUnit.MODULE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
-import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
-import static seedu.address.testutil.TypicalLessons.TYPICAL_CS2101;
-import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
 
 public class EditCommandSystemTest extends AddressBookSystemTest {
 
@@ -76,22 +101,22 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
         /* Case: filtered lesson list, edit index within bounds of address book and lesson list -> edited */
-//        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
-//
-//        index = INDEX_FIRST_LESSON;
-//        assertTrue(index.getZeroBased() < getModel().getFilteredLessonList().size());
-//        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + CODE_DESC_MA1101R;
-//        lessonToEdit = getModel().getFilteredLessonList().get(index.getZeroBased());
-//        editedLesson = new LessonBuilder(lessonToEdit).withCode(VALID_CODE_MA1101R).build();
-//        assertCommandSuccess(command, index, editedLesson);
+        //        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
+        //
+        //        index = INDEX_FIRST_LESSON;
+        //        assertTrue(index.getZeroBased() < getModel().getFilteredLessonList().size());
+        //        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + CODE_DESC_MA1101R;
+        //        lessonToEdit = getModel().getFilteredLessonList().get(index.getZeroBased());
+        //        editedLesson = new LessonBuilder(lessonToEdit).withCode(VALID_CODE_MA1101R).build();
+        //        assertCommandSuccess(command, index, editedLesson);
 
         /* Case: filtered lesson list, edit index within bounds of address book but out of bounds of lesson list
          * -> rejected
          */
-//        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
+        //        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
         int invalidIndex = getModel().getAddressBook().getLessonList().size();
-//        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + CODE_DESC_MA1101R,
-//                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        //        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + CODE_DESC_MA1101R,
+        //                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
 
         /* --------------------- Performing edit operation while a lesson card is selected -------------------------- */
 
@@ -145,7 +170,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_GROUP_DESC,
                 Group.MESSAGE_GROUP_CONSTRAINTS);
 
-            /* Case: invalid address -> rejected */
+        /* Case: invalid address -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + INVALID_TIMESLOT_DESC,
                 TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS);
 
@@ -174,7 +199,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * @param toEdit the index of the current model's filtered list
      * @see EditCommandSystemTest#assertCommandSuccess(String, Index, ReadOnlyLesson, Index)
      */
-    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson) throws DuplicateBookedSlotException {
+    private void assertCommandSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson)
+            throws DuplicateBookedSlotException {
         assertCommandSuccess(command, toEdit, editedLesson, null);
     }
 
@@ -190,12 +216,12 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
             Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
         Model expectedModel = getModel();
         ReadOnlyLesson lessonToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased());
-        BookedSlot bookedSlotToEdit = new BookedSlot(lessonToEdit.getLocation(),lessonToEdit.getTimeSlot());
-        BookedSlot editedBookedSlot = new BookedSlot(editedLesson.getLocation(),editedLesson.getTimeSlot());
+        BookedSlot bookedSlotToEdit = new BookedSlot(lessonToEdit.getLocation(), lessonToEdit.getTimeSlot());
+        BookedSlot editedBookedSlot = new BookedSlot(editedLesson.getLocation(), editedLesson.getTimeSlot());
         try {
             expectedModel.updateLesson(
                     expectedModel.getFilteredLessonList().get(toEdit.getZeroBased()), editedLesson);
-            expectedModel.updateBookedSlot(bookedSlotToEdit,editedBookedSlot);
+            expectedModel.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
             expectedModel.updateFilteredLessonList(MA1101R_CODE_PREDICATE);
         } catch (DuplicateLessonException | LessonNotFoundException e) {
             throw new IllegalArgumentException(

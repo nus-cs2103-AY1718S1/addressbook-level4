@@ -1,13 +1,14 @@
 package seedu.address.model.lesson.predicate;
 
-import org.junit.Test;
-import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import static seedu.address.testutil.TypicalLessons.CS2101_L1;
 import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import seedu.address.model.module.predicates.ShowSpecifiedLessonPredicate;
 
 public class ShowSpecifiedLessonPredicateTest {
 

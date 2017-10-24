@@ -10,9 +10,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
 import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
-import org.junit.Test;
-
 import java.util.List;
+
+import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;

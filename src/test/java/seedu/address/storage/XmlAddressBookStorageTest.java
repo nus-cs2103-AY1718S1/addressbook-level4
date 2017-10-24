@@ -2,13 +2,15 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalLessons.*;
+import static seedu.address.testutil.TypicalLessons.CS2103T_L1;
+import static seedu.address.testutil.TypicalLessons.CS2103_L1;
+import static seedu.address.testutil.TypicalLessons.MA1101R_L2;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import java.io.IOException;
 
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 

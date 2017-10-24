@@ -2,7 +2,14 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+
+import static seedu.address.logic.commands.CommandTestUtil.DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
 import static seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
 
 import org.junit.Test;

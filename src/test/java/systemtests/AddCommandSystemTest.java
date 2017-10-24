@@ -1,22 +1,5 @@
 package systemtests;
 
-import org.junit.Test;
-import seedu.address.commons.core.Messages;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.model.Model;
-import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ClassType;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Group;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.TimeSlot;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
-import seedu.address.testutil.LessonBuilder;
-import seedu.address.testutil.LessonUtil;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_MA1101R;
@@ -48,6 +31,24 @@ import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MA1101R;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
 import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.Model;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.TimeSlot;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.testutil.LessonBuilder;
+import seedu.address.testutil.LessonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
@@ -119,7 +120,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + GROUP_DESC_CS2101 + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
 
-                /* Case: add a lesson with all fields same as another lesson in the address book except Time slot -> added */
+        /* Case: add a lesson with all fields same as another lesson in the address book except Time slot -> added */
         toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
                 .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_CS2101)
                 .withLecturers(VALID_LECTURER_MA1101R).build();
@@ -128,23 +129,28 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, toAdd);
 
         /* Case: missing code -> rejected */
-        command = AddCommand.COMMAND_WORD + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        command = AddCommand.COMMAND_WORD + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing class type -> rejected */
-        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing venue -> rejected */
-        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + GROUP_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing group -> rejected */
-        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + TIMESLOT_DESC_MA1101R;
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing time slot -> rejected */
-        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R;
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */

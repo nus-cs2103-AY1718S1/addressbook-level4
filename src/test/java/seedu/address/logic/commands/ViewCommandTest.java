@@ -2,7 +2,11 @@ package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
-import static seedu.address.testutil.TypicalLessons.*;
+import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
+import static seedu.address.testutil.TypicalLessons.MA1101R_L2;
+import static seedu.address.testutil.TypicalLessons.MA1101R_T1;
+import static seedu.address.testutil.TypicalLessons.MA1101R_T2;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.List;

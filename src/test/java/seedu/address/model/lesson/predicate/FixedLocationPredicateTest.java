@@ -1,15 +1,17 @@
 package seedu.address.model.lesson.predicate;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
+
 import org.junit.Test;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.predicates.FixedLocationPredicate;
 import seedu.address.testutil.LessonBuilder;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
 
 public class FixedLocationPredicateTest {
 

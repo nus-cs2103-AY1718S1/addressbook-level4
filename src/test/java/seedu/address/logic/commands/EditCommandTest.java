@@ -2,7 +2,14 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstLessonOnly;
 import static seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;

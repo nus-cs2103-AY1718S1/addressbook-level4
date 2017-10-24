@@ -1,10 +1,11 @@
 package seedu.address.model.lesson;
 
-import org.junit.Test;
-import seedu.address.model.module.TimeSlot;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.model.module.TimeSlot;
 
 public class TimeSlotTest {
     @Test
