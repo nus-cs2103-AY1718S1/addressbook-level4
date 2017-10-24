@@ -27,7 +27,7 @@ public class EmailCommandTest {
 
     @Test
     public void execute_email_success() {
-        Index inBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() - 1 );
+        Index inBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() - 1);
         EmailCommand emailCommand = prepareCommand(inBoundIndex);
         assertCommandSuccess(emailCommand, model, emailCommand.MESSAGE_SUCCESS, model);
     }
