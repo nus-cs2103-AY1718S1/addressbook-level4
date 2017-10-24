@@ -1,5 +1,4 @@
-
-= AddressBook Level 4 - Developer Guide
+= 3W - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,9 +10,17 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W15-B4/tree/main
 
 By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
+
+== Introduction
+
+3W stands for "Who, What & Where". It is an application for University students, business people and all those who have a busy daily schedule.
+3W stores information about your contact, your tasks, and build linkage between them for cross references.
+3W supports map show for contact address and task venue with a Google map window.
+3W bases on command line to interact.
+Live neat with 3W.
 
 == Setting up
 

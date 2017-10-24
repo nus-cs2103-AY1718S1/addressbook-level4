@@ -4,20 +4,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
+3W was developed by our team below based on
+AddressBook - Level 4 developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
 The dummy content given below serves as a placeholder to be used by future forks of the project. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team CS2103AUG2017-W15-B4
-
-=== Cui Xiaohan
-image::xiaohan.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: UI designer
-
-'''
 
 === Dong Shaocong
 image::shaocongdong.png[width="150", align="left"]
