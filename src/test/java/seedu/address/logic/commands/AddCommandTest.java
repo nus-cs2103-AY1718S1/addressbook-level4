@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -143,6 +144,11 @@ public class AddCommandTest {
 
         @Override
         public  void removeTag(Index index, Tag tag) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
             fail("This method should not be called");
         }
     }
