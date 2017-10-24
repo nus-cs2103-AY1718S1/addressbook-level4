@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import com.sun.deploy.panel.TextFieldProperty;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

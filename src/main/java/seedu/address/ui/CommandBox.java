@@ -1,10 +1,6 @@
 package seedu.address.ui;
 
-import java.awt.*;
-import java.beans.EventHandler;
 import java.util.logging.Logger;
-
-import com.sun.deploy.panel.TextFieldProperty;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
