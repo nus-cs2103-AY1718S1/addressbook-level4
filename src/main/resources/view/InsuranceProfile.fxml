@@ -18,19 +18,19 @@
                      <HBox>
                         <children>
                            <Label styleClass="particular-field" text="Owner: " />
-                               <Label fx:id="owner" styleClass="particular-field" text="\$owner" />
+                               <Label fx:id="owner" styleClass="particular-person" text="\$owner" />
                         </children>
                      </HBox>
                      <HBox>
                         <children>
                            <Label styleClass="particular-field" text="Insured: " />
-                               <Label fx:id="insured" styleClass="particular-field" text="\$insured" />
+                               <Label fx:id="insured" styleClass="particular-person" text="\$insured" />
                         </children>
                      </HBox>
                      <HBox>
                         <children>
                            <Label styleClass="particular-field" text="Beneficiary: " />
-                               <Label fx:id="beneficiary" styleClass="particular-field" text="\$beneficiary" />
+                               <Label fx:id="beneficiary" styleClass="particular-person" text="\$beneficiary" />
                         </children>
                      </HBox>
                      <HBox>
