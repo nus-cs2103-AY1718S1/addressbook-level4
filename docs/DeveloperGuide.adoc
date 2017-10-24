@@ -1,5 +1,5 @@
-= AddressBook Level 4 - Developer Guide
-= AddressBook Level 4 - Developer Guide
+= UniCity - Developer Guide
+= UniCity - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,9 +11,26 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W13-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B1`      Since: `AUG 2017`      Licence: `MIT`
+
+== Introduction
+
+=== Purpose
+
+UniCity is a contact management desktop application implemented in Java. This developer guide aims to provide
+adequate information for a new developer to understand the underlying structure of UniCity and how it works.
+
+=== Overview
+
+This guide covers the following: +
+
+* Design architecture of UniCity. +
+* Implementation details of main features such as undoing and redoing of previous commands, logging, configuration and
+etc. +
+* Testing and integrating the software for future releases. +
+* Additional information covered by the appendix section. +
 
 == Setting up
 
@@ -347,10 +364,14 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // end::undoredo[]
 
 // tag::favourite[]
-=== Favourite a contact
+=== Favourite mechanism (Since v1.2)
 To favourite a contact is achieved by `FavouriteCommand`, which is a subclass of `UndoableCommand`. It basically changes the value of the `Favourite` field of a `Person`.
 
 In this sense, `Favourite` class need to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is "False".
+
+The following sequence diagram shows how a `FavouriteCommand` is processed:
+
+image::FavouriteSequenceDiagram.png[width="800"]
 
 To make the default status of a `Favourite` field "False", the default constructor of `Favourite` is implemented in this way:
 [source,java]
@@ -470,7 +491,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-=== Filter mechanism
+=== Filter mechanism (Since v1.2)
 
 The filter mechanism is facilitated by `FilterCommandParser`, which resides inside the parser folder of the logic component.
 
@@ -564,7 +585,7 @@ some of his contacts may have tags that serve the same purpose but spelt differe
 
 ---
 
-=== Sorting mechanism
+=== Sorting mechanism (Since v1.2)
 
 The sorting mechanism is achieved by the `SortCommand`. In order to sort the list of contacts, the default constructor of `SortCommand` creates an empty editable array list of contacts as shown below:
 
@@ -630,8 +651,6 @@ If the list is in correct order, the address book will reply with `Already sorte
 [NOTE]
 The sorting process is case insensitive.
 
-
-
 ==== Design considerations
 **Aspect:** Implementation of `SortCommand` +
 **Alternative 1 (current choice):** The `SortCommand` will inherit directly from `Command` without the undo/redo mechanism. +
@@ -657,47 +676,129 @@ The sorting process is case insensitive.
 **Pros:** Less time and space consuming as sorting is achieved in a single array. +
 **Cons:** There is no way to obtain the origin list of contacts for other functions. If a mistake is made, the original list of contacts will be compromised. Need to update all classes that inherits from Address Book class as well which may be confusing.
 
-=== Facebook mechanism
+=== Facebook mechanism (Coming in v1.3)
 
-The facebook mechanism is facilitated by `FacebookCommandParser`, which resides inside the parser folder of the logic component.
+The facebook mechanism is facilitated by `FacebookCommand`, which resides inside the commands folder of the logic component.
 
-The facebook mechanism searches a contact's email on Facebook as specified by the contact's index number, according to the last ordering of the contact list.
+The facebook mechanism displays the Facebook login page when the `facebook` command is entered.
 
-The `FacebookCommand` will inherit from `Command`.
+image::facebook-command-ui.png[width="800"]
 
-When the command word `facebook` is typed into UniCity, `AddressBookParser` will call `FacebookCommandParser`.
+Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page.
 
-`FacebookCommandParser` then takes in the command argument (index of the contact), wraps it as an `Index` class to be parsed into the `FacebookCommand` constructor.
+As part of the UI component, the `BrowserPanel` class loads the facebook page using a method called `loadFacebookPage`.
 
-Upon execution, the `FacebookCommand` posts an event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load the search page.
+The `MainWindow` class sets up the browser panel by calling the `BrowserPanel`'s constructor.
 
-The `BrowserPanel` has `loadPersonPage` and `loadPage` to load the url that holds the search page. The url consists of 2 parts: the first part is a constant url string that
-exhibits the search behaviour on facebook while the second part will be the contact's email address to search on facebook.
-
-[NOTE]
-The user may be required to log in to Facebook in the browser panel of UniCity if that is his first Facebook command.
+This class handles the dispatched `ShowFacebookRequestEvent` event and calls the browser panel's `loadFacebookPage` to mount the Facebook Page on the user interface.
 
 [NOTE]
-This command may not work for some contacts as the specified contact may either not have a Facebook account or has not registered an account with the given email.
+The user has to ensure that an internet connection is established to succeed in the command.
 
 ==== Design Considerations
 
-**Aspect:** Facebook search by contact's name or email address +
-**Alternative 1 (current choice):** The url in `loadPersonPage` to contain email address search +
-**Pros:** Reduces ambiguity in comparison to searching by names as the chances of Facebook users sharing the same names or part of their names are higher compared to their email addresses. +
-**Cons:** The users' contacts might not have registered a Facebook account under their specified email. In which case, the users will be unable to search for their desired contacts on Facebook. +
-**Alternative 2:** The url in `loadPersonPage` to contain the contact's name search  +
-**Pros:** With the contact's full name, there is a chance of finding the contact on Facebook. Accounts for contacts who do not have an account with the same email address. +
-**Cons:** Facebook search by name may return a broader result as there are more Facebook users who share similar names. This contributes to an inaccurate result.
+**Aspect:** Logging in to Facebook through CLI or GUI +
+**Alternative 1 (current choice):** User enters the command `facebook` in the command box without his username and password; once the log in page is loaded he will enter his username and password in the page itself.  +
+**Pros:** Easy to implement and hassle-free. No need to import Facebook API, just load the page by parsing its URL into the relevant methods. +
+**Cons:** Defeats the purpose of a CLI application. User needs to navigate the log in page. +
+**Alternative 2:** User enters the command `facebook`, followed by his username and password in the command box. He is automatically logged into Facebook and is directed to Facebook's newsfeed page.  +
+**Pros:** Saves users the trouble of navigating the facebook log in page. Adheres to the purpose of the application having a CLI. +
+**Cons:** More difficult to implement. May require the use of Facebook API which may cause unexpected regressions that developers may not know how to solve.
+
+// tag::addremovetag[]
+=== Add/Remove Tag mechanism
+
+The add/remove tag mechanism is facilitated by the `FilteredList`, which resides in the `ModelManager`. It inherits
+from the `UndoableCommand` and is similar to the add/delete person function but deals with tags instead.
+
+The mechanism performs an addition or removal of a tag using a list of target indexes that is within the range of the
+default list and a tag to add/remove. By using the `FilteredList`, addition and removal of tags when the list is
+unfiltered or filtered by other commands such as the find command is possible. Furthermore tags can be added to/removed
+from multiple people at once.
+
+Suppose the user wants to add the tag "friends" to the first two persons in the list. The user will execute the
+`AddTagCommand`, addtag 1 2 t/friends, to add the tag "friends" to the 1st and 2nd person in the last person indexing
+of UniCity. The same can be done to remove the tags as illustrated by the diagram below:
+
+image::AddRemoveTag.png[width="800"]
+
+[NOTE]
+If the given indexes are out of bounds, the `AddTagCommand` and `RemoveTagCommand` will throw an exception
+
+The following sequence diagram shows how the add tag operation works:
+
+image::AddTagSdLogic.png[width="800"]
+
+The remove tag command works in the same way but with a different command name instead.
+
+[NOTE]
+If the tag to remove doesn't exist, `RemoveTagCommand` will throw an exception while `AddTagCommand` will throw an
+exception if the tag exists in every person in the given list of indexes.
+
+The `addTag` method of the `ModelManager` goes through each person in the list and adds the tag to each of them and
+updates them. This works the same for the `removeTag` method. After which it raises the `indicateAddressBookChanged`
+event which triggers the storage component to save this change. Note that by indicating an event instead of directly
+calling the storage component, coupling is reduced. The implementation of `addTag` is shown below:
+
+[source,java]
+----
+        /**
+         * Adds given tag to the given indexes of the target persons shown in the last person listing.
+         */
+        @Override
+        public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
+                DuplicatePersonException {
+            for (int i = 0; i < targetIndexes.size(); i++) {
+                int targetIndex = targetIndexes.get(i).getZeroBased();
+                ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
+
+                Person newPerson = new Person(oldPerson);
+                Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
+                newTags.add(toAdd);
+                newPerson.setTags(newTags);
+
+                addressBook.updatePerson(oldPerson, newPerson);
+                indicateAddressBookChanged();
+            }
+        }
+
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of the `addTag` and `removeTag` method +
+**Alternative 1 (current choice):** Implement the methods in `ModelManager`. +
+**Pros:**  Easier to implement since `ModelManager` has access to all the required methods and variables. +
+**Cons:** Hard for new developers to understand how it works as a large amount of code in the many layers of the Model
+component must be read to understand the mechanism. +
+**Alternative 2:** Implement the `addTag` and `removeTag` method inside `AddTagCommand` and `RemoveTagCommand`
+respectively. +
+**Pros:** Easier for new developers to understand. +
+**Cons:** Involves replication of code, violating the DRY principle. Furthermore, it violates the Single Responsibility
+Principle and the Separation of Concerns as `AddTagCommand` and `RemoveTagCommand` must now update the person and
+raise the address book changed event.
 
 ---
+
+**Aspect:** Type of command +
+**Alternative 1 (current choice):** Implement the command as an `UndoableCommand`. +
+**Pros:** More intuitive for the user to type undo when he makes the mistake. +
+**Cons:** New developers must understand the template pattern before they can understand these commands. +
+**Alternative 2:** Implement the command as a normal `Command`. +
+**Pros:** Allows the user to undo a previous add/remove by clicking the up button to bring up the previous command and
+then changing the first letter since the shortcut command for `AddTagCommand` and `RemoveTagCommand` is "at" and "rt"
+respectively. +
+**Cons:** Less intuitive for the user and is not consistent with the design that commands that modify data should be
+undoable.
+// end::addremovetag[]
 
 == Documentation
 
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides
+more flexibility in formatting.
 
 === Editing Documentation
 
@@ -1067,6 +1168,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |remove a tag from my friends' contact information |
 
+|`* *` |user |sort my contacts in alphabetical order |I can find my contacts easier
+
+|`* *` |caring user |add birthday to my close friends |celebrate their birthday with them
+
 |`* *` |lazy user |type shorter commands while ignoring their cases |access my friends' contact information faster
 
 |`* *` |curious user |search my contacts' information online with google |
@@ -1246,6 +1351,33 @@ Use case ends.
 Use case ends.
 
 [discrete]
+=== Use case: Sort all contacts
+
+*MSS*
+
+1. User requests to sort all persons in the list.
+2. UniCity displays a list of every person sorted by name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+[none]
+** 2a1. UniCity displays a message on empty list.
++
+Use case ends.
++
+[none]
+* 2a. The list is already sorted in order.
++
+** 2a1. UniCity displays a message on about the sorted list.
++
+Use case ends.
+
+[discrete]
 === Use case: Undo an action
 
 *MSS*
@@ -1292,6 +1424,41 @@ Use case ends.
 ** 2a1. UniCity displays a failure message.
 +
 Use case ends.
+
+[discrete]
+=== Use case: Add birthday to a contact
+
+*MSS*
+
+1. User requests to list persons.
+2. UniCity shows a list of persons.
+3. User requests to add birthday to a specific contact in the list.
+4. UniCity adds the birthday of that contact to the field.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. the list is empty.
++
+Use case ends.
+
+[none]
+* 3a. the given index is invalid.
++
+[none]
+** 3a1. UniCity displays an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 3a. the given birthday is invalid format.
++
+[none]
+** 3a1. UniCity shows an error message and a sample input.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: View previous commands

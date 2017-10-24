@@ -10,6 +10,8 @@
     -fx-opacity: 0.9;
 }
 
+
+
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -328,6 +330,10 @@
 
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+
+#personListView {
+    -fx-background-color: #383838;
 }
 
 #resultDisplay .content {

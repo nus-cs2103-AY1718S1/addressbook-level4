@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.commands.AddBirthdayCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -13,6 +14,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FacebookCommand;
 import seedu.address.logic.commands.FavouriteCommand;
 import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -73,6 +75,10 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(SelectCommand.COMMAND_WORDVAR_2)) {
             return new SelectCommandParser().parse(arguments);
 
+        } else if (commandWord.equalsIgnoreCase(FacebookCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(FacebookCommand.COMMAND_WORDVAR_2)) {
+            return new FacebookCommand();
+
         } else if (commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(DeleteCommand.COMMAND_WORDVAR_2)) {
             return new DeleteCommandParser().parse(arguments);
@@ -117,6 +123,10 @@ public class AddressBookParser {
         } else if (commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_1)
                 || commandWord.equalsIgnoreCase(ShowFavouriteCommand.COMMAND_WORD_2)) {
             return new ShowFavouriteCommand();
+
+        } else if (commandWord.equalsIgnoreCase(AddBirthdayCommand.COMMAND_WORDVAR_1)
+                || commandWord.equalsIgnoreCase(AddBirthdayCommand.COMMAND_WORDVAR_2)) {
+            return new AddBirthdayCommandParser().parse(arguments);
 
         } else if (commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(SortCommand.COMMAND_WORDVAR_2)) {

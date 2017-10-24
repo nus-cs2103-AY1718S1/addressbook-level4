@@ -63,7 +63,7 @@ public class FavouriteCommand extends UndoableCommand {
             changedToFav = false;
         }
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), favourite, personToEdit.getTags());
+                personToEdit.getAddress(), favourite, personToEdit.getBirthday(), personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);

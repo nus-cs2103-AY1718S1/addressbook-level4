@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -23,6 +24,7 @@ public class FindCommand extends Command {
 
     private final NameContainsKeywordsPredicate predicate;
 
+
     public FindCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
@@ -30,6 +32,13 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        int result = model.getFilteredPersonList().size();
+        if (result == 0 && !predicate.getKeywords().isEmpty()) {
+            String targetName = model.getClosestMatchingName(predicate);
+            model.updateFilteredPersonList(predicate);
+            return new CommandResult(String.format(getMessageForPersonListShownSummary(result)
+                    + Messages.MESSAGE_NO_PERSON_FOUND, targetName));
+        }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
@@ -39,4 +48,5 @@ public class FindCommand extends Command {
                 || (other instanceof FindCommand // instanceof handles nulls
                 && this.predicate.equals(((FindCommand) other).predicate)); // state check
     }
+
 }
