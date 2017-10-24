@@ -25,8 +25,6 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        LoggingCommand loggingCommand = new LoggingCommand();
-        loggingCommand.keepLog(predicate.getClass().getName(), "Find");
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 

@@ -25,8 +25,6 @@ public class TagCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        LoggingCommand loggingCommand = new LoggingCommand();
-        loggingCommand.keepLog(predicate.getClass().getName(), "Tagged");
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
