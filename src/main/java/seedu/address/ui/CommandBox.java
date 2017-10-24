@@ -19,6 +19,7 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.HintParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -94,6 +95,10 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            keyEvent.consume();
+            autocomplete();
+            break;
         default:
             // let JavaFx handle the keypress
         }
@@ -165,6 +170,16 @@ public class CommandBox extends UiPart<Region> {
         // add an empty string to represent the most-recent end of historySnapshot, to be shown to
         // the user if she tries to navigate past the most-recent end of the historySnapshot.
         historySnapshot.add("");
+    }
+
+    /**
+     * Automatically completes user's input and replaces it in the command box.
+     */
+    private void autocomplete() {
+        String input = commandTextField.getText();
+        String autocompletion = HintParser.autocomplete(input);
+        commandTextField.textProperty().set(autocompletion);
+        commandTextField.positionCaret(autocompletion.length());
     }
 
     /**
