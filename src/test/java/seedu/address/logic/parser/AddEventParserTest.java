@@ -1,11 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_A_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_ADDRESS_B_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_DATE_A_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_DATE_B_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_A_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_B_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
@@ -14,16 +11,13 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_ADDRESS
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_NAME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.model.event.Date;
-import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Name;
-import seedu.address.testutil.EventBuilder;
 
 public class AddEventParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();
