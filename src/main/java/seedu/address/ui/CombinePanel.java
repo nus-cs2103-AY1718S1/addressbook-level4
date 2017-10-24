@@ -99,6 +99,9 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 
+    /**
+     * Generate timetable data
+     */
     public void generateTimeTableData(){
         ObservableList<ReadOnlyLesson> lessons = logic.getFilteredLessonList();
         initGridData();
