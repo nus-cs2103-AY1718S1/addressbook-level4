@@ -8,9 +8,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
 /**
  * Adds a reminder to the address book.

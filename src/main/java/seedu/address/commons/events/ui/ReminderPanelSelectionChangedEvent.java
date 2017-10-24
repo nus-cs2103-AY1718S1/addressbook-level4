@@ -3,7 +3,9 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.ReminderCard;
 
-
+/**
+ * Represents a selection change in the Reminder List Panel
+ */
 public class ReminderPanelSelectionChangedEvent extends BaseEvent {
 
 
