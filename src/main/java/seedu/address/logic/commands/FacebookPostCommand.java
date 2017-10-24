@@ -41,7 +41,7 @@ public class FacebookPostCommand extends Command {
      */
     public static void completePost() throws CommandException {
         Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
-        user = "";
+        user = null;
         try {
             user = facebookInstance.getName();
             facebookInstance.postStatusMessage(toPost);
