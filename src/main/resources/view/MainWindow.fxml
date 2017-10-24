@@ -43,6 +43,7 @@
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
+
       <VBox fx:id="reminderList" minWidth="340" maxWidth="340">
          <padding>
             <Insets bottom="10" left="10" right="10" top="10" />
@@ -56,6 +57,7 @@
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
+
     </StackPane>
   </SplitPane>
 

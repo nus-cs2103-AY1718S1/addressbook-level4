@@ -11,12 +11,12 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Priority {
 
     public static final String MESSAGE_PRIORITY_CONSTRAINTS =
-            "Priority numbers can only contain numbers from 1 to 10";
-    public static final String PRIORITY_VALIDATION_REGEX = "[1-9]|1[0]";
+            "Priority can only be Low / Medium / High";
+    public static final String PRIORITY_VALIDATION_REGEX = ".*\\b(Low|Medium|High)\\b.*";
     public final String value;
 
     /**
-     * Validates given priority number.
+     * Validates given priority word.
      *
      * @throws IllegalValueException if given priority string is invalid.
      */
@@ -30,7 +30,7 @@ public class Priority {
     }
 
     /**
-     * Returns true if a given string is a valid reminder priority number.
+     * Returns true if a given string is a valid reminder priority word.
      */
     public static boolean isValidPriority(String test) {
         return test.matches(PRIORITY_VALIDATION_REGEX);

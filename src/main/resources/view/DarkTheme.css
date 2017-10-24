@@ -365,3 +365,27 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#personListHeading {
+    -fx-background-color: deepskyblue;
+    -fx-border-color: white;
+}
+
+#personListHeading .label {
+    -fx-font-style: italic;
+    -fx-font-weight: bolder;
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+}
+
+#reminderListHeading {
+    -fx-background-color: deepskyblue;
+    -fx-border-color: white;
+}
+
+#reminderListHeading .label {
+    -fx-font-style: italic;
+    -fx-font-weight: bolder;
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+}

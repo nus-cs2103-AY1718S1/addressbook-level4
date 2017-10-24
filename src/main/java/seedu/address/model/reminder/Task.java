@@ -26,17 +26,17 @@ public class Task {
      *
      * @throws IllegalValueException if given task name string is invalid.
      */
-    public Task(String taskName) throws IllegalValueException {
-        requireNonNull(taskName);
-        String trimmedTaskName = taskName.trim();
-        if (!isValidTaskName(trimmedTaskName)) {
+    public Task(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!isValidTaskName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_TASK_NAME_CONSTRAINTS);
         }
-        this.taskName = trimmedTaskName;
+        this.taskName = trimmedName;
     }
 
     /**
-     * Returns true if a given string is a valid person task name.
+     * Returns true if a given string is a valid reminder task name.
      */
     public static boolean isValidTaskName(String test) {
         return test.matches(TASK_NAME_VALIDATION_REGEX);

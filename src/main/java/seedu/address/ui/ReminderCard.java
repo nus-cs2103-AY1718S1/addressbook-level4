@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,9 +11,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.reminder.ReadOnlyReminder;
 
+/**
+ * An UI component that displays information of a {@code Reminder}.
+ */
 public class ReminderCard extends UiPart<Region> {
 
     private static final String FXML = "ReminderListCard.fxml";
+    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static Random random = new Random();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -45,6 +54,14 @@ public class ReminderCard extends UiPart<Region> {
         bindListeners(reminder);
     }
 
+    private static String getColorForTag(String tagValue) {
+        if (!tagColors.containsKey(tagValue)) {
+            tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
+        }
+
+        return tagColors.get(tagValue);
+    }
+
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -56,12 +73,19 @@ public class ReminderCard extends UiPart<Region> {
         message.textProperty().bind(Bindings.convert(reminder.messageProperty()));
         reminder.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            reminder.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(reminder);
         });
     }
 
+    /**
+     * @param reminder
+     */
     private void initTags(ReadOnlyReminder reminder) {
-        reminder.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        reminder.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override

@@ -25,6 +25,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.PriorityComparator;
 import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.exceptions.DuplicateReminderException;
@@ -80,6 +81,8 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //// person-level operations
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -114,6 +117,8 @@ public class ModelManager extends ComponentManager implements Model {
             addressBook.updatePerson(oldPerson, newPerson);
         }
     }
+
+    //// reminder-level operations
 
     @Override
     public synchronized void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException {
@@ -167,6 +172,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Reminder List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyReminder} backed by the internal list of
+     * {@code addressBook}
+     */
     @Override
     public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
         logger.info("it came here");
@@ -260,6 +271,22 @@ public class ModelManager extends ComponentManager implements Model {
             indicateAddressBookChanged();
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+    }
+
+    /**
+     * @param contactList
+     * @throws CommandException
+     */
+    public void sortListByPriority(ArrayList<ReadOnlyReminder> contactList) throws CommandException {
+        contactList.addAll(filteredReminders);
+        Collections.sort(contactList, new PriorityComparator());
+
+        try {
+            addressBook.setReminders(contactList);
+            indicateAddressBookChanged();
+        } catch (DuplicateReminderException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_REMINDER);
         }
     }
 

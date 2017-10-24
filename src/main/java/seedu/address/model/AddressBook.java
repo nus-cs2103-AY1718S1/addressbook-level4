@@ -77,15 +77,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
-
-        } catch (DuplicatePersonException e) {
-            assert false : "AddressBooks should not have duplicate persons";
-        }
-        try {
             setReminders(newData.getReminderList());
 
-        } catch (Exception e) {
+        } catch (DuplicatePersonException dpe) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateReminderException dre) {
+            assert false : "AddressBooks should not have duplicate reminders";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -110,15 +107,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
-    public void addReminder(ReadOnlyReminder p) throws DuplicateReminderException {
-        Reminder newReminder = new Reminder(p);
-        syncMasterTagListWith(newReminder);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any reminder
-        // in the reminder list.
-        reminders.add(newReminder);
-    }
-
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -141,6 +129,46 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        if (persons.remove(key)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
+    //// reminder-level operations
+
+    /**
+     * Adds a reminder to the address book.
+     * Also checks the new reminder's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the reminder to point to those in {@link #tags}.
+     *
+     * @throws DuplicateReminderException if an equivalent reminder already exists.
+     */
+    public void addReminder(ReadOnlyReminder p) throws DuplicateReminderException {
+        Reminder newReminder = new Reminder(p);
+        syncMasterTagListWith(newReminder);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any reminder
+        // in the reminder list.
+        reminders.add(newReminder);
+    }
+
+    /**
+     * Replaces the given reminder {@code target} in the list with {@code editedReadOnlyReminder}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyReminder}.
+     *
+     * @throws DuplicateReminderException if updating the reminder's details causes the reminder to be equivalent to
+     *      another existing reminder in the list.
+     * @throws ReminderNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncMasterTagListWith(Reminder)
+     */
     public void updateReminder(ReadOnlyReminder target, ReadOnlyReminder editedReadOnlyReminder)
             throws DuplicateReminderException, ReminderNotFoundException {
         requireNonNull(editedReadOnlyReminder);
@@ -152,6 +180,26 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the reminder list.
         reminders.setReminder(target, editedReminder);
     }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws ReminderNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeReminder(ReadOnlyReminder key) throws ReminderNotFoundException {
+        if (reminders.remove(key)) {
+            return true;
+        } else {
+            throw new ReminderNotFoundException();
+        }
+    }
+
+    //// tag-level operations
+
+    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
+        tags.add(t);
+    }
+
+    //// sync master tag list
 
     /**
      * Ensures that every tag in this person:
@@ -173,6 +221,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         person.setTags(correctTagReferences);
     }
 
+    /**
+     * Ensures that every tag in these persons:
+     *  - exists in the master list {@link #tags}
+     *  - points to a Tag object in the master list
+     *  @see #syncMasterTagListWith(Person)
+     */
+    private void syncMasterTagListWith(UniquePersonList persons) {
+        persons.forEach(this::syncMasterTagListWith);
+    }
+
+    /**
+     * Ensures that every tag in this reminder:
+     *  - exists in the master list {@link #tags}
+     *  - points to a Tag object in the master list
+     */
     private void syncMasterTagListWith(Reminder reminder) {
         final UniqueTagList reminderTags = new UniqueTagList(reminder.getTags());
         tags.mergeFrom(reminderTags);
@@ -189,43 +252,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Ensures that every tag in these persons:
+     * Ensures that every tag in these reminders:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Person)
+     *  @see #syncMasterTagListWith(Reminder)
      */
-    private void syncMasterTagListWith(UniquePersonList persons) {
-        persons.forEach(this::syncMasterTagListWith);
-    }
-
     private void syncMasterTagListWith(UniqueReminderList reminders) {
         reminders.forEach(this::syncMasterTagListWith);
-    }
-
-    /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
-            return true;
-        } else {
-            throw new PersonNotFoundException();
-        }
-    }
-
-    public boolean removeReminder(ReadOnlyReminder key) throws ReminderNotFoundException {
-        if (reminders.remove(key)) {
-            return true;
-        } else {
-            throw new ReminderNotFoundException();
-        }
-    }
-
-    //// tag-level operations
-
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
     }
 
     //// util methods
