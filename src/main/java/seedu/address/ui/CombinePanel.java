@@ -34,8 +34,7 @@ import seedu.address.model.module.ReadOnlyLesson;
 public class CombinePanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String NUS_MAP_SEARCH_URL_PREFIX = "http://map.nus.edu.sg/#page=search&type=by&qword=";
 
     private static final String FXML = "CombinePanel.fxml";
     private static final int ROW = 6;
@@ -142,8 +141,8 @@ public class CombinePanel extends UiPart<Region> {
                     lbl.setEditable(false);
                     lbl.setStyle("-fx-control-inner-background:black;"
                             + " -fx-background-color: #383838;"
-                            + " -fx-border-color: #EEEEEE"
-                            + " -fx-border-width: 10"
+                            + " -fx-border-color: #EEEEEE;"
+                            + " -fx-border-width: 10;"
                             + " -fx-padding: 5 5 5 5; "
                             + " -fx-font-family: Consolas; "
                             + "-fx-text-fill: #00ff00;");
@@ -203,8 +202,7 @@ public class CombinePanel extends UiPart<Region> {
     /************* BROWSER PANNEL *********/
 
     private void loadLessonPage(ReadOnlyLesson lesson) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + lesson.getCode().fullCodeName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        loadPage(NUS_MAP_SEARCH_URL_PREFIX + lesson.getLocation().toString());
     }
 
     public void loadPage(String url) {
