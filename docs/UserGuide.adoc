@@ -106,7 +106,7 @@ Format: `add #/TRACKING_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERYDAT
 
 [TIP]
 A parcel can have any number of tags (including 0)
-A parcel can only have one of three `STATUS` input. i.e. `PENDING`, `DELIVERING`, `DELIVERED`
+A parcel can only have one of four `STATUS` input. i.e. `PENDING`, `DELIVERING`, `COMPLETED` and `OVERDUE`.
 If there is no `STATUS` input, it defaults to `PENDING`
 
 Examples:
@@ -415,7 +415,7 @@ In version v1.2, users will be able to: +
 === Features added in v1.3
 In version v1.3, users will be able to: +
 
-* Add one of three Status to parcels. i.e. `PENDING`, `DELIVERING`, `DELIVERED`
+* Add one of four possible Status to parcels. i.e. `PENDING`, `DELIVERING`, `COMPLETED` and `OVERDUE`.
 * Import parcels stored in an Ark storage file in xml format into Ark.
 
 {{More to be added}}
@@ -437,8 +437,8 @@ In `Ark v2.0`, the delivery vendor will be able to do the following: +
 * Update status of `Parcel`
 * Color code `ParcelCard` based on impending deadlines.
 * Generate the optimal route for the day's deliveries, based on shortest time, shortest distance travelled or most
- parcels delivered.
 * Archive completed deliveries
+ parcels delivered.
 * Add multiple parcels by importing a XML file
 * Store the sender's and receiver's details (i.e. `Name`, `Phone`, `Email Address`, `Address`)
 * Autocomplete input commands.

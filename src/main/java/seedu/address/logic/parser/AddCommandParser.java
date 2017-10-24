@@ -63,7 +63,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             if (statusOptional.isPresent()) {
                 status = statusOptional.get();
             } else {
-                status = Status.getStatusInstance("Pending");
+                status = Status.getInstance("Pending");
             }
 
             ReadOnlyParcel parcel = new Parcel(trackingNumber, name, phone, email, address, deliveryDate, status,

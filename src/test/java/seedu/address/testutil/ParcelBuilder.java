@@ -39,7 +39,7 @@ public class ParcelBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             DeliveryDate defaultDeliveryDate = new DeliveryDate(DEFAULT_DELIVERYDATE);
-            Status defaultStatus = Status.getStatusInstance(DEFAULT_STATUS);
+            Status defaultStatus = Status.getInstance(DEFAULT_STATUS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.parcel = new Parcel(defaultTrackingNumber, defaultName, defaultPhone, defaultEmail, defaultAddress,
                     defaultDeliveryDate, defaultStatus, defaultTags);
@@ -144,7 +144,7 @@ public class ParcelBuilder {
      */
     public ParcelBuilder withStatus(String status) {
         try {
-            this.parcel.setStatus(Status.getStatusInstance(status));
+            this.parcel.setStatus(Status.getInstance(status));
         } catch (IllegalValueException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
