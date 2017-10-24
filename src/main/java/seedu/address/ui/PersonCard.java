@@ -80,7 +80,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initFavouriteLabel(ReadOnlyPerson person) {
         String favouriteStatus = person.getFavourite().getStatus();
-        String textToDisplay = (favouriteStatus.equals("True"))? "Fav" : "";
+        String textToDisplay = (favouriteStatus.equals("True")) ? "Fav" : "";
         Label favouriteLabel = new Label(textToDisplay);
         if (favouriteStatus
                 .equals("True")) {
