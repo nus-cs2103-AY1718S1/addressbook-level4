@@ -66,7 +66,7 @@ public class Country {
         case "249": return "Sudan";
         case "1784": return "Saint Vincent and the Grenadines";
 
-        case DEFAULT_COUNTRY_CODE: // fallthrough
+        //case DEFAULT_COUNTRY_CODE: // fallthrough
         default: return DEFAULT_COUNTRY;
         }
     }
