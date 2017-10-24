@@ -108,6 +108,4 @@ public class ParcelTest {
         assertEquals(parcel.compareTo(sameParcel), 0);
     }
 
-
-
 }
