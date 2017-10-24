@@ -50,8 +50,10 @@ public class TaskCard extends UiPart<Region> {
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         this.task = task;
-        id.setText(displayedIndex + ". ");
-        initTags(task);
+        if(!task.getComplete()){
+            id.setText(displayedIndex + ". ");
+            initTags(task);
+        }
         bindListeners(task);
     }
 
