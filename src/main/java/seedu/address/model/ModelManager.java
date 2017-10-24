@@ -2,9 +2,12 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_ADDRESS;
+import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_EMAIL;
+import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_NAME;
+import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_PHONE;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +29,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.ComparatorUtil;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -51,39 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedFilteredPersons = new SortedList<>(filteredPersons);
         // Sort contacts by favourite status, then name, then phone, then email, then address
-        sortedFilteredPersons.setComparator(new Comparator<ReadOnlyPerson>() {
-            @Override
-            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
-                boolean v1 = p1.getFavouriteStatus().getStatus();
-                boolean v2 = p2.getFavouriteStatus().getStatus();
-                if (v1 && !v2) {
-                    return -1;
-                } else if (!v1 && v2) {
-                    return 1;
-                }
-                return 0;
-            }
-        }.thenComparing(new Comparator<ReadOnlyPerson>() {
-            @Override
-            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
-                return p1.getName().toString().compareTo(p2.getName().toString());
-            }
-        }.thenComparing(new Comparator<ReadOnlyPerson>() {
-            @Override
-            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
-                return p1.getPhone().toString().compareTo(p2.getName().toString());
-            }
-        }.thenComparing(new Comparator<ReadOnlyPerson>() {
-            @Override
-            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
-                return p1.getEmail().toString().compareTo(p2.getEmail().toString());
-            }
-        }.thenComparing(new Comparator<ReadOnlyPerson>() {
-            @Override
-            public int compare(ReadOnlyPerson p1, ReadOnlyPerson p2) {
-                return p1.getAddress().toString().compareTo(p2.getAddress().toString());
-            }
-        })))));
+        sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
     }
 
     public ModelManager() {
@@ -145,6 +117,26 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void sortByDataFieldFirst(String dataField) {
+        switch (dataField) {
+        case DATA_FIELD_NAME:
+            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
+            break;
+        case DATA_FIELD_PHONE:
+            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenPhoneFirst());
+            break;
+        case DATA_FIELD_EMAIL:
+            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenEmailFirst());
+            break;
+        case DATA_FIELD_ADDRESS:
+            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenAddressFirst());
+            break;
+        default:
+            break;
+        }
     }
 
     @Override
