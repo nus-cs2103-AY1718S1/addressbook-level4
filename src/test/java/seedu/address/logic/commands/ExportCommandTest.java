@@ -7,7 +7,6 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTasks.getTypicalTaskbook;
 
@@ -25,6 +24,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -44,10 +44,32 @@ public class ExportCommandTest {
     @Test
     public void execute_validIndexUnfilteredList_success() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
+        ReadOnlyPerson firstPersonToExport = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ReadOnlyPerson lastPersonToExport;
+        lastPersonToExport = model.getFilteredPersonList().get(lastPersonIndex.getZeroBased());
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
-        assertExecutionSuccess(INDEX_THIRD_PERSON);
-        assertExecutionSuccess(lastPersonIndex);
+        final StringBuilder firstBuilder = new StringBuilder();
+        firstPersonToExport.getTags().forEach(firstBuilder::append);
+        String firstMessage = String.format(ExportCommand.MESSAGE_SUCCESS,
+                String.join(" ", "n/" + firstPersonToExport.getName(),
+                        "p/" + firstPersonToExport.getPhone(),
+                        "e/" + firstPersonToExport.getEmail(),
+                        "a/" + firstPersonToExport.getAddress(),
+                        "r/" + firstPersonToExport.getRemark(),
+                        "t/" + firstBuilder));
+        final StringBuilder lastBuilder = new StringBuilder();
+        lastPersonToExport.getTags().forEach(lastBuilder::append);
+        String lastMessage = String.format(ExportCommand.MESSAGE_SUCCESS,
+                String.join(" ", "n/" + lastPersonToExport.getName(),
+                        "p/" + lastPersonToExport.getPhone(),
+                        "e/" + lastPersonToExport.getEmail(),
+                        "a/" + lastPersonToExport.getAddress(),
+                        "r/" + lastPersonToExport.getRemark(),
+                        "t/" + lastBuilder));
+
+        assertExecutionSuccess(INDEX_FIRST_PERSON, firstMessage);
+        //assertExecutionSuccess(INDEX_THIRD_PERSON);
+        assertExecutionSuccess(lastPersonIndex, lastMessage);
     }
 
     @Test
@@ -60,8 +82,19 @@ public class ExportCommandTest {
     @Test
     public void execute_validIndexFilteredList_success() {
         showFirstPersonOnly(model);
+        ReadOnlyPerson personToExport = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON);
+        final StringBuilder builder = new StringBuilder();
+        personToExport.getTags().forEach(builder::append);
+        String expectedMessage = String.format(ExportCommand.MESSAGE_SUCCESS,
+                String.join(" ", "n/" + personToExport.getName(),
+                        "p/" + personToExport.getPhone(),
+                        "e/" + personToExport.getEmail(),
+                        "a/" + personToExport.getAddress(),
+                        "r/" + personToExport.getRemark(),
+                        "t/" + builder));
+
+        assertExecutionSuccess(INDEX_FIRST_PERSON, expectedMessage);
     }
 
     @Test
@@ -125,7 +158,7 @@ public class ExportCommandTest {
         ExportCommand exportCommand = prepareCommand(index);
 
         try {
-            exportCommand.execute();
+            CommandResult commandResult = exportCommand.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
             assertEquals(expectedMessage, ce.getMessage());

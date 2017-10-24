@@ -27,6 +27,7 @@ public class ExportCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1 ";
 
+    public static final String MESSAGE_SUCCESS = "add %1$s";
     private final Index targetIndex;
 
     /**
@@ -50,19 +51,17 @@ public class ExportCommand extends Command {
         ReadOnlyPerson personToExport = lastShownList.get(targetIndex.getZeroBased());
 
         final StringBuilder builder = new StringBuilder();
-        builder.append("add n/")
-                .append(personToExport.getName())
-                .append(" p/")
-                .append(personToExport.getPhone())
-                .append(" e/")
-                .append(personToExport.getEmail())
-                .append(" a/")
-                .append(personToExport.getAddress())
-                .append(" r/")
-                .append(personToExport.getRemark())
-                .append(" t/");
         personToExport.getTags().forEach(builder::append);
-        return new CommandResult(builder.toString());
+        String feedBack = String.format(MESSAGE_SUCCESS,
+                String.join(" ",
+                        "n/" + personToExport.getName(),
+                        "p/" + personToExport.getPhone(),
+                        "e/" + personToExport.getEmail(),
+                        "a/" + personToExport.getAddress(),
+                        "r/" + personToExport.getRemark(),
+                        "t/" + builder.toString()));
+
+        return new CommandResult(feedBack);
 
     }
 
