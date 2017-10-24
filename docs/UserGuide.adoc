@@ -114,6 +114,12 @@ The website details is then loaded into the browser.
 Selects the 1st person in the results of the `find` command and attains the website of the 1st person.
 The website details is then loaded into the browser.
 
+Result of using `access index` should look like the figure below.
+
+image::AccessCommandFinalResult.PNG[width="790"]
+
+Figure 4.3.1 Access Command Result
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
@@ -132,6 +138,12 @@ Format: 'locate INDEX'
 * The index *must be a positive integer* `1, 2, 3, ...`
 * The address listed must be a valid address listed.
 ****
+
+Result of using `locate index` should look like the figure below.
+
+image::LocationCommandFinalResult.PNG[width="790"]
+
+Figure 4.5.1 Location Command Result
 
 Examples:
 
