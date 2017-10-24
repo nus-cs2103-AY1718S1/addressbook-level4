@@ -8,6 +8,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.MULTI_INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +65,9 @@ public class AddressBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+        MULTI_INDEX_FIRST_PERSON.clear();
+        MULTI_INDEX_FIRST_PERSON.add(INDEX_FIRST_PERSON);
+        assertEquals(new DeleteCommand(MULTI_INDEX_FIRST_PERSON), command);
     }
 
     @Test

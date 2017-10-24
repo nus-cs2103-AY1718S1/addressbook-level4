@@ -385,7 +385,9 @@ In addition, six more classes were created for the rest of the parameters, e.g. 
 The `FindCommandParser` has to be updated to be able to accept all these new parameters. The user input would be separated into two variables using
 the regex: `"(?<commandWord>\\w/)(?<arguments>.*)"`. The `commandWord` refers to either `n/`, `p/`, `e/` etc. and the `arguments` refers to the rest
 of the user input. The `FindCommandParser` would use the `commandWord` and return the correct `Predicate`. If the user input is invalid, a `ParseException`
-would be thrown.
+would be thrown. The following sequence diagram shows an example when `find n/...` command is executed:
+
+image::FindCommandSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 

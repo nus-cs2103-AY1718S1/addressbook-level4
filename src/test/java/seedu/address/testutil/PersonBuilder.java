@@ -10,6 +10,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
@@ -28,6 +29,7 @@ public class PersonBuilder {
     public static final String DEFAULT_BIRTHDAY = "";
     public static final String DEFAULT_AGE = "";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_FILEPATH = "";
 
     private Person person;
 
@@ -40,10 +42,10 @@ public class PersonBuilder {
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
             Age defaultAge = new Age(DEFAULT_AGE);
+            Photo defaultPhoto = new Photo(DEFAULT_FILEPATH);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultRemark,
-                    defaultBirthday, defaultAge, defaultTags);
-
+                    defaultBirthday, defaultAge, defaultPhoto, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -145,6 +147,13 @@ public class PersonBuilder {
         return this;
     }
 
+    /*
+     * Sets the {@code Photo} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPhoto(String filepath) {
+        this.person.setPhoto(new Photo(filepath));
+        return this;
+    }
 
     public Person build() {
         return this.person;

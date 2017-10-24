@@ -26,6 +26,8 @@ public interface ReadOnlyPerson {
     Birthday getBirthday();
     ObjectProperty<Age> ageProperty();
     Age getAge();
+    ObjectProperty<Photo> photoProperty();
+    Photo getPhoto();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 

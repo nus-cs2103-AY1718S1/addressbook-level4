@@ -14,6 +14,17 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Product Overview
+
+PEERSONAL is an open source contact manager. PEERSONAL helps you to store contacts with attributes such as: `name`, `phone number`, `email address`.
+You can use PEERSONAL to add new contacts, remind yourself about events associated with your contacts and keep track of upcoming birthdays. +
+
+PEERSONAL is available for Linux, Windows and Mac operating systems.
+
+== About
+
+This use guide aims to provide you a thorough and concise explanation of the features. This user guide also walks you through the steps of executing the commands in PEERSONAL.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
