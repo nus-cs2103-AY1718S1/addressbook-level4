@@ -2,10 +2,6 @@ package seedu.address.logic.commands;
 
 import java.util.List;
 import java.util.Properties;
-
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -37,7 +33,7 @@ public class EmailCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Email Sent!";
 
-    public static final String MESSAGE_FAILURE = "Email was not sent!";
+    private static final String MESSAGE_FAILURE = "Email was not sent!";
 
     private final Index targetIndex;
 
@@ -64,9 +60,7 @@ public class EmailCommand extends Command {
         for (Tag tag :  person.getTags()) {
             tags += tag.tagName + " ";
         }
-        tags.trim();
 
-        String code = "123";
         String to = "hanselblack@hotmail.com";
         // Sender's email ID needs to be mentioned
         String from = "unifycs2103@gmail.com";
@@ -124,7 +118,6 @@ public class EmailCommand extends Command {
                             + "<br/><img src='https://github.com/CS2103AUG2017-W11-B4/"
                             + "main/blob/master/docs/images/Ui.png?raw=true'/>",
                     "text/html");
-            ;
 
             Multipart multipart = new MimeMultipart();
 
