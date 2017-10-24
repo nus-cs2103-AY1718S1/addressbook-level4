@@ -9,7 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -84,11 +87,21 @@ public class PersonCard extends UiPart<Region> {
      * Binds the Tag with a randomly generated color
      */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
+        boolean fav = false;
+        for (Tag tag : person.getTags()) {
+            if (!tag.tagName.toLowerCase().contains("fav")) {
+                Label tagLabel = new Label(tag.tagName);
+                tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+                tags.getChildren().add(tagLabel);
+            } else {
+                fav = true;
+            }
+        }
+        if (fav) {
+            Circle circle = new Circle(0, 0, 8);
+            circle.setFill(Color.CORAL);
+            tags.getChildren().add(circle);
+        }
     }
 
     @Override
