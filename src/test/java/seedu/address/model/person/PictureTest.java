@@ -11,10 +11,10 @@ public class PictureTest {
     public void isValidPicture() {
         // invalid pictures
         assertFalse(Picture.isValidPicture("default_profile.png"));
-        assertFalse(Picture.isValidPicture(Picture.PICTURE_IMAGE_LOCATION + "default_profile.jpg"));
+        assertFalse(Picture.isValidPicture(Picture.DEFAULT_PICTURE_LOCATION + "default_profile.jpg"));
 
         // valid pictures
         assertTrue(Picture.isValidPicture(null));
-        assertTrue(Picture.isValidPicture(Picture.PICTURE_IMAGE_LOCATION + "default_profile.png"));
+        assertTrue(Picture.isValidPicture(Picture.DEFAULT_PICTURE_LOCATION + "default_profile.png"));
     }
 }

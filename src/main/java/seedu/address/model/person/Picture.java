@@ -3,9 +3,12 @@ package seedu.address.model.person;
 import java.io.File;
 import java.io.IOException;
 
+import javax.xml.bind.annotation.XmlType;
+
 import org.apache.commons.io.FileUtils;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.UserPrefs;
 
 /**
  * Represents a Person's picture's name
@@ -19,8 +22,12 @@ public class Picture {
     public static final String MESSAGE_PROFILEPICTURE_ERROR =
             "Error copying file.";
 
-    public static final String PICTURE_IMAGE_LOCATION =
-            "src/main/resources/images/pictures/"; // Where images are stored when added
+    public static final String PICTURE_SAVE_LOCATION =
+            UserPrefs.FOLDER_LOCATION; // Where images are stored when added
+    public static final String DEFAULT_PICTURE_LOCATION =
+            "src/main/resources/images/";
+    public static final String DEFAULT_PICTURE =
+            "default_profile.png";
 
     private static final String PICTURE_SUFFIX = ".png";
     private static final String PICTURE_DELIMITER = "/";
@@ -47,7 +54,7 @@ public class Picture {
             // in that case just put PICTURE_IMAGE_LOCATION to find it
             if (split.length != 1) {
                 File src = new File(fileLocation);
-                File dest = new File(PICTURE_IMAGE_LOCATION + this.value);
+                File dest = new File(PICTURE_SAVE_LOCATION + this.value);
 
                 try {
                     FileUtils.copyFile(src, dest);
@@ -76,6 +83,17 @@ public class Picture {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * Returns default picture location if there is no value
+     */
+    public String getPictureLocation() {
+        if (value == null) {
+            return DEFAULT_PICTURE_LOCATION + DEFAULT_PICTURE;
+        } else {
+            return PICTURE_SAVE_LOCATION + value;
         }
     }
 
