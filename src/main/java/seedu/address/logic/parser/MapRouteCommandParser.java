@@ -9,7 +9,7 @@ import seedu.address.logic.commands.MapRouteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new MapRoute Command object
+ * Parses input arguments and creates a new MapRouteCommand object
  */
 public class MapRouteCommandParser implements Parser<MapRouteCommand> {
     /**
@@ -24,7 +24,7 @@ public class MapRouteCommandParser implements Parser<MapRouteCommand> {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapRouteCommand.MESSAGE_USAGE));
             }
             String[] argsArray = args.trim().split(PREFIX_ADDRESS.getPrefix());
-            if (argsArray.length == 1) {
+            if (argsArray.length <= 1) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapRouteCommand.MESSAGE_USAGE));
             }
