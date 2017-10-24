@@ -100,6 +100,11 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        /* Case: mixed case command word -> 1 person returned */
+        command = "FiNd Meier";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
         /* Case: find person in address book, keyword is substring of name but not start -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " eier";
         ModelHelper.setFilteredList(expectedModel);
@@ -155,10 +160,6 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-
-        /* Case: mixed case command word -> rejected */
-        command = "FiNd Meier";
-        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**

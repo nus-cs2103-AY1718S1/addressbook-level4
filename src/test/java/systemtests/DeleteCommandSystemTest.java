@@ -107,9 +107,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid arguments (extra argument) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
-
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**
