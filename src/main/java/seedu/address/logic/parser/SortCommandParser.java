@@ -10,10 +10,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class SortCommandParser implements Parser<SortCommand> {
 
-    private static final String DATA_FIELD_NAME = "name";
-    private static final String DATA_FIELD_PHONE = "phone";
-    private static final String DATA_FIELD_EMAIL = "email";
-    private static final String DATA_FIELD_ADDRESS = "address";
+    public static final String DATA_FIELD_NAME = "name";
+    public static final String DATA_FIELD_PHONE = "phone";
+    public static final String DATA_FIELD_EMAIL = "email";
+    public static final String DATA_FIELD_ADDRESS = "address";
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
