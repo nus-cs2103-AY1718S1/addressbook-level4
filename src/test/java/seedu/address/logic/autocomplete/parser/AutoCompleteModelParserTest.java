@@ -21,6 +21,7 @@ import static seedu.address.testutil.TypicalPersons.GEORGE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -264,6 +265,11 @@ public class AutoCompleteModelParserTest {
 
         @Override
         public void removeTag(Index index, Tag tag) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
             fail("This method should not be called");
         }
     }
