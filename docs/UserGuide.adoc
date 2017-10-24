@@ -1,5 +1,6 @@
 = KayPoh! - User Guide
 :toc:
+:toclevels: 3
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -14,7 +15,14 @@ endif::[]
 
 By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 
-== Introduction / Product overview
+== Introduction
+
+=== About
+
+This user guide will provide you with instructions on how to use the KayPoh! application.
+You should not need any prior technical knowledge to make use of this guide.
+
+=== Product Overview
 
 KayPoh! is a desktop contact management application for desktop computers for social users.
 You can use KayPoh! to store contact and social information information about people,
@@ -32,6 +40,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
+.User Interface of KayPoh!
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -54,17 +63,112 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Some commands provide `OPTIONS` to specify how the command should operate.
+`OPTIONS` should be entered after the command word, and should prefixed with a dash `-`
+(e.g. `find -tag`).
+* Some common commands have a shorter *alias*, which can be used in place of the full command word
+(e.g. `d` can be used in place of `delete`).
 ====
 
-=== Viewing help: `help`
+=== Navigating KayPoh!
 
-Format: `help`
+==== Listing persons: `list`
 
-=== Adding a person: `add`
+Shows a specific list of persons based on user's specified option. +
+Format: `list [OPTION]` +
+Alias: `l`
+
+Options: +
+
+* Default (no option specified) +
+Shows a list of all persons in the address book. +
+* `fav` [Since v1.3] +
+Shows a list of all favorite persons in the address book.
+
+Example:
+
+* `list`
+* `list -fav` [Since v1.3] +
+
+==== Selecting a person: `select`
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX` +
+Alias: `s`
+
+****
+* Selects the person and loads the Instagram page  of the person at the specified `INDEX`. If the person does not have an Instagram account, the Facebook account of the person is loaded instead. If the person has neither Instagram nor Facebook, the Google search page of the person is loaded.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in the address book.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
+
+[[find-by-tag]]
+==== Finding persons: `find`
+
+Finds and displays a list of persons based on user's specified option. +
+Format `find [OPTION] KEYWORD [MORE_KEYWORDS]...` +
+Alias: `f`
+
+Options: +
+
+* Default (no option specified) +
+Finds persons whose name contain any of the given keywords. +
+* `tag` [Since v1.3] +
+Finds persons who are associated with any of the given tags. +
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find John` +
+Shows a list of persons with the names `john` and `John Doe`.
+* `find Betsy Tim John` +
+Shows a list of persons with names `Betsy`, `Tim`, or `John`.
+* `find -tag friends colleagues` +
+Shows a list of persons with tags `friends` or `colleagues`.
+
+==== Sorting the displayed list [Coming in v2.0]: `sort`
+
+Sorts the list of persons in the last displayed listing. +
+Format: `sort [OPTION]` +
+
+Options: +
+
+* Default (no option specified) +
+Sorts persons by their name in alphabetical order.
+* `recent` +
+Sorts persons by how recently they were last added, edited, or selected.
+
+Examples:
+
+* `list` +
+`sort` +
+lists all person in the address book, sorted by name
+* `find bob` +
+`sort -recent` +
+lists all the person that contain the keyword `bob`, sorted based on when they were last accessed.
+
+=== Managing Contacts
+
+==== Adding a person: `add`
 
 Adds a person to the address book. +
-Format: `add n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...`
-
+Format: `add n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
+Alias: `a`
 
 ****
 * A person can have more than one phone number (at least one). [Since v1.2] +
@@ -85,47 +189,11 @@ address `John street, block 123, #01-01`.
 Adds a `favorite` contact with the name `Rob Cross`, phone numbers `92456877` and `64123456`, email address `rob@example.com`,
 address `Kent Ridge Drive 23`, tag `husband`, and a `Facebook` account with the username `r.cross10`.
 
-=== Listing persons: `list`
-
-Shows a specific list of persons based on user's specified option. +
-Format: `list [OPTION]`
-
-Options: +
-
-* Default (no option specified) +
-Shows a list of all persons in the address book. +
-* `fav` [Since v1.3] +
-Shows a list of all favorite persons in the address book.
-
-Example:
-
-* `list`
-* `list -fav` [Since v1.3] +
-
-=== Selecting a person: `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Instagram page  of the person at the specified `INDEX`. If the person does not have an Instagram account, the Facebook account of the person is loaded instead. If the person has neither Instagram nor Facebook, the Google search page of the person is loaded.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Editing a person: `edit`
+==== Editing a person: `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...`
+Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
+Alias: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -150,7 +218,7 @@ and an Instagram account with the username `janedoe123`.
 * `edit 3 n/Betsy Crower t/` +
 Edits the name of the 3rd person to be `Betsy Crower` and clears all existing tags.
 
-=== Adding contact photos [Coming in v2.0]: `photo`
+==== Adding contact photos [Coming in v2.0]: `photo`
 
 Adds a display photo for a person. +
 Format: `photo INDEX [FILE_PATH]`
@@ -180,108 +248,7 @@ Adds the specified display photo for the 2nd person in the address book.
 `photo 1 /Users/seedu/Pictures/betsy.jpg` +
 Adds the specified display photo for the 1st person in the results of the `find` command.
 
-==== Deleting a person: `delete`
-
-Deletes the specified person(s) from the address book. +
-Format: `delete [OPTION] KEYWORD [MORE_KEYWORDS]...`
-
-[NOTE]
-The `KEYWORD` for `delete` command depends on which options are used.
-
-Options: +
-
-* Default (no option specified) +
-Deletes persons based on their indexes in the last displayed list.
-* `tag` +
-Deletes persons that have the input tags.
-
-==== To delete persons by index (default):
-Deletes person(s) specified by their indexes in the last displayed list.
-Format: `delete INDEX [ADDITIONAL_INDEXES]...`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* More than one person can be deleted in the same command by specifying additional indexes. [Since v1.2]
-****
-
-Examples:
-
-* `list` +
-`delete 2 3` +
-Deletes the 2nd and 3rd persons in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-==== To delete persons by tag [Since v1.3]:
-
-Deletes person(s) that have a the input tags. +
-Format: `delete -tag TAG [ADDITIONAL_TAGS]...`
-
-[NOTE]
-All contacts with the input tag will be deleted.
-Make sure that none of the contacts that you do not intend to delete have the input tag.
-You can use the <<find-by-tag, find command>> to view all contacts that have the tag.
-
-Examples:
-* `delete -tag temp`
-Deletes all persons with the tag `temp`
-* `delete -tag school work`
-Deletes all persons with the tags `school` or `work`
-
-[[find-by-tag]]
-=== Finding persons: `find`
-
-Finds and displays a list of persons based on user's specified option. +
-Format `find [OPTION] KEYWORD [MORE_KEYWORDS]...`
-
-Options: +
-
-* Default (no option specified) +
-Finds persons whose name contain any of the given keywords. +
-* `tag` [Coming in v2.0] +
-Finds persons who are associated with any of the given tags. +
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Shows a list of persons with the names `john` and `John Doe`.
-* `find Betsy Tim John` +
-Shows a list of persons with names `Betsy`, `Tim`, or `John`.
-* `find -tag friends colleagues` +
-Shows a list of persons with tags `friends` or `colleagues`.
-
-=== Sorting persons [Coming in v2.0]: `sort`
-
-Sorts the list of persons in the last displayed listing. +
-Format: `sort [OPTION]`
-
-Options: +
-
-* Default (no option specified) +
-Sorts persons by their name in alphabetical order.
-* `recent` +
-Sorts persons by how recently they were last added, edited, or selected.
-
-Examples:
-
-* `list` +
-`sort` +
-lists all person in the address book, sorted by name
-* `find bob` +
-`sort -recent` +
-lists all the person that contain the keyword `bob`, sorted based on when they were last accessed.
-
-=== Favoriting a person [Since v1.2]: `fav`
+==== Favoriting a person [Since v1.2]: `fav`
 
 Labels the specified person(s) as a favorite contact. +
 Format: `fav INDEX [ADDITIONAL INDEXES]`
@@ -300,7 +267,7 @@ Favorites the 1st and 3rd person in the most recently displayed list.
 `unfav 1` +
 Favorites the first person in the list of contacts with the name `Betsy`.
 
-=== Unfavoriting a person [Since v1.2]: `unfav`
+==== Unfavoriting a person [Since v1.2]: `unfav`
 
 Removes the the `favorite` label from the specified person(s). +
 Format: `unfav INDEX [ADDITIONAL INDEXES]`
@@ -320,7 +287,218 @@ Unfavorites the 2nd and 4th person in the most recently displayed list.
 Unfavorites the first person in the list of contacts with the name `Betsy`.
 
 
-=== Listing entered commands: `history`
+==== Deleting a person: `delete`
+
+Deletes the specified person(s) from the address book. +
+Format: `delete [OPTION] KEYWORD [MORE_KEYWORDS]...` +
+Alias: `d`
+
+[NOTE]
+The `KEYWORD` for `delete` command depends on which options are used.
+
+Options: +
+
+* Default (no option specified) +
+Deletes persons based on their indexes in the last displayed list.
+* `tag` +
+Deletes persons that have the input tags.
+
+===== Deleting persons by index (default):
+Deletes person(s) specified by their indexes in the last displayed list.
+Format: `delete INDEX [ADDITIONAL_INDEXES]...`
+
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* More than one person can be deleted in the same command by specifying additional indexes. [Since v1.2]
+****
+
+Examples:
+
+* `list` +
+`delete 2 3` +
+Deletes the 2nd and 3rd persons in the address book.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+
+===== Deleting persons by tag [Since v1.3]:
+
+Deletes person(s) that have a the input tags. +
+Format: `delete -tag TAG [ADDITIONAL_TAGS]...`
+
+[NOTE]
+All contacts with the input tag will be deleted.
+Make sure that none of the contacts that you do not intend to delete have the input tag.
+You can use the <<find-by-tag, find command>> to view all contacts that have the tag.
+
+Examples:
+* `delete -tag temp`
+Deletes all persons with the tag `temp`
+* `delete -tag school work`
+Deletes all persons with the tags `school` or `work`
+
+==== Clearing all entries: `clear`
+
+Clears all entries from the address book. +
+Format: `clear`
+
+[[social-media-integrations]]
+=== Social Media Integrations [Since v1.2]
+
+==== Representing Social Media Accounts
+
+Social media accounts are represented in the format `SOCIAL_TYPE USERNAME`.
+
+The social types presently supported are:
+
+* `facebook` (aliases: `fb`)
+* `instagram` (aliases: `ig`)
+
+Example:
+
+* `facebook johnd10` +
+Represents the Facebook account with the username `johnd10`.
+* `ig damyth` +
+represents the Instagram account with the username `damyth`.
+
+==== Facebook Integrations
+
+===== Connecting to Facebook [Since v1.2]: `facebook connect`
+
+Connects to your Facebook account. +
+Format: `facebook connect`
+
+****
+* Launches a Facebook authorization page in the browser
+* Key in your credentials to connect to your Facebook account
+* Once your Facebook account has been connected, you can <<facebook-import-contact, import contacts from facebook>> and
+<<facebook-make-post, post to your Facebook wall>>.
+****
+
+[[facebook-import-contact]]
+===== Importing a contact from Facebook [Coming in v2.0]:
+
+Imports a Facebook friend as a contact. +
+Format `facebook import USERNAME`
+
+****
+* Your facebook account must be connected to use this feature.
+* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
+the browser for you to connect to your account.
+****
+
+===== Importing all Facebook friends [Coming in v2.0]:
+Imports all your Facebook friends as contacts. +
+Format `facebook importall`
+
+****
+* Your facebook account must be connected to use this feature.
+* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
+the browser for you to connect to your account.
+****
+
+[[facebook-make-post]]
+===== Posting to Facebook [Since v1.2]: `facebook post`
+
+Posts a status to your Facebook wall. +
+Format: `facebook post STATUS`
+
+****
+* Your facebook account must be connected to use this feature.
+* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
+the browser for you to connect to your account.
+****
+
+Examples:
+
+* `facebook post hello world!` +
+Posts the status 'hello world!' to your Facebook wall.
+
+=== Managing Contact Data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+==== Sharing Contacts
+
+[[export-command]]
+===== Exporting contact data: `export`
+
+Exports all contact data to an external file. +
+Format: `export FILE_PATH`
+
+****
+* Exports contact data to the location specified by `FILE_PATH`.
+* You must have *write access* to the specified file path.
+* The input `FILE_PATH` must be an absolute file path.
+** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
+** `c:\Users\seedu\Documents\exportData.xml` for Windows
+****
+
+Examples:
+
+* `export /Users/seedu/Documents/exportData.xml` +
+Exports contact data to the location `/Users/seedu/Documents/exportData.xml`
+
+[[import-command]]
+===== Importing contact data: `import`
+
+Imports contact data from an external file. +
+Format: `import FILE_PATH`
+
+****
+* Imports contact data from data file at the location specified by `FILE_PATH`.
+* You must have *read access* to the specified file path.
+* The input `FILE_PATH` must be an absolute file path, e.g.
+** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
+** `c:\Users\seedu\Documents\exportData.xml` for Windows
+****
+
+Examples:
+
+* `import /Users/seedu/Documents/exportData.xml` +
+Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
+
+
+==== Synchronizing with the cloud [Coming in v2.0]:
+
+===== Configuring your cloud account: `sync`
+
+Configures the addressbook to synchronize with the cloud using the given user credentials. +
+Format: `sync u/USERNAME p/PASSWORD`
+
+===== Synchronizing with the cloud
+
+Address book data is automatically synchronized with cloud when an internet connection is available. +
+There is no need to synchronize manually.
+
+===== Removing your cloud account: `unsync`
+
+Stops synchronizing of contact information with any previously configured cloud accounts. +
+Format: `unsync`
+
+=== Miscellaneous
+
+==== Changing themes [Coming in v2.0]: `theme`
+
+Changes the color theme of the application. +
+Format: `theme THEME`
+
+Available Themes:
+
+* `light` +
+Changes the theme of the program to a light color scheme.
+* `dark` +
+Changes the theme of the program to a dark color scheme.
+
+Example:
+
+* `theme light`
+* `theme dark`
+
+==== Listing entered commands: `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -331,10 +509,11 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command: `undo`
+==== Undoing previous command: `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
+Alias: `u`
 
 [NOTE]
 ====
@@ -357,10 +536,11 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command: `redo`
+==== Redoing the previously undone command: `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Alias: `r`
 
 Examples:
 
@@ -380,165 +560,15 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-[[export-command]]
-=== Exporting contact data: `export`
-
-Exports all contact data to an external file. +
-Format: `export FILE_PATH`
-
-****
-* Exports contact data to the location specified by `FILE_PATH`.
-* You must have *write access* to the specified file path.
-* The input `FILE_PATH` must be an absolute file path.
-** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
-** `c:\Users\seedu\Documents\exportData.xml` for Windows
-****
-
-Examples:
-
-* `export /Users/seedu/Documents/exportData.xml` +
-Exports contact data to the location `/Users/seedu/Documents/exportData.xml`
-
-[[import-command]]
-=== Importing contact data: `import`
-
-Imports contact data from an external file. +
-Format: `import FILE_PATH`
-
-****
-* Imports contact data from data file at the location specified by `FILE_PATH`.
-* You must have *read access* to the specified file path.
-* The input `FILE_PATH` must be an absolute file path, e.g.
-** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
-** `c:\Users\seedu\Documents\exportData.xml` for Windows
-****
-
-Examples:
-
-* `import /Users/seedu/Documents/exportData.xml` +
-Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
-
-=== Changing themes [Coming in v2.0]: `theme`
-
-Changes the color theme of the application. +
-Format: `theme THEME`
-
-Available Themes:
-
-* `light` +
-Changes the theme of the program to a light color scheme.
-* `dark` +
-Changes the theme of the program to a dark color scheme.
-
-Example:
-
-* `theme light`
-* `theme dark`
-
-=== Clearing all entries: `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-
-=== Exiting the program: `exit`
+==== Exiting the program: `exit`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` +
+Alias: `x`
 
-=== Saving the data
+==== Viewing help: `help`
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-[[social-media-integrations]]
-== Social Media Integrations [Since v1.2]
-
-=== Representing Social Media Accounts
-
-Social media accounts are represented in the format `SOCIAL_TYPE USERNAME`.
-
-The social types presently supported are:
-
-* `facebook` (aliases: `fb`)
-* `instagram` (aliases: `ig`)
-
-Example:
-
-* `facebook johnd10` +
-Represents the Facebook account with the username `johnd10`.
-* `ig damyth` +
-represents the Instagram account with the username `damyth`.
-
-=== Facebook Integration:
-
-==== Connecting to Facebook [Since v1.2]: `facebook connect`
-
-Connects to your Facebook account. +
-Format: `facebook connect`
-
-****
-* Launches a Facebook authorization page in the browser
-* Key in your credentials to connect to your Facebook account
-* Once your Facebook account has been connected, you can <<facebook-import-contact, import contacts from facebook>> and
-<<facebook-make-post, post to your Facebook wall>>.
-****
-
-[[facebook-import-contact]]
-==== Importing a contact from Facebook [Coming in v2.0]:
-
-Imports a Facebook friend as a contact. +
-Format `facebook import USERNAME`
-
-****
-* Your facebook account must be connected to use this feature.
-* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
-the browser for you to connect to your account.
-****
-
-==== Importing all Facebook friends [Coming in v2.0]:
-Imports all your Facebook friends as contacts. +
-Format `facebook importall`
-
-****
-* Your facebook account must be connected to use this feature.
-* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
-the browser for you to connect to your account.
-****
-
-[[facebook-make-post]]
-==== Posting to Facebook [Since v1.2]: `facebook post`
-
-Posts a status to your Facebook wall. +
-Format: `facebook post STATUS`
-
-****
-* Your facebook account must be connected to use this feature.
-* If you have not yet connected your Facebook account, the authorization page will automatically be launched in
-the browser for you to connect to your account.
-****
-
-Examples:
-
-* `facebook post hello world!` +
-Posts the status 'hello world!' to your Facebook wall.
-
-=== Synchronizing with the cloud [Coming in v2.0]:
-
-==== Configuring your cloud account: `sync`
-
-Configures the addressbook to synchronize with the cloud using the given user credentials. +
-Format: `sync u/USERNAME p/PASSWORD`
-
-==== Synchronizing
-
-Address book data is automatically synchronized with cloud when an internet connection is available. +
-There is no need to synchronize manually.
-
-==== Removing your cloud account: `unsync`
-
-Stops synchronizing of contact information with any previously configured cloud accounts. +
-Format: `unsync`
+Format: `help`
 
 == FAQ
 
