@@ -613,6 +613,19 @@ There is no need to save manually.
 
 == Troubleshooting
 
+Having trouble? Here's a list of common errors and why they occur:
+
+* Error: Invalid Command Format +
+Occurs if a mandatory prefix has been left out. 
+
+* Error: Invaid Date Format +
+Occurs if the date given cannot be parsed.
+
+* Error: Unknown Command +
+Occurs if the command is incorrect.
+
+The correct usage of all commands is summarized in the next section.
+
 == Command Summary
 
 * *Add Contacts* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +
