@@ -2,6 +2,7 @@ package seedu.address.model.parcel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_ADDRESS;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_DELIVERYDATE;
 import static seedu.address.testutil.ParcelBuilder.DEFAULT_EMAIL;
@@ -92,5 +93,22 @@ public class ParcelTest {
                 + " Tags: ["  + DEFAULT_TAGS + "]");
 
     }
+
+    @Test
+    public void compareTo() throws IllegalValueException {
+        Parcel parcel = new Parcel(new ParcelBuilder().build());
+        Parcel sameParcel = new Parcel(new TrackingNumber(DEFAULT_TRACKING_NUMBER),
+                new Name(DEFAULT_NAME), new Phone(DEFAULT_PHONE),
+                new Email(DEFAULT_EMAIL), new Address(DEFAULT_ADDRESS),
+                new DeliveryDate(DEFAULT_DELIVERYDATE),
+                Status.getStatusInstance(DEFAULT_STATUS),
+                SampleDataUtil.getTagSet(DEFAULT_TAGS));
+        int parcelHash = parcel.hashCode();
+        int sameParcelHash = sameParcel.hashCode();
+        assertFalse(parcelHash == sameParcelHash);
+        assertEquals(parcel.compareTo(sameParcel), 0);
+    }
+
+
 
 }

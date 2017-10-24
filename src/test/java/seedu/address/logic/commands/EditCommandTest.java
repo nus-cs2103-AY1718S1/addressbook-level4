@@ -16,8 +16,10 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
+import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.rules.ExpectedException;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -37,7 +39,16 @@ import seedu.address.testutil.ParcelBuilder;
  */
 public class EditCommandTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void constructor_nullParcel_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new EditCommand(null, null);
+    }
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
