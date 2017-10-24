@@ -16,7 +16,7 @@ public class GroupContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>
 
     @Override
     public boolean test(ReadOnlyPerson readOnlyPerson) {
-        return false;
+        return readOnlyPerson.getGroup().getGroupName().equals(groupFilter);
     }
 
     @Override

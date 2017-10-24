@@ -3,8 +3,11 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicateGroupException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.GroupNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -25,6 +28,12 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Checks if unique group already exists */
+    boolean groupExists(Group group) throws GroupNotFoundException;
+
+    /** Adds group if one doesn't already exist */
+    void addGroup(Group group) throws DuplicateGroupException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

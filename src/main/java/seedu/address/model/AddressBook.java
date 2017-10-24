@@ -10,9 +10,12 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UniqueGroupList;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicateGroupException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -26,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueGroupList groups;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        groups = new UniqueGroupList();
     }
 
     public AddressBook() {}
@@ -57,6 +62,23 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
+    }
+
+    /**
+     * Adds a group to the unique group list
+     * @param toAdd
+     */
+    public void addGroup (Group toAdd) throws DuplicateGroupException {
+        requireNonNull(toAdd);
+        groups.add(toAdd);
+    }
+
+    /**
+     * Returns a boolean describing whether or not the group is in the address book
+     */
+    public boolean groupExists (Group group){
+        requireNonNull(group);
+        return groups.contains(group);
     }
 
     /**

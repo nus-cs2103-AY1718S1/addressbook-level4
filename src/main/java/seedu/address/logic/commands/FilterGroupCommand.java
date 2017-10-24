@@ -24,7 +24,6 @@ public class FilterGroupCommand extends UndoableCommand {
     /**
      * Updates the filtered list to display only people with the proper group predicate
      */
-    @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredPersonList(predicate);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));

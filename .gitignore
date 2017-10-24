@@ -1,4 +1,5 @@
 .gitignore
+test.txt
 build/
 .gradle/
 .checkstyle

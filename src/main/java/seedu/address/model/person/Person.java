@@ -41,6 +41,7 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.remarks = new SimpleObjectProperty<>(remarks);
+        this.group = new SimpleObjectProperty<>(new Group("none"));
     }
 
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Remark remarks, Group group) {

@@ -1,8 +1,15 @@
 package seedu.address.logic.commands;
 
+import java.util.Iterator;
 import java.util.List;
-
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Group;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicateGroupException;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.GroupNotFoundException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * This command is used to add people to an existing group
@@ -15,27 +22,56 @@ public class GroupCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + " [group name] [names to add to group]. Example: "
             + COMMAND_WORD + " Vietnam Grant Ali Joey";
     public static final String MESSAGE_PARAMETERS = "[group name] [person names ...]";
+    public static final String MESSAGE_SUCCESS = "Group command executed";
 
-    private final String groupName;
-    private final List<String> names;
 
-    public GroupCommand (String groupName, List<String> names) {
-        this.groupName = groupName;
-        this.names = names;
+
+    private final List<String> args;
+
+    public GroupCommand (List<String> args) {
+        this.args = args;
     }
 
-    /**
-     * This is just a stub for execute right now. Need to update the model component before it will work.
-     * Coming in v1.3
-     */
+    @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        return null;
+        String groupName = args.get(0);
+        try {
+            if (!model.groupExists(new Group(groupName))) {
+                model.addGroup(new Group(groupName));
+            }
+
+            // Iterate through our list of people, if we find a name in our group list then edit the person to be in the
+            // group
+            try {
+                for (int i = 1; i < args.size() ; i++) {
+                    for (Iterator<ReadOnlyPerson> it = model.getFilteredPersonList().iterator(); it.hasNext(); ) {
+
+                        ReadOnlyPerson p = it.next();
+                        if (p.getName().fullName.toLowerCase().contains(args.get(i).toLowerCase())) {
+                            ReadOnlyPerson newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
+                                    p.getTags(), p.getRemark(), new Group(groupName));
+                            model.updatePerson(p, newPerson);
+                        }
+                    }
+                }
+
+                return new CommandResult( MESSAGE_SUCCESS);
+            } catch (DuplicatePersonException e ) {
+                throw new CommandException(e.getMessage());
+            } catch (PersonNotFoundException e) {
+                throw new CommandException(e.getMessage());
+            }
+        } catch (GroupNotFoundException e) {
+            throw new CommandException(e.getMessage());
+        } catch (DuplicateGroupException e ){
+            throw new CommandException(e.getMessage());
+        }
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof GroupCommand // instanceof handles nulls
-                && names.equals(((GroupCommand) other).names));
+                && args.equals(((GroupCommand) other).args));
     }
 }
