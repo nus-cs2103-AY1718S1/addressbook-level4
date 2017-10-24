@@ -112,6 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
             DuplicatePersonException {
+
         for (int i = 0; i < targetIndexes.size(); i++) {
             int targetIndex = targetIndexes.get(i).getZeroBased();
             ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
@@ -132,6 +133,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
             DuplicatePersonException {
+
         for (int i = 0; i < targetIndexes.size(); i++) {
             int targetIndex = targetIndexes.get(i).getZeroBased();
             ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
@@ -157,25 +159,33 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
+
         requireNonNull(predicate);
-        double maxDistance = initialToleranceValue;
+        ArrayList<String> allNames = getListOfAllFirstAndLastNames(predicate);
+        List<String> keywords = predicate.getKeywords();
+        return keywords.size() == 1 ? getClosestMatchingNameForOneKeyword(keywords, allNames, initialToleranceValue)
+                : getClosestMatchingNameForMultipleKeywords(keywords, allNames, initialToleranceValue);
+    }
+
+    /**
+     * This helper method gets a list of all the names, separates them and returns a list of first and last names.
+     */
+    private ArrayList<String> getListOfAllFirstAndLastNames(NameContainsKeywordsPredicate predicate) {
+
         updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         ObservableList<ReadOnlyPerson> fullList = getFilteredPersonList();
         ArrayList<String> allNames = fullList.stream().map(p -> p.getName().toString().split(" "))
                 .flatMap(Arrays::stream).collect(Collectors.toCollection(ArrayList::new));
-        List<String> keywords = predicate.getKeywords();
-
         // switches filteredPersonList back from showing all persons to original according to the given predicate
-        this.updateFilteredPersonList(predicate);
-        return keywords.size() == 1 ? getClosestMatchingNameForOneKeyword(keywords, allNames, maxDistance)
-                : getClosestMatchingNameForMultipleKeywords(keywords, allNames, maxDistance);
+        updateFilteredPersonList(predicate);
+        return allNames;
     }
 
     /**
-     * If there is only one keyword given, this helper method gets the closest matching name from the keywords
+     * If there is only one keyword given, this helper method gets the closest matching name from that keyword.
      */
-    public String getClosestMatchingNameForOneKeyword(List<String> keywords,
-                                                      ArrayList<String> allNames, double maxDistance) {
+    private String getClosestMatchingNameForOneKeyword(List<String> keywords,
+                                                       ArrayList<String> allNames, double maxDistance) {
 
         JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
         String target = keywords.get(0);
@@ -191,10 +201,10 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * If there are multiple keywords given, this helper method gets the closest matching list of names from the
-     * keywords and converts them into a string
+     * keywords and converts them into a readable string.
      */
-    public String getClosestMatchingNameForMultipleKeywords(List<String> keywords,
-                                                      ArrayList<String> allNames, double maxDistance) {
+    private String getClosestMatchingNameForMultipleKeywords(List<String> keywords,
+                                                             ArrayList<String> allNames, double maxDistance) {
 
         JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
         ArrayList<String> result = new ArrayList<String>();
