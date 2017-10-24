@@ -114,11 +114,13 @@ public class BrowserPanel extends UiPart<Region> {
         case FacebookConnectCommand.COMMAND_ALIAS:
             logger.info(LogsCenter.getEventHandlingLogMessage(event));
             FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+            break;
 
         case FacebookPostCommand.COMMAND_ALIAS:
             logger.info(LogsCenter.getEventHandlingLogMessage(event));
             FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
             FacebookPostCommand.completePost();
+            break;
 
         default:
             throw new CommandException("Url change error.");
