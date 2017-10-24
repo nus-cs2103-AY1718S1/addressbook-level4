@@ -20,7 +20,6 @@ import seedu.address.logic.commands.persons.FindCommand;
 import seedu.address.logic.commands.persons.ListCommand;
 import seedu.address.logic.commands.persons.SelectCommand;
 import seedu.address.logic.commands.tags.DetagCommand;
-import seedu.address.logic.commands.tags.FindTagCommand;
 import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.logic.commands.tasks.DeleteTaskCommand;
 import seedu.address.logic.commands.tasks.FindTaskCommand;
