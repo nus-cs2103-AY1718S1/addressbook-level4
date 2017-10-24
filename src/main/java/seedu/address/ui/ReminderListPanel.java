@@ -11,6 +11,7 @@ import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ReminderPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.reminder.ReadOnlyReminder;
 
@@ -34,19 +35,19 @@ public class ReminderListPanel extends UiPart<Region> {
                 reminderList, (reminder) -> new ReminderCard(reminder, reminderList.indexOf(reminder) + 1));
         reminderListView.setItems(mappedList);
         reminderListView.setCellFactory(listView -> new ReminderListPanel.ReminderListViewCell());
-       // setEventHandlerForSelectionChangeEvent();
+        setEventHandlerForSelectionChangeEvent();
     }
 
-//    private void setEventHandlerForSelectionChangeEvent() {
-//        reminderListView.getSelectionModel().selectedItemProperty()
-//                .addListener((observable, oldValue, newValue) -> {
-//                    if (newValue != null) {
-//                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-//                        raise(new ReminderPanelSelectionChangedEvent(newValue));
-//                    }
-//                });
-//    }
-//
+    private void setEventHandlerForSelectionChangeEvent() {
+        reminderListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        raise(new ReminderPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
      */
