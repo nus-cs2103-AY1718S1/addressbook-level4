@@ -10,8 +10,8 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.person.PersonCardHandle;
+import guitests.guihandles.person.PersonListPanelHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;

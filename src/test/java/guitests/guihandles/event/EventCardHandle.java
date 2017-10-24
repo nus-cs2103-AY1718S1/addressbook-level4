@@ -1,5 +1,6 @@
-package guitests.guihandles;
+package guitests.guihandles.event;
 
+import guitests.guihandles.NodeHandle;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 

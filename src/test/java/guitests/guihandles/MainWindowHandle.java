@@ -1,5 +1,6 @@
 package guitests.guihandles;
 
+import guitests.guihandles.person.PersonListPanelHandle;
 import javafx.stage.Stage;
 
 /**
