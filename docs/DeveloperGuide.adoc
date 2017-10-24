@@ -404,6 +404,43 @@ The suggestion mechanism will be a hybrid of the above two functionalities, in w
 will be shown as the user type commands. This has not been implemented but will be a UI-heavy component that anchor on the fuzzy search logic.
 // end::searching[]
 
+// tag::findtag[]
+=== Find Tag
+
+The `FindTagCommand` allows the user to locate persons in the addressbook by their tag instead of their names.
+
+* Able to view contacts by similar attributes such as 'colleagues' or 'friends'.
+* Utilises a `TagContainsKeywordsPredicate` class that extends the `Predicate` class.
+** Allows the `FindTag` feature to function with more than 1 keyword at a time easily.
+
+image::FindTagSequenceDiagram.png[width="1200"]
+
+==== Design Considerations
+**Aspect:** Searching for tags  +
+**Alternative 1 (current choice):** Search through the `ReadOnlyPerson` class +
+**Pros:** Code related to the findin through names can be reused +
+**Cons:** Requires more computational power to go through all existing persons in the list. +
+**Alternative 2:** Allow Tag class to store `ReadOnlyPerson` class as parameter +
+**Pros:** Easier to retrieve all contacts under a certain `Tag` +
+**Cons:** Potentially cleaner, but limits future improvements (combining all `Find` features).
+
+---
+**Aspect:** how `FindTag` executes (AND logic vs OR logic) +
+**Alternative 1 (current choice):** Utilising OR logic +
+**Pros:** More flexible usag eallows user to view contacts across various tags , +
+          user does not have to utilise more than 1 `FindTag` command to view various contacts. +
+**Cons:** Looking for specific contacts that have more than 1 tag becomes impossible. +
+**Alternative 2:** Utilising AND logic  +
+**Pros:** Allows finding of specific contacts with more than 1 tag. +
+**Cons:** Limits flexibility for power users that wish to a various contacts across more than 1 tag.
+
+==== Future Improvements
+
+* Combining all `Find` features into 1 `Filter` feautre to allow filtering across all parameters of `Person` class.
+* Introducing `and` and `or` commands within `Filter` to reap benefits of both AND and OR logic.
+
+// end::findtag[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
