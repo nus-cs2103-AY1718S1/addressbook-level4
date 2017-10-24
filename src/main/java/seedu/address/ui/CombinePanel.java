@@ -37,6 +37,7 @@ public class CombinePanel extends UiPart<Region> {
     public static final String NUS_MAP_SEARCH_URL_PREFIX = "http://map.nus.edu.sg/#page=search&type=by&qword=";
 
     private static final String FXML = "CombinePanel.fxml";
+    private static final String LESSON_NODE_ID = "lessonNode";
     private static final int ROW = 6;
     private static final int COL = 13;
 
@@ -139,13 +140,7 @@ public class CombinePanel extends UiPart<Region> {
                     TextArea lbl = new TextArea(text);
                     lbl.setWrapText(true);
                     lbl.setEditable(false);
-                    lbl.setStyle("-fx-control-inner-background:black;"
-                            + " -fx-background-color: #383838;"
-                            + " -fx-border-color: #EEEEEE;"
-                            + " -fx-border-width: 10;"
-                            + " -fx-padding: 5 5 5 5; "
-                            + " -fx-font-family: Consolas; "
-                            + "-fx-text-fill: #00ff00;");
+                    lbl.setId(LESSON_NODE_ID);
                     timetableGrid.setGridLinesVisible(true);
                     timetableGrid.add(lbl, j, i, endHourSpan, 1);
                 }
