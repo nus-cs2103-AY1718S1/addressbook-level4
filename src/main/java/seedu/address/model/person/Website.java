@@ -1,12 +1,16 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Represents a Person's website in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidWebsite(String)}
+ */
 public class Website {
 
     public static final String MESSAGE_WEBSITE_CONSTRAINTS =
@@ -32,7 +36,8 @@ public class Website {
      * Returns if a given string is a valid person email.
      */
     public static boolean isValidWebsite(String test) {
-        Pattern p = Pattern.compile("(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(https://)?[a-zA-Z_0-9\\-]+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?");
+        Pattern p = Pattern.compile("(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(https://)?[a-zA-Z_0-9\\-]+" +
+                "(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?");
 
         Matcher m = p.matcher(test);
         return m.matches();
