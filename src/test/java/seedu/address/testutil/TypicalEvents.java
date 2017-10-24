@@ -1,5 +1,9 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_ADDRESS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_DATE;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_NAME;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,9 +12,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_ADDRESS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_DATE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_NAME;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
