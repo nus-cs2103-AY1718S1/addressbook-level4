@@ -32,6 +32,7 @@ public class UndoCommandTest {
     public void setUp() {
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        MULTI_INDEX_FIRST_PERSON.clear();
         MULTI_INDEX_FIRST_PERSON.add(INDEX_FIRST_PERSON);
     }
 

@@ -51,12 +51,11 @@ public class ParserUtil {
      */
     public static ArrayList<Index> parseMultiIndex(String multiBasedIndex) throws IllegalValueException {
         ArrayList<Index> parsedIndexes = new ArrayList <> ();
+        multiBasedIndex = multiBasedIndex.trim();
         String[] splitString = multiBasedIndex.split(" ");
         ArrayList<String> splitParse = new ArrayList<>();
         for (int x = 0; x < splitString.length; x++) {
-            if (StringUtil.isNonZeroUnsignedInteger(splitString[x])) {
-                splitParse.add(splitString[x]);
-            }
+            splitParse.add(splitString[x]);
         }
         for (int x = 0; x < splitParse.size(); x++) {
             splitParse.set(x, splitParse.get(x).trim());
