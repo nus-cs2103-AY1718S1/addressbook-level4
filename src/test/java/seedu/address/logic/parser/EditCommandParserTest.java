@@ -3,7 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.DELIVERYDATE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DELIVERYDATE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
@@ -132,7 +132,7 @@ public class EditCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PARCEL;
         String userInput = targetIndex.getOneBased() + TRACKING_NUMBER_DESC_AMY + PHONE_DESC_BOB + TAG_DESC_HUSBAND
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + DELIVERYDATE_DESC_AMY + STATUS_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
                 + TAG_DESC_FRIEND;
 
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder()
@@ -192,7 +192,7 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // delivery date
-        userInput = targetIndex.getOneBased() + DELIVERYDATE_DESC_AMY;
+        userInput = targetIndex.getOneBased() + DELIVERY_DATE_DESC_AMY;
         descriptor = new EditParcelDescriptorBuilder().withDeliveryDate(VALID_DELIVERYDATE_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -214,7 +214,7 @@ public class EditCommandParserTest {
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_PARCEL;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
-                + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + DELIVERYDATE_DESC_AMY + STATUS_DESC_AMY
+                + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
                 + EMAIL_DESC_AMY + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB
                 + DELIVERYDATE_DESC_BOB + STATUS_DESC_BOB + TAG_DESC_HUSBAND;
 
