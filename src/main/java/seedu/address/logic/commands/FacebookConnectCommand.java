@@ -3,14 +3,13 @@ package seedu.address.logic.commands;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
 import facebook4j.auth.AccessToken;
-
+import javafx.scene.web.WebEngine;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -20,10 +19,12 @@ public class FacebookConnectCommand extends Command {
     public static final String COMMAND_WORD = "facebook connect";
     public static final String COMMAND_ALIAS = "fbconnect";
     public static final String MESSAGE_SUCCESS = "Connected to your Facebook Account!";
+    public static final String MESSAGE_STARTED_PROCESS = "Authentication has been initiated. "
+            + "Please log into your Facebook account.";
+
 
     private static final String FACEBOOK_DOMAIN = "https://www.facebook.com/";
     private static final String FACEBOOK_APP_ID = "131555220900267";
-    // TODO(Alex): Do we really need all of these permissions?
     private static final String FACEBOOK_PERMISSIONS = "user_about_me,email,publish_actions,user_birthday,"
             + "user_education_history,user_friends,user_games_activity,user_hometown,user_likes,"
             + "user_location,user_photos,user_posts,user_relationship_details,user_relationships,"
@@ -41,7 +42,22 @@ public class FacebookConnectCommand extends Command {
     private static boolean authenticated = false;
     private static String welcomeUser;
     private static Facebook facebookInstance;
-    private String accessToken;
+    private static WebEngine webEngine;
+    private static String accessToken;
+
+    /**
+     * Returns the existing WebEngine
+     */
+    public static WebEngine getWebEngine() {
+        return webEngine;
+    }
+
+    /**
+     * Sets a WebEngine
+     */
+    public static void setWebEngine(WebEngine webEngine) {
+        FacebookConnectCommand.webEngine = webEngine;
+    }
 
     /**
      * Returns the authenticated Facebook instance
@@ -51,46 +67,53 @@ public class FacebookConnectCommand extends Command {
     }
 
     /**
+     * Sets the authenticated Facebook instance
+     */
+    public static void setFacebookInstance(Facebook facebookInstance) {
+        FacebookConnectCommand.facebookInstance = facebookInstance;
+    }
+
+    /**
      * Checks if there is an authenticated Facebook instance
      */
     public static boolean isAuthenticated() {
         return authenticated;
     }
 
-    @Override
-    public CommandResult execute() throws CommandException {
-        // TODO(Alex): Can we not use chromedriver? It feels kinda hacky to use a web browser from a test suite.
-        // Can we either use the exiting BrowserPanel or use the user's default browser?
-        System.setProperty("webdriver.chrome.driver", "chromedriver");
+    /**
+     * Completes the authentication process
+     */
+    public static void completeAuth(String url) throws CommandException {
+        Pattern p = Pattern.compile("access_token=(.*?)\\&");
+        Matcher m = p.matcher(url);
+        m.matches();
+        m.find();
+        accessToken = m.group(1);
 
-        WebDriver driver = new ChromeDriver();
-        driver.get(FACEBOOK_AUTH_URL);
-        while (true) {
-            if (driver.getCurrentUrl().contains("access_token")) {
-                Pattern p = Pattern.compile("access_token=(.*?)\\&");
-                String url = driver.getCurrentUrl();
-                Matcher m = p.matcher(url);
-                m.matches();
-                m.find();
-                accessToken = m.group(1);
-                driver.quit();
-
-                facebookInstance = new FacebookFactory().getInstance();
-                facebookInstance.setOAuthPermissions(FACEBOOK_PERMISSIONS);
-                facebookInstance.setOAuthAccessToken(new AccessToken(accessToken, null));
-                try {
-                    welcomeUser = facebookInstance.getName();
-                } catch (FacebookException e) {
-                    //TODO(Alex): Properly handle the error
-                    e.printStackTrace();
-                }
-                break;
-            }
+        facebookInstance = new FacebookFactory().getInstance();
+        facebookInstance.setOAuthPermissions(FACEBOOK_PERMISSIONS);
+        facebookInstance.setOAuthAccessToken(new AccessToken(accessToken, null));
+        try {
+            welcomeUser = facebookInstance.getName();
+        } catch (FacebookException e) {
+            throw new CommandException("Error in Facebook Authorisation");
         }
 
         if (accessToken != null) {
             authenticated = true;
-            return new CommandResult(MESSAGE_SUCCESS + " User name: " + welcomeUser);
+            EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                    MESSAGE_SUCCESS + " User name: " + welcomeUser, false));
+        } else {
+            throw new CommandException("Error in Facebook Authorisation");
+        }
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        webEngine.load(FACEBOOK_AUTH_URL);
+
+        if (webEngine.getLocation().equals(FACEBOOK_AUTH_URL)) {
+            return new CommandResult(MESSAGE_STARTED_PROCESS);
         } else {
             throw new CommandException("Error in Facebook Authorisation");
         }
