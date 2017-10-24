@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +29,7 @@ import seedu.address.testutil.modelstubs.ModelStubAcceptingPersonAdded;
 
 public class ImportCommandTest {
     private static final String TEST_DATA_FOLDER = Paths.get("src/test/data/ImportCommandTest")
-            .toAbsolutePath().toString() + "/";
+            .toAbsolutePath().toString() + File.separator;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
