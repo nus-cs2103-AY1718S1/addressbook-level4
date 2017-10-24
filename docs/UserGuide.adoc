@@ -145,10 +145,12 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 === Exporting a person to a sting of add command: `export`
 
 Export the details of the person by the index number +
-Format: `export KEYWORD [MORE_KEYWORDS]`
+Format: `export INDEX`
 
 ****
-* Person in the last person listing matching the index number will be returned.
+* Exports the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
