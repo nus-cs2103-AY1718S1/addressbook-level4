@@ -64,21 +64,35 @@ public interface ReadOnlyPerson {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Phone: ")
-                .append(getPhone())
-                .append(" Email: ")
-                .append(getEmail())
-                .append(" Address: ")
-                .append(getAddress())
-                .append(" Birthday: ")
-                .append(getBirthday())
-                .append(" Remarks: ")
-                .append(getRemark())
-                .append(" Website: ")
-                .append(getWebsite())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
+        builder.append(getName());
+        if (getPhone().toString() != null) {
+            builder.append(" Phone: ")
+                .append(getPhone());
+        }
+
+        if (getEmail().toString() != null) {
+            builder.append(" Email: ")
+                .append(getEmail());
+        }
+        if (getAddress().toString() != null) {
+            builder.append(" Address: ")
+                .append(getAddress());
+        }
+        if (getBirthday().toString() != null) {
+            builder.append(" Birthday: ")
+                .append(getBirthday());
+        }
+        builder.append(" Remarks: ")
+            .append(getRemark());
+        if (getWebsite().toString() != null) {
+            builder.append(" Website: ")
+                .append(getWebsite());
+        }
+
+        if (!(getTags().isEmpty())) {
+            builder.append(" Tags: ");
+            getTags().forEach(builder::append);
+        }
         return builder.toString();
     }
 

@@ -48,7 +48,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                     PREFIX_BIRTHDAY,
                     PREFIX_WEBSITE,
                     PREFIX_TAG);
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) { //checks if name is present as this is compulsory
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
