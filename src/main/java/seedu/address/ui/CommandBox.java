@@ -50,12 +50,13 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
     private static final String TAG_PREFIX = "prefix";
 
-    private static final int NAME = 0;
-    private static final int EMAIL = 1;
-    private static final int PHONE = 2;
-    private static final int ADDRESS = 3;
-    private static final int TAG = 4;
-    private static final int FONT_SIZE = 5;
+    private static final int CODE = 0;
+    private static final int CLASSTYPE = 1;
+    private static final int VENUE = 2;
+    private static final int GROUP = 3;
+    private static final int TIMESLOT = 4;
+    private static final int LECTURER = 5;
+    private static final int FONT_SIZE = 6;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -67,7 +68,7 @@ public class CommandBox extends UiPart<Region> {
     private ArrayList<String> prefixList;
     private int fontIndex = 0;
     private boolean enableHighlight = false;
-    private String userPrefFontSize;
+    private String userPrefFontSize = "-fx-font-size: normal;";
 
     private final ImageView tick = new ImageView("/images/tick.png");
     private final ImageView cross = new ImageView("/images/cross.png");
@@ -98,7 +99,7 @@ public class CommandBox extends UiPart<Region> {
     private Label keywordLabel;
 
     @FXML
-    private Label checkbox;
+    private Label checkBox;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -126,11 +127,12 @@ public class CommandBox extends UiPart<Region> {
      */
     private void configPrefixList() {
         prefixList = new ArrayList<>();
-        prefixList.add(CliSyntax.PREFIX_NAME.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_EMAIL.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_PHONE.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_ADDRESS.getPrefix());
-        prefixList.add(CliSyntax.PREFIX_TAG.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_MODULE_CODE.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_CLASS_TYPE.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_VENUE.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_GROUP.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_TIME_SLOT.getPrefix());
+        prefixList.add(CliSyntax.PREFIX_LECTURER.getPrefix());
         prefixList.add(CliSyntax.PREFIX_FONT_SIZE.getPrefix());
     }
 
@@ -140,7 +142,6 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
-
         case UP:
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
@@ -153,7 +154,7 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         default:
-                // let JavaFx handle the keypress
+            // let JavaFx handle the keypress
         }
     }
 
@@ -162,7 +163,10 @@ public class CommandBox extends UiPart<Region> {
      */
     @FXML
     private void handleKeyReleased(KeyEvent keyEvent) {
-        listenCommandInputChanged();
+        switch (keyEvent.getCode()) {
+        default:
+            listenCommandInputChanged();
+        }
     }
 
     /**
@@ -176,8 +180,8 @@ public class CommandBox extends UiPart<Region> {
 
             configInActiveTag();
             configInactiveKeyword();
-            configBorderColor(allTextInput);
 
+            configBorderColor(allTextInput);
 
             for (int i = 0; i < inputArray.length; i++) {
                 String text = inputArray[i];
@@ -187,36 +191,42 @@ public class CommandBox extends UiPart<Region> {
                     configActiveKeyword(text);
                 }
 
-                //Name
-                if (text.contains(prefixList.get(NAME))) {
-                    index = allTextInput.indexOf(prefixList.get(NAME));
-                    configActiveTag(index, prefixList.get(NAME));
+                //Code
+                if (text.contains(prefixList.get(CODE))) {
+                    index = allTextInput.indexOf(prefixList.get(CODE));
+                    configActiveTag(index, prefixList.get(CODE));
                 }
 
-                //Email
-                if (text.contains(prefixList.get(EMAIL))) {
-                    index = allTextInput.indexOf(prefixList.get(EMAIL));
-                    configActiveTag(index, prefixList.get(EMAIL));
+                //Class type
+                if (text.contains(prefixList.get(CLASSTYPE))) {
+                    index = allTextInput.indexOf(prefixList.get(CLASSTYPE));
+                    configActiveTag(index, prefixList.get(CLASSTYPE));
                 }
 
-                //Phone
-                if (text.contains(prefixList.get(PHONE))) {
-                    index = allTextInput.indexOf(prefixList.get(PHONE));
-                    configActiveTag(index, prefixList.get(PHONE));
+                //Venue
+                if (text.contains(prefixList.get(VENUE))) {
+                    index = allTextInput.indexOf(prefixList.get(VENUE));
+                    configActiveTag(index, prefixList.get(VENUE));
                 }
 
-                //Address
-                if (text.contains(prefixList.get(ADDRESS))) {
-                    index = allTextInput.indexOf(prefixList.get(ADDRESS));
-                    configActiveTag(index, prefixList.get(ADDRESS));
+                //Group
+                if (text.contains(prefixList.get(GROUP))) {
+                    index = allTextInput.indexOf(prefixList.get(GROUP));
+                    configActiveTag(index, prefixList.get(GROUP));
                 }
 
-                //Tag
-                if (text.contains(prefixList.get(TAG))) {
+                //Time slot
+                if (text.contains(prefixList.get(TIMESLOT))) {
+                    index = allTextInput.indexOf(prefixList.get(TIMESLOT));
+                    configActiveTag(index, prefixList.get(TIMESLOT));
+                }
+
+                //Lecturer
+                if (text.contains(prefixList.get(LECTURER))) {
                     ArrayList<Integer> tagList = getTagIndexList(allTextInput);
                     for (int j = 0; j < tagList.size(); j++) {
                         index = tagList.get(j);
-                        configActiveTag(index, index + prefixList.get(TAG));
+                        configActiveTag(index, index + prefixList.get(LECTURER));
                     }
                 }
 
@@ -234,7 +244,7 @@ public class CommandBox extends UiPart<Region> {
         ArrayList<Integer> tagList = new ArrayList<>();
         int index = 0;
         while (index < allTextInput.length()) {
-            int newIndex = allTextInput.indexOf(prefixList.get(TAG), index);
+            int newIndex = allTextInput.indexOf(prefixList.get(LECTURER), index);
             if (newIndex == -1) {
                 break;
             }
@@ -274,15 +284,14 @@ public class CommandBox extends UiPart<Region> {
         try {
             tester.parseCommand(allTextInput);
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: green; -fx-border-width: 2");
-            checkbox.setGraphic(tick);
-
+            checkBox.setGraphic(tick);
+            checkBox.toFront();
         } catch (ParseException e) {
             commandTextField.setStyle(userPrefFontSize + "-fx-border-color: red; -fx-border-width: 2");
-            checkbox.setGraphic(cross);
+            checkBox.setGraphic(cross);
+            checkBox.toFront();
         }
     }
-
-
 
     /**
      * Configure command keyword when appeared on Command Box
@@ -294,28 +303,28 @@ public class CommandBox extends UiPart<Region> {
         keywordLabel.setVisible(true);
 
         keywordLabel.getStyleClass().clear();
-        Insets leftInset = new Insets(0, 0, 0, 13);
+        Insets leftInset = new Insets(0, 0, 0, 14);
 
         switch (fontIndex) {
         case 1:
             keywordLabel.getStyleClass().add("keyword-label-xsmall");
-            leftInset = new Insets(0, 0, 0, 9);
+            leftInset = new Insets(0, 0, 0, 11);
             break;
         case 2:
             keywordLabel.getStyleClass().add("keyword-label-small");
-            leftInset = new Insets(0, 0, 0, 10);
+            leftInset = new Insets(0, 0, 0, 11);
             break;
         case 3:
             keywordLabel.getStyleClass().add("keyword-label-default");
-            leftInset = new Insets(0, 0, 0, 14);
+            leftInset = new Insets(0, 0, 0, 15);
             break;
         case 4:
             keywordLabel.getStyleClass().add("keyword-label-large");
-            leftInset = new Insets(0, 0, 0, 10);
+            leftInset = new Insets(0, 0, 0, 11);
             break;
         case 5:
             keywordLabel.getStyleClass().add("keyword-label-xlarge");
-            leftInset = new Insets(0, 0, 0, 9);
+            leftInset = new Insets(0, 0, 0, 11);
             break;
         default:
             keywordLabel.getStyleClass().add("keyword-label-default");
@@ -325,8 +334,9 @@ public class CommandBox extends UiPart<Region> {
         stackPane.setMargin(keywordLabel, leftInset);
 
         String color = keywordColorMap.get(commandKeyword);
-        keywordLabel.setStyle("-fx-background-color: " + color + ";\n"
-                + "-fx-text-fill: red;");
+        // keywordLabel.setStyle("-fx-background-color: " + color + ";\n"
+        // + "-fx-text-fill: red;");
+        keywordLabel.setStyle(("-fx-text-fill: " + color));
         keywordLabel.toFront();
     }
 
@@ -349,27 +359,27 @@ public class CommandBox extends UiPart<Region> {
         case 1:
             tagLabel.getStyleClass().add("keyword-label-xsmall");
             margin = computeMargin(1, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 9);
+            leftInset = new Insets(0, 0, 0, margin + 11);
             break;
         case 2:
             tagLabel.getStyleClass().add("keyword-label-small");
             margin = computeMargin(2, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 10);
+            leftInset = new Insets(0, 0, 0, margin + 11);
             break;
         case 3:
             tagLabel.getStyleClass().add("keyword-label-default");
             margin = computeMargin(3, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 14);
+            leftInset = new Insets(0, 0, 0, margin + 15);
             break;
         case 4:
             tagLabel.getStyleClass().add("keyword-label-large");
             margin = computeMargin(4, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 10);
+            leftInset = new Insets(0, 0, 0, margin + 11);
             break;
         case 5:
             tagLabel.getStyleClass().add("keyword-label-xlarge");
             margin = computeMargin(5, inputText);
-            leftInset = new Insets(0, 0, 0, margin + 9);
+            leftInset = new Insets(0, 0, 0, margin + 11);
             break;
         default:
             tagLabel.getStyleClass().add("keyword-label-default");
@@ -379,8 +389,11 @@ public class CommandBox extends UiPart<Region> {
         stackPane.setAlignment(tagLabel, Pos.CENTER_LEFT);
         stackPane.setMargin(tagLabel, leftInset);
 
-        tagLabel.setStyle("-fx-background-color:yellow;\n "
-                + "-fx-text-fill: red; ");
+        // tagLabel.setStyle("-fx-background-color:yellow;\n"
+        // + "-fx-text-fill: red; ");
+
+        tagLabel.setStyle("-fx-text-fill: yellow");
+
         tagLabel.setVisible(true);
         tagLabel.toFront();
     }
@@ -389,7 +402,6 @@ public class CommandBox extends UiPart<Region> {
     private void handleChangeFontSizeEvent(ChangeFontSizeEvent event) {
         setFontSize(event.message);
     }
-
 
     @Subscribe
     private void handleColorKeywordEvent(ColorKeywordEvent event) {
@@ -576,10 +588,12 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
+
     /**
      * Sets the command box to enable highlighting of command keywords
      */
     public void setEnableHighlight(boolean enableHighlight) {
         this.enableHighlight = enableHighlight;
     }
+
 }

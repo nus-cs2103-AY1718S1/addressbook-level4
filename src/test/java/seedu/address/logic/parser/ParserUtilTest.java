@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,25 +18,28 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.TimeSlot;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_CODE = "ABC4444AA";
+    private static final String INVALID_CLASS_TYPE = "LECTURE";
+    private static final String INVALID_LOCATION = "";
+    private static final String INVALID_GROUP = "A";
+    private static final String INVALID_TIME_SLOT = "FRIDAY[2PM-4PM]";
+    private static final String INVALID_LECTURER = "";
 
-    private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
-    private static final String VALID_ADDRESS = "123 Main Street #0505";
-    private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_CODE = "CS2103T";
+    private static final String VALID_CLASS_TYPE = "LEC";
+    private static final String VALID_LOCATION = "LT30";
+    private static final String VALID_GROUP = "4";
+    private static final String VALID_TIME_SLOT = "WED[1100-1200]";
+    private static final String VALID_LECTURER_1 = "Prof Cao Liang";
+    private static final String VALID_LECTURER_2 = "Prof Justin Poh";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -57,134 +60,160 @@ public class ParserUtilTest {
     @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_LESSON, ParserUtil.parseIndex("1"));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_LESSON, ParserUtil.parseIndex("  1  "));
     }
 
     @Test
-    public void parseName_null_throwsNullPointerException() throws Exception {
+    public void parseCode_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseName(null);
+        ParserUtil.parseCode(null);
     }
 
     @Test
-    public void parseName_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseCode_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseName(Optional.of(INVALID_NAME));
+        ParserUtil.parseCode(Optional.of(INVALID_CODE));
     }
 
     @Test
-    public void parseName_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseName(Optional.empty()).isPresent());
+    public void parseCode_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseCode(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseName_validValue_returnsName() throws Exception {
-        Name expectedName = new Name(VALID_NAME);
-        Optional<Name> actualName = ParserUtil.parseName(Optional.of(VALID_NAME));
+    public void parseCode_validValue_returnsCode() throws Exception {
+        Code expectedCode = new Code(VALID_CODE);
+        Optional<Code> actualCode = ParserUtil.parseCode(Optional.of(VALID_CODE));
 
-        assertEquals(expectedName, actualName.get());
+        assertEquals(expectedCode, actualCode.get());
     }
 
     @Test
-    public void parsePhone_null_throwsNullPointerException() throws Exception {
+    public void parseClassType_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parsePhone(null);
+        ParserUtil.parseClassType(null);
     }
 
     @Test
-    public void parsePhone_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseClassType_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parsePhone(Optional.of(INVALID_PHONE));
+        ParserUtil.parseClassType(Optional.of(INVALID_CLASS_TYPE));
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    public void parseClassType_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseClassType(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parsePhone_validValue_returnsPhone() throws Exception {
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        Optional<Phone> actualPhone = ParserUtil.parsePhone(Optional.of(VALID_PHONE));
+    public void parseClassType_validValue_returnsClassType() throws Exception {
+        ClassType expectedClassType = new ClassType(VALID_CLASS_TYPE);
+        Optional<ClassType> actualClassType = ParserUtil.parseClassType(Optional.of(VALID_CLASS_TYPE));
 
-        assertEquals(expectedPhone, actualPhone.get());
+        assertEquals(expectedClassType, actualClassType.get());
     }
 
     @Test
-    public void parseAddress_null_throwsNullPointerException() throws Exception {
+    public void parseLocation_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseAddress(null);
+        ParserUtil.parseLocation(null);
     }
 
     @Test
-    public void parseAddress_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseLocation_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS));
+        ParserUtil.parseLocation(Optional.of(INVALID_LOCATION));
     }
 
     @Test
-    public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
+    public void parseLocation_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseLocation(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseAddress_validValue_returnsAddress() throws Exception {
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        Optional<Address> actualAddress = ParserUtil.parseAddress(Optional.of(VALID_ADDRESS));
+    public void parseLocation_validValue_returnsLocation() throws Exception {
+        Location expectedLocation = new Location(VALID_LOCATION);
+        Optional<Location> actualLocation = ParserUtil.parseLocation(Optional.of(VALID_LOCATION));
 
-        assertEquals(expectedAddress, actualAddress.get());
+        assertEquals(expectedLocation, actualLocation.get());
     }
 
     @Test
-    public void parseEmail_null_throwsNullPointerException() throws Exception {
+    public void parseGroup_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseEmail(null);
+        ParserUtil.parseGroup(null);
     }
 
     @Test
-    public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseGroup_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseEmail(Optional.of(INVALID_EMAIL));
+        ParserUtil.parseGroup(Optional.of(INVALID_GROUP));
     }
 
     @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
+    public void parseGroup_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseGroup(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseEmail_validValue_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL));
+    public void parseGroup_validValue_returnsGroup() throws Exception {
+        Group expectedGroup = new Group(VALID_GROUP);
+        Optional<Group> actualGroup = ParserUtil.parseGroup(Optional.of(VALID_GROUP));
 
-        assertEquals(expectedEmail, actualEmail.get());
+        assertEquals(expectedGroup, actualGroup.get());
     }
 
     @Test
-    public void parseTags_null_throwsNullPointerException() throws Exception {
+    public void parseTimeSlot_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseTags(null);
+        ParserUtil.parseTimeSlot(null);
     }
 
     @Test
-    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
+    public void parseTimeSlot_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
+        ParserUtil.parseTimeSlot(Optional.of(INVALID_TIME_SLOT));
     }
 
     @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
+    public void parseTimeSlot_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTimeSlot(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
-        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+    public void parseTimeSlot_validValue_returnsTimeSlot() throws Exception {
+        TimeSlot expectedTimeSlot = new TimeSlot(VALID_TIME_SLOT);
+        Optional<TimeSlot> actualTimeSlot = ParserUtil.parseTimeSlot(Optional.of(VALID_TIME_SLOT));
 
-        assertEquals(expectedTagSet, actualTagSet);
+        assertEquals(expectedTimeSlot, actualTimeSlot.get());
+    }
+
+    @Test
+    public void parseLecturers_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseLecturer(null);
+    }
+
+    @Test
+    public void parseLecturers_collectionWithInvalidLecturers_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseLecturer(Arrays.asList(VALID_LECTURER_1, INVALID_LECTURER));
+    }
+
+    @Test
+    public void parseLecturers_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parseLecturer(Collections.emptyList()).isEmpty());
+    }
+
+    @Test
+    public void parseLecturers_collectionWithValidLecturers_returnsLecturerSet() throws Exception {
+        Set<Lecturer> actualLecturerSet = ParserUtil.parseLecturer(Arrays.asList(VALID_LECTURER_1, VALID_LECTURER_2));
+        Set<Lecturer> expectedLecturerSet = new HashSet<Lecturer>(
+                Arrays.asList(new Lecturer(VALID_LECTURER_1), new Lecturer(VALID_LECTURER_2)));
+
+        assertEquals(expectedLecturerSet, actualLecturerSet);
     }
 }

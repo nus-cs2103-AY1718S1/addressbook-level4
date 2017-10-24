@@ -1,70 +1,66 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.AMY;
-import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.CODE_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.CODE_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.GROUP_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CLASSTYPE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_CODE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_GROUP_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_LECTURER_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIMESLOT_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_VENUE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.LECTURER_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_DESC_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CLASSTYPE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_CODE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_LECTURER_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_MA1101R;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_CS2101;
+import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MA1101R;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LECTURER;
+import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.tag.Tag;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.TimeSlot;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.testutil.LessonBuilder;
+import seedu.address.testutil.LessonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void add() throws Exception {
         Model model = getModel();
-        /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a lesson without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */
-        ReadOnlyPerson toAdd = AMY;
-        String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
-                + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + TAG_DESC_FRIEND + " ";
+        ReadOnlyLesson toAdd = TYPICAL_MA1101R;
+        String command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R  + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R  + GROUP_DESC_MA1101R  + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -74,116 +70,122 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
-        model.addPerson(toAdd);
+        model.addLesson(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: add a duplicate person -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        /* Case: add a duplicate lesson -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R  + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R  + GROUP_DESC_MA1101R  + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
 
-        /* Case: add a duplicate person except with different tags -> rejected */
-        // "friends" is an existing tag used in the default model, see TypicalPersons#ALICE
+        /* Case: add a duplicate lesson except with different tags -> rejected */
+        // "friends" is an existing tag used in the default model, see TypicalLessons#ALICE
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
-        // AddressBook#addPerson(ReadOnlyPerson)
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + " " + PREFIX_TAG.getPrefix() + "friends";
-        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PERSON);
+        // AddressBook#addLesson(ReadOnlyLesson)
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R + TIMESLOT_DESC_MA1101R
+                + " " + PREFIX_LECTURER.getPrefix() + "Dr Wong";
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
 
-        /* Case: add a person with all fields same as another person in the address book except name -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
+        /* Case: add a lesson with all fields same as another lesson in the address book except Code -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_CS2101).withClassType(VALID_CLASSTYPE_MA1101R)
+                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_CS2101 + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        /* Case: add a lesson with all fields same as another lesson in the address book except ClassType -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_CS2101)
+                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_CS2101 + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        /* Case: add a lesson with all fields same as another lesson in the address book except Locaiton -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
+                .withLocation(VALID_VENUE_CS2101).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_CS2101
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except phone -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
+        /* Case: add a lesson with all fields same as another lesson in the address book except Group -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
+                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_CS2101).withTimeSlot(VALID_TIMESLOT_MA1101R)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_CS2101 + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        /* Case: add a lesson with all fields same as another lesson in the address book except Time slot -> added */
+        toAdd = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
+                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_CS2101)
+                .withLecturers(VALID_LECTURER_MA1101R).build();
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_CS2101 + LECTURER_DESC_MA1101R;
         assertCommandSuccess(command, toAdd);
 
-        /* Case: add a person with all fields same as another person in the address book except email -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_BOB + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
-
-        /* Case: add a person with all fields same as another person in the address book except address -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
-                + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
-
-        /* Case: filters the person list before adding -> added */
-        executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
-        assert getModel().getFilteredPersonList().size()
-                < getModel().getAddressBook().getPersonList().size();
-        assertCommandSuccess(IDA);
-
-        /* Case: add to empty address book -> added */
-        executeCommand(ClearCommand.COMMAND_WORD);
-        assert getModel().getAddressBook().getPersonList().size() == 0;
-        assertCommandSuccess(ALICE);
-
-        /* Case: add a person with tags, command with parameters in random order -> added */
-        toAdd = BOB;
-        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + NAME_DESC_BOB
-                + TAG_DESC_HUSBAND + EMAIL_DESC_BOB;
-        assertCommandSuccess(command, toAdd);
-
-        /* Case: selects first card in the person list, add a person -> added, card selection remains unchanged */
-        executeCommand(SelectCommand.COMMAND_WORD + " 1");
-        assert getPersonListPanel().isAnyCardSelected();
-        assertCommandSuccess(CARL);
-
-        /* Case: add a person, missing tags -> added */
-        assertCommandSuccess(HOON);
-
-        /* Case: missing name -> rejected */
-        command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        /* Case: missing code -> rejected */
+        command = AddCommand.COMMAND_WORD + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        /* Case: missing class type -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
+        /* Case: missing venue -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + GROUP_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY;
+        /* Case: missing group -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + TIMESLOT_DESC_MA1101R;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+
+        /* Case: missing time slot -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
-        command = "adds " + PersonUtil.getPersonDetails(toAdd);
+        command = "adds " + LessonUtil.getLessonDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
-        /* Case: invalid name -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
+        /* Case: invalid code -> rejected */
+        command = AddCommand.COMMAND_WORD + INVALID_CODE_DESC + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, Code.MESSAGE_CODE_CONSTRAINTS);
 
-        /* Case: invalid phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + INVALID_PHONE_DESC + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, Phone.MESSAGE_PHONE_CONSTRAINTS);
+        /* Case: invalid class type -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + INVALID_CLASSTYPE_DESC + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, ClassType.MESSAGE_CLASSTYPE_CONSTRAINTS);
 
-        /* Case: invalid email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + INVALID_EMAIL_DESC + ADDRESS_DESC_AMY;
-        assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
+        /* Case: invalid venue -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + INVALID_VENUE_DESC
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, Location.MESSAGE_LOCATION_CONSTRAINTS);
 
-        /* Case: invalid address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC;
-        assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        /* Case: invalid group -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + INVALID_GROUP_DESC + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, Group.MESSAGE_GROUP_CONSTRAINTS);
 
-        /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + INVALID_TAG_DESC;
-        assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
+        /* Case: invalid time slot -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + INVALID_TIMESLOT_DESC + LECTURER_DESC_MA1101R;
+        assertCommandFailure(command, TimeSlot.MESSAGE_TIMESLOT_CONSTRAINTS);
+
+        /* Case: invalid lecturers -> rejected */
+        command = AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R + VENUE_DESC_MA1101R
+                + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + INVALID_LECTURER_DESC;
+        assertCommandFailure(command, Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
     }
 
     /**
@@ -196,20 +198,20 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * the browser url and selected card remains unchanged.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
-    private void assertCommandSuccess(ReadOnlyPerson toAdd) {
-        assertCommandSuccess(PersonUtil.getAddCommand(toAdd), toAdd);
+    private void assertCommandSuccess(ReadOnlyLesson toAdd) {
+        assertCommandSuccess(LessonUtil.getAddCommand(toAdd), toAdd);
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyPerson)}. Executes {@code command}
+     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyLesson)}. Executes {@code command}
      * instead.
-     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyPerson)
+     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyLesson)
      */
-    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd) {
+    private void assertCommandSuccess(String command, ReadOnlyLesson toAdd) {
         Model expectedModel = getModel();
         try {
-            expectedModel.addPerson(toAdd);
-        } catch (DuplicatePersonException dpe) {
+            expectedModel.addLesson(toAdd);
+        } catch (DuplicateLessonException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
         String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
@@ -218,10 +220,10 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyPerson)} except that the result
+     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyLesson)} except that the result
      * display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}.
-     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyPerson)
+     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyLesson)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);

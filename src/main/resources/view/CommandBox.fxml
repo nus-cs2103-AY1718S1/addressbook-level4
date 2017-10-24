@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="stackPane" styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" styleClass="pane-without-border" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <Label fx:id="keywordLabel" maxHeight="-Infinity" maxWidth="-Infinity" text="Label" />
    <Text fx:id="commandTextDefault" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" StackPane.alignment="CENTER_LEFT">
       <StackPane.margin>
@@ -17,6 +17,9 @@
    <Text fx:id="commandTextSmall" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
    <Text fx:id="commandTextLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
    <Text fx:id="commandTextXLarge" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" />
-  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." StackPane.alignment="CENTER_LEFT" />
-   <Label fx:id="checkbox" StackPane.alignment="CENTER_RIGHT" />
+  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" onKeyReleased="#handleKeyReleased" promptText="Enter command here..." styleClass="text-field" StackPane.alignment="CENTER_LEFT" />
+   <Label fx:id="checkBox" StackPane.alignment="CENTER_RIGHT">
+      <padding>
+         <Insets right="2.0" />
+      </padding></Label>
 </StackPane>

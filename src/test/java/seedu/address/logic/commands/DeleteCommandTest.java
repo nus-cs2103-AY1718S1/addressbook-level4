@@ -4,10 +4,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstLessonOnly;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
+
+import java.util.List;
 
 import org.junit.Test;
 
@@ -19,7 +22,9 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -30,68 +35,68 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        expectedModel.deleteLesson(lessonToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredLessonList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
-        showFirstPersonOnly(model);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        showFirstLessonOnly(model);
 
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-        showNoPerson(expectedModel);
+        expectedModel.deleteLesson(lessonToDelete);
+        showNoLesson(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        ListingUnit.setCurrentListingUnit(ListingUnit.PERSON);
-        showFirstPersonOnly(model);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        showFirstLessonOnly(model);
 
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundIndex = INDEX_SECOND_LESSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getLessonList().size());
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);
+        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_LESSON);
+        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_LESSON);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PERSON);
+        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_LESSON);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -100,52 +105,62 @@ public class DeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different delete command -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
     @Test
-    public void execute_validIndexDeleteByAddress_success() throws Exception {
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        ListingUnit.setCurrentListingUnit(ListingUnit.ADDRESS);
+    public void execute_validIndexDeleteByModule_success() throws Exception {
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_WITH_ADDRESS_SUCCESS,
-                personToDelete.getAddress());
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+        ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS,
+                lessonToDelete.getCode());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+
+        expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        List<ReadOnlyLesson> lastShownList = expectedModel.getFilteredLessonList();
+        for (int i = 0; i < lastShownList.size(); i++) {
+            ReadOnlyLesson lesson = lastShownList.get(i);
+            if (lesson.getCode().equals(lessonToDelete.getCode())) {
+                expectedModel.deleteLesson(lesson);
+                i--;
+            }
+        }
+
+        expectedModel.updateFilteredLessonList(new UniqueModuleCodePredicate(expectedModel.getUniqueCodeSet()));
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_validIndexDeleteByPhone_success() throws Exception {
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        ListingUnit.setCurrentListingUnit(ListingUnit.PHONE);
+    public void execute_validIndexDeleteByLocation_success() throws Exception {
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_WITH_PHONE_SUCCESS,
-                personToDelete.getPhone());
+        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
+        ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_validIndexDeleteByEmail_success() throws Exception {
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        ListingUnit.setCurrentListingUnit(ListingUnit.EMAIL);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_WITH_EMAIL_SUCCESS,
-                personToDelete.getEmail());
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS,
+                lessonToDelete.getLocation());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
 
+        expectedModel.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+
+        List<ReadOnlyLesson> lastShownList = expectedModel.getFilteredLessonList();
+
+        for (int i = 0; i < lastShownList.size(); i++) {
+            ReadOnlyLesson lesson = lastShownList.get(i);
+            if (lesson.getLocation().equals(lessonToDelete.getLocation())) {
+                expectedModel.deleteLesson(lesson);
+                i--;
+            }
+        }
+
+        expectedModel.updateFilteredLessonList(new UniqueLocationPredicate(expectedModel.getUniqueLocationSet()));
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
@@ -161,9 +176,9 @@ public class DeleteCommandTest {
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
+    private void showNoLesson(Model model) {
+        model.updateFilteredLessonList(p -> false);
 
-        assert model.getFilteredPersonList().isEmpty();
+        assert model.getFilteredLessonList().isEmpty();
     }
 }

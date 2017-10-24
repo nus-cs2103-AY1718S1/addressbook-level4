@@ -10,7 +10,7 @@ import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
 import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
 import static seedu.address.logic.commands.CustomiseCommand.MESSAGE_SUCCESS;
 import static seedu.address.model.font.FontSize.MESSAGE_FONT_SIZE_CONSTRAINTS;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -92,7 +92,7 @@ public class CustomiseCommandTest {
             // null -> returns false
             assertFalse(customiseCommand.equals(null));
 
-            // different person -> returns false
+            // different Customise command -> returns false
             CustomiseCommand commandWithDifferentValues = new CustomiseCommand(fontSizeXlarge);
             assertFalse(customiseCommand.equals(commandWithDifferentValues));
         } catch (IllegalValueException ile) {

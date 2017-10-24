@@ -1,86 +1,67 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.model.ListingUnit.ADDRESS;
-import static seedu.address.model.ListingUnit.EMAIL;
-import static seedu.address.model.ListingUnit.PERSON;
-import static seedu.address.model.ListingUnit.PHONE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.ListingUnit.LESSON;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
 
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ChangeListingUnitEvent;
+import seedu.address.commons.events.ui.RefreshPanelEvent;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.person.predicates.FavourListPredicate;
-import seedu.address.model.person.predicates.UniqueAddressPredicate;
-import seedu.address.model.person.predicates.UniqueEmailPredicate;
-import seedu.address.model.person.predicates.UniquePhonePredicate;
-
+import seedu.address.model.module.predicates.FavouriteListPredicate;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists unique locations or unique module codes of all lessons according to user's specification.
  */
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": List all persons or all attributes(if specified) and "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": List all locations or all module codes and "
             + "displays them as a list with index numbers.\n"
-            + "Parameters: address/email/phone/collection\n"
-            + "Example: " + COMMAND_WORD + " address";
+            + "Parameters: module/location/favouriteList\n"
+            + "Example: " + COMMAND_WORD + " module";
 
-    public static final String MESSAGE_SUCCESS = "Listed all %1$s";
+    public static final String MESSAGE_SUCCESS = "Listed %1$s(s)";
 
-    public static final String DEFAULT_LISTING_ELEMENT = "Persons";
-    public static final String ATTRIBUTE_ADDRESS = "address";
-    public static final String ATTRIBUTE_COLLECTION = "collection";
-    public static final String ATTRIBUTE_EMAIL = "email";
-    public static final String ATTRIBUTE_PHONE = "phone";
+    public static final String MODULE_KEYWORD = "module";
+    public static final String LOCATION_KEYWORD = "location";
+    public static final String MARKED_LIST_KEYWORD = "marked";
 
-
-    private final String attName;
+    private final String parameter;
 
     public ListCommand(String attributeName) {
-        this.attName = attributeName;
-    }
-
-    public ListCommand() {
-        this.attName = DEFAULT_LISTING_ELEMENT;
-    }
-
-    private boolean hasAttribute() {
-        return !attName.equals(DEFAULT_LISTING_ELEMENT);
+        this.parameter = attributeName;
     }
 
     @Override
     public CommandResult execute() {
 
-        switch (attName) {
-
-        case ATTRIBUTE_ADDRESS:
-            ListingUnit.setCurrentListingUnit(ADDRESS);
-            UniqueAddressPredicate addressPredicate = new UniqueAddressPredicate(model.getUniqueAdPersonSet());
-            return executeListByAttribute(addressPredicate);
-
-        case ATTRIBUTE_EMAIL:
-            ListingUnit.setCurrentListingUnit(EMAIL);
-            UniqueEmailPredicate emailPredicate = new UniqueEmailPredicate(model.getUniqueEmailPersonSet());
-            return executeListByAttribute(emailPredicate);
-
-        case ATTRIBUTE_PHONE:
-            ListingUnit.setCurrentListingUnit(PHONE);
-            UniquePhonePredicate phonePredicate = new UniquePhonePredicate(model.getUniquePhonePersonSet());
-            return executeListByAttribute(phonePredicate);
-
-        case ATTRIBUTE_COLLECTION:
-            ListingUnit.setCurrentListingUnit(PERSON);
-            FavourListPredicate favourListPredicate = model.getFavourListPredicate();
-            return executeListByAttribute(favourListPredicate);
-
-        default:
-            ListingUnit.setCurrentListingUnit(PERSON);
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
+        if (parameter.equals(MODULE_KEYWORD)) {
+            ListingUnit.setCurrentListingUnit(MODULE);
+            UniqueModuleCodePredicate codePredicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
+            ListingUnit.setCurrentPredicate(codePredicate);
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
+            return executeListByAttribute(codePredicate);
+        } else if (parameter.equals(LOCATION_KEYWORD)) {
+            ListingUnit.setCurrentListingUnit(LOCATION);
+            UniqueLocationPredicate locationPredicate = new UniqueLocationPredicate(model.getUniqueLocationSet());
+            ListingUnit.setCurrentPredicate(locationPredicate);
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
+            return executeListByAttribute(locationPredicate);
+        } else if (parameter.equals(MARKED_LIST_KEYWORD)) {
+            ListingUnit.setCurrentListingUnit(LESSON);
+            FavouriteListPredicate favouriteListPredicate = new FavouriteListPredicate();
+            ListingUnit.setCurrentPredicate(favouriteListPredicate);
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
+            return executeListByAttribute(favouriteListPredicate);
+        } else {
+            assert false : "There cannot be other parameters passed in";
+            return null;
         }
     }
 
@@ -88,9 +69,9 @@ public class ListCommand extends Command {
      * execute the list command with different attributes.
      */
     private CommandResult executeListByAttribute(Predicate predicate) {
-        model.updateFilteredPersonList(predicate);
-        EventsCenter.getInstance().post(new ChangeListingUnitEvent());
-        return new CommandResult(String.format(MESSAGE_SUCCESS, attName));
+        model.updateFilteredLessonList(predicate);
+        EventsCenter.getInstance().post(new RefreshPanelEvent());
+        return new CommandResult(String.format(MESSAGE_SUCCESS, parameter));
     }
 
     @Override
@@ -104,8 +85,8 @@ public class ListCommand extends Command {
         }
 
         ListCommand o = (ListCommand) other;
-        if (attName != null && o.attName != null) {
-            return attName.equals(o.attName);
+        if (parameter != null && o.parameter != null) {
+            return parameter.equals(o.parameter);
         }
 
         return false;

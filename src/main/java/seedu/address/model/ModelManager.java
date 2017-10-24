@@ -1,7 +1,10 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,19 +14,21 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.person.predicates.FavourListPredicate;
-import seedu.address.model.person.predicates.UniqueAddressPredicate;
-import seedu.address.model.person.predicates.UniqueEmailPredicate;
-import seedu.address.model.person.predicates.UniquePhonePredicate;
+import seedu.address.commons.events.ui.RefreshPanelEvent;
+import seedu.address.model.module.BookedSlot;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
+import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.predicates.UniqueLocationPredicate;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -33,9 +38,10 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final FilteredList<ReadOnlyPerson> filteredPersons;
-
-    private final HashSet<ReadOnlyPerson> favourList;
+    private final FilteredList<ReadOnlyLesson> filteredLessons;
+    private final HashSet<BookedSlot> bookedList;
+    private ReadOnlyLesson currentViewingLesson;
+    private String currentViewingAttribute;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -47,8 +53,14 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        favourList = new HashSet<ReadOnlyPerson>();
+        filteredLessons = new FilteredList<>(this.addressBook.getLessonList());
+        Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+        ListingUnit.setCurrentPredicate(predicate);
+        filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
+        bookedList = new HashSet<BookedSlot>();
+        initializeBookedSlot();
+        currentViewingAttribute = "default";
+
     }
 
     public ModelManager() {
@@ -56,51 +68,33 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public HashSet<Address> getUniqueAdPersonSet() {
-        HashSet<Address> set = new HashSet<>();
+    public HashSet<Location> getUniqueLocationSet() {
+        HashSet<Location> set = new HashSet<>();
 
-        ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        for (ReadOnlyPerson p : personLst) {
-            if (!set.contains(p.getAddress())) {
-                set.add(p.getAddress());
+        ObservableList<ReadOnlyLesson> lessonLst = getFilteredLessonList();
+        updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        for (ReadOnlyLesson l : lessonLst) {
+            if (!set.contains(l.getLocation())) {
+                set.add(l.getLocation());
             }
         }
         return set;
     }
 
     @Override
-    public HashSet<Email> getUniqueEmailPersonSet() {
-        HashSet<Email> set = new HashSet<>();
+    public HashSet<Code> getUniqueCodeSet() {
+        HashSet<Code> set = new HashSet<>();
 
-        ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        for (ReadOnlyPerson p : personLst) {
-            if (!set.contains(p.getEmail())) {
-                set.add(p.getEmail());
+        ObservableList<ReadOnlyLesson> lessonLst = getFilteredLessonList();
+        updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
+        for (ReadOnlyLesson l : lessonLst) {
+            if (!set.contains(l.getCode())) {
+                set.add(l.getCode());
             }
         }
         return set;
     }
 
-    @Override
-    public HashSet<Phone> getUniquePhonePersonSet() {
-        HashSet<Phone> set = new HashSet<>();
-
-        ObservableList<ReadOnlyPerson> personLst = getFilteredPersonList();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        for (ReadOnlyPerson p : personLst) {
-            if (!set.contains(p.getPhone())) {
-                set.add(p.getPhone());
-            }
-        }
-        return set;
-    }
-
-    @Override
-    public FavourListPredicate getFavourListPredicate() {
-        return new FavourListPredicate(favourList);
-    }
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
@@ -119,60 +113,159 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
+    public synchronized void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException {
+        addressBook.removeLesson(target);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void collectPerson(ReadOnlyPerson target) throws DuplicatePersonException {
-        if (!favourList.contains(target)) {
-            favourList.add(target);
+    public synchronized void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException {
+
+        for (ReadOnlyLesson lesson : lessonList) {
+            addressBook.removeLesson(lesson);
+        }
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
+        addressBook.addLesson(lesson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void bookmarkLesson(ReadOnlyLesson target) throws DuplicateLessonException {
+        addressBook.bookmarkLesson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void unBookmarkLesson(ReadOnlyLesson target) {
+        addressBook.unBookmarkLesson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void unbookBookedSlot(BookedSlot target) {
+        if (bookedList.contains(target)) {
+            bookedList.remove(target);
+        }
+
+    }
+
+    @Override
+    public void bookingSlot(BookedSlot target) throws DuplicateBookedSlotException {
+        if (!bookedList.contains(target)) {
+            bookedList.add(target);
         } else {
-            throw new DuplicatePersonException();
+            throw new DuplicateBookedSlotException();
         }
     }
 
     @Override
-    public synchronized void deletePersonSet(List<ReadOnlyPerson> personList) throws PersonNotFoundException {
-
-        for (ReadOnlyPerson person : personList) {
-            addressBook.removePerson(person);
+    public void updateBookedSlot(BookedSlot target, BookedSlot toReplace) throws DuplicateBookedSlotException {
+        if (target.equals(toReplace) || !bookedList.contains(toReplace)) {
+            bookedList.remove(target);
+            bookedList.add(toReplace);
+        } else {
+            throw new DuplicateBookedSlotException();
         }
-        indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
-        handleListingUnit();
-        indicateAddressBookChanged();
+    public void updateBookedSlotSet() {
+        bookedList.clear();
+        for (ReadOnlyLesson lesson : addressBook.getLessonList()) {
+            BookedSlot slot = new BookedSlot(lesson.getLocation(), lesson.getTimeSlot());
+            bookedList.add(slot);
+        }
     }
 
     @Override
-    public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
-
-        addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
+    public void unbookAllSlot() {
+        bookedList.clear();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    @Override
+    public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
+            throws DuplicateLessonException, LessonNotFoundException {
+        requireAllNonNull(target, editedLesson);
+        addressBook.updateLesson(target, editedLesson);
+        indicateAddressBookChanged();
+    }
 
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * This method initialize the booked slot
+     */
+    public void initializeBookedSlot() {
+        for (int i = 0; i < filteredLessons.size(); i++) {
+            bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(), filteredLessons.get(i).getTimeSlot()));
+        }
+    }
+
+    @Override
+    public void sortLessons() {
+        addressBook.sortLessons();
+    }
+
+    @Override
+    public void setCurrentViewingLesson(ReadOnlyLesson lesson) {
+        this.currentViewingLesson = lesson;
+    }
+
+    @Override
+    public ReadOnlyLesson getCurrentViewingLesson() {
+        return this.currentViewingLesson;
+    }
+
+    @Override
+    public void setViewingPanelAttribute(String attribute) {
+        this.currentViewingAttribute = attribute;
+    }
+
+    @Override
+    public String getCurrentViewingAttribute() {
+        return this.currentViewingAttribute;
+    }
+
+    //=========== Filtered Module List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyModule} backed by the internal list of
      * {@code addressBook}
      */
     @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
+        return FXCollections.unmodifiableObservableList(filteredLessons);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+    public void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredLessons.setPredicate(predicate);
+    }
+
+    @Override
+    public void handleListingUnit() {
+        ListingUnit unit = ListingUnit.getCurrentListingUnit();
+
+        if (unit.equals(LOCATION)) {
+            UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
+            updateFilteredLessonList(predicate);
+        } else if (unit.equals(MODULE)) {
+            UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+            updateFilteredLessonList(predicate);
+        } else {
+            updateFilteredLessonList(ListingUnit.getCurrentPredicate());
+
+            if (getFilteredLessonList().isEmpty()) {
+                UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+                updateFilteredLessonList(predicate);
+                ListingUnit.setCurrentPredicate(predicate);
+                ListingUnit.setCurrentListingUnit(MODULE);
+                EventsCenter.getInstance().post(new RefreshPanelEvent());
+            }
+        }
     }
 
     @Override
@@ -190,31 +283,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredLessons.equals(other.filteredLessons);
     }
 
-    @Override
-    public void handleListingUnit() {
-        switch (ListingUnit.getCurrentListingUnit()) {
-
-        case ADDRESS:
-            UniqueAddressPredicate addressPredicate = new UniqueAddressPredicate(getUniqueAdPersonSet());
-            updateFilteredPersonList(addressPredicate);
-            break;
-
-        case PHONE:
-            UniquePhonePredicate phonePredicate = new UniquePhonePredicate(getUniquePhonePersonSet());
-            updateFilteredPersonList(phonePredicate);
-            break;
-
-        case EMAIL:
-            UniqueEmailPredicate emailPredicate = new UniqueEmailPredicate(getUniqueEmailPersonSet());
-            updateFilteredPersonList(emailPredicate);
-            break;
-
-        default:
-            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        }
-    }
 
 }
