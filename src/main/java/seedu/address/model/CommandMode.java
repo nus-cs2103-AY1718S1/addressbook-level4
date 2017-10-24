@@ -1,9 +1,9 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a command mode in the application.

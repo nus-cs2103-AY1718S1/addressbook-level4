@@ -100,16 +100,16 @@ public class AddressBookParser {
                 return new ExitCommand();
 
             case HelpCommand.COMMAND_WORD:
-                    return new HelpCommand();
+                return new HelpCommand();
 
             case UndoCommand.COMMAND_WORD:
-                    return new UndoCommand();
+                return new UndoCommand();
 
             case RedoCommand.COMMAND_WORD:
-                 return new RedoCommand();
+                return new RedoCommand();
 
             default:
-                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
         } else if (StringUtil.containsWordIgnoreCase(TASKMANAGER_MODE, commandMode)) {
             switch (commandWord) {
@@ -118,34 +118,34 @@ public class AddressBookParser {
                 return new ChangeModeCommandParser().parse(arguments);
 
             case AddTaskCommand.COMMAND_WORD:
-                 return new AddTaskCommandParser().parse(arguments);
+                return new AddTaskCommandParser().parse(arguments);
 
             case SelectTaskCommand.COMMAND_WORD:
-                 return new SelectTaskCommandParser().parse(arguments);
+                return new SelectTaskCommandParser().parse(arguments);
 
             case DeleteTaskCommand.COMMAND_WORD:
-                 return new DeleteTaskCommandParser().parse(arguments);
+                return new DeleteTaskCommandParser().parse(arguments);
 
             case FindTaskCommand.COMMAND_WORD:
-                 return new FindTaskCommandParser().parse(arguments);
+                return new FindTaskCommandParser().parse(arguments);
 
             case ListTasksCommand.COMMAND_WORD:
-                 return new ListTasksCommand();
+                return new ListTasksCommand();
 
             case ClearCommand.COMMAND_WORD:
-                 return new ClearCommand();
+                return new ClearCommand();
 
             case HistoryCommand.COMMAND_WORD:
-                 return new HistoryCommand();
+                return new HistoryCommand();
 
             case ExitCommand.COMMAND_WORD:
-                 return new ExitCommand();
+                return new ExitCommand();
 
             case HelpCommand.COMMAND_WORD:
-                 return new HelpCommand();
+                return new HelpCommand();
 
             case UndoCommand.COMMAND_WORD:
-                 return new UndoCommand();
+                return new UndoCommand();
 
             case RedoCommand.COMMAND_WORD:
                 return new RedoCommand();

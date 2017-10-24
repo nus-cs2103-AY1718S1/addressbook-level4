@@ -21,7 +21,7 @@ public class ChangeModeCommand extends Command {
     public static final String MESSAGE_INVALID_MODE = "The mode can only be either addressbook (ab) "
         + "or taskmanager (tm)";
 
-    public static String mode;
+    private static String mode;
 
     /**
      * Create an ChangeModeCommand to change current command mode
@@ -36,8 +36,7 @@ public class ChangeModeCommand extends Command {
         try {
             model.changeCommandMode(mode);
             return new CommandResult(String.format(MESSAGE_CHANGE_MODE_SUCCESS, paraphraseCurrentMode(mode)));
-        }
-        catch (IllegalValueException e) {
+        } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_INVALID_MODE);
         }
     }
@@ -49,8 +48,7 @@ public class ChangeModeCommand extends Command {
     private String paraphraseCurrentMode(String mode) {
         if (mode.equals("ab") || mode.equals("addressbook")) {
             return "addressbook";
-        }
-        else {
+        } else {
             return "taskmanager";
         }
     }
