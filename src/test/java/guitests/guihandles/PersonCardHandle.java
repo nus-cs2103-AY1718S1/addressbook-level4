@@ -80,7 +80,9 @@ public class PersonCardHandle extends NodeHandle<Node> {
         return birthdayLabel.getText();
     }
 
-    public String getAge() { return ageLabel.getText(); }
+    public String getAge() {
+        return ageLabel.getText();
+    }
 
     public List<String> getTags() {
         return tagLabels
