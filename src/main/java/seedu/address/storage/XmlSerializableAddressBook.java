@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -69,6 +70,14 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tags);
+    }
+
+    /**
+     * This method shouldn't be used, since the group list is not an observable xml element
+     * However it is used in ModelManager, so the method stub is needed.
+     */
+    public ObservableList<Group> getGroupList() {
+        return null;
     }
 
 }
