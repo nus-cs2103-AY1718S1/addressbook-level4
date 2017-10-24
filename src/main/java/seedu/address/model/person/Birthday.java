@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-import java.util.Calendar;
-
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is always valid

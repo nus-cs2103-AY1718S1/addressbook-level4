@@ -2,8 +2,9 @@ package seedu.address.model.person;
 
 import java.util.Calendar;
 
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Represents a Person's age in the address book.
+ */
 public class Age {
 
     public final String value;
