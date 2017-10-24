@@ -44,7 +44,9 @@ public class KeyListenerUtil {
     public static final Set<KeyCombination> POSSIBLE_KEY_COMBINATIONS =
             new HashSet<>(Arrays.asList(
                     FOCUS_PERSON_LIST_KEY_COMBINATION,
+                    FOCUS_PERSON_LIST_ALT_KEY_COMBINATION,
                     FOCUS_COMMAND_BOX_KEY_COMBINATION,
+                    FOCUS_RESULT_DISPLAY_KEY_COMBINATION,
                     DELETE_SELECTION_KEY_COMBINATION,
                     CLEAR_KEY_COMBINATION,
                     HISTORY_KEY_COMBINATION,
@@ -57,6 +59,6 @@ public class KeyListenerUtil {
                     EDIT_KEY_COMBINATION,
                     FIND_KEY_COMBINATION,
                     SELECT_KEY_COMBINATION,
-                    DELETE_SELECTION_KEY_COMBINATION
+                    DELETE_KEY_COMBINATION
             ));
 }

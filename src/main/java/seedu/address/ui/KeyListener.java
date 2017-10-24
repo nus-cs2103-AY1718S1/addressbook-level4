@@ -2,10 +2,12 @@ package seedu.address.ui;
 
 import static seedu.address.ui.util.KeyListenerUtil.ADD_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.CLEAR_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.DELETE_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.DELETE_SELECTION_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.EDIT_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.FIND_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.FOCUS_COMMAND_BOX_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_ALT_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.FOCUS_RESULT_DISPLAY_KEY_COMBINATION;
 import static seedu.address.ui.util.KeyListenerUtil.HISTORY_KEY_COMBINATION;
@@ -69,7 +71,7 @@ public class KeyListener {
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
-        if (FOCUS_PERSON_LIST_ALT_KEY_COMBINATION.match(keyEvent)
+        if (FOCUS_PERSON_LIST_KEY_COMBINATION.match(keyEvent)
                 || FOCUS_PERSON_LIST_ALT_KEY_COMBINATION.match(keyEvent)) {
             personListPanel.setFocus();
 
@@ -115,7 +117,7 @@ public class KeyListener {
         } else if (SELECT_KEY_COMBINATION.match(keyEvent)) {
             displayCommandFormat(SelectCommand.FORMAT);
 
-        } else if (DELETE_SELECTION_KEY_COMBINATION.match(keyEvent)) {
+        } else if (DELETE_KEY_COMBINATION.match(keyEvent)) {
             displayCommandFormat(DeleteCommand.FORMAT);
 
         } else {
