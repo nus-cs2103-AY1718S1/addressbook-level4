@@ -16,6 +16,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
+    private static final String SOCIALMEDIA_FIELD_ID = "#socialMedia";
     private static final String REMARK_FIELD_ID = "#remark";
     private static final String TAGS_FIELD_ID = "#tags";
 
@@ -24,6 +25,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label addressLabel;
     private final Label phoneLabel;
     private final Label emailLabel;
+    private final Label socialMediaLabel;
     private final Label remarkLabel;
     private final List<Label> tagLabels;
 
@@ -36,6 +38,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
+        this.socialMediaLabel = getChildNode(SOCIALMEDIA_FIELD_ID);
         this.remarkLabel = getChildNode(REMARK_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
@@ -64,6 +67,10 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
     public String getEmail() {
         return emailLabel.getText();
+    }
+
+    public String getSocialMedia() {
+        return socialMediaLabel.getText();
     }
 
     public String getRemark() {

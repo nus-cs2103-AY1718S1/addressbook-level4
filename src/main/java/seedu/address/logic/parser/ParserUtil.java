@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.SocialMedia;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -106,5 +108,19 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses three {@code String facebook, twitter, instagram} into an {@code SocialMedia}.
+     */
+    public static SocialMedia parseSocialMedia(Optional<String> facebook,
+            Optional<String> twitter, Optional<String> instagram) throws IllegalValueException {
+        requireAllNonNull(facebook, twitter, instagram);
+
+        String fb = facebook.isPresent() ? facebook.get() : "";
+        String tw = twitter.isPresent() ? twitter.get() : "";
+        String in = instagram.isPresent() ? instagram.get() : "";
+
+        return new SocialMedia(fb, tw, in);
     }
 }

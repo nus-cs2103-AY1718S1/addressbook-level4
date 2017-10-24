@@ -26,12 +26,13 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Remark> remark;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Date> createdAt;
+    private ObjectProperty<SocialMedia> socialMedia;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Remark remark,
-                  Set<Tag> tags, Date createdAt) {
+                  Set<Tag> tags, Date createdAt, SocialMedia socialMedia) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -42,6 +43,7 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
 
         this.createdAt = new SimpleObjectProperty<>(createdAt);
+        this.socialMedia = new SimpleObjectProperty<>(socialMedia);
     }
 
     /**
@@ -49,7 +51,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getRemark(), source.getTags(), source.getCreatedAt());
+                source.getRemark(), source.getTags(), source.getCreatedAt(), source.getSocialMedia());
     }
 
     public void setName(Name name) {
@@ -154,6 +156,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Date getCreatedAt() {
         return createdAt.get();
+    }
+
+    @Override
+    public ObjectProperty<SocialMedia> socialMediaProperty() {
+        return socialMedia;
+    }
+
+    @Override
+    public SocialMedia getSocialMedia() {
+        return socialMedia.get();
+    }
+
+    public void setSocialMedia(SocialMedia socialMedia) {
+        this.socialMedia.set(requireNonNull(socialMedia));
     }
 
     @Override
