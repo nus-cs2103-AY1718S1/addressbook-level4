@@ -56,7 +56,7 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
         for (int i = lastIndex + 1; i < argsArray.length; i++) {
             newTag = newTag.concat(argsArray[i] + " ");
         }
-        newTag.trim();
+        newTag = newTag.trim();
         tagSet.add(newTag);
         TagAddDescriptor tagAddDescriptor = new TagAddDescriptor();
         try {
