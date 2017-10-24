@@ -22,8 +22,8 @@ By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `bonus.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `bonus.jar` release from link:{repoURL}/releases[here].
+.  Create a folder you want to use as home folder for **BoNUS** and copy the `jar` you have downloaded there.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -42,7 +42,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Components
 
 **BoNUS** mainly consists on three components: *contacts*, *events* and *calendar*. They work independently and each is
-considered as a kind of `data items`. They are described in details as follows:
+considered as a collection of one kind of `data items`. They are described in details as follows:
 
 === Contacts
 
@@ -53,22 +53,24 @@ and `edit` command in the section below for more information.
 * You can store other information of your contacts by adding customize properties. Refer to the `config add-property`
 command in the section below for more information.
 * You can group your contacts by adding one or multiple tags to them. Contacts with the same tag will be classified
-under the same group.
+under the same group. Tag can be displayed in the color specified by `config --set-tag-color` command.
 
 === Events
 
 You can store your upcoming events (meeting with professor tomorrow, assignment deadline, lecture/tutorial time slot, etc.) in **BoNUS**.
 
 * By default, you can store and update their title, interval (starting time and end time), venue and description. Refer
-to the `add` and `edit` command in the section below for more information.
+to the `addE` and `editE` command in the section below for more information.
 * Similar to link:#contacts[contacts], you can add customize properties to events as well.
 * Similar to link:#contacts[contacts], you can add tags to events as well.
 * If you have set starting and/or end time for an event, it will be reflected accordingly on the link:#calendar[calendar] component.
 * You can set notification at specific time before an event starts (when you should arrive at the venue before a meeting
 begins) or at specific time before an event ends (when you need to finalize your assignment and submit it to your professor).
-* You can link one or more link:#contacts[contacts] to an event (if all of you are going to attend the same meeting).
+* You can link one or more link:#contacts[contacts] to an event (if they are going to attend the event together with you).
 
 === Calendar
+
+_(Coming in v2.0)_
 
 Calender provides a more convenient interface for you to view your upcoming link:#events[events]. All events are displayed
 based on their time interval. Events whose time intervals are not specified will not be displayed here.
@@ -84,6 +86,7 @@ based on their time interval. Events whose time intervals are not specified will
 
 * Import contacts from _iCloud_, _Google+_, _Facebook_, etc.
 * Import events from _Google_ _Calendar_, _Outlook_ _Calendar_, etc.
+* Export data (contacts and events) to `.xml` file (default storage format for **BoNUS**), Excel Worksheet, etc.
 * Sync between all your devices.
 * (**Exclusive**) automatically generate your school schedule by simply entering your timetable URL from _https://nusmods.com/[NUSMods]_.
 
@@ -101,9 +104,10 @@ is expected to
 The **BoNUS** developers understand our users will store personal data in the application. We value privacy and security
 a lot.
 
-* All data saved to the storage file will be encrypted using the state-of-the-art encryption scheme.
-* Users will be prompted to enter their password whenever they open the application.
-* You can set up 2FA (two-factor authentication) if there is extra security requirement.
+* All data saved to the storage file will be encrypted using the state-of-the-art encryption scheme (AES-256).
+* You will be prompted to enter their password whenever they open the application (if you has decided to lock your application
+the last time before you exited).
+* You can set up 2FA (two-factor authentication) to fulfill extra security requirement(s).
 
 == Commands
 
@@ -112,29 +116,33 @@ The listing below shows a summary of all commands currently available to users a
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in parentheses represent the command shortcut e.g. in `(a)add n/NAME`, `a` is the shorthand-equivalent notation for the `add` command.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which
+can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
+(i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be typed in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME`
+is also acceptable.
 ====
 
 ====
 *Command in different components*
 
-* Most command can be applied to either a person or an event, whose result will depend on the context e.g. `add n/NAME`
-will add a person if the user is currently in the link:#contacts[contacts] component, add an event otherwise.
-* All commands entered in the link:#calendar[calendar] component will actually be handled by the link:#contacts[contacts]
-component.
+* Most command can be applied to either a person or an event, whose result will depend on the context e.g. `add` will add
+a person if the user is currently in the link:#contacts[contacts] component, otherwise `addE` will add a new link:#events[event].
+* All commands entered in the link:#calendar[calendar] component will actually be handled by either link:#contacts[contacts]
+component or link:#events[events] component.
 ====
 
-=== Viewing help : `help`
+=== Viewing help : `(h)help`
 
-Format: `help`
+Format: `(h)help` (or press `F1` on the keyboard)
 
-=== Adding a person : `add`
+=== Adding a person : `(a)add`
 
 Adds a person to the application. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `(a)add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0).
@@ -144,35 +152,50 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+[TIP]
+In a similar format, you can also add customize properties when adding a new person, as long as you have used `config
+--add-property` command to define that property before.
 
-=== Adding an event : `addE`
+Example:
+
+First, add a birthday property with the short name `b`
+
+* `config --add-property s/b f/birthday`
+
+Then, you can set the value of `birthday` property when you add a new person (_see `b/12091191` below_)
+
+* `add n/Chris Lee p/98765432 e/johnd@example.com a/23 Chinatown b/12091991 t/friends`
+
+=== Adding an event : `(aE)addE`
 
 Adds an event to the application. +
-Format: `addE n/NAME dt/DATE_TIME a/EMAIL a/ADDRESS `
-
-[TIP]
-Events added will be automatically sorted by date/time
+Format: `(aE)addE n/NAME dt/DATE_TIME a/EMAIL a/ADDRESS`
 
 Examples:
 
-* `addE n/Does Birthday dt/25122015 20:30 a/Does crib `
-* `addE n/Betsy Birthday dt/25122016 21:30 a/Betsy crib `
+* `addE n/Does Birthday dt/25122015 20:30 a/12 Kent Ridge Drive`
+* `addE n/Betsy Birthday dt/25122016 21:30 a/23 Marina Road`
 
-
-=== Listing all persons/events : `list`
+=== Listing all persons/events : `(l)list`
 
 Shows a list of all persons in the application. +
-Format: `list`
+Format: `(l)list`
 
-=== Listing all events : `listE`
+[TIP]
+Contacts will be sorted by their names (increment).
+
+=== Listing all events : `(lE)listE`
 
 Shows a list of all events in the application. +
-Format: `listE`
+Format: `(lE)listE`
 
-=== Editing a person : `edit`
+[TIP]
+Events will be sorted by date/time (increment).
+
+=== Editing a person : `(e)edit`
 
 Edits an existing person in the application. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `(e)edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last listing.
@@ -190,10 +213,10 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Editing an event : `editE`
+=== Editing an event : `(eE)editE`
 
 Edits an existing event in the application. +
-Format: `editE INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]`
+Format: `(eE)editE INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]`
 
 ****
 * Edits the event at the specified `INDEX`. The index refers to the index number shown in the last listing.
@@ -211,10 +234,10 @@ Edits the name of the 2nd event to be `Lunch with Betsy`.
 
 
 
-=== Locating persons/events by any property : `find`
+=== Locating persons/events by any property : `(f)find`
 
-Finds events whose corresponding field(s) contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
+Finds persons/events whose corresponding field(s) contain any of the given keywords. +
+Format: `(f)find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -236,10 +259,10 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `(d)delete`
 
 Deletes the specified person from the application. +
-Format: `delete INDEX`
+Format: `(d)delete INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -256,10 +279,10 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Deleting an event : `deleteE`
+=== Deleting an event : `(dE)deleteE`
 
 Deletes the specified event from the application. +
-Format: `deleteE INDEX`
+Format: `(dE)deleteE INDEX`
 
 ****
 * Deletes the event at the specified `INDEX`.
@@ -273,10 +296,10 @@ Examples:
 `deleteE 2` +
 Deletes the 2nd event in the address book.
 
-=== Selecting a person: `select`
+=== Selecting a person: `(s)select`
 
-Selects the person/event identified by the index number used in the last listing. +
-Format: `select INDEX`
+Selects a person (identified by the index number used in the last listing) to view the details of that person. +
+Format: `(s)select INDEX`
 
 ****
 * Selects the person/event and loads the details of this data item.
@@ -293,10 +316,10 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `(i)history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `(i)history`
 
 [NOTE]
 ====
@@ -304,14 +327,14 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `(u)undo`
 
 Restores the application to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `(u)undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the application's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the application's content (`add`, `addE`, `edit`, `editE`, `delete`, `deleteE`, and `clear`).
 ====
 
 Examples:
@@ -330,10 +353,13 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+[TIP]
+You can view what command you have undone from the user feedback message.
+
+=== Redoing the previously undone command : `(r)redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `(r)redo`
 
 Examples:
 
@@ -351,27 +377,88 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
+
+[TIP]
+You can view what command you have redone from the user feedback message.
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `(c)clear`
 
-Clears all entries from the current component. +
-Format: `clear`
+Clears all entries from the current component (either contacts or events). +
+Format: `(c)clear`
 
 [NOTE]
 ====
-Use `clear --all` if you want to clear data in all components (all contacts and events).
+Use `clear --all` if you want to clear data in all components (both contacts and events).
 ====
 
-=== Advance setting : `config`
+=== Exporting data : `(p)export`
+
+==== To `.xml` format
+
+Exports the current data in the application, including data from all three components: *Contacts*, *Events* and
+*Calendar*, to an external location. +
+Format: `(p)export FILEPATH`
+
+****
+* Exports data to the location and file name specified by `FILEPATH`.
+* `FILEPATH` must end with an extension of `.xml`.
+* If a relative path is provided, the data will be exported to the *BoNUS* installation directory.
+* Existing data file at `FILEPATH` will be overwritten.
+* Parent directories, if specified in `FILEPATH`, will be created if they do not exist.
+****
+
+Examples:
+
+* For `Windows` users: +
+`export C:\Users\John Doe\Documents\bonus.xml`
+
+* For `macOS` and `Linux` users: +
+`export /Users/John Doe/Documents/bonus.xml`
+
+==== To Microsoft Excel^TM^ Worksheet
+
+_(Coming in v2.0)_
+
+Exports the current data in the application to an external file of Microsoft Excel^TM^ format. +
+Format: `(p)export --excel FILEPATH`
+
+****
+* The file name should follow similar rules to the section above.
+* However, it must end with an extension of `.xls` (`.xlsx` is currently not supported).
+****
+
+Examples:
+
+* For `Windows` users: +
+`export C:\Users\John Doe\Documents\bonus.xls`
+
+* For `macOS` and `Linux` users: +
+`export /Users/John Doe/Documents/bonus.xls`
+
+=== Advance setting : `(cfg)config`
 
 Changes the configuration of the application or applies some advance settings to the data. Make sure you know what you
 are doing before using any of the following commands. These commands are intended for advance users.
 
-==== Add new property : `config --add-property`
+==== Add new property : `(cfg)config --add-property`
 
-Adds a new property field available to persons/events. +
-Format: `config --add-property s/b f/birthday [m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*]`
+Adds a new property field available to all persons or events. +
+Format: `(cfg)config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
+
+[NOTE]
+====
+* Short name is used as the prefix for `add`/`addE` and `edit`/`editE` commands.
+* Full name is used to display the name of each property on the right panel (to show details of the selected person, see `select` command).
+* Constraint message is the string that will be shown in result display box when the input value for this property in
+`add`/`addE` and `edit`/`editE` commands is invalid.
+* Regular expression is used to check whether the input value for this property is valid.
+====
+
+Example:
+
+* `config --add-property s/ag f/age`
+* `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*`
 
 ****
 * This command does not add a new property to a specific person. Instead, it defines a property that will be available to
@@ -385,33 +472,34 @@ if there is an existing property with the same short name.
 https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#compile-java.lang.String-[Pattern.compile] method.
 ****
 
-==== Set tag color : `config --set-tag-color`
+==== Set tag color : `(cfg)config --set-tag-color`
 
 Sets the displayed color of a certain tag (for persons/events). +
-Format: `config --set-tag-color TAG_NAME COLOR`
+Format: `(cfg)config --set-tag-color TAG_NAME COLOR`
 
 ****
 * By default, the application will use a random color to display each tag. The same tags are displayed using the same
 color, different tags are _usually_ displayed using different colors.
-* The value of the parameter `COLOR` should be a valid RGB value (in hexadecimal, starting with a `#`). You can pick the
-RGB value of your favorite color from https://www.w3schools.com/colors/colors_rgb.asp[here].
+* The value of the parameter `COLOR` should be either one of the pre-defined color names or a valid RGB value (in hexadecimal,
+starting with a `#`). You can pick the RGB value of your favorite color from https://www.w3schools.com/colors/colors_rgb.asp[here].
+* Pre-defined color names include _black_, _blue_, _brown_, _green_, _red_, _white_, _yellow_.
 ****
 
-==== Import calendar : `config --import-calendar`
+==== Import calendar : `(cfg)config --import-calendar`
 
 _(Coming in version 2.0)_ +
 Imports events from an online available calender. +
-Format: `config --import-calendar URL`
+Format: `(cfg)config --import-calendar URL`
 
 [NOTE]
 ====
 The supplied URL should be in either a valid ICS/iCal format or generated from your https://nusmods.com/[NUSMods].
 ====
 
-=== Exiting the program : `exit`
+=== Exiting the program : `(x)exit`
 
 Exits the program. +
-Format: `exit`
+Format: `(x)exit`
 
 === Saving the data
 
@@ -422,31 +510,36 @@ Format: `exit`
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+data of your previous Address Book folder.
 
 == Command Summary
 
-* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* : `(a)add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Add event* : `addE n/NAME dt/DATE_TIME a/ADDRESS` +
+* *Add event* : `(aE)addE n/NAME dt/DATE_TIME a/ADDRESS` +
 e.g. `addE n/James birthday dt/18022017 13:30 a/123, Clementi Rd, 1234665`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Clear* : `(c)clear`
+* *Delete* : `(d)delete INDEX` +
 e.g. `delete 3`
-* *Delete event* : `deleteE INDEX` +
+* *Delete event* : `(dE)deleteE INDEX` +
 e.g. `deleteE 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `(e)edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Edit event* : `edit INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]` +
+* *Edit event* : `(eE)editE INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]` +
 e.g. `editE 2 n/Lees Day`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `(f)find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
-* *List event* : `listE`
-* *Help* : `help`
-* *Select* : `select INDEX` +
+* *List* : `(l)list`
+* *List event* : `(lE)listE`
+* *Help* : `(h)help`
+* *Select* : `(s)select INDEX` +
 e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Config* : `config --add-property` `config --set-tag-color` `config --import-calendar`
+* *History* : `(i)history`
+* *Undo* : `(u)undo`
+* *Redo* : `(r)redo`
+* *Exit* : `(x)exit`
+* *Export* : `(p)export [--excel] FILEPATH` +
+eg. For `Windows` users: `export C:\Users\John Doe\Documents\addressbook.xml` +
+eg. For `macOS` and `Linux` users: `export /Users/John Doe/Documents/addressbook.xml`
+* *Config* : `(cfg)config --add-property` `(cfg)config --set-tag-color` `(cfg)config --import-calendar`
