@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.apache.commons.text.similarity.JaroWinklerDistance;
 
@@ -157,19 +159,45 @@ public class ModelManager extends ComponentManager implements Model {
     public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
         requireNonNull(predicate);
         double maxDistance = initialToleranceValue;
-        ArrayList<String> result = new ArrayList<String>();
         updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         ObservableList<ReadOnlyPerson> fullList = getFilteredPersonList();
-        ArrayList<String> allNames = new ArrayList<String>();
-        for (ReadOnlyPerson p : fullList) {
-            String[] firstAndLastName = p.getName().toString().split(" ");
-            for (String name : firstAndLastName) {
-                allNames.add(name);
-            }
-        }
+        ArrayList<String> allNames = fullList.stream().map(p -> p.getName().toString().split(" "))
+                .flatMap(Arrays::stream).collect(Collectors.toCollection(ArrayList::new));
+        List<String> keywords = predicate.getKeywords();
+
+        // switches filteredPersonList back from showing all persons to original according to the given predicate
+        this.updateFilteredPersonList(predicate);
+        return keywords.size() == 1 ? getClosestMatchingNameForOneKeyword(keywords, allNames, maxDistance)
+                : getClosestMatchingNameForMultipleKeywords(keywords, allNames, maxDistance);
+    }
+
+    /**
+     * If there is only one keyword given, this helper method gets the closest matching name from the keywords
+     */
+    public String getClosestMatchingNameForOneKeyword(List<String> keywords,
+                                                      ArrayList<String> allNames, double maxDistance) {
 
         JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
-        List<String> keywords = predicate.getKeywords();
+        String target = keywords.get(0);
+        String result = "";
+        for (String s : allNames) {
+            if (maxDistance < currentJaroWinklerDistance.apply(target, s)) {
+                maxDistance = currentJaroWinklerDistance.apply(target, s);
+                result = s;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * If there are multiple keywords given, this helper method gets the closest matching list of names from the
+     * keywords and converts them into a string
+     */
+    public String getClosestMatchingNameForMultipleKeywords(List<String> keywords,
+                                                      ArrayList<String> allNames, double maxDistance) {
+
+        JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
+        ArrayList<String> result = new ArrayList<String>();
         for (String target : keywords) {
             for (String s : allNames) {
                 if (maxDistance < currentJaroWinklerDistance.apply(target, s)) {
@@ -180,9 +208,6 @@ public class ModelManager extends ComponentManager implements Model {
                 }
             }
         }
-
-        // switches filteredPersonList back from showing all persons to original according to the given predicate
-        this.updateFilteredPersonList(predicate);
         return String.join(" OR ", result);
     }
 
