@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleObjectProperty;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -43,14 +44,6 @@ public class Event implements ReadOnlyEvent {
         this.desc = new SimpleObjectProperty<>(desc);
         this.time = new SimpleObjectProperty<>(time);
         this.participants = new SimpleObjectProperty<>(new ParticipantList());
-    }
-
-    public Event (EventName name, EventDescription desc, EventTime time, ParticipantList list) {
-        requireAllNonNull(name, time);
-        this.name = new SimpleObjectProperty<>(name);
-        this.desc = new SimpleObjectProperty<>(desc);
-        this.time = new SimpleObjectProperty<>(time);
-        this.participants = new SimpleObjectProperty<>(list);
     }
 
     public Event (ReadOnlyEvent source) {
@@ -121,6 +114,10 @@ public class Event implements ReadOnlyEvent {
 
     public void removeParticipant(ReadOnlyPerson person) throws PersonNotFoundException {
         this.participants.get().remove(person);
+    }
+
+    public void addParticipant(Person person) throws DuplicatePersonException {
+        this.participants.get().add(person);
     }
 
     @Override

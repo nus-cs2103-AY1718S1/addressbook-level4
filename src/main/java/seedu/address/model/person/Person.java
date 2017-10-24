@@ -11,6 +11,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -62,6 +63,8 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getBirthday(), source.getTags());
+        if(source.getParticipation().size()>0)
+            this.setParticipants(source.getParticipation());
     }
 
     public void setName(Name name) {
@@ -154,8 +157,9 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
-    public ParticipationList getParticipation() {
-        return participation.get();
+    @Override
+    public Set<Event> getParticipation() {
+        return Collections.unmodifiableSet(participation.get().toSet());
     }
 
     /**
@@ -169,6 +173,9 @@ public class Person implements ReadOnlyPerson {
         this.participation.get().remove(event);
     }
 
+    public void addParticipateEvent(Event event) throws DuplicateEventException {
+        this.participation.get().add(event);
+    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

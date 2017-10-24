@@ -18,10 +18,12 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonHaveParticipateException;
 import seedu.address.model.event.exceptions.PersonNotParticipateException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.HaveParticipateEventException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -183,6 +185,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         eventList.updateEvent(target, editedEvent);
         indicateAddressBookChanged();
+        indicateEventListChanged();
     }
 
     //=========== Participant Operations =============================================================
@@ -197,6 +200,15 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void joinEvent(Person person, Event event)
+            throws PersonHaveParticipateException, HaveParticipateEventException {
+        eventList.addParticipant(person, event);
+        indicateEventListChanged();
+
+        addressBook.addParticipation(person, event);
+        indicateAddressBookChanged();
+    }
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyEvent} backed by the internal list of
      * {@code addressBook}

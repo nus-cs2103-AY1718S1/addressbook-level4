@@ -14,8 +14,11 @@ import javafx.collections.ObservableList;
 
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonHaveParticipateException;
 import seedu.address.model.event.exceptions.PersonNotParticipateException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -127,6 +130,15 @@ public class UniqueEventList implements Iterable<Event> {
             throw new PersonNotParticipateException();
         }
 
+    }
+
+    public void addParticipant(Person participant, Event targetEvent)
+            throws PersonHaveParticipateException {
+        try{
+            targetEvent.addParticipant(participant);
+        }catch (DuplicatePersonException dpe) {
+            throw new PersonHaveParticipateException();
+        }
     }
 
     /**
