@@ -1,6 +1,6 @@
 .background {
-    -fx-background-color: derive(#f3e4c6, 20%);
-    background-color: #f3e4c6; /* Used in the default.html file */
+    -fx-background-color: derive(#fff7e3, 20%);
+    background-color: #fff7e3; /* Used in the default.html file */
 }
 
 .label {
@@ -40,9 +40,9 @@
 }
 
 .table-view {
-    -fx-base: #fff2d6;
-    -fx-control-inner-background: #f3e4c6;
-    -fx-background-color: #f3e4c6;
+    -fx-base: #fff7e3;
+    -fx-control-inner-background: #fff7e3;
+    -fx-background-color: #fff7e3;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -77,19 +77,19 @@
 }
 
 .split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#f3e4c6, 20%);
+    -fx-background-color: derive(#fff7e3, 20%);
     -fx-border-color: transparent transparent transparent #fff0cc;
 }
 
 .split-pane:vertical .split-pane-divider {
-    -fx-background-color: derive(#f3e4c6, 20%);
+    -fx-background-color: derive(#fff7e3, 20%);
     -fx-border-color: transparent transparent transparent #fff0cc;
 }
 
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
-    -fx-background-color: derive(#f3e4c6, 20%);
+    -fx-background-color: derive(#fff7e3, 20%);
 }
 
 .list-view {
@@ -111,19 +111,19 @@
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #e0e5e3;
+    -fx-background-color: #F1F3F2;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #f4b770;
+    -fx-background-color: #aec4e8;
     -fx-background-radius: 5;
 }
 
 .list-cell:filled:selected #cardPane {
     -fx-border-radius: 5;
-    -fx-border-color: #8F4F06;
+    -fx-border-color: #7da7ed;
     -fx-border-width: 1;
 }
 
@@ -144,17 +144,17 @@
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#f3e4c6, 20%);
+     -fx-background-color: derive(#fff7e3, 20%);
 }
 
 .pane-with-border {
-     -fx-background-color: derive(#f3e4c6, 20%);
-     -fx-border-color: derive(#f3e4c6, 10%);
+     -fx-background-color: derive(#fff7e3, 20%);
+     -fx-border-color: derive(#fff7e3, 10%);
      -fx-border-top-width: 1px;
 }
 
 .status-bar {
-    -fx-background-color: derive(#f3e4c6, 20%);
+    -fx-background-color: derive(#fff7e3, 20%);
     -fx-text-fill: black;
 }
 
@@ -175,8 +175,8 @@
 }
 
 .status-bar-with-border {
-    -fx-background-color: derive(#f3e4c6, 30%);
-    -fx-border-color: derive(#f3e4c6, 25%);
+    -fx-background-color: derive(#fff7e3, 30%);
+    -fx-border-color: derive(#fff7e3, 25%);
     -fx-border-width: 1px;
 }
 
@@ -185,17 +185,17 @@
 }
 
 .grid-pane {
-    -fx-background-color: derive(#f3e4c6, 30%);
-    -fx-border-color: derive(#f3e4c6, 30%);
+    -fx-background-color: derive(#fff7e3, 30%);
+    -fx-border-color: derive(#fff7e3, 30%);
     -fx-border-width: 1px;
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: derive(#f3e4c6, 30%);
+    -fx-background-color: derive(#fff7e3, 30%);
 }
 
 .context-menu {
-    -fx-background-color: derive(#f3e4c6, 50%);
+    -fx-background-color: derive(#fff7e3, 50%);
 }
 
 .context-menu .label {
@@ -203,7 +203,7 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#f3e4c6, 20%);
+    -fx-background-color: derive(#fff7e3, 20%);
 }
 
 .menu-bar .label {
@@ -227,7 +227,7 @@
     -fx-border-color: #e2e2e2;
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    -fx-background-color: #f3e4c6;
+    -fx-background-color: #fff7e3;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
@@ -240,7 +240,7 @@
 
 .button:pressed, .button:default:hover:pressed {
   -fx-background-color: white;
-  -fx-text-fill: #f3e4c6;
+  -fx-text-fill: #fff7e3;
 }
 
 .button:focused {
@@ -253,7 +253,7 @@
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;
-    -fx-background-color: #f3e4c6;
+    -fx-background-color: #fff7e3;
     -fx-text-fill: black;
 }
 
@@ -267,11 +267,11 @@
 }
 
 .dialog-pane {
-    -fx-background-color: #f3e4c6;
+    -fx-background-color: #fff7e3;
 }
 
 .dialog-pane > *.button-bar > *.container {
-    -fx-background-color: #f3e4c6;
+    -fx-background-color: #fff7e3;
 }
 
 .dialog-pane > *.label.content {
@@ -281,7 +281,7 @@
 }
 
 .dialog-pane:header *.header-panel {
-    -fx-background-color: derive(#f3e4c6, 25%);
+    -fx-background-color: derive(#fff7e3, 25%);
 }
 
 .dialog-pane:header *.header-panel *.label {
@@ -345,7 +345,7 @@
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #f3e4c6, transparent, #f3e4c6;
+    -fx-background-color: transparent, #fff7e3, transparent, #fff7e3;
     -fx-background-radius: 0;
 }
 
