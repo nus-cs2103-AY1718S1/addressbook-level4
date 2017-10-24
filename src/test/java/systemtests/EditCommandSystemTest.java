@@ -27,6 +27,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIXES_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
@@ -130,45 +131,43 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: Autofill name -> filled */
         index = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_NAME;
-        assertAutofillSuccess(command, index, PREFIX_NAME);
+        assertAutofillSuccess(command, index);
 
         /* Case: Autofill phone -> filled */
         index = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_PHONE;
-        assertAutofillSuccess(command, index, PREFIX_PHONE);
+        assertAutofillSuccess(command, index);
 
         /* Case: Autofill email -> filled */
         index = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_EMAIL;
-        assertAutofillSuccess(command, index, PREFIX_EMAIL);
+        assertAutofillSuccess(command, index);
 
         /* Case: Autofill address -> filled */
         index = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_ADDRESS;
-        assertAutofillSuccess(command, index, PREFIX_ADDRESS);
+        assertAutofillSuccess(command, index);
 
         /* Case: Autofill dob -> filled */
         index = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_DOB;
-        assertAutofillSuccess(command, index, PREFIX_DOB);
+        assertAutofillSuccess(command, index);
 
         /* Case: Autofill tags -> filled */
         index = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG;
-        assertAutofillSuccess(command, index, PREFIX_TAG);
+        assertAutofillSuccess(command, index);
 
         /* Case: Autofill tags -> filled */
         index = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_DELTAG;
-        assertAutofillSuccess(command, index, PREFIX_DELTAG);
+        assertAutofillSuccess(command, index);
 
         /* Case: Autofill multiple fields -> filled */
         index = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_PHONE + " " + PREFIX_ADDRESS
                 + " " + PREFIX_TAG;
-        assertAutofillSuccess(command, index, PREFIX_PHONE);
-        assertAutofillSuccess(getCommandBox().getInput(), index, PREFIX_ADDRESS);
-        assertAutofillSuccess(getCommandBox().getInput(), index, PREFIX_TAG);
+        assertAutofillSuccess(command, index);
 
 
 
@@ -270,42 +269,28 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
-    private void assertAutofillSuccess(String command, Index toEdit, Prefix prefix) {
+    private void assertAutofillSuccess(String command, Index toEdit) {
         Model expectedModel = getModel();
-        String filledPrefix = prefix.getPrefix();
-        if (prefix.equals(PREFIX_NAME)) {
-            filledPrefix += expectedModel.getAddressBook().getPersonList()
-                    .get(toEdit.getZeroBased()).getName().toString();
-        } else if (prefix.equals(PREFIX_PHONE)) {
-            filledPrefix += expectedModel.getAddressBook().getPersonList()
-                    .get(toEdit.getZeroBased()).getPhone().toString();
-        } else if (prefix.equals(PREFIX_EMAIL)) {
-            filledPrefix += expectedModel.getAddressBook().getPersonList()
-                    .get(toEdit.getZeroBased()).getEmail().toString();
-        } else if (prefix.equals(PREFIX_ADDRESS)) {
-            filledPrefix += expectedModel.getAddressBook().getPersonList()
-                    .get(toEdit.getZeroBased()).getAddress().toString();
-        } else if (prefix.equals(PREFIX_DOB)) {
-            filledPrefix += expectedModel.getAddressBook().getPersonList()
-                    .get(toEdit.getZeroBased()).getDateOfBirth().toString();
-        } else if (prefix.equals(PREFIX_TAG)) {
-            Set<Tag> tags =  expectedModel.getAddressBook().getPersonList()
-                    .get(toEdit.getZeroBased()).getTags();
-            filledPrefix = "";
-            for (Tag tag : tags) {
-                filledPrefix += PREFIX_TAG.getPrefix() + tag.getTagName() + " ";
-            }
-        } else if (prefix.equals(PREFIX_DELTAG)) {
-            Set<Tag> tags =  expectedModel.getAddressBook().getPersonList()
-                    .get(toEdit.getZeroBased()).getTags();
-            filledPrefix = "";
-            for (Tag tag : tags) {
-                filledPrefix += PREFIX_DELTAG.getPrefix() + tag.getTagName() + " ";
+        ReadOnlyPerson person = expectedModel.getAddressBook().getPersonList().get(toEdit.getZeroBased());
+        executeCommand(command);
+        for (Prefix prefix : PREFIXES_PERSON) {
+            String prefixInConcern = prefix.getPrefix();
+            if (command.contains(prefixInConcern)) {
+                String replacementText = prefixInConcern + person.getDetailByPrefix(prefix) + " ";
+                command = command.replaceFirst(prefixInConcern, replacementText);
             }
         }
-        String filledCommand = command.replace(prefix.getPrefix(), filledPrefix.trim());
-        executeCommand(command);
-        assertApplicationDisplaysExpected(filledCommand, "Autofilled " + prefix.getPrefix(), expectedModel);
+        if (command.contains(PREFIX_TAG.getPrefix())) {
+            String formattedTags = PREFIX_TAG.getPrefix()
+                    + person.getDetailByPrefix(PREFIX_TAG).replaceAll(" ", " t/") + " ";
+            command = command.replaceFirst(PREFIX_TAG.getPrefix(), formattedTags);
+        }
+        if (command.contains(PREFIX_DELTAG.getPrefix())) {
+            String formattedTags = PREFIX_DELTAG.getPrefix()
+                    + person.getDetailByPrefix(PREFIX_DELTAG).replaceAll(" ", " t/") + " ";
+            command = command.replaceFirst(PREFIX_DELTAG.getPrefix(), formattedTags);
+        }
+        assertApplicationDisplaysExpected(command.trim(), "Autofilled!", expectedModel);
         assertCommandBoxShowsDefaultStyle();
     }
 
