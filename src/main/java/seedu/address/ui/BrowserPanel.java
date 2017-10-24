@@ -19,7 +19,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * The Browser Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class BrowserPanel extends UiPart<
+        Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com/maps/search/?api=1&query=";

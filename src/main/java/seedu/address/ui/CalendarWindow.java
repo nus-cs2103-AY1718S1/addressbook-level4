@@ -17,9 +17,8 @@ import seedu.address.commons.util.FxViewUtil;
 public class CalendarWindow extends UiPart<Region> {
 
     public static final String CALENDAR_URL = "https://www.timeanddate.com/calendar/";
-    public static final String URL = "https://www.youtube.com/watch?v=r5yaoMjaAmE";
     private static final Logger logger = LogsCenter.getLogger(CalendarWindow.class);
-    private static final String ICON = "/images/calender.png";
+    private static final String ICON = "/images/calender_icon.png";
     private static final String FXML = "Calendar.fxml";
     private static final String TITLE = "Calendar";
 
