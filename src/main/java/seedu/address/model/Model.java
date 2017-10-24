@@ -16,6 +16,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that consists of all ReadOnlyPerson who has been favorited */
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_FAV_PERSONS = p -> p.getFavorite().isFavorite();
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 

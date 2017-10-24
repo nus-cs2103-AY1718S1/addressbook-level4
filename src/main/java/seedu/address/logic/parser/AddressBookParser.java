@@ -99,7 +99,7 @@ public class AddressBookParser {
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
-            return new ListCommand();
+            return new ListCommand(arguments);
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
