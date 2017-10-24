@@ -95,10 +95,10 @@ public class SampleDataUtil {
             sampleParticipantsList.add(new InternalId(2));
             LocalDateTime now = LocalDateTime.now();
             return new Meeting[] {
-                    new Meeting(LocalDateTime.of(now.getYear() + 1, 1,1,0, 0),
-                            "Home", "New Year Celebration", sampleParticipantsList),
-                    new Meeting(LocalDateTime.of(now.getYear() + 1, 2,1,14, 0),
-                            "COM1-02-10", "Project Meeting", sampleParticipantsList),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 1, 1, 0, 0),
+                        "Home", "New Year Celebration", sampleParticipantsList),
+                new Meeting(LocalDateTime.of(now.getYear() + 1, 2, 1, 14, 0),
+                        "COM1-02-10", "Project Meeting", sampleParticipantsList),
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
