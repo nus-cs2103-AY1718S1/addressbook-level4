@@ -90,7 +90,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * @return {@code String} value of the current displayed list.
+     * @return String value of the current displayed list
      */
     @Override
     public String getCurrentList() {
@@ -98,7 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Sets {@code String} value of the current displayed list using value of {@param currentList}
+     * Sets String value of the current displayed list using value of {@param currentList}
      */
     @Override
     public void setCurrentList(String currentList) {
@@ -119,7 +119,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Removes a specific person from blacklist in the AddressBook.
      * @param target to be removed from blacklist.
-     * @return {@code removedBlacklistedPerson}.
+     * @return removedBlacklistedPerson
      * @throws PersonNotFoundException if no person is found.
      */
     @Override
@@ -134,7 +134,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Deletes a specific person from whitelist in the AddressBook.
      * @param target to be removed from whitelist.
-     * @return {@code removedBlacklistedPerson}.
+     * @return removedBlacklistedPerson
      * @throws PersonNotFoundException if no person is found.
      */
     @Override
@@ -155,7 +155,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Adds a specific person to blacklist in the AddressBook.
      * @param person to be updated.
-     * @return {@code newBlacklistedPerson}.
+     * @return newBlacklistedPerson
      * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
      */
     @Override
@@ -170,7 +170,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Adds a specific person to whitelist in the AddressBook.
      * @param person to be updated.
-     * @return {@code whitelistedPerson}.
+     * @return whitelistedPerson
      * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
      */
     @Override
@@ -291,7 +291,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @param target person in the address book who paid back some money
      * @param amount amount that the person paid back. Must be either a positive integer or positive number with
      *               two decimal places
-     * @return {@code repayingPerson}.
+     * @return repayingPerson
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */

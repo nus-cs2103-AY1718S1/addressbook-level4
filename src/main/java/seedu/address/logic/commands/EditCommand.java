@@ -107,8 +107,8 @@ public class EditCommand extends UndoableCommand {
 
     /**
      * Does the appropriate list status checks on {@code personToEdit}
-     * and changes the list status of {@code editedPerson} accordingly.
-     * @Returns {@code editedPerson}.
+     * and changes the list status of {@code editedPerson} accordingly
+     * @return editedPerson
      */
     private Person listSyncChecks(ReadOnlyPerson personToEdit, Person editedPerson) {
         if (personToEdit.isWhitelisted() && editedPerson.getDebt().toNumber() > 0) {

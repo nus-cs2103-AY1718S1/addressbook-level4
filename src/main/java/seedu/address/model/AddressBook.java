@@ -82,7 +82,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Searches for blacklisted persons in {@code persons}.
-     * @return {@code UniquePersonList} of all blacklisted person in {@code persons}.
+     * @return UniquePersonList of all blacklisted person in {@code persons}
      */
     public UniquePersonList getBlacklistedPersons() {
         UniquePersonList blacklistedPersons = new UniquePersonList();
@@ -101,7 +101,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Searches for whitelisted persons in {@code persons}.
-     * @return {@code UniquePersonList} of all whitelisted persons in {@code persons}.
+     * @return UniquePersonList of all whitelisted persons in {@code persons}
      */
     public UniquePersonList getWhitelistedPersons() {
         UniquePersonList whitelistedPersons = new UniquePersonList();
@@ -138,7 +138,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the blacklist in the address book.
-     * @return ReadOnly {@code newBlacklistedPerson}.
+     * @return ReadOnly newBlacklistedPerson
      */
     public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson p) {
         int index;
@@ -165,7 +165,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the whitelist in the address book.
-     * @return ReadOnly {@code newWhitelistedPerson}.
+     * @return ReadOnly newWhitelistedPerson
      */
     public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) {
         int index;
@@ -249,7 +249,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Updates {@code key} to exclude {@code key} from the blacklist in this {@code AddressBook}.
-     * @return ReadOnly {@code newUnBlacklistedPerson}.
+     * @return ReadOnly newUnBlacklistedPerson
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
@@ -277,7 +277,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Updates {@code key} to exclude {@code key} from the whitelist in this {@code AddressBook}.
-     * @return ReadOnly {@code newWhitelistedPerson}.
+     * @return ReadOnly newWhitelistedPerson
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
@@ -354,7 +354,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param target person in the address book who paid back some money
      * @param amount amount that the person paid back. Must be either a positive integer or positive number with
      *               two decimal places
-     * @return ReadOnly {@editPerson}.
+     * @return ReadOnly editPerson
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */
@@ -387,7 +387,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Resets person's debt field to zero, in the masterlist of the addressbook.
-     * @return ReadOnly {@code existingPerson}.
+     * @return ReadOnly existingPerson
      * @throws PersonNotFoundException if person does not exist in list.
      */
     public ReadOnlyPerson resetPersonDebt(ReadOnlyPerson p) throws PersonNotFoundException {
@@ -414,7 +414,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Resets person's {@code dateRepaid} field to current date, in the masterlist of the addressbook.
-     * @return ReadOnly {@code existingPerson}.
+     * @return ReadOnly existingPerson
      * @throws PersonNotFoundException if person does not exist in list.
      */
     public ReadOnlyPerson setDateRepaid(ReadOnlyPerson p) throws PersonNotFoundException {
