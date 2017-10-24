@@ -97,6 +97,9 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise pictures for person
+     */
     private void initPicture(ReadOnlyPerson person) {
         picture.setImage(new Image(person.getPicture().getPictureLocation()));
 

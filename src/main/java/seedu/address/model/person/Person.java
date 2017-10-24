@@ -153,7 +153,6 @@ public class Person implements ReadOnlyPerson {
         return website.get();
     }
 
-    //
     public void setPicture(Picture picture) {
         this.picture.set(requireNonNull(picture));
     }
