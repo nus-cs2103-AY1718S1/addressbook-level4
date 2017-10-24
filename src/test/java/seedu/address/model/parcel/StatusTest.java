@@ -17,14 +17,17 @@ public class StatusTest {
 
     @Test
     public void testToStringTest() {
-        Status delivered = Status.COMPLETED;
-        assertEquals("COMPLETED", delivered.toString());
+        Status completed = Status.COMPLETED;
+        assertEquals("COMPLETED", completed.toString());
 
         Status delivering = Status.DELIVERING;
         assertEquals("DELIVERING", delivering.toString());
 
         Status pending = Status.PENDING;
         assertEquals("PENDING", pending.toString());
+
+        Status overdue = Status.OVERDUE;
+        assertEquals("OVERDUE", overdue.toString());
     }
 
     @Test
@@ -38,8 +41,12 @@ public class StatusTest {
         assertEquals(Status.DELIVERING, delivering);
 
         // mix of uppercase and lowercase characters
-        Status delivered = Status.getInstance("dEliVERed");
-        assertEquals(Status.COMPLETED, delivered);
+        Status completed = Status.getInstance("cOmPleTeD");
+        assertEquals(Status.COMPLETED, completed);
+
+        // mix of uppercase and lowercase characters
+        Status overdue = Status.getInstance("overDUE");
+        assertEquals(Status.OVERDUE, overdue);
 
         thrown.expect(IllegalValueException.class);
         thrown.expectMessage(Status.MESSAGE_STATUS_CONSTRAINTS);
@@ -54,10 +61,12 @@ public class StatusTest {
         // uppercase letters
         assertTrue(Status.isValidStatus("PENDING"));
         assertTrue(Status.isValidStatus("DELIVERING"));
+        assertTrue(Status.isValidStatus("OVERDUE"));
+        assertTrue(Status.isValidStatus("COMPLETED"));
 
         // lower case letters
         assertFalse(Status.isValidStatus("pending"));
-        assertFalse(Status.isValidStatus("delivered"));
+        assertFalse(Status.isValidStatus("completed"));
 
         // mix of upper and lower case
         assertFalse(Status.isValidStatus("DelIVEred"));
