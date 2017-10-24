@@ -57,8 +57,8 @@ public class LinkCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (!(link.value.startsWith(PossibleLinks.POSSIBLE_LINK_1) ||
-                link.value.startsWith(PossibleLinks.POSSIBLE_LINK_2)) && !link.value.isEmpty()) {
+        if (!(link.value.startsWith(PossibleLinks.POSSIBLE_LINK_1)
+                || link.value.startsWith(PossibleLinks.POSSIBLE_LINK_2)) && !link.value.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_INVALID_LINK_FORMAT);
         }
 
