@@ -26,19 +26,19 @@ public interface Model {
     /** Returns all names in the AddressBook */
     List<String> getAllNamesInAddressBook();
 
-    /** Returns all names in the AddressBook */
+    /** Returns all phones in the AddressBook */
     List<String> getAllPhonesInAddressBook();
 
-    /** Returns all names in the AddressBook */
+    /** Returns all emails in the AddressBook */
     List<String> getAllEmailsInAddressBook();
 
-    /** Returns all names in the AddressBook */
+    /** Returns all addresses in the AddressBook */
     List<String> getAllAddressesInAddressBook();
 
-    /** Returns all names in the AddressBook */
+    /** Returns all tags in the AddressBook */
     List<String> getAllTagsInAddressBook();
 
-    /** Returns all names in the AddressBook */
+    /** Returns all remarks in the AddressBook */
     List<String> getAllRemarksInAddressBook();
 
     /** Deletes the given person. */
