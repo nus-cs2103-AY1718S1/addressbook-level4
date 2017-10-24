@@ -3,9 +3,16 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LINK;
 
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Link;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Changes the facebook link of an existing person in the address book.
@@ -22,7 +29,9 @@ public class LinkCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_LINK + "https://www.facebook.com/profile.php?id=100021659181463";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Link: %2$s";
+    public static final String MESSAGE_ADD_LINK_SUCCESS = "Added link to Person: %1$s";
+    public static final String MESSAGE_DELETE_LINK_SUCCESS = "Removed link from Person: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
     private final Link link;
@@ -41,7 +50,38 @@ public class LinkCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), link));
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        if (!link.value.contains("facebook.com") && !link.value.isEmpty()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_LINK_FORMAT);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getFavouriteStatus(),
+                personToEdit.getTags(), link);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+
+        return new CommandResult(generateSuccessMessage(editedPerson));
+    }
+
+    private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
+        if (!link.value.isEmpty()) {
+            return String.format(MESSAGE_ADD_LINK_SUCCESS, personToEdit);
+        } else {
+            return String.format(MESSAGE_DELETE_LINK_SUCCESS, personToEdit);
+        }
     }
 
     @Override
