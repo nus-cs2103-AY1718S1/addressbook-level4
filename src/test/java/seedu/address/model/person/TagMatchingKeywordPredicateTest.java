@@ -83,7 +83,7 @@ public class TagMatchingKeywordPredicateTest {
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }
     @Test
-    public void testKeywordReturnsTrue(){
+    public void testKeywordReturnsTrue() {
         TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("");
         assertTrue("".equals(predicate.getKeyword()));
     }
