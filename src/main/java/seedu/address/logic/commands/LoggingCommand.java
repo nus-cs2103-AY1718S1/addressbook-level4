@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,7 +17,7 @@ import seedu.address.commons.core.LogsCenter;
 public class LoggingCommand {
     private final Logger logger = LogsCenter.getLogger(LoggingCommand.class);
     /**
-     *keepLog Method
+     *keepLog Method to Write Activity Log To The ConnectUsLog.txt file
      */
     public void keepLog(String logText, String functionType) {
         try (FileWriter fileWrite = new FileWriter("src/test/data/XMLUtilTest/ConnectUsLog.txt", true);
@@ -26,5 +27,12 @@ public class LoggingCommand {
         } catch (IOException e) {
             System.out.println("Error With ConnectUs.txt Logging");
         }
+    }
+    /**
+     * clearLog Method to clear the Activity Log in the ConnectUsLog.txt file
+     */
+    public void clearLog() {
+        File file = new File("src/test/data/XMLUtilTest/ConnectUsLog.txt");
+        file.delete();
     }
 }
