@@ -2,10 +2,13 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -31,6 +34,22 @@ public class UniquePersonList implements Iterable<Person> {
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
     /**
+     * Constructs empty UniquePersonList.
+     */
+    public UniquePersonList() {}
+
+
+    /**
+     * Creates a UniquePersonList using given persons.
+     * Enforces no nulls.
+     */
+    public UniquePersonList(Set<Person> persons) {
+        requireNonNull(persons);
+        internalList.addAll(persons);
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
      * Returns true if the list contains an equivalent person as the given argument.
      */
     public boolean contains(ReadOnlyPerson toCheck) {
@@ -49,6 +68,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+
     }
 
     /**
@@ -143,5 +163,14 @@ public class UniquePersonList implements Iterable<Person> {
     @Override
     public int hashCode() {
         return internalList.hashCode();
+    }
+
+    /**
+     * Returns all persons in this list as a Set.
+     * This set is mutable and change-insulated against the internal list.
+     */
+    public Set<Person> toSet() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new HashSet<>(internalList);
     }
 }

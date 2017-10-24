@@ -12,7 +12,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ListEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
@@ -66,6 +68,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /** Raises an event to indicate a list command has occurred */
+    private void indicateListEvent() {
+        raise(new ListEvent(getFilteredPersonList()));
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -106,6 +113,20 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
+            throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
+        addressBook.addPersonToGroup(targetGroup, toAdd);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
+            throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
+
+    }
+
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -123,10 +144,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void showUnfilteredPersonList() {
+        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
+        indicateListEvent();
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+        indicateListEvent();
     }
+
 
     @Override
     public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
