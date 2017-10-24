@@ -18,7 +18,8 @@ public class HistoryCommand extends Command {
     public static final String COMMAND_WORD_2 = "record";
     public static final String MESSAGE_SUCCESS = "Entered commands (from most recent to earliest):\n%1$s";
     public static final String MESSAGE_NO_HISTORY = "You have not yet entered any commands.";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all the commands entered by user from the start of app launch.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Lists all the commands entered by " +
+            "user from the start of app launch.";
 
     @Override
     public CommandResult execute() {
