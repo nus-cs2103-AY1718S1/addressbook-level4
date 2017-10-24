@@ -37,7 +37,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 [width=100%",cols="50%,<25%,<25%",options="header",]
 |=======================================================================
 |Feature |Developer |Delivery Date
-
 |=======================================================================
 
 == Upcoming
