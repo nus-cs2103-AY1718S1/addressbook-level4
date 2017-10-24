@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-public class ListingPanelSwitchTest extends AddressBookGuiTest {
+public class SwitchListingPanelTest extends AddressBookGuiTest {
     @Test
     public void switchListingPanel_fromPersonListingToEventListing_checkCorrectness() {
         // By default, person listing should be loaded at the initial stage.
