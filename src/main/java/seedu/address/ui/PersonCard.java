@@ -5,12 +5,13 @@ import java.util.HashMap;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Circle;
 import seedu.address.model.person.ReadOnlyPerson;
-
-
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -50,6 +51,8 @@ public class PersonCard extends UiPart<Region> {
     private Label remark;
     @FXML
     private Label website;
+    @FXML
+    private ImageView picture;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -57,6 +60,10 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+
+        picture.setImage(new Image("images/default_profile.png"));
+        Circle circle = new Circle(32.0, 32.0, 30.0);
+        picture.setClip(circle);
     }
 
     /**
