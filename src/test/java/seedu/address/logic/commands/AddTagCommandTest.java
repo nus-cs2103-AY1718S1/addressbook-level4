@@ -104,28 +104,7 @@ public class AddTagCommandTest {
 
         assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
     }
-
-    @Test
-    public void execute_multipleTagsMultipleIndexes_success() throws Exception {
-        Tag tagToAdd1 = new Tag("enemy");
-        Tag tagToAdd2 = new Tag("brother");
-        Set<Index> indexSet = new HashSet<>();
-        Set<Tag> tagSet = new HashSet<>();
-        tagSet.add(tagToAdd1);
-        tagSet.add(tagToAdd2);
-        indexSet.add(INDEX_FIRST_PERSON);
-        indexSet.add(INDEX_SECOND_PERSON);
-
-        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet);
-
-        String expectedMessage = String.format(AddTagCommand.MESSAGE_ADDED_SUCCESS + " to index "
-                + "1, 2.", tagSet);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addTag(tagSet, indexSet);
-
-        assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
-    }
+    
 
     @Test
     public void execute_addDuplicateTag_throwsCommandException() throws Exception {
