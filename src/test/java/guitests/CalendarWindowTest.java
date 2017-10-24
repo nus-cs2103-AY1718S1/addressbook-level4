@@ -1,13 +1,11 @@
 package guitests;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import guitests.guihandles.CalendarWindowHandle;
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.HelpCommand;
 
 
@@ -20,14 +18,6 @@ public class CalendarWindowTest extends AddressBookGuiTest {
     @Test
     public void openCalendarWindow() {
 
-//        //use command box
-//        runCommand(CalendarCommand.COMMAND_WORD);
-//        assertCalendarWindowOpen();
-//
-//        //using alias
-//        runCommand(CalendarCommand.COMMAND_ALIAS);
-//        assertCalendarWindowOpen();
-
         //using incorrect command
         runCommand(HelpCommand.COMMAND_ALIAS);
         assertCalendarWindowNotOpen();
@@ -36,19 +26,8 @@ public class CalendarWindowTest extends AddressBookGuiTest {
         assertCalendarWindowNotOpen();
     }
 
-//    /**
-//     * Asserts that the calender window is open, and closes it after checking.
-//     */
-//    private void assertCalendarWindowOpen() {
-//        assertTrue(CalendarCommand.MESSAGE_DISPLAY_CALENDAR_SUCCESS, CalendarWindowHandle.isWindowPresent());
-//        guiRobot.pauseForHuman();
-//
-//        new CalendarWindowHandle(guiRobot.getStage(CalendarWindowHandle.CALENDAR_WINDOW_TITLE)).close();
-//        mainWindowHandle.focus();
-//    }
-
     /**
-     * Asserts that the help window isn't open.
+     * Asserts that the calendar window isn't open.
      */
     private void assertCalendarWindowNotOpen() {
         assertFalse(ERROR_MESSAGE, CalendarWindowHandle.isWindowPresent());
