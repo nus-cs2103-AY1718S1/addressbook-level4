@@ -53,7 +53,8 @@ public class LessonListPanelTest extends GuiUnitTest {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
-        LessonCardHandle expectedCard = lessonListPanelHandle.getLessonListCardHandle(INDEX_SECOND_LESSON.getZeroBased());
+        LessonCardHandle expectedCard =
+                lessonListPanelHandle.getLessonListCardHandle(INDEX_SECOND_LESSON.getZeroBased());
         LessonCardHandle selectedCard = lessonListPanelHandle.getHandleToSelectedCard();
         assertCardEquals(expectedCard, selectedCard);
     }

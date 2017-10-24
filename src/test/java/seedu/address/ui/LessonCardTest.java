@@ -1,26 +1,29 @@
 package seedu.address.ui;
 
-import guitests.guihandles.LessonCardHandle;
-import org.junit.Test;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.testutil.LessonBuilder;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysLesson;
+
+import org.junit.Test;
+
+import guitests.guihandles.LessonCardHandle;
+
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.testutil.LessonBuilder;
 
 public class LessonCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
         // no tags
-//        Lesson lessonWithNoLecturers = new LessonBuilder().withLecturers(new String[0]).build();
-//        LessonListCard lessonListCard = new LessonListCard(lessonWithNoLecturers, 1);
-//        uiPartRule.setUiPart(lessonListCard);
-//        assertCardDisplay(lessonListCard, lessonWithNoLecturers, 1);
+        // Lesson lessonWithNoLecturers = new LessonBuilder().withLecturers(new String[0]).build();
+        // LessonListCard lessonListCard = new LessonListCard(lessonWithNoLecturers, 1);
+        // uiPartRule.setUiPart(lessonListCard);
+        // assertCardDisplay(lessonListCard, lessonWithNoLecturers, 1);
 
         // with tags
         Lesson lessonWithLecturers = new LessonBuilder().build();
