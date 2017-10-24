@@ -57,6 +57,8 @@ public class Picture {
         } else if (this.value != null && this.value.equals(((Picture) other).value)) { // state check
             return true;
         }
+
+        return false;
     }
 
     @Override
