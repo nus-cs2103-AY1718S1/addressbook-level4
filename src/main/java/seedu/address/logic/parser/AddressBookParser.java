@@ -41,8 +41,8 @@ public class AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    public static final String ADDRESSBOOK_MODE = "addressbook ab";
-    public static final String TASKMANAGER_MODE = "taskmanager tm";
+    public static final String MODE_ADDRESS_BOOK = "addressbook ab";
+    public static final String MODE_TASK_MANAGER = "taskmanager tm";
 
     /**
      * Parses user input into command for execution.
@@ -60,7 +60,7 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
 
-        if (StringUtil.containsWordIgnoreCase(ADDRESSBOOK_MODE, commandMode)) {
+        if (StringUtil.containsWordIgnoreCase(MODE_ADDRESS_BOOK, commandMode)) {
             switch (commandWord) {
 
             case AddCommand.COMMAND_WORD:
@@ -111,7 +111,7 @@ public class AddressBookParser {
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
-        } else if (StringUtil.containsWordIgnoreCase(TASKMANAGER_MODE, commandMode)) {
+        } else if (StringUtil.containsWordIgnoreCase(MODE_TASK_MANAGER, commandMode)) {
             switch (commandWord) {
 
             case ChangeModeCommand.COMMAND_WORD:
