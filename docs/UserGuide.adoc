@@ -259,10 +259,10 @@ Format: `findMeeting KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `findmeeting Clementi` +
-Returns `Clementi` and `Clementi Road`
-* `findmeeting Clementi NUS` +
-Returns any meeting having names `Clementi` or `NUS`
+* `findmeeting John` +
+Returns meetings with `John` and `John Doe`
+* `findmeeting Study Shopping` +
+Returns any meeting having names `Study` or `Shopping`
 * `findmeeting Shopping Study John` +
 Returns any meeting having `John` as the person to meet and any meetings having names `Study` and `Shopping`
 
