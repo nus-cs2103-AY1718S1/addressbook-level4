@@ -16,12 +16,12 @@ import seedu.address.model.person.InternalId;
  */
 public class Meeting {
 
-//    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-//    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
+    //public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
+    //public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
-    public final static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-    public final static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-    public final static String MESSAGE_INVALID_DATE = "The meeting must be in the future.";
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    public static final String MESSAGE_INVALID_DATE = "The meeting must be in the future.";
     private LocalDateTime dateTime;
     private String location;
     private String notes;
@@ -47,6 +47,31 @@ public class Meeting {
         this.listOfPersonsId = listOfPersonsId;
     }
 
+    // Get methods
+    public String getDate() {
+        return dateTime.format(DATE_FORMATTER);
+    }
+
+    public String getTime() {
+        return dateTime.format(TIME_FORMATTER);
+    }
+
+    public String getDateTime() {
+        return dateTime.toString();
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public ArrayList<InternalId> getListOfPersonsId() {
+        return listOfPersonsId;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -66,10 +91,10 @@ public class Meeting {
      * Format state as text for viewing.
      */
     public String toString() {
-        return "Date: " + dateTime.format(dateFormatter) + '\n' +
-                "Time: " + dateTime.format(timeFormatter) + '\n' +
-                "Location: " + location + '\n' +
-                "Notes: " + notes;
+        return "Date: " + dateTime.format(DATE_FORMATTER) + '\n'
+                + "Time: " + dateTime.format(TIME_FORMATTER) + '\n'
+                + "Location: " + location + '\n'
+                + "Notes: " + notes;
     }
 
 }
