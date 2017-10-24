@@ -117,7 +117,7 @@ public class CommandBox extends UiPart<Region> {
             historySnapshot.next();
             commandTextField.setText(historySnapshot.previous());
             commandTextField.positionCaret(commandTextField.getText().length());
-            raise(new NewResultAvailableEvent("Autofilled " + efe.getEmptyFieldPrefix().getPrefix(), false));
+            raise(new NewResultAvailableEvent("Autofilled!", false));
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure

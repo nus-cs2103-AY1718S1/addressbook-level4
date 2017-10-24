@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -60,4 +61,5 @@ public interface ReadOnlyPerson {
         return builder.toString();
     }
 
+    String getDetailByPrefix(Prefix prefix);
 }
