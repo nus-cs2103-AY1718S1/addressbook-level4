@@ -7,9 +7,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddFaveCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CreateGroupCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -17,6 +20,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemoveFaveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -81,6 +85,14 @@ public class AddressBookParser {
         case SortCommand.COMMAND_ALT:
             return new SortCommandParser().parse(arguments);
 
+        case CreateGroupCommand.COMMAND_WORD:
+        case CreateGroupCommand.COMMAND_ALT:
+            return new CreateGroupCommandParser().parse(arguments);
+
+        case DeleteGroupCommand.COMMAND_WORD:
+        case DeleteGroupCommand.COMMAND_ALT:
+            return new DeleteGroupCommandParser().parse(arguments);
+
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALT:
             return new HistoryCommand();
@@ -98,6 +110,14 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALT:
             return new RedoCommand();
+
+        case AddFaveCommand.COMMAND_WORD:
+        case AddFaveCommand.COMMAND_ALT:
+            return new AddFaveCommandParser().parse(arguments);
+
+        case RemoveFaveCommand.COMMAND_WORD:
+        case RemoveFaveCommand.COMMAND_ALT:
+            return new RemoveFaveCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
