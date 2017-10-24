@@ -173,7 +173,6 @@ public class CommandBox extends UiPart<Region> {
      */
     protected void replaceText(String text) {
         commandTextField.setText(text);
-        //commandTextField.positionCaret(commandTextField.getText().length());
     }
 
     /**
