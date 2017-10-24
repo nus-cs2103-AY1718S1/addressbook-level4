@@ -28,7 +28,7 @@ public class ParcelTest {
                 new Name(DEFAULT_NAME), new Phone(DEFAULT_PHONE),
                 new Email(DEFAULT_EMAIL), new Address(DEFAULT_ADDRESS),
                 new DeliveryDate(DEFAULT_DELIVERY_DATE),
-                Status.getStatusInstance(DEFAULT_STATUS),
+                Status.getInstance(DEFAULT_STATUS),
                 SampleDataUtil.getTagSet(DEFAULT_TAGS));
         Parcel differentParcel = new Parcel(parcel);
 
