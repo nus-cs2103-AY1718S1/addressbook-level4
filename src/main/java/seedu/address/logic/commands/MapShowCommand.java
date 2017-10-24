@@ -21,7 +21,7 @@ public class MapShowCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_Locate_PERSON_SUCCESS = "Located Person: %1$s";
+    public static final String MESSAGE_LOCATE_PERSON_SUCCESS = "Located Person: %1$s";
 
     private final Index targetIndex;
 
@@ -40,7 +40,7 @@ public class MapShowCommand extends Command {
 
         EventsCenter.getInstance().post(new BrowserPanelShowLocationEvent(
                 model.getFilteredPersonList().get(targetIndex.getZeroBased())));
-        return new CommandResult(String.format(MESSAGE_Locate_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
 
