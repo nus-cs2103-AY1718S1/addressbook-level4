@@ -11,6 +11,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * Represents a Person in the address book.
@@ -25,6 +26,8 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Mrt> mrt;
 
     private ObjectProperty<UniqueTagList> tags;
+
+    private ObjectProperty<Schedule> schedule;
 
     /**
      * Every field must be present and not null.
@@ -45,7 +48,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getMrt(), source.getTags());
+                source.getMrt(), source.getTags() );
     }
 
     public void setName(Name name) {
@@ -135,6 +138,19 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    @Override
+    public Schedule getSchedule(){
+        return schedule.get();
+    }
+
+    public ObjectProperty<Schedule> scheduleProperty(){
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule){
+        this.schedule.set(schedule);
     }
 
     @Override
