@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= 3W - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,12 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W15-B4/main
 
 By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
+== Welcome to 3W
+
+
 
 == Quick Start
 
@@ -148,7 +151,7 @@ Export the details of the person by the index number +
 Format: `export INDEX`
 
 ****
-* Exports the person at the specified `INDEX`.
+* Exports the person at the specified `INDEX`, selects the person and loads the Google Map page.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -202,7 +205,7 @@ Selects the person identified by the index number used in the last person listin
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the Google Map page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing of persons.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
