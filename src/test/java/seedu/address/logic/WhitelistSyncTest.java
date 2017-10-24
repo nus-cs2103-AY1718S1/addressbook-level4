@@ -18,7 +18,6 @@ import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.PaybackCommand;
-import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.UnbanCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -373,33 +372,7 @@ public class WhitelistSyncTest {
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
 
-    @Test
-    public void execute_redoCommandRemovesWhitelistedPerson_success()
-            throws Exception {
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.addWhitelistedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        expectedModel.setCurrentList("whitelist");
-        expectedModel.changeListTo("whitelist");
-
-        // Preparation done on actual model
-        RepaidCommand repaidCommand = new RepaidCommand(INDEX_FIRST_PERSON);
-        repaidCommand.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-
-        // Preparation done on actual model
-        UndoRedoStack undoRedoStack = prepareStack(
-                Collections.emptyList(), Arrays.asList(repaidCommand));
-        RedoCommand redoCommand = new RedoCommand();
-        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
-        redoCommand.execute();
-
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
-
-        // Operation to be done on actual model
-        WhitelistCommand whitelistCommand = prepareWhitelistCommand();
-
-        assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
-    }
 
 
     /**
