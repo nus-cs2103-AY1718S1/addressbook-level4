@@ -57,13 +57,6 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_addEvent() throws Exception {
-        Event event = new EventBuilder().build();
-        AddEventCommand command = (AddEventCommand) parser.parseCommand(AddEventUtil.getAddEventCommand(event));
-        assertEquals(new AddEventCommand(event), command);
-    }
-
-    @Test
     public void parseCommand_access() throws Exception {
         AccessCommand command = (AccessCommand) parser.parseCommand(
                 AccessCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());

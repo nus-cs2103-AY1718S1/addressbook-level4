@@ -29,26 +29,6 @@ public class AddEventParserTest {
     private AddEventCommandParser parser = new AddEventCommandParser();
 
     @Test
-    public void parse_allFieldsPresent_success() {
-        Event expectedEvent = new EventBuilder().withName(VALID_EVENT_B_NAME).withDate(VALID_EVENT_B_DATE)
-                .withAddress(VALID_EVENT_B_ADDRESS).build();
-
-        // multiple names - last name accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + EVENT_NAME_A_DESC + EVENT_NAME_B_DESC
-                + EVENT_DATE_B_DESC + EVENT_ADDRESS_B_DESC, new AddEventCommand(expectedEvent));
-
-        // multiple date - last date accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + EVENT_NAME_B_DESC
-                + EVENT_DATE_A_DESC + EVENT_DATE_B_DESC
-                + EVENT_ADDRESS_B_DESC, new AddEventCommand(expectedEvent));
-
-        // multiple addresses - last address accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + EVENT_NAME_B_DESC
-                + EVENT_DATE_B_DESC + EVENT_ADDRESS_A_DESC
-                + EVENT_ADDRESS_B_DESC, new AddEventCommand(expectedEvent));
-    }
-
-    @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE);
 
