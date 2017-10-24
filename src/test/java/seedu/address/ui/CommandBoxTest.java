@@ -2,7 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.*;
+import java.awt.AWTException;
 import java.util.ArrayList;
 
 import org.junit.Before;
