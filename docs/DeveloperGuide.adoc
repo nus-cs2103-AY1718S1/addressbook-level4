@@ -14,6 +14,22 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `W15-B3`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+ConnectUs is an address book application that allows you to manage your contacts through the use of a command-line interface (CLI) or a graphical user interface (GUI). +
+
+This guide provides information that can help you improve the application in terms of coding and testing, and also allow you to better understand the features
+through the use of diagrams and explanations. +
+
+ConnectUs consists of the following features: +
+
+* Adding new contacts
+* Editing, deleting, and emailing existing contacts
+* Importing contacts from phone
+* Filtering and removing tags of contacts
+* Providing a view of the location in Google Maps by the contact's address
+* Login feature
+* Changing colour theme
+
 == Setting up
 
 === Prerequisites
@@ -90,20 +106,23 @@ When you are ready to start coding,
 
 === Architecture
 
-image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+The *_link:#architecture-diagram[Architecture Diagram]_* given below explains the high-level design of the App. Given below is a quick overview of each component.
 
-The *_link:#architecture-diagram[Architecture Diagram]_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+image::Architecture.png[width="600"]
+_Figure 3.1.1 : Architecture Diagram_
+
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+Based on _Figure 3.1.1_, the App is made up of the following segments:
+
+The `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+The link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
@@ -120,10 +139,15 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+
+The following figure below shows the class diagram of the logic component.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
+
+For example, in _Figure 3.1.2_ the `Logic` component defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+
+
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +155,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _link:#sequence-diagram[Sequence Diagram]_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +163,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -148,8 +172,10 @@ The sections below give more details of each component.
 
 === UI component
 
+The figure below shows you on the structure of the UI component in our App.
+
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -165,11 +191,13 @@ The `UI` component,
 
 === Logic component
 
+The following diagrams _Figure 3.3.1_ and _Figure 3.3.2_ shows the structure of the logic component.
+
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -182,12 +210,14 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the link:#sequence-diagram[Sequence Diagram] for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
+_Figure 3.4.1_ shows the structure of the Model Component
+
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -200,8 +230,10 @@ The `Model`,
 
 === Storage component
 
+Lastly, _Figure 3.5.1_ shows the structure of the Storage component.
+
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -241,6 +273,7 @@ email under the "email" attribute.
 The following sequence diagram describes how `OpenEmailClient` passes in the "email" attribute to `Desktop`
 
 image::OpenEmailClientSequenceDiagram.png[width="800"]
+_Figure 4.1.1 : Sequence Diagram of the Email function_
 
 
 === Mapping a command to a JavaFX Button
@@ -307,11 +340,14 @@ When the DeleteButton is pressed, it will be handled by the handleDeleteButtonPr
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
+
+The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.3.1 : Class Diagram for Logic Command_
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from _Figure 4.3.1_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -346,22 +382,25 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+As shown in _Figure 4.3.2_ below, the user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.3.2: Undoable Command example_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example in _Figure 4.3.3_, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.3.3: Undoable Command example_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack` as shown in _Figure 4.3.4_. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.3.4: Undoable Command example_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -369,6 +408,8 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following link:#sequence-diagram[sequence diagram] shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+
+_Figure 4.3.5_ : Sequence Diagram of the Undo and Redo function._
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -378,14 +419,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.3.6: Undoable Command example_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.3.7: Undoable Command example_
 
 The following link:#activity-diagram[activity diagram]summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.3.8: Undoable Command Activity Diagram_
 
 ==== Design Considerations
 
@@ -472,7 +516,7 @@ Once the required information (name, email, address, phone number) is retrieved 
 
 * Then using the informaton the class retrieved, it will then create a `Person` object. This object is then stored inside a `ReadOnlyPerson` array.
 
-* When all the contact in the file has been accessed and created as a `Person` object and stored inside the array, the `ImportCommandParser` will then return a new `ImportCommand()` will will parse the array to the `ImportCommand` class for execution.
+* When all the contact in the file has been accessed and created as a `Person` object and stored inside the array, the `ImportCommandParser` will then return a new `ImportCommand()` that will parse the array to the `ImportCommand` class for execution.
 
 * The `ImportCommand` class will retrieve the `ReadOnlyPerson` array that was parsed into its' constructor and then loop through the array and add each `Person` object into the addressbook.
 
@@ -505,13 +549,17 @@ Once the required information (name, email, address, phone number) is retrieved 
 === Filter by tag mechanism
 (added in v1.2)
 
-The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. The keywords inputted by the user is put into a List<String> and
-then parses into `TagContainsKeywordsPredicate` which will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person
+The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. +
+
+* The keywords inputted by the user is put into a List<String> and
+then parses into `TagContainsKeywordsPredicate`. +
+* `TagContainsKeywordsPredicate` will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person
 that has the tags similar to the keywords. +
-After which, the predicate returned by `TagContainsKeywordsPredicate` will then update the filtered list when it is parsed into the method updateFilteredPersonList(Predicate) which belongs to the `Model` class. +
-The filtered list size is then parsed into the getMessageForPersonListShownSummary(int) which will return the `CommandResult` to show to the user. +
-The result will be the message showing the amount of persons in the filtered list and the display of the filtered list. +
-The tag command is not undoable so it will just override execute().
+* After which, the predicate returned by `TagContainsKeywordsPredicate` will be saved in `TagCommand`. The tag command is not undoable so it will just override execute().
+* At the method execute(), the predicate is then used to update the filtered list when it is parsed into the method updateFilteredPersonList(Predicate) which belongs to the `Model` class. +
+* The filtered list size is then parsed into the getMessageForPersonListShownSummary(int) which will return the `CommandResult` to show to the user. +
+* The result will be the message showing the amount of persons in the filtered list and the display of the filtered list. +
+
 
 ==== Design Considerations
 **Aspect:** Implementation logic of `TagCommand` +
@@ -526,13 +574,17 @@ The tag command is not undoable so it will just override execute().
 === Remove tag mechanism
 (added in v1.2)
 
-The remove tag mechanism is implemented by `Logic` and `Model`. When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
-The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
-In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
+The remove tag mechanism is implemented by `Logic` and `Model`.
+
+* When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
+* The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
+* In the execution stage (executeUndoableCommand()) in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
 `ModelManager` which implements `Model`. The method removes any tags of a person that matches the tag in the ArrayList. +
-The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
-and then removes the `Tag` that is parsed into the method. The setTags is then set for the newPerson and the updatePerson(oldPerson, newPerson) method is subsequently called to update the `Person` in the `AddressBook`.
-`RemoveTagCommand` also handles the checking of whether the Tag(keyword) matches any of the existing tags in ConnectUs.
+* The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
+and then removes the `Tag` that is parsed into the method. +
+* The setTags is then set for the newPerson and the updatePerson(oldPerson, newPerson) method is subsequently called to update the `Person` in the `AddressBook`.
+* `RemoveTagCommand` also handles the checking of whether the Tag(keyword) matches any of the existing tags in ConnectUs.
+
 [NOTE]
 If the keywords is not identical to any of the existing tag names, 'CommandResult' will notify the user that no tags has been removed. Otherwise, a success message will be shown.
 
@@ -541,6 +593,7 @@ The remove tag command is undoable so it will execute and override executeUndoab
 The following sequence diagram shows how the remove tag operation works:
 
 image::removeTag_sequenceDiagram.png[width="800"]
+_Figure 4.8.1: Remove Tag Sequence Diagram_
 
 ==== Design Considerations
 **Aspect:** Implementation logic of `RemoveTagCommand` +
@@ -567,16 +620,19 @@ image::removeTag_sequenceDiagram.png[width="800"]
 
 The changing of colour theme feature is added for users to choose their preferred colour theme. The colour theme options are implemented by the `UI`
 on the `MainWindow` MenuBar as MenuItems. +
-When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem
-will trigger the onAction method "handleWhiteTheme". The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets
+
+* When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem
+will trigger the onAction method "handleWhiteTheme". +
+* The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets
 that belongs to other colours. +
+
 The diagrams shows the UI of the additional colour themes:
 
 image::whiteThemeUI.png[width="800"]
-_Figure 3.6.1 : White Theme_
+_Figure 4.9.1 : White Theme_
 
 image::greenThemeUI.png[width="800"]
-_Figure 3.6.2 : Green Theme_
+_Figure 4.9.2 : Green Theme_
 
 == Documentation
 
@@ -606,7 +662,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -932,6 +988,8 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
+=== Must Have
+
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
@@ -949,8 +1007,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete people by their name |clear space for new contacts
 
-|`* * *` |user |find people by address and see them on a map |find people who live near me
-
 |`* * *` |user |be able to sort my contact based on most recent contact |immediately get the contact.
 
 |`* * *` |user |retrieve my past command history |review what I entered previously
@@ -960,18 +1016,18 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |clear the whole list of persons |pass this app to a new user
 
 |`* * *` |user |edit the details of a person |update any changes to the person.
+|=======================================================================
 
+=== Nice to have
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Priority |As a ... |I want to ... |So that I can...
 |`* *` |user |filter the list through details such as names |search for those contacts that I only need.
 
 |`* *` |user |easily send email or messages to the contact through the application |immediately send  messages.
 
-|`* *` |user |have contacts of relevant supplier |contact whichever services i want at the point of time.
-
-|`* *` |user |plan out the best path for each contact based on what i select |take advantage of the most efficient routes.
-
 |`* *` |user |have a map view of all my contacts based on their address | plan where to visit them.
-
-|`* *` |user |have an image associated to the contact details |know how my friends look like.
 
 |`* *` |user |import my phone contacts to the addressbook easily |save time in adding them again.
 
@@ -979,21 +1035,26 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |have my information secured |be assured that my contact information are safe on cloud storage
 
-|`* *` |user |upload images to different contacts |so that i can easily identify them
-
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
-{More to be added}
+=== Unlikely to have
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Priority |As a ... |I want to ... |So that I can...
+|`*` |user |upload images to different contacts |so that i can easily identify them
+
+|`*` |user |plan out the best path for each contact based on what i select |take advantage of the most efficient routes.
+|=======================================================================
 
 [appendix]
 == Use Cases
 
 (For all link:#use-case[use cases] below, the *System* is the `ConnectUs` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
+
 === Use case: Delete person
 
 *MSS*
@@ -1032,11 +1093,13 @@ Use case ends.
 
 [none]
 * 1a. The given command is invalid.
+[none]
 ** 1a1. ConnectUs shows an error message.
 +
 Use case resumes at step 1.
 
 * 1b. The given person is a duplicate of an existing person.
+[none]
 ** 1b1. ConnectUs shows an error message.
 +
 Use case resumes at step 1.
@@ -1068,12 +1131,14 @@ Use case resumes at step 2.
 
 * 3b. The given changes are a duplicate of an existing person.
 +
+[none]
 ** 3b1. ConnectUs shows an error message.
 +
 Use case resumes at step 2.
 
 * 3c. The given command is invalid.
 +
+[none]
 ** 3c1. ConnectUs shows an error message.
 +
 Use case resumes at step 2.
@@ -1092,6 +1157,7 @@ Use case ends.
 [none]
 * 1a. There is no command to redo.
 +
+[none]
 ** 1a1. ConnectUs shows an error message.
 +
 Use case ends.
@@ -1110,6 +1176,7 @@ Use case ends.
 [none]
 * 1a. There is no command to undo.
 +
+[none]
 ** 1a1. ConnectUs shows an error message.
 +
 Use case ends.
@@ -1157,23 +1224,16 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-
-{More to be added}
-
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  Internet connection is required to maximise the functionality of the AddressBook Application. Such as accessing features in BrowserPanel.
-.  Should have at least 100MB of space in HardDiskDrive in order for application to install.
-.  Should have IntelliJ IDE installed in computer.
-.  Should have at least 2GB of ram in computer in order for the application to run smoothly.
-.  Requirement of at least 3rd Generation i3 processor to operate the application.
-.  This is a test
-
-{More to be added}
+*  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+*  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+*  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Internet connection is required to maximise the functionality of the AddressBook Application. Such as accessing features in BrowserPanel.
+*  Should have at least 100MB of space in HardDiskDrive in order for application to install.
+*  Should have at least 2GB of ram in computer in order for the application to run smoothly.
+*  Requirement of at least 3rd Generation i3 processor to operate the application.
 
 [appendix]
 == Glossary
@@ -1222,18 +1282,3 @@ a list of actions or event steps typically defining the interactions between a r
 ....
 
 [appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
