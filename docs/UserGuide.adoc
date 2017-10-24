@@ -115,7 +115,7 @@ Options: +
 
 * Default (no option specified) +
 Finds persons whose name contain any of the given keywords. +
-* `tag` [Coming in v2.0] +
+* `tag` [Since v1.3] +
 Finds persons who are associated with any of the given tags. +
 
 ****
