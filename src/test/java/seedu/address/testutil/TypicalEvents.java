@@ -37,7 +37,7 @@ public class TypicalEvents {
             .withDescription("Sleeping").withTime("25/01/2017").build();
 
     /**
-     * Returns an {@code AddressBook} with all the typical events.
+     * Returns an {@code EventList} with all the typical events.
      */
     public static EventList getTypicalEventList() {
         EventList el = new EventList();
@@ -51,8 +51,26 @@ public class TypicalEvents {
         return el;
     }
 
+    /**
+     * Returns an {@code EventList} with all the typical events.
+     */
+    public static EventList getUnsortedEventList() {
+        EventList el = new EventList();
+        for (ReadOnlyEvent event : getUnsortedEvents()) {
+            try {
+                el.addEvent(event);
+            } catch (DuplicateEventException e) {
+                assert false : "not possible";
+            }
+        }
+        return el;
+    }
+
     public static List<ReadOnlyEvent> getTypicalEvents() {
         return new ArrayList<>(Arrays.asList(FIRST, SECOND, THIRD, FORTH));
     }
 
+    public static List<ReadOnlyEvent> getUnsortedEvents() {
+        return new ArrayList<>(Arrays.asList(FORTH, SECOND, FIRST, THIRD));
+    }
 }

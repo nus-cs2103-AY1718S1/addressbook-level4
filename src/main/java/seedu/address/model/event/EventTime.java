@@ -12,7 +12,7 @@ public class EventTime {
 
 
     public static final String MESSAGE_EVENT_TIME_CONSTRAINTS =
-            "Event description should not be blank";
+            "Event time should be in dd/mm/yyyy form, and satisfies reality.";
 
     /*
      * The first character of the event name must not be a whitespace,
@@ -22,26 +22,83 @@ public class EventTime {
             + "(0[1-9]|1[012]|[1-9])[///./-](19|20)\\d\\d$";
 
     public final String eventTime;
+    private String year;
+    private String month;
+    private String day;
 
     /**
      * Validates given name.
      *
      * @throws IllegalValueException if given name string is invalid.
      */
-    public EventTime(String desc) throws IllegalValueException {
-        requireNonNull(desc);
-        String trimmedName = desc.trim();
-        if (!isValidName(trimmedName)) {
+    public EventTime(String time) throws IllegalValueException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        if (!isValidFormat(trimmedTime)) {
             throw new IllegalValueException(MESSAGE_EVENT_TIME_CONSTRAINTS);
         }
-        this.eventTime = trimmedName;
+        this.eventTime = trimmedTime;
+        splitTime(trimmedTime);
+
+        if (!isValidTime()) {
+            throw new IllegalValueException(MESSAGE_EVENT_TIME_CONSTRAINTS);
+        }
     }
 
     /**
-     * Returns true if a given string is a valid event description.
+     * Splits the time into year, day, month
      */
-    public static boolean isValidName(String test) {
+    private void splitTime(String trimmedTime) {
+        String[] splitedTime = trimmedTime.split("/");
+        day = splitedTime[0];
+        month = splitedTime[1];
+        year = splitedTime[2];
+    }
+
+    public String orderForSort() {
+        return year + month + day;
+    }
+
+    /**
+     * Returns true if a given time is valid formatted.
+     */
+    public boolean isValidFormat(String test) {
         return test.matches(EVNET_TIME_VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if a given string is a valid time.
+     */
+    public boolean isValidTime() {
+        return isValidMonth(Integer.parseInt(month))
+                && isValidDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+    }
+
+    /**
+     * Returns true if a given day is valid
+     */
+    private boolean isValidDay(int year, int month, int day) {
+        int[] daysInMonth = new int[] {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if (month == 2 && isLeapYear(year)) {
+            return day >= 1 && day <= daysInMonth[month - 1] + 1;
+        }
+
+        return day >= 1 && day <= daysInMonth[month - 1];
+    }
+
+    /**
+     * Returns true if a given month is valid
+     */
+    private boolean isValidMonth(int month) {
+        return month <= 12 && month >= 1;
+    }
+
+    /**
+     * Returns true if a given year is a leap year
+     */
+    private boolean isLeapYear(int year) {
+        return (year % 400 == 0)
+                || (year % 100 != 0 && year % 4 == 0);
     }
 
     @Override

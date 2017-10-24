@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
+import static seedu.address.testutil.TypicalEvents.getUnsortedEventList;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.getUnsortedAddressBook;
 
@@ -26,7 +27,7 @@ public class SortCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getUnsortedAddressBook(), getTypicalEventList(), new UserPrefs());
+        model = new ModelManager(getUnsortedAddressBook(), getUnsortedEventList(), new UserPrefs());
         expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
 
         sortCommand = new SortCommand();

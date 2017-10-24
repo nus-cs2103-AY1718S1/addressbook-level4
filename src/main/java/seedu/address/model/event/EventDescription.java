@@ -29,17 +29,17 @@ public class EventDescription {
      */
     public EventDescription(String desc) throws IllegalValueException {
         requireNonNull(desc);
-        String trimmedName = desc.trim();
-        if (!isValidName(trimmedName)) {
+        String trimmedDesc = desc.trim();
+        if (!isValidDesc(trimmedDesc)) {
             throw new IllegalValueException(MESSAGE_EVENT_DESCRIPTION_CONSTRAINTS);
         }
-        this.eventDesc = trimmedName;
+        this.eventDesc = trimmedDesc;
     }
 
     /**
      * Returns true if a given string is a valid event description.
      */
-    public static boolean isValidName(String test) {
+    public static boolean isValidDesc(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
