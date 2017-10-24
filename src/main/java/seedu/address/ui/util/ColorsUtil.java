@@ -13,7 +13,7 @@ public class ColorsUtil {
 
     private ColorsUtil() {} // prevents instantiation
 
-    public static String[] getTagColors() {
+    public static String[] getColors() {
         return new String[] { RED, YELLOW, BLUE, TEAL, GREEN, PURPLE };
     }
 }

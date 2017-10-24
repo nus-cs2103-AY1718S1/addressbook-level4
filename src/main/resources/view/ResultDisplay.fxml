@@ -4,8 +4,8 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="placeHolder" styleClass="result-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-  <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display" wrapText="true">
+<StackPane fx:id="placeHolder" alignment="CENTER_LEFT" styleClass="result-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <TextArea fx:id="resultDisplay" editable="false" maxHeight="300.0" styleClass="result-display" wrapText="true">
     <StackPane.margin>
       <Insets />
     </StackPane.margin>

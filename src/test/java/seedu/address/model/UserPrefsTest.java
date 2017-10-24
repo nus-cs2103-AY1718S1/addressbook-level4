@@ -18,7 +18,7 @@ public class UserPrefsTest {
     @Before
     public void setUp() {
         // Set up default values to values from an empty UserPrefs object
-        guiSettings = new GuiSettings((double) 500, (double) 500, 0, 0);
+        guiSettings = new GuiSettings((double) 800, (double) 600, 0, 0);
         String rolodexFilePath = "data/default.rldx";
         rolodexName = "MyRolodex";
         userPrefs = new UserPrefs();

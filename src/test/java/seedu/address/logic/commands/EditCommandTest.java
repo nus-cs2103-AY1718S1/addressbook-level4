@@ -39,14 +39,16 @@ public class EditCommandTest {
 
     @Test
     public void executeAllFieldsSpecifiedUnfilteredListSuccess() throws Exception {
+        ReadOnlyPerson toBeEdited = model.getLatestPersonList().get(0);
         Person editedPerson = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson)
+                .build(toBeEdited.getTags());
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new Rolodex(model.getRolodex()), new UserPrefs());
-        expectedModel.updatePerson(model.getLatestPersonList().get(0), editedPerson);
+        expectedModel.updatePerson(toBeEdited, editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -54,20 +56,20 @@ public class EditCommandTest {
     @Test
     public void executeSomeFieldsSpecifiedUnfilteredListSuccess() throws Exception {
         Index indexLastPerson = Index.fromOneBased(model.getLatestPersonList().size());
-        ReadOnlyPerson lastPerson = model.getLatestPersonList().get(indexLastPerson.getZeroBased());
+        ReadOnlyPerson toBeEdited = model.getLatestPersonList().get(indexLastPerson.getZeroBased());
 
-        PersonBuilder personInList = new PersonBuilder(lastPerson);
+        PersonBuilder personInList = new PersonBuilder(toBeEdited);
         Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build(toBeEdited.getTags());
         EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new Rolodex(model.getRolodex()), new UserPrefs());
-        expectedModel.updatePerson(lastPerson, editedPerson);
+        expectedModel.updatePerson(toBeEdited, editedPerson);
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
