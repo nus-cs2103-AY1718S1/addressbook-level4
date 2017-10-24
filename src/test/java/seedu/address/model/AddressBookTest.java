@@ -90,6 +90,11 @@ public class AddressBookTest {
         public ObservableList<Tag> getTagList() {
             return tags;
         }
+
+        @Override
+        public int getMaxInternalIndex() {
+            return 1;
+        }
     }
 
 }
