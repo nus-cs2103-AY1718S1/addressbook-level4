@@ -7,10 +7,8 @@ import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_EMAIL;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_NAME;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_PHONE;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import java.util.function.Predicate;
@@ -164,39 +162,17 @@ public class ModelManager extends ComponentManager implements Model {
         Boolean tagExist = false;
 
         if (!index.isEmpty()) {
-            if ((index.size() > 1) && (tag.size() > 1)) {
-                throw new DuplicatePersonException();
-            } else {
-                List<Index> indexList = new ArrayList<>();
-                indexList.addAll(index);
-                if (index.size() == 1) {
-                    int targetIndex = indexList.get(index.size() - 1).getZeroBased();
-                    Person toDelete = new Person(getFilteredPersonList().get(targetIndex));
-                    Person toUpdate = new Person(toDelete);
-                    Set<Tag> oldTags = toDelete.getTags();
-
-                    Set<Tag> newTags = deleteTag(tag, toDelete);
-                    if (!(newTags.size() == oldTags.size())) {
-                        toUpdate.setTags(newTags);
-                        tagExist = true;
-                        addressBook.updatePerson(toDelete, toUpdate);
-                    }
-                } else {
-                    Iterator<Index> it = indexList.iterator();
-                    while (it.hasNext()) {
-                        Index current = it.next();
-                        int targetIndex = current.getZeroBased();
-                        Person toDelete = new Person(getFilteredPersonList().get(targetIndex));
-                        Person toUpdate = new Person(toDelete);
-                        Set<Tag> oldTags = toDelete.getTags();
-
-                        Set<Tag> newTags = deleteTag(tag, toDelete);
-                        if (!(newTags.size() == oldTags.size())) {
-                            toUpdate.setTags(newTags);
-                            tagExist = true;
-                            addressBook.updatePerson(toDelete, toUpdate);
-                        }
-                    }
+            Iterator<Index> indexIt = index.iterator();
+            while (indexIt.hasNext()) {
+                int indexToRemove = indexIt.next().getZeroBased();
+                Person toDelete = new Person(getFilteredPersonList().get(indexToRemove));
+                Person toUpdate = new Person(toDelete);
+                Set<Tag> oldTags = toDelete.getTags();
+                Set<Tag> newTags = deleteTag(tag, oldTags);
+                if (!(newTags.size() == oldTags.size())) {
+                    toUpdate.setTags(newTags);
+                    tagExist = true;
+                    addressBook.updatePerson(toDelete, toUpdate);
                 }
             }
         } else {
@@ -204,8 +180,7 @@ public class ModelManager extends ComponentManager implements Model {
                 Person toDelete = new Person(getFilteredPersonList().get(i));
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
-
-                Set<Tag> newTags = deleteTag(tag, toDelete);
+                Set<Tag> newTags = deleteTag(tag, oldTags);
                 if (!(newTags.size() == oldTags.size())) {
                     toUpdate.setTags(newTags);
                     tagExist = true;
@@ -219,14 +194,39 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    @Override
+    public void addTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException,
+            DuplicatePersonException {
+
+        Iterator<Index> indexIt = index.iterator();
+        boolean added = false;
+
+        while (indexIt.hasNext()) {
+            int indexToAdd = indexIt.next().getZeroBased();
+            Person toCheck = new Person(getFilteredPersonList().get(indexToAdd));
+            Person toUpdate = new Person(toCheck);
+            Set<Tag> current = toCheck.getTags();
+            Set<Tag> updated = newTag(tag, current);
+            if (!(current.size() == updated.size())) {
+                toUpdate.setTags(updated);
+                added = true;
+                addressBook.updatePerson(toCheck, toUpdate);
+            }
+        }
+
+        if (!added) {
+            throw new PersonNotFoundException();
+        }
+    }
+
+
     /**
      *
-     * @param tag
-     * @param toDelete
+     * @param tag set of tags input by user
+     * @param oldTags set of current tags
      * @return Set of Tags of new Person to be updated
      */
-    private Set<Tag> deleteTag(Set<Tag> tag, Person toDelete) {
-        Set<Tag> oldTags = toDelete.getTags();
+    private Set<Tag> deleteTag(Set<Tag> tag, Set<Tag> oldTags) {
         Set<Tag> newTags = new HashSet<>();
 
         Iterator<Tag> it = oldTags.iterator();
@@ -247,4 +247,34 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return newTags;
     }
+
+    /**
+     *
+     * @param tag set of tags input by user
+     * @param current set of current tags
+     * @return Set of tags to be updated
+     */
+    private Set<Tag> newTag(Set<Tag> tag, Set<Tag> current) {
+        Set<Tag> updated = new HashSet<>();
+        Iterator<Tag> it = current.iterator();
+        boolean exist = false;
+        for (Tag t : tag) {
+            Tag toAdd = t;
+            while (it.hasNext()) {
+                Tag toCheck = it.next();
+                if (current.equals(t)) {
+                    exist = true;
+                }
+                updated.add(toCheck);
+            }
+            if (!exist) {
+                updated.add(toAdd);
+                exist = false;
+            }
+        }
+        return updated;
+    }
+
+
+
 }

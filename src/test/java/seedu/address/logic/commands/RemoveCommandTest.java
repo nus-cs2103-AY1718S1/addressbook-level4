@@ -25,7 +25,7 @@ import seedu.address.model.tag.Tag;
 
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code RemoveCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code RemoveTagCommand}.
  */
 public class RemoveCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
@@ -37,9 +37,9 @@ public class RemoveCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
 
-        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
 
-        String expectedMessage = String.format(RemoveCommand.MESSAGE_REMOVE_SUCCESS
+        String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_SUCCESS
                         + " from address book.", tagSet);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -55,10 +55,10 @@ public class RemoveCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
 
-        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
 
         String expectedMessage =  String.format(
-                RemoveCommand.MESSAGE_TAG_NOT_FOUND + " the address book.", tagSet);
+                RemoveTagCommand.MESSAGE_TAG_NOT_FOUND + " the address book.", tagSet);
 
         assertCommandFailure(removeCommand, model, expectedMessage);
     }
@@ -71,9 +71,9 @@ public class RemoveCommandTest {
         tagSet.add(tagToRemove);
         indexSet.add(INDEX_FIRST_PERSON);
 
-        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
 
-        String expectedMessage = String.format(RemoveCommand.MESSAGE_REMOVE_SUCCESS + " from index "
+        String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_SUCCESS + " from index "
                 + INDEX_FIRST_PERSON.getOneBased() + ".", tagSet);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
@@ -91,7 +91,7 @@ public class RemoveCommandTest {
         tagSet.add(tagToRemove);
         indexSet.add(outOfBoundIndex);
 
-        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
         assertCommandFailure(removeCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
@@ -103,9 +103,9 @@ public class RemoveCommandTest {
         tagSet.add(tagToRemove);
         indexSet.add(INDEX_FIRST_PERSON);
 
-        RemoveCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
         assertCommandFailure(removeCommand, model, String.format(
-                RemoveCommand.MESSAGE_TAG_NOT_FOUND + " index: " + INDEX_FIRST_PERSON.getOneBased() + ".", tagSet));
+                RemoveTagCommand.MESSAGE_TAG_NOT_FOUND + " index: " + INDEX_FIRST_PERSON.getOneBased() + ".", tagSet));
     }
 
     @Test
@@ -121,11 +121,11 @@ public class RemoveCommandTest {
         tagSet2.add(secondTag);
         indexSet2.add(INDEX_SECOND_PERSON);
         Set<Index> emptySet = new HashSet<>();
-        RemoveCommand removeFirstCommand = new RemoveCommand(tagSet1, emptySet);
-        RemoveCommand removeSecondCommand = new RemoveCommand(tagSet2, emptySet);
-        RemoveCommand removeThirdCommand = new RemoveCommand(tagSet1, indexSet1);
-        RemoveCommand removeFourthCommand = new RemoveCommand(tagSet1, indexSet2);
-        RemoveCommand removeFifthCommand = new RemoveCommand(tagSet2, indexSet1);
+        RemoveTagCommand removeFirstCommand = new RemoveTagCommand(tagSet1, emptySet);
+        RemoveTagCommand removeSecondCommand = new RemoveTagCommand(tagSet2, emptySet);
+        RemoveTagCommand removeThirdCommand = new RemoveTagCommand(tagSet1, indexSet1);
+        RemoveTagCommand removeFourthCommand = new RemoveTagCommand(tagSet1, indexSet2);
+        RemoveTagCommand removeFifthCommand = new RemoveTagCommand(tagSet2, indexSet1);
 
         // same object -> returns true (no Index)
         assertTrue(removeFirstCommand.equals(removeFirstCommand));
@@ -154,10 +154,10 @@ public class RemoveCommandTest {
 
 
     /**
-     * Returns a {@code RemoveCommand} with the parameter {@code tag}.
+     * Returns a {@code RemoveTagCommand}.
      */
-    private RemoveCommand prepareCommand(Set<Tag> tag, Set<Index> index) {
-        RemoveCommand removeCommand = new RemoveCommand(tag, index);
+    private RemoveTagCommand prepareCommand(Set<Tag> tag, Set<Index> index) {
+        RemoveTagCommand removeCommand = new RemoveTagCommand(tag, index);
         removeCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return removeCommand;
     }
