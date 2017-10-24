@@ -13,14 +13,11 @@ public class Age {
         if (birthday.length() == 0) {
             this.value = "";
             return;
-        }
-        else {
+
+        } else {
             String result = birthday.substring(6);
             int birthYear = Integer.parseInt(result);
-
-
             int year = Calendar.getInstance().get(Calendar.YEAR);
-
             String howOld = Integer.toString(year - birthYear);
 
             if (year - birthYear == 1) {
