@@ -23,42 +23,42 @@ import seedu.address.logic.commands.UndoCommand;
  */
 public class KeyListenerUtil {
 
-    public static final KeyCombination FOCUS_PERSON_LIST_KEY_COMBINATION = KeyCombination.valueOf("Esc");
-    public static final KeyCombination FOCUS_PERSON_LIST_ALT_KEY_COMBINATION = KeyCombination.valueOf("Ctrl+Left");
-    public static final KeyCombination FOCUS_COMMAND_BOX_KEY_COMBINATION = KeyCombination.valueOf("Enter");
-    public static final KeyCombination FOCUS_RESULT_DISPLAY_KEY_COMBINATION = KeyCombination.valueOf("Ctrl+Right");
-    public static final KeyCombination DELETE_SELECTION_KEY_COMBINATION = KeyCombination.valueOf("Ctrl+D");
-    public static final KeyCombination CLEAR_KEY_COMBINATION = KeyCombination.valueOf(ClearCommand.COMMAND_HOTKEY);
-    public static final KeyCombination HISTORY_KEY_COMBINATION = KeyCombination.valueOf(HistoryCommand.COMMAND_HOTKEY);
-    public static final KeyCombination UNDO_KEY_COMBINATION = KeyCombination.valueOf(UndoCommand.COMMAND_HOTKEY);
-    public static final KeyCombination REDO_KEY_COMBINATION = KeyCombination.valueOf(RedoCommand.COMMAND_HOTKEY);
-    public static final KeyCombination LIST_KEY_COMBINATION = KeyCombination.valueOf(ListCommand.COMMAND_HOTKEY);
-    public static final KeyCombination OPEN_FILE_KEY_COMBINATION = KeyCombination.valueOf(OpenCommand.COMMAND_HOTKEY);
-    public static final KeyCombination NEW_FILE_KEY_COMBINATION = KeyCombination.valueOf(NewCommand.COMMAND_HOTKEY);
-    public static final KeyCombination ADD_KEY_COMBINATION = KeyCombination.valueOf(AddCommand.COMMAND_HOTKEY);
-    public static final KeyCombination EDIT_KEY_COMBINATION = KeyCombination.valueOf(EditCommand.COMMAND_HOTKEY);
-    public static final KeyCombination FIND_KEY_COMBINATION = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);
-    public static final KeyCombination SELECT_KEY_COMBINATION = KeyCombination.valueOf(SelectCommand.COMMAND_HOTKEY);
-    public static final KeyCombination DELETE_KEY_COMBINATION = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_FOCUS_PERSON_LIST = KeyCombination.valueOf("Esc");
+    public static final KeyCombination KEY_COMBINATION_FOCUS_PERSON_LIST_ALT = KeyCombination.valueOf("Ctrl+Left");
+    public static final KeyCombination KEY_COMBINATION_FOCUS_COMMAND_BOX = KeyCombination.valueOf("Enter");
+    public static final KeyCombination KEY_COMBINATION_FOCUS_RESULT_DISPLAY = KeyCombination.valueOf("Ctrl+Right");
+    public static final KeyCombination KEY_COMBINATION_DELETE_SELECTION = KeyCombination.valueOf("Ctrl+D");
+    public static final KeyCombination KEY_COMBINATION_CLEAR = KeyCombination.valueOf(ClearCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_HISTORY = KeyCombination.valueOf(HistoryCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_UNDO = KeyCombination.valueOf(UndoCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_REDO = KeyCombination.valueOf(RedoCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_LIST = KeyCombination.valueOf(ListCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_OPEN_FILE = KeyCombination.valueOf(OpenCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_NEW_FILE = KeyCombination.valueOf(NewCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_ADD = KeyCombination.valueOf(AddCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_EDIT = KeyCombination.valueOf(EditCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_FIND = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_SELECT = KeyCombination.valueOf(SelectCommand.COMMAND_HOTKEY);
+    public static final KeyCombination KEY_COMBINATION_DELETE = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY);
 
     public static final Set<KeyCombination> POSSIBLE_KEY_COMBINATIONS =
             new HashSet<>(Arrays.asList(
-                    FOCUS_PERSON_LIST_KEY_COMBINATION,
-                    FOCUS_PERSON_LIST_ALT_KEY_COMBINATION,
-                    FOCUS_COMMAND_BOX_KEY_COMBINATION,
-                    FOCUS_RESULT_DISPLAY_KEY_COMBINATION,
-                    DELETE_SELECTION_KEY_COMBINATION,
-                    CLEAR_KEY_COMBINATION,
-                    HISTORY_KEY_COMBINATION,
-                    UNDO_KEY_COMBINATION,
-                    REDO_KEY_COMBINATION,
-                    LIST_KEY_COMBINATION,
-                    OPEN_FILE_KEY_COMBINATION,
-                    NEW_FILE_KEY_COMBINATION,
-                    ADD_KEY_COMBINATION,
-                    EDIT_KEY_COMBINATION,
-                    FIND_KEY_COMBINATION,
-                    SELECT_KEY_COMBINATION,
-                    DELETE_KEY_COMBINATION
+                    KEY_COMBINATION_FOCUS_PERSON_LIST,
+                    KEY_COMBINATION_FOCUS_PERSON_LIST_ALT,
+                    KEY_COMBINATION_FOCUS_COMMAND_BOX,
+                    KEY_COMBINATION_FOCUS_RESULT_DISPLAY,
+                    KEY_COMBINATION_DELETE_SELECTION,
+                    KEY_COMBINATION_CLEAR,
+                    KEY_COMBINATION_HISTORY,
+                    KEY_COMBINATION_UNDO,
+                    KEY_COMBINATION_REDO,
+                    KEY_COMBINATION_LIST,
+                    KEY_COMBINATION_OPEN_FILE,
+                    KEY_COMBINATION_NEW_FILE,
+                    KEY_COMBINATION_ADD,
+                    KEY_COMBINATION_EDIT,
+                    KEY_COMBINATION_FIND,
+                    KEY_COMBINATION_SELECT,
+                    KEY_COMBINATION_DELETE
             ));
 }
