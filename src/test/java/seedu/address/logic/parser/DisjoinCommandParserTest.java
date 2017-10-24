@@ -10,12 +10,12 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.DisjoinCommand;
+import seedu.address.logic.commands.DisJoinCommand;
 
 public class DisjoinCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, DisjoinCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, DisJoinCommand.MESSAGE_USAGE);
 
     private static final String FIRST_PERSON = " " + PREFIX_PERSON + INDEX_FIRST_PERSON.getOneBased();
     private static final String FIRST_EVENT = " " + PREFIX_EVENT + INDEX_FIRST_EVENT.getOneBased();
@@ -65,7 +65,7 @@ public class DisjoinCommandParserTest {
 
     @Test
     public void testSuccess() {
-        DisjoinCommand expectedCommand = new DisjoinCommand(INDEX_FIRST_PERSON, INDEX_FIRST_EVENT);
+        DisJoinCommand expectedCommand = new DisJoinCommand(INDEX_FIRST_PERSON, INDEX_FIRST_EVENT);
         assertParseSuccess(parser, FIRST_PERSON + " " + FIRST_EVENT, expectedCommand);
     }
 
