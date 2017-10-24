@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.PossibleLinks;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -47,9 +48,9 @@ public class BrowserPanel extends UiPart<Region> {
      * @param person
      */
     private void loadPersonPage(ReadOnlyPerson person) {
-        if (person.getLink().value.contains("https://www.facebook.com/")) {
+        if (person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_2)) {
             loadPage(person.getLink().value);
-        } else if (person.getLink().value.contains("facebook.com/")) {
+        } else if (person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_1)) {
             loadPage("https://www." + person.getLink().value);
         } else {
             loadPage(FACEBOOK_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
