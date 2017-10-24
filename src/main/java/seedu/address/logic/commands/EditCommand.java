@@ -79,6 +79,9 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            LoggingCommand loggingCommand = new LoggingCommand();
+            loggingCommand.keepLog(personToEdit.toString(), "Before Edit");
+            loggingCommand.keepLog(editedPerson.toString(), "After Edit");
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {

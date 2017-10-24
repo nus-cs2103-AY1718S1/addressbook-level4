@@ -39,6 +39,8 @@ public class RemoveTagCommand extends UndoableCommand {
         try {
             for (Tag tag : tagsToRemove) {
                 model.removeTag(tag);
+                LoggingCommand loggingCommand = new LoggingCommand();
+                loggingCommand.keepLog(tag.toString(), "Remove Tag");
             }
         } catch (DuplicatePersonException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -49,7 +51,6 @@ public class RemoveTagCommand extends UndoableCommand {
         if (!isTagsExist(tagsToRemove)) {
             return new CommandResult(String.format(MESSAGE_TAG_NOT_REMOVED));
         }
-
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS));
     }
 

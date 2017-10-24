@@ -36,6 +36,8 @@ public class ImportCommand extends UndoableCommand {
         } catch (DuplicatePersonException de) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
         }
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Import Action");
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

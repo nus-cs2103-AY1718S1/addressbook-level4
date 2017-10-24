@@ -26,6 +26,8 @@ public class RedoCommand extends Command {
         }
 
         undoRedoStack.popRedo().redo();
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Redo");
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
