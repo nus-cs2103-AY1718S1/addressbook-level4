@@ -27,7 +27,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
@@ -125,7 +125,7 @@ public class AddCommandParserTest {
         // zero tags and no status
         Parcel expectedParcel = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
                 .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERYDATE_AMY).withStatus("PENDING")
+                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus("PENDING")
                 .withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY,

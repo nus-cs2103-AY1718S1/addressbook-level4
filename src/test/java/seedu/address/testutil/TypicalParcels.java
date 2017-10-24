@@ -2,7 +2,7 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
@@ -69,7 +69,7 @@ public class TypicalParcels {
     // Manually added - Parcel's details found in {@code CommandTestUtil}
     public static final ReadOnlyParcel AMY = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
             .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-            .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERYDATE_AMY).withStatus(VALID_STATUS_AMY)
+            .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
             .withTags(VALID_TAG_FRIEND).build();
     public static final ReadOnlyParcel BOB = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
             .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)

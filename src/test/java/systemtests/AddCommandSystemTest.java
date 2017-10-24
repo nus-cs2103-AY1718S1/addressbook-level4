@@ -27,7 +27,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
@@ -120,7 +120,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERYDATE_AMY).withStatus(VALID_STATUS_AMY)
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
@@ -133,7 +133,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERYDATE_AMY).withStatus(VALID_STATUS_AMY)
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
@@ -145,7 +145,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERYDATE_AMY).withStatus(VALID_STATUS_AMY)
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_BOB
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
@@ -157,7 +157,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERYDATE_AMY).withStatus(VALID_STATUS_AMY)
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_BOB
@@ -170,7 +170,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_BOB)
-                .withDeliveryDate(VALID_DELIVERYDATE_AMY).withStatus(VALID_STATUS_AMY)
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
@@ -196,7 +196,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_BOB)
-                .withDeliveryDate(VALID_DELIVERYDATE_AMY).withStatus(VALID_STATUS_BOB)
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_BOB)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_AMY + STATUS_DESC_BOB
@@ -271,7 +271,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: missing status -> accepted */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERYDATE_AMY).withTags(VALID_TAG_FRIEND)
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withTags(VALID_TAG_FRIEND)
                 .withStatus("PENDING").build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + TAG_DESC_FRIEND;
