@@ -42,8 +42,6 @@ import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
-import java.util.Set;
-
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
