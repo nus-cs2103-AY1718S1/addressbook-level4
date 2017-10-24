@@ -35,9 +35,9 @@ public class EmailCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    private static String MESSAGE_SUCCESS = "Email Sent!";
+    public static final String MESSAGE_SUCCESS = "Email Sent!";
 
-    private static String MESSAGE_FAILURE = "Email was not sent!";
+    public static final String MESSAGE_FAILURE = "Email was not sent!";
 
     private final Index targetIndex;
 
@@ -54,6 +54,7 @@ public class EmailCommand extends Command {
         }
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+
         String name = person.getName().fullName;
         String phone = person.getPhone().toString();
         String address = person.getAddress().toString();
@@ -147,5 +148,12 @@ public class EmailCommand extends Command {
             msg.printStackTrace();
             return new CommandResult(MESSAGE_FAILURE);
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailCommand // instanceof handles nulls
+                && this.targetIndex.equals(((EmailCommand) other).targetIndex)); // state check
     }
 }
