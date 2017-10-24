@@ -1,10 +1,13 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.org.apache.regexp.internal.RE;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 
@@ -18,27 +21,43 @@ public class DeleteGroupCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX (must be a positive integer) NAME (must be existing in group list)\n"
+            + "Example: " + COMMAND_WORD + " 1" + " or " + COMMAND_WORD + " n/Bamboo";
 
-    public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Deleted Group: %1$s";
 
     private final Index targetIndex;
+    private final GroupName targetGroupName;
 
     public DeleteGroupCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+        this.targetGroupName = null;
     }
-
+    public DeleteGroupCommand(GroupName targetGroupName) {
+        this.targetIndex = null;
+        this.targetGroupName = targetGroupName;
+    }
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyGroup> lastShownList = model.getFilteredGroupList();
+        ReadOnlyGroup groupToDelete;
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+        if(this.targetIndex == null) {
+            List<GroupName> lastShownGroupNames = new ArrayList<GroupName>();
+            lastShownList.forEach(ReadOnlyGroup -> lastShownGroupNames.add(ReadOnlyGroup.getName()));
+            if(!lastShownGroupNames.contains(this.targetGroupName)) {
+                throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_NAME);
+            }
+            groupToDelete = lastShownList.get(lastShownGroupNames.indexOf(this.targetGroupName));
+        } else {
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+            }
+            groupToDelete = lastShownList.get(targetIndex.getZeroBased());
         }
 
-        ReadOnlyGroup groupToDelete = lastShownList.get(targetIndex.getZeroBased());
+
 
         try {
             model.deleteGroup(groupToDelete);
@@ -53,6 +72,7 @@ public class DeleteGroupCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteGroupCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteGroupCommand) other).targetIndex)); // state check
+                && this.targetIndex.equals(((DeleteGroupCommand) other).targetIndex))
+                && this.targetGroupName.equals(((DeleteGroupCommand)other).targetGroupName); // state check
     }
 }
