@@ -148,4 +148,8 @@ public class ParserUtil {
         List<Date> dates = dateGroup.get(dateGroup.size()-1).getDates();
         return dates.get(dates.size()-1);
     }
+    
+    public static int parseRecurInterval(String date) {
+        if (date.contains(PREFIX))
+    }
 }

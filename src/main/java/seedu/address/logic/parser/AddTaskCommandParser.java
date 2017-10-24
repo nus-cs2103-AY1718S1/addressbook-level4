@@ -49,9 +49,9 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         try {
             Description description = ParserUtil.parseDescription(argMultimap.getPreamble());
             StartDate startDate = ParserUtil.parseStartDate(argMultimap.getValue(PREFIX_STARTDATE))
-                    .orElse(new StartDate(""));
+                    .orElse(new StartDate("", 0));
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_TO, PREFIX_DEADLINE_BY,
-                    PREFIX_DEADLINE_ON)).orElse(new Deadline(""));
+                    PREFIX_DEADLINE_ON)).orElse(new Deadline("", 0));
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             if (!TaskDates.isStartDateBeforeDeadline(startDate, deadline)) {

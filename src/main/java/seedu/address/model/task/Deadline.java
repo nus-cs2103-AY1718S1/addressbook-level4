@@ -6,21 +6,23 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents the deadline of a task in the application.
- * Guarantees: immutable, is valid as declared in {@link #isDateValid(String)}
+ * Guarantees: immutable, is valid as declared in 
  */
 public class Deadline extends TaskDates {
 
     public final String date;
+    public final long recurInterval;
 
     /**
      * Validates given deadline date.
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public Deadline(String date) throws IllegalValueException {
+    public Deadline(String date, long recurInterval) throws IllegalValueException {
         requireNonNull(date);
-        String trimmedDate = date.trim();
-        this.date = trimmedDate;
+        this.date = date.trim();
+        this.recurInterval = recurInterval;
+        System.out.println(recurInterval + " " + date);
     }
 
     public boolean isEmpty() {

@@ -19,14 +19,6 @@ public abstract class TaskDates {
     public static final String DATE_FORMAT_PATTERN = "EEE, MMM d, ''yy";
 
     public static final String MESSAGE_DATE_CONSTRAINTS = "Date is invalid";
-
-    /**
-     * Validates date.
-     */
-    public static boolean isDateValid(String naturalLanguageInputDate) {
-        List<DateGroup> dates = new PrettyTimeParser().parseSyntax(naturalLanguageInputDate);
-        return !dates.isEmpty();
-    }
     
     /**
      * Formats the last date of a given Date into a String.
