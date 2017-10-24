@@ -5,6 +5,10 @@ import seedu.address.commons.util.StringUtil;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Represents a command mode in the application.
+ * Guarantees: details are present and not null, field values are validated.
+ */
 public class CommandMode {
 
     public static final String MESSAGE_COMMANDMODE_CONSTRAINTS = "Command commandMode should be either addressbook(ab) "
@@ -25,7 +29,7 @@ public class CommandMode {
     public void setCommandMode(String input) throws IllegalValueException {
         requireNonNull(input);
         String trimmedInput = input.trim().toLowerCase();
-        if(!isValidMode(trimmedInput)) {
+        if (!isValidMode(trimmedInput)) {
             throw new IllegalValueException(MESSAGE_COMMANDMODE_CONSTRAINTS);
         }
         this.commandMode = trimmedInput;

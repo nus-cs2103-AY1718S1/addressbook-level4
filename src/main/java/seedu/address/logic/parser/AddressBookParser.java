@@ -30,7 +30,6 @@ import seedu.address.logic.commands.tasks.ListTasksCommand;
 import seedu.address.logic.commands.tasks.SelectTaskCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Model;
 
 /**
  * Parses user input.
@@ -63,95 +62,96 @@ public class AddressBookParser {
 
         if (StringUtil.containsWordIgnoreCase(ADDRESSBOOK_MODE, commandMode)) {
             switch (commandWord) {
-                case AddCommand.COMMAND_WORD:
-                    return new AddCommandParser().parse(arguments);
 
-                case ChangeModeCommand.COMMAND_WORD:
-                    return new ChangeModeCommandParser().parse(arguments);
+            case AddCommand.COMMAND_WORD:
+                return new AddCommandParser().parse(arguments);
 
-                case ClearCommand.COMMAND_WORD:
-                    return new ClearCommand();
+            case ChangeModeCommand.COMMAND_WORD:
+                return new ChangeModeCommandParser().parse(arguments);
 
-                case EditCommand.COMMAND_WORD:
-                    return new EditCommandParser().parse(arguments);
+            case ClearCommand.COMMAND_WORD:
+                return new ClearCommand();
 
-                case DeleteCommand.COMMAND_WORD:
-                    return new DeleteCommandParser().parse(arguments);
+            case EditCommand.COMMAND_WORD:
+                return new EditCommandParser().parse(arguments);
 
-                case FindCommand.COMMAND_WORD:
-                    return new FindCommandParser().parse(arguments);
+            case DeleteCommand.COMMAND_WORD:
+                return new DeleteCommandParser().parse(arguments);
 
-                case FindTagCommand.COMMAND_WORD:
-                    return new FindTagCommandParser().parse(arguments);
+            case FindCommand.COMMAND_WORD:
+                return new FindCommandParser().parse(arguments);
 
-                case SelectCommand.COMMAND_WORD:
-                    return new SelectCommandParser().parse(arguments);
+            case FindTagCommand.COMMAND_WORD:
+                return new FindTagCommandParser().parse(arguments);
 
-                case ListCommand.COMMAND_WORD:
-                    return new ListCommand();
+            case SelectCommand.COMMAND_WORD:
+                return new SelectCommandParser().parse(arguments);
 
-                case DetagCommand.COMMAND_WORD:
-                    return new DetagCommandParser().parse(arguments);
+            case ListCommand.COMMAND_WORD:
+                return new ListCommand();
 
-                case HistoryCommand.COMMAND_WORD:
-                    return new HistoryCommand();
+            case DetagCommand.COMMAND_WORD:
+                return new DetagCommandParser().parse(arguments);
 
-                case ExitCommand.COMMAND_WORD:
-                    return new ExitCommand();
+            case HistoryCommand.COMMAND_WORD:
+                return new HistoryCommand();
 
-                case HelpCommand.COMMAND_WORD:
+            case ExitCommand.COMMAND_WORD:
+                return new ExitCommand();
+
+            case HelpCommand.COMMAND_WORD:
                     return new HelpCommand();
 
-                case UndoCommand.COMMAND_WORD:
+            case UndoCommand.COMMAND_WORD:
                     return new UndoCommand();
 
-                case RedoCommand.COMMAND_WORD:
-                    return new RedoCommand();
+            case RedoCommand.COMMAND_WORD:
+                 return new RedoCommand();
 
-                default:
-                    throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            default:
+                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
         } else if (StringUtil.containsWordIgnoreCase(TASKMANAGER_MODE, commandMode)) {
             switch (commandWord) {
 
-                case ChangeModeCommand.COMMAND_WORD:
-                    return new ChangeModeCommandParser().parse(arguments);
+            case ChangeModeCommand.COMMAND_WORD:
+                return new ChangeModeCommandParser().parse(arguments);
 
-                case AddTaskCommand.COMMAND_WORD:
-                    return new AddTaskCommandParser().parse(arguments);
+            case AddTaskCommand.COMMAND_WORD:
+                 return new AddTaskCommandParser().parse(arguments);
 
-                case SelectTaskCommand.COMMAND_WORD:
-                    return new SelectTaskCommandParser().parse(arguments);
+            case SelectTaskCommand.COMMAND_WORD:
+                 return new SelectTaskCommandParser().parse(arguments);
 
-                case DeleteTaskCommand.COMMAND_WORD:
-                    return new DeleteTaskCommandParser().parse(arguments);
+            case DeleteTaskCommand.COMMAND_WORD:
+                 return new DeleteTaskCommandParser().parse(arguments);
 
-                case FindTaskCommand.COMMAND_WORD:
-                    return new FindTaskCommandParser().parse(arguments);
+            case FindTaskCommand.COMMAND_WORD:
+                 return new FindTaskCommandParser().parse(arguments);
 
-                case ListTasksCommand.COMMAND_WORD:
-                    return new ListTasksCommand();
+            case ListTasksCommand.COMMAND_WORD:
+                 return new ListTasksCommand();
 
-                case ClearCommand.COMMAND_WORD:
-                    return new ClearCommand();
+            case ClearCommand.COMMAND_WORD:
+                 return new ClearCommand();
 
-                case HistoryCommand.COMMAND_WORD:
-                    return new HistoryCommand();
+            case HistoryCommand.COMMAND_WORD:
+                 return new HistoryCommand();
 
-                case ExitCommand.COMMAND_WORD:
-                    return new ExitCommand();
+            case ExitCommand.COMMAND_WORD:
+                 return new ExitCommand();
 
-                case HelpCommand.COMMAND_WORD:
-                    return new HelpCommand();
+            case HelpCommand.COMMAND_WORD:
+                 return new HelpCommand();
 
-                case UndoCommand.COMMAND_WORD:
-                    return new UndoCommand();
+            case UndoCommand.COMMAND_WORD:
+                 return new UndoCommand();
 
-                case RedoCommand.COMMAND_WORD:
-                    return new RedoCommand();
+            case RedoCommand.COMMAND_WORD:
+                return new RedoCommand();
 
-                default:
-                    throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            default:
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
         }
         throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

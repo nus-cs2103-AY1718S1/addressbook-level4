@@ -1,9 +1,9 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Change the current command mode
@@ -42,8 +42,12 @@ public class ChangeModeCommand extends Command {
         }
     }
 
+    /**
+     * Paraphrase the input mode into either addressbook or taskmanager
+     * @param mode
+     */
     private String paraphraseCurrentMode(String mode) {
-        if (mode.equals("ab") || mode.equals("addressbook")){
+        if (mode.equals("ab") || mode.equals("addressbook")) {
             return "addressbook";
         }
         else {
