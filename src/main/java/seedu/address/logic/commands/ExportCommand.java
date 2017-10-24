@@ -23,11 +23,11 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Export the details of the person identified "
             + "by the index number used in the last person listing. \n"
             + "Output will be in an add command format, which can be "
-            + "directly given to 3W to excute.\n"
+            + "directly given to 3W to execute.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_EXPORT_PERSON_SUCCESS = "Export Success";
+    public static final String MESSAGE_SUCCESS = "add %1$s";
     private final Index targetIndex;
 
     /**
@@ -51,20 +51,25 @@ public class ExportCommand extends Command {
         ReadOnlyPerson personToExport = lastShownList.get(targetIndex.getZeroBased());
 
         final StringBuilder builder = new StringBuilder();
-        builder.append("add n/")
-                .append(personToExport.getName())
-                .append(" p/")
-                .append(personToExport.getPhone())
-                .append(" e/")
-                .append(personToExport.getEmail())
-                .append(" a/")
-                .append(personToExport.getAddress())
-                .append(" r/")
-                .append(personToExport.getRemark())
-                .append(" t/");
         personToExport.getTags().forEach(builder::append);
-        return new CommandResult(builder.toString());
+        String feedBack = String.format(MESSAGE_SUCCESS,
+                String.join(" ",
+                        "n/" + personToExport.getName(),
+                        "p/" + personToExport.getPhone(),
+                        "e/" + personToExport.getEmail(),
+                        "a/" + personToExport.getAddress(),
+                        "r/" + personToExport.getRemark(),
+                        "t/" + builder.toString()));
 
+        return new CommandResult(feedBack);
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ExportCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ExportCommand) other).targetIndex)); // state check
     }
 
 }
