@@ -25,7 +25,7 @@
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street S123113</address>
         <deliveryDate>05-05-2017</deliveryDate>
-        <status>delivered</status>
+        <status>overdue</status>
     </parcels>
     <parcels>
         <trackingNumber>RR123356789SG</trackingNumber>
@@ -43,7 +43,7 @@
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave S123115</address>
         <deliveryDate>05-05-2017</deliveryDate>
-        <status>delivered</status>
+        <status>completed</status>
     </parcels>
     <parcels>
         <trackingNumber>RR123477789SG</trackingNumber>
@@ -81,7 +81,7 @@
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
         <deliveryDate>05-05-2017</deliveryDate>
-        <status>delivered</status>
+        <status>completed</status>
         <address isPrivate="false">chicago ave S123123</address>
     </parcels>
     <tags>owesMoney</tags>

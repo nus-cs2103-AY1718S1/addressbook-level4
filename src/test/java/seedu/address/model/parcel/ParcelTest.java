@@ -65,10 +65,10 @@ public class ParcelTest {
         assertEquals(differentParcel.deliveryDateProperty().get(),
                 new SimpleObjectProperty<>(new DeliveryDate("05-05-2005")).get());
 
-        differentParcel.setStatus(Status.getInstance("Delivered"));
-        assertEquals(differentParcel.getStatus(), Status.getInstance("Delivered"));
+        differentParcel.setStatus(Status.getInstance("Completed"));
+        assertEquals(differentParcel.getStatus(), Status.getInstance("Completed"));
         assertEquals(differentParcel.statusProperty().get(),
-                new SimpleObjectProperty<>(Status.getInstance("Delivered")).get());
+                new SimpleObjectProperty<>(Status.getInstance("Completed")).get());
 
         differentParcel.setTags(SampleDataUtil.getTagSet("test"));
         assertEquals(differentParcel.getTags(), SampleDataUtil.getTagSet("test"));

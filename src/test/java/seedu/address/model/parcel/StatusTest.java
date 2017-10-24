@@ -69,7 +69,7 @@ public class StatusTest {
         assertFalse(Status.isValidStatus("completed"));
 
         // mix of upper and lower case
-        assertFalse(Status.isValidStatus("DelIVEred"));
+        assertFalse(Status.isValidStatus("ComPleTed"));
 
         // random symbols
         assertFalse(Status.isValidStatus("$!@HBJ123"));
