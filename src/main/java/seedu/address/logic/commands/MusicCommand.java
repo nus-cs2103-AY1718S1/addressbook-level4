@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.io.File;
 import java.util.Arrays;
 
 import javafx.scene.media.Media;
@@ -64,7 +63,8 @@ public class MusicCommand extends Command {
                 return new CommandResult(messageSuccess);
             }
             if (genreExist) {
-                String musicFile = getClass().getResource("/audio/music/"+ genre + trackNumber + ".mp3").toExternalForm();
+                String musicFile = getClass().getResource("/audio/music/"
+                        + genre + trackNumber + ".mp3").toExternalForm();
                 messageSuccess = genre.toUpperCase() + " Music Playing";
                 if (trackNumber < 2) {
                     trackNumber++;
