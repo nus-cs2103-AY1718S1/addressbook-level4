@@ -129,7 +129,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showLessonsWithName(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
-        assert getModel().getFilteredLessonList().size() < getModel().getAddressBook().getLessonList().size();
+        assert getModel().getFilteredLessonList().size() <= getModel().getAddressBook().getLessonList().size();
     }
 
     /**
@@ -148,6 +148,8 @@ public abstract class AddressBookSystemTest {
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
+        System.out.println(expectedResultMessage);
+        System.out.println(getResultDisplay().getText());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         Model model = getModel();
         assertEquals(expectedModel, model);
