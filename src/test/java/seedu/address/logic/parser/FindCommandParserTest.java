@@ -27,7 +27,8 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_emptyTagArgs_throwsParseException() {
-        assertParseFailure(parser, "t/     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "-tag     ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -35,10 +36,10 @@ public class FindCommandParserTest {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommand =
                 new FindByTagsCommand(new TagsContainKeywordsPredicate(Arrays.asList("colleagues", "friends")));
-        assertParseSuccess(parser, "t/ colleagues friends", expectedFindCommand);
+        assertParseSuccess(parser, "-tag colleagues friends", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, "t/   \n colleagues \t friends \n", expectedFindCommand);
+        assertParseSuccess(parser, "-tag   \n colleagues \t friends \n", expectedFindCommand);
     }
 
     @Test
