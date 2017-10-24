@@ -63,10 +63,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Birthday birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
             Remark remark = new Remark(""); // add command does not allow adding remarks straight away
             Website website = ParserUtil.parseWebsite(argMultimap.getValue(PREFIX_WEBSITE)).get();
-//            Picture picture = ParserUtil.parsePicture(argMultimap.getValue(PREFIX_PICTURE)).get(); // TODO
+            Picture picture = ParserUtil.parsePicture(argMultimap.getValue(PREFIX_PICTURE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, website, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, website,
+                    picture, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

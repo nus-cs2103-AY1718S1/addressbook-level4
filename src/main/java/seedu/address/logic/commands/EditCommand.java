@@ -52,6 +52,7 @@ public class EditCommand extends UndoableCommand {
         + "[" + PREFIX_EMAIL + "EMAIL] "
         + "[" + PREFIX_ADDRESS + "ADDRESS] "
         + "[" + PREFIX_WEBSITE + "WEBSITE] "
+        + "[" + PREFIX_PICTURE + "PICTURE] "
         + "[" + PREFIX_BIRTHDAY + "DD/MM/YYYY] "
         + "[" + PREFIX_TAG + "TAG]...\n"
         + "Example: " + COMMAND_WORD + " 1 "
@@ -114,6 +115,7 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
         Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
+        Picture updatedPicture = editPersonDescriptor.getPicture().orElse(personToEdit.getPicture());
         Website updatedWebsite = editPersonDescriptor.getWebsite().orElse(personToEdit.getWebsite());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
@@ -124,6 +126,7 @@ public class EditCommand extends UndoableCommand {
             updatedBirthday,
             updatedRemark,
             updatedWebsite,
+            updatedPicture,
             updatedTags);
     }
 

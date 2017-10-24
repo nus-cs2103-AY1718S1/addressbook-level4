@@ -32,7 +32,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and name must not be null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  Birthday birthday, Remark remark, Website website, Set<Tag> tags) {
+                  Birthday birthday, Remark remark, Website website, Picture picture, Set<Tag> tags) {
         requireNonNull(name);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -41,7 +41,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
         this.website = new SimpleObjectProperty<>(website);
-        // this.picture = new SimpleObjectProperty<>(picture);
+        this.picture = new SimpleObjectProperty<>(picture);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -51,7 +51,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-            source.getBirthday(), source.getRemark(), source.getWebsite(), source.getTags());
+            source.getBirthday(), source.getRemark(), source.getWebsite(), source.getPicture(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -199,7 +199,7 @@ public class Person implements ReadOnlyPerson {
         this.setAddress(replacement.getAddress());
         this.setRemark(replacement.getRemark());
         this.setWebsite(replacement.getWebsite());
-        //this.setPicture(replacement.getPicture());
+        this.setPicture(replacement.getPicture());
         this.setTags(replacement.getTags());
     }
 

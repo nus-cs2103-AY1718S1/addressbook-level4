@@ -60,6 +60,7 @@ public interface ReadOnlyPerson {
                       && other.getBirthday().equals(this.getBirthday())
                       && other.getAddress().equals(this.getAddress())
                       && other.getWebsite().equals(this.getWebsite())
+                      && other.getPicture().equals(this.getPicture())
                       && other.getRemark().equals(this.getRemark()));
     }
 
@@ -93,10 +94,10 @@ public interface ReadOnlyPerson {
                 .append(getWebsite());
         }
 
-//        if (getPicture().toString() != null) {
-//            builder.append(" Picture: ")
-//                    .append(getPicture());
-//        }
+        if (getPicture().toString() != null) {
+            builder.append(" Picture: ")
+                    .append(getPicture());
+        }
 
         if (!(getTags().isEmpty())) {
             builder.append(" Tags: ");

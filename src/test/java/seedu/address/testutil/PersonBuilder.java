@@ -9,6 +9,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Picture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.Website;
@@ -25,6 +26,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_WEBSITE = Website.WEBSITE_EXAMPLE;
+    public static final String DEFAULT_PICTURE = null;
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
     public static final String DEFAULT_BIRTHDAY = "15/02/1992";
@@ -40,9 +42,11 @@ public class PersonBuilder {
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
             Website defaultWebsite = new Website(DEFAULT_WEBSITE);
+            Picture defaultPicture = new Picture(DEFAULT_PICTURE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail,
-                    defaultAddress, defaultBirthday, defaultRemark, defaultWebsite, defaultTags);
+                    defaultAddress, defaultBirthday, defaultRemark, defaultWebsite,
+                    defaultPicture, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -141,6 +145,18 @@ public class PersonBuilder {
     public PersonBuilder withWebsite(String website) {
         try {
             this.person.setWebsite(new Website(website));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("website is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Picture} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPicture(String picture) {
+        try {
+            this.person.setPicture(new Picture(picture));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("website is expected to be unique.");
         }
