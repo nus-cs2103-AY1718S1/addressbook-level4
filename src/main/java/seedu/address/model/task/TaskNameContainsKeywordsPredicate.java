@@ -4,15 +4,14 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Tests that a {@code ReadOnlyTask}'s {@code Name} matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
+public class TaskNameContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
     private final List<String> keywords;
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public TaskNameContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -25,8 +24,8 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof TaskNameContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((TaskNameContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }

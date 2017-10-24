@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-//import static seedu.address.logic.commands.CommandTestUtil.showFirstTaskOnly;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstTaskOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTasks.getTypicalTaskbook;
 
@@ -16,7 +18,6 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.JumpToTaskListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -80,32 +81,31 @@ public class ExportTaskCommandTest {
 
     @Test
     public void executeValidIndexFilteredListSuccess() {
-        showFirstPersonOnly(model);
-        ReadOnlyTask personToExport = model.getFilteredTaskList().get(INDEX_FIRST_PERSON.getZeroBased());
+        showFirstTaskOnly(model);
+        ReadOnlyTask taskToExport = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
 
         final StringBuilder builder = new StringBuilder();
-        personToExport.getTags().forEach(builder::append);
-        String expectedMessage = String.format(ExportCommand.MESSAGE_SUCCESS,
-                String.join(" ", "n/" + personToExport.getName(),
-                        "p/" + personToExport.getPhone(),
-                        "e/" + personToExport.getEmail(),
-                        "a/" + personToExport.getAddress(),
-                        "r/" + personToExport.getRemark(),
+        taskToExport.getTags().forEach(builder::append);
+        String expectedMessage = String.format(ExportTaskCommand.MESSAGE_SUCCESS,
+                String.join(" ", "n/" + taskToExport.getName(),
+                        "d/" + taskToExport.getDescription(),
+                        "s/" + taskToExport.getStartDateTime(),
+                        "e/" + taskToExport.getEndDateTime(),
                         "t/" + builder));
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON, expectedMessage);
+        assertExecutionSuccess(INDEX_FIRST_TASK, expectedMessage);
     }
-//
-//    @Test
-//    public void executeInvalidIndexFilteredListFailure() {
-//        showFirstTaskOnly(model);
-//
-//        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
-//        // ensures that outOfBoundIndex is still in bounds of address book list
-//        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getTaskList().size());
-//
-//        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-//    }
+
+    @Test
+    public void executeInvalidIndexFilteredListFailure() {
+        showFirstTaskOnly(model);
+
+        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getTaskBook().getTaskList().size());
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
 
     @Test
     public void equals() {
