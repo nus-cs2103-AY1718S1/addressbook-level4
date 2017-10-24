@@ -27,7 +27,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, INDEX_FIRST_LESSON);
 
         /* Case: select the last card in the lesson list -> selected */
-        Index lessonCount = Index.fromOneBased(getTypicalLessons().size());
+        Index lessonCount = Index.fromOneBased(getModel().getFilteredLessonList().size());
         command = SelectCommand.COMMAND_WORD + " " + lessonCount.getOneBased();
         assertCommandSuccess(command, lessonCount);
 

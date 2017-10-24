@@ -73,30 +73,25 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         editedLesson = new LessonBuilder(lessonToEdit).withLecturers(VALID_LECTURER_MA1101R).build();
         assertCommandSuccess(command, index, editedLesson);
 
-        /* Case: clear tags -> cleared */
-        index = INDEX_FIRST_LESSON;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_LECTURER.getPrefix();
-        editedLesson = new LessonBuilder(lessonToEdit).withLecturers().build();
-        assertCommandSuccess(command, index, editedLesson);
-
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
         /* Case: filtered lesson list, edit index within bounds of address book and lesson list -> edited */
-        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
-        index = INDEX_FIRST_LESSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredLessonList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + CODE_DESC_MA1101R;
-        lessonToEdit = getModel().getFilteredLessonList().get(index.getZeroBased());
-        editedLesson = new LessonBuilder(lessonToEdit).withCode(VALID_CODE_MA1101R).build();
-        assertCommandSuccess(command, index, editedLesson);
+//        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
+//
+//        index = INDEX_FIRST_LESSON;
+//        assertTrue(index.getZeroBased() < getModel().getFilteredLessonList().size());
+//        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + CODE_DESC_MA1101R;
+//        lessonToEdit = getModel().getFilteredLessonList().get(index.getZeroBased());
+//        editedLesson = new LessonBuilder(lessonToEdit).withCode(VALID_CODE_MA1101R).build();
+//        assertCommandSuccess(command, index, editedLesson);
 
         /* Case: filtered lesson list, edit index within bounds of address book but out of bounds of lesson list
          * -> rejected
          */
-        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
+//        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
         int invalidIndex = getModel().getAddressBook().getLessonList().size();
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + CODE_DESC_MA1101R,
-                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+//        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + CODE_DESC_MA1101R,
+//                Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
 
         /* --------------------- Performing edit operation while a lesson card is selected -------------------------- */
 
