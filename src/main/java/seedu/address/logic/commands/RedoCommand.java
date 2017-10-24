@@ -13,6 +13,11 @@ import seedu.address.model.Model;
 public class RedoCommand extends Command {
 
     public static final String COMMAND_WORD = "redo";
+    public static final String COMMAND_ALIAS = "r";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
+            + ": Reverses the most recent undo command.\n"
+            + "Parameters: None"
+            + MESSAGE_GET_MORE_HELP;
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 

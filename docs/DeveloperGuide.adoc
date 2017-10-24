@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -30,16 +30,9 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
-+
 
-. *CheckStyle-IDEA* plugin
-+
-[TIP]
-Install the plugin by going to `File` > `Settings` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS). +
-Select `Plugins`, press `Browse Repository`, and find the plugin. +
-Restart the IDE to complete the installation.
 
-=== Importing the project into IntelliJ
+=== Setting up the project in your computer
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -50,47 +43,19 @@ Restart the IDE to complete the installation.
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+This will generate all resources required by the application and tests.
 
-=== Configuring Checkstyle-IDEA
+=== Verifying the setup
 
-. Click `File` > `Settings...` > `Other Settings` > `Checkstyle`
-. Set `Scan Scope`  to `Only Java sources (including tests)`, so that the plugin will run checkstyle for our test source codes as well
-. Ensure that the `Checkstyle version` is set to `8.1`. This is the same version that we are using inside Gradle, so that you won't get any errors due to version incompatibility
-+
-image::checkstyle-idea-scan-scope.png[width="500"]
-. Click the plus sign under `Configuration File`
-. Enter an arbitrary description e.g. addressbook
-. Select `Use a local Checkstyle file`
-. Use the checkstyle configuration file found at `config/checkstyle/checkstyle.xml`
-. Click `Next` > `Finish`
-. Mark `Active` for the newly imported check configuration
-+
-image::checkstyle-idea-configuration.png[width="700"]
-. Click `OK`
+. Run the `seedu.address.MainApp` and try a few commands
+. link:#testing[Run the tests] to ensure they all pass.
 
-=== Troubleshooting Checkstyle-IDEA
+=== Configurations to do before writing code
 
-**Problem: When importing `checkstyle.xml`, Checkstyle-IDEA plugin complains that `The Checkstyle rules file could not be parsed. ... The file has been blacklisted for 60s.`**
+==== Configuring the coding style
 
-* Reason: `checkstyle.xml` is written for a particular version, but the plugin was not configured to the correct version.
-* Solution: Ensure that you have selected the correct `Checkstyle version`, that matches the version in `build.gradle`, as `checkstyle.xml` is written for Gradle's checkstyle.
-
-**Problem: After setting up `checkstyle.xml`, Checkstyle-IDEA plugin does not seem to highlight the errors / real-time scanning seems broken.**
-
-* Reason: The plugin may not immediately run after setting it up.
-* Solution: Restart the IDE.
-
-=== Updating documentation
-
-After forking the repo, links in the documentation will link to the wrong repo. You should replace the URL in the variable `repoURL` in DeveloperGuide.adoc with the URL of your fork.
-
-=== Coding style
-
-We follow https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards].
-
-=== Configuring import statements
-
-IntelliJ uses a different import order from our coding style. To rectify this issue:
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
 . Select `Editor` > `Code Style` > `Java`
@@ -98,6 +63,28 @@ IntelliJ uses a different import order from our coding style. To rectify this is
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
 * For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+
+==== Updating documentation to match your fork
+
+After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+
+==== Setting up CI
+
+Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+
+Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+
+[NOTE]
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+
+==== Getting started with coding
+
+When you are ready to start coding,
+
+1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
 
@@ -228,6 +215,8 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 == Implementation
+
+This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -375,22 +364,331 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Displaying the Usage of a Specific Command [Since v1.2]
+
+This function is an enhancement of the exisitng help function, which opens the help command. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Model and Logic components of the application.
+
+For the Model component, `CommandIdentifier` is implemented this way:
+[source,java]
+----
+public class CommandIdentifier {
+
+    // ... required public static final fields ...
+
+    public CommandIdentifier(String commandIdentifier) throws IllegalValueException {
+        requireNonNull(commandIdentifier);
+        if (!isValidCommandIdentifier(commandIdentifier) && !commandIdentifier.equals("")) {
+            throw new IllegalValueException(MESSAGE_COMMAND_WORD_CONSTRAINTS);
+        }
+        this.value = commandIdentifier;
+    }
+
+    public static boolean isValidCommandIdentifier(String test) {
+       // ... checks if the string argument is a valid command identifier ...
+    }
+}
+----
+[NOTE]
+A valid command identifier includes all existing command and their aliases.
+
+For the Logic component, when the user key in help command in the command box, `HelpCommandParser` will be called. It parses user input that folows the help command, which may contain the optional command identifier argument:
+[source,java]
+----
+public HelpCommand parse(String args) throws ParseException {
+    // ... checks if the argument contains at most 1 word ...
+
+    // ... calls ParserUtil to parse command identifier ...
+
+    // ... calls HelpCommand ...
+}
+----
+To accomodate this enhancement, the following method is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object:
+[source,java]
+----
+public static CommandIdentifier parseCommandIdentifier(String commandWord) throws IllegalValueException {
+    requireNonNull(commandWord);
+    return new CommandIdentifier(commandWord.trim());
+}
+----
+Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. The execute method in the `HelpCommand` is implemented as follows:
+[source,java]
+----
+public CommandResult execute() {
+    // ... switch cases for all the command words and command aliases ...
+
+    // ... default case: opens help window ...
+}
+----
+The `HelpCommand` execution is done in `AddressBookParser`. Below shows the output of this function.
+
+image::HelpEnhancementScreenShot.PNG[width="800"]
+
+=== Locating a person's address [Since v1.2]
+
+This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
+
+When the LocateCommand is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`:
+[source,java]
+----
+public class LocateCommand extends Command {
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        //... check targetIndex ...
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+
+        //... return CommandResult ...
+    }
+}
+----
+The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it:
+[source,java]
+----
+public class PersonListPanel extends UiPart<Region> {
+    /**
+     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            personListView.scrollTo(index);
+            personListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+
+    // Handling method for JumpToListRequestEvent
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(event.targetIndex);
+    }
+}
+----
+The UI outcome of scrolling and selecting a PersonCard in the `PersonListPanel` is shown below:
+
+image::PersonListPanelSelect.png[width="200"]
+
+When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below:
+[source,java]
+----
+public class PersonListPanel extends UiPart<Region> {
+
+    public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+        super(FXML);
+        setConnections(personList); // calls addListenerForSelectionChangeEvent() method
+        registerAsAnEventHandler(this);
+    }
+
+     /**
+     * Creates a list of {@code PersonCard} from {@code personList}, sets them to the {@code personListView}
+     * and adds listener to {@code personListView} for selection change.
+     */
+    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+        //... set up personListView with personList ...
+        addListenerForSelectionChangeEvent();
+    }
+
+    /**
+     * Adds a listener to {@code personListView} so that
+     * selected item raises {@code PersonPanelSelectionChangedEvent}.
+     */
+    private void addListenerForSelectionChangeEvent() {
+        personListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        raise(new PersonPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+}
+----
+
+The `BrowserPanel` contains a `WebView` which displays a web page of the google map location of the selected person's address. It is able to do so as it is an event subscriber for the `PersonPanelSelectionChangedEvent` as shown below:
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+
+    @Subscribe
+    private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IllegalValueException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
+    }
+}
+----
+By being a subscriber to this event, the `WebView` in `BrowserPanel` will load the corresponding web page whenever a new
+`PersonPanelSelectionChangedEvent` is posted to the `EventBus`.
+
+//tag::FindCommand[]
+=== FindCommand by any search field [Since v1.2]
+
+
+The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords. The keywords must be a full word match.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone`and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
+
+
+`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input. Checks will be conducted via l`FindCommandParserl` which inherits from `FindCommand`.
+
+[source,java]
+----
+public class FindCommandParser implements Parser<FindCommand> {
+    public FindCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+    //...Check for allocation of Predicate...
+    }
+}
+
+----
+[NOTE]
+A valid find command search keywords based on prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG]
+
+Also,the input will first have to be tokenised in order to extract the prefix for for the search procedure. In absence of valid prefix ,an exception will be thrown.
+[source,java]
+----
+        if (!areSomePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TAG)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+----
+
+A successful tokenism of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model` . The methods takes in the user input and returns a `containsKeyWordPredicate`. Addressbook will search for the keywords in the revelvant parameters.
+
+Upon any successful match, the particulars of the contact will be displayed. The sketch belows indicates the various outcome of search function by  using `FindCommand` .
+
+
+image::FindCommand_Name.PNG[width="300"]
+
+
+image::FindCommand_Phone.PNG[width="300"]
+
+
+image::FindCommand_Email.PNG[width="300"]
+
+
+image::FindCommand_Address.PNG[width="300"]
+
+
+image::FindCommand_Tag.PNG[width="300"]
+
+
+//tag::CopyCommand[]
+=== Copy email address to clipboard [Since v1.2]
+
+The `copy` function uses the Clipboard in Toolkit API to automatically copy emails of selected indexes onto the system clipboard.
+The index(es) selected must exist in the current result display window.
+
+[source,java]
+----
+// copy string to clipboard
+Toolkit toolkit = Toolkit.getDefaultToolkit();
+Clipboard clipboard = toolkit.getSystemClipboard();
+StringSelection messageOutputSelection = new StringSelection(messageOutput);
+clipboard.setContents(messageOutputSelection, null);
+
+----
+
+The selected emails are stored in a string ArrayList, then re-formatted to remove square brackets around the ArrayList and change all commas to semi-colons before sending the result to system clipboard output. This ensures that the final output string copied to clipboard has maximum compatibility with formatting conventions in email applications.
+
+[source,java]
+----
+// outputList without square brackets
+String messageOutput = outputList.toString().substring(1, outputList.toString().length() - 1);
+
+// outputList use semi-colon separator
+messageOutput = messageOutput.replace(",", ";");
+
+----
+
+Examples of copy command on UI:
+
+
+image::CopyCommand_single_index.PNG[width="300"]
+
+
+image::CopyCommand_multiple_index.PNG[width="300"]
+
+Figures 1 and 2 show the acceptable format for indexes, and the expected result. Note that the message will only be displayed if the message is already copied to the system clipboard.
+
+image::CopyCommand_browser_result.PNG[width="300"]
+
+Figure 3 shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
+
+Why it is implemented that way
+
+There was no way to copy emails from the listed contacts in the previous version, so a user would have to refer to the address book application while typing it into their email application or browser manually. As email addresses are almost always meant to be utilized in an electronic device, an automatic ‘copy’ command of all requested email addresses is the most efficient and user-friendly way of text selection for this type of information.
+
+Alternatives considered
+
+It is possible to provide the same output text in the console message to user, which was the first iteration of this feature. However, since the resultant string was only meant to be copied either way, this implementation would cause the user to perform one more action per email address output request, as they would have to manually copy the output to their system clipboard.
+
+Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
+
+
+
+== Documentation
+
+We use asciidoc for writing documentation.
+
+[NOTE]
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+
+=== Editing Documentation
+
+See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
+
+=== Publishing Documentation
+
+See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
+
+=== Converting Documentation to PDF format
+
+We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+
+Here are the steps to convert the project documentation files to PDF format.
+
+.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
+.  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
+.  Within Chrome, click on the `Print` option in Chrome's menu.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+
+image::chrome_save_as_pdf.png[width="300"]
+_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+
 == Testing
 
-Tests can be found in the `./src/test/java` folder.
+=== Running Tests
 
-*In IntelliJ*:
+There are three ways to run tests.
+
+[TIP]
+The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+
+*Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
 * To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
 
-*Using Gradle*:
+*Method 2: Using Gradle*
 
-* See <<UsingGradle#, UsingGradle.adoc>> for how to run tests using Gradle.
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+
+[NOTE]
+See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+
+*Method 3: Using Gradle (headless)*
+
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+
+=== Types of tests
 
 We have two types of tests:
 
-.  *GUI Tests* - These are _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `guitests` package.
+.  *GUI Tests* - These are tests involving the GUI. They include,
+.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
@@ -399,9 +697,12 @@ e.g. `seedu.address.storage.StorageManagerTest`
 ..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
 e.g. `seedu.address.logic.LogicManagerTest`
 
-=== Headless GUI Testing
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running. See <<UsingGradle#running-tests, UsingGradle.adoc>> to learn how to run tests in headless mode.
+=== Troubleshooting Testing
+**Problem: `HelpWindowTest` fails with a `NullPointerException`.**
+
+* Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
+* Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
 
@@ -413,21 +714,6 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Previewing Documentation
-
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to preview `.adoc` files locally.
-Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
-
-=== Publishing Documentation
-
-See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis. +
-To verify that it works,
-
-.  Trigger Travis to regenerate documentation. To do so, you need to push a new commit to the master branch of the fork. +
-   Suggested change: Remove the codacy badge from `README`.
-.  Wait for Travis CI to finish running the build on your new commit.
-.  Go to the URL `\https://<your-username-or-organization-name>.github.io/addressbook-level4/`. You should see your `README` file displayed.
-
 === Making a Release
 
 Here are the steps to create a new release.
@@ -437,20 +723,6 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Converting Documentation to PDF format
-
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
-
-Here are the steps to convert the project documentation files to PDF format.
-
-.  Make sure you have set up GitHub Pages as described in <<DeveloperGuide#publishing-documentation, Publishing Documentation>>.
-.  Using Chrome, go to the URL of the documentation file. e.g. For <<UserGuide#, UserGuide.adoc>>, the URL will be `\https://<your-username-or-organization-name>.github.io/addressbook-level4/docs/UserGuide.html`.
-.  Click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
-
-image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.4.1 : Saving documentation as PDF files in Chrome_
-
 === Managing Dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
@@ -458,9 +730,13 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Getting Started in Writing Code
+== Suggested Programming Tasks to Get Started
 
-We have prepared some exercises for beginners of the codebase. There are two kinds of exercise: the first one (i.e. improving each component) is for learning one component at a time, and the second one (i.e. adding the remark command) is to learn how to implement an end-to-end feature across all components.
+Suggested path for new programmers:
+
+1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
+
+2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
 === Improving each component
 
@@ -468,6 +744,9 @@ Each individual exercise in this section is component-based (i.e. you would not 
 
 [discrete]
 ==== `Logic` component
+
+[TIP]
+Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
 
 . Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
 +
@@ -483,6 +762,9 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [discrete]
 ==== `Model` component
 
+[TIP]
+Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
+
 . Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
 +
 ****
@@ -496,6 +778,9 @@ Each individual exercise in this section is component-based (i.e. you would not 
 
 [discrete]
 ==== `Ui` component
+
+[TIP]
+Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
 
 . Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
 +
@@ -557,6 +842,9 @@ image::getting-started-ui-status-after.png[width="500"]
 
 [discrete]
 ==== `Storage` component
+
+[TIP]
+Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
 
 . Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
 +
@@ -700,11 +988,58 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |delete multiple persons at once  |avoid going through the hassle of removing one at each time
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |select multiple person |perform the same command to multiple contacts at once
+
+|`* * *` |user |update my contact |I do not have to recreate a contact whenever there are changes
+
+|`* * *` |user |store multiple information of the same kind for a contact |accommodate contacts with multiple addresses, e-mail addresses or phone numbers
+
+|`* * *` |user |get suggestions on the tags I have used |be consistent with the tags I use
+
+|`* *` |user |see a sorted list of my contacts |it will save time and energy on my end
+
+|`* *` |user |use shortcut to any command |it will be easier for me to find someone in my contact list
+
+|`* *` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
+
+|`* *` |user |rename any field |update my relationship with contact
+
+|`* *` |user |check the usage of commands easily |it will save time and energy on my end
+
+|`* *` |user |view the location of an address on google maps |make plans to travel there
+
+|`* *` |user |link my contact's saved email to a 'compose email page' |send an email to him/her with a click
+
+|`* *` |user |find my contact's address on google map |locate my contact
+
+|`* *` |user |filter my contact based on any search field |I do not have to go through the whole list of addressbook to find a contact
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |be able to link my addressbook to my google calendar |set events and reminders related to my contacts
+
+|`* *` |user |create a timeline with a contact |record and store activities with them
+
+|`* *` |user |see my contacts' social media profile pictures |identify them more easily
+
+|`* *` |user |write down remarks for a contact |record specific information about the contact
+
+|`* *` |user |to create new task|keep track on ongoing task and stay on track
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |choose the colour for my contact's tag |differentiate contact's with different tags just by looking at them
+
+|`*` |user |sort persons by birthday |view whose birthdays are in the upcoming months
+
+|`*` |user |key in a contact's birthday and be reminded about it when the time comes |wish him/her happy birthday
+
+|`*` |user |be prompted to confirm my input whenever I add a person |avoid adding a person with the wrong details
+
 |=======================================================================
 
 {More to be added}
@@ -716,7 +1051,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 [discrete]
 === Use case: Delete person
-
 *MSS*
 
 1.  User requests to list persons
@@ -740,6 +1074,67 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Add remark
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add remark to a specific person in the list
+4.  AddressBook successfully adds remark to contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index or format is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Rename existing tag
+#Pre-condition :The identitifed tag exists in Addressbook
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to rename the tag and key in the new input
+4. AddressBook prompts user to confirm the changes
+5. User confirms changes
+6. AddressBook successfully replaces the name of the existing tag to the newer version
++
+Use case ends.
+
+=== Use case: Search by phone
+#Pre-condition :The identitifed phone exist in AddressBook
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to search for phone number by inputting 4 or 8 digits
+4. AddressBook successfully find the persons with matching phone numbers
++
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given phone number is invalid
+
+> 3a1. AddressBook shows an error message
+  Use case resumes at step 2
+
+> Use case ends
+
 {More to be added}
 
 [appendix]
@@ -748,6 +1143,9 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Respond time should be less than 10s
+.  Should be able to automatically create a backup file for the contacts data stored
+.  The project is expected to adhere to a schedule that delivers a feature set every week
 
 {More to be added}
 
