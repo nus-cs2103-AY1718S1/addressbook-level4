@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlMimeType;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -35,6 +37,8 @@ public class XmlAdaptedPerson {
     private String remark;
     @XmlElement(required = true)
     private String birthday;
+    @XmlElement(required = true)
+    private String age;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -57,6 +61,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         remark = source.getRemark().value;
         birthday = source.getBirthday().value;
+        age = source.getAge().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -79,7 +84,8 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark);
         final Birthday birthday = new Birthday(this.birthday);
+        final Age age = new Age(this.birthday);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, remark, birthday, tags);
+        return new Person(name, phone, email, address, remark, birthday, age, tags);
     }
 }
