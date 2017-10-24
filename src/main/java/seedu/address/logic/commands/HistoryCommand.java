@@ -27,7 +27,6 @@ public class HistoryCommand extends Command {
         }
 
         Collections.reverse(previousCommands);
-        model.unselect();
         return new CommandResult(String.format(MESSAGE_SUCCESS, String.join("\n", previousCommands)));
     }
 
