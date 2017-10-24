@@ -46,6 +46,8 @@ public class FacebookPostCommand extends Command {
             user = facebookInstance.getName();
             facebookInstance.postStatusMessage(toPost);
         } catch (FacebookException e) {
+            // exception not handled because Facebook API still throws an exception even if success,
+            // so exception is ignored for now
             e.printStackTrace();
         }
 
