@@ -140,9 +140,6 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-    public FxRobot getRobot() {
-        return this.robot;
-    }
 
     /**
      * press control key
