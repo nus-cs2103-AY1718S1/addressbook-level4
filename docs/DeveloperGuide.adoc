@@ -1008,7 +1008,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
+
 === Use case: Delete person
 
 *MSS*
@@ -1034,7 +1034,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-[discrete]
+
 === Use case: Find person
 
 *MSS*
@@ -1066,7 +1066,7 @@ Use case ends.
 +
 Use case ends.
 
-[discrete]
+
 === Use Case: Edit details of person
 
 *MSS*
@@ -1103,7 +1103,7 @@ Use case resumes at step 2.
 ** Repeat 5a1-5a3 until valid category is entered.
 ** User resumes from step 6.
 
-[discrete]
+
 === Use Case: Tag multiple people with the same tag
 
 1. User requests to list people.
@@ -1127,7 +1127,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-=== Use Case: Remove tag of multiple person
+=== Use Case: Remove tag of multiple people
 
 1. User requests to list people.
 2. Addressbook lists all contacts.
@@ -1158,7 +1158,7 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-=== Use Case: Find the person using tags
+=== Use Case: Find a person using tags
 
 1. User requests to find person.
 2. User enters the category (i.e. tag) and details to search for person.
