@@ -63,7 +63,7 @@ public interface ReadOnlyPerson {
         builder.append(" Tags: ");
         getTags().forEach(builder::append);
         builder.append(" Link: ")
-                .append("getLink()");
+                .append(getLink());
         return builder.toString();
     }
 

@@ -38,6 +38,8 @@ public class XmlAdaptedPerson {
     private boolean favouriteStatus;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement(required = true)
+    private String link;
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -65,6 +67,9 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+
+        link = source.getLink().value;
+
     }
 
     /**
@@ -86,10 +91,12 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final ArrayList<Remark> remarks = new ArrayList<>(personRemarks);
-        remarks.add(new Remark(""));
+        if(remarks.isEmpty()) { //Ensures that an empty remark list will not increase in size
+            remarks.add(new Remark("")); //Ensures every Person will always have a remarked field
+        }
         final FavouriteStatus favouriteStatus = new FavouriteStatus(this.favouriteStatus);
         final Set<Tag> tags = new HashSet<>(personTags);
-        final Link link = new Link("");   // TODO: To be fixed in Storage commit
+        final Link link = new Link(this.link);
         return new Person(name, phone, email, address, remarks, favouriteStatus, tags, link);
     }
 }

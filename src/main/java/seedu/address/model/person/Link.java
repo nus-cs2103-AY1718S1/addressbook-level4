@@ -14,8 +14,11 @@ public class Link {
     public final String value;
 
     public Link(String link) {
-        requireNonNull(link);
-        this.value = link;
+        if(link == null){
+            this.value = "";
+        } else {
+            this.value = link;
+        }
     }
 
     @Override
