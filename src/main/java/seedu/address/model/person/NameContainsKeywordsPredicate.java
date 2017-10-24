@@ -3,7 +3,7 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.parser.ArgumentWildcardMatcher;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
@@ -12,13 +12,19 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     private final List<String> keywords;
 
     public NameContainsKeywordsPredicate(List<String> keywords) {
-        this.keywords = keywords;
+        this.keywords = ArgumentWildcardMatcher.processKeywords(keywords);
     }
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        for (String name : person.getName().fullName.split("\\s+")) {
+            for (String keyword : keywords) {
+                if (name.toLowerCase().matches(keyword)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

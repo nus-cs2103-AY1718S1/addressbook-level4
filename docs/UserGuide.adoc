@@ -65,6 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Wildcard symbol `*` is allowed in parameters for `find` and `filter` which matches any non-space string.
 ====
 
 === Viewing help : `help`
@@ -339,6 +340,9 @@ Here are some other ways you can do with `find`:
 Lists any person having names `Betsy`, `Tim`, or `John`
 * `f Watson` +
 Lists any person having the name `Watson`
+* `find j*` +
+Lists any person whose name starts with `j`
+
 
 === Locating persons by tags: `filter`
 
@@ -381,8 +385,12 @@ Here are some other ways you can do with `filter`:
 Lists any person having the `family` tag
 * `filter family friends` +
 Lists any person tagged with `family` or `friends`
+* `ft fa*` +
+Lists any person tagged with any tags matching `fa*` such as `family` but not `friends`
 
 
+
+>>>>>>> master
 
 === Selecting a person : `select`
 
