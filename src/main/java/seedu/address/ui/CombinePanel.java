@@ -98,11 +98,11 @@ public class CombinePanel extends UiPart<Region> {
         }
     }
 
-    /**
-     * Generate timetable grid.
-     */
-    public void generateTimeTableGrid() {
 
+    /**
+     * Generate timetable data
+     */
+    public void generateTimeTableData(){
         ObservableList<ReadOnlyLesson> lessons = logic.getFilteredLessonList();
         initGridData();
 
@@ -120,6 +120,14 @@ public class CombinePanel extends UiPart<Region> {
             int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol;
             gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan);
         }
+    }
+
+    /**
+     * Generate timetable grid.
+     */
+    public void generateTimeTableGrid() {
+
+        generateTimeTableData();
 
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COL; j++) {
@@ -130,8 +138,8 @@ public class CombinePanel extends UiPart<Region> {
                 int endHourSpan = data.getEndHourSpan();
                 if (i == weekDayRow &&  j == startHourCol) {
                     TextArea lbl = new TextArea(text);
-                    lbl.setId("lbl");
                     lbl.setWrapText(true);
+                    lbl.setEditable(false);
                     lbl.setStyle("-fx-control-inner-background:black;"
                             + " -fx-background-color: #383838;"
                             + " -fx-border-color: #EEEEEE"

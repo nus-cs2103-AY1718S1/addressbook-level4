@@ -1,11 +1,12 @@
 package guitests.guihandles;
 
-import javafx.scene.control.ListView;
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.ui.LessonListCard;
-
 import java.util.List;
 import java.util.Optional;
+
+import javafx.scene.control.ListView;
+
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.ui.LessonListCard;
 
 /**
  * Provides a handle for {@code LessonListPanel} containing the list of {@code LessonCard}.

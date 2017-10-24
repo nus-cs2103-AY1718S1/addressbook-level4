@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstLessonOnly;
 import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -16,6 +15,7 @@ import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.predicates.FavouriteListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
+
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.

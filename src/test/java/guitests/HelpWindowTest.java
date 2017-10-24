@@ -1,11 +1,13 @@
 package guitests;
 
-import guitests.guihandles.HelpWindowHandle;
-import org.junit.Test;
-import seedu.address.logic.commands.HelpCommand;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import guitests.guihandles.HelpWindowHandle;
+
+import seedu.address.logic.commands.HelpCommand;
 
 public class HelpWindowTest extends AddressBookGuiTest {
     private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "
@@ -15,7 +17,7 @@ public class HelpWindowTest extends AddressBookGuiTest {
 
     @Test
     public void openHelpWindow() {
-        //use accelerator
+        // use accelerator
         getCommandBox().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
@@ -28,15 +30,15 @@ public class HelpWindowTest extends AddressBookGuiTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-//        getBrowserPanel().click();
-//        getMainMenu().openHelpWindowUsingAccelerator();
-//        assertHelpWindowNotOpen();
+        // getBrowserPanel().click();
+        // getMainMenu().openHelpWindowUsingAccelerator();
+        // assertHelpWindowNotOpen();
 
-        //use menu button
+        // use menu button
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
 
-        //use command box
+        // use command box
         runCommand(HelpCommand.COMMAND_WORD);
         assertHelpWindowOpen();
     }

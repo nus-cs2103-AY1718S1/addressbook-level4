@@ -12,6 +12,8 @@ import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import org.junit.Test;
 
+import java.util.List;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -23,8 +25,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
-
-import java.util.List;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.

@@ -73,7 +73,7 @@ Adds a lesson to the ModU list +
 Format: `add m/MODULE_CODE ct/CLASS_TYPE v/VENUE gp/GROUP ts/TIME_SLOT l/LECTURER...`
 
 [TIP]
-A lesson must have at least one lecturer
+A lesson must have at least one lecturer and a lesson must not have a same time slot and location as existing lesson in ModU
 
 Examples:
 
@@ -159,17 +159,26 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 ****
 * The search is case insensitive. e.g `MA1101R` will match `Ma1101r`
 * The order of the keywords does not matter. e.g. `MA1101R CS2101` will match `CS2101` and 'MA1101R'
-* Only the code is searched.
-* Only full module code will be matched e.g. `MA1101` will not match `MA1101R`
+* The location will be search if the list is listed by location
+* The module code will be search if the list is listed by module
+* Any detail of a lesson will be search if view is called previously
+* Partial of the code will be matched e.g. `MA1101` will match `MA1101R`
 * Lessons matching at least one keyword will be returned (i.e. `OR` search). e.g. `MA1101R CS2101` will return `MA1101R` or `CS2101`
 ****
 
 Examples:
 
-* `find MA1101R` +
-Returns `MA1101R`
-* `find MA1101R CS2101 CS2103T +
+* `list module` +
+`find MA1101R` +
+Returns modules with code name `MA1101R`
+* `find MA1101R CS2101 CS2103` +
 Returns module having code `MA1101R`, `CS2101`, or `CS2103T`
+* `list location` +
+`find lt25` +
+Returns location with name `LT25`
+* `view 1` +
+`find TUE`
+Return lesson with any details that contains `TUE` case insensitive
 
 image::video/find.gif[width="790"]
 

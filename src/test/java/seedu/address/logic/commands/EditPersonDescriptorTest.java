@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
 
 import org.junit.Test;
+
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 
 public class EditPersonDescriptorTest {

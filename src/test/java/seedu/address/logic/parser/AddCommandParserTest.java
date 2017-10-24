@@ -1,16 +1,5 @@
 package seedu.address.logic.parser;
 
-import org.junit.Test;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.ClassType;
-import seedu.address.model.module.Code;
-import seedu.address.model.module.Group;
-import seedu.address.model.module.Lesson;
-import seedu.address.model.module.Location;
-import seedu.address.model.module.TimeSlot;
-import seedu.address.testutil.LessonBuilder;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.CLASSTYPE_DESC_MA1101R;
@@ -39,6 +28,18 @@ import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_CS2101;
 import static seedu.address.logic.commands.CommandTestUtil.VENUE_DESC_MA1101R;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Lesson;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.TimeSlot;
+import seedu.address.testutil.LessonBuilder;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
@@ -75,8 +76,9 @@ public class AddCommandParserTest {
                 + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R, new AddCommand(expectedLesson));
 
         // multiple tags - all accepted
-        Lesson expectedLessonMultipleLecturer = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
-                .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
+        Lesson expectedLessonMultipleLecturer = new LessonBuilder().withCode(VALID_CODE_MA1101R)
+                .withClassType(VALID_CLASSTYPE_MA1101R).withLocation(VALID_VENUE_MA1101R)
+                .withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
                 .withLecturers(VALID_LECTURER_MA1101R, VALID_LECTURER_CS2101).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
                         +  VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R
@@ -87,11 +89,12 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Lesson expectedLesson =new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
+        Lesson expectedLesson = new LessonBuilder().withCode(VALID_CODE_MA1101R).withClassType(VALID_CLASSTYPE_MA1101R)
                 .withLocation(VALID_VENUE_MA1101R).withGroup(VALID_GROUP_MA1101R).withTimeSlot(VALID_TIMESLOT_MA1101R)
                 .withLecturers(VALID_LECTURER_MA1101R).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
-                +  VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R, new AddCommand(expectedLesson));
+                +  VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R
+                + LECTURER_DESC_MA1101R, new AddCommand(expectedLesson));
     }
 
     @Test
@@ -100,32 +103,39 @@ public class AddCommandParserTest {
 
         // missing code prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_CODE_MA1101R + CLASSTYPE_DESC_MA1101R
-                +  VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R, expectedMessage);
+                +  VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R
+                + LECTURER_DESC_MA1101R, expectedMessage);
 
         // missing class type prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + VALID_CLASSTYPE_MA1101R
-                +  VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R, expectedMessage);
+                +  VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R
+                + LECTURER_DESC_MA1101R, expectedMessage);
 
         // missing venue prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
-                + VALID_VENUE_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R, expectedMessage);
+                + VALID_VENUE_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R
+                + LECTURER_DESC_MA1101R, expectedMessage);
 
         // missing group prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
-                + VENUE_DESC_MA1101R + VALID_GROUP_MA1101R + TIMESLOT_DESC_MA1101R + LECTURER_DESC_MA1101R, expectedMessage);
+                + VENUE_DESC_MA1101R + VALID_GROUP_MA1101R + TIMESLOT_DESC_MA1101R
+                + LECTURER_DESC_MA1101R, expectedMessage);
 
         // missing time slot prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
-                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + VALID_TIMESLOT_MA1101R + LECTURER_DESC_MA1101R, expectedMessage);
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + VALID_TIMESLOT_MA1101R
+                + LECTURER_DESC_MA1101R, expectedMessage);
 
         // missing lecturer prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
-                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + VALID_LECTURER_MA1101R, expectedMessage);
+                + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R
+                + VALID_LECTURER_MA1101R, expectedMessage);
 
 
         // all prefixes missing
         assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_CODE_MA1101R + VALID_CLASSTYPE_MA1101R
-                + VALID_VENUE_MA1101R + VALID_GROUP_MA1101R + VALID_TIMESLOT_MA1101R + VALID_LECTURER_MA1101R, expectedMessage);
+                + VALID_VENUE_MA1101R + VALID_GROUP_MA1101R + VALID_TIMESLOT_MA1101R
+                + VALID_LECTURER_MA1101R, expectedMessage);
     }
 
     @Test

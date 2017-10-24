@@ -1,21 +1,25 @@
 package guitests;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.testutil.LessonUtil;
-import seedu.address.ui.StatusBarFooter;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import static seedu.address.testutil.TypicalLessons.CS2103T_L1;
+import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
+import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static org.junit.Assert.*;
-import static seedu.address.testutil.TypicalLessons.CS2103T_L1;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
-import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.testutil.LessonUtil;
+import seedu.address.ui.StatusBarFooter;
 
 /**
  * TODO: Remove this class when we have system tests.
