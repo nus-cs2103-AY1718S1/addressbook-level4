@@ -189,42 +189,42 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         /* Case: missing phone -> added */
-        toAdd = new PersonBuilder().withName("Kai Hsien").withPhone(EMPTY_PHONE).withEmail(VALID_EMAIL_AMY)
+        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(EMPTY_PHONE).withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withWebsite(VALID_WEBSITE_AMY)
             .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + " n/Kai Hsien" + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: missing email -> added */
-        toAdd = new PersonBuilder().withName("Jeremy").withPhone(VALID_PHONE_AMY).withEmail(EMPTY_EMAIL)
+        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(EMPTY_EMAIL)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withWebsite(VALID_WEBSITE_AMY)
             .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + " n/Jeremy" + PHONE_DESC_AMY + ADDRESS_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + ADDRESS_DESC_AMY
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: missing address -> added */
-        toAdd = new PersonBuilder().withName("Adeeb").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
             .withAddress(EMPTY_ADDRESS).withBirthday(VALID_BIRTHDAY_AMY).withWebsite(VALID_WEBSITE_AMY)
             .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + " n/Adeeb" + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
             + BIRTHDAY_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: missing website -> added */
-        toAdd = new PersonBuilder().withName("Adeep").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withWebsite(EMPTY_WEBSITE)
             .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + " n/Adeep" + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
             + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: missing birthday -> added */
-        toAdd = new PersonBuilder().withName("Adeep").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+        toAdd = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
             .withAddress(VALID_ADDRESS_AMY).withBirthday(EMPTY_BIRTHDAY).withWebsite(VALID_WEBSITE_AMY)
             .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + " n/Adeep" + PHONE_DESC_AMY + EMAIL_DESC_AMY
+        command = AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + EMAIL_DESC_AMY
             + ADDRESS_DESC_AMY + WEBSITE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
