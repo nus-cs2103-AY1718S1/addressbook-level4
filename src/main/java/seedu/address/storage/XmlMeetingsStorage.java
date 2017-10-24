@@ -11,8 +11,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.UniqueMeetingList;
+import seedu.address.model.ReadOnlyMeetingList;
 
 /**
  * A class to access Meeting data stored as an xml file on the hard disk.
@@ -42,7 +41,7 @@ public class XmlMeetingsStorage implements MeetingsStorage {
     */
 
     @Override
-    public Optional<UniqueMeetingList> readMeetings() throws DataConversionException, IOException {
+    public Optional<ReadOnlyMeetingList> readMeetingList() throws DataConversionException, IOException {
         return readMeetingList(filePath);
     }
 
@@ -50,7 +49,7 @@ public class XmlMeetingsStorage implements MeetingsStorage {
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<UniqueMeetingList> readMeetingList(String filePath) throws DataConversionException,
+    public Optional<ReadOnlyMeetingList> readMeetingList(String filePath) throws DataConversionException,
                                                                                  FileNotFoundException {
         requireNonNull(filePath);
 
@@ -61,22 +60,22 @@ public class XmlMeetingsStorage implements MeetingsStorage {
             return Optional.empty();
         }
 
-        UniqueMeetingList meetingListOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath),
-                UniqueMeetingList.class);
+        ReadOnlyMeetingList meetingListOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath),
+                XmlSerializableMeetingList.class);
 
         return Optional.of(meetingListOptional);
     }
 
     @Override
-    public void saveMeetingList(UniqueMeetingList meetingList) throws IOException {
+    public void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException {
         saveMeetingList(meetingList, filePath);
     }
 
     /**
-     * Similar to {@link #saveMeetingList(UniqueMeetingList)}
+     * Similar to {@link #saveMeetingList(ReadOnlyMeetingList)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveMeetingList(UniqueMeetingList meetingList, String filePath) throws IOException {
+    public void saveMeetingList(ReadOnlyMeetingList meetingList, String filePath) throws IOException {
         requireNonNull(meetingList);
         requireNonNull(filePath);
 
@@ -87,11 +86,11 @@ public class XmlMeetingsStorage implements MeetingsStorage {
 
     /*
     @Override
-    public void backupMeetingList(UniqueMeetingList meetingList) throws IOException {
+    public void backupMeetingList(ReadOnlyMeetingList meetingList) throws IOException {
         saveMeetingList(meetingList, backupFilePath);
     }
 
-    public Optional<UniqueMeetingList> restoreMeetingList() throws IOException, DataConversionException {
+    public Optional<ReadOnlyMeetingList> restoreMeetingList() throws IOException, DataConversionException {
         return readMeetingList(backupFilePath);
     }
     */

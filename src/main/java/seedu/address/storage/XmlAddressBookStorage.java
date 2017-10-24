@@ -63,7 +63,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         }
 
         ReadOnlyAddressBook addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath),
-                ReadOnlyAddressBook.class);
+                XmlSerializableAddressBook.class);
 
         return Optional.of(addressBookOptional);
     }
