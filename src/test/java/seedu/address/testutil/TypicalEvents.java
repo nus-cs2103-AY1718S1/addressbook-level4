@@ -8,12 +8,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_ADDRESS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_ADDRESS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_DATE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_DATE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_A_NAME;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EVENT_B_NAME;
-
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
