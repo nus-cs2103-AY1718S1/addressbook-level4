@@ -4,29 +4,19 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
-import java.util.Set;
 
-import seedu.address.model.association.exceptions.DuplicateParticipationException;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.*;
-import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.event.exceptions.EventNotFoundException;
-import seedu.address.model.Model;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.PersonHaveParticipateException;
-import seedu.address.model.event.exceptions.PersonNotParticipateException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.HaveParticipateEventException;
-import seedu.address.model.person.exceptions.NotParticipateEventException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
 
 
 
@@ -49,15 +39,13 @@ public class JoinCommand extends UndoableCommand {
     private Index personIdx;
     private Index eventIdx;
     private Person personToJoin;
-    private Person editedPerson;
     private Event eventToJoin;
-    private ReadOnlyEvent editedEvent;
 
     /**
      * creates a new commands to add the specified {@code ReadOnlyPerson}
      */
-    public JoinCommand(Index personIdx, Index eventIdx){
-        requireAllNonNull(personIdx,eventIdx);
+    public JoinCommand(Index personIdx, Index eventIdx) {
+        requireAllNonNull(personIdx, eventIdx);
 
         this.personIdx = personIdx;
         this.eventIdx = eventIdx;
@@ -69,10 +57,10 @@ public class JoinCommand extends UndoableCommand {
 
         List<ReadOnlyPerson> lastShownPersonList = model.getFilteredPersonList();
         List<ReadOnlyEvent> lastShownEventList = model.getFilteredEventList();
-        if(personIdx.getZeroBased() >= lastShownPersonList.size()) {
+        if (personIdx.getZeroBased() >= lastShownPersonList.size()) {
             throw new  CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        if(eventIdx.getZeroBased() >= lastShownEventList.size()) {
+        if (eventIdx.getZeroBased() >= lastShownEventList.size()) {
             throw new  CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         personToJoin = (Person) lastShownPersonList.get(personIdx.getZeroBased());
@@ -84,8 +72,6 @@ public class JoinCommand extends UndoableCommand {
         } catch (HaveParticipateEventException npee) {
             return new CommandResult(MESSAGE_DUPLICATE_EVENT);
         }
-        /*model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredEventList(Model.PREDICATE_SHOW_ALL_EVENTS);*/
         return new CommandResult(String.format(MESSAGE_JOIN_SUCCESS, personToJoin.getName(),
                 eventToJoin.getEventName()));
     }

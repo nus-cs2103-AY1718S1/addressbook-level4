@@ -125,10 +125,13 @@ public class UniquePersonList implements Iterable<Person> {
 
     }
 
+    /**
+     * Add a specific person to the participant list of an event
+     */
     public void addParticipateEvent(Person targetPerson, Event participateEvent) throws HaveParticipateEventException {
-        try{
+        try {
             targetPerson.addParticipateEvent(participateEvent);
-        }catch (DuplicateEventException dpe) {
+        } catch (DuplicateEventException dpe) {
             throw new HaveParticipateEventException();
         }
     }

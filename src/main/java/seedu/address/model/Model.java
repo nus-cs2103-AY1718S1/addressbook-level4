@@ -10,7 +10,6 @@ import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.PersonHaveParticipateException;
 import seedu.address.model.event.exceptions.PersonNotParticipateException;
-import seedu.address.model.person.ParticipationList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;

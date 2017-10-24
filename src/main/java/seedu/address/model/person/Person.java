@@ -45,17 +45,6 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.participation = new SimpleObjectProperty<>(new ParticipationList());
     }
-    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Set<Tag> tags, ParticipationList list) {
-        requireAllNonNull(name, phone, email, address, tags);
-        this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
-        this.birthday = new SimpleObjectProperty<>(birthday);
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.participation = new SimpleObjectProperty<>(list);
-    }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
@@ -63,8 +52,9 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getBirthday(), source.getTags());
-        if(source.getParticipation().size()>0)
+        if (source.getParticipation().size() > 0) {
             this.setParticipants(source.getParticipation());
+        }
     }
 
     public void setName(Name name) {
