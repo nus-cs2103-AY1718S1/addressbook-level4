@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 //import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-//import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -113,7 +113,7 @@ public class AutoCompleteModelParserTest {
         //single possibility matched
         assertEquals(parser.parseForPossibilities("edit 12 e/corn"),
                 Arrays.asList(new String[] {"edit 12 e/" + DANIEL.getEmail().toString(),
-                        "edit 12 e/corn"}));
+                                            "edit 12 e/corn"}));
 
         //no possibility matched
         assertEquals(parser.parseForPossibilities("add e/example.com"),
@@ -126,17 +126,37 @@ public class AutoCompleteModelParserTest {
         //multiple possibilities matched
         assertEquals(parser.parseForPossibilities("add a/1"),
                 Arrays.asList(new String[] {"add a/" + ALICE.getAddress().toString(),
-                        "add a/" + DANIEL.getAddress().toString(),
-                        "add a/1"}));
+                                            "add a/" + DANIEL.getAddress().toString(),
+                                            "add a/1"}));
 
         //single possibility matched
         assertEquals(parser.parseForPossibilities("edit 2 a/10"),
                 Arrays.asList(new String[] {"edit 2 a/" + DANIEL.getAddress().toString(),
-                        "edit 2 a/10"}));
+                                            "edit 2 a/10"}));
 
         //no possibility matched
         assertEquals(parser.parseForPossibilities("add a/serangoon"),
                 Arrays.asList(new String[] {"add a/serangoon"}));
+    }
+
+    @Test
+    public void testParseTags() {
+        parser.setPrefix(PREFIX_TAG);
+        //multiple possibilities matched
+        assertEquals(parser.parseForPossibilities("removetag t/f"),
+                Arrays.asList(new String[] {"removetag t/friends",
+                                            "removetag t/friend",
+                                            "removetag t/family",
+                                            "removetag t/f"}));
+
+        //single possibility matched
+        assertEquals(parser.parseForPossibilities("edit 1 t/fa"),
+                Arrays.asList(new String[] {"edit 1 t/family",
+                                            "edit 1 t/fa"}));
+
+        //no possibility matched
+        assertEquals(parser.parseForPossibilities("add n/Goatman t/enemy t/to"),
+                Arrays.asList(new String[] {"add n/Goatman t/enemy t/to"}));
     }
 
     @After
@@ -282,7 +302,17 @@ public class AutoCompleteModelParserTest {
 
         @Override
         public List<String> getAllTagsInAddressBook() {
-            return personsAdded.stream()
+            //generate a unique tag list first
+            final ArrayList<Tag> tagsList = new ArrayList<Tag>();
+            for (ReadOnlyPerson person : personsAdded) {
+                for (Tag tag : person.getTags()) {
+                    if (tagsList.indexOf(tag) == -1) {
+                        tagsList.add(tag);
+                    }
+                }
+            }
+
+            return tagsList.stream()
                     .map(tag -> tag.toString().substring(1, tag.toString().length() - 1))
                     .collect(Collectors.toList());
         }
