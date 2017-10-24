@@ -50,11 +50,12 @@ public class TaskCard extends UiPart<Region> {
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
         this.task = task;
-        if(!task.getComplete()){
+        if (!task.getComplete()) {
             id.setText(displayedIndex + ". ");
             initTags(task);
         }
         bindListeners(task);
+
     }
 
     private static String getTagColor(String tagName) {

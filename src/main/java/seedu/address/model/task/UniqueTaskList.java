@@ -2,6 +2,7 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
+import java.lang.annotation.Target;
 import java.util.Iterator;
 import java.util.List;
 
@@ -71,9 +72,9 @@ public class UniqueTaskList implements Iterable<Task> {
      *
      * @throws TaskNotFoundException if {@code target} could not be found in the list.
      */
-    public void setComplete(ReadOnlyTask Task) throws TaskNotFoundException {
-        requireNonNull(Task);
-        int index = internalList.indexOf(Task);
+    public void setComplete(ReadOnlyTask task) throws TaskNotFoundException {
+        requireNonNull(task);
+        int index = internalList.indexOf(task);
         if (index == -1) {
             throw new TaskNotFoundException();
         }

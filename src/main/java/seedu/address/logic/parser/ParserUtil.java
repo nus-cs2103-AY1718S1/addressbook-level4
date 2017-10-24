@@ -66,7 +66,7 @@ public class ParserUtil {
     /**
      * Parser a {@code Optional<Boolean> complete} into an optional of the same type
      */
-    public static Optional<Boolean> parseBoolean(Optional<Boolean> complete) throws IllegalValueException{
+    public static Optional<Boolean> parseBoolean(Optional<Boolean> complete) throws IllegalValueException {
         requireNonNull(complete);
         return Optional.of(complete.get());
     }

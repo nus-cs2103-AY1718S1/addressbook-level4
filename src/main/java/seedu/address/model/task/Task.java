@@ -53,7 +53,7 @@ public class Task implements ReadOnlyTask {
      * Constructor with complete
      * @param state, the marked completed state of the task
      */
-    public Task(Boolean state){
+    public Task(Boolean state) {
         this();
         this.complete = new SimpleObjectProperty<>(true);
     }
@@ -108,7 +108,8 @@ public class Task implements ReadOnlyTask {
      * @param endDateTime, the end date and time of this task
      * @param tags, the tag set
      */
-    public Task (String name, String description, String startDateTime, String endDateTime, Set<Tag> tags, Boolean complete) {
+    public Task (String name, String description, String startDateTime, String endDateTime,
+                 Set<Tag> tags, Boolean complete) {
         this(tags);
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
@@ -162,7 +163,9 @@ public class Task implements ReadOnlyTask {
         return endDateTime.get();
     }
 
-    public Boolean getComplete () { return complete.get(); }
+    public Boolean getComplete () {
+        return complete.get();
+    }
 
     public ObjectProperty<String> nameProperty() {
         return taskName;
@@ -184,7 +187,9 @@ public class Task implements ReadOnlyTask {
         return tags;
     }
 
-    public ObjectProperty<Boolean> completeProperty() { return complete; }
+    public ObjectProperty<Boolean> completeProperty() {
+        return complete;
+    }
 
     public void setName(String name) {
         this.taskName.set(requireNonNull(name));
@@ -206,7 +211,9 @@ public class Task implements ReadOnlyTask {
         tags.set(new UniqueTagList(replacement));
     }
 
-    public void setComplete() { this.complete.set(requireNonNull(true)); }
+    public void setComplete() {
+        this.complete.set(requireNonNull(true));
+    }
 
     /**
      * Set a new tag set along with the new task construction

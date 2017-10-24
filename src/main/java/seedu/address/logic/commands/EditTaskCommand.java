@@ -196,9 +196,9 @@ public class EditTaskCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
-        public void setComplete(Boolean state) {this.complete = true; }
+        public void setComplete(Boolean state) { this.complete = true; }
 
-        public Optional<Boolean> getComplete() {return Optional.ofNullable(complete); }
+        public Optional<Boolean> getComplete() { return Optional.ofNullable(complete); }
 
         @Override
         public boolean equals(Object other) {
