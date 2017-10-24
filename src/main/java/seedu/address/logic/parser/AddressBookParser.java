@@ -41,8 +41,8 @@ public class AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    private static final String ADDRESSBOOK_MODE = "addressbook ab";
-    private static final String TASKMANAGER_MODE = "taskmanager tm";
+    public static final String ADDRESSBOOK_MODE = "addressbook ab";
+    public static final String TASKMANAGER_MODE = "taskmanager tm";
 
     /**
      * Parses user input into command for execution.
