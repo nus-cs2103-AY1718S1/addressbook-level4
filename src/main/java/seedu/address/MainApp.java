@@ -101,7 +101,7 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
         }
-
+        logger.info("yoyo" + initialData.toString());
         return new ModelManager(initialData, userPrefs);
     }
 

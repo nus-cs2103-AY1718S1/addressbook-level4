@@ -55,8 +55,9 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredReminders = new FilteredList<>(this.addressBook.getReminderList());
+        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+
     }
 
     public ModelManager() {
@@ -168,6 +169,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
+        logger.info("it came here");
+
         return FXCollections.unmodifiableObservableList(filteredReminders);
     }
 
