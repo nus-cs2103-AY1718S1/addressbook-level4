@@ -12,11 +12,12 @@ public class TaskByEndCommand extends Command {
     public static final String COMMAND_WORD = "taskbyend";
     public static final String COMMAND_ALIAS = "byend";
 
-    public static final String MESSAGE_NOT_IMPLEMENTED_YET = "Taskbyend command not implemented yet";
+    public static final String MESSAGE_SUCCESS = "Task sorted by end date now.";
 
 
     @Override
-    public CommandResult execute() throws CommandException {
-        throw new CommandException(MESSAGE_NOT_IMPLEMENTED_YET);
+    public CommandResult execute() {
+        model.taskByEnd();
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 }

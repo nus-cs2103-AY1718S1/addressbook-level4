@@ -146,7 +146,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
+        taskListPanel = new TaskListPanel(logic.getSortedTaskList());
         taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
     }
 
