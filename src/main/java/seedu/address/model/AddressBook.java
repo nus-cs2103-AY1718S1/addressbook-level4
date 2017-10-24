@@ -10,11 +10,13 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.HaveParticipateEventException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -213,6 +215,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.removeParticipateEvent(person, event);
     }
 
+    public void addParticipation(Person person, Event event) throws HaveParticipateEventException {
+        persons.addParticipateEvent(person, event);
+    }
     //// util methods
 
     @Override

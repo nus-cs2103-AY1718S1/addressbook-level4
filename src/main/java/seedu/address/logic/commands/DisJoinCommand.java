@@ -39,7 +39,7 @@ public class DisJoinCommand extends UndoableCommand {
     private Person personToRemove;
     private Event eventToRemove;
 
-    public DisJoinCommand (Index personIndex, Index eventIndex) {
+    public DisJoinCommand(Index personIndex, Index eventIndex) {
         this.personIndex = personIndex;
         this.eventIndex = eventIndex;
     }
@@ -86,5 +86,13 @@ public class DisJoinCommand extends UndoableCommand {
                     + "it should not fail now");
         }
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return this == other
+                || (other instanceof DisJoinCommand
+                && this.eventIndex.equals(((DisJoinCommand) other).eventIndex)
+                && this.personIndex.equals(((DisJoinCommand) other).personIndex));
     }
 }

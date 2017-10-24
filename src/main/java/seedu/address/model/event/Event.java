@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleObjectProperty;
 
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -101,6 +102,9 @@ public class Event implements ReadOnlyEvent {
         return Collections.unmodifiableSet(participants.get().toSet());
     }
 
+    public ParticipantList getParticipantList() {
+        return participants.get();
+    }
     /**
      * Replaces this event's participants with the persons in the argument set.
      */
@@ -110,6 +114,10 @@ public class Event implements ReadOnlyEvent {
 
     public void removeParticipant(ReadOnlyPerson person) throws PersonNotFoundException {
         this.participants.get().remove(person);
+    }
+
+    public void addParticipant(Person person) throws DuplicatePersonException {
+        this.participants.get().add(person);
     }
 
     @Override
