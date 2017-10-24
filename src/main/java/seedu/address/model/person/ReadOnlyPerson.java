@@ -65,26 +65,26 @@ public interface ReadOnlyPerson {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName());
-        if (!(getPhone().toString() == null)) {
+        if (getPhone().toString() != null) {
             builder.append(" Phone: ")
                 .append(getPhone());
         }
 
-        if (!(getEmail().toString() == null)) {
+        if (getEmail().toString() != null) {
             builder.append(" Email: ")
                 .append(getEmail());
         }
-        if (!(getAddress().toString() == null)) {
+        if (getAddress().toString() != null) {
             builder.append(" Address: ")
                 .append(getAddress());
         }
-        if (!(getBirthday().toString() == null)) {
+        if (getBirthday().toString() != null) {
             builder.append(" Birthday: ")
                 .append(getBirthday());
         }
         builder.append(" Remarks: ")
             .append(getRemark());
-        if (!(getWebsite().toString() == null)) {
+        if (getWebsite().toString() != null) {
             builder.append(" Website: ")
                 .append(getWebsite());
         }
