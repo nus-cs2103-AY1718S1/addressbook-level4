@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Scanner;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -45,16 +44,21 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    /**
+     * Parses multiple {@code oneBasedIndex} into a {@code Index} ArrayList<Index> and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
     public static ArrayList<Index> parseMultiIndex(String multiBasedIndex) throws IllegalValueException {
         ArrayList<Index> parsedIndexes = new ArrayList <> ();
         String[] splitParse = multiBasedIndex.split(" ");
-        for(int x = 1; x< splitParse.length; x++) {
+        for (int x = 1; x <splitParse.length; x++) {
             splitParse[x] = splitParse[x].trim();
-            if(!StringUtil.isNonZeroUnsignedInteger(splitParse[x])) {
+            if (!StringUtil.isNonZeroUnsignedInteger(splitParse[x])) {
                 throw new IllegalValueException(MESSAGE_INVALID_INDEX);
             }
         }
-        for(int x = 1; x<splitParse.length; x++){
+        for (int x = 1; x <splitParse.length; x++) {
             parsedIndexes.add(Index.fromOneBased(Integer.parseInt(splitParse[x])));
         }
         return parsedIndexes;

@@ -1,9 +1,7 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -38,30 +36,30 @@ public class DeleteCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        for(int x = 0; x< targetIndex.size(); x++) {
+        for (int x = 0; x< targetIndex.size(); x++) {
             if (targetIndex.get(x).getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
-        if(targetIndex.size() <= 0)
+        if (targetIndex.size() <= 0) {
             throw new CommandException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
 
         ArrayList<ReadOnlyPerson> personToDelete = new ArrayList<>();
-        for(int x = 0; x<targetIndex.size(); x++) {
+        for (int x = 0; x <targetIndex.size(); x++) {
             personToDelete.add(lastShownList.get(targetIndex.get(x).getZeroBased()));
         }
-        //ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            for(int x = 0; x<personToDelete.size(); x++)
-            model.deletePerson(personToDelete.get(x));
+            for(int x = 0; x <personToDelete.size(); x++) {
+                model.deletePerson(personToDelete.get(x));
+            }
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
         String outputResult = MESSAGE_DELETE_PERSON_SUCCESS;
         outputResult = String.format(outputResult, personToDelete.get(0));
-        for(int x = 1; x<personToDelete.size(); x++)
-        {
+        for (int x = 1; x <personToDelete.size(); x++) {
             outputResult = outputResult + "\n";
             String temp = personToDelete.get(x).toString();
             outputResult += temp;
