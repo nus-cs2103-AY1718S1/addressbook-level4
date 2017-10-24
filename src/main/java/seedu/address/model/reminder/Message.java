@@ -2,8 +2,6 @@ package seedu.address.model.reminder;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 /**
  * Represents a reminder's message in the address book.
  * Guarantees: immutable
@@ -14,10 +12,8 @@ public class Message {
 
     /**
      * Validates given message.
-     *
-     * @throws IllegalValueException if given message string is invalid.
      */
-    public Message(String message) throws IllegalValueException {
+    public Message(String message) {
         requireNonNull(message);
         this.message = message.trim();
     }
