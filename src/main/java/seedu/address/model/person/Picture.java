@@ -25,7 +25,7 @@ public class Picture {
     public static final String PICTURE_SAVE_LOCATION =
             UserPrefs.FOLDER_LOCATION; // Where images are stored when added
     public static final String DEFAULT_PICTURE_LOCATION =
-            "src/main/resources/images/";
+            "/images/";
     public static final String DEFAULT_PICTURE =
             "default_profile.png";
 
@@ -96,8 +96,7 @@ public class Picture {
      */
     public String getPictureLocation() {
         if (value == null) {
-            return PREFIX_PICTURE + Paths.get(DEFAULT_PICTURE_LOCATION + DEFAULT_PICTURE)
-                    .toAbsolutePath().toUri().getPath();
+            return DEFAULT_PICTURE_LOCATION + DEFAULT_PICTURE;
         } else {
             return PREFIX_PICTURE + Paths.get(PICTURE_SAVE_LOCATION + value)
                     .toAbsolutePath().toUri().getPath();
