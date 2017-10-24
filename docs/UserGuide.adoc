@@ -82,6 +82,38 @@ Examples:
 
 image::video/add.gif[width="790"]
 
+=== Marking a lesson: `mark`
+
+Marks a lesson to the marked list +
+Format: `mark INDEX`
+
+****
+* Mark the lesson at the specified `INDEX`. The index refers to the index number shown in the last lesson listing. The index *must be a positive integer* 1, 2, 3, ...
+* The specified lesson must be initially not in the marked list.
+****
+
+Examples:
+
+* `view 1` +
+`mark 1` +
+Mark the person into the marked list.
+
+=== Marking a lesson: `unmark`
+
+remove a lesson from the marked list +
+Format: `unmark INDEX`
+
+****
+* Unmark the lesson at the specified `INDEX`. The index refers to the index number shown in the last lesson listing. The index *must be a positive integer* 1, 2, 3, ...
+* The specified lesson must already exist in the marked list.
+****
+
+Examples:
+
+* `view 1` +
+`unmark 1` +
+Remove the lesson from the marked list.
+
 === Listing all lesson : `list`
 
 Shows a list of all modules in the ModU. +
@@ -89,6 +121,9 @@ Format: `list module`
 
 Shows a list of all location in the ModU. +
 Format: `List location`
+
+Shows a list of all marked lessons in the ModU. +
+Format: `List marked`
 
 image::video/list.gif[width="790"]
 
@@ -273,6 +308,11 @@ image::video/history.gif[width="790"]
 Restores the list to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
+****
+* You can only use `undo` with current listing element(Module/Location/Lesson).
+* Undo previous command is no longger allowed once user switched listing element.
+****
+
 [NOTE]
 ====
 Undoable commands: those commands that modify the list's content (`add`, `delete`, `edit` and `clear`).
@@ -300,6 +340,11 @@ image::video/undo.gif[width="790"]
 
 Reverses the most recent `undo` command. +
 Format: `redo`
+
+****
+If the most recent `undo` command is execueted with the panel listing elements different from those
+elements when the actual command is executed. The command will not be allowed to redo.
+****
 
 Examples:
 
