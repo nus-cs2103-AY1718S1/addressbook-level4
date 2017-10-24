@@ -117,22 +117,22 @@ public class AddCommandTest {
 
         @Override
         public void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void addSchedule(ReadOnlySchedule schedule) throws DuplicateScheduleException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException {
-
+            fail("This method should not be called.");
         }
 
         @Override
@@ -180,12 +180,12 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void updateFilteredScheduleList(Predicate<ReadOnlySchedule> predicate) {
-
+            fail("This method should not be called.");
         }
     }
 

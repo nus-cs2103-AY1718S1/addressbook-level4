@@ -132,10 +132,7 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        //TODO: Edit ScheduleListPanel.java to take in schedules instead of persons,
-        //TODO: and the line below to getFilteredScheduleList().
-        //TODO: I've included CorrectScheduleListPanel.txt in dropbox, can copypaste
-        ScheduleListPanel scheduleListPanel = new ScheduleListPanel(logic.getFilteredPersonList());
+        ScheduleListPanel scheduleListPanel = new ScheduleListPanel(logic.getFilteredScheduleList());
         browserPanel.getSchedulePlaceholder().getChildren().add(scheduleListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
