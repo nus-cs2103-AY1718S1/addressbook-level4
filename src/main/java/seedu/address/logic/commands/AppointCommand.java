@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Appointment;
 
 /**
  * Appoint command which add an appointment to the calendar
@@ -20,18 +21,18 @@ public class AppointCommand extends UndoableCommand {
             + "[date (dd/mm/yy)] [time (hh:mm)] [duration (mins)";
 
     private final Index index;
-    private final String appointmentDetails;
+    private final Appointment appointment;
 
-    public AppointCommand(Index index, String appointmentDetails) {
+    public AppointCommand(Index index, Appointment appointment) {
         requireNonNull(index);
-        requireNonNull(appointmentDetails);
+        requireNonNull(appointment);
 
         this.index = index;
-        this.appointmentDetails = appointmentDetails;
+        this.appointment = appointment;
     }
 
-    public String getAppointment() {
-        return this.appointmentDetails;
+    public Appointment getAppointment() {
+        return this.appointment;
     }
 
     @Override

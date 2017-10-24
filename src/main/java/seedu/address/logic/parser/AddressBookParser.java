@@ -63,7 +63,7 @@ public class AddressBookParser {
 
         case GroupCommand.COMMAND_WORD:
             return new GroupCommandParser().parse(arguments);
-            
+
         case AppointCommand.COMMAND_WORD:
             return new AppointCommandParser().parse(arguments);
 

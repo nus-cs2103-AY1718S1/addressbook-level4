@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AppointCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Appointment;
 
 /**
  * Parses input arguments and creates a new AppointCommand object
@@ -30,7 +31,10 @@ public class AppointCommandParser implements Parser<AppointCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AppointCommand.MESSAGE_USAGE));
         }
-
-        return new AppointCommand(index, appointmentDetails);
+        try {
+            return new AppointCommand(index, new Appointment(appointmentDetails));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
     }
 }
