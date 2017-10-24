@@ -22,6 +22,6 @@ public class ListFaveCommand extends Command {
 
     public static Predicate<ReadOnlyPerson> isFavourite() {
         return p ->
-                p.getFavourite().getStatus() == true;
+                p.getFavourite().getStatus();
     }
 }
