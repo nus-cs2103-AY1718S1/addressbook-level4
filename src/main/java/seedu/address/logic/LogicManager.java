@@ -7,6 +7,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.PermissionCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -23,6 +24,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private Command previousCommand;
 
     public LogicManager(Model model) {
         this.model = model;
@@ -36,12 +38,27 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
+            previousCommand = command;
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;
         } finally {
             history.add(commandText);
+        }
+    }
+
+    @Override
+    public CommandResult executeAfterUserPermission(String permissionText) throws CommandException, ParseException {
+        logger.info("----------------[USER INPUT][" + permissionText + "]");
+        try {
+            boolean userPermission = addressBookParser.parsePermission(permissionText);
+            assert(previousCommand instanceof PermissionCommand);
+            PermissionCommand command = (PermissionCommand) previousCommand;
+            CommandResult result = command.executeAfterUserPermission(userPermission);
+            return result;
+        } finally {
+            history.add(permissionText);
         }
     }
 

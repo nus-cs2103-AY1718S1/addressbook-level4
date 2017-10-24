@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyAddressBook;
 
 /**
- * Requests to restore backup version of Address Book from the default file
+ * Requests to restore backup version of Address Book from the default file path
  */
 public class RestoreBackupDataEvent extends BaseEvent {
     private ReadOnlyAddressBook backupAddressBookData;

@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -195,4 +196,31 @@ public class AddressBookParserTest {
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
     }
+
+    @Test
+    public void parsePermission_userAllows() throws Exception {
+        assertTrue(parser.parsePermission("yes"));
+        assertTrue(parser.parsePermission("y"));
+    }
+
+    @Test
+    public void parsePermission_userDoNotAllow() throws Exception {
+        assertFalse(parser.parsePermission("no"));
+        assertFalse(parser.parsePermission("n"));
+    }
+
+    @Test
+    public void parsePermission_unrecognisedInput_throwsParseException() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        parser.parsePermission("");
+    }
+
+    @Test
+    public void parsePermission_unknownCommand_throwsParseException() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
+        parser.parsePermission("unknownCommand");
+    }
+
 }
