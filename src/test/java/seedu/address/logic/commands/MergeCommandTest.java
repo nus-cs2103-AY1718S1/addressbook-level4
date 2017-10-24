@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -16,12 +18,14 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 /**
  * Contains integration test (interaction with Logic) for {@code MergeCommand}
  */
 public class MergeCommandTest {
     private final String TEST_DEFAULT_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/TestAddressBook.xml";
+    private final String TEST_DATA_ERROR_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/DataConversionError.xml";
     private final String TEST_NEW_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
     
     @Rule
@@ -59,6 +63,18 @@ public class MergeCommandTest {
         assertCommandSuccess(mergeCommand, MergeCommand.MESSAGE_SUCCESS, model, logic);
     }
 
+    @Test
+    public void merge_fileNotFound_failure() {
+        String mergeCommand = MergeCommand.COMMAND_WORD + " " + "./dummy/path/file.xml";
+        assertCommandFailure(mergeCommand, CommandException.class, MergeCommand.MESSAGE_FILE_NOT_FOUND, logic);
+    }
+
+    @Test
+    public void merge_dataConversionError_failure() {
+        String mergeCommand = MergeCommand.COMMAND_WORD + " " + TEST_DATA_ERROR_FILE_PATH;
+        assertCommandFailure(mergeCommand, CommandException.class, MergeCommand.MESSAGE_DATA_CONVERSION_ERROR, logic);
+    }
+    
     /**
      * Executes the command, confirms that no exceptions are thrown and that the result message is correct.
      * Also confirms that {@code expectedModel} is as specified.
@@ -66,6 +82,15 @@ public class MergeCommandTest {
      */
     private void assertCommandSuccess(String inputCommand, String expectedMessage, Model expectedModel, Logic expectedLogic) {
         assertCommandBehavior(null, inputCommand, expectedMessage, expectedModel, expectedLogic);
+    }
+
+    /**
+     * Executes the command, confirms that the exception is thrown and that the result message is correct.
+     * @see #assertCommandBehavior(Class, String, String, Model, Logic)
+     */
+    private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage, Logic expectedLogic) {
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel, expectedLogic);
     }
     
     private void assertCommandBehavior(Class<?> expectedException, String inputCommand,
