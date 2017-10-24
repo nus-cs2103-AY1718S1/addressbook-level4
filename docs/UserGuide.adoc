@@ -91,7 +91,7 @@ _Figure 4.1.1_
 Command Name: `add` +
 Shorthand Alias: `a` +
 Function: adds a person to *DummyName* +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... [m/MEETING]...` +
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...` +
 [TIP]
 A person can have any number of tags (including 0)
 [TIP]
@@ -115,7 +115,9 @@ Here are some other ways you can add contacts:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Jack Daniels`
 * `a n/John Watson p/83331122 e/johnw@example.com a/John Avenue, block 2, #01-01`
+* `a n/Dave`
 
 If you type in all commands shown above, you should see:
 

@@ -61,6 +61,10 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_MEETING_DESC = " " + PREFIX_MEETING + "10/10/15 10:00"; // incorrect date format
 
+    public static final String NO_PHONE_SET = "No Phone Number";
+    public static final String NO_EMAIL_SET = "No Email";
+    public static final String NO_ADDRESS_SET = "No Address";
+
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
