@@ -106,7 +106,7 @@ public class AddTagCommandTest {
     }
 
     @Test
-    public void execute_validTagsValidIndexes_success() throws Exception {
+    public void execute_MultipleTagsMultipleIndexes_success() throws Exception {
         Tag tagToAdd1 = new Tag("enemy");
         Tag tagToAdd2 = new Tag("brother");
         Set<Index> indexSet = new HashSet<>();
