@@ -79,7 +79,7 @@ Alias: `qh`
 ==== Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
+Format: `add n/NAME [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
 Alias: `a`
 
 [TIP]
@@ -95,7 +95,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 * `add n/Bob p/91294232`
 * `add n/Sally e/friend@casual.com e/colleague@work.com
-* `add n/Allen Walker p/11112222 e/allen@walker.com a/Agate Street 22 f/allenwalker t/allenwalker99 i/iamallen`
+* `add n/Allen Walker p/11112222 e/allen@walker.com a/Agate Street 22 fb/allenwalker tw/allenwalker99 ig/iamallen`
 
 ==== Listing all persons : `list`
 
