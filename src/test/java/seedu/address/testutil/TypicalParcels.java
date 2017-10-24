@@ -44,7 +44,7 @@ public class TypicalParcels {
             .withDeliveryDate("01-03-2000").build();
     public static final ReadOnlyParcel DANIEL = new ParcelBuilder().withTrackingNumber("RR111321123SG")
             .withName("Daniel Meier").withPhone("87652533").withEmail("cornelia@example.com")
-            .withAddress("59 Namly Garden S267387").withStatus("delivered")
+            .withAddress("59 Namly Garden S267387").withStatus("overdue")
             .withDeliveryDate("04-04-2004").build();
     public static final ReadOnlyParcel ELLE = new ParcelBuilder().withTrackingNumber("RR111321124SG")
             .withName("Elle Meyer").withPhone("9482224").withEmail("werner@example.com")
@@ -56,15 +56,15 @@ public class TypicalParcels {
     public static final ReadOnlyParcel GEORGE = new ParcelBuilder().withTrackingNumber("RR696969696SG")
             .withName("George Best").withPhone("9482442").withEmail("anna@example.com")
             .withAddress("Block 532 HDB Upper Cross Street s050532").withDeliveryDate("07-07-2007")
-            .withTags("family", "friends").withStatus("delivered").build();
+            .withTags("family", "friends").withStatus("completed").build();
 
     // Manually added
     public static final ReadOnlyParcel HOON = new ParcelBuilder().withTrackingNumber("RR121212124SG")
             .withName("Hoon Meier").withPhone("8482424").withEmail("stefan@example.com")
-            .withAddress("522 Hougang Ave 6 s530522").withDeliveryDate("08-08-2008").withStatus("delivered").build();
+            .withAddress("522 Hougang Ave 6 s530522").withDeliveryDate("08-08-2008").withStatus("completed").build();
     public static final ReadOnlyParcel IDA = new ParcelBuilder().withTrackingNumber("RR111333888SG")
             .withName("Ida Mueller").withPhone("8482131").withEmail("hans@example.com")
-            .withAddress("3 River Valley Rd, S179024").withDeliveryDate("09-09-2009").withStatus("DELIVERED").build();
+            .withAddress("3 River Valley Rd, S179024").withDeliveryDate("09-09-2009").withStatus("COMPLETED").build();
 
     // Manually added - Parcel's details found in {@code CommandTestUtil}
     public static final ReadOnlyParcel AMY = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)

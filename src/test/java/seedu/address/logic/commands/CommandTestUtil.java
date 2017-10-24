@@ -41,7 +41,7 @@ public class CommandTestUtil {
     public static final String VALID_DELIVERY_DATE_AMY = "01-01-2001";
     public static final String VALID_DELIVERY_DATE_BOB = "02-02-2002";
     public static final String VALID_STATUS_AMY = "deliVerIng"; // for case insenstivity
-    public static final String VALID_STATUS_BOB = "Delivered"; // case insensitivity of Status
+    public static final String VALID_STATUS_BOB = "Completed"; // case insensitivity of Status
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 

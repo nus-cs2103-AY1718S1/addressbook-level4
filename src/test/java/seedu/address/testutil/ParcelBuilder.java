@@ -144,7 +144,7 @@ public class ParcelBuilder {
      */
     public ParcelBuilder withStatus(String status) {
         try {
-            this.parcel.setStatus(Status.getStatusInstance(status));
+            this.parcel.setStatus(Status.getInstance(status));
         } catch (IllegalValueException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
