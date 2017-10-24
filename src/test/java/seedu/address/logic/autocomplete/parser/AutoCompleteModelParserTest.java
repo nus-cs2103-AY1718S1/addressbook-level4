@@ -162,16 +162,11 @@ public class AutoCompleteModelParserTest {
     @Test
     public void testParseRemark() {
         parser.setPrefix(PREFIX_REMARK);
-        //multiple possibilities matched
-        assertEquals(parser.parseForPossibilities("remark 2 r/l"),
-                Arrays.asList(new String[] {"remark 2 r/" + BENSON.getRemark().toString(),
-                                            "remark 2 r/" + GEORGE.getRemark().toString(),
-                                            "remark 2 r/l"}));
 
         //single possibility matched
-        assertEquals(parser.parseForPossibilities("remark 1 r/Fav"),
-                Arrays.asList(new String[] {"remark 1 r/" + CARL.getRemark().toString(),
-                                            "remark 1 r/Fav"}));
+        assertEquals(parser.parseForPossibilities("remark 1 r/Like"),
+                Arrays.asList(new String[] {"remark 1 r/" + GEORGE.getRemark().toString(),
+                                            "remark 1 r/Like"}));
 
         //no possibility matched
         assertEquals(parser.parseForPossibilities("remark 1 r/Not in list"),
