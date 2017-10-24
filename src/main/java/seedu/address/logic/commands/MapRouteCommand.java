@@ -20,7 +20,7 @@ public class MapRouteCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Shows the route from the location provided to the selected person's address on Google map.\n"
-            + "Parameters: INDEX (must be a positive integer)"
+            + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_ADDRESS + "ADDRESS\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ADDRESS + "Blk 30 Clementi Street 29";
