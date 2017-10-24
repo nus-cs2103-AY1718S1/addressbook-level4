@@ -48,6 +48,21 @@ public class BrowserPanel extends UiPart<Region> {
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    /**
+     * Loads the google map page on the browser specifying the location of the person selected.
+     * @param person the person whose location is to be shown on the map.
+     */
+    public void loadLocationPage(ReadOnlyPerson person) {
+        int endIndex = person.getAddress().toString().indexOf(",");
+        if (endIndex == -1) {
+            endIndex = person.getAddress().toString().length();
+        }
+        String location = person.getAddress().toString().substring(0, endIndex);
+
+        loadPage(GOOGLE_MAP_SEARCH_URL_PREFIX + location.replaceAll(" ", "+")
+                + GOOGLE_MAP_SEARCH_URL_SUFFIX);
+    }
+
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
