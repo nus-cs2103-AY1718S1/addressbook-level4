@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
@@ -36,11 +37,15 @@ public class XmlAdaptedPerson {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    @XmlElement
+    private List<XmlAdaptedEvent> onEvent = new ArrayList<>();
+
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPerson() {
+    }
 
 
     /**
@@ -57,6 +62,9 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        for (Event event : source.getEvents()) {
+            onEvent.add(new XmlAdaptedEvent(event));
+        }
         dateAdded = source.getDateAdded().toString();
     }
 
@@ -70,12 +78,17 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        final List<Event> personEvents = new ArrayList<>();
+        for (XmlAdaptedEvent event : onEvent) {
+            personEvents.add(event.toModelType());
+        }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
+        final Set<Event> events = new HashSet<>(personEvents);
         final DateAdded dateAdded = new DateAdded(this.dateAdded);
-        return new Person(name, phone, email, address, tags, dateAdded);
+        return new Person(name, phone, email, address, tags, events, dateAdded);
     }
 }
