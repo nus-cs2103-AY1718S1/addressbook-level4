@@ -235,7 +235,7 @@ public class EditCommandParserTest {
     }
 
     @Test
-    public void parse_resetLecturers_success() {
+    public void parse_resetLecturers_failure() {
         Index targetIndex = INDEX_THIRD_LESSON;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 
@@ -243,7 +243,7 @@ public class EditCommandParserTest {
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        assertParseSuccess(parser, userInput, expectedCommand);
+        assertParseFailure(parser, userInput, Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
     }
 
     @Test
