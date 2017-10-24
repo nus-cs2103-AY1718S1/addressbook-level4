@@ -45,11 +45,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
 
             Optional<Phone> phoneOptional = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE));
-            Phone phone = phoneOptional.isPresent() ? phoneOptional.get() : new Phone("");
+            Phone phone = phoneOptional.isPresent() ? phoneOptional.get() : new Phone(null);
             Optional<Email> emailOptional = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL));
-            Email email = emailOptional.isPresent() ? emailOptional.get() : new Email("");
+            Email email = emailOptional.isPresent() ? emailOptional.get() : new Email(null);
             Optional<Address> addressOptional = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS));
-            Address address = addressOptional.isPresent() ? addressOptional.get() : new Address("");
+            Address address = addressOptional.isPresent() ? addressOptional.get() : new Address(null);
             Note note = new Note("");
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 

@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -23,10 +21,9 @@ public class Phone {
      * @throws IllegalValueException if given phone string is invalid.
      */
     public Phone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (trimmedPhone == "") {
-            this.value = NO_PHONE_NUMBER ;
+        String trimmedPhone = (phone == null) ? null : phone.trim();
+        if (trimmedPhone == null) {
+            this.value = NO_PHONE_NUMBER;
         } else if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         } else {

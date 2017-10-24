@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.commands.CommandTestUtil.NO_ADDRESS_SET;
 
-
 import org.junit.Test;
 
 public class AddressTest {

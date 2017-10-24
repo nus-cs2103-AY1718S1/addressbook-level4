@@ -147,9 +147,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person, missing tags -> added */
         assertCommandSuccess(HOON);
 
-
-//        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_BOB
-//                + TAG_DESC_FRIEND;
         /* Case: missing phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NO_PHONE_SET).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
