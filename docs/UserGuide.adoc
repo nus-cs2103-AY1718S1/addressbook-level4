@@ -352,6 +352,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear contacts* : `clear contacts`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Detag* `detag INDEX, INDEX... [t/TAG]` +
+e.g. `detag 1, 2, 3 t/friends`
 * *Deletetask* `deletetask INDEX` +
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
