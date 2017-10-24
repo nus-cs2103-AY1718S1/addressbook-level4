@@ -321,7 +321,7 @@ There is no need to save manually.
 
 == Coming in v2.0
 
-=== Log in window for a user
+=== Login window for a user
 
 === UniCity as an online application
 
@@ -329,25 +329,42 @@ There is no need to save manually.
 
 === Facebook command to search for contacts on Facebook
 
-=== Automatic pop-up help window for new users
+=== Automatic pop-up of help window for new users
 
-=== Event reminders for a person
+=== Event reminders for the user
 
-=== Changing wallpaper of the background of UniCity
+=== Choosing personalized wallpaper for the background of UniCity
 
-=== Auto-completion through command history
+=== Auto-completion of commands through analysing commands history
 
 === Suggestions when typing a name in find command
 
 === Group contacts by their courses of study
 
-=== Memories
+=== Memories field to store memorable texts, images and videos
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 Alternatively, you may log in as a user into the online version of UniCity and it will fetch your contacts from your addressbook.
+
+*Q*: Will my contacts disappear after I exit from UniCity? +
+*A*: UniCity saves all your contacts in a local file so that you can always find them after running the application.
+
+*Q*: Can I add remarks and other information to my contacts in UniCity? +
+*A*: You can only add specified information to each contacts such as name, number, email, address, favourite, birthday and tags.
+
+*Q*: Can I find my friends using the Facebook command without logging in Facebook? +
+*A*: The pre-requisite of connecting with your friends on Facebook is logging into your own Facebook account to add them as friends.
+
+*Q*: Will it be save for me to enter so many private information of my contacts on UniCity?
+:A*: Each user has an unique set of encryption to use UniCity and as developers, we do not have access to your contacts.
+It is safe to enter anything in UniCity.
+
+*Q*: What do I do if I accidentally cleared my contacts? +
+*A*: Use the undo function implemented in UniCity to go back to the original copy.
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
