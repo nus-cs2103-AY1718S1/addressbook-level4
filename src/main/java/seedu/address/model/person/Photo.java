@@ -43,8 +43,7 @@ public class Photo {
     public String getFilePath() {
         return filepath;
     }
-    
-    //url of the image that is parsed into Image class 
+    //url of the image that is parsed into Image class
     public String getUrl() { return this.url; }
 
 }

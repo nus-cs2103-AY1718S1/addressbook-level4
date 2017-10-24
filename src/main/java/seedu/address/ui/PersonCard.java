@@ -99,7 +99,6 @@ public class PersonCard extends UiPart<Region> {
             imageView.setImage(image);
         }
     }
-    
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
