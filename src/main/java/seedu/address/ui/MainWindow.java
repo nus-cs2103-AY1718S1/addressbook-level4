@@ -205,8 +205,8 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleCalendar() {
-//        CalendarWindow calendarWindow = new CalendarWindow();
-//        calendarWindow.show();
+        //CalendarWindow calendarWindow = new CalendarWindow();
+        //calendarWindow.show();
         browserPanel.loadPage("https://www.timeanddate.com/calendar/");
     }
 
