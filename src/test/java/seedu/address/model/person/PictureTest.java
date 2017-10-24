@@ -3,8 +3,6 @@ package seedu.address.model.person;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.nio.file.Paths;
-
 import org.junit.Test;
 
 public class PictureTest {
