@@ -53,7 +53,6 @@
         </VBox>
       <StackPane prefWidth="340.0">
          <children>
-      
                           <StackPane fx:id="browserPlaceholder" prefWidth="340.0" StackPane.alignment="CENTER">
                   <padding>
                       <Insets bottom="10" left="10" right="10" top="10" />
