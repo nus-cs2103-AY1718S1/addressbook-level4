@@ -10,7 +10,7 @@ import seedu.address.model.task.TaskContainsKeywordsPredicate;
  */
 public class FindTaskCommand extends Command {
 
-    public static final String COMMAND_WORD = "findtask";
+    public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks whose descriptions contain any of "
         + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"

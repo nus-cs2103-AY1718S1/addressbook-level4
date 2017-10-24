@@ -1,6 +1,7 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_TASK_LISTED_OVERVIEW;
+import static seedu.address.logic.commands.ChangeModeCommand.MESSAGE_CHANGE_MODE_SUCCESS;
 import static seedu.address.testutil.TypicalTasks.ASSIGNMENT;
 import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
 import static seedu.address.testutil.TypicalTasks.GYM;
@@ -10,6 +11,7 @@ import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -21,6 +23,12 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void find() {
+
+        /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
+
+        /*change the current command mode to task manager*/
+        executeCommand(ChangeModeCommand.COMMAND_WORD + " tm");
+
         /* Case: find multiple tasks in address book, command with leading spaces and trailing spaces
          * -> 2 tasks found
          */
@@ -39,7 +47,7 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertSelectedTaskCardUnchanged();
 
         /* Case: mixed case command word -> 2 tasks found */
-        command = "FiNdTaSk Finish";
+        command = "FiNd Finish";
         assertCommandSuccess(command, expectedModel);
 
         /* Case: find task where task list is not displaying the task we are finding -> 1 task found */

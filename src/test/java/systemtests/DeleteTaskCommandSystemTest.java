@@ -2,6 +2,7 @@ package systemtests;
 
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
+import static seedu.address.logic.commands.ChangeModeCommand.MESSAGE_CHANGE_MODE_SUCCESS;
 import static seedu.address.logic.commands.tasks.DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastTask;
 import static seedu.address.testutil.TestUtil.getMidTask;
@@ -13,6 +14,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.tasks.DeleteTaskCommand;
@@ -29,14 +31,19 @@ public class DeleteTaskCommandSystemTest extends AddressBookSystemTest {
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
-        /* Case: delete the first task in the list, command with leading spaces and trailing spaces -> deleted */
+        /*Case: change the current command mode to task manager -> success*/
         Model expectedModel = getModel();
-        String command = "     " + DeleteTaskCommand.COMMAND_WORD + "      "
-                + INDEX_FIRST_TASK.getOneBased() + "       ";
-        ReadOnlyTask deletedTask = removeTask(expectedModel, INDEX_FIRST_TASK);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, deletedTask);
+        String command = ChangeModeCommand.COMMAND_WORD + " tm";
+        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
+        /* Case: delete the first task in the list, command with leading spaces and trailing spaces -> deleted */
+
+        command = "     " + DeleteTaskCommand.COMMAND_WORD + "      "
+                + INDEX_FIRST_TASK.getOneBased() + "       ";
+        ReadOnlyTask deletedTask = removeTask(expectedModel, INDEX_FIRST_TASK);
+        expectedResultMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, deletedTask);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: delete the last task in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
@@ -52,7 +59,7 @@ public class DeleteTaskCommandSystemTest extends AddressBookSystemTest {
         Model modelAfterDeletingLast = getModel();
         ReadOnlyTask removedTask = removeTask(modelAfterDeletingLast, lastTaskIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, removedTask);
-        assertCommandSuccess("DelEtETaSk 5", modelAfterDeletingLast, expectedResultMessage);
+        assertCommandSuccess("DelEtE 5", modelAfterDeletingLast, expectedResultMessage);
 
         /* Case: undo deleting the last task in the list -> last task restored */
         command = UndoCommand.COMMAND_WORD;

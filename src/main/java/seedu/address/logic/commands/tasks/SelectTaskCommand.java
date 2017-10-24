@@ -16,7 +16,7 @@ import seedu.address.model.task.ReadOnlyTask;
  */
 public class SelectTaskCommand extends Command {
 
-    public static final String COMMAND_WORD = "selecttask";
+    public static final String COMMAND_WORD = "select";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
         + ": Selects the task identified by the index number used in the last task listing.\n"
