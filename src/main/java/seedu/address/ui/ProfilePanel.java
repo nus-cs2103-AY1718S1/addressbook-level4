@@ -12,6 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -55,6 +56,9 @@ public class ProfilePanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
+        owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(person.getLifeInsurance().getOwner())));
+        insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(person.getLifeInsurance().getInsured())));
+        beneficiary.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(person.getLifeInsurance().getBeneficiary())));
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
