@@ -1,16 +1,15 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.reminder.ReadOnlyReminder;
-
-import java.util.logging.Logger;
 
 /**
  * The Display Panel of the App.

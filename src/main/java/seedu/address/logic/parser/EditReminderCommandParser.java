@@ -46,11 +46,16 @@ public class EditReminderCommandParser implements Parser<EditReminderCommand> {
 
         EditReminderDescriptor editReminderDescriptor = new EditReminderDescriptor();
         try {
-            ParserUtil.parseTask(argMultimap.getValue(PREFIX_TASK)).ifPresent(editReminderDescriptor::setTask);
-            ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).ifPresent(editReminderDescriptor::setPriority);
-            ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).ifPresent(editReminderDescriptor::setDate);
-            ParserUtil.parseMessage(argMultimap.getValue(PREFIX_MESSAGE)).ifPresent(editReminderDescriptor::setMessage);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editReminderDescriptor::setTags);
+            ParserUtil.parseTask(argMultimap.getValue(PREFIX_TASK)).ifPresent(
+                    editReminderDescriptor::setTask);
+            ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).ifPresent(
+                    editReminderDescriptor::setPriority);
+            ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).ifPresent(
+                    editReminderDescriptor::setDate);
+            ParserUtil.parseMessage(argMultimap.getValue(PREFIX_MESSAGE)).ifPresent(
+                    editReminderDescriptor::setMessage);
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(
+                    editReminderDescriptor::setTags);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
