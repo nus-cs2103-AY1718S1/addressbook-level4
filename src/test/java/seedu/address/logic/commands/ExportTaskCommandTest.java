@@ -5,8 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstTaskOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -46,7 +44,7 @@ public class ExportTaskCommandTest {
     @Test
     public void executeValidIndexUnfilteredListSuccess() {
         Index lastTaskIndex = Index.fromOneBased(model.getFilteredTaskList().size());
-        ReadOnlyTask firstTaskToExport = model.getFilteredTaskList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ReadOnlyTask firstTaskToExport = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         ReadOnlyTask lastTaskToExport;
         lastTaskToExport = model.getFilteredTaskList().get(lastTaskIndex.getZeroBased());
 
@@ -67,7 +65,7 @@ public class ExportTaskCommandTest {
                         "e/" + lastTaskToExport.getEndDateTime(),
                         "t/" + lastBuilder));
 
-        assertExecutionSuccess(INDEX_FIRST_PERSON, firstMessage);
+        assertExecutionSuccess(INDEX_FIRST_TASK, firstMessage);
         //assertExecutionSuccess(INDEX_THIRD_PERSON);
         assertExecutionSuccess(lastTaskIndex, lastMessage);
     }
@@ -100,7 +98,7 @@ public class ExportTaskCommandTest {
     public void executeInvalidIndexFilteredListFailure() {
         showFirstTaskOnly(model);
 
-        Index outOfBoundsIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundsIndex = INDEX_SECOND_TASK;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundsIndex.getZeroBased() < model.getTaskBook().getTaskList().size());
 
@@ -109,14 +107,14 @@ public class ExportTaskCommandTest {
 
     @Test
     public void equals() {
-        ExportTaskCommand exportTaskFirstCommand = new ExportTaskCommand(INDEX_FIRST_PERSON);
-        ExportTaskCommand exportTaskSecondCommand = new ExportTaskCommand(INDEX_SECOND_PERSON);
+        ExportTaskCommand exportTaskFirstCommand = new ExportTaskCommand(INDEX_FIRST_TASK);
+        ExportTaskCommand exportTaskSecondCommand = new ExportTaskCommand(INDEX_SECOND_TASK);
 
         // same object -> returns true
         assertTrue(exportTaskFirstCommand.equals(exportTaskFirstCommand));
 
         // same values -> returns true
-        ExportTaskCommand exportTaskFirstCommandCopy = new ExportTaskCommand(INDEX_FIRST_PERSON);
+        ExportTaskCommand exportTaskFirstCommandCopy = new ExportTaskCommand(INDEX_FIRST_TASK);
         assertTrue(exportTaskFirstCommand.equals(exportTaskFirstCommandCopy));
 
         // different types -> returns false
