@@ -8,7 +8,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class Link {
 
-    public static final String MESSAGE_REMARK_CONSTRAINTS =
+    public static final String MESSAGE_LINK_CONSTRAINTS =
             "Links need to be a facebook.com link";
 
     public final String value;

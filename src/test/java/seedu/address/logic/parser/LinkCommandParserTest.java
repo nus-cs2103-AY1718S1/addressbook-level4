@@ -19,13 +19,13 @@ public class LinkCommandParserTest {
     public void parse_indexSpecified_failure() throws Exception {
         final Link link = new Link("facebook.com");
 
-        // have remarks
+        // have link
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_LINK.toString() + " " + link;
         LinkCommand expectedCommand = new LinkCommand(INDEX_FIRST_PERSON, link);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // no remarks
+        // no link
         userInput = targetIndex.getOneBased() + " " + PREFIX_LINK.toString();
         expectedCommand = new LinkCommand(INDEX_FIRST_PERSON, new Link(""));
         assertParseSuccess(parser, userInput, expectedCommand);

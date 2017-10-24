@@ -55,7 +55,7 @@ public class LinkCommandTest {
         // different index -> returns false
         assertFalse(standardCommand.equals(new LinkCommand(INDEX_SECOND_PERSON, new Link(VALID_LINK_AMY))));
 
-        // different remarks -> returns false
+        // different links -> returns false
         assertFalse(standardCommand.equals(new LinkCommand(INDEX_FIRST_PERSON, new Link(VALID_LINK_BOB))));
     }
 

@@ -15,8 +15,8 @@ public class LinkTest {
         assertTrue(link.equals(link));
 
         // same values -> returns true
-        Remark remarkCopy = new Remark(link.value);
-        assertTrue(link.equals(remarkCopy));
+        Link linkCopy = new Link(link.value);
+        assertTrue(link.equals(linkCopy));
 
         // different types -> returns false
         assertFalse(link.equals(1));
@@ -25,7 +25,7 @@ public class LinkTest {
         assertFalse(link.equals(null));
 
         // different person -> returns false
-        Remark differentRemark = new Remark("facebook.com/gg");
-        assertFalse(link.equals(differentRemark));
+        Link differentLink = new Link("facebook.com/gg");
+        assertFalse(link.equals(differentLink));
     }
 }
