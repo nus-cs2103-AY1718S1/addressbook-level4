@@ -469,11 +469,16 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 |===
 | Shortcut | Purpose
 
-| kbd:[Ctrl + L] | List all contacts
+| kbd:[Ctrl + A] | Display the add command format in command box
+| kbd:[Ctrl + E] | Display the edit command format in command box
+| kbd:[Ctrl + F] | Display the find command format in command box
 | kbd:[Ctrl + H] | View history
+| kbd:[Ctrl + L] | List all contacts
+| kbd:[Ctrl + S] | Display the select command format in command box
 | kbd:[Ctrl + Z] | Undo last command
 | kbd:[Ctrl + Y] | Redo last command
-| kbd:[Ctrl + Shift + D] | Clear contact list
+| kbd:[Ctrl + Shift + D] | Display the delete command format in command box
+| kbd:[Ctrl + Shift + C] | Clear contact list
 | kbd:[F1] | View help window
 | kbd:[Ctrl + O] | Open a Rolodex file
 | kbd:[Ctrl + N] | Create new Rolodex file
