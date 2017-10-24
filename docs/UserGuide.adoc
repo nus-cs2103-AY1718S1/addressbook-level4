@@ -571,3 +571,6 @@ e.g.`select 2`
 e.g. `export /Users/seedu/Documents/exportData.xml`
 * *Import*: `import FILE_PATH` +
 e.g. `import /Users/seedu/Documents/importData.xml`
+* *Connect to Facebook*: `facebook connect` +
+* *Post to Facebook*: `facebook post STATUS` +
+e.g. `facebook post hello world!`
