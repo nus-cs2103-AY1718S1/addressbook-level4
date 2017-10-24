@@ -26,4 +26,11 @@ public class SortCommand extends Command {
         model.sortFilteredPersonList(comparator);
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortCommand // instanceof handles nulls
+                && this.comparator.equals(((SortCommand) other).comparator)); // state check
+    }
 }
