@@ -5,9 +5,12 @@ import static java.util.stream.Collectors.toCollection;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.storage.PasswordSecurity.getSha512SecurePassword;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
@@ -306,6 +309,19 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ChangeInternalListEvent(listName));
     }
 
+    @Override
+    public void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths) {
+        String accruedAmount = person.calcAccruedAmount(differenceInMonths);
+        try {
+            Debt amount = new Debt(accruedAmount);
+            addDebtToPerson(person, amount);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "Should not occur as person obtained from allPersons";
+        } catch (IllegalValueException ive) {
+            assert false : Debt.MESSAGE_DEBT_CONSTRAINTS;
+        }
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -419,6 +435,22 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredBlacklistedPersons.equals(other.filteredBlacklistedPersons)
                 && filteredWhitelistedPersons.equals(other.filteredWhitelistedPersons);
+    }
+
+
+    //==================== Event Handling Code ===============================================================
+
+    @Subscribe
+    public void handleLoginUpdateDebt(LoginAppRequestEvent event) {
+        // login is successful
+        if (event.getLoginStatus() == true) {
+            for (ReadOnlyPerson person : allPersons) {
+                if (!person.getInterest().value.equals("No interest set.")
+                        && (person.checkUpdateDebt(new Date()) != 0)) {
+                    updateDebtFromInterest(person, person.checkUpdateDebt(new Date()));
+                }
+            }
+        }
     }
 
 }

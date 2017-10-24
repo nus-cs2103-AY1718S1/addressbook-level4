@@ -245,6 +245,11 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        @Override
+        public void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths) {
+            fail("This method should not be called");
+        }
+
     }
 
     /**

@@ -141,4 +141,6 @@ public interface Model {
      */
     ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount)
             throws PersonNotFoundException, IllegalValueException;
+
+    void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths);
 }
