@@ -31,26 +31,29 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final UniqueMeetingList meetingList;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final UserPrefs userPrefs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyMeetingList meetingList,
+                        UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, meetingList, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + ", meeting list: " + meetingList
+                + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        logger.info(String.format("Maximum index in the address book: %d", addressBook.getMaxInternalIndex()));
+        this.meetingList = new UniqueMeetingList(meetingList);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.userPrefs = userPrefs;
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UniqueMeetingList(), new UserPrefs());
     }
 
     @Override
@@ -62,6 +65,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public UniqueMeetingList getMeetingList() {
+        return meetingList;
     }
 
     /** Raises an event to indicate the model has changed */

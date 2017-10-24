@@ -1,11 +1,16 @@
 package seedu.address.model.util;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Meeting;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyMeetingList;
+import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InternalId;
@@ -69,6 +74,35 @@ public class SampleDataUtil {
         }
 
         return tags;
+    }
+
+    public static ReadOnlyMeetingList getSampleMeetingList() {
+        try {
+            UniqueMeetingList meetings = new UniqueMeetingList();
+            for (Meeting sampleMeeting : getSampleMeetings()) {
+                meetings.add(sampleMeeting);
+            }
+            return meetings;
+        } catch (UniqueMeetingList.DuplicateMeetingException e) {
+            throw new AssertionError("sample data cannot contain duplicate meetings", e);
+        }
+    }
+
+    public static Meeting[] getSampleMeetings() {
+        try {
+            ArrayList<InternalId> sampleParticipantsList = new ArrayList<>();
+            sampleParticipantsList.add(new InternalId(1));
+            sampleParticipantsList.add(new InternalId(2));
+            LocalDateTime now = LocalDateTime.now();
+            return new Meeting[] {
+                    new Meeting(LocalDateTime.of(now.getYear() + 1, 1,1,0, 0),
+                            "Home", "New Year Celebration", sampleParticipantsList),
+                    new Meeting(LocalDateTime.of(now.getYear() + 1, 2,1,14, 0),
+                            "COM1-02-10", "Project Meeting", sampleParticipantsList),
+            };
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
     }
 
 }

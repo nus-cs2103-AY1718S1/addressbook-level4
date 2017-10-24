@@ -12,6 +12,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyMeetingList;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -23,12 +24,15 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final String READ_FILE_MESSAGE = "Attempting to read to data file: ";
     private static final String WRITE_FILE_MESSAGE = "Attempting to write to data file: ";
     private AddressBookStorage addressBookStorage;
+    private MeetingListStorage meetingListStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, MeetingListStorage meetingListStorage,
+                          UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
+        this.meetingListStorage = meetingListStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -97,6 +101,32 @@ public class StorageManager extends ComponentManager implements Storage {
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
+    }
+
+    // ============ Meeting List methods ==================
+    @Override
+    public String getMeetingsFilePath() {
+        return meetingListStorage.getMeetingsFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyMeetingList> readMeetingList() throws IOException, DataConversionException {
+        return meetingListStorage.readMeetingList();
+    }
+
+    @Override
+    public Optional<ReadOnlyMeetingList> readMeetingList(String filePath) throws DataConversionException, IOException {
+        return meetingListStorage.readMeetingList(filePath);
+    }
+
+    @Override
+    public void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException {
+        meetingListStorage.saveMeetingList(meetingList);
+    }
+
+    @Override
+    public void saveMeetingList(ReadOnlyMeetingList meetingList, String filePath) throws IOException {
+        meetingListStorage.saveMeetingList(meetingList, filePath);
     }
 
 }

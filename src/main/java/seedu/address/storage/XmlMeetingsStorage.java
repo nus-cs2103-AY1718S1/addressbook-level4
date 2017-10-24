@@ -16,7 +16,7 @@ import seedu.address.model.ReadOnlyMeetingList;
 /**
  * A class to access Meeting data stored as an xml file on the hard disk.
  */
-public class XmlMeetingsStorage implements MeetingsStorage {
+public class XmlMeetingsStorage implements MeetingListStorage {
 
     // Creates a new folder for all backup data
     //private static final String BACKUP_FILE_PREFIX = "backup/";

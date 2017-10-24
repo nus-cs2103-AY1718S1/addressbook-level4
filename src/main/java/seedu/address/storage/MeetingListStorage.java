@@ -9,7 +9,7 @@ import seedu.address.model.ReadOnlyMeetingList;
 /**
  * Represents a storage for meetings
  */
-public interface MeetingsStorage {
+public interface MeetingListStorage {
 
     /**
      * Returns the file path of the data file.

@@ -39,6 +39,14 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Creates a copy of an existing meeting list
+     */
+    public UniqueMeetingList(ReadOnlyMeetingList newData) {
+        requireNonNull(newData);
+        this.internalList.setAll(newData.getMeetingList());
+    }
+
     @Override
     public ObservableList<Meeting> getMeetingList() {
         return internalList;
