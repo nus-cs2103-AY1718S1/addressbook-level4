@@ -8,6 +8,29 @@ OurAb is a CLI(Command Line Interface)-based desktop Address Book application wr
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
 
+=== Enhancement Added: Meetings Storage
+
+==== External behavior
+
+* Provides storage for meetings managment, which will be implemented in future verions (> v1.3).
+
+---
+
+==== Justification
+
+To provide functionality for storing meeting data
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+image::StorageClassDiagram.png[width="800"]
+
+#End of Extract#
+
+---
 === Enhancement Added: User Preferences Management
 
 ==== External behavior
