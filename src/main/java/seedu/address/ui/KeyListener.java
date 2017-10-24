@@ -1,22 +1,22 @@
 package seedu.address.ui;
 
-import static seedu.address.ui.util.KeyListenerUtil.ADD;
-import static seedu.address.ui.util.KeyListenerUtil.CLEAR;
-import static seedu.address.ui.util.KeyListenerUtil.DELETE;
-import static seedu.address.ui.util.KeyListenerUtil.DELETE_SELECTION;
-import static seedu.address.ui.util.KeyListenerUtil.EDIT;
-import static seedu.address.ui.util.KeyListenerUtil.FIND;
-import static seedu.address.ui.util.KeyListenerUtil.FOCUS_COMMAND_BOX;
-import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST;
-import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_ALT;
-import static seedu.address.ui.util.KeyListenerUtil.FOCUS_RESULT_DISPLAY;
-import static seedu.address.ui.util.KeyListenerUtil.HISTORY;
-import static seedu.address.ui.util.KeyListenerUtil.LIST;
-import static seedu.address.ui.util.KeyListenerUtil.NEW_FILE;
-import static seedu.address.ui.util.KeyListenerUtil.OPEN_FILE;
-import static seedu.address.ui.util.KeyListenerUtil.REDO;
-import static seedu.address.ui.util.KeyListenerUtil.SELECT;
-import static seedu.address.ui.util.KeyListenerUtil.UNDO;
+import static seedu.address.ui.util.KeyListenerUtil.ADD_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.CLEAR_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.DELETE_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.DELETE_SELECTION_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.EDIT_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.FIND_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_COMMAND_BOX_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_ALT_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_ALT_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.FOCUS_RESULT_DISPLAY_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.HISTORY_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.LIST_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.NEW_FILE_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.OPEN_FILE_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.REDO_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.SELECT_KEY_COMBINATION;
+import static seedu.address.ui.util.KeyListenerUtil.UNDO_KEY_COMBINATION;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -71,52 +71,53 @@ public class KeyListener {
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
-        if (FOCUS_PERSON_LIST.match(keyEvent) || FOCUS_PERSON_LIST_ALT.match(keyEvent)) {
+        if (FOCUS_PERSON_LIST_ALT_KEY_COMBINATION.match(keyEvent)
+                || FOCUS_PERSON_LIST_ALT_KEY_COMBINATION.match(keyEvent)) {
             personListPanel.setFocus();
 
-        } else if (FOCUS_COMMAND_BOX.match(keyEvent)) {
+        } else if (FOCUS_COMMAND_BOX_KEY_COMBINATION.match(keyEvent)) {
             commandBox.setFocus();
 
-        } else if (FOCUS_RESULT_DISPLAY.match(keyEvent)) {
+        } else if (FOCUS_RESULT_DISPLAY_KEY_COMBINATION.match(keyEvent)) {
             resultDisplay.setFocus();
 
-        } else if (DELETE_SELECTION.match(keyEvent)) {
+        } else if (DELETE_SELECTION_KEY_COMBINATION.match(keyEvent)) {
             deleteSelectedContact();
 
-        } else if (CLEAR.match(keyEvent)) {
+        } else if (CLEAR_KEY_COMBINATION.match(keyEvent)) {
             executeCommand(ClearCommand.COMMAND_WORD);
 
-        } else if (HISTORY.match(keyEvent)) {
+        } else if (HISTORY_KEY_COMBINATION.match(keyEvent)) {
             executeCommand(HistoryCommand.COMMAND_WORD);
 
-        } else if (UNDO.match(keyEvent)) {
+        } else if (UNDO_KEY_COMBINATION.match(keyEvent)) {
             executeCommand(UndoCommand.COMMAND_WORD);
 
-        } else if (REDO.match(keyEvent)) {
+        } else if (REDO_KEY_COMBINATION.match(keyEvent)) {
             executeCommand(RedoCommand.COMMAND_WORD);
 
-        } else if (LIST.match(keyEvent)) {
+        } else if (LIST_KEY_COMBINATION.match(keyEvent)) {
             executeCommand(ListCommand.COMMAND_WORD);
 
-        } else if (OPEN_FILE.match(keyEvent)) {
+        } else if (OPEN_FILE_KEY_COMBINATION.match(keyEvent)) {
             executeCommand(OpenCommand.COMMAND_WORD);
 
-        } else if (NEW_FILE.match(keyEvent)) {
+        } else if (NEW_FILE_KEY_COMBINATION.match(keyEvent)) {
             executeCommand(NewCommand.COMMAND_WORD);
 
-        } else if (ADD.match(keyEvent)) {
+        } else if (ADD_KEY_COMBINATION.match(keyEvent)) {
             displayCommandFormat(AddCommand.FORMAT);
 
-        } else if (EDIT.match(keyEvent)) {
+        } else if (EDIT_KEY_COMBINATION.match(keyEvent)) {
             displayCommandFormat(EditCommand.FORMAT);
 
-        } else if (FIND.match(keyEvent)) {
+        } else if (FIND_KEY_COMBINATION.match(keyEvent)) {
             displayCommandFormat(FindCommand.FORMAT);
 
-        } else if (SELECT.match(keyEvent)) {
+        } else if (SELECT_KEY_COMBINATION.match(keyEvent)) {
             displayCommandFormat(SelectCommand.FORMAT);
 
-        } else if (DELETE.match(keyEvent)) {
+        } else if (DELETE_SELECTION_KEY_COMBINATION.match(keyEvent)) {
             displayCommandFormat(DeleteCommand.FORMAT);
 
         } else {
