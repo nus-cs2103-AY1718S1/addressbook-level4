@@ -122,20 +122,20 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortByDataFieldFirst(String dataField) {
         switch (dataField) {
-            case DATA_FIELD_NAME:
-                sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
-                break;
-            case DATA_FIELD_PHONE:
-                sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenPhoneFirst());
-                break;
-            case DATA_FIELD_EMAIL:
-                sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenEmailFirst());
-                break;
-            case DATA_FIELD_ADDRESS:
-                sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenAddressFirst());
-                break;
-            default:
-                break;
+        case DATA_FIELD_NAME:
+            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
+            break;
+        case DATA_FIELD_PHONE:
+            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenPhoneFirst());
+            break;
+        case DATA_FIELD_EMAIL:
+            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenEmailFirst());
+            break;
+        case DATA_FIELD_ADDRESS:
+            sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenAddressFirst());
+            break;
+        default:
+            break;
         }
     }
 

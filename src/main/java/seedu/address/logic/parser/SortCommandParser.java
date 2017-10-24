@@ -29,16 +29,16 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         String dataFieldToSortByFirst = trimmedArgs.toLowerCase();
 
-        switch (dataFieldToSortByFirst) {
-            case DATA_FIELD_NAME:
-            case DATA_FIELD_PHONE:
-            case DATA_FIELD_EMAIL:
-            case DATA_FIELD_ADDRESS:
-                return new SortCommand(dataFieldToSortByFirst);
-            default:
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        switch (dataFieldToSortByFirst) { 
+        case DATA_FIELD_NAME:
+        case DATA_FIELD_PHONE:
+        case DATA_FIELD_EMAIL:
+        case DATA_FIELD_ADDRESS:
+            return new SortCommand(dataFieldToSortByFirst);
+        default:
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
-        
+
     }
 
 }
