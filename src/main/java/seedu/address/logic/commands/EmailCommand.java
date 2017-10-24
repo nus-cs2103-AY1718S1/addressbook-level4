@@ -130,16 +130,6 @@ public class EmailCommand extends Command {
 
             //set text message part
             multipart.addBodyPart(messageBodyPart);
-
-            //attachment
-            messageBodyPart = new MimeBodyPart();
-            String file = "audio/voice.mp3";
-            String fileName = "Voice.mp3";
-            DataSource source = new FileDataSource(file);
-            messageBodyPart.setDataHandler(new DataHandler(source));
-            messageBodyPart.setFileName(fileName);
-            multipart.addBodyPart(messageBodyPart);
-
             message.setContent(multipart);
 
             Transport.send(message);

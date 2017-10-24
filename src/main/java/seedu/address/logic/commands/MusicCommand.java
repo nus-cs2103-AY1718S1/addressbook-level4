@@ -64,7 +64,7 @@ public class MusicCommand extends Command {
                 return new CommandResult(messageSuccess);
             }
             if (genreExist) {
-                String musicFile = "audio/music/" + genre + trackNumber + ".mp3";
+                String musicFile = getClass().getResource("/audio/music/"+ genre + trackNumber + ".mp3").toExternalForm();
                 messageSuccess = genre.toUpperCase() + " Music Playing";
                 if (trackNumber < 2) {
                     trackNumber++;
@@ -74,7 +74,7 @@ public class MusicCommand extends Command {
                 if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                     mediaPlayer.stop();
                 }
-                Media sound = new Media(new File(musicFile).toURI().toString());
+                Media sound = new Media(musicFile);
                 mediaPlayer = new MediaPlayer(sound);
                 mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
                 mediaPlayer.setVolume(2.0);
