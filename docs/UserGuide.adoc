@@ -17,9 +17,13 @@ By: ` The Myth`      Since: `Jun 2016`      Licence: `MIT`
 == Introduction
 
 The Myth's Book is an address book dedicated for university students to store useful information such
-as the phone numbers and emails of the people around them. The Myth's Book is a `Command Line Input` based
-software which helps caters to students who are efficient and comfortable in typing out command line inputs to
-manipulate with information of their contacts in the address book.
+as websites, phone numbers and emails of the people around them for personal usage. The application helps students
+to keep track of birthday dates and upcoming events through a calendar and facilitate convenient access to their friend's website
+and even Google Maps location through the in-built browser panel in the application. Furthermore, there are many
+useful tools such as finding group tags (e.g. friends, neighbours) and switching themes for better user preference and usability.
+
+The Myth's Book is a `Command Line Input` based software which helps caters to students who are efficient and comfortable
+in typing out command line inputs to manipulate with information of their contacts in the address book.
 
 == About
 
@@ -76,7 +80,7 @@ Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]`
 
 [NOTE]
-You can see the examples provided below to know more about how and what details should be inputted. +
+You can see the examples provided below to know more about what details should be inputted. +
 Website should follow this format `https://www.anyName.com/anyContent` where anyName can only be alphanumeric and anyContent can be the exact url details of the website. +
 It is encouraged to have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in website input error. +
 Birthday should be in proper format of "dd/mm/yyyy" where all elements inputted for birthday are integers.
