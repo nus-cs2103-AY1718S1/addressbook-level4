@@ -22,11 +22,13 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: select the first card in the lesson list, command with leading spaces and trailing spaces
          * -> selected
          */
+
+
         String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_LESSON);
 
-        /* Case: select the last card in the lesson list -> selected */
-        Index lessonCount = Index.fromOneBased(getModel().getFilteredLessonList().size());
+        /* Case: select the first card in the lesson list -> selected */
+        Index lessonCount = Index.fromOneBased(1);
         command = SelectCommand.COMMAND_WORD + " " + lessonCount.getOneBased();
         assertCommandSuccess(command, lessonCount);
 
@@ -41,7 +43,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, expectedResultMessage);
 
         /* Case: select the middle card in the lesson list -> selected */
-        Index middleIndex = Index.fromOneBased(lessonCount.getOneBased() / 2);
+        Index middleIndex = Index.fromOneBased(lessonCount.getOneBased() / 2 + 1);
         command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
         assertCommandSuccess(command, middleIndex);
 
@@ -140,4 +142,6 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
+
+
 }
