@@ -498,8 +498,8 @@ The favourite mechanism is very similar to the one used in edit command. The fea
 
 . `FavouriteCommandParser` calls upon `FavouriteCommand` and parses the argument as an index.
 . It replaces the person identified in `AddressBook` with a new person that has its `favourite` instance inverted to either `true` or `false`.
-. The `favouritePerson` method in AddressBook then creates two `UniquePersonList` to implement the sorting. Persons with `favourite` = `true` will be sorted into the `favouriteList`. Persons with `favourite` = `false` will be sorted into the `notFavouriteList`. 
-. The two lists will then be merged into the `persons` list in `AddressBook`, with `favouriteList` being at the top. 
+. The `favouritePerson` method in AddressBook then creates two `UniquePersonList` to implement the sorting. Persons with `favourite` = `true` will be sorted into the `favouriteList`. Persons with `favourite` = `false` will be sorted into the `notFavouriteList`.
+. The two lists will then be merged into the `persons` list in `AddressBook`, with `favouriteList` being at the top.
 
 The code below shows how FavouriteCommand is implemented:
 
