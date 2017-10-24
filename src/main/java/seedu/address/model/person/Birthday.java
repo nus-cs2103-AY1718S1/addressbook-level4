@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is always valid
@@ -10,28 +12,36 @@ import static java.util.Objects.requireNonNull;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person's birthday have to be in the format DD/MMM/YYYY, and should not be blank";
+            "Person's birthday have to be in the format DD-MM-YYYY, and should not be blank";
     public static final String BIRTHDAY_VALIDATION_REGEX =
-            "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))"
-                    + "\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May"
-                    + "|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|"
-                    + "^(?:29(\\/|-|\\.)(?:0?2|(?:Feb))\\3(?:(?:(?:1[6-9]|[2-9]\\d)"
-                    + "?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])"
-                    + "00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9]|(?:Jan|Feb|"
-                    + "Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))"
-                    + "\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$\n";
+            "^(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-](19|20)\\d\\d$";
 
     public final String value;
 
-    public Birthday(String birthday) {
+    /**
+     * Validates given birthday.
+     *
+     * @throws IllegalValueException if given birthday string is invalid.
+     */
+
+    public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
+        String trimmedBirthday = birthday.trim();
+        if (!isValidBirthday(trimmedBirthday)) {
+            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
         this.value = birthday;
     }
 
-    /*public static boolean isValidBirthday(String birthday) {
-        return birthday.matches(BIRTHDAY_VALIDATION_REGEX);
+    /**
+     * Returns true if a given string is a valid birthday.
+     */
+    public static boolean isValidBirthday(String birthday) {
+        if (birthday.matches(BIRTHDAY_VALIDATION_REGEX) || birthday.matches("")) {
+            return true;
+        }
+        return false;
     }
-    */
 
     @Override
     public String toString() {

@@ -30,7 +30,7 @@ public class BirthdayCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_BIRTHDAY + "[BIRTHDAY]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_BIRTHDAY + "01/JAN/1995";
+            + PREFIX_BIRTHDAY + "01-01-1995";
 
     public static final String MESSAGE_ADD_BIRTHDAY_SUCCESS = "Added birthday to Person: %1$s";
     public static final String MESSAGE_DELETE_BIRTHDAY_SUCCESS = "Removed birthday from Person: %1$s";
@@ -69,7 +69,7 @@ public class BirthdayCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target person cannot be missing.");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 

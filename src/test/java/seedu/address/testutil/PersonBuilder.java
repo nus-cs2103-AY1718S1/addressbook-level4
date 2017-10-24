@@ -128,7 +128,12 @@ public class PersonBuilder {
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
     public PersonBuilder withBirthday(String birthday) {
-        this.person.setBirthday(new Birthday(birthday));
+        try {
+            Birthday temp = new Birthday(birthday);
+            this.person.setBirthday(temp);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
         return this;
     }
 

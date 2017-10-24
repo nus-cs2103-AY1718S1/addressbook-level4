@@ -14,6 +14,17 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Product Overview
+
+PEERSONAL is an open source contact manager. PEERSONAL helps you to store contacts with attributes such as: `name`, `phone number`, `email address`.
+You can use PEERSONAL to add new contacts, remind yourself about events associated with your contacts and keep track of upcoming birthdays. +
+
+PEERSONAL is available for Linux, Windows and Mac operating systems.
+
+== About
+
+This use guide aims to provide you a thorough and concise explanation of the features. This user guide also walks you through the steps of executing the commands in PEERSONAL.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -92,9 +103,9 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Finding a person: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose attributes match the prefix and keywords input. +
 Format: `find [PREFIX][KEYWORD]`
 
 ****
@@ -142,14 +153,15 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Adding photo : `addphoto`
+=== Adding photo : `addPhoto` (Since v1.3)
 
 Adds a photo for the specifed person in the address book. +
-Format: `addphoto INDEX f/filepath`
+Format: `addPhoto INDEX f/[FILEPATH]`
 
 Examples:
 
-* `addphoto 1 f/C:/users/pictures/thickThings/thic.png`
+* `addPhoto 1 f/C:/users/pictures/cuteThings/cutedog.png` +
+Adds a photo `cutedog.png` to the first person of the Address Book.
 
 === Selecting a person : `select`
 
@@ -255,10 +267,28 @@ Edits the birthday for the first person to `20/DEC/2012` +
 * `birthday 1 b/` +
 Removes the birthday for the first person.
 
+=== Sorting all entries : `sort` (Since v1.2)
+
+Sorts all entries in Peersonal based on the given prefix in ascending order. +
+Sorts based on `NAME` by default. +
+Format: `sort [PREFIX]` +
+
+Examples:
+
+* `sort` +
+Sorts the list based on `NAME` +
+* `sort p/` +
+Sorts the list based on `PHONE`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
 
 === List recently added contacts : `listrecent` (Coming in v2.0)
 
@@ -279,11 +309,6 @@ Format: `emailall t/[TAG]`
 
 Display birthdays of contacts according to months in a calendar view. +
 Format: `calendar`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
 
 === Saving the data
 
