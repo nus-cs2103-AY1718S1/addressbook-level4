@@ -135,6 +135,11 @@ public class AddTaskCommandTest {
         }
 
         @Override
+        public void markTask(ReadOnlyTask Task) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
