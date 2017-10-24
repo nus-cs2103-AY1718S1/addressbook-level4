@@ -12,6 +12,9 @@ import seedu.address.model.reminder.ReadOnlyReminder;
 
 import java.util.logging.Logger;
 
+/**
+ * The Display Panel of the App.
+ */
 public class DisplayPanel  extends UiPart<Region> {
 
 

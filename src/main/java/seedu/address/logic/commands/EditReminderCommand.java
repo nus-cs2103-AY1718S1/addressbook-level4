@@ -71,7 +71,7 @@ public class EditReminderCommand extends UndoableCommand {
         List<ReadOnlyReminder> lastShownList = model.getFilteredReminderList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_REMINDER_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_REMINDER_DISPLAYED_INDEX);
         }
 
         ReadOnlyReminder reminderToEdit = lastShownList.get(index.getZeroBased());

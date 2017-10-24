@@ -54,7 +54,7 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
 
-        logger.info( model.getFilteredReminderList().toString());
+        logger.info(model.getFilteredReminderList().toString());
         return model.getFilteredReminderList();
     }
 

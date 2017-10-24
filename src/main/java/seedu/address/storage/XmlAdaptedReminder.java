@@ -15,8 +15,10 @@ import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.Task;
 import seedu.address.model.tag.Tag;
-import seedu.address.storage.XmlAdaptedTag;
 
+/**
+ * JAXB-friendly version of the Reminder.
+ */
 public class XmlAdaptedReminder {
 
     @XmlElement(required = true)
