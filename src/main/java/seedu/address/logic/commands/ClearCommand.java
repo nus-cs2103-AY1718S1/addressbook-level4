@@ -18,6 +18,8 @@ public class ClearCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.resetData(new AddressBook());
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Clear");
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
