@@ -48,8 +48,8 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
-        if (toAdd.getInternalId().getId() > maxInternalIndex) {
-            maxInternalIndex = toAdd.getInternalId().getId();
+        if (toAdd.getInternalId().getId() > this.maxInternalIndex) {
+            this.maxInternalIndex = toAdd.getInternalId().getId();
         }
     }
 
@@ -86,15 +86,12 @@ public class UniquePersonList implements Iterable<Person> {
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
-        // Internal Index should be distinct; check if removed person is the max
-        if (personFoundAndDeleted && toRemove.getInternalId().getId() == maxInternalIndex) {
-            this.maxInternalIndex = updateMaxInternalIndex();
-        }
         return personFoundAndDeleted;
     }
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
+        this.maxInternalIndex = replacement.getMaxInternalIndex();
     }
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
@@ -137,8 +134,9 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     *
      * Updates the maximum internal index among all persons in the person list
+     * Currently not used; implemented previously for remove(), but it was unnecessary to update
+     * after each deletion
      * @return the maximum internal index
      */
     private int updateMaxInternalIndex() {
