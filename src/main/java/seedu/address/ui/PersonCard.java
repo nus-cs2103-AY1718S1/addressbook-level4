@@ -5,6 +5,8 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -47,8 +49,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label birthday;
     @FXML
+    private Label age;
+    @FXML
     private FlowPane tags;
-
+    @FXML
+    private ImageView imageView;
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -73,6 +78,8 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        age.textProperty().bind(Bindings.convert(person.ageProperty()));
+        setImage(person);
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -87,7 +94,14 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-
+    /** Checks if the user has added any photo to the specific contact*/
+    private void setImage(ReadOnlyPerson person) {
+        String url = person.getPhoto().getUrl();
+        if (!url.equals("")) { //if url is not empty, sets the image that overrides the default photo.
+            Image image = new Image(url);
+            imageView.setImage(image);
+        }
+    }
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

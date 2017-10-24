@@ -1,4 +1,4 @@
-﻿= AddressBook Level 4 - Developer Guide
+﻿= PEERSONAL - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -210,27 +210,29 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
-
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
 // 3.3tag::addPhoto[]
-=== addPhoto mechanism
+=== Adding a profile picture mechanism
 
-The addPhoto feature is facilitated mainly by the Logic component where most of the process is executed.
-It adds an image to the contact indicated by the user using the addPhotoCommand. addPhotoCommand inherits from UndoableCommand and therefore can be undone using the UndoCommand.
+The `addphoto` feature is facilitated mainly by the `Logic` component where most of the process is executed.
+It adds an image to the contact indicated by the user using `AddPhotoCommand`. `AddPhotoCommand` inherits from `UndoableCommand` and is therefore undoable using the `undo` function.
+The diagram below shows the inheritance diagram for commands:
 
-Suppose that the user wishes to append an image to a desired contact. The user will execute addPhotoCommand 1 f/C:/Users/PhotoBook/myFace.png to add a photo to the first person in Peersonal. Peersonal will parse the user input into their proper parameters in addPhotoCommandparser.
-addPhotoCommandparser will then return a addPhotoCommand to be executed in the LogicManager. A new Person object, editedPerson is created with all the same field as the personToEdit with the addition of the new Photo field. The editedPerson will replace personToEdit within the UniquePersonList.
+image::inheritCommandUML.png[width="800]
+
+Suppose that the user wishes to append an image to a desired contact. The user will execute `addphoto 1 f/C:/Users/PhotoBook/myFace.png` to add a photo to the first person in Peersonal. Peersonal will parse the user input into their proper parameters in `AddPhotoCommandParser`.
+`AddPhotoCommandParser` will then return a `AddPhotoCommand` to be executed in the `LogicManager`. Upon the `execute()` method of `AddPhotoCommand`, a new `Person` object, `editedPerson` is created with all the same field as the `personToEdit` with the addition of the new `Photo` field. The `editedPerson` will replace `personToEdit` using the `updatePerson()` in the `Model` class. A success message will be generated if the photo addition is successful. +
+The sequence diagram below shows how the `addphoto` process is carried out:
+
+image::SequenceDiagramUML.png[width="800]
 
 ==== Design considerations
 
-**Aspect:** Implementation of addPhotoCommand +
-**Alternative 1(current choice):** Have addPhotoCommand implement UndoableCommand +
+**Aspect:** Implementation of AddPhotoCommand +
+**Alternative 1(current choice):** Have `AddPhotoCommand` implement `UndoableCommand` +
 **Pros:** We will retain the logic flow of how commands are executed. This option increases code reusability and retains the cohesion of each class. +
 **Cons:** Logic flow is embedded in multiple layers. New developers might find it hard to understand the complicated logic flow.
 
@@ -371,31 +373,31 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== FindPhoneNumberCommand mechanism
+=== Enhancing FindCommand mechanism
 
-The `FindPhoneNumberCommand` class is added along with the `FindPhoneNumberCommandParser` class and `NumberContainsKeywordsPredicate` class.
-The `FindPhoneNumberCommand` class extends from the `Command` class and hence cannot be undone or redone using the `Undo` or `Redo` commands. +
+Before any enhancement, the `FindCommand` class can only search the Address Book by the names of the contacts.
+With this enhancement, it is now able to search through the Address Book for all the parameters tied to a contact. +
 
-In the `NumberContainsKeywordsPredicate` class, it implements the `Predicate` class. The purpose of this class is to match
-the keyword input from the user with the `Phone` value (phone number of contacts) and the `FindPhoneNumberCommandParser` would return the matched contact
-details to the user in the GUI. +
+The first change is for the `FindCommand` class to accept all `Predicate` and not only the `NameContainsKeywordsPredicate`.
+In addition, six more classes were created for the rest of the parameters, e.g. `AddressContainsKeywordsPredicate`,
+`EmailContainsKeywordsPredicate` etc. +
 
-The `AddressBookParser` has to be updated to be able to recognise the new `COMMAND_WORD` for `FindPhoneNumberCommand`. In addition,
-we need to create a new `FindPhoneNumberCommandParser` class as well. This parser class implements the `Parser` class and its main function
-is to take the input commands and would return a `FindPhoneNumberCommand` object for execution. It would return
-an invalid error message if the input is correct and return a successful message  if the inputs  are correct.
+The `FindCommandParser` has to be updated to be able to accept all these new parameters. The user input would be separated into two variables using
+the regex: `"(?<commandWord>\\w/)(?<arguments>.*)"`. The `commandWord` refers to either `n/`, `p/`, `e/` etc. and the `arguments` refers to the rest
+of the user input. The `FindCommandParser` would use the `commandWord` and return the correct `Predicate`. If the user input is invalid, a `ParseException`
+would be thrown. The following sequence diagram shows an example when `find n/...` command is executed:
+
+image::FindCommandSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `FindPhoneNumberCommand`. +
-**Alternative 1 (current choice):** Using a separate command using the command word `findphone` +
-**Pros:** Easy to debug and implement. +
-**Cons:** Inconvenient for users as they have to use another command. +
-**Alternative 2:** Enhancing the current `FindCommand` to allow it to accept phone numbers. +
-**Pros:** More convenient for users as they can just a single command word, `find`, to search through the Address Book
-with different parameters. +
-**Cons:** More difficult to implement and maintain. Testing can be more tedious as well.
-//end::findphonenumber[]
+**Aspect:** Accepting different types of user input. +
+**Alternative 1 (current choice):** Using a `commandWord` and `arguments` regex to distinguish user inputs. +
+**Pros:** It is easy to add new parameters and debug. +
+**Cons:** Only able to find one contact at a time e.g. `find n/Alice Bob` does not work.  +
+**Alternative 2:** Accept any type of user input after `find`. +
+**Pros:** More user-friendly as there are fewer requirements for user input. +
+**Cons:** Difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.
 
 ---
 === BirthdayCommand mechanism
@@ -409,7 +411,7 @@ will be executed. An instance of `Person` will be created to be updated with the
 The command will then call the `updatedFilteredPersonList()` method in the `Model` Class. In the end, the command will
 generate a success message. The following sequence diagram summarises what happens when the `BirthdayCommand` is implemented:
 
-image::BirthdayUMLseq.png[width="800"]
+image::UMLforBirthday.png[width="800"]
 
 ==== Design Considerations
 
@@ -422,6 +424,38 @@ command. Further enhancements are needed to catch more invalid cases. +
 **Pros:** Convenient for users as they have to only remember a few key commands. +
 **Cons:** Difficult to implement and maintain. Testing can be more tedious as well.
 //end::birthday[]
+
+---
+
+=== SortCommand mechanism
+
+`SortCommand` inherits from `UndoableCommand` and supports undoing and redoing.
+It is facilitated by the Logic component, where most of the process is executed.
+The command sorts the persons within the list by the given prefix, which defaults to `NAME` if the prefix is left blank.
+
+
+The `SortCommand` class takes in the given prefix and determines the Comparator for the sort to occur.
+It would then pass the Comparator to the Model component and executes the sort based on the Comparator using the inbuilt function
+of `Collections.sort()`. It will then call the `updatedFilteredPersonList()` method in the `Model` class and display
+a Success message upon successful completion of the command.
+
+
+==== Design Considerations
+**Aspect:** Implementation of `SortCommand`. +
+**Alternative 1 (current choice):** Sorting of the list instead of solely using the `FindCommand` so as to allow
+display of the entire list in an easier to see manner. +
+**Pros:** Can easily see the full list and spot contacts which may be missed out due to spelling errors. +
+**Cons:** List may be excessively long, making it harder to access the contacts you are trying to find. +
+**Alternative 2:** Enhancement of `FindCommand` such that it can display all names starting with a certain letter. +
+**Pros:** Can view a list of people whose name starts with the given letter +
+**Cons:** Will still miss out erroneously added names. Only applicable for names and not other fields.
+
+---
+
+**Aspect:** Sort parameters of `SortCommand`. +
+**Alternative 1 (current choice):** Allow sorting based on name, phone, email or address +
+**Pros:** Gives the option to sort based on whichever option the user wants.  +
+**Cons:** Unable to make it inbuilt due to the presence of multiple sort parameters. Contacts are not sorted upon addition to Peersonal.  +
 
 ---
 

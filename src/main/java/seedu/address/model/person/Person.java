@@ -24,6 +24,8 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<Birthday> birthday;
+    private ObjectProperty<Age> age;
+    private ObjectProperty<Photo> photo;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
@@ -31,8 +33,8 @@ public class Person implements ReadOnlyPerson {
      */
 
     public Person(Name name, Phone phone, Email email, Address address, Remark remark,
-                  Birthday birthday, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, remark, birthday, tags);
+                  Birthday birthday, Age age, Photo photo, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, remark, birthday, age, photo, tags);
 
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -40,6 +42,8 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
         this.birthday = new SimpleObjectProperty<>(birthday);
+        this.age = new SimpleObjectProperty<>(age);
+        this.photo = new SimpleObjectProperty<>(photo);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -50,7 +54,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
 
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-             source.getBirthday(), source.getTags());
+             source.getBirthday(), source.getAge(), source.getPhoto(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -128,6 +132,17 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    public ObjectProperty<Photo> photoProperty() {
+        return photo;
+    }
+    public Photo getPhoto() {
+        return photo.get();
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo.set(requireNonNull(photo));
+    }
+    @Override
     public ObjectProperty<Remark> remarkProperty() {
         return remark;
     }
@@ -135,6 +150,21 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Remark getRemark() {
         return remark.get();
+    }
+
+    //@Override
+    public void setAge(Age age) {
+        this.age.set(requireNonNull(age));
+    }
+
+    @Override
+    public ObjectProperty<Age> ageProperty() {
+        return age;
+    }
+
+    @Override
+    public Age getAge() {
+        return age.get();
     }
 
     /**
@@ -186,6 +216,7 @@ public class Person implements ReadOnlyPerson {
         this.setEmail(replacement.getEmail());
         this.setAddress(replacement.getAddress());
         this.setBirthday(replacement.getBirthday());
+        this.setAge(replacement.getAge());
         this.setTags(replacement.getTags());
     }
 

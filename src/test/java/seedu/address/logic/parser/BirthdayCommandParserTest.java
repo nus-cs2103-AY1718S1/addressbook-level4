@@ -17,7 +17,7 @@ public class BirthdayCommandParserTest {
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
-        final Birthday birthday = new Birthday("06/JAN/1995");
+        final Birthday birthday = new Birthday("06-01-1995");
 
         //have birthdays
         Index targetIndex = INDEX_FIRST_PERSON;

@@ -8,6 +8,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.MULTI_INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +65,9 @@ public class AddressBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+        MULTI_INDEX_FIRST_PERSON.clear();
+        MULTI_INDEX_FIRST_PERSON.add(INDEX_FIRST_PERSON);
+        assertEquals(new DeleteCommand(MULTI_INDEX_FIRST_PERSON), command);
     }
 
     @Test
@@ -86,7 +89,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_birthday() throws Exception {
-        final Birthday birthday = new Birthday("05/JAN/1995");
+        final Birthday birthday = new Birthday("05-01-1995");
         BirthdayCommand command = (BirthdayCommand) parser.parseCommand(BirthdayCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_BIRTHDAY + " " + birthday.value);
         assertTrue(command instanceof BirthdayCommand);
@@ -102,7 +105,7 @@ public class AddressBookParserTest {
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindCommand.COMMAND_WORD + " " + "n/" + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 

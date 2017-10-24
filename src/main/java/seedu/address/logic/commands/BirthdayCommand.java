@@ -9,6 +9,7 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -30,7 +31,7 @@ public class BirthdayCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_BIRTHDAY + "[BIRTHDAY]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_BIRTHDAY + "01/JAN/1995";
+            + PREFIX_BIRTHDAY + "01-01-1995";
 
     public static final String MESSAGE_ADD_BIRTHDAY_SUCCESS = "Added birthday to Person: %1$s";
     public static final String MESSAGE_DELETE_BIRTHDAY_SUCCESS = "Removed birthday from Person: %1$s";
@@ -60,15 +61,17 @@ public class BirthdayCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Age age = new Age(birthday.toString());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRemark(), birthday, personToEdit.getTags());
+                personToEdit.getAddress(), personToEdit.getRemark(), birthday, age, personToEdit.getPhoto(),
+                personToEdit.getTags());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target person cannot be missing.");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 

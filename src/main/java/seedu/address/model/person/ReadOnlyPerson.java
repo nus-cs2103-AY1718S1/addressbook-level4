@@ -24,6 +24,10 @@ public interface ReadOnlyPerson {
     Remark getRemark();
     ObjectProperty<Birthday> birthdayProperty();
     Birthday getBirthday();
+    ObjectProperty<Age> ageProperty();
+    Age getAge();
+    ObjectProperty<Photo> photoProperty();
+    Photo getPhoto();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -38,7 +42,8 @@ public interface ReadOnlyPerson {
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
                 && other.getRemark().equals(this.getRemark()))
-                && other.getBirthday().equals(this.getBirthday());
+                && other.getBirthday().equals(this.getBirthday())
+                && other.getAge().equals(this.getAge());
     }
 
     /**
@@ -57,6 +62,8 @@ public interface ReadOnlyPerson {
                 .append(getRemark())
                 .append(" Birthday: ")
                 .append(getBirthday())
+                .append(" Age: ")
+                .append(getAge())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
