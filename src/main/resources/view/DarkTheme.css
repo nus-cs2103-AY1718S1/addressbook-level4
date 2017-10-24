@@ -133,13 +133,6 @@
     -fx-text-fill: #010504;
 }
 
-.cell_favourite {
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
-    -fx-text-fill: #010504;
-    -fx-background-color: #7a2518;
-}
-
 .anchor-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
 }

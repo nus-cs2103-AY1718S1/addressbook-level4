@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -55,6 +56,7 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        initFavouriteLabel(person);
         initTags(person);
         bindListeners(person);
     }
@@ -68,12 +70,22 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        favourite.textProperty().bind(Bindings.convert(person.favouriteProperty()));
+        person.favouriteProperty().addListener((observable, oldValue, newValue) -> initFavouriteLabel(person));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
         });
+    }
+
+    private void initFavouriteLabel(ReadOnlyPerson person) {
+        Label favouriteLabel = new Label(person.getFavourite().getStatus());
+        if (person.getFavourite().getStatus().equals("True")) {
+            favouriteLabel.setStyle("-fx-background-color: orangered");
+        } else {
+            favouriteLabel.setStyle("-fx-background-color: cornflowerblue");
+        }
+        cardPane.getChildren().add(favouriteLabel);
     }
 
     /**
