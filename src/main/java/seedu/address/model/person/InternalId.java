@@ -10,8 +10,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class InternalId {
 
-    public final int value;
     public static final String MESSAGE_ID_CONSTRAINTS = "Id must be a positive interger.";
+    public final int value;
 
     /**
      * Validates given address.
@@ -19,7 +19,6 @@ public class InternalId {
      * @throws IllegalValueException if given address string is invalid.
      */
     public InternalId(int id) throws IllegalValueException {
-        requireNonNull(id);
         if (id < 0) {
             throw new IllegalValueException(MESSAGE_ID_CONSTRAINTS);
         }

@@ -19,7 +19,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Person implements ReadOnlyPerson {
 
-    public static int TEMP_ID_VALUE = 0;
+    public static final int TEMP_ID_VALUE = 0;
     private ObjectProperty<InternalId> internalId;
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
@@ -44,6 +44,14 @@ public class Person implements ReadOnlyPerson {
         this.searchCount = new SimpleObjectProperty<>(searchCount);
     }
 
+    /**
+     * Creates a copy of the given ReadOnlyPerson.
+     */
+    public Person(ReadOnlyPerson source) {
+        this(source.getInternalId(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getTags(), source.getSearchData());
+    }
+
     public void setInternalId(int id) {
         if (this.internalId.getValue().getId() == TEMP_ID_VALUE) {
             try {
@@ -52,14 +60,6 @@ public class Person implements ReadOnlyPerson {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * Creates a copy of the given ReadOnlyPerson.
-     */
-    public Person(ReadOnlyPerson source) {
-        this(source.getInternalId(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags(), source.getSearchData());
     }
 
     public void setName(Name name) {
