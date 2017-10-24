@@ -105,8 +105,8 @@ public class ModelManagerTest {
         ModelManager modelManager1 = new ModelManager(addressBook, userPrefs);
         modelManager.addPerson(TypicalPersons.ALICE);
         modelManager.addPerson(TypicalPersons.BENSON);
-        modelManager1.addPerson(TypicalPersons.BENSON);
-        modelManager1.addPerson(TypicalPersons.ALICE);
+        modelManager1.addPerson(TypicalPersons.CARL);
+        modelManager1.addPerson(TypicalPersons.DANIEL);
         modelManager.sortPersonList();
         System.out.println(modelManager);
         assertEquals(modelManager, modelManager1);
