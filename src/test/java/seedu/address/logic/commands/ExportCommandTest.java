@@ -158,7 +158,7 @@ public class ExportCommandTest {
         ExportCommand exportCommand = prepareCommand(index);
 
         try {
-            CommandResult commandResult = exportCommand.execute();
+            exportCommand.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
             assertEquals(expectedMessage, ce.getMessage());
