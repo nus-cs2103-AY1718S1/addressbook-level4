@@ -87,8 +87,8 @@ Format: `help`
 . Type `help` into the command box, and press kbd:[Enter] to execute it.
 . The help window will appear as shown above.
 
-image::UG_help1.png[width="790"]
-image::UG_help2.png[width="790"]
+image::UG_help1.png[width="590"]
+image::UG_help2.png[width="590"]
 
 === Adding a person: `add`
 
@@ -110,8 +110,8 @@ Examples:
 . The result box will display "New person added:" with the contact details.
 . The contact list will be displayed with the newly added contact at the bottom of the list.
 
-image::UG_add1.png[width="790"]
-image::UG_add2.png[width="790"]
+image::UG_add1.png[width="590"]
+image::UG_add2.png[width="590"]
 
 
 === Listing all persons : `list`
@@ -124,8 +124,8 @@ Alias: `l`
 . The result box will display "Listed all persons"
 . The contact list will be displayed with every contacts found in the address book. You can scroll down to view more contacts in the list.
 
-image::UG_list1.png[width="790"]
-image::UG_list2.png[width="790"]
+image::UG_list1.png[width="590"]
+image::UG_list2.png[width="590"]
 
 === Editing a person : `edit`
 
@@ -154,8 +154,8 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 . The result box will display "Edited person:" with the edited details.
 . The details of last updated will be updated with your system time.
 
-image::UG_edit1.png[width="790"]
-image::UG_edit2.png[width="790"]
+image::UG_edit1.png[width="590"]
+image::UG_edit2.png[width="590"]
 
 === Searching for people by details: `find`
 
@@ -233,10 +233,10 @@ Deletes the 1st person in the results of the `find` command.
 . The deleted contact will be deleted from the contact list.
 . The details of last updated will be updated with your system time.
 
-image::UG_list1.png[width="790"]
-image::UG_list2.png[width="790"]
-image::UG_delete1.png[width="790"]
-image::UG_delete2.png[width="790"]
+image::UG_list1.png[width="590"]
+image::UG_list2.png[width="590"]
+image::UG_delete1.png[width="590"]
+image::UG_delete2.png[width="590"]
 
 === Selecting a person : `select`
 
@@ -269,10 +269,10 @@ Selects the 1st person in the results of the `find` command.
 . The selected person will be highlighted from the contact list.
 . The details of the selected person will be shown in the contact's detail box.
 
-image::UG_list1.png[width="790"]
-image::UG_list2.png[width="790"]
-image::UG_select1.png[width="790"]
-image::UG_select2.png[width="790"]
+image::UG_list1.png[width="590"]
+image::UG_list2.png[width="590"]
+image::UG_select1.png[width="590"]
+image::UG_select2.png[width="590"]
 
 === Listing entered commands : `history`
 
