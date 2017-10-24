@@ -108,7 +108,7 @@ public class AddressBookParser {
 
         case ExportTaskCommand.COMMAND_WORD:
         case ExportTaskCommand.COMMAND_ALIAS:
-             return new ExportTaskCommandParser().parse(arguments);
+            return new ExportTaskCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
