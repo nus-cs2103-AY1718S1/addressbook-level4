@@ -25,6 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<Website> website;
+    private ObjectProperty<Picture> picture;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
@@ -40,6 +41,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
         this.website = new SimpleObjectProperty<>(website);
+        // this.picture = new SimpleObjectProperty<>(picture);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -150,6 +152,21 @@ public class Person implements ReadOnlyPerson {
         return website.get();
     }
 
+    //
+    public void setPicture(Picture picture) {
+        this.picture.set(requireNonNull(picture));
+    }
+
+    @Override
+    public ObjectProperty<Picture> pictureProperty() {
+        return picture;
+    }
+
+    @Override
+    public Picture getPicture() {
+        return picture.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -182,6 +199,7 @@ public class Person implements ReadOnlyPerson {
         this.setAddress(replacement.getAddress());
         this.setRemark(replacement.getRemark());
         this.setWebsite(replacement.getWebsite());
+        this.setPicture(replacement.getPicture());
         this.setTags(replacement.getTags());
     }
 
@@ -195,7 +213,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, remark, website, tags);
+        return Objects.hash(name, phone, email, address, remark, website, picture, tags);
     }
 
     @Override

@@ -12,19 +12,24 @@ public class Picture {
 
     public static final String MESSAGE_PROFILEPICTURE_CONSTRAINTS =
             "There should be a valid location to the picture and the picture must be a .png";
+    public static final String PICTURE_IMAGE_LOCATION = "images/"; // Where images are stored when added
 
     private static final String PICTURE_SUFFIX = ".png";
+    private static final String PICTURE_DELIMITER = ".png";
 
     public final String value;
 
 
     public Picture(String fileLocation) throws IllegalValueException {
-        // String trimmedWebsite = website == WEBSITE_NULL ? WEBSITE_NULL : website.trim();
-        if (!isValidPicture(fileLocation)) {
+        String trimmedFileLocation = fileLocation == null ? null : fileLocation.trim();
+        if (!isValidPicture(trimmedFileLocation)) {
             throw new IllegalValueException(MESSAGE_PROFILEPICTURE_CONSTRAINTS);
         }
 
-        this.value = fileLocation;
+        String [] split = trimmedFileLocation.split(PICTURE_DELIMITER);
+
+        // last value before / is picture we want
+        this.value = split[split.length - 1];
     }
 
     /**

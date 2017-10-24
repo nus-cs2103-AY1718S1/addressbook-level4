@@ -40,6 +40,10 @@ public interface ReadOnlyPerson {
 
     Website getWebsite();
 
+    ObjectProperty<Picture> pictureProperty();
+
+    Picture getPicture();
+
     ObjectProperty<UniqueTagList> tagProperty();
 
     Set<Tag> getTags();
