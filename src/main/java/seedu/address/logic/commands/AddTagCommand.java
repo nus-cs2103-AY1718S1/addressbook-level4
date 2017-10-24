@@ -62,11 +62,11 @@ public class AddTagCommand extends UndoableCommand {
 
         String indexOut = listIndex.stream().collect(Collectors.joining(", "));
 
-         for (Index i : index) {
-             if (i.getZeroBased() >= lastShownList.size()) {
-                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-             }
-         }
+        for (Index i : index) {
+            if (i.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
         successMessage = String.format(MESSAGE_ADDED_SUCCESS + " to index " + indexOut + ".", tag);
         duplicate = String.format(MESSAGE_DUPLICATE_TAG + " index: " + indexOut + ".", tag);
 
