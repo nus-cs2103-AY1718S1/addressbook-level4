@@ -27,7 +27,7 @@ public class LinkCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_LINK + "[LINK]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_LINK + "https://www.facebook.com/profile.php?id=100021659181463";
+            + PREFIX_LINK + "facebook.com/johndoe";
 
     public static final String MESSAGE_ADD_LINK_SUCCESS = "Added link to Person: %1$s";
     public static final String MESSAGE_DELETE_LINK_SUCCESS = "Removed link from Person: %1$s";
@@ -56,7 +56,8 @@ public class LinkCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (!link.value.contains("facebook.com") && !link.value.isEmpty()) {
+        if (!(link.value.startsWith("facebook.com/") || link.value.startsWith("https://www.facebook.com/"))
+                && !link.value.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_INVALID_LINK_FORMAT);
         }
 
