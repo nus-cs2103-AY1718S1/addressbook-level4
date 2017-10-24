@@ -152,9 +152,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_facebook() throws Exception {
-        FacebookCommand command = (FacebookCommand) parser.parseCommand(
-                FacebookCommand.COMMAND_WORDVAR_1);
-        assertEquals(new FacebookCommand(), command);
+        assertTrue(parser.parseCommand(FacebookCommand.COMMAND_WORDVAR_1) instanceof FacebookCommand);
     }
 
     @Test
