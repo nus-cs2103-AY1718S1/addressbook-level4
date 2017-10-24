@@ -153,25 +153,25 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: missing phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NO_PHONE_SET).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;;
+                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).withMeetings().build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: missing email -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(NO_EMAIL_SET)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).withMeetings().build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND;;
         assertCommandSuccess(command, toAdd);
 
         /* Case: missing address -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(NO_ADDRESS_SET).withTags(VALID_TAG_FRIEND).build();
+                .withAddress(NO_ADDRESS_SET).withTags(VALID_TAG_FRIEND).withMeetings().build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND;;
         assertCommandSuccess(command, toAdd);
 
         /* Case: only has name -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(NO_PHONE_SET).withEmail(NO_EMAIL_SET)
-                .withAddress(NO_ADDRESS_SET).withTags().build();
+                .withAddress(NO_ADDRESS_SET).withTags().withMeetings().build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY;
         assertCommandSuccess(command, toAdd);
 
