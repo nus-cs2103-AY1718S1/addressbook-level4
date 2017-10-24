@@ -51,6 +51,9 @@ public class TagMatchingKeywordPredicateTest {
         // One keyword
         assertTrue(predicate1.test(new PersonBuilder().withTags("husband").build()));
 
+        // One keyword
+        assertTrue(predicate1.test(new PersonBuilder().withTags("husbands").build()));
+
         //Mixed-case keyword
         assertTrue(predicate1.test(new PersonBuilder().withTags("HUSBAND").build()));
 
@@ -59,6 +62,9 @@ public class TagMatchingKeywordPredicateTest {
 
         //Mixed-case multiple words keyword
         assertTrue(predicate2.test(new PersonBuilder().withTags("College Friend").build()));
+
+        // Multiple words keyword
+        assertTrue(predicate2.test(new PersonBuilder().withTags("college friend 1").build()));
     }
 
     @Test
