@@ -36,12 +36,13 @@ import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
 public class AddressBookParserTest {
+
+    private static final String MODE_ADDRESS_BOOK = "addressbook";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     private final AddressBookParser parser = new AddressBookParser();
-
-    private static final String MODE_ADDRESS_BOOK = "addressbook";
 
     @Test
     public void parseCommand_add() throws Exception {
