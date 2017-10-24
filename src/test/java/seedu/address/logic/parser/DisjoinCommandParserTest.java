@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.DisJoinCommand;
 
-public class DisJoinCommandParserTest {
+public class DisjoinCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, DisJoinCommand.MESSAGE_USAGE);
