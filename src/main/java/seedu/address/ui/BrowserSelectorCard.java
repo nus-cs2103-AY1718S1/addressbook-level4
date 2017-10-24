@@ -6,6 +6,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
+/**
+ * A UI component that displays information on the browser display type
+ */
 public class BrowserSelectorCard extends UiPart<Region> {
 
     private static final String FXML = "BrowserSelectorCard.fxml";
@@ -25,6 +28,9 @@ public class BrowserSelectorCard extends UiPart<Region> {
         fillImage(imageName);
     }
 
+    /**
+     * Fills the image on the browser card
+     */
     private void fillImage(String imageName) {
         if (imageName.equals("linkedin")) {
             browserCardImage.setImage(new Image("/images/linkedin.png"));

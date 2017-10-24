@@ -4,6 +4,9 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+/**
+ * Chooses the display screen mode
+ */
 public class ChooseCommand extends Command {
 
     public static final String COMMAND_WORD = "choose";

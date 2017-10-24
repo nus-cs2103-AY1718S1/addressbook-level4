@@ -6,6 +6,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
+/**
+ * A UI component that displays information on which theme is currently selected
+ */
 public class ThemeSelectorCard extends UiPart<Region> {
 
     private static final String FXML = "ThemeSelectorCard.fxml";

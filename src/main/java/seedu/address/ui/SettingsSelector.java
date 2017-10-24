@@ -50,7 +50,7 @@ public class SettingsSelector extends UiPart<Region> {
     private void setConnections() {
         //Setting connections for browser list
         ObservableList<String> browserItems = FXCollections.observableArrayList(
-                "linkedin","facebook","meeting"
+                "linkedin", "facebook", "meeting"
         );
         ObservableList<BrowserSelectorCard> mappedBrowserList = EasyBind.map(
                 browserItems, (item) -> new BrowserSelectorCard(item));
@@ -59,7 +59,7 @@ public class SettingsSelector extends UiPart<Region> {
 
         //Setting connections for theme list
         ObservableList<String> themeItems = FXCollections.observableArrayList(
-                "blue","dark","light"
+                "blue", "dark", "light"
         );
         ObservableList<ThemeSelectorCard> mappedThemeList = EasyBind.map(
                 themeItems, (item) -> new ThemeSelectorCard(item));
@@ -67,9 +67,12 @@ public class SettingsSelector extends UiPart<Region> {
         themeSelectorList.setCellFactory(listView -> new SettingsSelector.ThemeListViewCell());
     }
 
+    /**
+     * Raise an event to select the browser list items
+     */
     private void selectBrowser(String browserSelection) {
         for (int i = 0; i <= browserSelectorList.getItems().size(); i++) {
-            if(browserSelectorList.getItems().get(i).getImageString().equals(browserSelection)) {
+            if (browserSelectorList.getItems().get(i).getImageString().equals(browserSelection)) {
                 browserSelectorList.getSelectionModel().select(i);
                 raise(new BrowserPanelSelectionChangedEvent(browserSelection));
                 return;

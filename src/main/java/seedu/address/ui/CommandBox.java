@@ -237,6 +237,9 @@ public class CommandBox extends UiPart<Region> {
         helpEnabled = false;
     }
 
+    /**
+     * Check whether to display the settings panel
+     */
     private boolean checkForSettingsPanelPopup(TextField commandTextField) {
         if (commandTextField.getText().contains("choose") || commandTextField.getText().contains("pref")) {
             return true;
