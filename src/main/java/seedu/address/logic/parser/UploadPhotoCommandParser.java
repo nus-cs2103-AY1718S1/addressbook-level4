@@ -29,7 +29,7 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
             if (st.hasMoreTokens()) {
                 photoPath = st.nextToken();
             } else {
-                photoPath = "D:\\Git projects\\addressbook4\\docs\\images\\default_photo.png";
+                photoPath = "..\\addressbook4\\docs\\images\\default_photo.png";
             }
 
             while (st.hasMoreTokens()) {

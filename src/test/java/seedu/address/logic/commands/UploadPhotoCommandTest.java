@@ -29,9 +29,9 @@ public class UploadPhotoCommandTest {
     @Test
     public void execute_personAcceptedByModel_uploadPhotoSuccessful() throws Exception {
         Person updatedPerson = new PersonBuilder(model.getFilteredPersonList()
-                .get(INDEX_FIRST_PERSON.getZeroBased())).withPhoto("D:\\Git Projects\\wolf.jpg").build();
+                .get(INDEX_FIRST_PERSON.getZeroBased())).withPhoto("..\\addressbook4\\docs\\images\\wolf.jpg").build();
 
-        Photo photo = new Photo("D:\\Git Projects\\wolf.jpg");
+        Photo photo = new Photo("..\\addressbook4\\docs\\images\\wolf.jpg");
         UploadPhotoCommand uploadPhotoCommand = prepareCommand(INDEX_FIRST_PERSON, photo);
 
         String expectedMessage = String.format(UploadPhotoCommand.MESSAGE_UPDATE_PERSON_PHOTO_SUCCESS, updatedPerson);
