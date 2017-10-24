@@ -29,7 +29,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         String dataFieldToSortByFirst = trimmedArgs.toLowerCase();
 
-        switch (dataFieldToSortByFirst) { 
+        switch (dataFieldToSortByFirst) {
         case DATA_FIELD_NAME:
         case DATA_FIELD_PHONE:
         case DATA_FIELD_EMAIL:
