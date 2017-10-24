@@ -17,8 +17,9 @@ public class FileUtil {
     private static final Pattern XML_FILE_FORMAT = Pattern.compile(".*\\.xml$");
     private static final Pattern UNIX_NAME_SEPARATOR_FORMAT = Pattern.compile(".*/.*");
     private static final Pattern WINDOWS_NAME_SEPARATOR_FORMAT = Pattern.compile(".*\\\\.*");
-    private static final Pattern INVALID_NAME_CHARACTERS_FORMAT = Pattern.compile(".*[?!%*+:|\"<>. ].*");
+    private static final Pattern INVALID_NAME_CHARACTERS_FORMAT = Pattern.compile(".*[?!%*+:|\"<> ].*");
     private static final Pattern CONSECUTIVE_NAME_SEPARATOR_FORMAT = Pattern.compile("(.*//.*)|(.*\\\\\\\\.*)");
+    private static final Pattern CONSECUTIVE_EXTENSION_SEPARATOR_FORMAT = Pattern.compile(".*\\.\\..*");
 
     public static boolean isFileExists(File file) {
         return file.exists() && file.isFile();
@@ -111,12 +112,12 @@ public class FileUtil {
         Matcher unixMatcher = UNIX_NAME_SEPARATOR_FORMAT.matcher(filePath);
         Matcher windowsMatcher = WINDOWS_NAME_SEPARATOR_FORMAT.matcher(filePath);
 
-        if (unixMatcher.matches() && File.separator.equals("\\") |
-                windowsMatcher.matches() && File.separator.equals("/")) {
-            return false;
+        if (unixMatcher.matches() && File.separator.equals("\\")
+            || windowsMatcher.matches() && File.separator.equals("/")) {
+            return true;
         }
         else {
-            return true;
+            return false;
         }
     }
 
@@ -130,10 +131,17 @@ public class FileUtil {
     /**
      * Checks whether the {@filePath} contain any consecutive name separators (OS-dependent)
      *
-     * {@link #hasConsecutiveNameSeparators(String)} should be checked prior this method
+     * {@link #hasInvalidNameSeparators(String)} should be checked prior this method
      */
     public static boolean hasConsecutiveNameSeparators(String filePath) {
-        return INVALID_NAME_CHARACTERS_FORMAT.matcher(filePath).matches();
+        return CONSECUTIVE_NAME_SEPARATOR_FORMAT.matcher(filePath).matches();
     }
 
+    /**
+     * Checks whether the {@filePath} contain any consecutive extension separators (.)
+     *
+     */
+    public static boolean hasConsecutiveExtensionSeparators(String filePath) {
+        return CONSECUTIVE_EXTENSION_SEPARATOR_FORMAT.matcher(filePath).matches();
+    }
 }
