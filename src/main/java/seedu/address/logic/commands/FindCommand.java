@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
 import java.util.function.Predicate;
 
 import seedu.address.model.person.ReadOnlyPerson;
@@ -19,9 +17,12 @@ public class FindCommand extends Command {
             + "Alias: " + COMMAND_ALIAS + "\n"
             + "Options: \n"
             + "\tdefault - Find contacts whose names contain any of the specified keywords (case-sensitive)\n"
-            + "\t" + PREFIX_TAG + " - Find contacts whose tags contain any of the specified keywords (case-sensitive)\n"
+            + "\t" + FindByTagsCommand.COMMAND_OPTION
+            + " - Find contacts whose tags contain any of the specified keywords (case-sensitive)\n"
             + "Parameters: [OPTION] KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " t/ friends colleagues";
+            + "Example: \n"
+            + COMMAND_WORD + " bob alice\n"
+            + COMMAND_WORD + " -" + FindByTagsCommand.COMMAND_OPTION + " friends colleagues";
 
     private final Predicate<ReadOnlyPerson> predicate;
 

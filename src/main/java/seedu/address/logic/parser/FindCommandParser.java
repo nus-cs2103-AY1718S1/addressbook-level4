@@ -38,18 +38,18 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
+        OptionBearingArgument opArgs = new OptionBearingArgument(args);
+        String filteredArgs = opArgs.getFilteredArgs();
 
-        if (FindByTagsCommand.matchArgs(trimmedArgs)) {
-            String keywordArgs = FindByTagsCommand.getKeywordArgs(trimmedArgs);
-            checkArgsNotEmpty(keywordArgs);
+        checkArgsNotEmpty(filteredArgs);
 
-            String[] tagKeywords = parseKeywords(keywordArgs);
+        if (opArgs.getOptions().contains(FindByTagsCommand.COMMAND_OPTION)) {
+            String[] tagKeywords = parseKeywords(filteredArgs);
             TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(Arrays.asList(tagKeywords));
             return new FindByTagsCommand(predicate);
         } else {
-            checkArgsNotEmpty(trimmedArgs);
-            String[] nameKeywords = parseKeywords(trimmedArgs);
+            checkArgsNotEmpty(opArgs.getFilteredArgs());
+            String[] nameKeywords = parseKeywords(filteredArgs);
             NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords));
             return new FindByNameCommand(predicate);
         }
