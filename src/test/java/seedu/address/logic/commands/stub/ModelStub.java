@@ -41,6 +41,9 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void sortPersonList() {}
+
+    @Override
     public void resetData(ReadOnlyAddressBook newData) {
         fail("This method should not be called.");
     }
