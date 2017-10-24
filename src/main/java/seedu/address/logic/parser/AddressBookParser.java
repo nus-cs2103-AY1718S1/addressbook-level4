@@ -25,7 +25,15 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
+import seedu.address.logic.parser.event.AddEventParser;
+import seedu.address.logic.parser.event.DeleteEventParser;
+import seedu.address.logic.parser.event.EditEventParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.person.AddCommandParser;
+import seedu.address.logic.parser.person.DeleteCommandParser;
+import seedu.address.logic.parser.person.EditCommandParser;
+import seedu.address.logic.parser.person.FindCommandParser;
+import seedu.address.logic.parser.person.SelectCommandParser;
 
 /**
  * Parses user input.
