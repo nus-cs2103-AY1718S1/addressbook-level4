@@ -34,7 +34,7 @@ public class WebCommandParser implements Parser<WebCommand> {
     public WebCommand parse(String args) throws ParseException {
 
         try {
-            String websiteName = ParserUtil.parseWebname(args).trim();
+            String websiteName = ParserUtil.parseWebname(args).trim().toLowerCase();
             String websiteToShow = WEBSITES_MAP.get(websiteName);
             if (websiteToShow == null) {
                 throw new IllegalValueException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

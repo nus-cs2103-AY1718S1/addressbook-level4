@@ -15,7 +15,7 @@ public class WebsiteSelectionRequestEvent extends BaseEvent {
     }
 
     public String getWebsiteRequested() {
-        return this.websiteRequested;
+        return websiteRequested;
     }
 
     @Override

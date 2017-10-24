@@ -71,7 +71,7 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadPersonSocial(ReadOnlyPerson selectedPerson, String websiteRequested) {
         selectedPerson.getWebLinks().forEach(webLink -> {
-            if (websiteRequested == webLink.webLinkTag) {
+            if (websiteRequested.toLowerCase() == webLink.webLinkTag.trim().toLowerCase()) {
                 loadPage(webLink.webLinkInput);
                 return;
             }
