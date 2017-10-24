@@ -34,7 +34,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 |=======================================================================
 |Feature |Developer |Delivery Date
 |Allow wildcard symbol * in find command| Zeyong| In progress
-
+|Appointments implementation |Alex| In progress
+|Add optional parameters |Derrick |In progress
 |=======================================================================
 
 == Upcoming
