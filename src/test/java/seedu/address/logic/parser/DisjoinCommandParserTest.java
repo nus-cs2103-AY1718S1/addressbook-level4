@@ -5,9 +5,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
@@ -57,7 +56,7 @@ public class DisjoinCommandParserTest {
         assertParseFailure(parser, PREFIX_PERSON + "-5 " + FIRST_EVENT, MESSAGE_INVALID_FORMAT);
 
         // zero index
-        assertParseFailure(parser, FIRST_PERSON + " " + PREFIX_EVENT +"0" , MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, FIRST_PERSON + " " + PREFIX_EVENT + "0" , MESSAGE_INVALID_FORMAT);
 
         // Non integer
         assertParseFailure(parser, PREFIX_PERSON + "some random string", MESSAGE_INVALID_FORMAT);
