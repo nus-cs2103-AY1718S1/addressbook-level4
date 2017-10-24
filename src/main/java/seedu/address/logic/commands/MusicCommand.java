@@ -21,11 +21,11 @@ public class MusicCommand extends Command {
             + "GENRE (must be either pop, dance or classic) \n"
             + "Example: " + COMMAND_WORD + " play classic ";
 
-    private static final String MESSAGE_MUSIC_STOP = "Music Stopped";
+    private static final String MESSAGE_STOP = "Music Stopped";
 
-    private static String MESSAGE_MUSIC_PAUSE = "Music Paused";
+    private static String messagePause = "Music Paused";
 
-    private static String MESSAGE_SUCCESS = "Music Playing";
+    private static String messageSuccess = "Music Playing";
 
     private static MediaPlayer mediaPlayer;
 
@@ -61,11 +61,11 @@ public class MusicCommand extends Command {
         case "play":
             if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
                 mediaPlayer.play();
-                return new CommandResult(MESSAGE_SUCCESS);
+                return new CommandResult(messageSuccess);
             }
             if (genreExist) {
                 String musicFile = "audio/music/" + genre + trackNumber + ".mp3";
-                MESSAGE_SUCCESS = genre.toUpperCase() + " Music Playing";
+                messageSuccess = genre.toUpperCase() + " Music Playing";
                 if (trackNumber < 2) {
                     trackNumber++;
                 } else {
@@ -79,7 +79,7 @@ public class MusicCommand extends Command {
                 mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
                 mediaPlayer.setVolume(2.0);
                 mediaPlayer.play();
-                return new CommandResult(MESSAGE_SUCCESS);
+                return new CommandResult(messageSuccess);
             } else {
                 return new CommandResult(MESSAGE_USAGE);
             }
@@ -87,13 +87,13 @@ public class MusicCommand extends Command {
             if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                 mediaPlayer.stop();
             }
-            return new CommandResult(MESSAGE_MUSIC_STOP);
+            return new CommandResult(MESSAGE_STOP);
         case "pause":
             if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                 mediaPlayer.pause();
             }
-            MESSAGE_MUSIC_PAUSE = genre.toUpperCase() + " Music Paused";
-            return new CommandResult(MESSAGE_MUSIC_PAUSE);
+            messagePause = genre.toUpperCase() + " Music Paused";
+            return new CommandResult(messagePause);
         default:
             return new CommandResult(MESSAGE_USAGE);
         }

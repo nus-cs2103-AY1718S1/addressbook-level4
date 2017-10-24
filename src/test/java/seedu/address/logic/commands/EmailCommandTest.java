@@ -26,13 +26,6 @@ public class EmailCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_email_success() {
-        Index inBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() - 1);
-        EmailCommand emailCommand = prepareCommand(inBoundIndex);
-        assertCommandSuccess(emailCommand, model, emailCommand.MESSAGE_SUCCESS, model);
-    }
-
-    @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         EmailCommand emailCommand = prepareCommand(outOfBoundIndex);
