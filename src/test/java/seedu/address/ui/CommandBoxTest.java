@@ -11,7 +11,9 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.parser.HintParser;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
@@ -64,6 +66,16 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
         guiRobot.push(KeyCode.ESCAPE);
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
+    }
+
+    @Test
+    public void commandBox_autocomplete() {
+        guiRobot.push(KeyCode.TAB);
+        assertEquals(HintParser.autocomplete(""), commandBoxHandle.getInput());
+
+        commandBoxHandle.type(AddCommand.COMMAND_WORD);
+        guiRobot.push(KeyCode.TAB);
+        assertEquals(HintParser.autocomplete(AddCommand.COMMAND_WORD), commandBoxHandle.getInput());
     }
 
     @Test
