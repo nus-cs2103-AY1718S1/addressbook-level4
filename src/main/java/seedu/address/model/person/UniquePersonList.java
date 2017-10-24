@@ -13,9 +13,12 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.HaveParticipateEventException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -120,6 +123,17 @@ public class UniquePersonList implements Iterable<Person> {
             throw new NotParticipateEventException();
         }
 
+    }
+
+    /**
+     * Add a specific person to the participant list of an event
+     */
+    public void addParticipateEvent(Person targetPerson, Event participateEvent) throws HaveParticipateEventException {
+        try {
+            targetPerson.addParticipateEvent(participateEvent);
+        } catch (DuplicateEventException dpe) {
+            throw new HaveParticipateEventException();
+        }
     }
 
     public void setPersons(UniquePersonList replacement) {
