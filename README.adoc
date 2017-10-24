@@ -36,5 +36,7 @@ _Marco Jakob_.
 
 * AddressBook-Level4 project created by https://github.com/se-edu/[SE-EDU] initiative
 
+* Credits to Joestalmach for the date parsing NLP library
+
 == Licence : link:LICENSE[MIT]
 
