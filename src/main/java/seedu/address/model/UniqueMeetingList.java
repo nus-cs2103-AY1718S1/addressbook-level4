@@ -19,7 +19,7 @@ import seedu.address.commons.util.CollectionUtil;
  *
  * @see Meeting#equals(Object)
  */
-public class UniqueMeetingList implements Iterable<Meeting> {
+public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList {
 
     private final ObservableList<Meeting> internalList = FXCollections.observableArrayList();
 
@@ -37,6 +37,11 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         internalList.addAll(meetings);
 
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    @Override
+    public ObservableList<Meeting> getMeetingList() {
+        return internalList;
     }
 
     /**
