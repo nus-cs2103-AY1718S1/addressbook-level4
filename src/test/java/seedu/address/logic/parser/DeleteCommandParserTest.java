@@ -25,9 +25,9 @@ public class DeleteCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
-        ArrayList<Index> IndexList = new ArrayList<>();
-        IndexList.add(INDEX_FIRST_PERSON);
-        assertParseSuccess(parser, "1", new DeleteCommand(IndexList));
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(INDEX_FIRST_PERSON);
+        assertParseSuccess(parser, "1", new DeleteCommand(indexList));
     }
 
     @Test

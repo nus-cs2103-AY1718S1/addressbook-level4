@@ -109,9 +109,9 @@ public class DeleteCommandTest {
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
     private DeleteCommand prepareCommand(Index index) {
-        ArrayList<Index> IndexList = new ArrayList<>();
-        IndexList.add(index);
-        DeleteCommand deleteCommand = new DeleteCommand(IndexList);
+        ArrayList<Index> indexList = new ArrayList<>();
+        indexList.add(index);
+        DeleteCommand deleteCommand = new DeleteCommand(indexList);
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }
