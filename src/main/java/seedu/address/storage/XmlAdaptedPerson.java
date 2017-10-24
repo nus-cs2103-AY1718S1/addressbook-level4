@@ -40,7 +40,7 @@ public class XmlAdaptedPerson {
     private String birthday;
     @XmlElement(required = true)
     private String age;
-    @XMLElement(required = true)
+    @XmlElement(required = true)
     private String filepath;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
