@@ -334,37 +334,37 @@ In addition, dates can be stored after being formatted to a more user-friendly s
  in validating whether a start date is indeed before a deadline. +
 **Alternative 2:** Use java.time.LocalDate class. +
 **Pros:** Dates are in correct format. Validation becomes easier and reformatting is not necessary.+
-**Cons:** LocalDate cannot be initialized when no input is given. In order to make dates optional, phony values would have to be used which violates the coding standard.
-**Alternative 3:**  Use java.util.Optional class for instance variables along with the LocalDate class.
+**Cons:** LocalDate cannot be initialized when no input is given. In order to make dates optional, phony values would have to be used which violates the coding standard. +
+**Alternative 3:**  Use java.util.Optional class for instance variables along with the LocalDate class. +
 **Pros:** Easy to understand reasoning, for new developers looking to contribute. Easy to format specifically for display (once) and allows empty values when no dates are supplied. +
-**Cons** The general agreement in the software engineering community seems to be that it is better not to use extra wrapping for an instance variable, that might pose problems in unwrapping later on.
+**Cons** The general agreement in the software engineering community seems to be that it is better not to use extra wrapping for an instance variable, that might pose problems in unwrapping later on. +
 
-**Aspect:** Natural Language Processing
+**Aspect:** Natural Language Processing +
 **Alternative 1 (current choice):** Use an external library (PrettyTime) to process dates in natural language __after__ they have been tokenized by their respective prefixes
-and categorized according to type.
-**Pros** Dates are sure to be instantiated according to the correct class.
-**Cons** Command format becomes less flexible.
-**Alternative 2:** Parse all dates first then scan the argument string for keywords.
-**Pros** More flexible command format and consequently, more user-friendly.
-**Cons** Open to more mistakes in setting starting dates and deadlines.
+and categorized according to type. +
+**Pros** Dates are sure to be instantiated according to the correct class. +
+**Cons** Command format becomes less flexible. +
+**Alternative 2:** Parse all dates first then scan the argument string for keywords. +
+**Pros** More flexible command format and consequently, more user-friendly. +
+**Cons** Open to more mistakes in setting starting dates and deadlines. +
 
-**Aspect:** Assigning starting dates and deadlines
-**Alternative 1 (current choice):** Use an abstract parent TaskDates class to hold all validator and formatting methods.
+**Aspect:** Assigning starting dates and deadlines +
+**Alternative 1 (current choice):** Use an abstract parent TaskDates class to hold all validator and formatting methods. +
 **Pros** Prevents code duplication for common methods and prevents abstract class from being instantiated ensuring that
-there are only two types of task dates.
-**Cons** Other classes have no direct interaction with parent class.
-**Alternative 2:** Use a single TaskDates class and set instance variables to contain starting and deadline dates.
-**Pros** Easier to implement.
-**Cons** Might violate SRP as the class is now concerned with two different kinds of dates.
+there are only two types of task dates. +
+**Cons** Other classes have no direct interaction with parent class. +
+**Alternative 2:** Use a single TaskDates class and set instance variables to contain starting and deadline dates. +
+**Pros** Easier to implement. +
+**Cons** Might violate SRP as the class is now concerned with two different kinds of dates. +
 
-**Aspect:** Setting prefixes for adding tasks
-**Alternative 1 (current choice):** Use natural language prefixes i.e. from, to, by
-**Pros** Easier to type and remember.
-**Cons** Difficult to implement as descriptions containing these words must be separated from dates.
-**Alternative 2** Use slashes such as in task commands i.e. f/, o/, b/ etc.
-**Pros** Faster to type.
+**Aspect:** Setting prefixes for adding tasks +
+**Alternative 1 (current choice):** Use natural language prefixes i.e. from, to, by +
+**Pros** Easier to type and remember. +
+**Cons** Difficult to implement as descriptions containing these words must be separated from dates. +
+**Alternative 2** Use slashes such as in task commands i.e. f/, o/, b/ etc. +
+**Pros** Faster to type. +
 **Cons** Description might contain slashes. t/ (to) would clash with t/ prefix for tags so to/ would have to be used.
-Limits possibilities of adding new prefixes and making the format more flexible in the future.
+Limits possibilities of adding new prefixes and making the format more flexible in the future. +
 
 === DeleteTask mechanism
 
