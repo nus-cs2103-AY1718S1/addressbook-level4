@@ -11,7 +11,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new MapRoute Command object
  */
-public class MapRouteCommandParser implements Parser<MapShowCommand> {
+public class MapRouteCommandParser implements Parser<MapRouteCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the MapRouteCommand
      * and returns an MapRouteCommand object for execution.
@@ -22,7 +22,7 @@ public class MapRouteCommandParser implements Parser<MapShowCommand> {
             String indexArg = args.trim().substring(0, args.trim().indexOf(" "));
             String addressArg = args.trim().substring(args.trim().indexOf(" ") + 1);
             Index index = ParserUtil.parseIndex(indexArg);
-            return new MapShowCommand(index, addressArg);
+            return new MapRouteCommand(index, addressArg);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapShowCommand.MESSAGE_USAGE));
