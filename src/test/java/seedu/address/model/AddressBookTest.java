@@ -52,7 +52,7 @@ public class AddressBookTest {
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ALICE twice
         List<Lesson> newLessons = Arrays.asList(new Lesson(MA1101R_L1), new Lesson(MA1101R_L1));
-        List<Lecturer> newLecturers= new ArrayList<>(MA1101R_L1.getLecturers());
+        List<Lecturer> newLecturers = new ArrayList<>(MA1101R_L1.getLecturers());
         AddressBookStub newData = new AddressBookStub(newLessons, newLecturers);
 
         thrown.expect(AssertionError.class);

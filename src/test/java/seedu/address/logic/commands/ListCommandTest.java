@@ -43,7 +43,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_list_marked_list() throws DuplicateLessonException {
+    public void execute_list_marked() throws DuplicateLessonException {
 
         expectedModel.updateFilteredLessonList(new FavouriteListPredicate());
         assertCommandSuccess(listMarkedCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,

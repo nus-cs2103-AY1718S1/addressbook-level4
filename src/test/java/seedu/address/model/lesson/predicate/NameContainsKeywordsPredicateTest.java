@@ -1,15 +1,16 @@
 package seedu.address.model.lesson.predicate;
 
-import org.junit.Test;
-import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
-import seedu.address.testutil.LessonBuilder;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import seedu.address.model.module.predicates.NameContainsKeywordsPredicate;
+import seedu.address.testutil.LessonBuilder;
 
 public class NameContainsKeywordsPredicateTest {
     @Test
@@ -24,7 +25,8 @@ public class NameContainsKeywordsPredicateTest {
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        NameContainsKeywordsPredicate firstPredicateCopy = new NameContainsKeywordsPredicate(firstPredicateKeywordList);
+        NameContainsKeywordsPredicate firstPredicateCopy = new NameContainsKeywordsPredicate(
+                firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -40,7 +42,8 @@ public class NameContainsKeywordsPredicateTest {
     @Test
     public void test_codeContainsKeywords_returnsTrue() {
         // One keyword
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.singletonList("MA1101R"));
+        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.singletonList(
+                "MA1101R"));
         assertTrue(predicate.test(new LessonBuilder().withCode("MA1101R").build()));
 
         // Only one matching keyword

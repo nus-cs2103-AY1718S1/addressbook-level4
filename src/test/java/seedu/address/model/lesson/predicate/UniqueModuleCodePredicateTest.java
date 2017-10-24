@@ -1,17 +1,17 @@
 package seedu.address.model.lesson.predicate;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalLessons.CS2101_L1;
+import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
+
 import org.junit.Test;
+
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import static seedu.address.testutil.TypicalLessons.CS2101_L1;
-import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
-import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 public class UniqueModuleCodePredicateTest {
 

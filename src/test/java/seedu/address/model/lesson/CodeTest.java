@@ -1,10 +1,11 @@
 package seedu.address.model.lesson;
 
-import org.junit.Test;
-import seedu.address.model.module.Code;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.model.module.Code;
 
 public class CodeTest {
     @Test

@@ -1,13 +1,12 @@
 package seedu.address.testutil;
 
+import java.io.File;
+import java.io.IOException;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
 import seedu.address.model.module.ReadOnlyLesson;
-
-import java.io.File;
-import java.io.IOException;
-
 
 /**
  * A utility class for test cases.

@@ -60,15 +60,15 @@ public class FindCommandTest {
      /**
       * Parses {@code userInput} into a {@code FindCommand}.
      */
-/**
- private FindCommand prepareCommand(String userInput) {
- FindCommand command =
- new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
- command.setData(model, new CommandHistory(), new UndoRedoStack());
- return command;
- }
+    /**
+     private FindCommand prepareCommand(String userInput) {
+     FindCommand command =
+     new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+     command.setData(model, new CommandHistory(), new UndoRedoStack());
+     return command;
+     }
 
- **/
+     **/
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      * - the command feedback is equal to {@code expectedMessage}<br>

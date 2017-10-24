@@ -15,6 +15,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -30,8 +32,6 @@ import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.testutil.LessonBuilder;
-
-import javafx.collections.ObservableList;
 
 public class AddCommandTest {
 

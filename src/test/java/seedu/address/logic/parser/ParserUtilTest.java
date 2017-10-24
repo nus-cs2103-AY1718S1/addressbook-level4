@@ -1,12 +1,8 @@
 package seedu.address.logic.parser;
 
-import org.junit.Rule;
-import org.junit.Test;
-
-import org.junit.rules.ExpectedException;
-
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
@@ -17,9 +13,17 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.module.*;
+import seedu.address.model.module.ClassType;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Group;
+import seedu.address.model.module.Location;
+import seedu.address.model.module.TimeSlot;
 
 public class ParserUtilTest {
     private static final String INVALID_CODE = "ABC4444AA";
