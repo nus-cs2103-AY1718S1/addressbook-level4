@@ -22,6 +22,8 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "f", "filter", "search"));
+    public static final String COMMAND_HOTKEY = "Ctrl+f";
+    public static final String FORMAT = "find KEYWORD(S)";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names roughly match any of "
             + "the specified keywords (case-insensitive) "

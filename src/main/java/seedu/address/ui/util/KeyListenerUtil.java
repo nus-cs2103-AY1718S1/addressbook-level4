@@ -5,12 +5,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javafx.scene.input.KeyCombination;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.NewCommand;
 import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 /**
@@ -30,6 +35,11 @@ public class KeyListenerUtil {
     public static final KeyCombination LIST = KeyCombination.valueOf(ListCommand.COMMAND_HOTKEY);
     public static final KeyCombination OPEN_FILE = KeyCombination.valueOf(OpenCommand.COMMAND_HOTKEY);
     public static final KeyCombination NEW_FILE = KeyCombination.valueOf(NewCommand.COMMAND_HOTKEY);
+    public static final KeyCombination ADD = KeyCombination.valueOf(AddCommand.COMMAND_HOTKEY);
+    public static final KeyCombination EDIT = KeyCombination.valueOf(EditCommand.COMMAND_HOTKEY);
+    public static final KeyCombination FIND = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);
+    public static final KeyCombination SELECT = KeyCombination.valueOf(SelectCommand.COMMAND_HOTKEY);
+    public static final KeyCombination DELETE = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY);
 
     public static final Set<KeyCombination> POSSIBLE_KEY_COMBINATIONS =
             new HashSet<>(Arrays.asList(
@@ -42,6 +52,11 @@ public class KeyListenerUtil {
                     REDO,
                     LIST,
                     OPEN_FILE,
-                    NEW_FILE
+                    NEW_FILE,
+                    ADD,
+                    EDIT,
+                    FIND,
+                    SELECT,
+                    DELETE
             ));
 }

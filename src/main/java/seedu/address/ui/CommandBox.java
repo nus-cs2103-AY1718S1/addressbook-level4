@@ -19,7 +19,12 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -33,6 +38,7 @@ public class CommandBox extends UiPart<Region> {
     private static final int TIME_SINCE_TYPING = 300;
     private static final int START_OF_FIRST_FIELD = 6;
     private static final int END_OF_FIRST_FIELD = 10;
+    private static final int CTRL = 17;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
@@ -44,11 +50,6 @@ public class CommandBox extends UiPart<Region> {
     private int anchorPosition;
     private String selectedText = "";
     private String input;
-    private final String addCommandFormat = "add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS";
-    private final String editCommandFormat = "edit INDEX [Field(s) you want to change]";
-    private final String findCommandFormat = "find KEYWORD(S)";
-    private final String selectCommandFormat = "select INDEX";
-    private final String deleteCommandFormat = "delete INDEX";
     private final String[] autocompleteCommandList = {"add", "a", "delete", "d", "edit", "e", "find", "f", "search",
         "list", "l", "select", "s"};
     private final String[] addCommandFieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX",
@@ -116,13 +117,21 @@ public class CommandBox extends UiPart<Region> {
             break;
         case TAB:
             autocomplete();
-            //press shift key to make the text selection in command box appear
-            robot.keyPress(17);
-            robot.keyRelease(17);
+            //press control key to make the text selection in command box appear
+            pressCtrl();
             break;
         default:
             // let JavaFx handle the keypress
         }
+    }
+
+    public Robot getRobot() {
+        return robot;
+    }
+
+    public void pressCtrl() {
+        robot.keyPress(CTRL);
+        robot.keyRelease(CTRL);
     }
 
     /**
@@ -157,7 +166,7 @@ public class CommandBox extends UiPart<Region> {
      */
     protected void replaceText(String text) {
         commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
+        //commandTextField.positionCaret(commandTextField.getText().length());
     }
 
     /**
@@ -236,13 +245,13 @@ public class CommandBox extends UiPart<Region> {
     private void autoSelectFirstField() {
         setFocus();
         switch (input) {
-        case addCommandFormat:
+        case AddCommand.FORMAT:
             commandTextField.selectRange(START_OF_FIRST_FIELD, END_OF_FIRST_FIELD);
             break;
-        case editCommandFormat:
-        case findCommandFormat:
-        case selectCommandFormat:
-        case deleteCommandFormat:
+        case EditCommand.FORMAT:
+        case FindCommand.FORMAT:
+        case SelectCommand.FORMAT:
+        case DeleteCommand.FORMAT:
             int indexOfFirstSpace = input.indexOf(" ");
             commandTextField.selectRange(indexOfFirstSpace + 1, input.length());
             break;
@@ -301,24 +310,24 @@ public class CommandBox extends UiPart<Region> {
         switch (command) {
         case "add":
         case "a":
-            replaceText(addCommandFormat);
+            replaceText(AddCommand.FORMAT);
             break;
         case "edit":
         case "e":
-            replaceText(editCommandFormat);
+            replaceText(EditCommand.FORMAT);
             break;
         case "find":
         case "f":
         case "search":
-            replaceText(findCommandFormat);
+            replaceText(FindCommand.FORMAT);
             break;
         case "select":
         case "s":
-            replaceText(selectCommandFormat);
+            replaceText(SelectCommand.FORMAT);
             break;
         case "delete":
         case "d":
-            replaceText(deleteCommandFormat);
+            replaceText(DeleteCommand.FORMAT);
             break;
         default:
         }
