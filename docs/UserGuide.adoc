@@ -246,14 +246,15 @@ Removes the remark for the first person.
 
 === Adding birthday : `birthday` (Since v1.2)
 
-Edits the birthday for a person specified in the `INDEX`. +
+Edits the birthday for a person specified in the `INDEX`.
+Also shows the person's age for the corresponding birthday in the current year. +
 Format: `birthday INDEX b/[BIRTHDAY]` +
 
 Examples:
 
-* `birthday 1 b/20/DEC/2012` +
-Edits the birthday for the first person to `20/DEC/2012` +
-* `birthday 1 b/` +
+* `birthday 1 b/20-12-2012` +
+Edits the birthday for the first person to `20-12-2012` +
+* `birthday 1 b/` or `birthday 1` +
 Removes the birthday for the first person.
 
 === Sorting all entries : `sort` (Since v1.2)
@@ -323,7 +324,7 @@ e.g. `find James Jake`
 * *Remark* : `remark INDEX [r/REMARK]` +
 e.g. `remark 1 r/is a student in NUS`
 * *Birthday* : `birthday INDEX [b/DATE]` +
-e.g. `birthday 1 b/01/APR/1995`
+e.g. `birthday 1 b/01-01-1995`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +

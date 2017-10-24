@@ -409,7 +409,7 @@ will be executed. An instance of `Person` will be created to be updated with the
 The command will then call the `updatedFilteredPersonList()` method in the `Model` Class. In the end, the command will
 generate a success message. The following sequence diagram summarises what happens when the `BirthdayCommand` is implemented:
 
-image::BirthdayUMLseq.png[width="800"]
+image::UMLforBirthday.png[width="800"]
 
 ==== Design Considerations
 
