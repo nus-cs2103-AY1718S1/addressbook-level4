@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class DeliveryDate {
 
 
-    public static final String MESSAGE_DELIVERYDATE_CONSTRAINTS =
+    public static final String MESSAGE_DELIVERY_DATE_CONSTRAINTS =
             "Delivery dates should be in the format dd-mm-yyyy";
     public static final String DATE_VALIDATION_REGEX =
             "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$";
@@ -26,7 +26,7 @@ public class DeliveryDate {
         requireNonNull(deliveryDate);
         String trimmedDate = deliveryDate.trim();
         if (!isValidDate(trimmedDate)) {
-            throw new IllegalValueException(MESSAGE_DELIVERYDATE_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_DELIVERY_DATE_CONSTRAINTS);
         }
         this.value = trimmedDate;
     }

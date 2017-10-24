@@ -309,7 +309,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid delivery date -> rejected */
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + INVALID_DELIVERY_DATE_DESC;
-        assertCommandFailure(command, DeliveryDate.MESSAGE_DELIVERYDATE_CONSTRAINTS);
+        assertCommandFailure(command, DeliveryDate.MESSAGE_DELIVERY_DATE_CONSTRAINTS);
 
         /* Case: invalid status -> rejected */
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY

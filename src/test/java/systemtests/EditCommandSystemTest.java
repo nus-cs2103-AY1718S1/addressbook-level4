@@ -196,7 +196,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid delivery date -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased()
-                + INVALID_DELIVERY_DATE_DESC, DeliveryDate.MESSAGE_DELIVERYDATE_CONSTRAINTS);
+                + INVALID_DELIVERY_DATE_DESC, DeliveryDate.MESSAGE_DELIVERY_DATE_CONSTRAINTS);
 
         /* Case: invalid status -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased()

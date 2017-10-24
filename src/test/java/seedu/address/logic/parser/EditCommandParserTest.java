@@ -103,7 +103,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
         assertParseFailure(parser, "1" + INVALID_DELIVERY_DATE_DESC,
-                DeliveryDate.MESSAGE_DELIVERYDATE_CONSTRAINTS); // invalid delivery date
+                DeliveryDate.MESSAGE_DELIVERY_DATE_CONSTRAINTS); // invalid delivery date
         assertParseFailure(parser, "1" + INVALID_STATUS_DESC, Status.MESSAGE_STATUS_CONSTRAINTS);
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 

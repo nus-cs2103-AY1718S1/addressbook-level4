@@ -201,7 +201,7 @@ public class AddCommandParserTest {
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + INVALID_DELIVERY_DATE_DESC + STATUS_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                DeliveryDate.MESSAGE_DELIVERYDATE_CONSTRAINTS);
+                DeliveryDate.MESSAGE_DELIVERY_DATE_CONSTRAINTS);
 
         // invalid status
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
