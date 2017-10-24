@@ -235,7 +235,7 @@ Deletes all persons with the tags `school` or `work`
 === Finding persons: `find`
 
 Finds and displays a list of persons based on user's specified option. +
-Format `find [OPTION] KEYWORD [MORE_KEYWORDS]...
+Format `find [OPTION] KEYWORD [MORE_KEYWORDS]...`
 
 Options: +
 
