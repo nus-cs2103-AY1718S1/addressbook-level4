@@ -14,7 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -23,7 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class RemarkListPanel extends UiPart<Region> {
     private static final String FXML = "RemarkListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(RemarkListPanel.class);
-    private final Integer FIRST_INDEX_OF_ARRAY = 0;
+    private final Integer firstIndexOfArray = 0;
 
     private final StringProperty displayed = new SimpleStringProperty("");
 
@@ -50,15 +49,14 @@ public class RemarkListPanel extends UiPart<Region> {
         totalPersonsWithRemarks = 0;
         personListWithRemarks = new ArrayList<>();
         for (int i = 0; i < personObservableList.size(); i++) {
-            if (!personObservableList.get(i).getRemark().get(FIRST_INDEX_OF_ARRAY).value.equals("")
+            if (!personObservableList.get(i).getRemark().get(firstIndexOfArray).value.equals("")
                     && !personObservableList.get(i).getRemark().isEmpty()) {
                 totalPersonsWithRemarks++;
                 personListWithRemarks.add(personObservableList.get(i).getName().fullName);
             }
         }
         String printedString = totalPersonsWithRemarks + " person(s) with pending remarks: \n";
-               // + "---------------------------------------------------\n";
-        for(int i =0; i < personListWithRemarks.size(); i++) {
+        for (int i = 0; i < personListWithRemarks.size(); i++) {
             printedString = printedString.concat(personListWithRemarks.get(i) + "\n");
         }
         final String finalString = printedString;
