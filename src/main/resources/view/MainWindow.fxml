@@ -106,6 +106,9 @@
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
+                     <StackPane.margin>
+                        <Insets bottom="5.0" />
+                     </StackPane.margin>
                   </Text>
                </children>
             </StackPane>
