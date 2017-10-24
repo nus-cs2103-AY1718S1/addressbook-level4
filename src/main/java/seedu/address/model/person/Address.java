@@ -19,7 +19,7 @@ public class Address {
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String value;
+    public String value;
 
     /**
      * Validates given address.
@@ -33,6 +33,15 @@ public class Address {
         }
         this.value = address;
     }
+    public Address() throws IllegalValueException {
+        //requireNonNull(address);
+        String address="address unknown";
+        /*if (!isValidAddress(address)) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }*/
+        this.value = address;
+    }
+
 
     /**
      * Returns true if a given string is a valid person email.

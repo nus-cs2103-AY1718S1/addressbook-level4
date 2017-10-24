@@ -14,7 +14,7 @@ public class Email {
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
 
-    public final String value;
+    public String value;
 
     /**
      * Validates given email.
@@ -29,6 +29,16 @@ public class Email {
         }
         this.value = trimmedEmail;
     }
+
+    public Email() throws IllegalValueException {
+        //requireNonNull(email);
+        String trimmedEmail = "email unknown";
+        /*if (!isValidEmail(trimmedEmail)) {
+            throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
+        }*/
+        this.value = trimmedEmail;
+    }
+
 
     /**
      * Returns if a given string is a valid person email.

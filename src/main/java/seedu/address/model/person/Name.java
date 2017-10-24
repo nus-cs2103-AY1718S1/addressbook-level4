@@ -19,7 +19,7 @@ public class Name {
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public final String fullName;
+    public String fullName;
 
     /**
      * Validates given name.
@@ -34,6 +34,15 @@ public class Name {
         }
         this.fullName = trimmedName;
     }
+
+    public Name() throws IllegalValueException {
+        String trimmedName = "anonymous";
+        if (!isValidName(trimmedName)) {
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+        }
+        this.fullName = trimmedName;
+    }
+
 
     /**
      * Returns true if a given string is a valid person name.

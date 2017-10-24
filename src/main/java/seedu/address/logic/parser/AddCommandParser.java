@@ -38,19 +38,48 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY,
                 PREFIX_ADDRESS, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_BIRTHDAY)) {
+        if ((!arePrefixesPresent(argMultimap, PREFIX_NAME))
+                &&(!arePrefixesPresent(argMultimap, PREFIX_ADDRESS))
+                &&(!arePrefixesPresent(argMultimap, PREFIX_PHONE))
+                &&(!arePrefixesPresent(argMultimap, PREFIX_EMAIL))
+                &&(!arePrefixesPresent(argMultimap, PREFIX_BIRTHDAY)))
+        //&&(!arePrefixesPresent(argMultimap, PREFIX_TAG)))
+
+        {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
-            Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            Birthday birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
-            Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Name name;
+            Phone phone;
+            Email email;
+            Birthday birthday;
+            Address address;
+            Set<Tag> tagList;
+            if(arePrefixesPresent(argMultimap, PREFIX_NAME))
+                name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+            else {name=new Name();}
+
+            if(arePrefixesPresent(argMultimap, PREFIX_PHONE))
+                phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+            else {phone=new Phone();}
+
+            if(arePrefixesPresent(argMultimap, PREFIX_EMAIL))
+                email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+            else {email=new Email();}
+
+            if(arePrefixesPresent(argMultimap, PREFIX_BIRTHDAY))
+                birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
+            else {birthday=new Birthday();}
+
+            if(arePrefixesPresent(argMultimap, PREFIX_ADDRESS))
+                address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            else {address=new Address();}
+
+            tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             ReadOnlyPerson person = new Person(name, phone, email, birthday, address, tagList);
+
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
