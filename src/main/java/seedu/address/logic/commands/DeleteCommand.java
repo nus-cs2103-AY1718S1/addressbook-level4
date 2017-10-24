@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -20,9 +22,10 @@ public class DeleteCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Multiple parameters must be separated by a space\n"
+            + "Example: " + COMMAND_WORD + " 1, or " + COMMAND_WORD + "1 3 4";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted: %1$s";
 
     private ArrayList <Index> targetIndex = new ArrayList <>();
 
@@ -40,10 +43,12 @@ public class DeleteCommand extends UndoableCommand {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
+        if(targetIndex.size() <= 0)
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
 
         ArrayList<ReadOnlyPerson> personToDelete = new ArrayList<>();
         for(int x = 0; x<targetIndex.size(); x++) {
-            personToDelete.set(x, lastShownList.get(targetIndex.get(x).getZeroBased()));
+            personToDelete.add(lastShownList.get(targetIndex.get(x).getZeroBased()));
         }
         //ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
@@ -53,8 +58,15 @@ public class DeleteCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        String outputResult = MESSAGE_DELETE_PERSON_SUCCESS;
+        outputResult = String.format(outputResult, personToDelete.get(0));
+        for(int x = 1; x<personToDelete.size(); x++)
+        {
+            outputResult = outputResult + "\n";
+            String temp = personToDelete.get(x).toString();
+            outputResult += temp;
+        }
+        return new CommandResult(outputResult);
     }
 
     @Override
