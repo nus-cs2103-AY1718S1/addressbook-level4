@@ -20,7 +20,6 @@ public class UniqueParcelListTest {
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         UniqueParcelList uniqueParcelList = new UniqueParcelList();
-        Parcel toAdd = new ParcelBuilder().build();
         thrown.expect(UnsupportedOperationException.class);
         uniqueParcelList.asObservableList().remove(0);
     }
