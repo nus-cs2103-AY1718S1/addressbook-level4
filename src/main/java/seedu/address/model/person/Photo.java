@@ -25,7 +25,7 @@ public class Photo {
             if (isValidFilePath(file)) {
                 try {
                     String localUrl = file.toURI().toURL().toString();
-                     this.url = localUrl;
+                    this.url = localUrl;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }

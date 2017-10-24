@@ -94,7 +94,7 @@ public class PersonCard extends UiPart<Region> {
     /** Checks if the user has added any photo to the specific contact*/
     private void setImage(ReadOnlyPerson person) {
         String url = person.getPhoto().getUrl();
-        if(!url.equals("")) { //if url is not empty, sets the image that overrides the default photo.
+        if (!url.equals("")) { //if url is not empty, sets the image that overrides the default photo.
             Image image = new Image(url);
             imageView.setImage(image);
         }
