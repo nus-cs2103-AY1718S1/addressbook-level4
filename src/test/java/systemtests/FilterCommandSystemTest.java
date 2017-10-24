@@ -13,7 +13,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FilterCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
@@ -119,7 +118,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: filter address of person in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORDVAR_1 + " " + FIONA.getAddress().value;
+        command = FilterCommand.COMMAND_WORDVAR + " " + FIONA.getAddress().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
