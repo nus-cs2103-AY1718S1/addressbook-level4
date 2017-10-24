@@ -6,7 +6,7 @@ package seedu.address.logic.commands;
  * @author Sri-vatsa
  */
 
-public class ListByMostSearchedCommand extends Command {
+public class ListByMostSearchedCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "listMostSearched";
     public static final String COMMAND_ALIAS = "lms";
@@ -15,7 +15,7 @@ public class ListByMostSearchedCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Listed all persons sorted by frequency of search";
 
     @Override
-    public CommandResult execute() {
+    public CommandResult executeUndoableCommand() {
         model.sortPersonListBySearchCount();
         return new CommandResult(MESSAGE_SUCCESS);
     }
