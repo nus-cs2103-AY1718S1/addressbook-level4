@@ -17,8 +17,8 @@ By: `Team W15-B3`      Since: `Jun 2016`      Licence: `MIT`
 == Introduction
 
 ConnectUs is a professional address book application tailored to small to medium enterprises
-who wish for prompt lookup of their business partners particulars. It allows for storage and management of business contacts, quick and easy 
-access to their emails, and displays their location on Google Maps. 
+who wish for prompt lookup of their business partners particulars. It allows for storage and management of business contacts, quick and easy
+access to their emails, and displays their location on Google Maps.
 
 ConnectUs v1.2 is available for Windows and Mac OS X Operating Systems.
 
@@ -43,7 +43,7 @@ Below lists the command terminology which would be used throughout this guide:
 .  Ensure you have Java link:http://www.oracle.com/technetwork/java/javase/8u60-relnotes-2620227.html[version] `1.8.0_60` or later installed in your Computer.
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8. 
+This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `connectUs.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
@@ -340,7 +340,7 @@ Sorts the contact in the address book based on the name of the contact by clicki
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 *Q*: How do I change the theme? +
-*A*: Click on the `File` drop down menu on the top left hand corner of the screen. A drop down menu appears. Click on the theme you want to apply. 
+*A*: Click on the `File` drop down menu on the top left hand corner of the screen. A drop down menu appears. Click on the theme you want to apply.
 
 == Command Summary
 
