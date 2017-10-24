@@ -65,8 +65,10 @@ public class EditCommandSystemTest extends RolodexSystemTest {
         Index index = INDEX_FIRST_PERSON;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
                 + PHONE_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + ADDRESS_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
+        ReadOnlyPerson personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
         Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+                .build(personToEdit.getTags());
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: undo editing the last person in the list -> last person restored */
@@ -85,20 +87,24 @@ public class EditCommandSystemTest extends RolodexSystemTest {
         index = INDEX_SECOND_PERSON;
         command = EditCommand.COMMAND_WORD_ABBREVIATIONS.iterator().next() + " " + index.getOneBased() + NAME_DESC_BOB
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, index, BOB);
+        personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
+        editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
+                .build(personToEdit.getTags());
+        assertCommandSuccess(command, index, editedPerson);
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FRIEND;
-        ReadOnlyPerson personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
-        editedPerson = new PersonBuilder(personToEdit).withTags(VALID_TAG_FRIEND).build();
+        personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
+        editedPerson = new PersonBuilder(personToEdit).withTags(VALID_TAG_FRIEND).build(personToEdit.getTags());
         assertCommandSuccess(command, index, editedPerson);
 
-        /* Case: clear tags -> cleared */
+        /* Case: empty tag parameter -> no effect */
         index = INDEX_FIRST_PERSON;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TAG.getPrefix();
-        editedPerson = new PersonBuilder(personToEdit).withTags().build();
-        assertCommandSuccess(command, index, editedPerson);
+        personToEdit = getModel().getLatestPersonList().get(index.getZeroBased());
+        assertCommandSuccess(command, index, personToEdit);
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
