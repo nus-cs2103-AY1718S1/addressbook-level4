@@ -139,6 +139,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortByDataFieldFirst(String dataField) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void removeTag(Set<Tag> tag, Set<Index> index) throws  PersonNotFoundException,
                 DuplicatePersonException {
             fail("This method should not be called.");

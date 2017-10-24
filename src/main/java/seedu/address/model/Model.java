@@ -55,6 +55,8 @@ public interface Model {
      * @throws PersonNotFoundException
      * @throws DuplicatePersonException
      */
+    void sortByDataFieldFirst(String dataField);
+
     void removeTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException, DuplicatePersonException;
 
     /**
