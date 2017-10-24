@@ -143,6 +143,12 @@ public class AddCommandTest {
                 DuplicatePersonException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void addTag(Set<Tag> tag, Set<Index> index) throws  PersonNotFoundException,
+                DuplicatePersonException {
+            fail("This method should not be called.");
+        }
     }
 
     /**

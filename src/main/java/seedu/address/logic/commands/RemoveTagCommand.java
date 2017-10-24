@@ -19,17 +19,16 @@ import seedu.address.model.tag.Tag;
 /**
  * Remove the specified tag from address book
  */
-public class RemoveCommand extends UndoableCommand {
+public class RemoveTagCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "remove";
-    public static final String COMMAND_ALIAS = "rm";
+    public static final String COMMAND_WORD = "removetag";
+    public static final String COMMAND_ALIAS = "rt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Remove the tag from a person by the index number used "
             + "in the last person listing.\n"
             + "Remove the specified tag in the whole address book by excluding the [INDEX] parameter.\n"
             + "Parameters: [TAG]... [INDEX]...(INDEX must be positive integer)\n"
-            + "Multiple TAGS and INDEXES in one command is not allowed.\n"
             + "Example: " + COMMAND_WORD + " friends 1";
 
     public static final String MESSAGE_REMOVE_SUCCESS = "Removed Tag: %1$s";
@@ -43,7 +42,7 @@ public class RemoveCommand extends UndoableCommand {
      * @param tag to be removed from address book
      * @param index of the person in the filtered list to remove tag
      */
-    public RemoveCommand(Set<Tag> tag, Set<Index> index)  {
+    public RemoveTagCommand(Set<Tag> tag, Set<Index> index)  {
         this.tag = tag;
         this.index = index;
     }
@@ -84,7 +83,7 @@ public class RemoveCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(
                     String.format
-                            (MESSAGE_INVALID_COMMAND_FORMAT, RemoveCommand.MESSAGE_USAGE));
+                            (MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
         } catch (PersonNotFoundException pnfe) {
             throw new CommandException(notFound);
         }
@@ -99,11 +98,11 @@ public class RemoveCommand extends UndoableCommand {
             return true;
         }
         // instanceof handles nulls
-        if (!(other instanceof RemoveCommand)) {
+        if (!(other instanceof RemoveTagCommand)) {
             return false;
         }
         // state check
-        RemoveCommand e = (RemoveCommand) other;
+        RemoveTagCommand e = (RemoveTagCommand) other;
         if ((index.size() == 0) && (e.index.size() == 0)) {
             return checkEqual(tag, e.tag);
         }
@@ -124,14 +123,14 @@ public class RemoveCommand extends UndoableCommand {
         Iterator<T> it1 = set1.iterator();
         Iterator<T> it2 = set2.iterator();
 
-        Boolean check = true;
+        Boolean check = false;
 
         while (it1.hasNext()) {
             T item = it1.next();
             while (it2.hasNext()) {
                 T item2 = it2.next();
-                if (!item.equals(item2)) {
-                    check = false;
+                if (item.equals(item2)) {
+                    check = true;
                 }
             }
         }
