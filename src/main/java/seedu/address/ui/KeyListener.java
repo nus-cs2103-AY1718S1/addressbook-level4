@@ -13,12 +13,9 @@ import static seedu.address.ui.util.KeyListenerUtil.OPEN_FILE;
 import static seedu.address.ui.util.KeyListenerUtil.REDO;
 import static seedu.address.ui.util.KeyListenerUtil.UNDO;
 
-import java.util.logging.Logger;
-
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -31,7 +28,6 @@ import seedu.address.logic.commands.UndoCommand;
  * Listens to key events in the main window.
  */
 public class KeyListener {
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Region mainNode;
     private PersonListPanel personListPanel;
