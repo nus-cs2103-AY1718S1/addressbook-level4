@@ -32,7 +32,8 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Appointment appointment, Set<Group> groups, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Appointment appointment,
+                                        Set<Group> groups, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -48,7 +49,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getAppointment(), 
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getAppointment(),
                 source.getGroups(), source.getTags());
     }
 
@@ -107,16 +108,16 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
-    
+
     public void setAppointment(Appointment appointment) {
         this.appointment.set(requireNonNull(appointment));
     }
-    
+
     @Override
     public ObjectProperty<Appointment> appointmentProperty() {
         return appointment;
     }
-   
+
     @Override
     public Appointment getAppointment() {
         return appointment.get();
