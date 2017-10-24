@@ -77,7 +77,7 @@ public class EmailLoginWindow extends UiPart<Region> {
                                     + "\"" + passwordString + "\"");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-            //primaryStage.close();
+            feedbackLabel.setText(commandResult.feedbackToUser);
         } catch (CommandException e) {
             feedbackLabel.setText(e.getMessage());
         } catch (ParseException e) {
