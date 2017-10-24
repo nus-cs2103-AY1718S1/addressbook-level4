@@ -14,5 +14,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_UNFAV = new Prefix("uf/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_SOCIAL = new Prefix("s/");
+    public static final Prefix PREFIX_OPTION = new Prefix("-");
 
 }
