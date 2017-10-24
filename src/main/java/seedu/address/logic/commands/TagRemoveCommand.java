@@ -15,6 +15,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
@@ -173,9 +174,11 @@ public class TagRemoveCommand extends UndoableCommand {
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
         Set<Tag> updatedTags = tagRemoveDescriptor.getTags();
+        Set<Event> updatedEvents = personToEdit.getEvents();
         DateAdded updateDateAdded = personToEdit.getDateAdded();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updateDateAdded);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                updatedEvents, updateDateAdded);
     }
 
     @Override
@@ -206,6 +209,7 @@ public class TagRemoveCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Set<Event> events;
         private DateAdded dateAdded;
 
         public TagRemoveDescriptor() {}
@@ -216,6 +220,7 @@ public class TagRemoveCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            this.events = toCopy.events;
             this.dateAdded = toCopy.dateAdded;
         }
         public TagRemoveDescriptor(ReadOnlyPerson toCopy) {
@@ -224,6 +229,7 @@ public class TagRemoveCommand extends UndoableCommand {
             this.email = toCopy.getEmail();
             this.address = toCopy.getAddress();
             this.tags = toCopy.getTags();
+            this.events = toCopy.getEvents();
         }
 
         /**
@@ -263,6 +269,14 @@ public class TagRemoveCommand extends UndoableCommand {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setEvent(Set<Event> events) {
+            this.events = events;
+        }
+
+        public Optional<Set<Event>> getEvents() {
+            return Optional.ofNullable(events);
         }
 
         public void setTags(Set<Tag> tags) {
