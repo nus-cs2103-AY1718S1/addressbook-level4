@@ -26,11 +26,11 @@ public class StringUtil {
         requireNonNull(sentence);
         requireNonNull(word);
 
-        String preppedWord = word.trim().replaceAll("\\s+","").toLowerCase();
+        String preppedWord = word.trim().replaceAll("\\s+", "").toLowerCase();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
-        String preppedSentence = sentence.replaceAll("\\s+","").toLowerCase();
+        String preppedSentence = sentence.replaceAll("\\s+", "").toLowerCase();
 
         return preppedSentence.contains(preppedWord);
     }
