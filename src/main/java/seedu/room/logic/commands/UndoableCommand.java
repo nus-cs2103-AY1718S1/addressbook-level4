@@ -5,8 +5,8 @@ import static seedu.room.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.ResidentBook;
 import seedu.room.model.ReadOnlyResidentBook;
+import seedu.room.model.ResidentBook;
 
 /**
  * Represents a command which can be undone and redone.

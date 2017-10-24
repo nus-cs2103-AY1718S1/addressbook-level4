@@ -18,7 +18,7 @@ public class Email {
     /**
      * Validates given email.
      *
-     * @throws IllegalValueException if given email room string is invalid.
+     * @throws IllegalValueException if given email string is invalid.
      */
     public Email(String email) throws IllegalValueException {
         if (email == null) {

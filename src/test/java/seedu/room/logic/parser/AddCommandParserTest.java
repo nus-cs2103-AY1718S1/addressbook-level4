@@ -1,33 +1,34 @@
 package seedu.room.logic.parser;
 
 import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.room.logic.commands.CommandTestUtil.ROOM_DEFAULT_UNSET;
-import static seedu.room.logic.commands.CommandTestUtil.ROOM_DESC_AMY;
-import static seedu.room.logic.commands.CommandTestUtil.ROOM_DESC_BOB;
+
 import static seedu.room.logic.commands.CommandTestUtil.DEFAULT_NOT_SET;
 import static seedu.room.logic.commands.CommandTestUtil.EMAIL_DEFAULT_UNSET;
 import static seedu.room.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.room.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static seedu.room.logic.commands.CommandTestUtil.INVALID_ROOM_DESC;
 import static seedu.room.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.room.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.room.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
+import static seedu.room.logic.commands.CommandTestUtil.INVALID_ROOM_DESC;
 import static seedu.room.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.room.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.room.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.PHONE_DEFAULT_UNSET;
 import static seedu.room.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.room.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
+import static seedu.room.logic.commands.CommandTestUtil.ROOM_DEFAULT_UNSET;
+import static seedu.room.logic.commands.CommandTestUtil.ROOM_DESC_AMY;
+import static seedu.room.logic.commands.CommandTestUtil.ROOM_DESC_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.room.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static seedu.room.logic.commands.CommandTestUtil.VALID_ROOM_AMY;
-import static seedu.room.logic.commands.CommandTestUtil.VALID_ROOM_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.room.logic.commands.CommandTestUtil.VALID_ROOM_AMY;
+import static seedu.room.logic.commands.CommandTestUtil.VALID_ROOM_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.room.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -36,11 +37,11 @@ import static seedu.room.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import org.junit.Test;
 
 import seedu.room.logic.commands.AddCommand;
-import seedu.room.model.person.Room;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.Phone;
+import seedu.room.model.person.Room;
 import seedu.room.model.tag.Tag;
 import seedu.room.testutil.PersonBuilder;
 
@@ -64,7 +65,7 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_AMY
                 + EMAIL_DESC_BOB + ROOM_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
-        // multiple roomes - last room accepted
+        // multiple rooms - last room accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ROOM_DESC_AMY + ROOM_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 

@@ -8,12 +8,12 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.room.commons.exceptions.IllegalValueException;
-import seedu.room.model.person.Room;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.Phone;
 import seedu.room.model.person.ReadOnlyPerson;
+import seedu.room.model.person.Room;
 import seedu.room.model.person.Timestamp;
 import seedu.room.model.tag.Tag;
 

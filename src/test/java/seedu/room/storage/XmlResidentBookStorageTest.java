@@ -16,8 +16,8 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.room.commons.exceptions.DataConversionException;
 import seedu.room.commons.util.FileUtil;
-import seedu.room.model.ResidentBook;
 import seedu.room.model.ReadOnlyResidentBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.person.Person;
 
 public class XmlResidentBookStorageTest {

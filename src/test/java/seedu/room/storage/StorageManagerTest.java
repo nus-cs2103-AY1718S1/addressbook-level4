@@ -14,8 +14,8 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.commons.events.storage.DataSavingExceptionEvent;
-import seedu.room.model.ResidentBook;
 import seedu.room.model.ReadOnlyResidentBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.UserPrefs;
 import seedu.room.ui.testutil.EventsCollectorRule;
 

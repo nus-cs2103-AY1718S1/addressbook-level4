@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.room.commons.exceptions.IllegalValueException;
-import seedu.room.model.ResidentBook;
 import seedu.room.model.ReadOnlyResidentBook;
-import seedu.room.model.person.Room;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.Phone;
+import seedu.room.model.person.Room;
 import seedu.room.model.person.Timestamp;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.tag.Tag;

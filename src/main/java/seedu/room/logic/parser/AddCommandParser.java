@@ -1,10 +1,10 @@
 package seedu.room.logic.parser;
 
 import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.room.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TEMPORARY;
 
@@ -15,12 +15,12 @@ import java.util.stream.Stream;
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.AddCommand;
 import seedu.room.logic.parser.exceptions.ParseException;
-import seedu.room.model.person.Room;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.Phone;
 import seedu.room.model.person.ReadOnlyPerson;
+import seedu.room.model.person.Room;
 import seedu.room.model.person.Timestamp;
 import seedu.room.model.tag.Tag;
 

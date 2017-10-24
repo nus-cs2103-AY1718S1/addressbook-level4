@@ -13,8 +13,8 @@ import org.junit.rules.ExpectedException;
 
 import seedu.room.model.ResidentBook;
 import seedu.room.storage.XmlSerializableResidentBook;
-import seedu.room.testutil.ResidentBookBuilder;
 import seedu.room.testutil.PersonBuilder;
+import seedu.room.testutil.ResidentBookBuilder;
 import seedu.room.testutil.TestUtil;
 
 public class XmlUtilTest {
@@ -54,7 +54,8 @@ public class XmlUtilTest {
 
     @Test
     public void getDataFromFile_validFile_validResult() throws Exception {
-        XmlSerializableResidentBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableResidentBook.class);
+        XmlSerializableResidentBook dataFromFile =
+                XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableResidentBook.class);
         assertEquals(9, dataFromFile.getPersonList().size());
         assertEquals(0, dataFromFile.getTagList().size());
     }
@@ -82,7 +83,8 @@ public class XmlUtilTest {
         TEMP_FILE.createNewFile();
         XmlSerializableResidentBook dataToWrite = new XmlSerializableResidentBook(new ResidentBook());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        XmlSerializableResidentBook dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableResidentBook.class);
+        XmlSerializableResidentBook dataFromFile =
+                XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableResidentBook.class);
         assertEquals((new ResidentBook(dataToWrite)).toString(), (new ResidentBook(dataFromFile)).toString());
         //TODO: use equality instead of string comparisons
 

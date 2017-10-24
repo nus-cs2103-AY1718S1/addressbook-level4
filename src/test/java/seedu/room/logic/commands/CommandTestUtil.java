@@ -2,10 +2,10 @@ package seedu.room.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.room.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TEMPORARY;
 
@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.ResidentBook;
 import seedu.room.model.Model;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.person.NameContainsKeywordsPredicate;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
@@ -60,7 +60,7 @@ public class CommandTestUtil {
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_ROOM_DESC = " " + PREFIX_ROOM; // empty string not allowed for roomes
+    public static final String INVALID_ROOM_DESC = " " + PREFIX_ROOM; // empty string not allowed for rooms
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;

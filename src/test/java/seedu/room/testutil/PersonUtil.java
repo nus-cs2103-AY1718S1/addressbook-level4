@@ -1,9 +1,9 @@
 package seedu.room.testutil;
 
-import static seedu.room.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TEMPORARY;
 

@@ -9,7 +9,7 @@ import seedu.room.commons.exceptions.IllegalValueException;
 public class Room {
 
     public static final String MESSAGE_ROOM_CONSTRAINTS =
-            "Person roomes can take any values, and it should not be blank";
+            "Person rooms can take any values, and it should not be blank";
 
     /*
      * The first character of the room must not be a whitespace,

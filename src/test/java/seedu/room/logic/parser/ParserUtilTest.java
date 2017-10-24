@@ -18,10 +18,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.room.commons.exceptions.IllegalValueException;
-import seedu.room.model.person.Room;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Phone;
+import seedu.room.model.person.Room;
 import seedu.room.model.tag.Tag;
 
 public class ParserUtilTest {

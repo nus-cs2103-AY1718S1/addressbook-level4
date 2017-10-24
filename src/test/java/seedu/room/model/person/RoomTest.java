@@ -9,11 +9,11 @@ public class RoomTest {
 
     @Test
     public void isValidRoom() {
-        // invalid roomes
+        // invalid rooms
         assertFalse(Room.isValidRoom("")); // empty string
         assertFalse(Room.isValidRoom(" ")); // spaces only
 
-        // valid roomes
+        // valid rooms
         assertTrue(Room.isValidRoom("Blk 456, Den Road, #01-355"));
         assertTrue(Room.isValidRoom("-")); // one character
         assertTrue(Room.isValidRoom("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long room

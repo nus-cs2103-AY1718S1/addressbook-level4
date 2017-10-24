@@ -4,10 +4,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.room.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.room.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.room.logic.commands.CommandTestUtil.VALID_ROOM_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.room.logic.commands.CommandTestUtil.VALID_ROOM_BOB;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import org.junit.Test;

@@ -1,10 +1,10 @@
 package seedu.room.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.room.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.room.logic.parser.CliSyntax.PREFIX_ROOM;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.room.logic.parser.CliSyntax.PREFIX_TEMPORARY;
 import static seedu.room.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -17,12 +17,12 @@ import seedu.room.commons.core.Messages;
 import seedu.room.commons.core.index.Index;
 import seedu.room.commons.util.CollectionUtil;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.person.Room;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.Phone;
 import seedu.room.model.person.ReadOnlyPerson;
+import seedu.room.model.person.Room;
 import seedu.room.model.person.Timestamp;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;

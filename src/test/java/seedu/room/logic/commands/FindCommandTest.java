@@ -17,9 +17,9 @@ import org.junit.Test;
 
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
-import seedu.room.model.ResidentBook;
 import seedu.room.model.Model;
 import seedu.room.model.ModelManager;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.person.NameContainsKeywordsPredicate;
 import seedu.room.model.person.ReadOnlyPerson;

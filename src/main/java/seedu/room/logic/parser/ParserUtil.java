@@ -10,10 +10,10 @@ import java.util.Set;
 import seedu.room.commons.core.index.Index;
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.commons.util.StringUtil;
-import seedu.room.model.person.Room;
 import seedu.room.model.person.Email;
 import seedu.room.model.person.Name;
 import seedu.room.model.person.Phone;
+import seedu.room.model.person.Room;
 import seedu.room.model.person.Timestamp;
 import seedu.room.model.tag.Tag;
 
