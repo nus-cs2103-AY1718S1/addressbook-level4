@@ -9,7 +9,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Contains helper methods to set up {@code Model} for Slider.
+ * Contains helper methods to set up {@code Model} for testing.
  */
 public class ModelHelper {
     private static final Predicate<ReadOnlyPerson> PREDICATE_MATCHING_NO_PERSONS = unused -> false;

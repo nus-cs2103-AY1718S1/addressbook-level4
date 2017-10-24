@@ -9,7 +9,7 @@ import guitests.guihandles.exceptions.NodeNotFoundException;
 import javafx.scene.Node;
 
 /**
- * Provides access to a node in a JavaFx application for GUI Slider purposes.
+ * Provides access to a node in a JavaFx application for GUI testing purposes.
  */
 public abstract class NodeHandle<T extends Node> {
     protected final GuiRobot guiRobot = new GuiRobot();

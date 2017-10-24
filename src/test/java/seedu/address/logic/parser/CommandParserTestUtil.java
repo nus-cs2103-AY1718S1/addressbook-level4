@@ -7,7 +7,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Contains helper methods for Slider command parsers.
+ * Contains helper methods for testing command parsers.
  */
 public class CommandParserTestUtil {
 
