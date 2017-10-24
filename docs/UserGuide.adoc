@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Death Note v1.3 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -16,13 +16,18 @@ By: `CS2103AUG2017-W10-B3`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 === Purpose
-*The user guide contains all essential information to make full use of the address book. This guide includes the description of the application's system function, abilities and step-by-step procedures to be able to use the address book effectively.*
+This user guide contains all the essential information required to make full
+use of Death Note. It also includes the description of the
+application's system function, abilities and
+step-by-step procedures to be able to use Death Note effectively.
 
 === Overview
-Death Note address book allows you to store the name, phone number, email, address, website and allows you to tag and remark the people in your address book.
+Death Note allows you to store the name, profile picture, phone number, email,
+address, birthday and website of your contacts. It also allows you to add tags and
+remarks to people stored inside.
 
 === Current Version
-Current version of this application is *Version 1.0*.
+The current version of this application is *Version 1.3*.
 
 == Quick Start
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -31,20 +36,22 @@ Current version of this application is *Version 1.0*.
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `DeathNote.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for Death Note.
+.  Double-click the file to start the program. The graphical user interface(GUI) should appear
+   in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui.png[width="800"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe`
+    to Death Note.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`exit`* : exits Death Note
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
@@ -63,28 +70,37 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
-Format: `help`
+Format: `help` +
+Opens up the help window.
 
 === Adding a person: `add` / `a` kbd:[V2.0]
 //tag::bday[]
-Adds a person to the address book +
+Adds a person to Death Note +
 
-> ##Version 1.0 (Current)## +
-Format: `add [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-Shorthand: `a [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-* All fields *MUST* be present except *TAGS*.
+> ##Version 1.3 (Current)## +
 
-> ##Version 2.0## +
-Format: `add [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...` +
-Shorthand: `a [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...` +
-Only NAME is compulsory +
-* Name field *MUST* be included. +
-* Other fields are optional.
-* Birthday field is in DD/MM/YYYY
+  Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
 
-TIPS:
-A person can have any number of TAGS. +
+  Shorthand: `a n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
 
+* Only the *NAME* field is compulsory +
+* Birthday is in dd/MM/yyyy format +
+* Picture should be in PNG format +
+
+> ###Version 2.0### +
+
+  Format: `add n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`
+
+  Shorthand: `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...`
+
+* Only the *NAME* field is compulsory
+* Birthday is in dd/MM/yyyy format
+
+
+TIPS: +
+
+1. A person can have any number of TAGS.
+2. You can input all the other parameters in any order except *NAME* which comes first
 //end::bday[]
 
 Examples:
@@ -95,41 +111,48 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/15/02/1992`
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https:www.website.com/`
 * `add n/Zulu t/friend e/zulu@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png`
 
 === Listing all persons : `list` / `l`
 
-Shows a list of all persons in the address book. +
-Format: `list` +
-Shorthand: `l`
+Shows a list of all persons in Death Note. +
 
-=== Sorting all persons : `sort` / `s` kbd:[V2.0]
+  Format: `list`
 
-Sorts the list of persons shown by alphabetical order.
-Format: `sort`
-Shorthand: ``
+  Shorthand: `l`
+
+=== Sorting all persons : kbd:[V2.0]
+
+Listed persons are sorted automatically in alphabetical order. No command is required.
 
 === Editing a person : `edit` / `e` kbd:[V2.0]
 
-Edits an existing person in the address book. +
+Edits an existing person in Death Note. +
 
-> ##Version 1.0 (Current)## +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-Shorthand: `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+> ##Version 1.3 (Current)## +
+
+  Format: `edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
+
+  Shorthand: `e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
+
+* Only the *NAME* field is compulsory +
+* Birthday is in dd/MM/yyyy format +
+* Picture should be in PNG format +
 
 > ##Version 2.0## +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...` +
-Shorthand: `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...` +
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...` +
-Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...` +
+  Format: `edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
 
-****
+  Shorthand: `e INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...`
+
+* Only the *NAME* field is compulsory +
+* Birthday is in dd/MM/yyyy format +
+
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
 
 Examples:
 
@@ -139,14 +162,8 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 * `edit 2 w/https://www.yahoo.com/ p/97883421` +
 Edits the website of the 2nd person to be https://www.yahoo.com/ and change the contact number to 97883421.
-
-=== Adding profile picture to a person kbd:[V2.0]
-
-Adds a profile picture to your contact. +
-Format: `profile [FILEPATH].jpg` +
-Shorthand: `p [FILEPATH].jpg` +
-
-Profile picture will be shown on the contact card itself.
+* `edit 1 pic/C:\pictures\clown.png +
+Edits the picture of the 1st person to the picture specified in the path i.e. clown.png
 
 === Locating persons by name: `find` / `f`
 
@@ -179,7 +196,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete` / `d`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from Death Note. +
 Format: `delete INDEX` +
 Shorthand: `d INDEX`
 
@@ -193,7 +210,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the displayed list.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -201,29 +218,31 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select` / `s`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX` +
-Shorthand: `s INDEX`
 
-****
+ Format: `select INDEX` +
+
+  Shorthand: `s INDEX`
+
 * Selects the person and loads the website of the person at the specified `INDEX` if the person has a website.
 * Selects the person and goole search the person at the specified `INDEX` if the person does not have a website.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
-****
 
 Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the displayed list.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
 === Adding Remarks : `remark` kbd:[V2.0]
 //tag::remark[]
-Adds remarks to the person identified by the INDEX
-Format: remark INDEX r/[REMARK]
+Adds or edits remarks to the person identified by the INDEX
+
+  Format: remark INDEX r/[REMARK]
+
 //end::remark[]
 Examples:
 
@@ -235,10 +254,11 @@ Removes the remark for the first person.
 
 === Listing entered commands : `history` / `h`
 
-
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` +
-Shorthand: `h`
+
+  Format: `history`
+
+  Shorthand: `h`
 
 [NOTE]
 ====
@@ -248,13 +268,15 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo` / `u`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo` +
-Shorthand: `u`
+Restores the Death Note to the state before the previous _undoable_ command was executed. +
+
+  Format: `undo`
+
+  Shorthand: `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the Death Note's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -276,8 +298,10 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo` / `r`
 
 Reverses the most recent `undo` command. +
-Format: `redo` +
-Shorthand: `r`
+
+  Format: `redo`
+
+  Shorthand: `r`
 
 Examples:
 
@@ -299,53 +323,63 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear` / `c`
 
-Clears all entries from the address book. +
-Format: `clear` +
-Shorthand: `c`
+Clears all entries from Death Note.
+
+  Format: `clear`
+
+  Shorthand: `c`
 
 === Change theme of the application : `theme` kbd:[V2.0]
-Changes the theme of the address book. +
-Format: `theme`
+Changes the theme of Death Note. +
+
+  Format: `theme`
 
 Examples:
 
 * `theme` light
 * `theme` dark
 
+Current available themes:
+
+1. light
+2. dark
+
 === Exiting the program : `exit`
 
-Exits the program. +
-Format: `exit`
+Exits Death Note. +
+
+  Format: `exit`
 
 === Open different Address Book kbd:[V2.0]
 //tag::openbook[]
-Opens another address book from app.
+Opens another Death Note data file from within the application.
 
 On GUI:
 
 . Go to the top menu and click File > Open.
-. Locate your desired Address Book on the pop-up window.
-. Select and press Open
+. Locate your desired Death Note data file on the pop-up window. The file will be in an xml format.
+. Select the file and click Open
 // end::openbook[]
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+The data used in Death Note data is saved in the hard disk automatically after any
+command that changes the data is executed. There is no need to save manually.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+== Cheat Sheet
+=== Command Summary
 
 * *Help* : `help` +
-* *Add* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/20/10/2000 w/https://www.yahoo.com/ t/friend t/colleague` +
+* *Add* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/FILEPATH] [w/WEBSITE] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/20/10/2000 pic/C:\Picuture\profile.png w/https://www.yahoo.com/ t/friend t/colleague` +
 * *List* : `list` +
 * *Sort* : `sort` +
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [pic/FILEPATH] [w/WEBSITE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com` +
 * *Profile*: `profile C:\Users\User\Pictures\Saved Pictures\alex.jpg` +
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -363,17 +397,28 @@ e.g.`select 2`
 * *Exit* : `exit` +
 
 
-== Parameters
-*Name*: n/alphanumeric characters and spaces +
-*Phone Number*: p/at least 3 digits long +
-*Email*: e/ 2 alphanumeric/period strings separated by '@' +
-*Address*:  a/Address of person (can be any value) +
-*Birthday*: b/(DD/MM/YYYY) +
-*Remark*^1^: r/Can be any value or blank +
-*Website*: w/Website beginning with http:// or https:// that ends with a proper domain +
-*Tags*^2^: t/Tag names should be alphanumeric +
+=== Available Parameters
+Here is the list of all available parameters:
 
-^1^Only available during editting +
+*Name*: n/<alphanumeric characters and spaces> +
+
+*Phone Number*: p/<at least 3 digits long> +
+
+*Email*: e/<2 alphanumeric/period strings separated by '@'> +
+
+*Address*:  a/<Address of person (can be any value)> +
+
+*Birthday*: b/<(dd/MM/yyyy)> +
+
+*Profile Picture*: pic/<VALID FILE PATH> +
+
+*Remark*^1^: r/<Can be any value or blank> +
+
+*Website*: w/<Website beginning with http:// or https:// that ends with a proper domain> +
+
+*Tags*^2^: t/<Tag names should be alphanumeric> +
+
+^1^Only available in the remark command +
 ^2^Can have multiple tags
 
 == Glossary
