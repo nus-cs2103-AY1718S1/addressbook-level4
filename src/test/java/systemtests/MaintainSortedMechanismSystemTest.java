@@ -1,41 +1,22 @@
 package systemtests;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DELIVERYDATE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
-import static seedu.address.testutil.TypicalParcels.AMY;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
-import java.util.Iterator;
 import java.util.List;
 
-import javafx.collections.ObservableList;
 import org.junit.Test;
-import seedu.address.commons.core.Messages;
+
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditParcelDescriptor;
 import seedu.address.model.AddressBook;
@@ -81,20 +62,29 @@ public class MaintainSortedMechanismSystemTest {
     @Test
     public void checkSortedLinear() {
         ObservableList<ReadOnlyParcel> listToCheck = model.getFilteredParcelList();
-        assertTrue(checkSortedHelper(listToCheck));
+        assertTrue(checkSorted(listToCheck));
     }
 
-    private boolean checkSortedHelper(List listToCheck) {
+    /**
+     * Iterates recursively through the input list to check whether each element is in sorted order.
+     */
+    private boolean checkSorted(List listToCheck) {
         if (listToCheck.size() == 0 || listToCheck.size() == 1) {
             return true;
         } else {
             return compareParcels((Parcel) listToCheck.get(0), (Parcel) listToCheck.get(1))
-                    && checkSortedHelper(listToCheck.subList(1, listToCheck.size() - 1));
+                    && checkSorted(listToCheck.subList(1, listToCheck.size() - 1));
         }
     }
 
-    private boolean compareParcels(ReadOnlyParcel ParcelOne, ReadOnlyParcel ParcelTwo) {
-        int result = ParcelOne.compareTo(ParcelTwo);
+    /**
+     * Compares two parcels, returns true if first Parcel should come before second Parcel
+     * @param parcelOne
+     * @param parcelTwo
+     * @return true when ParcelOne compared to ParcelTwo returns less than 0;
+     */
+    private boolean compareParcels(ReadOnlyParcel parcelOne, ReadOnlyParcel parcelTwo) {
+        int result = parcelOne.compareTo(parcelTwo);
         if (result < 0) {
             return true;
         } else {
