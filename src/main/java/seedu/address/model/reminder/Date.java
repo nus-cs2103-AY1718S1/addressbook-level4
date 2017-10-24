@@ -2,8 +2,6 @@ package seedu.address.model.reminder;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 /**
  * Represents a reminder's date in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
@@ -14,10 +12,8 @@ public class Date {
 
     /**
      * Validates given date.
-     *
-     * @throws IllegalValueException if given date string is invalid.
      */
-    public Date(String date) throws IllegalValueException {
+    public Date(String date) {
         requireNonNull(date);
         this.date = date.trim();
     }
