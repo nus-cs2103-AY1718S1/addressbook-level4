@@ -130,6 +130,14 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code Link} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withLink(String link) {
+        this.person.setLink(new Link(link));
+        return this;
+    }
+
+    /**
      * Sets the {@code FavouriteStatus} of the {@code Person} that we are building.
      */
     public PersonBuilder withFavouriteStatus(boolean favouriteStatus) {
