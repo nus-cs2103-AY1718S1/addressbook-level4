@@ -439,6 +439,10 @@ The following link:#sequence-diagram[activity diagram] summarize what happens wh
 
 image::ColorKeywordActivityDiagram.png[width="900"]
 
+The following diagram shows what happens in the `configBorderColor` method in detail:
+
+image::configBorderColor.png[width="900"]
+
 ==== Design Considerations
 
 **Aspect:** Implementation of `ColorKeywordCommand` +
@@ -477,6 +481,7 @@ image::CustomiseCommandActivityDiagram.png[width="900"]
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface. It also does not follow Java's standard coding style.
 // end::customise[]
 
+// tag::list[]
 === List mechanism
 
 The list mechanism is facilitated by an enumeration class `ListingUnit`. Each time user list by different attributes, the static variable `currentListingUnit` in the Enumeration class is reset.
@@ -498,54 +503,7 @@ image::ListCommandSeqDiagram.png[width="900"]
 **Alternative 2 (previous choice):** Use a variable in model manager to keep record of currentListingUnit +
 **Pros:** No need for extra enumeration class. +
 **Cons:** In order to get it in other components, the variable must be declared static. But we cannot define static abstract method in interface.
-// end::colorKeyword[]
-
-// tag::Timetable[]
-=== Timetable mechanism
-
-The timetable mechanism is combined panel of browser and timetable which can be toggled depends on the current view list.
-In the lesson list view, the timetable will display the all lesson information about a module in a timetable format.
-In the location list view, the browser will display the map of the location.
-This mechanism is facilitated by using JavaFx.
-
-[NOTE]
-The timetable will only appear when the user is in the lesson list view.
-
-image::timetableEg.png[width="900"]
-
-In order to create a timetable using JavaFx, it involved the generating of data and generating of table.
-
-[source,java]
-----
-public class CombinePanel extends UiPart<Region> {
-
-     public void generateTimeTableData(){
-       //...generate grid data...
-    }
-
-    public void generateTimeTableGrid() {
-        //...generate timetable...
-    }
-}
-----
-
-image::timetableEg.png[width="900"]
-
-The following link:#sequence-diagram[sequence diagram] shows how the timetable mechanism works:
-
-image::timetable.png[width="900"]
-
-==== Design Considerations
-
-**Aspect:** Implementation of timetable +
-**Alternative 1 (current choice):**  combine browser panel and timetable panel.
-**Pros:** Toggle between the two panel easily. +
-**Cons:** Takes up more memory than just single panel +
-**Alternative 2:** Separate browser and timetable panel +
-**Pros:** Update the specifications of each individual panel +
-**Cons:** Difficult to implement.
-// end::colorKeyword[]
-
+// end::list[]
 
 === Logging
 
