@@ -22,7 +22,7 @@ public class TagMatchingKeywordPredicate implements Predicate<ReadOnlyPerson> {
             String current = tag.tagName;
             if (current.equalsIgnoreCase(keyword)) {
                 return true;
-            } else if (keyword.trim().isEmpty()){
+            } else if (keyword.trim().isEmpty()) {
                 return false;
             } else if (current.toLowerCase().contains(keyword.toLowerCase())
                 || keyword.toLowerCase().contains(current.toLowerCase())) {
