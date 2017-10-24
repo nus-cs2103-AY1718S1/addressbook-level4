@@ -88,11 +88,7 @@ public class MaintainSortedMechanismSystemTest {
      */
     private boolean compareParcels(ReadOnlyParcel parcelOne, ReadOnlyParcel parcelTwo) {
         int result = parcelOne.compareTo(parcelTwo);
-        if (result < 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return result < 0;
     }
 
     /**
