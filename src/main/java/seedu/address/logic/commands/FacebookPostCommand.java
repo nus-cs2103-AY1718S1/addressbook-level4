@@ -3,7 +3,10 @@ package seedu.address.logic.commands;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.ui.BrowserPanel;
 
 /**
  * Posts a message to a personal Facebook account.
@@ -19,9 +22,11 @@ public class FacebookPostCommand extends Command {
             + "Example: " + COMMAND_WORD + " hello world!";
 
     public static final String MESSAGE_FACEBOOK_POST_SUCCESS = "Posted to Facebook!";
-    //public static final String MESSAGE_FACEBOOK_POST_ERROR = "Error posting to Facebook";
+    public static final String MESSAGE_FACEBOOK_POST_INITIATED = "User not authenticated, log in to proceed.";
+    public static final String MESSAGE_FACEBOOK_POST_ERROR = "Error posting to Facebook";
 
-    private String toPost;
+    private static String user;
+    private static String toPost;
 
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
@@ -30,22 +35,36 @@ public class FacebookPostCommand extends Command {
         toPost = message;
     }
 
-    @Override
-    public CommandResult execute() throws CommandException {
-        if (!FacebookConnectCommand.isAuthenticated()) {
-            FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
-            newFacebookConnect.execute();
-        }
-
+    /**
+     * Completes the post command
+     * @throws CommandException
+     */
+    public static void completePost() throws CommandException {
         Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
-        String user = "";
+        user = null;
         try {
             user = facebookInstance.getName();
             facebookInstance.postStatusMessage(toPost);
         } catch (FacebookException e) {
+            // exception not handled because Facebook API still throws an exception even if success,
+            // so exception is ignored for now
             e.printStackTrace();
         }
 
-        return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS + " (using " + user + "'s account.)");
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(
+                MESSAGE_FACEBOOK_POST_SUCCESS + " (to " + user + "'s page.)", false));
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        if (!FacebookConnectCommand.isAuthenticated()) {
+            FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
+            BrowserPanel.setPost(true);
+            newFacebookConnect.execute();
+            return new CommandResult(MESSAGE_FACEBOOK_POST_INITIATED);
+        } else {
+            completePost();
+            return new CommandResult(MESSAGE_FACEBOOK_POST_SUCCESS + " (to " + user + "'s page.)");
+        }
     }
 }
