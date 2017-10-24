@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.apache.commons.io.FileUtils;
 
@@ -20,6 +21,7 @@ public class Picture {
     public static final String MESSAGE_PROFILEPICTURE_ERROR =
             "Error copying file.";
 
+    public static final String PREFIX_PICTURE = "file://";
     public static final String PICTURE_SAVE_LOCATION =
             UserPrefs.FOLDER_LOCATION; // Where images are stored when added
     public static final String DEFAULT_PICTURE_LOCATION =
@@ -80,6 +82,11 @@ public class Picture {
         if (file.exists() && file.length() <= PICTURE_MAX_SIZE && fileLocation.endsWith(PICTURE_SUFFIX)) {
             return true;
         } else {
+            file = new File(PICTURE_SAVE_LOCATION + fileLocation);
+            if (file.exists()) {
+                return true;
+            }
+
             return false;
         }
     }
@@ -89,9 +96,11 @@ public class Picture {
      */
     public String getPictureLocation() {
         if (value == null) {
-            return DEFAULT_PICTURE_LOCATION + DEFAULT_PICTURE;
+            return PREFIX_PICTURE + Paths.get(DEFAULT_PICTURE_LOCATION + DEFAULT_PICTURE)
+                    .toAbsolutePath().toUri().getPath();
         } else {
-            return PICTURE_SAVE_LOCATION + value;
+            return PREFIX_PICTURE + Paths.get(PICTURE_SAVE_LOCATION + value)
+                    .toAbsolutePath().toUri().getPath();
         }
     }
 

@@ -10,7 +10,7 @@ public class PictureTest {
     @Test
     public void isValidPicture() {
         // invalid pictures
-        assertFalse(Picture.isValidPicture("default_profile.png"));
+        assertFalse(Picture.isValidPicture("default_profile"));
         assertFalse(Picture.isValidPicture(Picture.DEFAULT_PICTURE_LOCATION + "default_profile.jpg"));
 
         // valid pictures

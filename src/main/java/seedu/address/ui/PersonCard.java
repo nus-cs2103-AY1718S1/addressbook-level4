@@ -59,11 +59,8 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initPicture(person);
         bindListeners(person);
-
-        picture.setImage(new Image("images/default_profile.png"));
-        Circle circle = new Circle(32.0, 32.0, 30.0);
-        picture.setClip(circle);
     }
 
     /**
@@ -78,6 +75,11 @@ public class PersonCard extends UiPart<Region> {
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         website.textProperty().bind(Bindings.convert(person.websiteProperty()));
+
+        person.pictureProperty().addListener((observable, oldValue, newValue) -> {
+            picture.setImage(new Image(person.getPicture().getPictureLocation()));
+        });
+
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
@@ -93,6 +95,13 @@ public class PersonCard extends UiPart<Region> {
             tagLabel.setStyle(UiStyle.getInstance().getBackgroundStyle(getColorForTag(tag.tagName)));
             tags.getChildren().add(tagLabel);
         });
+    }
+
+    private void initPicture(ReadOnlyPerson person) {
+        picture.setImage(new Image(person.getPicture().getPictureLocation()));
+
+        Circle circle = new Circle(32.0, 32.0, 30.0);
+        picture.setClip(circle);
     }
 
     @Override
