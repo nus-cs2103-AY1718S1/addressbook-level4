@@ -452,7 +452,7 @@ does not have to be aware of new `Predicates` +
 ---
 
 === Playing Music
-Unify has a built-in background music player. Users have the choice of playing some music to relax their mind and reduce their stress.
+Unify has a built-in background music player.
 
 The `music` command is extended with an additional command behind it. For example, `music play`, has play as the extended command. The `play` command at the back means that the system will play a music track. While `music pause` will pause the current music track.
 
@@ -530,17 +530,18 @@ image::MusicActivityDiagram.png[width="400"]
 **Pros:** Has a chance to be different the next time the user starts playing music. +
 **Cons:** User does not know which song is going to be played next. +
 
----
+=== Sending Email
+The sending email function is an external library and requires internet connection.
 
-**Aspect:** Extended commands naming convention +
-**Alternative 1 (current choice):** Extended commands are after the `music` command, hence `music play` & `music pause` +
-**Pros:** Easier to remember those extended commands belongs to `music` +
-**Cons:** Grammatically wrong. +
-**Alternative 2:** Have the extended commands come first, hence `play music` & `pause music` +
-**Pros:** Grammatically correct. Sounds nicer verbally. +
-**Cons:** User might not associate those extended commands to `music`. +
+==== Design Considerations
 
----
+**Aspect:** What to use for subject header in email +
+**Alternative 1 (current choice):** Fixed subject header +
+**Pros:** Easy to implement. Prevent of abuse of subject header to send negative subject headers +
+**Cons:** Always the same subject headert +
+**Alternative 2:** Let user input the subject header +
+**Pros:** Different subject header can be used for different purpose. +
+**Cons:** Can be abused and send negative subject header +
 
 === Aliases
 
