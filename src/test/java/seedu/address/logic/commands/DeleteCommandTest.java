@@ -81,18 +81,18 @@ public class DeleteCommandTest {
 
     @Test
     public void equals() {
-        ArrayList<Index> IndexFirstList = new ArrayList<>();
-        IndexFirstList.add(INDEX_FIRST_PERSON);
-        DeleteCommand deleteFirstCommand = new DeleteCommand(IndexFirstList);
-        ArrayList<Index> IndexSecondList = new ArrayList<>();
-        IndexSecondList.add(INDEX_SECOND_PERSON);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(IndexSecondList);
+        ArrayList<Index> indexFirstList = new ArrayList<>();
+        indexFirstList.add(INDEX_FIRST_PERSON);
+        DeleteCommand deleteFirstCommand = new DeleteCommand(indexFirstList);
+        ArrayList<Index> indexSecondList = new ArrayList<>();
+        indexSecondList.add(INDEX_SECOND_PERSON);
+        DeleteCommand deleteSecondCommand = new DeleteCommand(indexSecondList);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(IndexFirstList);
+        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(indexFirstList);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
