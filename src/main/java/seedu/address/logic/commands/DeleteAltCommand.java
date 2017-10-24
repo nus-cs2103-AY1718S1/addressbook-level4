@@ -38,7 +38,7 @@ public class DeleteAltCommand extends UndoableCommand {
         int index = 0;
 
         for (ReadOnlyPerson p : lastShownList) {
-            if (p.getName().toString().toLowerCase().contains(targetName) && targetName.length()>3) {
+            if (p.getName().toString().toLowerCase().contains(targetName) && targetName.length() > 3) {
                 index = lastShownList.indexOf(p);
                 break;
             } else {
