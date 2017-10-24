@@ -5,52 +5,55 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UniqueMeetingList;
 
 /**
- * Represents a storage for {@link seedu.address.model.AddressBook}.
+ * Represents a storage for meetings
  */
-public interface MeetingStorage {
+public interface MeetingsStorage {
 
     /**
      * Returns the file path of the data file.
      */
-    String getAddressBookFilePath();
+    String getMeetingsFilePath();
 
     /**
-     * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
+     * Returns Meetings data
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException;
+    Optional<UniqueMeetingList> readMeetings() throws DataConversionException, IOException;
 
     /**
-     * @see #getAddressBookFilePath()
+     * @see #getMeetingsFilePath()
      */
-    Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException;
+    Optional<UniqueMeetingList> readMeetingList(String filePath) throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link ReadOnlyAddressBook} to the storage.
-     * @param addressBook cannot be null.
+     * Saves the given {@link UniqueMeetingList} to the storage.
+     * @param meetingList cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    void saveMeetingList(UniqueMeetingList meetingList) throws IOException;
 
     /**
-     * @see #saveAddressBook(ReadOnlyAddressBook)
+     * @see #saveMeetingList(UniqueMeetingList)
      */
-    void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
+    void saveMeetingList(UniqueMeetingList meetingList, String filePath) throws IOException;
 
+    /*
     /**
      * Backs up the current state of addressbook to local storage
      */
-    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    //void backupMeetingList(UniqueMeetingList meetingList) throws IOException;
 
+    /*
     /**
      * Restores an earlier version of address book from local storage
      * @throws IOException if there was any problem reading the file
      * @throws DataConversionException if the data in storage is not in the expected format.
      */
-    Optional<ReadOnlyAddressBook> restoreAddressBook() throws IOException, DataConversionException;
+    //Optional<UniqueMeetingList> restoreMeetingList() throws IOException, DataConversionException;
 
 }
