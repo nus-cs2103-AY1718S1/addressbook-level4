@@ -138,6 +138,8 @@ public class TagRemoveCommandTest {
 
         TagRemoveDescriptor toCopy = new TagRemoveDescriptor(tagRemoveDescriptor);
 
+        assertTrue(tagRemoveDescriptor.equals(tagRemoveDescriptor));
+
         assertTrue(tagRemoveDescriptor.equals(toCopy));
 
         assertTrue(tagRemoveDescriptor.getName().equals(toCopy.getName()));
@@ -149,6 +151,31 @@ public class TagRemoveCommandTest {
         assertTrue(tagRemoveDescriptor.getEmail().equals(toCopy.getEmail()));
 
         assertTrue(tagRemoveDescriptor.getTags().equals(toCopy.getTags()));
+
+        assertFalse(tagRemoveDescriptor == null);
+    }
+
+    @Test
+    public void createEditedPersonTestSuccess() throws Exception {
+        showFirstPersonOnly(model);
+        ArrayList<Index> singlePersonIndexList = new ArrayList<>();
+        singlePersonIndexList.add(INDEX_FIRST_PERSON);
+
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Set<Tag> singleTagSet = new HashSet<Tag>();
+        Tag onlyTag = new Tag(VALID_TAG_HUSBAND);
+        singleTagSet.add(onlyTag);
+
+        TagRemoveDescriptor tagRemoveDescriptor = new TagRemoveDescriptor(personInFilteredList);
+        tagRemoveDescriptor.setTags(singleTagSet);
+        TagRemoveCommand tagRemoveCommand = new TagRemoveCommand(singlePersonIndexList, tagRemoveDescriptor);
+        Person person = tagRemoveCommand.createEditedPerson(personInFilteredList, tagRemoveDescriptor);
+
+        assertTrue(person.getName().equals(personInFilteredList.getName()));
+        assertTrue(person.getPhone().equals(personInFilteredList.getPhone()));
+        assertTrue(person.getAddress().equals(personInFilteredList.getAddress()));
+        assertTrue(person.getEmail().equals(personInFilteredList.getEmail()));
+        assertTrue(person.getTags().equals(tagRemoveDescriptor.getTags()));
     }
 
     @Test

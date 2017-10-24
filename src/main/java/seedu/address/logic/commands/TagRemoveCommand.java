@@ -164,7 +164,7 @@ public class TagRemoveCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
+    public Person createEditedPerson(ReadOnlyPerson personToEdit,
                                              TagRemoveDescriptor tagRemoveDescriptor) {
         assert personToEdit != null;
 

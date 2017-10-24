@@ -82,5 +82,10 @@ public class TagMatchingKeywordPredicateTest {
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
     }
+    @Test
+    public void testKeywordReturnsTrue(){
+        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("");
+        assertTrue("".equals(predicate.getKeyword()));
+    }
 
 }
