@@ -1,8 +1,20 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -17,16 +29,6 @@ import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -145,21 +147,23 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void unbookBookedSlot(BookedSlot target) {
-        if(bookedList.contains(target))
+        if (bookedList.contains(target)) {
             bookedList.remove(target);
+        }
+
     }
 
     @Override
     public void bookingSlot(BookedSlot target) throws DuplicateBookedSlotException {
-        if(!bookedList.contains(target)){
+        if (!bookedList.contains(target)) {
             bookedList.add(target);
-        }else{
+        } else {
             throw new DuplicateBookedSlotException();
         }
     }
 
     @Override
-    public void updateBookedSlot(BookedSlot target, BookedSlot toReplace) throws DuplicateBookedSlotException{
+    public void updateBookedSlot(BookedSlot target, BookedSlot toReplace) throws DuplicateBookedSlotException {
         if (target.equals(toReplace) || !bookedList.contains(toReplace)) {
             bookedList.remove(target);
             bookedList.add(toReplace);
@@ -171,14 +175,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateBookedSlotSet() {
         bookedList.clear();
-        for(ReadOnlyLesson lesson : addressBook.getLessonList()) {
+        for (ReadOnlyLesson lesson : addressBook.getLessonList()) {
             BookedSlot slot = new BookedSlot(lesson.getLocation(), lesson.getTimeSlot());
             bookedList.add(slot);
         }
     }
 
     @Override
-    public void unbookAllSlot(){
+    public void unbookAllSlot() {
         bookedList.clear();
     }
 
@@ -190,9 +194,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    public void initializeBookedSlot(){
-        for(int i=0; i<filteredLessons.size(); i++){
-            bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(),filteredLessons.get(i).getTimeSlot()));
+    /**
+     * This method initialize the booked slot
+     */
+    public void initializeBookedSlot() {
+        for (int i = 0; i < filteredLessons.size(); i++) {
+            bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(), filteredLessons.get(i).getTimeSlot()));
         }
     }
 
@@ -202,18 +209,22 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void setCurrentViewingLesson(ReadOnlyLesson lesson){ this.currentViewingLesson = lesson; }
+    public void setCurrentViewingLesson(ReadOnlyLesson lesson) {
+        this.currentViewingLesson = lesson;
+    }
 
     @Override
-    public ReadOnlyLesson getCurrentViewingLesson(){ return this.currentViewingLesson; }
+    public ReadOnlyLesson getCurrentViewingLesson() {
+        return this.currentViewingLesson;
+    }
 
     @Override
-    public void setViewingPanelAttribute(String attribute){
+    public void setViewingPanelAttribute(String attribute) {
         this.currentViewingAttribute = attribute;
     }
 
     @Override
-    public String getCurrentViewingAttribute(){
+    public String getCurrentViewingAttribute() {
         return this.currentViewingAttribute;
     }
 
@@ -241,7 +252,7 @@ public class ModelManager extends ComponentManager implements Model {
         if (unit.equals(LOCATION)) {
             UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
             updateFilteredLessonList(predicate);
-        } else if (unit.equals(MODULE)) { ;
+        } else if (unit.equals(MODULE)) {
             UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
             updateFilteredLessonList(predicate);
         } else {

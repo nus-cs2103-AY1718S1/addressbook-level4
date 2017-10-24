@@ -1,18 +1,17 @@
 package seedu.address.model.module;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.lecturer.Lecturer;
-import seedu.address.model.lecturer.UniqueLecturerList;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.sql.Time;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
+import seedu.address.model.lecturer.Lecturer;
+import seedu.address.model.lecturer.UniqueLecturerList;
 
 /**
  * Represents a Lesson in the address book.

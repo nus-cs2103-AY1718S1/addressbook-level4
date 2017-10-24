@@ -1,5 +1,9 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.ListingUnit;
@@ -9,11 +13,6 @@ import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Predicate;
-
-
 /**
  * Finds and lists items in address book which module or location contains any of the argument keywords.
  * Keyword matching is case insensitive.
@@ -22,7 +21,8 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all module or location whose names contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Finds all module or location whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " LT25";
@@ -55,17 +55,18 @@ public class FindCommand extends Command {
         }
 
         switch (ListingUnit.getCurrentListingUnit()) {
-            case LOCATION:
-                predicate = new LocationContainsKeywordsPredicate(newKeywordList);
-                break;
-            case LESSON:
-                currentViewingLesson = model.getCurrentViewingLesson();
-                predicate = new LessonContainsKeywordsPredicate
-                        (keywords, oldKeywordList, currentViewingLesson, model.getCurrentViewingAttribute());
-                break;
-            default:
-                predicate = new ModuleContainsKeywordsPredicate(newKeywordList);
-                break;
+
+        case LOCATION:
+            predicate = new LocationContainsKeywordsPredicate(newKeywordList);
+            break;
+        case LESSON:
+            currentViewingLesson = model.getCurrentViewingLesson();
+            predicate = new LessonContainsKeywordsPredicate(keywords, oldKeywordList,
+                    currentViewingLesson, model.getCurrentViewingAttribute());
+            break;
+        default:
+            predicate = new ModuleContainsKeywordsPredicate(newKeywordList);
+            break;
         }
 
         model.updateFilteredLessonList(predicate);

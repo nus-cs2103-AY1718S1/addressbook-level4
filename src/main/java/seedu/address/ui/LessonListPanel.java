@@ -19,6 +19,8 @@ import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.model.module.ReadOnlyLesson;
 
+
+
 /**
  * Panel containing the list of info.
  */

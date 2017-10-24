@@ -1,6 +1,13 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
+import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
+
 import com.google.common.eventbus.Subscribe;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,11 +20,6 @@ import seedu.address.model.FontSizeUnit;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_LARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_NORMAL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_SMALL;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XLARGE;
-import static seedu.address.logic.commands.CustomiseCommand.FONT_SIZE_XSMALL;
 
 /**
  * An UI component that displays information of a {@code Person}.
