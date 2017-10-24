@@ -143,9 +143,51 @@ Examples:
 * `find friends` +
 Returns `Alex Yeoh` and `Bernice Yu`
 * `find colleagues` +
-Returns 'bernice Yu' and 'Roy Balakrishnan'
+Returns `Bernice Yu` and `Roy Balakrishnan`
 * `ft Malay` +
 Returns `Adil`
+
+=== Locating persons by any parameter: `filter` (alias `fi`)
+
+Finds persons who has parameters that matches the given keyword. +
+Format: `filter KEYWORD [MORE_KEYWORDS]` or `fi KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `Alex CS2103 Groupmate` will match `Groupmate CS2103 Alex`
+* All parameters are searched.
+****
+
+Examples:
+
+* `filter friends` +
+Returns `Alex Yeoh` and `Bernice Yu`
+* `filter colleagues` +
+Returns `Bernice Yu` and `Roy Balakrishnan`
+* `ft alex Colleagues` +
+Returns `Alex Yeoh`, `Bernice Yu` and `Roy Balakrishnan`
+
+=== Locating persons by all parameter: `filterall` (alias `fa`)
+
+Finds persons who has parameters that matches the given keyword. +
+Format: `filterall KEYWORD [MORE_KEYWORDS]` or `fa KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `Alex CS2103 Groupmate` will match `Groupmate CS2103 Alex`
+* All parameters are searched.
+****
+
+Examples:
+
+* `filterall friends` +
+Returns `Alex Yeoh` and `Bernice Yu`
+* `filterall colleagues` +
+Returns `Bernice Yu` and `Roy Balakrishnan`
+* `ft Bernice Colleagues` +
+Returns `Bernice Yu`
+* `ft colleagues friends` +
+Returns `Bernice Yu`
 
 === Deleting a person : `delete` (alias `del`)
 
