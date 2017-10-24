@@ -52,10 +52,10 @@ public interface Model {
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Adds the given person into blacklist and returns the added person*/
-    ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+    ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person);
 
     /** Adds the given person into whitelist and returns the added person */
-    ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+    ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -100,7 +100,7 @@ public interface Model {
     ObservableList<ReadOnlyPerson> getNearbyPersons();
 
     /**
-     * Obtains and returns the list of persons that share the same cluster as {@param person}.
+     * Obtains and updates the list of persons that share the same cluster as {@param person}.
      */
     void updateSelectedPerson(ReadOnlyPerson person);
 

@@ -31,7 +31,7 @@ public class RepaidCommandTest {
     public void execute_repaidPersonTwice_success() throws Exception {
         ReadOnlyPerson repaidPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage = RepaidCommand.MESSAGE_WHITELIST_PERSON_FAILURE;
+        String expectedMessage = RepaidCommand.MESSAGE_REPAID_PERSON_FAILURE;
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addWhitelistedPerson(repaidPerson);
@@ -47,7 +47,7 @@ public class RepaidCommandTest {
         ReadOnlyPerson repaidPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         RepaidCommand repaidCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(RepaidCommand.MESSAGE_WHITELIST_PERSON_SUCCESS, repaidPerson.getName());
+        String expectedMessage = String.format(RepaidCommand.MESSAGE_REPAID_PERSON_SUCCESS, repaidPerson.getName());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addWhitelistedPerson(repaidPerson);

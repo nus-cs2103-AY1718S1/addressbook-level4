@@ -108,13 +108,13 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) {
             fail("This method should not be called.");
             return null;
         }
@@ -199,7 +199,7 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
-
+            fail("This method should not be called.");
         }
 
         @Override
@@ -251,13 +251,9 @@ public class AddCommandTest {
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
 
         @Override
-        public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             throw new DuplicatePersonException();
         }
 

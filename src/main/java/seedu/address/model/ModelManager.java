@@ -87,7 +87,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Returns {@code String} value of the current displayed list.
+     * @return {@code String} value of the current displayed list.
      */
     @Override
     public String getCurrentList() {
@@ -95,8 +95,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Sets {@code String} value of the current displayed list.
-     * from the value of {@param currentList}
+     * Sets {@code String} value of the current displayed list using value of {@param currentList}
      */
     @Override
     public void setCurrentList(String currentList) {
@@ -115,10 +114,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Deletes a specific person from blacklist in the AddressBook.
+     * Removes a specific person from blacklist in the AddressBook.
      * @param target to be removed from blacklist.
+     * @return {@code removedBlacklistedPerson}.
      * @throws PersonNotFoundException if no person is found.
-     * @code removedBlacklistedPerson is returned
      */
     @Override
     public synchronized ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -132,8 +131,8 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Deletes a specific person from whitelist in the AddressBook.
      * @param target to be removed from whitelist.
+     * @return {@code removedBlacklistedPerson}.
      * @throws PersonNotFoundException if no person is found.
-     * @code whitelistedPerson is returned
      */
     @Override
     public synchronized ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -153,11 +152,11 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Adds a specific person to blacklist in the AddressBook.
      * @param person to be updated.
+     * @return {@code newBlacklistedPerson}.
      * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
-     * @code newBlacklistedPerson is returned
      */
     @Override
-    public synchronized ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+    public synchronized ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) {
         ReadOnlyPerson newBlacklistPerson = addressBook.addBlacklistedPerson(person);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         changeListTo(BlacklistCommand.COMMAND_WORD);
@@ -168,21 +167,21 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Adds a specific person to whitelist in the AddressBook.
      * @param person to be updated.
+     * @return {@code whitelistedPerson}.
      * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
-     * @code whitelistedPerson is returned
      */
     @Override
-    public synchronized ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+    public synchronized ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person) {
         ReadOnlyPerson whitelistedPerson = person;
 
         try {
             whitelistedPerson = addressBook.resetPersonDebt(person);
             whitelistedPerson = addressBook.setDateRepaid(whitelistedPerson);
         } catch (PersonNotFoundException e) {
-            assert false : "This person cannot be missing";
+            assert false : "This person cannot be missing from addressbook";
         }
 
-        if (!whitelistedPerson.getIsBlacklisted()) {
+        if (!whitelistedPerson.isBlacklisted()) {
             whitelistedPerson = addressBook.addWhitelistedPerson(whitelistedPerson);
         }
         updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
@@ -289,9 +288,9 @@ public class ModelManager extends ComponentManager implements Model {
      * @param target person in the address book who paid back some money
      * @param amount amount that the person paid back. Must be either a positive integer or positive number with
      *               two decimal places
+     * @return {@code repayingPerson}.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
-     * @code repayingPerson is returned
      */
     @Override
     public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
@@ -347,7 +346,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Obtains the latest list of blacklisted persons from masterlist and adds to {@code filteredBlacklistedPersons}
-     * Raises an {@code event} to signal the requirement for change in displayed list in {@code PersonListPanel}
      * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
      */
     @Override
@@ -359,7 +357,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Obtains the latest list of whitelisted persons from masterlist and adds to {@code filteredWhitelistedPersons}
-     * Raises an {@code event} to signal the requirement for change in displayed list in {@code PersonListPanel}
      * Filters {@code filteredWhitelistedPersons} according to given {@param predicate}
      */
     @Override
@@ -370,7 +367,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Obtains and returns the list of persons that share the same cluster as {@param selectedPerson}.
+     * Obtains and updates the list of persons that share the same cluster as {@param selectedPerson}.
      */
     @Override
     public void updateSelectedPerson(ReadOnlyPerson selectedPerson) {
@@ -387,11 +384,17 @@ public class ModelManager extends ComponentManager implements Model {
         return nearbyPersons;
     }
 
+    /**
+     * Retrieves the full list of persons in addressbook.
+     */
     @Override
     public ObservableList<ReadOnlyPerson> getAllPersons() {
         return allPersons;
     }
 
+    /**
+     * Sorts the {@code internal list} in addressbook according to {@param order}
+     */
     @Override
     public void sortBy(String order) throws IllegalArgumentException {
         addressBook.sortBy(order);
