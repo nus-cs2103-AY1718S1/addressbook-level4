@@ -27,7 +27,7 @@ public class DeleteAltCommandParserTest {
 
     @Test
     public void parse_validArgs_with_differentCases_returnsDeleteAltCommand() {
-        assertParseSuccess(parser, "alicE paUliNe", new DeleteAltCommand(NAME_FIRST_PERSON));
+        assertParseSuccess(parser, "alice pauline", new DeleteAltCommand(NAME_FIRST_PERSON));
     }
 
     @Test
