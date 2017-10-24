@@ -26,11 +26,6 @@ public class DeleteAltCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_with_differentCases_returnsDeleteAltCommand() {
-        assertParseSuccess(parser, "alice pauline", new DeleteAltCommand(NAME_FIRST_PERSON));
-    }
-
-    @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "1",
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAltCommand.MESSAGE_USAGE));

@@ -174,6 +174,7 @@ public class StringUtilTest {
         assertTrue(StringUtil.isAlnumOnly("john"));
         assertTrue(StringUtil.isAlnumOnly("John"));
         assertTrue(StringUtil.isAlnumOnly("Boom Shakalaka"));
+        assertTrue(StringUtil.isAlnumOnly("bOoM ShakAlaKa")); // case insensitive
     }
 
     //---------------- Tests for isStringOption --------------------------------------
