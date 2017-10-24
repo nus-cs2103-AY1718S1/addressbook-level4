@@ -75,10 +75,6 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
-
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
-
 ==== Setting up CI
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
@@ -155,7 +151,9 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-=== UI component
+==== UI component
+
+The following diagram shows the structure of the UI Component:
 
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
@@ -166,22 +164,31 @@ The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `Re
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `UI` component does the following:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-=== Logic component
+==== Logic component
+
+The following diagram shows the structure of the `Logic` Component:
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
+
+The `Logic` Component consists of an interface `Logic` which is implemented directly or indirectly by all other classes, e.g.
+`LogicManager`, `CommandResult` etc.
+
+The `Logic` Component is where all Commands are situated and structured. This is elaborated below:
 
 image::LogicCommandClassDiagram.png[width="800"]
 _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+
+When a `Command` is executed, the `Logic` Component does the following:
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -193,21 +200,25 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
-=== Model component
+==== Model component
+
+The following shows a diagram for the `Model` Component:
 
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model` Component does the following:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-=== Storage component
+==== Storage component
+
+The following diagram represents the `Storage` Component:
 
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
@@ -227,13 +238,14 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-=== Birthday mechanism
+// tag::birthday[]
+=== Add contact mechanism: birthday parameter 
 
-The birthday mechanism is facilitated by the `AddCommand` class which inherited from the `UndoableCommand` class. It allows user to add the birthday of the contact by putting another parameter into the `AddCommand`.
+Addition of the birthday parameter is facilitated by the `AddCommand` class which inherited from the `UndoableCommand` class. It allows user to add the birthday of the contact by putting another parameter into the `AddCommand`.
 
-Suppose the user has just executed the `AddCommand` using `AddCommand` using the following code
+Suppose the user has just executed the `AddCommand` using `AddCommand` using the following:
 ----
-add n/eryao p/96965340 e/lite0520@gmail.com a/blk 254, ang mo kio b/081295
+`add n/eryao p/96965340 e/lite0520@gmail.com a/blk 254, ang mo kio b/081295`
 ----
 
 The `AddCommandParser` class will check for the validity of the parameter entered. Afterwards, the `LogicManager` invokes the method `AddCommand`, which creates a new person and update the storage.
@@ -244,35 +256,36 @@ If the birthday parameter is not specified, the `AddCommand` will give an invali
 ==== Design Considerations
 **Aspect:** Implementation of birthday feature in `AddCommand` +
 **Alternative 1 (current choice):** Make adding birthday optional +
-**Pros:** User can take note of contact's birthday easier
+**Pros:** User can take note of contact's birthday more easily
 **Cons:** User has to input an additional parameter
+// end::birthday[]
 
 // tag::detag[]
 === Detag mechanism
 
-The detag mechanism is facilitated by the `DetagCommand` class which inherited from the `UndoableCommand` class. It allows for the removing of existing tag from multiple person, i.e. detag. The minimum number of person specified is 1 and the maximum number is the number of person on the filtered list.
+The detag mechanism is facilitated by the `DetagCommand` class which is inherited from the `UndoableCommand` class. It allows for the removal of existing tags from multiple contacts, i.e. detag. The minimum number of contacts that can be specified is 1 and the maximum number is the number of contacts in the current list.
 
-Suppose the user to execute the command `detag` using the following code
+Suppose the user executes the command `detag` using the following code
 ----
-detag 1, 2 t/friends
+`detag 1, 2 t/friends`
 ----
 
-The `DetagCommandParser` class will check for the validity of the indices specified, i.e. within the range of the filtered list. Afterwards, the `LogicManager` invokes the method `deleteTag`, which removes the specific tag from the `Set` of tags from the specified persons, and update the storage.
+The `DetagCommandParser` class will check for the validity of the indices specified, i.e. within the range of the filtered list. Afterwards, the `LogicManager` invokes the method `deleteTag`, which removes the specific tag from the `Set` of tags from the specified contacts, and updates the storage.
 
 [NOTE]
-If one or more of the persons specified by the indices does not contain the specified tag to remove, the removal will not be executed even for those persons that have the tag.
+If one or more of the contacts specified by the indices does not contain the specified tag to remove, the removal will not be executed even for those contacts that have the tag.
 
 [NOTE]
-The current detag mechanism does not support multiple tags removal, i.e. remove 2 different tags in one command line.
+The current detag mechanism does not support multiple tag removal, i.e. remove 2 different tags in one command line.
 
 ==== Design Considerations
 **Aspect:** Implementation of `DetagCommand` +
 **Alternative 1 (current choice):** Directly removes the tag from `Set` of person(s) +
-**Pros:** Easier and more specific command to remove tag, and could remove from multiple persons in one command +
-**Cons:** Makes the tags of person skeptical for changes, and introducing of new additional command specifically for removal of tag may be not necessary +
+**Pros:** Easier and more specific command to remove tag, and allows removal from multiple persons in one command +
+**Cons:** Introducing of new additional command specifically for removal of tag may not be necessary +
 **Alternative 2:** Just use the `EditCommand` to change the tag +
 **Pros:** Use of one command to edit any details of a person is more organised +
-**Cons:** Could not remove tag of multiple persons, and have to type in the tags that do not need to be remove +
+**Cons:** Could not remove tag of multiple persons, and it is mandatory to retype the tags that do not need to be removed +
 // end::detag[]
 
 === FindTag mechanism
