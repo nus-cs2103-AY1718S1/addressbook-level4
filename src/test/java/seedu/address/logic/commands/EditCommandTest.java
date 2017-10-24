@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_LESSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_LESSON;
-import static seedu.address.testutil.TypicalLessons.TYPICAL_MA1101R;
 import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import org.junit.Before;

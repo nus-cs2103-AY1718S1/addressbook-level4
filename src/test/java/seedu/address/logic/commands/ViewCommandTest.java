@@ -1,7 +1,15 @@
 package seedu.address.logic.commands;
 
+import static junit.framework.TestCase.assertEquals;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalLessons.*;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -11,17 +19,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static junit.framework.TestCase.assertEquals;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
-import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
-import static seedu.address.testutil.TypicalLessons.MA1101R_L2;
-import static seedu.address.testutil.TypicalLessons.MA1101R_T1;
-import static seedu.address.testutil.TypicalLessons.MA1101R_T2;
-import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -55,7 +52,8 @@ public class ViewCommandTest {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
 
         assertCommandSuccess(viewCommand, String.format(viewCommand.MESSAGE_VIEW_MODULE_SUCCESS,
-                model.getFilteredLessonList().get(0).getCode()), Arrays.asList(MA1101R_L1,MA1101R_L2,MA1101R_T1,MA1101R_T2));
+                model.getFilteredLessonList().get(0).getCode()), Arrays.asList(MA1101R_L1,
+                MA1101R_L2, MA1101R_T1, MA1101R_T2));
     }
 
     @Test
@@ -64,17 +62,15 @@ public class ViewCommandTest {
         ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
 
         assertCommandSuccess(viewCommand, String.format(viewCommand.MESSAGE_VIEW_LOCATION_SUCCESS,
-                model.getFilteredLessonList().get(0).getLocation()), Arrays.asList(MA1101R_L1,MA1101R_L2));
+                model.getFilteredLessonList().get(0).getLocation()), Arrays.asList(MA1101R_L1, MA1101R_L2));
     }
-
-
 
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>
-     *     - the command feedback is equal to {@code expectedMessage}<br>
-     *     - the {@code FilteredList<ReadOnlyLesson>} is equal to {@code expectedList}<br>
-     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     * - the command feedback is equal to {@code expectedMessage}<br>
+     * - the {@code FilteredList<ReadOnlyLesson>} is equal to {@code expectedList}<br>
+     * - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
     private void assertCommandSuccess(ViewCommand command, String expectedMessage, List<ReadOnlyLesson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());

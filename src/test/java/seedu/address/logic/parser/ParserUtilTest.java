@@ -2,16 +2,24 @@ package seedu.address.logic.parser;
 
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.junit.rules.ExpectedException;
+
+import static org.junit.Assert.*;
+
+
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.module.*;
-
-import java.util.*;
-
-import static org.junit.Assert.*;
-import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 
 public class ParserUtilTest {
     private static final String INVALID_CODE = "ABC4444AA";
@@ -199,8 +207,8 @@ public class ParserUtilTest {
     @Test
     public void parseLecturers_collectionWithValidLecturers_returnsLecturerSet() throws Exception {
         Set<Lecturer> actualLecturerSet = ParserUtil.parseLecturer(Arrays.asList(VALID_LECTURER_1, VALID_LECTURER_2));
-        Set<Lecturer> expectedLecturerSet = new HashSet<Lecturer>
-                (Arrays.asList(new Lecturer(VALID_LECTURER_1), new Lecturer(VALID_LECTURER_2)));
+        Set<Lecturer> expectedLecturerSet = new HashSet<Lecturer>(
+                Arrays.asList(new Lecturer(VALID_LECTURER_1), new Lecturer(VALID_LECTURER_2)));
 
         assertEquals(expectedLecturerSet, actualLecturerSet);
     }
