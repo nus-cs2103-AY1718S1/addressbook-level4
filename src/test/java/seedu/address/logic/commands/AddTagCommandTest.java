@@ -104,7 +104,6 @@ public class AddTagCommandTest {
 
         assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
     }
-    
 
     @Test
     public void execute_addDuplicateTag_throwsCommandException() throws Exception {
