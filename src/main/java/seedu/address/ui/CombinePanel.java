@@ -118,7 +118,14 @@ public class CombinePanel extends UiPart<Region> {
             int weekDayRow = getWeekDay(timeText.substring(0, 3));
             int startHourCol = getTime(timeText.substring(4, 6));
             int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol;
-            gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan);
+
+            if (gridData[weekDayRow][startHourCol].getCount() == 0) {
+                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, 1);
+            } else {
+                int count = gridData[weekDayRow][startHourCol].getCount();
+                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, ++count);
+            }
+
         }
     }
 
@@ -136,6 +143,7 @@ public class CombinePanel extends UiPart<Region> {
                 int weekDayRow = data.getWeekDayRow();
                 int startHourCol = data.getStartHourCol();
                 int endHourSpan = data.getEndHourSpan();
+                int count = data.getCount();
                 if (i == weekDayRow &&  j == startHourCol) {
                     TextArea lbl = new TextArea(text);
                     lbl.setWrapText(true);
@@ -143,6 +151,10 @@ public class CombinePanel extends UiPart<Region> {
                     lbl.setId(LESSON_NODE_ID);
                     timetableGrid.setGridLinesVisible(true);
                     timetableGrid.add(lbl, j, i, endHourSpan, 1);
+                    if (count > 1) {
+                        System.out.println("HELO");
+                        lbl.setStyle("-fx-control-inner-background: red");
+                    }
                 }
             }
         }
@@ -239,16 +251,18 @@ class GridData {
     private Integer weekDayRow;
     private Integer startHourCol;
     private Integer endHourSpan;
+    private Integer count;
 
     public GridData() {
-        this("", -1, -1, -1);
+        this("", -1, -1, -1, 0);
     }
 
-    public GridData(String text, int weekDayRow, int startHourCol, int endHourSpan) {
+    public GridData(String text, int weekDayRow, int startHourCol, int endHourSpan, int count) {
         this.text = text;
         this.weekDayRow = weekDayRow;
         this.startHourCol = startHourCol;
         this.endHourSpan = endHourSpan;
+        this.count = count;
     }
 
     public String getText() {
@@ -266,6 +280,11 @@ class GridData {
     public Integer getWeekDayRow() {
         return weekDayRow;
     }
+
+    public Integer getCount() {
+        return count;
+    }
+
 
     @Override
     public int hashCode() {
