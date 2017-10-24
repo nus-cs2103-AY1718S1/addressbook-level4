@@ -11,7 +11,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new MapRoute Command object
  */
-public class MapRouteCommandParser {
+public class MapRouteCommandParser implements Parser<MapShowCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the MapRouteCommand
      * and returns an MapRouteCommand object for execution.
