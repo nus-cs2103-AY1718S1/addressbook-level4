@@ -18,6 +18,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String REMARK_FIELD_ID = "#remark";
     private static final String BIRTHDAY_FIELD_ID = "#birthday";
+    private static final String AGE_FIELD_ID = "#age";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
@@ -27,6 +28,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label emailLabel;
     private final Label remarkLabel;
     private final Label birthdayLabel;
+    private final Label ageLabel;
     private final List<Label> tagLabels;
 
     public PersonCardHandle(Node cardNode) {
@@ -39,6 +41,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.remarkLabel = getChildNode(REMARK_FIELD_ID);
+        this.ageLabel = getChildNode(AGE_FIELD_ID);
         this.birthdayLabel = getChildNode(BIRTHDAY_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
@@ -76,6 +79,8 @@ public class PersonCardHandle extends NodeHandle<Node> {
     public String getBirthday() {
         return birthdayLabel.getText();
     }
+
+    public String getAge() { return ageLabel.getText(); }
 
     public List<String> getTags() {
         return tagLabels

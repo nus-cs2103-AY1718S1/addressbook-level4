@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlMimeType;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -37,6 +39,8 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String birthday;
     @XmlElement(required = true)
+    private String age;
+    @XmlElement(required = true)
     private String filepath;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -60,6 +64,7 @@ public class XmlAdaptedPerson {
         address = source.getAddress().value;
         remark = source.getRemark().value;
         birthday = source.getBirthday().value;
+        age = source.getAge().value;
         filepath = source.getPhoto().getFilePath();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
@@ -82,9 +87,10 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Remark remark = new Remark(this.remark);
-        final Birthday birthday = new Birthday("");
+        final Birthday birthday = new Birthday(this.birthday);
+        final Age age = new Age(this.birthday);
         final Photo photo = new Photo(this.filepath);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, remark, birthday, photo, tags);
+        return new Person(name, phone, email, address, remark, birthday, age, photo, tags);
     }
 }

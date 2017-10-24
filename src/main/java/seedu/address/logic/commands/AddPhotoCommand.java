@@ -41,7 +41,8 @@ public class AddPhotoCommand extends UndoableCommand {
         }
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(), photo,
+                personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
+                personToEdit.getAge(), photo,
                 personToEdit.getTags());
         try {
             model.updatePerson(personToEdit, editedPerson);

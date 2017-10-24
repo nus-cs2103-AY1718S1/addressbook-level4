@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+import java.util.Calendar;
+
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is always valid
@@ -12,7 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person's birthday have to be in the format DD-MM-YYYY, and should not be blank";
+            "Person's birthday have to be in the format DD-MM-YYYY";
     public static final String BIRTHDAY_VALIDATION_REGEX =
             "^(0[1-9]|[12][0-9]|3[01])[-](0[1-9]|1[012])[-](19|20)\\d\\d$";
 
@@ -26,8 +28,7 @@ public class Birthday {
 
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        String trimmedBirthday = birthday.trim();
-        if (!isValidBirthday(trimmedBirthday)) {
+        if (!isValidBirthday(birthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
         this.value = birthday;

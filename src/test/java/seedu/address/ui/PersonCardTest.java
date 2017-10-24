@@ -38,6 +38,7 @@ public class PersonCardTest extends GuiUnitTest {
             personWithTags.setTags(ALICE.getTags());
             personWithTags.setRemark(ALICE.getRemark());
             personWithTags.setBirthday(ALICE.getBirthday());
+            personWithTags.setAge(ALICE.getAge());
         });
         assertCardDisplay(personCard, personWithTags, 2);
     }
