@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-T16-B1/main
+:repoURL: https://github.com/CS2103AUG2017-T16-B1/main/tree/master
 
-By: `Team T16-B1`      Since: `Oct 2017`      Licence: `MIT`
+By: `Team T16-B1`      Since: `Sept 2017`      Licence: `MIT`
 
 == Introduction
 Unable to keep track of all your deliveries?
@@ -114,6 +114,11 @@ Examples:
  s/DELIVERING`
 * `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
  t/fragile`
+
+ [NOTE]
+ Parcel Tracking numbers presently support only tracking numbers for registered articles managed by SingPost. These
+ numbers include two `R`s followed by nine digits and ending with `SG`. +
+ Support for other delivery companies will come in future patches.
 
 === Import multiple parcels stored in an xml storage file: `import`
 
@@ -341,7 +346,7 @@ Then press kbd:[Enter] key to enter the command.
 There is more than one possibility for the autocompletion, Ark will display the possible options to you as shown in the
  below.
 
-image::TabAutocompleteMultipleExample.png[width="400"]
+image::TabAutocompleteMultipleExample.PNG[width="400"]
 
 Examples:
 

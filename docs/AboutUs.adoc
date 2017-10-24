@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Kyle Timothy Ng Chu
-image::kowalski95.jpg[width="150", align="left"]
+image::kowalski985.jpg[width="150", align="left"]
 {empty}[http://github.com/kowalski985[github]] [<<kylechu#, portfolio>>]
 
 Role: Team Lead, Integration, Scheduling and Tracking, Developer in charge of Logic Component +
