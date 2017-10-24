@@ -44,6 +44,9 @@ public class UniqueGroupList implements Iterable<Group> {
         return groups.iterator();
     }
 
+    /**
+     * @return an FXCollection representing the GroupList as an unmodifiable list
+     */
     public ObservableList<Group> asObservableList() {
         assert CollectionUtil.elementsAreUnique(groups);
         return FXCollections.unmodifiableObservableList(groups);

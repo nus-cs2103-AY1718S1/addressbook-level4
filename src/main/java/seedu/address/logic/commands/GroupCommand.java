@@ -2,10 +2,13 @@ package seedu.address.logic.commands;
 
 import java.util.Iterator;
 import java.util.List;
+
 import seedu.address.logic.commands.exceptions.CommandException;
+
 import seedu.address.model.person.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+
 import seedu.address.model.person.exceptions.DuplicateGroupException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.GroupNotFoundException;
@@ -44,28 +47,23 @@ public class GroupCommand extends UndoableCommand {
             // Iterate through our list of people, if we find a name in our group list then edit the person to be in the
             // group
             try {
-                for (int i = 1; i < args.size() ; i++) {
+                for (int i = 1; i < args.size(); i++) {
                     for (Iterator<ReadOnlyPerson> it = model.getFilteredPersonList().iterator(); it.hasNext(); ) {
 
                         ReadOnlyPerson p = it.next();
                         if (p.getName().fullName.toLowerCase().contains(args.get(i).toLowerCase())) {
-                            ReadOnlyPerson newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
-                                    p.getTags(), p.getRemark(), group);
+                            ReadOnlyPerson newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
+                                    p.getAddress(), p.getTags(), p.getRemark(), group);
                             model.updatePerson(p, newPerson);
                             break;
                         }
                     }
                 }
-
-                return new CommandResult( MESSAGE_SUCCESS);
-            } catch (DuplicatePersonException e ) {
-                throw new CommandException(e.getMessage());
-            } catch (PersonNotFoundException e) {
+                return new CommandResult (MESSAGE_SUCCESS);
+            } catch (DuplicatePersonException | PersonNotFoundException e) {
                 throw new CommandException(e.getMessage());
             }
-        } catch (GroupNotFoundException e) {
-            throw new CommandException(e.getMessage());
-        } catch (DuplicateGroupException e ){
+        } catch (GroupNotFoundException | DuplicateGroupException e) {
             throw new CommandException(e.getMessage());
         }
     }

@@ -76,7 +76,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Returns a boolean describing whether or not the group is in the address book
      */
-    public boolean groupExists (Group group){
+    public boolean groupExists (Group group) {
         requireNonNull(group);
         return groups.contains(group);
     }
