@@ -6,33 +6,37 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+
+<VBox prefHeight="600.0" prefWidth="580.0" stylesheets="@../../css/Extensions.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox>
+      <HBox prefHeight="200.0">
          <children>
-            <HBox prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/default_person_photo.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="name" text="\\\$name" wrapText="true">
-                     <font>
-                        <Font size="45.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets top="50.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <ListView fx:id="propertyListPanel" />
+            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/default_person_photo.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="name" styleClass="details-name-huge-label" text="\\\$name" wrapText="true">
+               <font>
+                  <Font size="45.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="30.0" top="50.0" />
+               </HBox.margin>
+            </Label>
          </children>
-      </VBox>
+      </HBox>
+      <HBox>
+         <children>
+            <ListView fx:id="propertyListKeys" />
+            <ListView fx:id="propertyListValues" prefWidth="500.0" />
+         </children>
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </HBox>
    </children>
-</StackPane>
+</VBox>

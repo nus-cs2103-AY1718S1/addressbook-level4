@@ -18,13 +18,16 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToContactsListEvent;
 import seedu.address.commons.events.ui.SwitchToEventsListEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.event.EventListPanel;
+import seedu.address.ui.person.PersonDetailsPanel;
 import seedu.address.ui.person.PersonListPanel;
 
 /**
@@ -47,7 +50,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
-    private BrowserPanel dataDetailsPanel;
+    private BrowserPanel browserPanel;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -138,8 +141,7 @@ public class MainWindow extends UiPart<Region> {
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        dataDetailsPanel = new BrowserPanel();
-        dataDetailsPanelPlaceholder.getChildren().add(dataDetailsPanel.getRoot());
+        browserPanel = new BrowserPanel();
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                                                               logic.getFilteredPersonList().size(),
@@ -201,7 +203,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     void releaseResources() {
-        dataDetailsPanel.freeResources();
+        browserPanel.freeResources();
     }
 
     /**
@@ -211,26 +213,39 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     private void handleSwitchToContacts() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
     @Subscribe
     public void handleSwitchToContacts(SwitchToContactsListEvent event) {
+        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
 
     @FXML
     private void handleSwitchToEvents() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
     }
 
     @Subscribe
     public void handleSwitchToEvents(SwitchToEventsListEvent event) {
+        dataDetailsPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().clear();
         dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReadOnlyPerson person = event.getNewSelection().person;
+
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
     }
 
     /**

@@ -26,7 +26,7 @@ public class PropertyTest {
         Property newProperty = new Property("p", value);
 
         assertEquals("p", newProperty.getShortName());
-        assertEquals("phone", newProperty.getFullName());
+        assertEquals("Phone", newProperty.getFullName());
         assertEquals(value, newProperty.getValue());
     }
 
