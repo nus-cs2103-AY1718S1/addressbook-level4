@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -52,6 +53,7 @@ public class CommandBox extends UiPart<Region> {
         "list", "l", "select", "s"};
     private final String[] addCommandFieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX",
         "KEYWORD"};
+    private Robot robot;
 
 
 
@@ -62,9 +64,10 @@ public class CommandBox extends UiPart<Region> {
     private ImageView keyboardIcon;
 
 
-    public CommandBox(Logic logic) {
+    public CommandBox(Logic logic) throws AWTException {
         super(FXML);
         this.logic = logic;
+        robot = new Robot();
         loadKeyboardIcons();
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
@@ -113,6 +116,9 @@ public class CommandBox extends UiPart<Region> {
             break;
         case TAB:
             autocomplete();
+            //press shift key to make the text selection in command box appear
+            robot.keyPress(17);
+            robot.keyRelease(17);
             break;
         default:
             // let JavaFx handle the keypress
