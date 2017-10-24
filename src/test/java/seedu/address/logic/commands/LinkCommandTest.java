@@ -18,6 +18,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Link;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for LinkCommand.
@@ -36,10 +37,10 @@ public class LinkCommandTest {
 
     @Test
     public void equals() {
-        final LinkCommand standardCommand = new LinkCommand(INDEX_FIRST_PERSON, VALID_LINK_AMY);
+        final LinkCommand standardCommand = new LinkCommand(INDEX_FIRST_PERSON, new Link(VALID_LINK_AMY));
 
         // same values -> returns true
-        LinkCommand commandWithSameValues = new LinkCommand(INDEX_FIRST_PERSON, VALID_LINK_AMY);
+        LinkCommand commandWithSameValues = new LinkCommand(INDEX_FIRST_PERSON, new Link(VALID_LINK_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -52,17 +53,17 @@ public class LinkCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new LinkCommand(INDEX_SECOND_PERSON, VALID_LINK_AMY)));
+        assertFalse(standardCommand.equals(new LinkCommand(INDEX_SECOND_PERSON, new Link(VALID_LINK_AMY))));
 
         // different remarks -> returns false
-        assertFalse(standardCommand.equals(new LinkCommand(INDEX_FIRST_PERSON, VALID_LINK_BOB)));
+        assertFalse(standardCommand.equals(new LinkCommand(INDEX_FIRST_PERSON, new Link(VALID_LINK_BOB))));
     }
 
     /**
      * Returns an {@code LinkCommand} with parameters {@code index} and {@code link}
      */
     private LinkCommand prepareCommand(Index index, String link) {
-        LinkCommand linkCommand = new LinkCommand(index, link);
+        LinkCommand linkCommand = new LinkCommand(index, new Link(link));
         linkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return linkCommand;
     }

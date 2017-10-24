@@ -10,13 +10,14 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.LinkCommand;
+import seedu.address.model.person.Link;
 
 public class LinkCommandParserTest {
     private LinkCommandParser parser = new LinkCommandParser();
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
-        final String link = "facebook.com";
+        final Link link = new Link("facebook.com");
 
         // have remarks
         Index targetIndex = INDEX_FIRST_PERSON;
@@ -26,7 +27,7 @@ public class LinkCommandParserTest {
 
         // no remarks
         userInput = targetIndex.getOneBased() + " " + PREFIX_LINK.toString();
-        expectedCommand = new LinkCommand(INDEX_FIRST_PERSON, "");
+        expectedCommand = new LinkCommand(INDEX_FIRST_PERSON, new Link(""));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 

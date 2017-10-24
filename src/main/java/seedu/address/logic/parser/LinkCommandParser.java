@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.LinkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Link;
 
 public class LinkCommandParser implements Parser<LinkCommand> {
     /**
@@ -27,8 +28,8 @@ public class LinkCommandParser implements Parser<LinkCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, LinkCommand.MESSAGE_USAGE));
         }
 
-        String remark = argMultimap.getValue(PREFIX_LINK).orElse("");
+        String link = argMultimap.getValue(PREFIX_LINK).orElse("");
 
-        return new LinkCommand(index, remark);
+        return new LinkCommand(index, new Link(link));
     }
 }

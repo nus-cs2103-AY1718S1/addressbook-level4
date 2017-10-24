@@ -39,6 +39,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.FieldContainsKeywordsPredicate;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
@@ -173,9 +174,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_link() throws Exception {
-        final String link = "facebook.com";
+        final Link link = new Link("facebook.com");
         LinkCommand command = (LinkCommand) parser.parseCommand(LinkCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_LINK + " " + link);
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_LINK + " " + link.value);
         assertEquals(new LinkCommand(INDEX_FIRST_PERSON, link), command);
     }
 

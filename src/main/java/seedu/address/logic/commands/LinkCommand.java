@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_LINK;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Link;
 
 /**
  * Changes the facebook link of an existing person in the address book.
@@ -24,13 +25,13 @@ public class LinkCommand extends UndoableCommand {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Link: %2$s";
 
     private final Index index;
-    private final String link;
+    private final Link link;
 
     /**
      * @param index of the person in the filtered person list to edit the link
      * @param link of the person
      */
-    public LinkCommand(Index index, String link) {
+    public LinkCommand(Index index, Link link) {
         requireNonNull(index);
         requireNonNull(link);
 
