@@ -61,6 +61,9 @@ public interface Model {
     /** Sorts the events list according to date/time */
     void sortEventList();
 
+    /** Sorts the persons list according to name */
+    void sortPersonList();
+
     /** Adds an event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
 
