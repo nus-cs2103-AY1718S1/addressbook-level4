@@ -15,7 +15,14 @@ endif::[]
 
 By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 
-== Introduction / Product overview
+== Introduction
+
+=== About
+
+This user guide will provide you with instructions on how to use the KayPoh! application.
+You should not need any prior technical knowledge to make use of this guide.
+
+=== Product Overview
 
 KayPoh! is a desktop contact management application for desktop computers for social users.
 You can use KayPoh! to store contact and social information information about people,
