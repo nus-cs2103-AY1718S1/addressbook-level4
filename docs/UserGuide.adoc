@@ -17,9 +17,13 @@ By: ` The Myth`      Since: `Jun 2016`      Licence: `MIT`
 == Introduction
 
 The Myth's Book is an address book dedicated for university students to store useful information such
-as the phone numbers and emails of the people around them. The Myth's Book is a `Command Line Input` based
-software which helps caters to students who are efficient and comfortable in typing out command line inputs to
-manipulate with information of their contacts in the address book.
+as websites, phone numbers and emails of the people around them for personal usage. The application helps students
+to keep track of birthday dates and upcoming events through a calendar and facilitate convenient access to their friend's website
+and even Google Maps location through the in-built browser panel in the application. Furthermore, there are many
+useful tools such as finding group tags (e.g. friends, neighbours) and switching themes for better user preference and usability.
+
+The Myth's Book is a `Command Line Input` based software which helps caters to students who are efficient and comfortable
+in typing out command line inputs to manipulate with information of their contacts in the address book.
 
 == About
 
@@ -76,8 +80,9 @@ Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]`
 
 [NOTE]
-See examples for a rough idea of how and what details should be inputted. +
-Website should be `https://www.anyName.com/anyContent` where anyName can only be alphanumeric and anyContent can be the exact url details of the website. +
+You can see the examples provided below to know more about what details should be inputted. +
+Website should follow this format `https://www.anyName.com/anyContent` where anyName can only be alphanumeric and anyContent can be the exact url details of the website. +
+It is encouraged to have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in website input error. +
 Birthday should be in proper format of "dd/mm/yyyy" where all elements inputted for birthday are integers.
 
 
@@ -105,14 +110,20 @@ Format: 'access INDEX'
 
 Examples:
 
-* `list` +
-`access 2` +
+* 1.`list` +
+2.`access 2` +
 Selects the 2nd person in the address book and attains the website of the 2nd person.
 The website details is then loaded into the browser.
-* `find Betsy` +
-`access 1` +
+* 1.`find Betsy` +
+2.`access 1` +
 Selects the 1st person in the results of the `find` command and attains the website of the 1st person.
 The website details is then loaded into the browser.
+
+Result of using `access index` should look like the figure below.
+
+image::AccessCommandFinalResult.PNG[width="790"]
+
+Figure 4.3.1 Access Command Result
 
 === Listing all persons : `list`
 
@@ -133,15 +144,21 @@ Format: 'locate INDEX'
 * The address listed must be a valid address listed.
 ****
 
+Result of using `locate index` should look like the figure below.
+
+image::LocationCommandFinalResult.PNG[width="790"]
+
+Figure 4.5.1 Location Command Result
+
 Examples:
 
-* `list` +
-`locate 2` +
+* 1.`list` +
+2.`locate 2` +
 Selects the 2nd person in the address book and attains the address of the 2nd person.
 The address details is then used in a Google Maps Search.
-* `find Betsy` +
-`locate 1` +
-Selects the 1st person in the results of the `find` command and attains the address of the 2nd person.
+* 1.`find Betsy` +
+2.`locate 1` +
+Selects the 1st person in the results of the `find` command and attains the address of the 1st person.
 The address details is then used in a Google Maps Search.
 
 === Sorting all persons : `sort`
