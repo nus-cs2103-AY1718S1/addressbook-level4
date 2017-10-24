@@ -77,6 +77,9 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
+        case DeleteCommand.COMMAND_ALIAS:
+            return new DeleteCommandParser().parse(arguments);
+
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
@@ -92,6 +95,9 @@ public class AddressBookParser {
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
+        case ListCommand.COMMAND_ALIAS:
+            return new ListCommand();
+
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 
@@ -100,6 +106,9 @@ public class AddressBookParser {
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
+
+        case HelpCommand.COMMAND_ALIAS:
+             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommandParser().parse(arguments);
@@ -111,6 +120,9 @@ public class AddressBookParser {
             return new RemarkCommandParser().parse(arguments);
 
         case FavoriteCommand.COMMAND_WORD:
+            return new FavoriteCommandParser().parse(arguments);
+
+        case FavoriteCommand.COMMAND_ALIAS:
             return new FavoriteCommandParser().parse(arguments);
 
         case ListAlphabetCommand.COMMAND_WORD:
