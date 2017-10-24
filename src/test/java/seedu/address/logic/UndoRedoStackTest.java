@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,11 +28,11 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 public class UndoRedoStackTest {
+    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
+    private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
     private DummyCommand dummyCommandOne;
     private DummyUndoableCommand dummyUndoableCommandOne;
     private DummyUndoableCommand dummyUndoableCommandTwo;
-    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
-    private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private UndoRedoStack undoRedoStack = new UndoRedoStack();
 

@@ -1,9 +1,20 @@
 package seedu.address.logic.commands;
 
-import javafx.collections.ObservableList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.function.Predicate;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -18,19 +29,9 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
-import seedu.address.model.module.predicates.FavouriteListPredicate;
 import seedu.address.testutil.LessonBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.function.Predicate;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import javafx.collections.ObservableList;
 
 public class AddCommandTest {
 
@@ -176,7 +177,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson) throws DuplicateLessonException, LessonNotFoundException {
+        public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
+                throws DuplicateLessonException, LessonNotFoundException {
             fail("This method should not be called.");
         }
 
