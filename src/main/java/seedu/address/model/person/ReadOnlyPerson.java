@@ -57,5 +57,4 @@ public interface ReadOnlyPerson {
         getGroups().forEach(builder::append);
         return builder.toString();
     }
-
 }
