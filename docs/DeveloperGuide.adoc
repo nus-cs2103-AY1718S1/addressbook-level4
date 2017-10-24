@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Contact List Pro v1.3 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,14 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T09-B4/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
+
+[big]#*Introduction*#
+
+Contact List Pro is a software address book that allows users to store contacts and manage them using a variety of features.
+This guide provides information for you to set up and get started as a Contact List Pro developer, and is detailed enough to be useful to experienced developers as well.
 
 == Setting up
 
@@ -168,7 +173,7 @@ The `UI` component,
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
 
-image::LogicCommandClassDiagram.png[width="800"]
+image::NewLogicCommandClassDiagram.png[width="800"]
 _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
@@ -186,7 +191,7 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
-image::ModelClassDiagram.png[width="800"]
+image::NewModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -223,7 +228,7 @@ This section describes some noteworthy details on how certain features are imple
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
@@ -345,6 +350,143 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::favourite[]
+=== Favourite mechanism
+
+The favourite feature allows users to favourite or unfavourite a *single person* depending on whether the person is currently favourited or not. Favourited persons are all sorted to the top of the list in the user interface.
+
+The favourite mechanism makes use of `FavouriteCommandParser` which is called by `AddressBookParser` when it parses the user input. `FavouriteCommandParser` then passes the specified index into FavouriteCommand to execute its code.
+
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("favourite 2")` API call.
+
+image::FavouritePersonSequenceDiagram.png[width="800"]
+
+`FavouriteCommand` extends `UndoableCommand` and is thus also able to be undone/redone.
+
+==== Design Considerations
+**Aspect:** Data structure to hold the favourite status of a person +
+**Alternative 1 (current choice):** Create another class `FavouriteStatus` to hold data on whether the person is a favourite. +
+**Pros:** Consistent with the other data fields like `Name` and `Email` +
+**Cons:** Less memory efficient +
+**Alternative 2:** Creating a boolean variable in `Person` class itself +
+**Pros:** More memory efficient +
+**Cons:** Not as intuitive since all other data fields are encapsulated in other classes +
+
+---
+
+**Aspect:** Implementation of `FavouriteCommand` +
+**Alternative 1 (current choice):** Use the existing `updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)` method in `Model` +
+**Pros:** Able to make use of existing code +
+**Cons:** Might not be as speed efficient since another `Person` object is created just to toggle favourite status +
+**Alternative 2:** Implement additional methods in `Model`, `AddressBook`, etc. to specifically toggle a person's favourite status +
+**Pros:** Makes clear what the method is trying to do +
+**Cons:** Is not necessary when existing code is able to perform the same action +
+// end::favourite[]
+
+// tag::remove[]
+=== Tag removal mechanism
+
+The remove feature allows users to either remove a `Tag` from a multiple persons, remove multiple `Tags` from
+a single person or remove `Tag(s)` from the whole address book.
+The distinction in execution of the command lies in the format of the user command.
+
+The following sequence diagram shows how the remove operation works:
+
+image::removeTag.png[width="800"]
+As seen above, execution of `RemoveCommand` is governed by the `removeTag` method located in the `Model` interface and implemented by
+`ModelManager`.
+
+==== Design Considerations
+**Aspect:** Execution of remove command  +
+**Alternative 1 (current choice):** Accepts multiple `Tags` and *one* `Index` or *one* `Tag` and multiple `Index` as a single command input. +
+**Pros:** Allows greater efficiency in removing multiple `Tags` instead of doing it singly. +
+**Cons:** May pose an inconvenience for users to remove `Tag` a wide range of `Index`. +
+**Alternative 2:** Allow range of `Index` to be accepted as parameters. +
+**Pros:** Better efficiency in mass removal of `Tags` from persons that are listed consecutively. +
+**Cons:** Pose the same inconvenience to users if the person whose `Tag` to be removed are widely scattered. +
+
+---
+
+**Aspect:** Implementation of remove command. +
+**Alternative 1 (current choice):** Executes user input and provides one result of command output. +
+**Pros:** With current implementation, it allows for multiple removal of `Tags` in one command execution. +
+**Cons:** The use of the `Undo/Redo` command may not be applicable. +
+**Alternative 2:** Incorporate mechanism such as Stacks to store individual removal of `Tag`. +
+**Pros:** Complements the use of `Undo/Redo`. +
+**Cons:** Current method of removing tags has to accommodate the use of the new mechanism. +
+
+// end::remove[]
+
+// tag:: remark[]
+=== Remark CheckList Implementation
+
+The remark checklist serves as command to allow users to keep notes on individual persons. +
+We want our remark command to function like a todo list, which enables users to add remarks to a person based on a specific task they want to do with the person. +
+Since remarks can be different for different persons, it was placed under the Person class to allow for easy retrieval. +
+Since it is saved under the Person class, we are able to utilise the ReadOnlyPerson to compare persons, or extract specific information without risking a corruption in the storage file. +
+
+image::UpdatedRemarkSequenceDiagram.png[width ="900"]
+
+As users accomplish tasks that were associated with specific persons, we want to allow them to remove remarks at any point in time. +
+To help with this feature, we planned to use an ArrayList to store the remarks under each person, as it would help with indexing the remarks for easy removal and additions. +
+As ArrayLists naturally update the index of the its list, we do not need additional functions to handle indexing. +
+On top of this, we decided that remarks should be updated with any changes, either to selection or file storage. +
+Thus, we subscribed the remark panel UI to any person selection changes or person storage changes to allow for a constantly updated UI. +
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        tempPerson = event.getNewSelection().person;
+        String printedString = "Remarks regarding " + String.valueOf(event.getNewSelection().person.getName()) + ":\n"
+                + "---------------------------------------------------\n";
+        for (int i = 0; i < event.getNewSelection().person.getRemark().size(); i++) {
+            if (!event.getNewSelection().person.getRemark().get(i).value.equals("")) {
+                printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
+                        + event.getNewSelection().person.getRemark().get(i).value + "\n");
+            }
+        }
+        final String finalString = printedString;
+        Platform.runLater(() -> displayed.setValue(finalString));
+    }
+
+
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ObservableList<ReadOnlyPerson> personList = event.data.getPersonList();
+        for (int i = 0; i < personList.size(); i++) {
+            if (personList.get(i).getName().fullName.equals(tempPerson.getName().fullName)) {
+                String printedString = "Remarks regarding " + String.valueOf(personList.get(i).getName()) + ":\n"
+                        + "---------------------------------------------------\n";
+                for (int j = 0; j < personList.get(i).getRemark().size(); j++) {
+                    if (!personList.get(i).getRemark().get(j).value.equals("")) {
+                        printedString = printedString.concat(j + 1 + "). "
+                                + personList.get(i).getRemark().get(j).value + "\n");
+                    }
+                }
+                final String finalString = printedString;
+                Platform.runLater(() -> displayed.setValue(finalString));
+                break;
+            }
+        }
+    }
+----
+Since remarks tend to be lengthy, we decided that a large amount of space on the app should be dedicated to them. +
+Instead of implementing similar UI design as the tags feature, we decided to display the remarks using a large stackpane. +
+
+image::remarkUI.png[width="800"]
+
+[NOTE]
+Remarks can not be added when adding a person. It can only be done to a person already existing in the address book.
+
+[NOTE]
+If a person is without a remark, he/she still contains an ArrayList or empty remarks. +
+ArrayList should never contain null objects.
+
+
+// end::remark[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -465,8 +607,9 @@ Here are the steps to create a new release.
 === Managing Dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+
+* Include those libraries in the repo (this bloats the repo size) +
+* Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
 == Suggested Programming Tasks to Get Started
@@ -751,7 +894,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |delete person using other fields such as name |delete contact without knowing the index number
 
-|`* *` |user |undo/redo amendments made to the address book |immediately revert to previous version if mistakes are made
+|`* *` |user |undo/redo amendments made to the Contact List Pro |immediately revert to previous version if mistakes are made
 
 |`* *` |user |clear temporary storage upon exit |reduce memory used
 
@@ -767,17 +910,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |add profile pictures to contacts |recognize the contact by their face
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |user with many persons in the Contact List Pro |sort persons by name |locate a person easily
 
-|`*` |user |view recent contacts added/searched |keep a log of the operations done in the address book
+|`*` |user |view recent contacts added/searched |keep a log of the operations done in the Contact List Pro
 
 |`*` |user |sync contact details with social media |receive notification if contact details are not updated
 
-|`**` |user | have a password protected system| protect personal data when not using
+|`* *` |user | have a password protected system| protect personal data when not using
 
 |`*` |user | check contact’s facebook profile| remember who that friend is
 
-|`**` |user | know what error he made during use| avoid making similar mistakes
+|`* *` |user | know what error he made during use| avoid making similar mistakes
 
 |`*` |user | be able to copy/send emails with a click| send emails to the contacts efficiently
 
@@ -787,21 +930,20 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user who is colorblind| be able to customise text colour| be able to see the text
 
-|`**` |user who is farsighted| be able to customise font size| be able to see the text clearly
+|`* *` |user who is farsighted| be able to customise font size| be able to see the text clearly
 
-|`*` |user| sort certain persons by where they stay| know where is a convenient meetup location
+|`*` |user| sort certain persons by where they stay| know where is a convenient meet up location
 
 |`*` |user| save birthdays| retrieve more information about the person later
 
 
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Contact List Pro` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -809,9 +951,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Contact List Pro deletes the person
 +
 Use case ends.
 
@@ -825,7 +967,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -835,9 +977,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to favourite a specific person in the list
-4.  AddressBook sets the person as a favourite contact
+4.  Contact List Pro sets the person as a favourite contact
 +
 Use case ends.
 
@@ -851,7 +993,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -861,9 +1003,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to add a specific person in the list to a specific group
-4.  AddressBook adds the person into the group
+4.  Contact List Pro adds the person into the group
 +
 Use case ends.
 
@@ -877,13 +1019,13 @@ Use case ends.
 * 3a. The given index is invalid
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 * 3b. The given group is invalid
 +
 [none]
-** 3b1. AddressBook shows an error message.
+** 3b1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -893,12 +1035,15 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to enable password
-2.  AddressBook confirms the request, yes or no
+2.  Contact List Pro confirms the request, yes or no
 3.  User enters password
-4.  AddressBook requests for password again to confirm
+4.  Contact List Pro requests for password again to confirm
 5.  User enters password again
-6.  AddressBook sets up password and stores data in a .xml file
-7.  User needs to type in password every time at start before user can use any commands, other than help
+6.  Contact List Pro sets up password and stores data in a .xml file
+7.  Contact List Pro requests for answer to a predetermined security question.
+8.  User enters answer
+9.  Contact List Pro stores security answer in a .xml file linked to the account
+10.  User needs to type in login to get his private address book, else it will show a public address book
 +
 Use case ends.
 
@@ -910,25 +1055,29 @@ Use case ends.
 
 * 3a. Password entered is invalid.
 +
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
 * 4a. Confirmation password does not match password entered before.
 +
-** 4a1. AddressBook shows an error message.
+** 4a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
-* 7a. User type wrong password
+* 10a. User type wrong password
 +
-** 7a1. AddressBook reveals first and last letter of password.
+** 10a1. Contact List Pro reveals first and last letter of password.
 +
-** 7a2. User has forgotten the password
+** 10a2. User has forgotten the password
 +
-** 7a3. AddressBook prompts user to check the .xml that stores the password
+** 10a3. Contact List Pro prompts user to provide security answer
 +
-Use case resumes at step 7.
+** 10a4. Contact List Pro check if it match the answer from .xml file
++
+** 10a4. Contact List Pro reveals the password if correct
++
+Use case resumes at step 10.
 
 [discrete]
 === Use case: Sort certain persons by their address
@@ -936,11 +1085,11 @@ Use case resumes at step 7.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to only show certain persons, by index, in the list
-4.  AddressBook shows restricted list
+4.  Contact List Pro shows restricted list
 5.  User requests to sort persons by address
-6.  AddressBook shows a list of persons sorted by address
+6.  Contact List Pro shows a list of persons sorted by address
 +
 Use case ends.
 
@@ -952,7 +1101,7 @@ Use case ends.
 
 * 3a. The given index is invalid.
 +
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -962,10 +1111,10 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list person
-2.  AddressBook shows a list of person
+2.  Contact List Pro shows a list of person
 3.  User requests to edit a field, followed by new field details
-4.  AddressBook edits specified contact's details
-5.  AddressBook shows amended contact's details
+4.  Contact List Pro edits specified contact's details
+5.  Contact List Pro shows amended contact's details
 +
 Use case ends.
 
@@ -977,7 +1126,7 @@ Use case ends.
 
 * 3a. The given field is invalid.
 +
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -987,9 +1136,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Contact List Pro shows a list of persons
 3.  User requests to delete persons, by name, in the list
-4.  AddressBook shows message for successful deletion
+4.  Contact List Pro shows message for successful deletion
 +
 Use case ends.
 
@@ -1001,7 +1150,7 @@ Use case ends.
 
 * 3a. The given field is invalid.
 +
-** 3a1. AddressBook shows an error message.
+** 3a1. Contact List Pro shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1011,7 +1160,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons with partial inputs
-2.  AddressBook shows a list of persons with fields containing given input
+2.  Contact List Pro shows a list of persons with fields containing given input
 +
 Use case ends.
 
@@ -1019,12 +1168,37 @@ Use case ends.
 
 * 2a. The list is empty.
 +
-** 2a1. AddressBook shows an error message.
+** 2a1. Contact List Pro shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Remove tags from contacts
+
+*MSS*
+
+1.  User requests to remove specified tags from selected indexes or from the whole Contact List Pro.
+2.  Contact List Pro shows a successful message and a list of updated contacts.
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+** 2a1. Contact List Pro shows an error message.
++
+* 2b. Tag does not exist.
++
+** 2b1. Contact List Pro shows an error message.
++
+* 2c. Invalid index is given.
++
+** 2c1. Contact List Pro shows an error message.
 +
 Use case ends.
 
 
-{More to be added}
 
 [appendix]
 == Non Functional Requirements
@@ -1034,17 +1208,14 @@ Use case ends.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should work when not connected to the internet even if some functions are disabled.
 .  Commands should be intuitive, concise and easy to remember so that the user does not have to refer to help repeatedly.
-.  Text size should be sufficiently large.
+.  Text size should be sufficiently large (at least font size 10).
 .  Should not cause crashes when invalid commands are entered.
-.  A user should only be able to enter a certain amount of words into the command line.
+.  A user should only be able to enter a certain amount of words into the command line (does not exceed 100words).
 .  Should respond fast (~2 seconds) to any commands.
 .  Should include user-friendly instructions.
 .  Should have a feature to transfer contacts from one account to another.
 
 
-
-
-{More to be added}
 
 [appendix]
 == Glossary
@@ -1066,7 +1237,7 @@ A contact detail that is not meant to be shared with others
 [[command-line]]
 
 ....
-The text bar where user types in when AddressBook is opened up
+The text bar where user types in when Contact List Pro is opened up
 ....
 
 [[fields]]

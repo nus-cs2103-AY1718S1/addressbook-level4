@@ -3,11 +3,17 @@ package seedu.address.ui;
 import java.util.HashMap;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.util.AppUtil;
+import seedu.address.model.person.FavouriteStatus;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -20,6 +26,12 @@ public class PersonCard extends UiPart<Region> {
         "darkgrey", "limegreen" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Integer colourNum = 0;
+    private static final String FAVOURITE_IMAGE = "/images/favouriteIcon.png";
+    private static final String NON_FAVOURITE_IMAGE = "/images/nonFavouriteIcon.png";
+    private static Image favouritedImage = AppUtil.getImage(FAVOURITE_IMAGE);
+    private static Image nonFavouritedImage = AppUtil.getImage(NON_FAVOURITE_IMAGE);
+    private static final ObjectProperty<FavouriteStatus> favouriteTrue =
+            new SimpleObjectProperty<>(new FavouriteStatus(true));
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -44,7 +56,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private Label favouriteStatus;
+    private ImageView favouriteStatus;
     @FXML
     private FlowPane tags;
 
@@ -81,7 +93,8 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        favouriteStatus.textProperty().bind(Bindings.when(person.statusProperty()).then("Favourite").otherwise(""));
+        favouriteStatus.imageProperty().bind(Bindings.when(person.favouriteStatusProperty().isEqualTo(favouriteTrue))
+                .then(favouritedImage).otherwise(nonFavouritedImage));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);

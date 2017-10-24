@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Contact List Pro v1.3 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,36 +10,47 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T09-B4`      Since: `Oct 2017`      Licence: `MIT`
 
-== Quick Start
+== *Introduction*
+The `Contact List Pro v1.3` is a program to maintain your contact list. You can use the `Contact List Pro`
+ to add, delete, find, sort,  group contacts and even maintain a to-do list with your contacts.
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+== *About*
+This guide shows you how to get started using the `Contact List Pro`.
+
+This guide gives you an in-depth walk-through on the various features of the `Contact List Pro` and
+teaches you to perform the various commands with the aid of examples.
+
+Each feature stated in the guide also gives user suggestions on the suitable use of the features and functions.
+
+== *Getting Started*
+
+.  Ensure that you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will *not work* with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file into the folder that you want to use as the home folder for your Contact List Pro.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Some commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Contact List Pro.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== Features
+== *Features*
 
 ====
 *Command Format*
@@ -75,12 +86,12 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [MORE_TAGS]`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
+* Existing values will be overwritten by the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
@@ -92,25 +103,60 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Favouriting a person : `favourite`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Favourites or unfavourites an existing perosn in the address book. +
+Format: `favourite INDEX`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Favourites/Unfavourites the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If the person at the specified `INDEX` is a favourite contact, the person will be unfavourited, otherwise the person will be favourited.
+* Favourited contacts are automatically sorted to the top of the list
 ****
 
 Examples:
 
-* `find John` +
+* `list` +
+`favourite 6` +
+Favourites/Unfavourites the 6th person in the address book.
+* `find n/Betsy` +
+`favourite 1` +
+Favourites/Unfavourites the 1st person in the results of the `find` command.
+
+=== Finding persons : `find`
+
+Finds persons whose given field contain any of the given keywords. +
+Format: `find [PREFIX KEYWORD]...`
+
+****
+* Prefix has to be given to specify which field to search for.
+* Keyword must *not* contain whitespaces. (`n/Hans Bo` is *not* accepted)
+* The search is case insensitive for all fields. +
+e.g. `hans` will match `Hans`
+//* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Any fields can be searched. (`name`, `phone`, `address`, `email`, `tags`)
+* Partial keyword will be matched e.g. `Han` will match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+[NOTE]
+====
+PREFIX: +
+`n/` -> name +
+`p/` -> phone +
+`a/` -> address +
+`e/` -> email +
+`t/` -> tag
+====
+
+Examples:
+
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find n/Betsy n/Tim n/John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find t/friends t/colleagues` +
+Returns any person having tags `friends`, `colleagues`, or both.
 
 === Deleting a person : `delete`
 
@@ -128,7 +174,7 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd person in the address book.
-* `find Betsy` +
+* `find n/Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
@@ -148,7 +194,7 @@ Examples:
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
-* `find Betsy` +
+* `find n/Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
@@ -170,7 +216,8 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content +
+(`add`, `delete`, `edit`, `remove` and `clear`).
 ====
 
 Examples:
@@ -212,6 +259,45 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Removing tag(s) : `remove`
+
+Removes the specified tag(s). +
+Format: `remove [TAG]... [INDEX]...`
+
+[NOTE]
+====
+Executing command without the INDEX field will remove the given tag(s) from the whole address book.
+====
+
+****
+* The index refers to the index number shown in the last person listing.
+* The index must be a positive integer `1, 2, 3, ...`
+* Removes the specified tags from *ONE* specified index.
+* Removes *ONE* tag from the specified indexes.
+* Multiple tags and indexes input are *NOT* allowed.
+****
+
+Examples:
+
+* `list` +
+`remove friends 1` +
+Removes the `friends` tag from the first person in the address book.
+
+* `list` +
+`remove friends` +
+Removes the `friends` tag from every person in the address book.
+
+* `list` +
+`remove friends family 2` +
+Removes the `friends` and `family` tag from the second person in the address book.
+
+* `list` +
+`remove friends 2 5` +
+Removes the `friends` tag from the second and fifth person in the address book.
+
+
+// end::remove[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -227,35 +313,162 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== Coming in v2.0
+== *Command Summary*
 
-=== Ability to login/logout: `login`/`logout`
+[width="90%",cols="10%,<10%,<70%",options="header",]
+|=======================================================================
+|Feature |Alias |Command Format
+| *Help* | *h* | `help` +
+| *Add* | *a* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+| *List* | *l* | `list` +
+| *Edit* | *e* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+| *Favourite* | *fav* | `favourite INDEX` +
+| *Find* | *f* | `find [PREFIX KEYWORD]...` +
+| *Delete* | *d* | `delete INDEX` +
+| *Select* | *s* | `select INDEX` +
+| *History* | *hs* | `history` +
+| *Undo* | *u* | `undo` +
+| *Redo* | *r* | `redo` +
+| *Remove* | *rm* | `remove [TAG]... [INDEX]...` +
+| *Clear* | *c* | `clear` +
+| *exit* | *x* | `exit` +
+|=======================================================================
 
-=== Add a to-do note to contact: `todo`
+The command keywords can be substituted by their aliases. +
+For example:
 
-=== Link facebook page to contact: `link`
+* To favourite the person at INDEX 4: `fav 4` instead of `favourite 4` can be used. +
+* To undo a command : `u` instead of `undo` can be used.
 
-
-== FAQ
+== *FAQ*
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+== *Since v1.2*
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+=== Enhanced `find` command to accept different fields
+
+Allows user to find persons based on other fields apart from name based on prefix given. +
+
+Format: `find n/John t/friends`
+
+=== Enhanced `remove` command to remove tag from specified index
+
+Allows user to remove tag from individual person in the address book by specifying the corresponding index. +
+
+Format: `remove friends 1`
+
+=== Enhanced `find` command to accept partial inputs
+
+Allows user to find persons using partial inputs. +
+
+Format: `find n/Jo t/fri`
+
+=== Enhanced `remove` command to remove multiple tags from a single index
+
+Allows user to remove multiple tags from one individual person in the address book by specifying the corresponding index. +
+
+Format: `remove friends family 1`
+
+=== Enhanced `remove` command to remove a tag from multiple indexes
+
+Allows user to remove a single tag from multiple person in the address book by specifying the corresponding indexes. +
+
+Format: `remove friends 1 3`
+
+
+
+== *Coming in v2.0*
+
+=== Ability to create private accounts: `create`
+
+Allow user to have a private contact list that is protected by login username and password. +
+
+Format: `create u/USERNAME p/PASSWORD`
+
+[NOTE]
+Usernames need to be unique but not passwords. +
+After the create command is issued, a security question will appear where user will need to provide an answer. +
+The answer will be used if the user forgets his password.
+
+Examples:
+
+* `create u/johndoeuser p/abcd1234`
+
+=== Ability to login/logout: `login`/`logout`
+
+Allow user to login to their private account to access the contact list +
+
+Format to login: `login u/USERNAME p/PASSWORD`
+Format to logout: `logout`
+
+[NOTE]
+Account is automatically loggedout when the app is closed. +
+Logout feature can be used if user wants to access the public contact list without closing the app
+
+Examples:
+
+* `login u/johndoeuser p/abcd1234`
+* `logout`
+
+=== Add a remark note to contact: `remark`
+
+Adds remarks to a person existing in the address book based on their index +
+Or to remove remarks based on person's index and remark index +
+
+Format to add remark: `remark PERSONINDEX r/REMARK` +
+Format to remove remark: `remark PERSONINDEX REMARKINDEX`
+
+[TIP]
+A person can have any number of remarks (including 0)
+
+Examples:
+
+* `remark 1 r/Have a beer with him on Sunday`
+* `remark 3 r/Finish project with him by tomorrow r/Eat supper with him at 10`
+* `remark 1 1`
+* `remark 2 1`
+
+=== Link facebook page to contact: `link`
+
+Adds a facebook link to a person existing in the address book based on their index +
+
+Format: `link PERSONINDEX l/WEBSITEURL` +
+
+[TIP]
+A person can have only one link, any changes will update the existing link to be the new link +
+Only facebook links are accepted
+
+Examples:
+
+* `link 1 l/https://www.facebook.com/john.doe`
+
+=== Ability to add `tags` cumulatively to a person
+
+Adds tag(s) to a person in the address book by specifying the corresponding indexes. +
+
+Format: `tag brother 1`
+
+=== Ability to remove multiple `tags` from multiple persons in one command
+
+Remove specified tags from multiple persons in the address book by specifying the corresponding indexes. +
+
+Format: `remove friends family 1 3`
+
+=== Ability to highlight keyword from the `Find Command` result
+
+Based on the user inputs, the corresponding keywords in the result of the Find Command will be highlighted. +
+
+Command: `find n/ber a/serangoon`
+
+Result:
+
+image::highlight.png[width=""]
+
+=== Ability to `import` and `export` contact list manually or using a cloud service
+
+Import/Export contact lists from/to the give path. +
+
+Format: `import PATH`
+
