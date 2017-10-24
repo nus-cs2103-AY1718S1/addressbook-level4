@@ -36,13 +36,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AddressBookParser {
 
+
+    private static final String MODE_ADDRESS_BOOK = "addressbook ab";
+    private static final String MODE_TASK_MANAGER = "taskmanager tm";
+
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
-
-    public static final String MODE_ADDRESS_BOOK = "addressbook ab";
-    public static final String MODE_TASK_MANAGER = "taskmanager tm";
 
     /**
      * Parses user input into command for execution.
