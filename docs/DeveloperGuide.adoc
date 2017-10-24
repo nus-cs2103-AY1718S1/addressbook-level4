@@ -357,6 +357,33 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::find[]
+=== Find mechanism
+
+The find mechanism is facilitated by predicates. Whenever find command is executed, in `FindCommandParser` will turn the paramater into a string list which will pass to the `FindCommand`.
+In `FindCommand` different find predicate will be called depends on what the current `ListingUnit` is and will update the predicate of `filteredList` with one of these three predicates.
+`LocationContainsKeywordPredicate` which find the lessons with name that contains the keyword, `ModuleContainsKeywordPredicate` which find lesson with module code that contains the keyword and
+finally `LessonContainsKeywordPredicate` which find lessons with any information they have that contains the keywords.
+
+[NOTE]
+`LocationContainsKeywordPredicate` will be used when the current `ListingUnit` is `LOCATION`. +
+`ModuleContainsKeywordPredicate` will be used when the current `ListingUnit` is `MODULE`. +
+`LessonContainsKeywordPredicate` will be used when the current `ListingUnit` is `LESSON`.
+
+The following link:#sequence-diagram[sequence diagram] shows how the find operation works:
+
+image::SortCommandSeqDiagram.png[width="900"]
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+
+The following link:#activity-diagram[activity diagram] summarize what happens when an user execute find command.
+
+image::sortCommandactivitydiagram.png[width="900"]
+
+==== Design Considerations
+
+// end::find[]
+
 // tag::sort[]
 === Sort mechanism
 
@@ -377,13 +404,13 @@ image::sortCommandactivitydiagram.png[width="900"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `SortCommand` +
-**Alternative 1 (current choice):** Sort list by calling event to sort the current Observable<ReadOnlyLesson> lesson list on `LessonListPanel`. +
-**Pros:** The actual `internalList` wont be altered and wont affect other commands' execution. +
-**Cons:** Could be counter intuitive for new developer who is looking at the code for the first time as normally developers would relate such execution in the `Model` component of this product. In additional, this will make the `internalList` to be different with the `list` users see on the `LessonListPanel` which sill make other command operate to not operate properly. +
-**Alternative 2:** Sort the actual `internalList` in `UniqueLessonList`. +
+**Aspect:** Implementation of `FindCommand` +
+**Alternative 1 (current choice):** Sort the actual `internalList` in `UniqueLessonList`. +
 **Pros:** Easier for new developer to understand the operation of SortCommand execution as it is more intuitive. Prevent conflicting with other command execution which use the `internalList`. +
 **Cons:** More work as need to create different level of abstraction in model for a single method.
+**Alternative 2:** Sort list by calling event to sort the current Observable<ReadOnlyLesson> lesson list on `LessonListPanel`. +
+**Pros:** The actual `internalList` wont be altered and wont affect other commands' execution. +
+**Cons:** Could be counter intuitive for new developer who is looking at the code for the first time as normally developers would relate such execution in the `Model` component of this product. In additional, this will make the `internalList` to be different with the `list` users see on the `LessonListPanel` which sill make other command operate to not operate properly. +
 
 ---
 
