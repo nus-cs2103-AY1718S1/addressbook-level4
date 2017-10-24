@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -46,8 +45,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private Label favourite;
-    @FXML
     private Label birthday;
     @FXML
     private FlowPane tags;
@@ -78,6 +75,9 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Sets the colour of a favourite label based on its favourite status
+     */
     private void initFavouriteLabel(ReadOnlyPerson person) {
         Label favouriteLabel = new Label(person.getFavourite().getStatus());
         if (person.getFavourite().getStatus().equals("True")) {
