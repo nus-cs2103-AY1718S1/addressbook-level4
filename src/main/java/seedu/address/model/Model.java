@@ -113,4 +113,10 @@ public interface Model {
      */
     void sortListByAge(ArrayList<ReadOnlyPerson> contactList)  throws CommandException;
 
+    /**
+     * @param contactList
+     * @throws CommandException
+     */
+    void sortListByPriority(ArrayList<ReadOnlyReminder> contactList)  throws CommandException;
+
 }

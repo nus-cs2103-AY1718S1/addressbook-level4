@@ -26,6 +26,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortAgeCommand;
 import seedu.address.logic.commands.SortBirthdayCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SortPriorityCommand;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -122,6 +123,9 @@ public class AddressBookParser {
 
         case EditReminderCommand.COMMAND_WORD:
             return new EditReminderCommandParser().parse(arguments);
+
+        case SortPriorityCommand.COMMAND_WORD:
+            return new SortPriorityCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
