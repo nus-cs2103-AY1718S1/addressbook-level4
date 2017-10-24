@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import java.util.ArrayList;
+
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.commons.core.index.Index;
@@ -19,7 +21,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
+            ArrayList<Index> index = ParserUtil.parseMultiIndex(args);
             return new DeleteCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(

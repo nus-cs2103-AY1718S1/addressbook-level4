@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -23,9 +24,9 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
-    private final Index targetIndex;
+    private ArrayList <Index> targetIndex = new ArrayList <>();
 
-    public DeleteCommand(Index targetIndex) {
+    public DeleteCommand(ArrayList <Index> targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -34,15 +35,21 @@ public class DeleteCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        for(int x = 0; x< targetIndex.size(); x++) {
+            if (targetIndex.get(x).getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
         }
 
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        ArrayList<ReadOnlyPerson> personToDelete = new ArrayList<>();
+        for(int x = 0; x<targetIndex.size(); x++) {
+            personToDelete.set(x, lastShownList.get(targetIndex.get(x).getZeroBased()));
+        }
+        //ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.deletePerson(personToDelete);
+            for(int x = 0; x<personToDelete.size(); x++)
+            model.deletePerson(personToDelete.get(x));
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
