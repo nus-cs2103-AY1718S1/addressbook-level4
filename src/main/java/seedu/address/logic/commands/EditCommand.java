@@ -48,7 +48,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_DELIVERY_DATE + "DELIVERY DATE] "
+            + "[" + PREFIX_DELIVERY_DATE + "DELIVERY_DATE] "
             + "[" + PREFIX_STATUS + "STATUS]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
