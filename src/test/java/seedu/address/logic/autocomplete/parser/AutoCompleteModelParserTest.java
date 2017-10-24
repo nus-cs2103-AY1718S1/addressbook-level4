@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-//import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -157,6 +157,25 @@ public class AutoCompleteModelParserTest {
         //no possibility matched
         assertEquals(parser.parseForPossibilities("add n/Goatman t/enemy t/to"),
                 Arrays.asList(new String[] {"add n/Goatman t/enemy t/to"}));
+    }
+
+    @Test
+    public void testParseRemark() {
+        parser.setPrefix(PREFIX_REMARK);
+        //multiple possibilities matched
+        assertEquals(parser.parseForPossibilities("remark 2 r/l"),
+                Arrays.asList(new String[] {"remark 2 r/" + BENSON.getRemark().toString(),
+                                            "remark 2 r/" + GEORGE.getRemark().toString(),
+                                            "remark 2 r/l"}));
+
+        //single possibility matched
+        assertEquals(parser.parseForPossibilities("remark 1 r/Fav"),
+                Arrays.asList(new String[] {"remark 1 r/" + CARL.getRemark().toString(),
+                                            "remark 1 r/Fav"}));
+
+        //no possibility matched
+        assertEquals(parser.parseForPossibilities("remark 1 r/Not in list"),
+                Arrays.asList(new String[] {"remark 1 r/Not in list"}));
     }
 
     @After
@@ -321,6 +340,7 @@ public class AutoCompleteModelParserTest {
         public List<String> getAllRemarksInAddressBook() {
             return personsAdded.stream()
                     .map(person -> person.getRemark().toString())
+                    .filter(remark -> !remark.equals(""))
                     .collect(Collectors.toList());
         }
 
