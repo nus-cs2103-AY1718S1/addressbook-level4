@@ -23,33 +23,33 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        if (commandword.equals("add")) {
+        if ("add".equals(commandword)) {
             return new CommandResult(AddCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("clear")) {
+        } else if ("clear".equals(commandword)) {
             return new CommandResult(ClearCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("delete")) {
+        } else if ("delete".equals(commandword)) {
             return new CommandResult(DeleteCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("edit")) {
+        } else if ("edit".equals(commandword)) {
             return new CommandResult(EditCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("exit")) {
+        } else if ("exit".equals(commandword)) {
             return new CommandResult(ExitCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("find")) {
+        } else if ("find".equals(commandword)) {
             return new CommandResult(FindCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("history")) {
+        } else if ("history".equals(commandword)) {
             return new CommandResult(HistoryCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("list")) {
+        } else if ("list".equals(commandword)) {
             return new CommandResult(ListCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("redo")) {
+        } else if ("redo".equals(commandword)) {
             return new CommandResult(RedoCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("select")) {
+        } else if ("select".equals(commandword)) {
             return new CommandResult(SelectCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("sort")) {
+        } else if ("sort".equals(commandword)) {
             return new CommandResult(SortCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("tagadd")) {
+        } else if ("tagadd".equals(commandword)) {
             return new CommandResult(TagAddCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("tagremove")) {
+        } else if ("tagremove".equals(commandword)) {
             return new CommandResult(TagRemoveCommand.MESSAGE_USAGE);
-        } else if (commandword.equals("undo")) {
+        } else if ("undo".equals(commandword)) {
             return new CommandResult(UndoCommand.MESSAGE_USAGE);
         } else {
             EventsCenter.getInstance().post(new ShowHelpRequestEvent());

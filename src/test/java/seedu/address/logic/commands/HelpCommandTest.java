@@ -23,7 +23,7 @@ public class HelpCommandTest {
     }
 
     @Test
-    public void excute_success() {
+    public void excutesuccess() {
         CommandResult result = new HelpCommand("add").execute();
         assertEquals(AddCommand.MESSAGE_USAGE, result.feedbackToUser);
 

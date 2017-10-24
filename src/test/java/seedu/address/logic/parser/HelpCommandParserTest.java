@@ -37,7 +37,7 @@ public class HelpCommandParserTest {
     private HelpCommandParser parser = new HelpCommandParser();
 
     @Test
-    public void parse_success() {
+    public void parsesuccess() {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD, new HelpCommand("add"));
 
         assertParseSuccess(parser, AddCommand.COMMAND_WORD_2, new HelpCommand("add"));
