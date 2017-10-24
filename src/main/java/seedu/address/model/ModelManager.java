@@ -99,6 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
+        sortPersonList();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -116,6 +117,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        sortPersonList();
         indicateAddressBookChanged();
     }
     @Override
@@ -171,6 +173,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void sortEventList() {
         addressBook.sortEventList();
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortPersonList() {
+        addressBook.sortPersonList();
         indicateAddressBookChanged();
     }
 
