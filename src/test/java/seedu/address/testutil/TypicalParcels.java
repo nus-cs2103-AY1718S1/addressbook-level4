@@ -60,7 +60,7 @@ public class TypicalParcels {
     // Manually added
     public static final ReadOnlyParcel HOON = new ParcelBuilder().withTrackingNumber("RR121212124SG")
             .withName("Hoon Meier").withPhone("8482424").withEmail("stefan@example.com")
-            .withAddress("522 Hougang Ave 6 s530522").withDeliveryDate("08-08-2008").withStatus("delivered").build();
+            .withAddress("522 Hougang Ave 6 s530522").withDeliveryDate("10-10-2010").withStatus("delivered").build();
     public static final ReadOnlyParcel IDA = new ParcelBuilder().withTrackingNumber("RR111333888SG")
             .withName("Ida Mueller").withPhone("8482131").withEmail("hans@example.com")
             .withAddress("3 River Valley Rd, S179024").withDeliveryDate("09-09-2009").withStatus("DELIVERED").build();

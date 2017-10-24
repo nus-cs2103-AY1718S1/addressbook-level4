@@ -57,12 +57,15 @@ public class MaintainSortedMechanismSystemTest {
         expectedModel.maintainSorted();
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertTrue(checkSortedLinear(model));
     }
 
-    @Test
-    public void checkSortedLinear() {
-        ObservableList<ReadOnlyParcel> listToCheck = model.getFilteredParcelList();
-        assertTrue(checkSorted(listToCheck));
+    /**
+     * Method to retrieve list of parcels from input model and checks if the list is in sorted order.
+     */
+    private boolean checkSortedLinear(Model inputModel) {
+        ObservableList<ReadOnlyParcel> listToCheck = inputModel.getFilteredParcelList();
+        return checkSorted(listToCheck);
     }
 
     /**
