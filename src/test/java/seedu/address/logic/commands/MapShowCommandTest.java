@@ -96,8 +96,8 @@ public class MapShowCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
-     * is raised with the correct index.
+     * Executes a {@code MapShowCommand} with the given {@code index}, and checks that
+     * {@code BrowserPanelShowLocationEvent} is raised with the correct index.
      */
     private void assertExecutionSuccess(Index index) {
         MapShowCommand mapShowCommand = prepareCommand(index);
@@ -116,7 +116,7 @@ public class MapShowCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * Executes a {@code MapShowCommand} with the given {@code index}, and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(Index index, String expectedMessage) {
@@ -132,7 +132,7 @@ public class MapShowCommandTest {
     }
 
     /**
-     * Returns a {@code SelectCommand} with parameters {@code index}.
+     * Returns a {@code MapShowCommand} with parameters {@code index}.
      */
     private MapShowCommand prepareCommand(Index index) {
         MapShowCommand mapShowCommand = new MapShowCommand(index);
