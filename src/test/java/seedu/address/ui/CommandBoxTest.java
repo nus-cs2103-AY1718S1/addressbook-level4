@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import seedu.address.logic.Logic;
@@ -34,8 +35,9 @@ public class CommandBoxTest extends GuiUnitTest {
         Model model = new ModelManager();
         Logic logic = new LogicManager(model);
         StackPane commandBoxHelper = new StackPane();
+        SplitPane settingsPane = new SplitPane();
 
-        commandBox = new CommandBox(logic, commandBoxHelper);
+        commandBox = new CommandBox(logic, commandBoxHelper, settingsPane);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
