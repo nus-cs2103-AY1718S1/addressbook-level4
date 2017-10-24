@@ -804,10 +804,15 @@ There is no need to save manually.
 * Restore to a AddressBook backup
 * Synchronise with Google Contacts
 
+== Since v1.3
+* Add a person without all his/her parameters
+* Confirmation for restoring a backup
+* Wildcard `*` for searching of contacts
+* Meetings
+
 == Coming in v2.0
 
 * Add tags cumulatively
-* Add a person without all his/her parameters
 * Hide private contact details
 * Access a contact's Facebook profile
 * Get direction to a contact's address
