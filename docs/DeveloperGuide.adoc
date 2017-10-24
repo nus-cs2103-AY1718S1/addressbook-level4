@@ -1,5 +1,6 @@
 = Mobilize - Developer Guide
 :toc:
+:toclevels: 3
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -339,6 +340,8 @@ In addition, dates can be stored after being formatted to a more user-friendly s
 **Pros:** Easy to understand reasoning, for new developers looking to contribute. Easy to format specifically for display (once) and allows empty values when no dates are supplied. +
 **Cons** The general agreement in the software engineering community seems to be that it is better not to use extra wrapping for an instance variable, that might pose problems in unwrapping later on. +
 
+---
+
 **Aspect:** Natural Language Processing +
 **Alternative 1 (current choice):** Use an external library (PrettyTime) to process dates in natural language __after__ they have been tokenized by their respective prefixes
 and categorized according to type. +
@@ -348,6 +351,8 @@ and categorized according to type. +
 **Pros** More flexible command format and consequently, more user-friendly. +
 **Cons** Open to more mistakes in setting starting dates and deadlines. +
 
+---
+
 **Aspect:** Assigning starting dates and deadlines +
 **Alternative 1 (current choice):** Use an abstract parent TaskDates class to hold all validator and formatting methods. +
 **Pros** Prevents code duplication for common methods and prevents abstract class from being instantiated ensuring that
@@ -356,6 +361,8 @@ there are only two types of task dates. +
 **Alternative 2:** Use a single TaskDates class and set instance variables to contain starting and deadline dates. +
 **Pros** Easier to implement. +
 **Cons** Might violate SRP as the class is now concerned with two different kinds of dates. +
+
+---
 
 **Aspect:** Setting prefixes for adding tasks +
 **Alternative 1 (current choice):** Use natural language prefixes i.e. from, to, by +
@@ -393,7 +400,7 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 **Pros:** Keywords do not have to be exactly the same as those in the description of tasks. +
 **Cons:** The search result might not be accurate. For e.g. if the user searches using the keyword 'a' all the tasks'descriptions that contains the character 'a' will appear.
 
-== ListTask mechanism
+=== ListTask mechanism
 
 The ListTask mechanism is facilitated by the `ListTaskCommand` class which inherits from `Command` class. It allows the user to list out all the current tasks.
 
@@ -401,7 +408,7 @@ Suppose the user has just executed the `ListTaskCommand` using `listtask`.
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `ListTaskCommand` feature is being evoked and calls the `execute()` in the `ListTaskCommand` class which update the current list to show all tasks creates and return a `CommandResult` object.
 
-== SelectTask mechanism
+=== SelectTask mechanism
 
 The SelectTask mechanism is facilitated by the `SelectTaskCommand` class which inherits from `Command` class. It allows the user to select the task at specific index.
 
