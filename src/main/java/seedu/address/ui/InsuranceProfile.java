@@ -58,7 +58,9 @@ public class InsuranceProfile extends UiPart<Region> {
 
         owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(person.getLifeInsurance().getOwner())));
         insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(person.getLifeInsurance().getInsured())));
-        beneficiary.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(person.getLifeInsurance().getBeneficiary())));
+        beneficiary.setOnMouseClicked(e ->
+                raise(new PersonNameClickedEvent(person.getLifeInsurance().getBeneficiary())));
+
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
