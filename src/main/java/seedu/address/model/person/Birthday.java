@@ -28,8 +28,7 @@ public class Birthday {
 
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        String trimmedBirthday = birthday.trim();
-        if (!isValidBirthday(trimmedBirthday)) {
+        if (!isValidBirthday(birthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
         this.value = birthday;
@@ -44,26 +43,6 @@ public class Birthday {
         }
         return false;
     }
-
-    /**
-     * Calculates the age of a person given a valid birthday.
-     */
-    public static String ageCalculator(String birthday) {
-
-        if (birthday == "") {
-            return "";
-        }
-        String result = birthday.substring(6, 10);
-        int birthYear = Integer.parseInt(result);
-
-
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-
-        String result3 = Integer.toString(year - birthYear);
-        return "(" + result3 + "years old" + ")";
-
-    }
-
 
     @Override
     public String toString() {
