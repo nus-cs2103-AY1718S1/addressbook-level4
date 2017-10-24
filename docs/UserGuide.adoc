@@ -167,7 +167,23 @@ Format: `export INDEX`
 Examples:
 
 * `export 1` in the default setting +
-Returns `add n/Alex Yeoh p/87438807 e/alexyeoh@example.com a/Blk 30 Geylang Street 29, #06-40 r/ t/[friends]`
+Returns `add n/Alex Yeoh p/87438807 e/alexyeoh@example.com a/Blk 30 Geylang Street 29, #06-40 r/ t/friends`
+
+=== Exporting a task to a sting of addTask command: `exportTask`
+
+Export the details of the task by the index number +
+Format: `export INDEX`
+
+****
+* Exports the task at the specified `INDEX`, selects the task.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `export 1` in the default setting +
+Returns `addTask n/picnic d/have fun at Botanic Garden s/1/1/2099 12:00pm e/1/1/2099 15:00pm t/friends `
 
 === Deleting a person : `delete`
 
@@ -360,11 +376,17 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *AddTask* `add n/NAME d/Description s/START TIME f/END TIME [t/TAG]...` +
+e.g. `addTask n/picnic d/have fun at Botanic Garden s/1/1/2099 12:00pm f/1/1/2099 15:00pm t/friends`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Export* : `export INDEX` +
+e.g. `export 3`
+* *Export Task* : `exportTask INDEX` +
+e.g. `exportTask 3`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
