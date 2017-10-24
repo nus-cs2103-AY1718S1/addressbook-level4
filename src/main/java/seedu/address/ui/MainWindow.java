@@ -42,12 +42,13 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private InsuranceProfile insuranceProfile;
+    private ProfilePanel profilePanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane insurancePlaceholder;
+    private StackPane rightPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -131,7 +132,9 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         insuranceProfile = new InsuranceProfile();
-        insurancePlaceholder.getChildren().add(insuranceProfile.getRoot());
+        rightPanelPlaceholder.getChildren().add(insuranceProfile.getRoot());
+
+        profilePanel = new ProfilePanel();
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -225,5 +228,8 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event){
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        rightPanelPlaceholder.getChildren().clear();
+        rightPanelPlaceholder.getChildren().add(profilePanel.getRoot());
     }
 }
