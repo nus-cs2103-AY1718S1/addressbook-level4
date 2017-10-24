@@ -49,12 +49,13 @@ public class EditButton extends UiPart<Region> {
     @FXML
     private void handleEditButtonPressed() throws CommandException, ParseException {
         StringBuilder command = new StringBuilder();
-        command.append("edit " + getSelectedIndex() + " n/" +
-                nameTextField.getNameTextField() + " p/" + phoneTextField.getPhoneTextField() + " e/" + emailTextField.getEmailTextField() +
-        " a/" + addressTextFieldTextField.getAddressTextField());
+        command.append("edit " + getSelectedIndex() + " n/"
+                + nameTextField.getNameTextField() + " p/" + phoneTextField.getPhoneTextField() + " e/"
+                + emailTextField.getEmailTextField()
+                + " a/" + addressTextFieldTextField.getAddressTextField());
         String tagTextArea = tagTextField.getTagTextArea();
         String[] tagSplit = tagTextArea.split(",");
-        for( String s : tagSplit) {
+        for ( String s : tagSplit) {
             command.append(" t/" + s.trim());
         }
         CommandResult commandResult = logic.execute(command.toString());
