@@ -65,7 +65,7 @@ public class AddTagCommandTest {
     }
 
     @Test
-    public void execute_validTagValidIndexes_success() throws Exception {
+    public void execute_validTagMultipleIndexes_success() throws Exception {
         Tag tagToAdd = new Tag("enemy");
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
@@ -85,7 +85,7 @@ public class AddTagCommandTest {
     }
 
     @Test
-    public void execute_validTagValidIndex_success() throws Exception {
+    public void execute_multipleTagsValidIndex_success() throws Exception {
         Tag tagToAdd1 = new Tag("enemy");
         Tag tagToAdd2 = new Tag("brother");
         Set<Index> indexSet = new HashSet<>();
