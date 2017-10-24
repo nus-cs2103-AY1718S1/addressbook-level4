@@ -10,6 +10,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -53,6 +55,15 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> groupName} into an {@code Optional<GroupName>} if {@code groupName} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<GroupName> parseGroupName(Optional<String> groupName) throws IllegalValueException {
+        requireNonNull(groupName);
+        return groupName.isPresent() ? Optional.of(new GroupName(groupName.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -90,4 +101,18 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+
+    /**
+     * Parses {@code Collection<String> groups} into a {@code Set<Group>}.
+     */
+    public static Set<Group> parseGroups(Collection<String> groups) throws IllegalValueException {
+        requireNonNull(groups);
+        final Set<Group> groupSet = new HashSet<>();
+        for (String groupName : groups) {
+            groupSet.add(new Group(groupName));
+        }
+        return groupSet;
+    }
+
 }

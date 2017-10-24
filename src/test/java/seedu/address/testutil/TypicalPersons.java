@@ -13,6 +13,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
@@ -78,4 +79,59 @@ public class TypicalPersons {
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
+
+    public static AddressBook getEmptyAddressBook() {
+        AddressBook ab = new AddressBook();
+        return ab;
+    }
+
+    public static AddressBook getSortedAddressBook(String type, boolean isReverseOrder) {
+        AddressBook ab = new AddressBook();
+        List<ReadOnlyPerson> personList;
+
+        switch(type) {
+        case "name":
+            personList = getTypicalPersons();
+            break;
+        case "phone":
+            personList = getTypicalPersonsSortedByPhone();
+            break;
+        case "email":
+            personList = getTypicalPersonsSortedByEmail();
+            break;
+        case "address":
+            personList = getTypicalPersonsSortedByAddress();
+            break;
+        default:
+            personList = getTypicalPersons();
+        }
+
+        if (isReverseOrder) {
+            Collections.reverse(personList);
+        }
+
+        for (ReadOnlyPerson person : personList) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+
+        return ab;
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersonsSortedByPhone() {
+        return new ArrayList<>(Arrays.asList(ALICE, DANIEL, ELLE, FIONA, GEORGE, CARL, BENSON));
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersonsSortedByEmail() {
+        return new ArrayList<>(Arrays.asList(ALICE, GEORGE, DANIEL, CARL, BENSON, FIONA, ELLE));
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersonsSortedByAddress() {
+        return new ArrayList<>(Arrays.asList(DANIEL, ALICE, BENSON, GEORGE, FIONA, ELLE, CARL));
+    }
+
+
 }

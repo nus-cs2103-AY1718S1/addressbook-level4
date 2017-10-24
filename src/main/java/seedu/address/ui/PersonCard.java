@@ -1,12 +1,17 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -14,6 +19,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+
+    private static HashMap<String, String> tagColourSet = new HashMap<String, String>();
+    private static Random random = new Random();
+
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -32,18 +41,15 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label phone;
-    @FXML
-    private Label address;
-    @FXML
-    private Label email;
-    @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView favicon;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        favicon.setVisible(false);
         initTags(person);
         bindListeners(person);
     }
@@ -54,18 +60,35 @@ public class PersonCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
+        favicon.visibleProperty().bind(Bindings.createBooleanBinding(() -> person.getFavourite().value));
+
     }
 
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    private static String setTagColour(String tagName) {
+        String[] colours = {"#2ecc71", "#3498db", "#9b59b6", "#f1c40f", "#E67E22", "#27AE60", "#FFC153"};
+        if (!tagColourSet.containsKey(tagName)) {
+            tagColourSet.put(tagName, colours[random.nextInt(colours.length)]);
+        }
+
+        return tagColourSet.get(tagName);
     }
+
+    /**
+     * Initialise every contact's tag with its randomly assigned colours
+     */
+    private void initTags(ReadOnlyPerson person) {
+        person.getTags().forEach(
+            tag -> {
+                Label tagLabel = new Label(tag.tagName);
+                tagLabel.setStyle("-fx-background-color: " + setTagColour(tag.tagName));
+                tags.getChildren().add(tagLabel);
+            });
+    }
+
 
     @Override
     public boolean equals(Object other) {

@@ -162,6 +162,7 @@ public abstract class AddressBookSystemTest {
         getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
+        statusBarFooterHandle.rememberTotalPersons();
         getPersonListPanel().rememberSelectedPersonCard();
     }
 
@@ -226,6 +227,7 @@ public abstract class AddressBookSystemTest {
         StatusBarFooterHandle handle = getStatusBarFooter();
         assertFalse(handle.isSaveLocationChanged());
         assertFalse(handle.isSyncStatusChanged());
+        assertFalse(handle.isTotalPersonsChanged());
     }
 
     /**

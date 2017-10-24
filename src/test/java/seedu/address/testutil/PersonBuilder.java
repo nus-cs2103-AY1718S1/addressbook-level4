@@ -32,7 +32,8 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -65,6 +66,18 @@ public class PersonBuilder {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withGroups(String ... groups) {
+        try {
+            this.person.setGroups(SampleDataUtil.getGroupSet(groups));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("groups are expected to be unique.");
         }
         return this;
     }
