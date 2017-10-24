@@ -21,9 +21,9 @@ public class MusicCommand extends Command {
             + "GENRE (must be either pop, dance or classic) \n"
             + "Example: " + COMMAND_WORD + " play classic ";
 
-    private static final String MESSAGE_MUSICSTOP = "Music Stopped";
+    private static final String MESSAGE_MUSIC_STOP = "Music Stopped";
 
-    private static String MESSAGE_MUSICPAUSE = "Music Paused";
+    private static String MESSAGE_MUSIC_PAUSE = "Music Paused";
 
     private static String MESSAGE_SUCCESS = "Music Playing";
 
@@ -87,13 +87,13 @@ public class MusicCommand extends Command {
             if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                 mediaPlayer.stop();
             }
-            return new CommandResult(MESSAGE_MUSICSTOP);
+            return new CommandResult(MESSAGE_MUSIC_STOP);
         case "pause":
             if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                 mediaPlayer.pause();
             }
-            MESSAGE_MUSICPAUSE = genre.toUpperCase() + " Music Paused";
-            return new CommandResult(MESSAGE_MUSICPAUSE);
+            MESSAGE_MUSIC_PAUSE = genre.toUpperCase() + " Music Paused";
+            return new CommandResult(MESSAGE_MUSIC_PAUSE);
         default:
             return new CommandResult(MESSAGE_USAGE);
         }

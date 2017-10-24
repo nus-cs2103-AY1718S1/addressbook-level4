@@ -91,7 +91,6 @@ allprojects {
 
     shadowJar {
         archiveName = "addressbook.jar"
-
         destinationDir = file("${buildDir}/jar/")
     }
 }
