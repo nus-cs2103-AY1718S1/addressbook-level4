@@ -39,7 +39,7 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1 S123123";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3 S456456";
     public static final String VALID_DELIVERY_DATE_AMY = "01-01-2001";
-    public static final String VALID_DELIVERYDATE_BOB = "02-02-2002";
+    public static final String VALID_DELIVERY_DATE_BOB = "02-02-2002";
     public static final String VALID_STATUS_AMY = "deliVerIng"; // for case insenstivity
     public static final String VALID_STATUS_BOB = "Delivered"; // case insensitivity of Status
     public static final String VALID_TAG_HUSBAND = "husband";
@@ -56,7 +56,7 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String DELIVERY_DATE_DESC_AMY = " " + PREFIX_DELIVERYDATE + VALID_DELIVERY_DATE_AMY;
-    public static final String DELIVERY_DATE_DESC_BOB = " " + PREFIX_DELIVERYDATE + VALID_DELIVERYDATE_BOB;
+    public static final String DELIVERY_DATE_DESC_BOB = " " + PREFIX_DELIVERYDATE + VALID_DELIVERY_DATE_BOB;
     public static final String STATUS_DESC_AMY = " " + PREFIX_STATUS + VALID_STATUS_AMY;
     public static final String STATUS_DESC_BOB = " " + PREFIX_STATUS + VALID_STATUS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
@@ -83,7 +83,7 @@ public class CommandTestUtil {
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditParcelDescriptorBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
                 .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERYDATE_BOB).withStatus(VALID_STATUS_BOB)
+                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 

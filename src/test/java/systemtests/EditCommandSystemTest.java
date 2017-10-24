@@ -27,7 +27,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -82,7 +82,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + DELIVERY_DATE_DESC_BOB + STATUS_DESC_BOB + TAG_DESC_HUSBAND + " ";
         Parcel editedParcel = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB).withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withDeliveryDate(VALID_DELIVERYDATE_BOB).withStatus(VALID_STATUS_BOB)
+                .withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedParcel);
 

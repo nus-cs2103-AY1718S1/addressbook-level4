@@ -26,7 +26,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -220,7 +220,7 @@ public class EditCommandParserTest {
 
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
-                .withDeliveryDate(VALID_DELIVERYDATE_BOB).withStatus(VALID_STATUS_BOB).build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_BOB).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
