@@ -42,7 +42,7 @@ public class SampleDataUtil {
                         getTagSet("family")),
                 new Parcel(new TrackingNumber("RR987654321SG"), new Name("Irfan Ibrahim"), new Phone("92492021"),
                         new Email("irfan@example.com"), new Address("Blk 47 Tampines Street 20, #17-35 s535070"),
-                        new DeliveryDate("05-05-2005"), Status.getInstance("PENDING"),
+                        new DeliveryDate("05-05-2005"), Status.getInstance("OVERDUE"),
                         getTagSet("classmates")),
                 new Parcel(new TrackingNumber("RR123789456SG"), new Name("Roy Balakrishnan"), new Phone("92624417"),
                         new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31 S389825"),
