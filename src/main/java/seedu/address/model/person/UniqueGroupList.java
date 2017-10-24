@@ -3,11 +3,10 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicateGroupException;
 
 /**
@@ -43,6 +42,11 @@ public class UniqueGroupList implements Iterable<Group> {
     @Override
     public Iterator<Group> iterator() {
         return groups.iterator();
+    }
+
+    public ObservableList<Group> asObservableList() {
+        assert CollectionUtil.elementsAreUnique(groups);
+        return FXCollections.unmodifiableObservableList(groups);
     }
 
     @Override

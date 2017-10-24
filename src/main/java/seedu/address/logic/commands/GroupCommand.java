@@ -35,9 +35,10 @@ public class GroupCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         String groupName = args.get(0);
+        Group group = new Group (groupName);
         try {
-            if (!model.groupExists(new Group(groupName))) {
-                model.addGroup(new Group(groupName));
+            if (!model.groupExists (group)) {
+                model.addGroup (group);
             }
 
             // Iterate through our list of people, if we find a name in our group list then edit the person to be in the
@@ -49,8 +50,9 @@ public class GroupCommand extends UndoableCommand {
                         ReadOnlyPerson p = it.next();
                         if (p.getName().fullName.toLowerCase().contains(args.get(i).toLowerCase())) {
                             ReadOnlyPerson newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
-                                    p.getTags(), p.getRemark(), new Group(groupName));
+                                    p.getTags(), p.getRemark(), group);
                             model.updatePerson(p, newPerson);
+                            break;
                         }
                     }
                 }
