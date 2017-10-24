@@ -108,7 +108,7 @@ public class AddressBookParser {
             return new RemarkCommandParser().parse(arguments);
 
         case LinkCommand.COMMAND_WORD:
-            return new LinkCommand();
+            return new LinkCommandParser().parse(arguments);
 
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:
