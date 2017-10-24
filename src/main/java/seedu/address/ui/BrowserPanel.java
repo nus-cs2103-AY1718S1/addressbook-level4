@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.net.URL;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,7 +14,9 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.social.SocialInfo;
 
 /**
  * The Browser Panel of the App.
@@ -68,6 +71,15 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        ReadOnlyPerson person = event.getNewSelection().person;
+        Person p = new Person(person);
+        Iterator<SocialInfo> iterator = p.getSocialInfos().iterator();
+        if (iterator.hasNext()) {
+            SocialInfo social = iterator.next();
+            String url = social.getSocialUrl();
+            loadPage(url);
+        } else {
+            loadPersonPage(event.getNewSelection().person);
+        }
     }
 }
