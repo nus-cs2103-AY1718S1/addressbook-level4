@@ -9,7 +9,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.ui.event.EventCard;
 
 /**
- * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.
+ * Provides a handle for {@code EventListPanel} containing the list of {@code EventCard}.
  */
 public class EventListPanelHandle extends NodeHandle<ListView<EventCard>> {
     public static final String EVENT_LIST_VIEW_ID = "#eventListView";

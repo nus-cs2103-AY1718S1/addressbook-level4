@@ -14,6 +14,7 @@ import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.event.EventListPanelHandle;
 import guitests.guihandles.person.PersonListPanelHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
@@ -68,6 +69,10 @@ public abstract class AddressBookGuiTest {
 
     protected CommandBoxHandle getCommandBox() {
         return mainWindowHandle.getCommandBox();
+    }
+
+    public EventListPanelHandle getEventListPanel() {
+        return mainWindowHandle.getEventListPanel();
     }
 
     protected PersonListPanelHandle getPersonListPanel() {

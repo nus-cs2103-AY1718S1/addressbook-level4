@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 
 /**
- * Provides a handle to a person card in the person list panel.
+ * Provides a handle to a person card in the {@code PersonListPanel}.
  */
 public class PersonCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";

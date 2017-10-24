@@ -56,7 +56,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     }
 
     /**
-     * Navigates the listview to display and select the person.
+     * Navigates the list view to display and select the person.
      */
     public void navigateToCard(ReadOnlyPerson person) {
         List<PersonCard> cards = getRootNode().getItems();
