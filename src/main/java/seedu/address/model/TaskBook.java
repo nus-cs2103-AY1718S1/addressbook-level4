@@ -98,7 +98,8 @@ public class TaskBook implements ReadOnlyTaskBook {
      * @throws TaskNotFoundException if the task could not be found in the list..
      */
     public void markTask(ReadOnlyTask p) throws TaskNotFoundException {
-        tasks.setComplete(p);
+        Task newTask = new Task(p);
+        tasks.setComplete(newTask);
     }
 
     /**

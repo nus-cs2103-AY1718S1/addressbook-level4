@@ -50,6 +50,15 @@ public class Task implements ReadOnlyTask {
     }
 
     /**
+     * Constructor with complete
+     * @param state, the marked completed state of the task
+     */
+    public Task(Boolean state){
+        this();
+        this.complete = new SimpleObjectProperty<>(true);
+    }
+
+    /**
      * Constructor with a name and description only to be passed in (first type)
      * @param name, the name of this task
      * @param description, the description of this task
@@ -99,7 +108,7 @@ public class Task implements ReadOnlyTask {
      * @param endDateTime, the end date and time of this task
      * @param tags, the tag set
      */
-    public Task (String name, String description, String startDateTime, String endDateTime, Set<Tag> tags) {
+    public Task (String name, String description, String startDateTime, String endDateTime, Set<Tag> tags, Boolean complete) {
         this(tags);
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
