@@ -121,7 +121,7 @@ public class AddressBookTest {
             UniquePersonList blacklistedPersons = new UniquePersonList();
             for (ReadOnlyPerson readOnlyPerson : persons) {
                 Person person = new Person(readOnlyPerson);
-                if (person.getIsBlacklisted()) {
+                if (person.isBlacklisted()) {
                     try {
                         blacklistedPersons.add(person);
                     } catch (DuplicatePersonException e) {
@@ -136,7 +136,7 @@ public class AddressBookTest {
             UniquePersonList whitelistedPersons = new UniquePersonList();
             for (ReadOnlyPerson readOnlyPerson : persons) {
                 Person person = new Person(readOnlyPerson);
-                if (person.getIsWhitelisted()) {
+                if (person.isWhitelisted()) {
                     try {
                         whitelistedPersons.add(person);
                     } catch (DuplicatePersonException e) {

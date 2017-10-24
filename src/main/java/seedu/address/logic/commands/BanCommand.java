@@ -6,7 +6,6 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 
 
@@ -42,14 +41,10 @@ public class BanCommand extends UndoableCommand {
 
         ReadOnlyPerson personToBan = lastShownList.get(targetIndex.getZeroBased());
 
-        try {
-            if (personToBan.getIsBlacklisted()) {
-                messagetoDisplay = MESSAGE_BAN_PERSON_FAILURE;
-            } else {
-                model.addBlacklistedPerson(personToBan);
-            }
-        } catch (DuplicatePersonException e) {
-            assert false : "The target person is already in blacklist";
+        if (personToBan.isBlacklisted()) {
+            messagetoDisplay = MESSAGE_BAN_PERSON_FAILURE;
+        } else {
+            model.addBlacklistedPerson(personToBan);
         }
 
         return new CommandResult(String.format(messagetoDisplay, personToBan));

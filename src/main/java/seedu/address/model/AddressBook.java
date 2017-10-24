@@ -81,17 +81,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns {@code UniquePersonList} of all blacklisted persons
-     * in the existing data of this {@code AddressBook}.
+     * Searches for blacklisted persons in {@code persons}.
+     * @return {@code UniquePersonList} of all blacklisted person in {@code persons}.
      */
     public UniquePersonList getBlacklistedPersons() {
         UniquePersonList blacklistedPersons = new UniquePersonList();
         for (Person person : persons.getInternalList()) {
-            if (person.getIsBlacklisted()) {
+            if (person.isBlacklisted()) {
                 try {
                     blacklistedPersons.add(person);
                 } catch (DuplicatePersonException e) {
-                    assert false : "This is not possible as prior checks have been done";
+                    assert false : "This is not possible as prior checks have"
+                            + " been done to ensure AddressBook does not have duplicate persons";
                 }
             }
         }
@@ -99,17 +100,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Returns {@code UniquePersonList} of all whitelisted persons
-     * in the existing data of this {@code AddressBook}.
+     * Searches for whitelisted persons in {@code persons}.
+     * @return {@code UniquePersonList} of all whitelisted persons in {@code persons}.
      */
     public UniquePersonList getWhitelistedPersons() {
         UniquePersonList whitelistedPersons = new UniquePersonList();
         for (Person person : persons.getInternalList()) {
-            if (person.getIsWhitelisted()) {
+            if (person.isWhitelisted()) {
                 try {
                     whitelistedPersons.add(person);
                 } catch (DuplicatePersonException e) {
-                    assert false : "This is not possible as prior checks have been done";
+                    assert false : "This is not possible as prior checks have"
+                            + " been done to ensure AddressBook does not have duplicate persons";
                 }
             }
         }
@@ -136,11 +138,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the blacklist in the address book.
-     *
-     * @throws DuplicatePersonException if an equivalent person already exists.
-     * ReadOnly {@code newBlacklistedPerson} is returned
+     * @return ReadOnly {@code newBlacklistedPerson}.
      */
-    public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
+    public ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson p) {
         int index;
         index = persons.getIndexOf(p);
 
@@ -152,7 +152,12 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "This is not possible as prior checks have been done";
         }
         newBlacklistedPerson.setIsWhitelisted(false);
-        persons.add(index, newBlacklistedPerson);
+        try {
+            persons.add(index, newBlacklistedPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "This is not possible as it not possible to"
+                    + " have duplicates in persons before persons.remove(key) statement was executed.";
+        }
 
         return persons.getReadOnlyPerson(index);
 
@@ -160,10 +165,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the whitelist in the address book.
-     * @throws DuplicatePersonException if an equivalent person already exists.
-     * ReadOnly {@code newWhitelistedPerson} is returned
+     * @return ReadOnly {@code newWhitelistedPerson}.
      */
-    public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) throws DuplicatePersonException {
+    public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) {
         int index;
         index = persons.getIndexOf(p);
 
@@ -174,7 +178,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (PersonNotFoundException e) {
             assert false : "This is not possible as prior checks have been done";
         }
-        persons.add(index, newWhitelistedPerson);
+        try {
+            persons.add(index, newWhitelistedPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "This is not possible as it not possible to"
+                    + " have duplicates in persons before persons.remove(key) statement was executed.";
+        }
         return persons.getReadOnlyPerson(index);
     }
 
@@ -240,8 +249,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Updates {@code key} to exclude {@code key} from the blacklist in this {@code AddressBook}.
+     * @return ReadOnly {@code newUnBlacklistedPerson}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     * ReadOnly {@code newUnBlacklistedPerson} is returned
      */
     public ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
         int index;
@@ -259,7 +268,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             persons.add(index, newUnBlacklistedPerson);
         } catch (DuplicatePersonException e) {
-            assert false : "This is not possible as prior checks have been done";
+            assert false : "This is not possible as prior checks have"
+                    + " been done to ensure AddressBook does not have duplicate persons";
         }
 
         return persons.getReadOnlyPerson(index);
@@ -267,8 +277,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Updates {@code key} to exclude {@code key} from the whitelist in this {@code AddressBook}.
+     * @return ReadOnly {@code newWhitelistedPerson}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     * ReadOnly {@code newWhitelistedPerson} is returned
      */
     public ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson key) throws PersonNotFoundException {
         int index;
@@ -280,7 +290,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             persons.add(index, newWhitelistedPerson);
         } catch (DuplicatePersonException e) {
-            assert false : "This is not possible as prior checks have been done";
+            assert false : "This is not possible as prior checks have"
+                    + " been done to ensure AddressBook does not have duplicate persons";
         }
         return persons.getReadOnlyPerson(index);
     }
@@ -343,9 +354,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @param target person in the address book who paid back some money
      * @param amount amount that the person paid back. Must be either a positive integer or positive number with
      *               two decimal places
+     * @return ReadOnly {@editPerson}.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
-     * ReadOnly {@editPerson} is returned
      */
     public ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException,
             IllegalValueException {
@@ -376,9 +387,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Resets person's debt field to zero, in the masterlist of the addressbook.
-     *
-     *  @throws PersonNotFoundException if person does not exist in list.
-     *  ReadOnly {@code existingPerson} is returned
+     * @return ReadOnly {@code existingPerson}.
+     * @throws PersonNotFoundException if person does not exist in list.
      */
     public ReadOnlyPerson resetPersonDebt(ReadOnlyPerson p) throws PersonNotFoundException {
         int index;
@@ -404,9 +414,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Resets person's {@code dateRepaid} field to current date, in the masterlist of the addressbook.
-     *
-     *  @throws PersonNotFoundException if person does not exist in list.
-     *  ReadOnly {@code existingPerson} is returned
+     * @return ReadOnly {@code existingPerson}.
+     * @throws PersonNotFoundException if person does not exist in list.
      */
     public ReadOnlyPerson setDateRepaid(ReadOnlyPerson p) throws PersonNotFoundException {
         int index;

@@ -6,11 +6,10 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
- * 1. Adds a person identified using it's last displayed index into the whitelist.
- * 2. Resets the person's debt to zero.
+ * Adds a person identified using it's last displayed index into the whitelist.
+ * Resets person's debt to zero and sets the date repaid field.
  */
 public class RepaidCommand extends UndoableCommand {
 
@@ -21,8 +20,8 @@ public class RepaidCommand extends UndoableCommand {
             + ": Adds person identified by the index number into the whitelist and concurrently clear his debt.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
-    public static final String MESSAGE_WHITELIST_PERSON_SUCCESS = "%1$s has now repaid his/her debt";
-    public static final String MESSAGE_WHITELIST_PERSON_FAILURE = "Person has already repaid debt!";
+    public static final String MESSAGE_REPAID_PERSON_SUCCESS = "%1$s has now repaid his/her debt";
+    public static final String MESSAGE_REPAID_PERSON_FAILURE = "Person has already repaid debt!";
 
     private final Index targetIndex;
 
@@ -33,7 +32,7 @@ public class RepaidCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        String messagetoDisplay = MESSAGE_WHITELIST_PERSON_SUCCESS;
+        String messagetoDisplay = MESSAGE_REPAID_PERSON_SUCCESS;
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -42,14 +41,10 @@ public class RepaidCommand extends UndoableCommand {
 
         ReadOnlyPerson personToWhitelist = lastShownList.get(targetIndex.getZeroBased());
 
-        try {
-            if (personToWhitelist.getDebt().toNumber() == 0) {
-                messagetoDisplay = MESSAGE_WHITELIST_PERSON_FAILURE;
-            } else {
-                model.addWhitelistedPerson(personToWhitelist);
-            }
-        } catch (DuplicatePersonException e) {
-            assert false : "The target person is already in whitelist";
+        if (personToWhitelist.getDebt().toNumber() == 0) {
+            messagetoDisplay = MESSAGE_REPAID_PERSON_FAILURE;
+        } else {
+            model.addWhitelistedPerson(personToWhitelist);
         }
 
         return new CommandResult(String.format(messagetoDisplay, personToWhitelist.getName()));

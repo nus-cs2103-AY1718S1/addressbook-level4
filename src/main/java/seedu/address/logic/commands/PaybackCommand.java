@@ -48,7 +48,7 @@ public class PaybackCommand extends UndoableCommand {
 
         try {
             personThatPaidBack = model.deductDebtFromPerson(personThatPaidBack, amount);
-            if (personThatPaidBack.getDebt().toNumber() == 0 && !personThatPaidBack.getIsBlacklisted()) {
+            if (personThatPaidBack.getDebt().toNumber() == 0 && !personThatPaidBack.isBlacklisted()) {
                 model.addWhitelistedPerson(personThatPaidBack);
             }
         } catch (PersonNotFoundException pnfe) {

@@ -65,8 +65,8 @@ public class Person implements ReadOnlyPerson {
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
-        this.isBlacklisted = source.getIsBlacklisted();
-        this.isWhitelisted = source.getIsWhitelisted();
+        this.isBlacklisted = source.isBlacklisted();
+        this.isWhitelisted = source.isWhitelisted();
     }
 
     /**
@@ -258,7 +258,7 @@ public class Person implements ReadOnlyPerson {
      * Returns boolean status of a person's blacklist-status.
      */
     @Override
-    public boolean getIsBlacklisted() {
+    public boolean isBlacklisted() {
         return isBlacklisted;
     }
 
@@ -274,7 +274,7 @@ public class Person implements ReadOnlyPerson {
      * Returns boolean status of a person's whitelist-status.
      */
     @Override
-    public boolean getIsWhitelisted() {
+    public boolean isWhitelisted() {
         return isWhitelisted;
     }
 

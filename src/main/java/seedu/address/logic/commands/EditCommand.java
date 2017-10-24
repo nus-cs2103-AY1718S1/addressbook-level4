@@ -108,12 +108,12 @@ public class EditCommand extends UndoableCommand {
     /**
      * Does the appropriate list status checks on {@code personToEdit}
      * and changes the list status of {@code editedPerson} accordingly.
-     * Returns {@code editedPerson}.
+     * @Returns {@code editedPerson}.
      */
     private Person listSyncChecks(ReadOnlyPerson personToEdit, Person editedPerson) {
-        if (personToEdit.getIsWhitelisted() && editedPerson.getDebt().toNumber() > 0) {
+        if (personToEdit.isWhitelisted() && editedPerson.getDebt().toNumber() > 0) {
             editedPerson.setIsWhitelisted(false);
-        } else if (!personToEdit.getIsWhitelisted() && !personToEdit.getIsBlacklisted()
+        } else if (!personToEdit.isWhitelisted() && !personToEdit.isBlacklisted()
                 && editedPerson.getDebt().toNumber() == 0) {
             editedPerson.setIsWhitelisted(true);
             editedPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
@@ -149,8 +149,8 @@ public class EditCommand extends UndoableCommand {
 
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
         personCreated.setDateRepaid(personToEdit.getDateRepaid());
-        personCreated.setIsBlacklisted(personToEdit.getIsBlacklisted());
-        personCreated.setIsWhitelisted(personToEdit.getIsWhitelisted());
+        personCreated.setIsBlacklisted(personToEdit.isBlacklisted());
+        personCreated.setIsWhitelisted(personToEdit.isWhitelisted());
         return personCreated;
     }
 

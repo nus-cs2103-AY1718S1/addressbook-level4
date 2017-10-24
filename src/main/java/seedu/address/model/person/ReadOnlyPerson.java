@@ -41,7 +41,7 @@ public interface ReadOnlyPerson {
     /**
      * Returns true if person is blacklisted.
      */
-    boolean getIsBlacklisted();
+    boolean isBlacklisted();
 
     /**
      * Accepts {@code boolean} as parameter.
@@ -53,11 +53,10 @@ public interface ReadOnlyPerson {
     /**
      * Returns true if person is whitelisted.
      */
-    boolean getIsWhitelisted();
+    boolean isWhitelisted();
 
     /**
-     * Accepts {@code boolean} as parameter.
-     *
+     * {@param} is {@code boolean} value.
      * Sets {@code boolean} variable as the value of {@param isWhitelisted}
      */
     void setIsWhitelisted(boolean isWhitelisted);
@@ -79,8 +78,8 @@ public interface ReadOnlyPerson {
                 && other.getAddress().equals(this.getAddress()))
                 && other.getPostalCode().equals(this.getPostalCode())
                 && other.getCluster().equals(this.getCluster())
-                && (other.getIsBlacklisted() == (this.getIsBlacklisted()))
-                && (other.getIsWhitelisted() == (this.getIsWhitelisted()))
+                && (other.isBlacklisted() == (this.isBlacklisted()))
+                && (other.isWhitelisted() == (this.isWhitelisted()))
                 && other.getDebt().equals(this.getDebt())
                 && other.getInterest().equals(this.getInterest())
                 && other.getDateBorrow().equals(this.getDateBorrow())

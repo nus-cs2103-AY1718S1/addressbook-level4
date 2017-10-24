@@ -127,24 +127,16 @@ public class TypicalPersons {
             try {
                 ab.addPerson(person);
             } catch (DuplicatePersonException e) {
-                assert false : "not possible";
+                assert false : "It is not possible to have a duplicate person added into the addressbook";
             }
         }
 
         for (ReadOnlyPerson person : getTypicalBlacklistedPersons()) {
-            try {
-                ab.addBlacklistedPerson(person);
-            } catch (DuplicatePersonException e) {
-                assert false : "not possible";
-            }
+            ab.addBlacklistedPerson(person);
         }
 
         for (ReadOnlyPerson person : getTypicalWhitelistedPersons()) {
-            try {
-                ab.addWhitelistedPerson(person);
-            } catch (DuplicatePersonException e) {
-                assert false : "not possible";
-            }
+            ab.addWhitelistedPerson(person);
         }
         return ab;
     }

@@ -44,7 +44,7 @@ public class BorrowCommand extends UndoableCommand {
         ReadOnlyPerson personThatBorrowed = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            if (personThatBorrowed.getIsWhitelisted()) {
+            if (personThatBorrowed.isWhitelisted()) {
                 personThatBorrowed = model.removeWhitelistedPerson(personThatBorrowed);
             }
             model.addDebtToPerson(personThatBorrowed, amount);
