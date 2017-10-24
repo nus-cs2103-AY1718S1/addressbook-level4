@@ -17,8 +17,8 @@ public class StatusTest {
 
     @Test
     public void testToStringTest() {
-        Status delivered = Status.DELIVERED;
-        assertEquals("DELIVERED", delivered.toString());
+        Status delivered = Status.COMPLETED;
+        assertEquals("COMPLETED", delivered.toString());
 
         Status delivering = Status.DELIVERING;
         assertEquals("DELIVERING", delivering.toString());
@@ -30,21 +30,21 @@ public class StatusTest {
     @Test
     public void getStatusInstanceTest() throws IllegalValueException {
         // all uppercase
-        Status pending = Status.getStatusInstance("PENDING");
+        Status pending = Status.getInstance("PENDING");
         assertEquals(Status.PENDING, pending);
 
         // all lowercase
-        Status delivering = Status.getStatusInstance("delivering");
+        Status delivering = Status.getInstance("delivering");
         assertEquals(Status.DELIVERING, delivering);
 
         // mix of uppercase and lowercase characters
-        Status delivered = Status.getStatusInstance("dEliVERed");
-        assertEquals(Status.DELIVERED, delivered);
+        Status delivered = Status.getInstance("dEliVERed");
+        assertEquals(Status.COMPLETED, delivered);
 
         thrown.expect(IllegalValueException.class);
         thrown.expectMessage(Status.MESSAGE_STATUS_CONSTRAINTS);
-        Status.getStatusInstance("asd1237fa&(&"); // weird characters
-        Status.getStatusInstance("JUMPING"); // not one of the possible values
+        Status.getInstance("asd1237fa&(&"); // weird characters
+        Status.getInstance("JUMPING"); // not one of the possible values
     }
 
     @Test

@@ -92,7 +92,7 @@ public class ParcelCard extends UiPart<Region> {
             status.setStyle("-fx-background-color: " + "#ffc200");
             break;
 
-        case "DELIVERED":
+        case "COMPLETED":
         default: // fall through
             status.setStyle("-fx-background-color: " + "#00bf00");
             break;
