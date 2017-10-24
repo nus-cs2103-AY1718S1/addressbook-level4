@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 
 
 /**
@@ -40,7 +41,10 @@ public interface ReadOnlyEvent {
                 .append(" Time: ")
                 .append(getEventTime())
                 .append(" Participants: ");
-        getParticipants().forEach(builder::append);
+        for (ReadOnlyPerson person : getParticipants()) {
+            builder.append(person.getName())
+                    .append(" ");
+        }
         return builder.toString();
     }
 }
