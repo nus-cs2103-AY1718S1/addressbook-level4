@@ -18,6 +18,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_STRING;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -34,10 +35,12 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MusicCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
 
 /**
  * Class that is responsible for generating hints based on user input
@@ -48,6 +51,72 @@ public class HintParser {
     private static String commandWord;
     private static String arguments;
     private static String userInput;
+
+    private static final Set<String> COMMAND_SET = new HashSet<String>(Arrays.asList(new String[]{
+        "add", "alias", "clear", "delete", "edit", "exit", "find", "help", "history", "list",
+        "music", "redo", "remark", "select", "unalias", "undo"
+    }));
+
+    /**
+     * Parses {@code String input} and returns an appropriate autocompletion
+     */
+    public static String autocomplete(String input) {
+        String[] command;
+
+        try {
+            command = ParserUtil.parseCommandAndArguments(input);
+        } catch (ParseException e) {
+            return "";
+        }
+
+        userInput = input;
+        commandWord = command[0];
+        arguments = command[1];
+
+        switch (commandWord) {
+
+        case AddCommand.COMMAND_WORD:
+            return input + generateAddHint();
+
+        case EditCommand.COMMAND_WORD:
+            return input + generateEditHint();
+
+        case FindCommand.COMMAND_WORD:
+            return input + generateFindHint();
+
+        case MusicCommand.COMMAND_WORD:
+            if (arguments.isEmpty()) {
+                return commandWord + " " + (MusicCommand.isPlaying() ? "pause" : "play");
+            }
+            return commandWord + " " + autocompleteFromList(arguments.trim(), new String[] {"play", "pause", "stop"});
+
+        default:
+            return autocompleteCommand(commandWord);
+        }
+    }
+
+    /**
+     * Parses {@code String command} and returns the closest matching command word.
+     */
+    public static String autocompleteCommand(String command) {
+        Set<String> commands = new HashSet<>();
+        commands.addAll(COMMAND_SET);
+        commands.addAll(UserPrefs.getInstance().getAliases().getAllAliases());
+        String[] list = commands.toArray(new String[commands.size()]);
+        return autocompleteFromList(command, list);
+    }
+
+    /**
+     * Parses {@code String input} and returns the closest matching string in {@code String[] strings}.
+     */
+    public static String autocompleteFromList(String input, String[] strings) {
+        for (String string : strings) {
+            if (string.startsWith(input)) {
+                return string;
+            }
+        }
+        return input;
+    }
 
     /**
      * Parses {@code String input} and returns an appropriate hint

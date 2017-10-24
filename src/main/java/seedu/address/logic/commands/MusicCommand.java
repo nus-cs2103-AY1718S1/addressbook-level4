@@ -44,6 +44,16 @@ public class MusicCommand extends Command {
         this.command = command;
     }
 
+    /**
+     * Returns whether music is currently playing.
+     */
+    public static boolean isPlaying() {
+        if (mediaPlayer == null) {
+            return false;
+        }
+        return mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING;
+    }
+
     @Override
     public CommandResult execute() {
         boolean genreExist = Arrays.asList(genreList).contains(genre);
