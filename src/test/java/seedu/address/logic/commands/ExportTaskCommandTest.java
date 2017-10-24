@@ -142,7 +142,8 @@ public class ExportTaskCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToTaskListRequestEvent lastEvent = (JumpToTaskListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        JumpToTaskListRequestEvent lastEvent =
+                (JumpToTaskListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
         assertEquals(expectedAddressBook, model.getAddressBook());
     }

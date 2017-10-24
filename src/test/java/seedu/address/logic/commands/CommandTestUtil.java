@@ -19,10 +19,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.task.TaskNameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.TaskNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -95,8 +95,8 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HOTPOT = " " + PREFIX_TAG + VALID_TAG_HOTPOT;
     public static final String TAG_DESC_DEMO = " " + PREFIX_TAG + VALID_TAG_DEMO;
 
-//    public static final EditCommand.EditTaskDescriptor DESC_AMY;
-//    public static final EditCommand.EditTaskDescriptor DESC_BOB;
+    // public static final EditCommand.EditTaskDescriptor DESC_AMY;
+    // public static final EditCommand.EditTaskDescriptor DESC_BOB;
 
     /**
      * Executes the given {@code command}, confirms that <br>
@@ -137,7 +137,7 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     * Updates {@code model}'s filtered person list to show only the first person in the {@code model}'s 3W.
      */
     public static void showFirstPersonOnly(Model model) {
         ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
@@ -147,6 +147,9 @@ public class CommandTestUtil {
         assert model.getFilteredPersonList().size() == 1;
     }
 
+    /**
+     * Updates {@code model}'s filtered task list to show only the first task in the {@code model}'s 3W.
+     */
     public static void showFirstTaskOnly(Model model) {
         ReadOnlyTask task = model.getTaskBook().getTaskList().get(0);
         List<String> name = Arrays.asList(task.getName());
