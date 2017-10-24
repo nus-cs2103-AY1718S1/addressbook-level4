@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -87,4 +88,9 @@ public interface Model {
      */
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
+    /**Change the current command mode*/
+    void changeCommandMode(String mode) throws IllegalValueException;
+
+    /**Returns the current command mode*/
+    String getCommandMode();
 }

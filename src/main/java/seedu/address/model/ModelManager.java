@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -160,6 +161,18 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
+    }
+
+    //========== Command Mode ==============================================================================
+    @Override
+    public void changeCommandMode(String mode) throws IllegalValueException {
+        addressBook.changeCommandMode(mode);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public String getCommandMode() {
+        return addressBook.getCommandMode();
     }
 
     @Override
