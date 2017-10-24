@@ -148,6 +148,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void sortByDataFieldFirst(String dataField) {
+        
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
