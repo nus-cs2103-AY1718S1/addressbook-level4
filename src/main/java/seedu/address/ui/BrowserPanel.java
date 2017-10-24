@@ -41,10 +41,15 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loads the facebook page based on Person link.value or if person does not have link,
+     * loads a facebook search for the Person name.fullName
+     * @param person
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        if (person.getLink().value.contains("https://www.facebook.com/")){
+        if (person.getLink().value.contains("https://www.facebook.com/")) {
             loadPage(person.getLink().value);
-        } else if (person.getLink().value.contains("facebook.com/")){
+        } else if (person.getLink().value.contains("facebook.com/")) {
             loadPage("https://www." + person.getLink().value);
         } else {
             loadPage(FACEBOOK_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")

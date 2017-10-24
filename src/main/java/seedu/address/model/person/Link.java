@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * Represents a Person's link in the address book.
  * Guarantees: immutable; is always valid
@@ -14,7 +12,7 @@ public class Link {
     public final String value;
 
     public Link(String link) {
-        if(link == null){
+        if (link == null) {
             this.value = "";
         } else {
             this.value = link;

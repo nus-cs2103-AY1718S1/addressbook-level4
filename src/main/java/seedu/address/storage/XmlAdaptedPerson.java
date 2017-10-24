@@ -11,8 +11,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FavouriteStatus;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Link;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -91,7 +91,7 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final ArrayList<Remark> remarks = new ArrayList<>(personRemarks);
-        if(remarks.isEmpty()) { //Ensures that an empty remark list will not increase in size
+        if (remarks.isEmpty()) { //Ensures that an empty remark list will not increase in size
             remarks.add(new Remark("")); //Ensures every Person will always have a remarked field
         }
         final FavouriteStatus favouriteStatus = new FavouriteStatus(this.favouriteStatus);

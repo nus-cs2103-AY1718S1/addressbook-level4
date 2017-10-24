@@ -10,6 +10,9 @@ import seedu.address.logic.commands.LinkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Link;
 
+/**
+ * Parses input arguments and creates a new LinkCommand object
+ */
 public class LinkCommandParser implements Parser<LinkCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the LinkCommand
