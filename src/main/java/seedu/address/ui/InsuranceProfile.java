@@ -19,10 +19,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * The Profile Panel of the App.
  */
-public class ProfilePanel extends UiPart<Region> {
+public class InsuranceProfile extends UiPart<Region> {
 
     public static final String DEFAULT_MESSAGE = "Insurance profile";
-    private static final String FXML = "ProfilePanel.fxml";
+    private static final String FXML = "InsuranceProfile.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -49,7 +49,7 @@ public class ProfilePanel extends UiPart<Region> {
     @FXML
     private Label expiryDate;
 
-    public ProfilePanel() {
+    public InsuranceProfile() {
         super(FXML);
         scrollPane.setFitToWidth(true);
         profilePanel.prefWidthProperty().bind(scrollPane.widthProperty());
