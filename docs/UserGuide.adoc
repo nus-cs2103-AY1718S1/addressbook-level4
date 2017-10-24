@@ -97,7 +97,7 @@ Format: `select INDEX` +
 Alias: `s`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the Instagram page  of the person at the specified `INDEX`. If the person does not have an Instagram account, the Facebook account of the person is loaded instead. If the person has neither Instagram nor Facebook, the Google search page of the person is loaded.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -338,7 +338,6 @@ Examples:
 Deletes all persons with the tag `temp`
 * `delete -tag school work`
 Deletes all persons with the tags `school` or `work`
-
 
 ==== Clearing all entries: `clear`
 
@@ -602,3 +601,6 @@ e.g.`select 2`
 e.g. `export /Users/seedu/Documents/exportData.xml`
 * *Import*: `import FILE_PATH` +
 e.g. `import /Users/seedu/Documents/importData.xml`
+* *Connect to Facebook*: `facebook connect` +
+* *Post to Facebook*: `facebook post STATUS` +
+e.g. `facebook post hello world!`
