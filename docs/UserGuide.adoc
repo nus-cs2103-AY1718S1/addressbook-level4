@@ -12,7 +12,11 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+
+By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
+
+
+Welcome to the ConTag's Developer Guide! Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
 
 == Quick Start
 
@@ -253,6 +257,21 @@ Outputs the 1st person's email address in console: `johndoe@example.com`
 * `copy 1 4 5` +
 Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
 
+=== Opening calendar : `calendar` [Since v1.2]
+
+Alias: `cl`
+
+Open a calendar browser that display the current events. +
+Format: `calendar`
+
+Examples:
+
+Opens up calendar browser in the address book. +
+* `calendar` (using command word) +
+* `cl` (using alias) +
+Opens up calendar browser in the address book.
+
+
 === Listing entered commands : `history`
 
 Alias: `his`
@@ -338,11 +357,6 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
@@ -352,7 +366,7 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 1 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `find James Jake`
 * *List* : `list`
 * *Help* : `help`
@@ -365,3 +379,9 @@ e.g.`copy 1 2` [Coming in v2.0]
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Calendar* : `calendar`
+
+== FAQ
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
