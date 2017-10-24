@@ -15,11 +15,17 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label fx:id="browserSelectorTitle" prefWidth="150.0" text="Label" />
+            <ListView fx:id="browserSelectorList" GridPane.rowIndex="1" />
+            <ListView fx:id="themeSelectorList" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4" />
+            <Label fx:id="themeSelectorTitle" text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <ListView fx:id="browserSelectorList" prefWidth="150.0" />
    </children>
 </VBox>

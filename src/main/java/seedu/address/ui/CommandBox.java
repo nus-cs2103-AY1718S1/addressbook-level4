@@ -1,13 +1,23 @@
 package seedu.address.ui;
 
+import java.awt.*;
+import java.beans.EventHandler;
 import java.util.logging.Logger;
 
+import com.sun.deploy.panel.TextFieldProperty;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
@@ -30,32 +40,38 @@ public class CommandBox extends UiPart<Region> {
 
     private StackPane helperContainer;
     private CommandBoxHelper commandBoxHelper;
+    private SplitPane settingsPane;
     private Boolean helpEnabled = false;
+
+    private Timeline timelineLeft;
+    private Timeline timelineRight;
 
     @FXML
     private TextField commandTextField;
 
-    public CommandBox(Logic logic, StackPane commandBoxHelp) {
+    public CommandBox(Logic logic, StackPane commandBoxHelp, SplitPane settingsPane) {
         super(FXML);
         this.logic = logic;
         this.commandBoxHelper = new CommandBoxHelper(logic);
         this.helperContainer = commandBoxHelp;
+        this.settingsPane = settingsPane;
+        setAnimation();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
             setStyleToDefault();
 
-            /**old code
-            //shows helper if there is text in the command text field
-            if (!commandTextField.getText().trim().isEmpty() && !helpEnabled) {
-                showHelper();
-            } else if (commandTextField.getText().trim().isEmpty()) {
-                hideHelper();
-            }**/
-
+            /** Shows helper if there is text in the command field that corresponds to the command list*/
             if (commandBoxHelper.listHelp(commandTextField) && !helpEnabled) {
                 showHelper();
             } else if (!commandBoxHelper.listHelp(commandTextField)) {
                 hideHelper();
+            }
+
+            /** Shows settings screen if there is text in the command field that corresponds to settings*/
+            if (checkForSettingsPanelPopup(commandTextField)) {
+                timelineLeft.play();
+            } else {
+                timelineRight.play();
             }
         });
         commandTextField.setStyle("-fx-font-style: italic;" + " -fx-text-fill: lime");
@@ -223,5 +239,49 @@ public class CommandBox extends UiPart<Region> {
     private void hideHelper() {
         helperContainer.getChildren().remove(commandBoxHelper.getRoot());
         helpEnabled = false;
+    }
+
+    private boolean checkForSettingsPanelPopup(TextField commandTextField) {
+        if (commandTextField.getText().contains("choose") || commandTextField.getText().contains("pref")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Sets the animation sequence for entering left and right on the settings panel
+     */
+    private void setAnimation() {
+        final Timeline timelineBounce = new Timeline();
+        timelineBounce.setCycleCount(1);
+        timelineBounce.setAutoReverse(true);
+        KeyValue kv1 = new KeyValue(settingsPane.translateXProperty(), 0);
+        KeyValue kv2 = new KeyValue(settingsPane.translateXProperty(), -10);
+        KeyValue kv3 = new KeyValue(settingsPane.translateXProperty(), 0);
+        KeyFrame kf1 = new KeyFrame(Duration.millis(200), kv1, kv2, kv3);
+        timelineBounce.getKeyFrames().add(kf1);
+
+        /* Event handler to call bouncing effect after the scroll to left is finished. */
+        javafx.event.EventHandler<ActionEvent> onFinished = new javafx.event.EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                timelineBounce.play();
+            }
+        };
+
+        timelineLeft = new Timeline();
+        timelineRight = new Timeline();
+
+        timelineLeft.setCycleCount(1);
+        timelineLeft.setAutoReverse(true);
+        KeyValue kvLeft1 = new KeyValue(settingsPane.translateXProperty(), -10);
+        KeyFrame kfLeft = new KeyFrame(Duration.millis(400), onFinished, kvLeft1);
+        timelineLeft.getKeyFrames().add(kfLeft);
+
+        timelineRight.setCycleCount(1);
+        timelineRight.setAutoReverse(true);
+        KeyValue kvRight1 = new KeyValue(settingsPane.translateXProperty(), 300);
+        KeyFrame kfRight = new KeyFrame(Duration.millis(400), kvRight1);
+        timelineRight.getKeyFrames().add(kfRight);
     }
 }

@@ -9,13 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -61,13 +61,13 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane browserSelectorPlaceholder;
+    private SplitPane settingsPane;
+
+    @FXML
+    private StackPane settingsSelectorPlaceholder;
 
     @FXML
     private StackPane themeSelectorPlaceholder;
-
-    @FXML
-    private StackPane wzpane;
 
     @FXML
     private VBox personListBox;
@@ -101,7 +101,7 @@ public class MainWindow extends UiPart<Region> {
         String cssPath = Objects.equals(prefs.getStyle(), "light") ? "view/LightTheme.css" : "view/DarkTheme.css";
         scene.getStylesheets().add(cssPath);
 
-        //setAccelerators();
+        setAccelerators();
         registerAsAnEventHandler(this);
     }
 
@@ -150,6 +150,9 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        SettingsSelector settingsSelector = new SettingsSelector();
+        settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -160,14 +163,12 @@ public class MainWindow extends UiPart<Region> {
                 logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder);
+        //Setting initial position of settings panel
+        settingsPane.setTranslateX(160);
+
+        CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        BrowserSelector browserSelector = new BrowserSelector();
-        browserSelectorPlaceholder.getChildren().add(browserSelector.getRoot());
-
-        ThemeSelector themeSelector = new ThemeSelector();
-        themeSelectorPlaceholder.getChildren().add(themeSelector.getRoot());
     }
 
     void hide() {
