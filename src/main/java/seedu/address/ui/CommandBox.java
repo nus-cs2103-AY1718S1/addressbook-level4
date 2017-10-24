@@ -46,6 +46,7 @@ public class CommandBox extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
     private static final int TIME_SINCE_TYPING = 300;
+    private static final int PAUSE_BEFORE_PRESSING_CTRL = 100;
     private static final int START_OF_FIRST_FIELD = 6;
     private static final int END_OF_FIRST_FIELD = 10;
     private static final String[] LIST_OF_ALL_COMMANDS = {AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD,
@@ -148,7 +149,7 @@ public class CommandBox extends UiPart<Region> {
      */
     public void pressCtrl() {
         pause = new PauseTransition();
-        pause.setDuration(Duration.millis(100));
+        pause.setDuration(Duration.millis(PAUSE_BEFORE_PRESSING_CTRL));
         pause.setOnFinished(event -> {
             robot.push(KeyCode.CONTROL);
         });
