@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import guitests.guihandles.NodeHandle;
-import guitests.guihandles.person.PersonCardHandle;
 import javafx.scene.control.ListView;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.person.PersonCard;

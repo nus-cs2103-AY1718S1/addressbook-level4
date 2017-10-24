@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import guitests.guihandles.NodeHandle;
-import guitests.guihandles.event.EventCardHandle;
 import javafx.scene.control.ListView;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.ui.event.EventCard;
