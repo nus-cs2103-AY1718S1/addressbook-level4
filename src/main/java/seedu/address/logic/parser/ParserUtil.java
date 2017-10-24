@@ -51,15 +51,19 @@ public class ParserUtil {
      */
     public static ArrayList<Index> parseMultiIndex(String multiBasedIndex) throws IllegalValueException {
         ArrayList<Index> parsedIndexes = new ArrayList <> ();
-        String[] splitParse = multiBasedIndex.split(" ");
-        for (int x = 1; x < splitParse.length; x++) {
-            splitParse[x] = splitParse[x].trim();
-            if (!StringUtil.isNonZeroUnsignedInteger(splitParse[x])) {
+        String[] splitString = multiBasedIndex.split(" ");
+        ArrayList<String> splitParse = new ArrayList<>();
+        for (int x = 1; x < splitString.length; x++) {
+            splitParse.add(splitString[x]);
+        }
+        for (int x = 0; x < splitParse.size(); x++) {
+            splitParse.set(x, splitParse.get(x).trim());
+            if (!StringUtil.isNonZeroUnsignedInteger(splitParse.get(x))) {
                 throw new IllegalValueException(MESSAGE_INVALID_INDEX);
             }
         }
-        for (int x = 1; x < splitParse.length; x++) {
-            parsedIndexes.add(Index.fromOneBased(Integer.parseInt(splitParse[x])));
+        for (int x = 0; x < splitParse.size(); x++) {
+            parsedIndexes.add(Index.fromOneBased(Integer.parseInt(splitParse.get(x))));
         }
         return parsedIndexes;
     }

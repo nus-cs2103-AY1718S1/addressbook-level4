@@ -41,10 +41,6 @@ public class DeleteCommand extends UndoableCommand {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
-        if (targetIndex.size() <= 0) {
-            String forThrow = String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-            throw new CommandException(forThrow);
-        }
 
         ArrayList<ReadOnlyPerson> personToDelete = new ArrayList<>();
         for (int x = 0; x < targetIndex.size(); x++) {
