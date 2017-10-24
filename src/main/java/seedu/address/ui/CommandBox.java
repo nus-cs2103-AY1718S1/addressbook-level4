@@ -69,7 +69,7 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) throws AWTException {
         super(FXML);
         this.logic = logic;
-        robot = new Robot();
+        this.robot = new Robot();
         loadKeyboardIcons();
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
@@ -127,7 +127,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     public Robot getRobot() {
-        return robot;
+        return this.robot;
     }
 
     /**
