@@ -23,7 +23,7 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Export the details of the person identified "
             + "by the index number used in the last person listing. \n"
             + "Output will be in an add command format, which can be "
-            + "directly given to 3W to excute.\n"
+            + "directly given to 3W to execute.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "Example: " + COMMAND_WORD + " 1 ";
 

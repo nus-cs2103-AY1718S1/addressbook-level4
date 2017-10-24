@@ -42,7 +42,7 @@ public class ExportCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
+    public void executeValidIndexUnfilteredListSuccess() {
         Index lastPersonIndex = Index.fromOneBased(model.getFilteredPersonList().size());
         ReadOnlyPerson firstPersonToExport = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         ReadOnlyPerson lastPersonToExport;
@@ -73,14 +73,14 @@ public class ExportCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_failure() {
+    public void executeInvalidIndexUnfilteredListFailure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_validIndexFilteredList_success() {
+    public void executeValidIndexFilteredListSuccess() {
         showFirstPersonOnly(model);
         ReadOnlyPerson personToExport = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
@@ -98,7 +98,7 @@ public class ExportCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexFilteredList_failure() {
+    public void executeInvalidIndexFilteredListFailure() {
         showFirstPersonOnly(model);
 
         Index outOfBoundsIndex = INDEX_SECOND_PERSON;
