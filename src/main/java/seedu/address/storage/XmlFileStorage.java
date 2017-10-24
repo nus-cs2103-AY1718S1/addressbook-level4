@@ -58,7 +58,8 @@ public class XmlFileStorage {
             try {
                 mergedAddressBook.addPerson(new Person(defaultDataPerson));
             } catch (DuplicatePersonException dpe) {
-                throw new IOException(dpe.getMessage());
+                // default addressbook file should not have duplicates
+                assert false : "Unexpected exception " + dpe.getMessage();
             }
         }
         
@@ -74,7 +75,7 @@ public class XmlFileStorage {
                 try {
                     mergedAddressBook.addPerson(new Person(newDataPerson));
                 } catch (DuplicatePersonException dpe) {
-                    throw new IOException(dpe.getMessage());
+                    assert false : "Unexpected exception " + dpe.getMessage();
                 }
             }
         }
