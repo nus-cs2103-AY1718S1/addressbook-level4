@@ -8,16 +8,13 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Import
+=== Enhancement Added: Import Feature
 
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=import]
-
-#End of Extract#
 
 ---
 
@@ -28,11 +25,96 @@ include::../UserGuide.adoc[tag=import]
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=import]
 
-#End of Extract#
+---
+
+=== Enhancement Added: Backup Feature
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=backup]
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=backup]
+
+---
+
+=== Enhancement Added: Status Feature
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=status]
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=status]
+
+---
+
+=== Enhancement Added: Tracking Number Feature
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=trackingNumber]
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=trackingNumber]
+
+---
+
+=== Enhancement Added: Postal Code Feature
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=postalCode]
+
+---
+
+==== Justification
+
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=postalCode]
 
 ---
 

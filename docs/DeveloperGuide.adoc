@@ -496,6 +496,8 @@ Tag to delete them. +
 ** **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
 and has to be updated whenever we edit other parcel details as well.
 
+tag::backup[]
+
 === Backup Mechanism
 
 The back up mechanism is facilitated by a `backupAddressBook()` method within the `StorageManager`. It supports the
@@ -508,6 +510,8 @@ a method that is called when `Ark` is launched. The method utilises the `Storage
 stores the backup in the same directory as the main `AddressBook` storage file. The backup file is saved and named with
 the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e. If the main `AddressBook` storage file
  is named as `addressbook.xml`, the backup storage file will be saved as `addressbook.xml-backup.xml`.
+
+end::backup[]
 
 ==== Design Considerations
 
@@ -654,6 +658,8 @@ Also creates coupling between the `Autocompleter` and `CommandBox`. +
 ** **Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
 ** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +=== Tab autocomplete mechanism
 
+start::trackingNumber[]
+
 === TrackingNumber Field
 
 Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
@@ -666,6 +672,10 @@ Presently, the `Tracking Number` Field only has support for Registered Article t
 You can read more about their Registered Article tracking number
  link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here].
 
+end::trackingNumber[]
+
+tag::postalCode[]
+
 === PostalCode Field
 
 The `PostalCode` field is implemented as part of Address. This class stores the postal address of locations in Singapore.
@@ -677,6 +687,10 @@ Presently, the `PostalCode` field still does a very relaxed validation and does 
 code exists even though it might meet the criteria above. The team is working on producing a database of postal codes
  in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
  the correct postal code.
+
+end::postalCode[]
+
+tag::status[]
 
 === Status field
 
@@ -701,6 +715,8 @@ These states have different colours codes to allow users to differentiate the `S
 ** **Pros:** Users have more versatility on naming conventions
 ** **Cons:** It becomes more difficult to import data files since different users may use different terminologies to
 describe the same status of the parcel.
+
+end::status[]
 
 == Documentation
 
