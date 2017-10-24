@@ -19,7 +19,9 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchPanelRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -226,10 +228,18 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonNameClickedEvent(PersonNameClickedEvent event){
+    private void handleSwitchPanelRequestEvent(SwitchPanelRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         rightPanelPlaceholder.getChildren().clear();
         rightPanelPlaceholder.getChildren().add(profilePanel.getRoot());
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        rightPanelPlaceholder.getChildren().clear();
+        rightPanelPlaceholder.getChildren().add(insuranceProfile.getRoot());
     }
 }

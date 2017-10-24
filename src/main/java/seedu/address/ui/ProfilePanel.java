@@ -12,7 +12,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.SwitchPanelRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -86,8 +88,10 @@ public class ProfilePanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handlePersonNameClickedEvent(PersonNameClickedEvent event){
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadPersonPage(event.getPerson());
+
+        raise(new SwitchPanelRequestEvent());
     }
 }

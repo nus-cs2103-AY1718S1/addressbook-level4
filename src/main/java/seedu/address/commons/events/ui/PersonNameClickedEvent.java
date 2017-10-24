@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a click on one of the names in Insurance Profile
  */
 public class PersonNameClickedEvent extends BaseEvent {
 
