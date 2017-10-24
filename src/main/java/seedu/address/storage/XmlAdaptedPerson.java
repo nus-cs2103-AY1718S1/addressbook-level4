@@ -92,23 +92,23 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         Company company = new Company("NIL"); //to handle legacy versions where these optional fields were not stored
-        if(this.company != null) {
+        if (this.company != null) {
             company = new Company(this.company);
         }
         Position position = new Position("NIL"); //to handle legacy versions where these optional fields were not stored
-        if(this.position != null) {
+        if (this.position != null) {
             position = new Position(this.position);
         }
         Status status = new Status("NIL"); //to handle legacy versions where these optional fields were not stored
-        if(this.status != null) {
+        if (this.status != null) {
             status = new Status(this.status);
         }
         Priority priority = new Priority("L"); //to handle legacy versions where these optional fields were not stored
-        if(this.priority != null) {
+        if (this.priority != null) {
             priority = new Priority(this.priority);
         }
         Note note = new Note("NIL"); //to handle legacy versions where these optional fields were not stored
-        if(this.note != null) {
+        if (this.note != null) {
             note = new Note(this.note);
         }
         final Set<Tag> tags = new HashSet<>(personTags);
