@@ -93,6 +93,11 @@ public interface ReadOnlyPerson {
                 .append(getWebsite());
         }
 
+//        if (getPicture().toString() != null) {
+//            builder.append(" Picture: ")
+//                    .append(getPicture());
+//        }
+
         if (!(getTags().isEmpty())) {
             builder.append(" Tags: ");
             getTags().forEach(builder::append);

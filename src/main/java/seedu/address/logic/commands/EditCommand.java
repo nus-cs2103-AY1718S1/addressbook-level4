@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -24,6 +25,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Picture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.Website;
@@ -154,6 +156,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Birthday birthday;
         private Website website;
+        private Picture picture;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {
@@ -166,6 +169,7 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.birthday = toCopy.birthday;
             this.website = toCopy.website;
+            this.picture = toCopy.picture;
             this.tags = toCopy.tags;
         }
 
@@ -179,6 +183,7 @@ public class EditCommand extends UndoableCommand {
                 this.address,
                 this.birthday,
                 this.website,
+                this.picture,
                 this.tags);
         }
 
@@ -240,6 +245,16 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(website);
         }
 
+        public void setPicture(Picture picture) {
+            if (picture.value != null) {
+                this.picture = picture;
+            }
+        }
+
+        public Optional<Picture> getPicture() {
+            return Optional.ofNullable(picture);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -269,6 +284,7 @@ public class EditCommand extends UndoableCommand {
                 && getAddress().equals(e.getAddress())
                 && getBirthday().equals(e.getBirthday())
                 && getWebsite().equals(e.getWebsite())
+                && getPicture().equals(e.getPicture())
                 && getTags().equals(e.getTags());
         }
     }

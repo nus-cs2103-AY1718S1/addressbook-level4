@@ -199,7 +199,7 @@ public class Person implements ReadOnlyPerson {
         this.setAddress(replacement.getAddress());
         this.setRemark(replacement.getRemark());
         this.setWebsite(replacement.getWebsite());
-        this.setPicture(replacement.getPicture());
+        //this.setPicture(replacement.getPicture());
         this.setTags(replacement.getTags());
     }
 

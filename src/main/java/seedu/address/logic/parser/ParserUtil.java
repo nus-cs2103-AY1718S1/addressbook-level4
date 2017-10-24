@@ -15,6 +15,7 @@ import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Picture;
 import seedu.address.model.person.Website;
 import seedu.address.model.tag.Tag;
 
@@ -85,6 +86,14 @@ public class ParserUtil {
      */
     public static Optional<Website> parseWebsite(Optional<String> website) throws IllegalValueException {
         return website.isPresent() ? Optional.of(new Website(website.get())) : Optional.of(new Website(null));
+    }
+
+    /**
+     * Parses a {@code Optional<String> picture} into an {@code Optional<Picture>} if {@code picture} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Picture> parsePicture(Optional<String> picture) throws IllegalValueException {
+        return picture.isPresent() ? Optional.of(new Picture(picture.get())) : Optional.of(new Picture(null));
     }
 
     /**
