@@ -41,26 +41,26 @@ public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
 
-    private final String ADDRESSBOOK_MODE = "addressbook";
+    private static final String MODE_ADDRESS_BOOK = "addressbook";
 
     @Test
     public void parseCommand_add() throws Exception {
         Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person), ADDRESSBOOK_MODE);
+        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person), MODE_ADDRESS_BOOK);
         assertEquals(new AddCommand(person), command);
     }
 
     @Test
     public void parseCommand_clear() throws Exception {
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD, ADDRESSBOOK_MODE) instanceof ClearCommand);
-        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3", ADDRESSBOOK_MODE)
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD, MODE_ADDRESS_BOOK) instanceof ClearCommand);
+        assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3", MODE_ADDRESS_BOOK)
             instanceof ClearCommand);
     }
 
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(), ADDRESSBOOK_MODE);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(), MODE_ADDRESS_BOOK);
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
@@ -69,14 +69,14 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person), ADDRESSBOOK_MODE);
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person), MODE_ADDRESS_BOOK);
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
     @Test
     public void parseCommand_exit() throws Exception {
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD, ADDRESSBOOK_MODE) instanceof ExitCommand);
-        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3", ADDRESSBOOK_MODE) instanceof ExitCommand);
+        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD, MODE_ADDRESS_BOOK) instanceof ExitCommand);
+        assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3", MODE_ADDRESS_BOOK) instanceof ExitCommand);
     }
 
     @Test
@@ -84,25 +84,25 @@ public class AddressBookParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")),
-            ADDRESSBOOK_MODE);
+            MODE_ADDRESS_BOOK);
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
     public void parseCommand_help() throws Exception {
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD, ADDRESSBOOK_MODE) instanceof HelpCommand);
-        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3", ADDRESSBOOK_MODE)
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD, MODE_ADDRESS_BOOK) instanceof HelpCommand);
+        assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3", MODE_ADDRESS_BOOK)
             instanceof HelpCommand);
     }
 
     @Test
     public void parseCommand_history() throws Exception {
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD, ADDRESSBOOK_MODE) instanceof HistoryCommand);
-        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD + " 3", ADDRESSBOOK_MODE)
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD, MODE_ADDRESS_BOOK) instanceof HistoryCommand);
+        assertTrue(parser.parseCommand(HistoryCommand.COMMAND_WORD + " 3", MODE_ADDRESS_BOOK)
             instanceof HistoryCommand);
 
         try {
-            parser.parseCommand("histories", ADDRESSBOOK_MODE);
+            parser.parseCommand("histories", MODE_ADDRESS_BOOK);
             fail("The expected ParseException was not thrown.");
         } catch (ParseException pe) {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
@@ -111,40 +111,40 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_list() throws Exception {
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD, ADDRESSBOOK_MODE) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3", ADDRESSBOOK_MODE) instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD, MODE_ADDRESS_BOOK) instanceof ListCommand);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3", MODE_ADDRESS_BOOK) instanceof ListCommand);
     }
 
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(), ADDRESSBOOK_MODE);
+                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(), MODE_ADDRESS_BOOK);
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
-        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD, ADDRESSBOOK_MODE) instanceof RedoCommand);
-        assertTrue(parser.parseCommand("redo 1", ADDRESSBOOK_MODE) instanceof RedoCommand);
+        assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD, MODE_ADDRESS_BOOK) instanceof RedoCommand);
+        assertTrue(parser.parseCommand("redo 1", MODE_ADDRESS_BOOK) instanceof RedoCommand);
     }
 
     @Test
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
-        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD, ADDRESSBOOK_MODE) instanceof UndoCommand);
-        assertTrue(parser.parseCommand("undo 3", ADDRESSBOOK_MODE) instanceof UndoCommand);
+        assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD, MODE_ADDRESS_BOOK) instanceof UndoCommand);
+        assertTrue(parser.parseCommand("undo 3", MODE_ADDRESS_BOOK) instanceof UndoCommand);
     }
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-        parser.parseCommand("", ADDRESSBOOK_MODE);
+        parser.parseCommand("", MODE_ADDRESS_BOOK);
     }
 
     @Test
     public void parseCommand_unknownCommand_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
-        parser.parseCommand("unknownCommand", ADDRESSBOOK_MODE);
+        parser.parseCommand("unknownCommand", MODE_ADDRESS_BOOK);
     }
 }
