@@ -675,7 +675,7 @@ The website will then be loaded onto the browser of the `BrowserPanel` of the `M
 Sequence diagram for `execute()` method of `AccessCommand` and its event handling:
 
 image::AccessCommandEventsSequenceDiagram.PNG[width="800"]
-Figure 5.6.1 Access Command Model/EventsCenter/UI Sequence Diagram
+Figure 5.6.2 Access Command Model/EventsCenter/UI Sequence Diagram
 
 ==== Design Considerations
 **Aspect:** How accessing a website of a person executes +
@@ -767,7 +767,7 @@ inputs `locate 1` into the command line.
 
 Sequence diagram for `Logic` Component for `LocationCommand` and how it is executed:
 
-image::LocationCommandLogicSequenceDiagram.PNG[width="800"]
+image::LocationCommandLogicSequenceDiagram.png[width="800"]
 Figure 5.7.1 Location Command Logic Sequence Diagram
 
 After creating a new `LocationCommand`, `LogicManager` will call execute on `LocationCommand`
@@ -776,7 +776,7 @@ The address will then be loaded onto Google Maps Search of the browser of the `M
 
 Sequence diagram for `execute()` method of `LocationCommand` and its event handling:
 
-image::LocationCommandEventsSequenceDiagram.PNG[width="800"]
+image::LocationCommandEventsSequenceDiagram.png[width="800"]
 Figure 5.7.2 Access Command Model/EventsCenter/UI Sequence Diagram
 
 ==== Design Considerations
