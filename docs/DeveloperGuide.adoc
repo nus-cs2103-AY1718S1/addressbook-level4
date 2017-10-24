@@ -383,6 +383,30 @@ image::FavouritePersonSequenceDiagram.png[width="800"]
 **Cons:** Is not necessary when existing code is able to perform the same action +
 // end::favourite[]
 
+// tag::sort[]
+=== Sort mechanism
+
+The sort feature allows users to sort the person list according to the `DATAFIELD` that they want. Note that favourite sorting comes first before sorting by `DATAFIELD`. +
+
+Current `DATAFIELD` entries that are allowed are: `Name`, `Phone`, `Email` and `Address`. +
+
+The sort feature uses *JavaFX 8's* `SortedList` to wrap around the `FilteredList` in `ModelManager` to enable sorting. This is because `FilteredList` is *unmodifiable* as of *JavaFX 8* and thus cannot be sorted. +
+
+Firstly, `SortCommandParser` parses the user input and creates a `SortCommand` with the user-specified `DATAFIELD`. `SortCommand` then calls the `sortByDataFieldFirst` method in `ModelManager` which sets the appropriate order of `Comparators` for `SortedList`. +
+
+`Comparators` are gotten from the `ComparatorUtil` class.
+
+==== Design Considerations
+**Aspect:** Implementation of `Comparators` +
+**Alternative 1 (current choice):** Consolidate all the `Comparators` in the class `ComparatorUtil` and provide getter methods for them +
+**Pros:** Allows for code reuse, able to extend easily when more `DATAFIELD` details are added +
+**Cons:** More planning required for implementation +
+**Alternative 2:** Create `Comparators` in `ModelManager` and use them to sort +
+**Pros:** Less planning required for implementation +
+**Cons:** Results in messy code +
+
+//end::end::sort[]
+
 // tag::addtag[]
 === Tag addition mechanism
 
@@ -414,30 +438,6 @@ As seen above, execution of `AddTagCommand` is governed by the `addTag` method l
 **Cons:** Current method of adding tags has to be amended to accommodate the use of the new mechanism. +
 
 // end::addtag[]
-
-// tag::sort[]
-=== Sort mechanism
-
-The sort feature allows users to sort the person list according to the `DATAFIELD` that they want. Note that favourite sorting comes first before sorting by `DATAFIELD`. +
-
-Current `DATAFIELD` entries that are allowed are: `Name`, `Phone`, `Email` and `Address`. +
-
-The sort feature uses *JavaFX 8's* `SortedList` to wrap around the `FilteredList` in `ModelManager` to enable sorting. This is because `FilteredList` is *unmodifiable* as of *JavaFX 8* and thus cannot be sorted. +
-
-Firstly, `SortCommandParser` parses the user input and creates a `SortCommand` with the user-specified `DATAFIELD`. `SortCommand` then calls the `sortByDataFieldFirst` method in `ModelManager` which sets the appropriate order of `Comparators` for `SortedList`. +
-
-`Comparators` are gotten from the `ComparatorUtil` class.
-
-==== Design Considerations
-**Aspect:** Implementation of `Comparators` +
-**Alternative 1 (current choice):** Consolidate all the `Comparators` in the class `ComparatorUtil` and provide getter methods for them +
-**Pros:** Allows for code reuse, able to extend easily when more `DATAFIELD` details are added +
-**Cons:** More planning required for implementation +
-**Alternative 2:** Create `Comparators` in `ModelManager` and use them to sort +
-**Pros:** Less planning required for implementation +
-**Cons:** Results in messy code +
-
-//end::end::sort[]
 
 // tag::remove[]
 === Tag removal mechanism
