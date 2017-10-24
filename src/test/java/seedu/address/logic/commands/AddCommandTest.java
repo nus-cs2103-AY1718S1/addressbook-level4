@@ -26,10 +26,12 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonHaveParticipateException;
 import seedu.address.model.event.exceptions.PersonNotParticipateException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.HaveParticipateEventException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -181,6 +183,12 @@ public class AddCommandTest {
         @Override
         public void quitEvent(Person person, Event event)
                 throws PersonNotParticipateException, NotParticipateEventException {
+
+        }
+
+        @Override
+        public void joinEvent(Person person, Event event)
+                throws PersonHaveParticipateException, HaveParticipateEventException{
 
         }
 
