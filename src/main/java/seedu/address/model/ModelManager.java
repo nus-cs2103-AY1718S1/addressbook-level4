@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import org.apache.commons.text.similarity.JaroWinklerDistance;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +22,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Birthday;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -34,6 +38,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+
+    /* JaroWinklerDistance method uses double values ranging from 0 to 1. Set initial value to match very similar
+     * names only as setting the value to any value less than or equal to 0 will match the first name in filteredPersons
+     */
+    private final double initialToleranceValue = 0.5;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -142,6 +151,39 @@ public class ModelManager extends ComponentManager implements Model {
 
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
+        requireNonNull(predicate);
+        double maxDistance = initialToleranceValue;
+        ArrayList<String> result = new ArrayList<String>();
+        updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        ObservableList<ReadOnlyPerson> fullList = getFilteredPersonList();
+        ArrayList<String> allNames = new ArrayList<String>();
+        for (ReadOnlyPerson p : fullList) {
+            String[] firstAndLastName = p.getName().toString().split(" ");
+            for (String name : firstAndLastName) {
+                allNames.add(name);
+            }
+        }
+
+        JaroWinklerDistance currentJaroWinklerDistance = new JaroWinklerDistance();
+        List<String> keywords = predicate.getKeywords();
+        for (String target : keywords) {
+            for (String s : allNames) {
+                if (maxDistance < currentJaroWinklerDistance.apply(target, s)) {
+                    maxDistance = currentJaroWinklerDistance.apply(target, s);
+                    if (!result.contains(s)) {
+                        result.add(s);
+                    }
+                }
+            }
+        }
+
+        // switches filteredPersonList back from showing all persons to original according to the given predicate
+        this.updateFilteredPersonList(predicate);
+        return String.join(" OR ", result);
     }
 
     @Override
