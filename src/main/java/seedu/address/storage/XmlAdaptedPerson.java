@@ -90,7 +90,7 @@ public class XmlAdaptedPerson {
         final Birthday birthday = new Birthday(this.birthday);
         final Remark remark = new Remark(this.remark);
         final Website website = new Website(this.website);
-        final Picture picture = new Picture(null); // TODO
+        final Picture picture = new Picture(this.picture);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, birthday, remark, website,
                 picture, tags);

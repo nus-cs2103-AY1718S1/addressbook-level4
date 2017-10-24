@@ -3,8 +3,6 @@ package seedu.address.model.person;
 import java.io.File;
 import java.io.IOException;
 
-import javax.xml.bind.annotation.XmlType;
-
 import org.apache.commons.io.FileUtils;
 
 import seedu.address.commons.exceptions.IllegalValueException;
