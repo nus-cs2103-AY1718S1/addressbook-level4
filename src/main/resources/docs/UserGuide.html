@@ -280,7 +280,7 @@
             </ol>
           </div>
           <div class="paragraph">
-            <p>Examples:</p>
+            <p><span class="big green">Examples</span>:</p>
           </div>
           <div class="ulist">
             <ul>
@@ -412,7 +412,7 @@
             </ul>
           </div>
           <div class="paragraph">
-            <p>Examples:</p>
+            <p><span class="big green">Examples</span>:</p>
           </div>
           <div class="ulist">
             <ul>
@@ -446,49 +446,62 @@
           <div class="quoteblock">
             <blockquote>
               <div class="paragraph">
-                <p><mark>Version 1.0 (Current)</mark><br> Format: <code>find KEYWORD [MORE_KEYWORDS]</code><br>                  Shorthand: <code>f KEYWORD [MORE_KEYWORDS]</code></p>
+                <p><mark>Version 1.3 (Current)</mark><br></p>
               </div>
             </blockquote>
+          </div>
+          <div class="literalblock">
+            <div class="content">
+              <pre>Format: `find KEYWORD [MORE_KEYWORDS]`</pre>
+            </div>
+          </div>
+          <div class="literalblock">
+            <div class="content">
+              <pre>Shorthand: `f KEYWORD [MORE_KEYWORDS]`</pre>
+            </div>
           </div>
           <div class="quoteblock">
             <blockquote>
               <div class="paragraph">
-                <p><mark>Version 2.0</mark><br> Format: <code>find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]&#8230;&#8203; `<br>
-Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]&#8230;&#8203;</code><br>                  * The search will be based on the input and prefix.<br> * E.g.
-                  <code>find n/John p/96654253</code> will find a contact named "John"
-                  with phone number "96654253".</p>
+                <p><mark>Version 2.0</mark><br></p>
               </div>
             </blockquote>
           </div>
-          <div class="sidebarblock">
+          <div class="literalblock">
             <div class="content">
-              <div class="ulist">
-                <ul>
-                  <li>
-                    <p>The search is case insensitive. e.g <code>hans</code> will match
-                      <code>Hans</code></p>
-                  </li>
-                  <li>
-                    <p>The order of the keywords does not matter. e.g. <code>Hans Bo</code>                      will match <code>Bo Hans</code></p>
-                  </li>
-                  <li>
-                    <p>Only the name is searched.</p>
-                  </li>
-                  <li>
-                    <p>Only full words will be matched e.g. <code>Han</code> will not
-                      match <code>Hans</code></p>
-                  </li>
-                  <li>
-                    <p>Persons matching at least one keyword will be returned (i.e.
-                      <code>OR</code> search). e.g. <code>Hans Bo</code> will return
-                      <code>Hans Gruber</code>, <code>Bo Yang</code></p>
-                  </li>
-                </ul>
-              </div>
+              <pre>Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]... `</pre>
             </div>
           </div>
+          <div class="literalblock">
+            <div class="content">
+              <pre>Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...`</pre>
+            </div>
+          </div>
+          <div class="ulist">
+            <ul>
+              <li>
+                <p>There are 2 types of searches. One based on the input and prefix
+                  and the other only on Keywords.</p>
+              </li>
+              <li>
+                <p>The search is case insensitive. e.g <code>hans</code> will match
+                  <code>Hans</code></p>
+              </li>
+              <li>
+                <p>The order of the keywords does not matter. e.g. <code>Hans Bo</code>                  will match <code>Bo Hans</code></p>
+              </li>
+              <li>
+                <p>Only full words will be matched e.g. <code>Han</code> will not match
+                  <code>Hans</code></p>
+              </li>
+              <li>
+                <p>Persons matching at least one keyword will be returned (i.e. <code>OR</code>                  search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>,
+                  <code>Bo Yang</code></p>
+              </li>
+            </ul>
+          </div>
           <div class="paragraph">
-            <p>Examples:</p>
+            <p><span class="big green">Examples</span>:</p>
           </div>
           <div class="ulist">
             <ul>
@@ -499,35 +512,43 @@ Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [
                 <p><code>find Betsy Tim John</code><br> Returns any person having names
                   <code>Betsy</code>, <code>Tim</code>, or <code>John</code></p>
               </li>
+              <li>
+                <p><code>find n/John p/96654253</code> Returns a contact named "John"
+                  with phone number "96654253".</p>
+              </li>
             </ul>
           </div>
         </div>
         <div class="sect2">
           <h3 id="_deleting_a_person_code_delete_code_code_d_code">3.7. Deleting a person : <code>delete</code> / <code>d</code></h3>
           <div class="paragraph">
-            <p>Deletes the specified person from Death Note.<br> Format: <code>delete INDEX</code><br>              Shorthand: <code>d INDEX</code></p>
+            <p>Deletes the specified person from Death Note.</p>
           </div>
-          <div class="sidebarblock">
+          <div class="literalblock">
             <div class="content">
-              <div class="ulist">
-                <ul>
-                  <li>
-                    <p>Deletes the person at the specified <code>INDEX</code>.</p>
-                  </li>
-                  <li>
-                    <p>The index refers to the index number shown in the most recent
-                      listing.</p>
-                  </li>
-                  <li>
-                    <p>The index <strong>must be a positive integer</strong> 1, 2, 3,
-                      &#8230;&#8203;</p>
-                  </li>
-                </ul>
-              </div>
+              <pre>Format: `delete INDEX`</pre>
             </div>
           </div>
+          <div class="literalblock">
+            <div class="content">
+              <pre>Shorthand: `d INDEX`</pre>
+            </div>
+          </div>
+          <div class="ulist">
+            <ul>
+              <li>
+                <p>Deletes the person at the specified <code>INDEX</code>.</p>
+              </li>
+              <li>
+                <p>The index refers to the index number shown in the most recent listing.</p>
+              </li>
+              <li>
+                <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+              </li>
+            </ul>
+          </div>
           <div class="paragraph">
-            <p>Examples:</p>
+            <p><span class="big green">Examples</span>:</p>
           </div>
           <div class="ulist">
             <ul>
@@ -578,7 +599,7 @@ Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [
             </ul>
           </div>
           <div class="paragraph">
-            <p>Examples:</p>
+            <p><span class="big green">Examples</span>:</p>
           </div>
           <div class="ulist">
             <ul>
@@ -606,7 +627,7 @@ Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [
             </div>
           </div>
           <div class="paragraph">
-            <p>Examples:</p>
+            <p><span class="big green">Examples</span>:</p>
           </div>
           <div class="ulist">
             <ul>
@@ -684,7 +705,7 @@ Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [
             </table>
           </div>
           <div class="paragraph">
-            <p>Examples:</p>
+            <p><span class="big green">Examples</span>:</p>
           </div>
           <div class="ulist">
             <ul>
@@ -724,7 +745,7 @@ Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [
             </div>
           </div>
           <div class="paragraph">
-            <p>Examples:</p>
+            <p><span class="big green">Examples</span>:</p>
           </div>
           <div class="ulist">
             <ul>
@@ -776,7 +797,7 @@ Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [
             </div>
           </div>
           <div class="paragraph">
-            <p>Examples:</p>
+            <p><span class="big green">Examples</span>:</p>
           </div>
           <div class="ulist">
             <ul>
