@@ -45,6 +45,14 @@ public class Event implements ReadOnlyEvent {
         this.participants = new SimpleObjectProperty<>(new ParticipantList());
     }
 
+    public Event (EventName name, EventDescription desc, EventTime time, ParticipantList list) {
+        requireAllNonNull(name, time);
+        this.name = new SimpleObjectProperty<>(name);
+        this.desc = new SimpleObjectProperty<>(desc);
+        this.time = new SimpleObjectProperty<>(time);
+        this.participants = new SimpleObjectProperty<>(list);
+    }
+
     public Event (ReadOnlyEvent source) {
         this(source.getEventName(), source.getDescription(), source.getEventTime(), source.getParticipants());
     }
@@ -101,6 +109,9 @@ public class Event implements ReadOnlyEvent {
         return Collections.unmodifiableSet(participants.get().toSet());
     }
 
+    public ParticipantList getParticipantList() {
+        return participants.get();
+    }
     /**
      * Replaces this event's participants with the persons in the argument set.
      */
