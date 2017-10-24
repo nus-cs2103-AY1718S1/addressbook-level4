@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,6 +63,56 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public List<String> getAllNamesInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getName().toString())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllPhonesInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getPhone().toString())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllEmailsInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getEmail().toString())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllAddressesInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getAddress().toString())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllTagsInAddressBook() {
+        ObservableList<Tag> listOfTags = addressBook.getTagList();
+        // cut out the square brackets since that is redundant in CLI
+        return listOfTags.stream()
+                .map(tag -> tag.toString().substring(1, tag.toString().length() - 1))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getAllRemarksInAddressBook() {
+        ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
+        return listOfPersons.stream()
+                .map(person -> person.getRemark().toString())
+                .filter(remark -> !remark.equals(""))
+                .collect(Collectors.toList());
     }
 
     /** Raises an event to indicate the model has changed */

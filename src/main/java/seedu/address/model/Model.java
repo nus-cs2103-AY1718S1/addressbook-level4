@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
@@ -22,6 +23,24 @@ public interface Model {
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+
+    /** Returns all names in the AddressBook */
+    List<String> getAllNamesInAddressBook();
+
+    /** Returns all phones in the AddressBook */
+    List<String> getAllPhonesInAddressBook();
+
+    /** Returns all emails in the AddressBook */
+    List<String> getAllEmailsInAddressBook();
+
+    /** Returns all addresses in the AddressBook */
+    List<String> getAllAddressesInAddressBook();
+
+    /** Returns all tags in the AddressBook */
+    List<String> getAllTagsInAddressBook();
+
+    /** Returns all remarks in the AddressBook */
+    List<String> getAllRemarksInAddressBook();
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;

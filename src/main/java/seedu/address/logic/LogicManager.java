@@ -7,6 +7,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.autocomplete.AutoCompleteManager;
 import seedu.address.logic.autocomplete.AutoCompletePossibilities;
+import seedu.address.logic.autocomplete.parser.IdentityParser;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -35,8 +36,8 @@ public class LogicManager extends ComponentManager implements Logic {
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
-        this.autoCompletePossibilities = new AutoCompletePossibilities("");
-        this.autoCompleteManager = new AutoCompleteManager(AUTOCOMPLETE_CACHE_SIZE);
+        this.autoCompletePossibilities = new AutoCompletePossibilities("", new IdentityParser());
+        this.autoCompleteManager = new AutoCompleteManager(model, AUTOCOMPLETE_CACHE_SIZE);
     }
 
     @Override

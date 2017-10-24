@@ -10,8 +10,7 @@ import seedu.address.model.tag.Tag;
 
 /**
  */
-public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson>
-{
+public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
     public TagsContainKeywordsPredicate(List<String> keywords) {
@@ -23,17 +22,17 @@ public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson>
      * @return
      */
     private String stringifySetTags(Set<Tag> setTags) {
-        StringBuilder TagsString = new StringBuilder();
+        StringBuilder tagsString = new StringBuilder();
         final String stop = " ";
 
         Iterator<Tag> tagIterator = setTags.iterator();
         while (tagIterator.hasNext()) {
             Tag checkingTag = tagIterator.next();
-            TagsString.append(checkingTag.tagName);
-            TagsString.append(stop);
+            tagsString.append(checkingTag.tagName);
+            tagsString.append(stop);
         }
 
-        return TagsString.toString();
+        return tagsString.toString();
     }
 
     @Override

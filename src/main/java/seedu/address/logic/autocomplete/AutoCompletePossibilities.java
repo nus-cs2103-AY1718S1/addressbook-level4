@@ -2,7 +2,7 @@ package seedu.address.logic.autocomplete;
 
 import java.util.List;
 
-import seedu.address.logic.parser.AutoCompleteCommandParser;
+import seedu.address.logic.autocomplete.parser.AutoCompleteParser;
 
 /**
  * Stores the possible autocomplete options.
@@ -10,12 +10,13 @@ import seedu.address.logic.parser.AutoCompleteCommandParser;
 public class AutoCompletePossibilities {
     private final String stub;
     private final List<String> possibilities;
-    private final AutoCompleteCommandParser commandParser = new AutoCompleteCommandParser();
+    private final AutoCompleteParser parser;
 
     /** Default constructor */
-    public AutoCompletePossibilities(String stub) {
+    public AutoCompletePossibilities(String stub, AutoCompleteParser parser) {
         this.stub = stub;
-        possibilities = commandParser.parseForCommands(stub);
+        this.parser = parser;
+        possibilities = parser.parseForPossibilities(stub);
     }
 
     public List<String> getPossibilities() {
