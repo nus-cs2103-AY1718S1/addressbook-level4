@@ -3,7 +3,7 @@ package seedu.address.model.person;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's website in teh address book.
+ * Represents a Person's website in the address book.
  * Guarantees: immutable; is valid as declared
  */
 public class Website {

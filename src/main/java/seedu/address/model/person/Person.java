@@ -25,13 +25,14 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
     private ObjectProperty<Website> website;
+    private ObjectProperty<Picture> picture;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and name must not be null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  Birthday birthday, Remark remark, Website website, Set<Tag> tags) {
+                  Birthday birthday, Remark remark, Website website, Picture picture, Set<Tag> tags) {
         requireNonNull(name);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -40,6 +41,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
         this.website = new SimpleObjectProperty<>(website);
+        this.picture = new SimpleObjectProperty<>(picture);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -49,7 +51,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-            source.getBirthday(), source.getRemark(), source.getWebsite(), source.getTags());
+            source.getBirthday(), source.getRemark(), source.getWebsite(),
+                source.getPicture(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -150,6 +153,20 @@ public class Person implements ReadOnlyPerson {
         return website.get();
     }
 
+    public void setPicture(Picture picture) {
+        this.picture.set(requireNonNull(picture));
+    }
+
+    @Override
+    public ObjectProperty<Picture> pictureProperty() {
+        return picture;
+    }
+
+    @Override
+    public Picture getPicture() {
+        return picture.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -164,7 +181,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Replaces this person's tags with the tags in the argument tag set.
+     * Replaces  this person's tags with the tags in the argument tag set.
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
@@ -182,6 +199,7 @@ public class Person implements ReadOnlyPerson {
         this.setAddress(replacement.getAddress());
         this.setRemark(replacement.getRemark());
         this.setWebsite(replacement.getWebsite());
+        this.setPicture(replacement.getPicture());
         this.setTags(replacement.getTags());
     }
 
@@ -195,7 +213,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, remark, website, tags);
+        return Objects.hash(name, phone, email, address, remark, website, picture, tags);
     }
 
     @Override

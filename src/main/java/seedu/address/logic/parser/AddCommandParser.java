@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
 
@@ -21,6 +22,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Picture;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.Website;
@@ -47,6 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                     PREFIX_ADDRESS,
                     PREFIX_BIRTHDAY,
                     PREFIX_WEBSITE,
+                    PREFIX_PICTURE,
                     PREFIX_TAG);
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME)) { //checks if name is present as this is compulsory
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -60,9 +63,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Birthday birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
             Remark remark = new Remark(""); // add command does not allow adding remarks straight away
             Website website = ParserUtil.parseWebsite(argMultimap.getValue(PREFIX_WEBSITE)).get();
+            Picture picture = ParserUtil.parsePicture(argMultimap.getValue(PREFIX_PICTURE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, website, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, birthday, remark, website,
+                    picture, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

@@ -8,9 +8,10 @@ import seedu.address.commons.core.GuiSettings;
  * Represents User's preferences.
  */
 public class UserPrefs {
+    public static final String FOLDER_LOCATION = "data/";
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
+    private String addressBookFilePath = FOLDER_LOCATION + "addressbook.xml";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {

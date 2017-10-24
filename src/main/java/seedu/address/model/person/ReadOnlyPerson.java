@@ -40,6 +40,10 @@ public interface ReadOnlyPerson {
 
     Website getWebsite();
 
+    ObjectProperty<Picture> pictureProperty();
+
+    Picture getPicture();
+
     ObjectProperty<UniqueTagList> tagProperty();
 
     Set<Tag> getTags();
@@ -56,6 +60,7 @@ public interface ReadOnlyPerson {
                       && other.getBirthday().equals(this.getBirthday())
                       && other.getAddress().equals(this.getAddress())
                       && other.getWebsite().equals(this.getWebsite())
+                      && other.getPicture().equals(this.getPicture())
                       && other.getRemark().equals(this.getRemark()));
     }
 
@@ -87,6 +92,11 @@ public interface ReadOnlyPerson {
         if (getWebsite().toString() != null) {
             builder.append(" Website: ")
                 .append(getWebsite());
+        }
+
+        if (getPicture().toString() != null) {
+            builder.append(" Picture: ")
+                    .append(getPicture());
         }
 
         if (!(getTags().isEmpty())) {

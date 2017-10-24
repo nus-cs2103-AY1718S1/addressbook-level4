@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
 
@@ -43,6 +44,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                     PREFIX_ADDRESS,
                     PREFIX_BIRTHDAY,
                     PREFIX_WEBSITE,
+                    PREFIX_PICTURE,
                     PREFIX_TAG);
 
         Index index;
@@ -67,6 +69,8 @@ public class EditCommandParser implements Parser<EditCommand> {
                 .ifPresent(editPersonDescriptor::setAddress);
             ParserUtil.parseWebsite(argMultimap.getValue(PREFIX_WEBSITE))
                 .ifPresent(editPersonDescriptor::setWebsite);
+            ParserUtil.parsePicture(argMultimap.getValue(PREFIX_PICTURE))
+                    .ifPresent(editPersonDescriptor::setPicture);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG))
                 .ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {

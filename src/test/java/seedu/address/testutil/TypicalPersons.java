@@ -37,6 +37,7 @@ public class TypicalPersons {
             .withPhone("85355255")
             .withWebsite(Website.WEBSITE_EXAMPLE)
             .withTags("friends")
+            .withPicture(null)
             .build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder()
             .withName("Benson Meier")
@@ -45,6 +46,7 @@ public class TypicalPersons {
             .withBirthday("15/02/1993")
             .withWebsite(Website.WEBSITE_EXAMPLE)
             .withTags("owesMoney", "friends")
+            .withPicture(null)
             .build();
     public static final ReadOnlyPerson CARL = new PersonBuilder()
             .withName("Carl Kurz")
@@ -53,6 +55,7 @@ public class TypicalPersons {
             .withAddress("wall street")
             .withBirthday("15/02/1994")
             .withWebsite(Website.WEBSITE_EXAMPLE)
+            .withPicture(null)
             .build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder()
             .withName("Daniel Meier")
@@ -61,6 +64,7 @@ public class TypicalPersons {
             .withAddress("10th street")
             .withBirthday("15/02/1995")
             .withWebsite(Website.WEBSITE_EXAMPLE)
+            .withPicture(null)
             .build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder()
             .withName("Elle Meyer")
@@ -69,6 +73,7 @@ public class TypicalPersons {
             .withAddress("michegan ave")
             .withBirthday("15/02/1996")
             .withWebsite(Website.WEBSITE_EXAMPLE)
+            .withPicture(null)
             .build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder()
             .withName("Fiona Kunz")
@@ -76,6 +81,7 @@ public class TypicalPersons {
             .withEmail("lydia@example.com")
             .withAddress("little tokyo")
             .withWebsite(Website.WEBSITE_EXAMPLE)
+            .withPicture(null)
             .build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder()
             .withName("George Best")
@@ -83,6 +89,7 @@ public class TypicalPersons {
             .withEmail("anna@example.com")
             .withAddress("4th street")
             .withWebsite(Website.WEBSITE_EXAMPLE)
+            .withPicture(null)
             .build();
 
     // Manually added

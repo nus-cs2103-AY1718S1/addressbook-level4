@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
 
@@ -41,6 +42,7 @@ public class AddCommand extends UndoableCommand {
         + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
         + PREFIX_BIRTHDAY + "15/02/1992 "
         + PREFIX_WEBSITE + "https://www.website.com "
+        + PREFIX_PICTURE + "C:/Users/User/Picture/JohnDoe.png "
         + PREFIX_TAG + "friends "
         + PREFIX_TAG + "owesMoney";
 
