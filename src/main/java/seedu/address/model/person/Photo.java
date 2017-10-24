@@ -12,21 +12,19 @@ import javafx.scene.image.Image;
 public class Photo {
 
     public static final String URL_VALIDATION = "The filepath URL does not exist.";
-    private static final String DEFAULT_PHOTOURL = "/images/noPhoto.png";
-    private Image image;
+    private static final String DEFAULT_PHOTOURL = "";
     private String filepath;
     public Photo(String filepath) throws IllegalArgumentException {
         //this is to setup the default photo for contacts after it is added.
-        if (filepath.equals("/images/noPhoto.png")) {
+        if (filepath.equals("")) {
             this.filepath = DEFAULT_PHOTOURL;
-            this.image = new Image(getClass().getResource(this.filepath).toExternalForm());
+            //this.image = new Image(getClass().getResource(this.filepath).toExternalForm());
         } else {
-            this.filepath = filepath;
             File file = new File(filepath);
             if (isValidFilePath(file)) {
                 try {
                     String localUrl = file.toURI().toURL().toString();
-                    this.image = new Image(localUrl);
+                     this.filepath = localUrl;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -44,8 +42,8 @@ public class Photo {
         return filepath;
     }
 
-    public Image getImage() {
-        return image;
-    }
+   // public Image getImage() {
+     //   return image;
+    //}
 
 }

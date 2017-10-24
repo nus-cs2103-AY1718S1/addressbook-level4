@@ -5,6 +5,7 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -75,7 +76,7 @@ public class PersonCard extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
-        imageView.setImage(person.getPhoto().getImage());
+        setImage(person);
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -90,7 +91,15 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-
+    
+    private void setImage(ReadOnlyPerson person) {
+        String filePath = person.getPhoto().getFilePath();
+        if(!filePath.equals("")){
+            Image image = new Image(filePath);
+            imageView.setImage(image);
+        }
+    }
+    
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

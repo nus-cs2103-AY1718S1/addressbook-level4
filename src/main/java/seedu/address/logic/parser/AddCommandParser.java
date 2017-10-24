@@ -49,7 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Remark remark = new Remark(""); // add command does not allow adding remarks straight away
             Birthday birthday = new Birthday(""); //add command does not allow adding birthday straight away
-            Photo photo = new Photo("/images/noPhoto.png"); // add command does not allow adding photo straight
+            Photo photo = new Photo(""); // add command does not allow adding photo straight
             //away
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             ReadOnlyPerson person = new Person(name, phone, email, address, remark, birthday, photo, tagList);
