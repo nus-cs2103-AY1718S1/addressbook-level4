@@ -716,6 +716,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == User Stories
 
+*User Profile:* John is an undergraduate student in a local university. He has an active social life with many friend circles.
+John wants a way to manage his contacts and a way to remind him tasks and responsibilities in related to these contacts.
+
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
@@ -729,9 +732,34 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |avoid adding duplicate contacts |manage my contact list efficiently
+
+|`* * *` |user |edit contact information |make changes if needed
+
+|`* * *` |user |add birthday information |remember and keep track of my family members/friends birthday
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |add profile photo |can double check the identity if there are persons with the same name
+
+|`* *` |user |add multiple phone number to one person |store different contact number as one person may have more than one phone number
+
+|`* *` |user |have some important contacts |reach to my close friends easily at a click
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |find persons by tags |identify a group of people with common attributes
+
+|`* *` |user |add or remove some tags of a contact |quickly update contact information
+
+|`* * *` |user |find persons whose names contain a partial string |locate person whose name I forgot how to spell
+
+|`* *` |undergraduate student user |find persons by their address |identify which friends stay in the same campus
+
+|`* * *` |undergraduate student user |add events related to one or multiple contacts such as birthday or meetings |keep track tasks I need to do
+
+|`* *` |undergraduate student user |have a reminder pop up when an event is coming up |remember to prepare and fulfill my responsibility
+
 |=======================================================================
 
 {More to be added}
@@ -764,6 +792,121 @@ Use case ends.
 +
 [none]
 ** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User request to edit contact information
+2.  AddressBook shows old and new information stored
+
+*Extensions*
+
+[none]
+* 2a. No such person.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. Incorrect format of new information.
++
+[none]
+** 2b1. AddressBook shows an error message and request for new information again.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: List all persons
+
+*MSS*
+
+1.  User request to have a list of all persons
+2.  AddressBook shows a list of all persons in the contact list
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find persons by tags
+
+*MSS*
+
+1.  User request to list keywords
+2.  Application shows a list of persons who has those keywords as tags
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find persons by name string
+
+*MSS*
+
+1.  User request to key in a name string
+2.  Application shows a list of persons whose names contain the full or partial string
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find persons by phone number
+
+*MSS*
+
+1.  User request key in a phone number
+2.  Application shows a list of persons associated with the phone number
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add event associated with a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  Application shows a list of persons
+3.  User requests to add in an event associate with a specific person in the list
+4.  Application adds the event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Application shows an error message.
 +
 Use case resumes at step 2.
 

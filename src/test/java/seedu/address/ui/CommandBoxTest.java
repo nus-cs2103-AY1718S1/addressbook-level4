@@ -38,10 +38,12 @@ public class CommandBoxTest extends GuiUnitTest {
         defaultStyleOfCommandBox = new ArrayList<>(commandBoxHandle.getStyleClass());
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
+
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
     }
 
     @Test
+
     public void commandBox_startingWithSuccessfulCommand() {
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
@@ -55,6 +57,11 @@ public class CommandBoxTest extends GuiUnitTest {
         // verify that style is changed correctly even after multiple consecutive failed commands
         assertBehaviorForSuccessfulCommand();
         assertBehaviorForFailedCommand();
+
+
+
+
+
         assertBehaviorForFailedCommand();
     }
 
@@ -130,6 +137,7 @@ public class CommandBoxTest extends GuiUnitTest {
      *      - the text remains <br>
      *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
      */
+
     private void assertBehaviorForFailedCommand() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
         assertEquals(COMMAND_THAT_FAILS, commandBoxHandle.getInput());

@@ -20,7 +20,7 @@ import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Wraps all data at the address-book level
- * Duplicates are not allowed (by .equals comparison)
+ * Duplicates are not allowed (by .eNuals comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
@@ -64,11 +64,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
-        try {
+        /*try {
             setPersons(newData.getPersonList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
-        }
+        }*/
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);

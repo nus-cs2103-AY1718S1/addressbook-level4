@@ -33,7 +33,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com b/1993/12/12 a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -57,15 +57,15 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL b/BIRTHDAY a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com b/1995/5/21 a/John street, block 123, #01-01`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/1999/10/10 t/criminal`
 
 === Listing all persons : `list`
 
@@ -75,10 +75,10 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit PHONE [n/NAME] [p/PHONE] [e/EMAIL] [b/BIRTHDAY] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `PHONE`. The phone refers to the phone number of the person that you want to edit.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -87,22 +87,39 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
+* `edit 91229323 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `edit 91212332 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Update a tag name on all contacts: 'updateTag'
+
+Update a specified tag name with a new tag name on all contacts in addressbook. +
+Format: 'updateTag [t/oldTAG] [t/newTAG]'
+
+****
+* 'oldTag' must already exist in address book.
+* 'newTag' can be a tag that already exists in address book.
+* Updates the tag 'oldTAG' with the new tag 'newTAG'.
+* After this command is executed, 'oldTAG' no longer exists and the tag 'oldTAG' in any contact will be updated with 'newTAG'.
+****
+
+Examples:
+
+* 'updateTAG friend highschool_friend'+
+Any contact with tag 'friend' now has tag 'highschool_friend' and no longer has tag 'friend'
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose names contain fully or partially any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Partial words will be matched e.g. `Han` will match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hansell Gruber`, `Robert Lee`
 ****
 
 Examples:
@@ -111,6 +128,45 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Locating persons by phone number: 'phone'
+
+Finds person whose phone numbers match with at least a phone number in the specified list // Note that we plan to add multiple phone numbers to a person
+Format: 'phone NUMBER [MORE_NUMBERS]'
+
+****
+* The order of phone numbers being queried does not matter.
+* Only the phone number is searched.
+* Only full numbers will be matched e.b. '12345' will not match '123456' // can be modifed latter to match a chain of partial number
+****
+
+Examples:
+
+* 'phone 123456'+
+Returns person with phone number 123456
+* 'phone 123456 654321'
+Returns persons with phone numbers matching with '123456' or '654321'.
+
+=== Locating persons by tags: `findTag`
+
+Finds persons whose tags include all of the given keywords. +
+Format: `findTag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `cs2103t` will match `CS2103T`
+* The order of the keywords does not matter.
+* Only the tag is searched.
+* Only full words will be matched e.g. `cs210` will not match `cs2101`
+* Only persons matching at all keywords will be returned (i.e. `AND` search). e.g. e.g. `friend cs2103t` will match all
+contacts that have both `friend` and `cs2103t` tags
+****
+
+Examples:
+
+* `findTag friend` +
+Returns any person with a `friend` tag
+* `findTag CS2103T friend` +
+Returns all persons with both `friend` and `CS2103T` tag.
 
 === Deleting a person : `delete`
 
@@ -132,6 +188,22 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Deleting all contacts edded before a specific date 'deleteBefore'
+
+Deletes all persons added before the date specified from the address book. +
+Format: 'deleteBefore [DATE] [MONTH] [YEAR]'
+
+****
+* Deletes all persons added before date 'DATE', month 'MONTH' and year 'YEAR'
+* This command is undoable.
+* 'DATE', 'MONTH' and 'YEAR' must be respectively valid date, month and year.
+****
+
+Examples:
+
+* 'deleteBefore 10/01/2014' +
+Deletes all persons add before 10/01/2014 from the address book. 
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -151,6 +223,23 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Adding an event: `addEvent`
+
+Adds a person to the address book +
+Format: `addEvent INDEX n/EVENT_NAME d/DD-MM-YY [e/EXTRA]`
+
+[TIP]
+The event extra description is optional, can use as a to-do list. +
+The event date is `dd-mm-yy` format in which `yy` is the last 2 digits of the year.
+
+
+Examples:
+
+* `addEvent 1 n/Return 5$ d/09-08-17 e/lunch money` +
+Add a new event associate with the 1st person in the list.
+* `addEvent 2 n/Project Meeting d/25-11-17 e/IS1103, read up on last week lecture` +
+Add a new event associate with the 2nd person in the list.
 
 === Listing entered commands : `history`
 
@@ -234,12 +323,12 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL b/BIRTHDAY a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com b/1993/01/03 a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [b/BIRTHDAY] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
