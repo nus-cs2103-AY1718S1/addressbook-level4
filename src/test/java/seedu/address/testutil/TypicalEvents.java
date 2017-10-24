@@ -33,17 +33,9 @@ public class TypicalEvents {
     public static final ReadOnlyEvent NATIONALDAY = new EventBuilder().withName("National Day").withDate("2017-09-08")
             .withAddress("Padang").build();
 
-    // Manually added
-    public static final ReadOnlyEvent EASTER = new EventBuilder().withName("EASTER DAY").withDate("2018-12=20")
-            .withAddress("MIA's house").build();
-    public static final ReadOnlyEvent ULTRA = new EventBuilder().withName("ULTRA MUSIC FESTIVAL")
-            .withDate("2018-01-03").withAddress("Marina Bay Sands Open Area").build();
-
     // Manually added - Event's details found in {@code CommandTestUtil}
     public static final ReadOnlyEvent EVENT_A = new EventBuilder().withName(VALID_EVENT_A_NAME)
             .withDate(VALID_EVENT_A_DATE).withAddress(VALID_EVENT_A_ADDRESS).build();
-    public static final ReadOnlyEvent EVENT_B = new EventBuilder().withName(VALID_EVENT_B_NAME)
-            .withDate(VALID_EVENT_B_DATE).withAddress(VALID_EVENT_B_ADDRESS).build();
 
     private TypicalEvents() {} // prevents instantiation
 
