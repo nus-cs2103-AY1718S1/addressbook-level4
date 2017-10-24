@@ -79,11 +79,11 @@ public class StringUtil {
      * Will return false if the input string case does not match the string stored (case sensitive)
      * @throws NullPointerException if {@code s} is null.
      */
-    public static boolean isLettersOnly(String s) {
+    public static boolean isAlnumOnly(String s) {
         requireNonNull(s);
 
         try {
-            return s.matches("[\\p{Alpha}][\\p{Alpha} ]*");
+            return s.matches("[\\p{Alnum}][\\p{Alnum} ]*");
         } catch (IllegalArgumentException iae) {
             return false;
         }
@@ -97,11 +97,11 @@ public class StringUtil {
      * "-E" (contains capital letter)
      * @throws NullPointerException if {@code s} is null.
      */
-    public static boolean isStringOption(String s) {
+    public static boolean isSortOption(String s) {
         requireNonNull(s);
 
         try {
-            return s.matches("-\\p{Lower}");
+            return s.equals("-n") || s.equals("-p") || s.equals("-e") || s.equals("-a") || s.equals("-t");
         } catch (IllegalArgumentException iae) {
             return false;
         }
