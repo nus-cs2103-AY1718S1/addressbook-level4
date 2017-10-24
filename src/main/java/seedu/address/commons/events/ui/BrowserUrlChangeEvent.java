@@ -12,7 +12,9 @@ public class BrowserUrlChangeEvent extends BaseEvent {
         this.processType = processType;
     }
 
-    public String getProcessType() { return processType; }
+    public String getProcessType() {
+        return processType;
+    }
 
     @Override
     public String toString() {

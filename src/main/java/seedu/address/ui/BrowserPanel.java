@@ -30,6 +30,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
+    private static boolean isPost = false;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -37,8 +38,6 @@ public class BrowserPanel extends UiPart<Region> {
     private WebView browser;
 
     private Label location;
-
-    private static boolean isPost = false;
 
     public BrowserPanel() {
         super(FXML);
@@ -67,7 +66,9 @@ public class BrowserPanel extends UiPart<Region> {
      * Identifies if in the midst of posting process
      * @param post
      */
-    public static void setPost(boolean post) { isPost = post; }
+    public static void setPost(boolean post) {
+        isPost = post;
+    }
 
     /**
      * Loads a default HTML file with a background that matches the general theme.
@@ -88,8 +89,8 @@ public class BrowserPanel extends UiPart<Region> {
                             logger.fine("browser url changed to : '" + newValue + "'");
                             raise(new BrowserUrlChangeEvent(FacebookPostCommand.COMMAND_ALIAS));
                         }
-                }
-        });
+                    }
+                });
         isPost = false;
     }
 
@@ -108,15 +109,19 @@ public class BrowserPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleBrowserUrlChangeEvent(BrowserUrlChangeEvent event) throws CommandException {
-        switch (event.getProcessType()){
-            case FacebookConnectCommand.COMMAND_ALIAS:
-                logger.info(LogsCenter.getEventHandlingLogMessage(event));
-                FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+        switch (event.getProcessType()) {
 
-            case FacebookPostCommand.COMMAND_ALIAS:
-                logger.info(LogsCenter.getEventHandlingLogMessage(event));
-                FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
-                FacebookPostCommand.completePost();
+        case FacebookConnectCommand.COMMAND_ALIAS:
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+
+        case FacebookPostCommand.COMMAND_ALIAS:
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
+            FacebookPostCommand.completePost();
+
+        default:
+            throw new CommandException("Url change error.");
         }
     }
 }
