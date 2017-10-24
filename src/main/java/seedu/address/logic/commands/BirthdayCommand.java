@@ -61,9 +61,8 @@ public class BirthdayCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Age age = new Age(birthday.toString());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRemark(), birthday, age, personToEdit.getPhoto(),
+                personToEdit.getAddress(), personToEdit.getRemark(), birthday, personToEdit.getAge(), personToEdit.getPhoto(),
                 personToEdit.getTags());
 
         try {
