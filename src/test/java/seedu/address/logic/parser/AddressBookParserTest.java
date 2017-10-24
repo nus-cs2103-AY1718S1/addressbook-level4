@@ -134,7 +134,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_tAdd() throws Exception {
+    public void parseCommandTagAdd() throws Exception {
         Person person = new PersonBuilder().build();
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
@@ -149,7 +149,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_tFind() throws Exception {
+    public void parseCommandTagFind() throws Exception {
         TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("friend");
         TagFindCommand command = (TagFindCommand) parser.parseCommand(TagFindCommand.COMMAND_WORD
                 + " friend");
@@ -157,7 +157,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_tRemove() throws Exception {
+    public void parseCommandTagRemove() throws Exception {
         Person person = new PersonBuilder().build();
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
