@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -24,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_NOTE = "";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_MEETINGS = "2017-12-12 10:00";
 
     private Person person;
 
@@ -35,7 +37,9 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Note defaultNote = new Note(DEFAULT_NOTE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultNote, defaultTags);
+            Set<Meeting> defaultMeetings = SampleDataUtil.getMeetingSet(DEFAULT_MEETINGS);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultNote, defaultTags, defaultMeetings);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -68,6 +72,18 @@ public class PersonBuilder {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code meetings} into a {@code Set<Meeting>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withMeetings(String ... meetings) {
+        try {
+            this.person.setMeetings(SampleDataUtil.getMeetingSet(meetings));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("meetings are expected to be unique.");
         }
         return this;
     }

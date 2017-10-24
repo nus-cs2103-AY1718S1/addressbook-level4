@@ -91,9 +91,11 @@ _Figure 4.1.1_
 Command Name: `add` +
 Shorthand Alias: `a` +
 Function: adds a person to *DummyName* +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... [m/MEETING]...` +
 [TIP]
 A person can have any number of tags (including 0)
+[TIP]
+A person can have any number of meetings (including 0)
 [TIP]
 Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` are equivalent.
 ====
@@ -181,9 +183,11 @@ Deletes the 4th person in the results of the `filter` command.
 Command Name: `edit` +
 Shorthand Alias: `e` +
 Function: Edits the person at the specified `INDEX`. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...` +
 [TIP]
 A person can have any number of tags (including 0)
+[TIP]
+A person can have any number of meetings (including 0)
 [TIP]
 Parameters can be in any order e.g. `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` are equivalent.
 [NOTE]
@@ -831,10 +835,10 @@ will open up a new window in your default browser.
 |=======================================================================
 |Command | Alias| Format
 |Help |`hp` | `help`
-|Add |`a` | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+|Add |`a` | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... [m/MEETING]...`
 |List |`l` |`list`
 |Delete |`d` | `delete INDEX`
-|Edit |`e` | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+|Edit |`e` | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...`
 |Add Tag |`at` |`addtag INDEX TAG`
 |Delete Tag |`dt` |`deletetag TAGNAME`
 |Select |`sl` | `select INDEX
