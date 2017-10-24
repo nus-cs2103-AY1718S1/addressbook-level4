@@ -18,7 +18,6 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.google.OAuth;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
@@ -51,7 +50,6 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-    protected OAuth oauth;
 
 
     @Override
@@ -65,7 +63,6 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
-        oauth = new OAuth();
 
         initLogging(config);
 
@@ -198,7 +195,6 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        storage.backupAddressBook(model.getAddressBook());
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
         try {
