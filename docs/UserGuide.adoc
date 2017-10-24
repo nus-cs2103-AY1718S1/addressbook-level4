@@ -372,6 +372,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | History | `h` + | `h` +
 | Undo | `u` + | `u` +
 | Redo | `r` + | `r` +
+| Remark | `rm` + | `rm Index [rm/REMARK]` +
 |=======================================================================
 
 == FAQ
