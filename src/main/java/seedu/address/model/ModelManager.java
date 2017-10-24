@@ -79,6 +79,8 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //// person-level operations
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -113,6 +115,8 @@ public class ModelManager extends ComponentManager implements Model {
             addressBook.updatePerson(oldPerson, newPerson);
         }
     }
+
+    //// reminder-level operations
 
     @Override
     public synchronized void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException {
@@ -166,6 +170,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //=========== Filtered Reminder List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyReminder} backed by the internal list of
+     * {@code addressBook}
+     */
     @Override
     public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
         return FXCollections.unmodifiableObservableList(filteredReminders);

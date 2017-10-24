@@ -29,6 +29,8 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    //// person-level operations
+
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
@@ -62,6 +64,8 @@ public interface Model {
      */
     Boolean checkIfPersonListEmpty(ArrayList<ReadOnlyPerson> contactList);
 
+    //// reminder-level operations
+
     /** Deletes the given reminder. */
     void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
 
@@ -93,7 +97,7 @@ public interface Model {
      * Checks if list is empty
      * Returns true if is empty
      */
-    Boolean checkIfReminderListEmpty(ArrayList<ReadOnlyReminder> contactList);
+    Boolean checkIfReminderListEmpty(ArrayList<ReadOnlyReminder> reminderList);
 
     /**
      * Sort contact list in alphabetical order
