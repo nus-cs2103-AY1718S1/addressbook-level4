@@ -105,13 +105,13 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #C2D3DA;
+    -fx-background-color: #ffc3a3;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #e0e5e3;
+    -fx-background-color: #dee8e4;
     -fx-background-radius: 5;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
@@ -292,11 +292,11 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 70%);
+    -fx-background-color: derive(#824424, 75%);
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 100%);
+    -fx-background-color: derive(#824424, 100%);
     -fx-background-insets: 3;
 }
 
