@@ -38,7 +38,6 @@ public class TagTextField extends UiPart<Region> {
     public void setTagTextArea(String text) {
         tagTextArea.setText(text);
     }
-    
     public void setTagSet(Set<Tag> t) {
         tagSet = t;
     }
