@@ -91,15 +91,9 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Model support for contact component =============================================================
 
     @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
-        sortPersonList();
+        addressBook.sortPersonList();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -117,16 +111,13 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
-        sortPersonList();
+        addressBook.sortPersonList();
         indicateAddressBookChanged();
     }
-    @Override
-    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-            throws DuplicateEventException, EventNotFoundException {
-        requireAllNonNull(target, editedEvent);
 
-        addressBook.updateEvent(target, editedEvent);
-        sortEventList();
+    @Override
+    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
 
@@ -171,27 +162,26 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Model support for activity component =============================================================
 
     @Override
-    public void sortEventList() {
+    public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+        requireNonNull(event);
+        addressBook.addEvent(event);
         addressBook.sortEventList();
+        updateFilteredEventsList(PREDICATE_SHOW_ALL_EVENTS);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void sortPersonList() {
-        addressBook.sortPersonList();
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireAllNonNull(target, editedEvent);
+        addressBook.updateEvent(target, editedEvent);
+        addressBook.sortEventList();
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
         addressBook.removeEvent(event);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
-        addressBook.addEvent(event);
-        updateFilteredEventsList(PREDICATE_SHOW_ALL_EVENTS);
         indicateAddressBookChanged();
     }
 
