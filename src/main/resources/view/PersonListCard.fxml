@@ -27,10 +27,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <ImageView fitHeight="64" fitWidth="64">
-          <image>
-            <Image url="@../images/default_profile.png"></Image>
-          </image>
+        <ImageView fx:id="picture" fitHeight="64" fitWidth="64">
         </ImageView>
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
@@ -42,7 +39,7 @@
         <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
         <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
         <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-        <Label fx:id="birthday" text="\$birthday" />
+        <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" />
         <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
         <Label fx:id="website" styleClass="cell_small_label" text="\$website" />
       </VBox>
