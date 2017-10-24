@@ -9,7 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_BO
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERYDATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERY_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -196,7 +196,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid delivery date -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased()
-                + INVALID_DELIVERYDATE_DESC, DeliveryDate.MESSAGE_DELIVERYDATE_CONSTRAINTS);
+                + INVALID_DELIVERY_DATE_DESC, DeliveryDate.MESSAGE_DELIVERYDATE_CONSTRAINTS);
 
         /* Case: invalid status -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased()

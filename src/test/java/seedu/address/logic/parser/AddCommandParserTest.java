@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_BO
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERYDATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERY_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -199,7 +199,7 @@ public class AddCommandParserTest {
 
         // invalid delivery date
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
-                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + INVALID_DELIVERYDATE_DESC + STATUS_DESC_BOB
+                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + INVALID_DELIVERY_DATE_DESC + STATUS_DESC_BOB
                 + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 DeliveryDate.MESSAGE_DELIVERYDATE_CONSTRAINTS);
 
@@ -217,7 +217,7 @@ public class AddCommandParserTest {
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + INVALID_NAME_DESC
-                + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC + INVALID_DELIVERYDATE_DESC,
+                + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC + INVALID_DELIVERY_DATE_DESC,
                 Name.MESSAGE_NAME_CONSTRAINTS);
     }
 }
