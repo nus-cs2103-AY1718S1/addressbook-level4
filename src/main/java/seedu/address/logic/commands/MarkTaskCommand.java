@@ -18,15 +18,15 @@ public class MarkTaskCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "mta";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the task identified by the index number used in the last task listing.\n"
+            + ": Marks the task identified to be completed by the index number used in the last task listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_TASK_SUCCESS = "Deleted Task: %1$s";
+    public static final String MESSAGE_MARK_TASK_SUCCESS = "Marked Task: %1$s";
 
     private final Index targetIndex;
 
-    public DeleteTaskCommand(Index targetIndex) {
+    public MarkTaskCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -40,21 +40,21 @@ public class MarkTaskCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
-        ReadOnlyTask taskToDelete = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyTask taskToComplete = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.deleteTask(taskToDelete);
+            model.markTask(taskToComplete);
         } catch (TaskNotFoundException tnfe) {
             assert false : "The target task cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
+        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToComplete));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteTaskCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteTaskCommand) other).targetIndex)); // state check
+                || (other instanceof MarkTaskCommand // instanceof handles nulls
+                && this.targetIndex.equals(((MarkTaskCommand) other).targetIndex)); // state check
     }
 }
