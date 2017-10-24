@@ -24,32 +24,26 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s):\n%1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s): %1$s";
 
-    private ArrayList<Index> targetIndexArraylist = new ArrayList<Index>();
+    private List<Index> targetIndexList = new ArrayList<>();
 
-    public DeleteCommand(ArrayList<Index> targetIndexArraylist) {
-        this.targetIndexArraylist = targetIndexArraylist;
+    public DeleteCommand(List<Index> targetIndexList) {
+        this.targetIndexList = targetIndexList;
     }
-
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndexArraylist.add(targetIndex);
-    }
-
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        String result = "";
-        String people = "";
-        ReadOnlyPerson personToDelete = null;
-        for (Index i : this.targetIndexArraylist) {
+        StringBuilder people = new StringBuilder();
+
+        for (Index i : this.targetIndexList) {
             if (i.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
-            personToDelete = lastShownList.get(i.getZeroBased());
+            ReadOnlyPerson personToDelete = lastShownList.get(i.getZeroBased());
 
             try {
                 model.deletePerson(personToDelete);
@@ -57,18 +51,16 @@ public class DeleteCommand extends UndoableCommand {
                 assert false : "The target person cannot be missing";
             }
 
-            people += personToDelete + "\n";
+            people.append("\n");
+            people.append(personToDelete);
         }
-
-        people = people.substring(0, people.length() - 1);
-        result = String.format(MESSAGE_DELETE_PERSON_SUCCESS, people);
-        return new CommandResult(result);
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, people));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndexArraylist.equals(((DeleteCommand) other).targetIndexArraylist)); // state check
+                && this.targetIndexList.equals(((DeleteCommand) other).targetIndexList)); // state check
     }
 }
