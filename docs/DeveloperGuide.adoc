@@ -14,6 +14,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `CS2103AUG2017-W15-B4`      Since: `Oct 2017`      Licence: `MIT`
 
+== Introduction
+
+3W stands for "Who, What & Where". It is an application for University students, business people and all those who have a busy daily schedule.
+3W stores information about your contact, your tasks, and build linkage between them for cross references.
+3W supports map show for contact address and task venue with a Google map window.
+3W bases on command line to interact.
+Live neat with 3W.
+
 == Setting up
 
 === Prerequisites
