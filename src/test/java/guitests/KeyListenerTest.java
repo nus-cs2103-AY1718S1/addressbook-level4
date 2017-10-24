@@ -106,7 +106,7 @@ public class KeyListenerTest extends RolodexGuiTest {
 
     @Test
     public void executeKeyEventForClearCommand() {
-        KeyCodeCombination clearKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Shift+D");
+        KeyCodeCombination clearKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Shift+C");
 
         guiRobot.push(clearKeyCode);
         assertEquals(ClearCommand.MESSAGE_SUCCESS, getResultDisplay().getText());
