@@ -16,12 +16,9 @@ public class ExportCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Exports the address book data to the location defined by the file path.\n"
-            + "Existing file data will be overwritten by the current data in the address book. "
-            + "Parent directories will be created if they do not exist.\n"
-            + "Parameters: FILEPATH (must end with an extension of .xml)\n"
             + "Example:\n"
             + COMMAND_WORD + " C:\\Users\\John Doe\\Documents\\addressbook.xml (Windows)\n"
-            + COMMAND_WORD + " /Users/John Doe/Documents/addressbook.xml (Unix)\n";
+            + COMMAND_WORD + " /Users/John Doe/Documents/addressbook.xml (macOS, Linux)\n";
 
     public static final String MESSAGE_EXPORT_SUCCESS = "Exported address book data to: %1$s";
     public static final String MESSAGE_NOT_XML_FILE = "The file path does not point to an XML file.";
