@@ -24,7 +24,7 @@ public class Task implements ReadOnlyTask {
     private ObjectProperty<String> endDateTime;
     private ObjectProperty<Integer> taskIndex;
     private ObjectProperty<UniqueTagList> tags;
-
+    private ObjectProperty<Boolean> complete;
 
     /**
      * Default constructor may not be used
@@ -37,6 +37,7 @@ public class Task implements ReadOnlyTask {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
         this.startDateTime = new SimpleObjectProperty<>("");
         this.endDateTime = new SimpleObjectProperty<>("");
+        this.complete = new SimpleObjectProperty<>(false);
     }
 
     /**
@@ -57,6 +58,7 @@ public class Task implements ReadOnlyTask {
         this();
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
+        this.complete = new SimpleObjectProperty<>(false);
     }
 
     /**
@@ -70,6 +72,7 @@ public class Task implements ReadOnlyTask {
         this.taskName = new SimpleObjectProperty<>(name);
         this.taskDescription = new SimpleObjectProperty<>(description);
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
+        this.complete = new SimpleObjectProperty<>(false);
     }
 
     /**
@@ -85,6 +88,7 @@ public class Task implements ReadOnlyTask {
         this.taskDescription = new SimpleObjectProperty<>(description);
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
+        this.complete = new SimpleObjectProperty<>(false);
     }
 
     /**
@@ -101,6 +105,7 @@ public class Task implements ReadOnlyTask {
         this.taskDescription = new SimpleObjectProperty<>(description);
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
+        this.complete = new SimpleObjectProperty<>(false);
     }
 
     /**
@@ -109,7 +114,7 @@ public class Task implements ReadOnlyTask {
      */
     public Task (ReadOnlyTask task) {
         this(task.getName(), task.getDescription(), task.getStartDateTime(),
-                task.getEndDateTime(), task.getTags());
+                task.getEndDateTime(), task.getTags(), task.getComplete());
     }
 
     /**
@@ -148,6 +153,8 @@ public class Task implements ReadOnlyTask {
         return endDateTime.get();
     }
 
+    public Boolean getComplete () { return complete.get(); }
+
     public ObjectProperty<String> nameProperty() {
         return taskName;
     }
@@ -168,6 +175,8 @@ public class Task implements ReadOnlyTask {
         return tags;
     }
 
+    public ObjectProperty<Boolean> completeProperty() { return complete; }
+
     public void setName(String name) {
         this.taskName.set(requireNonNull(name));
     }
@@ -187,6 +196,8 @@ public class Task implements ReadOnlyTask {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
+
+    public void setComplete() { this.complete.set(requireNonNull(true)); }
 
     /**
      * Set a new tag set along with the new task construction

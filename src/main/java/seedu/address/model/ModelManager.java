@@ -139,6 +139,12 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    @Override
+    public void markTask(ReadOnlyTask task) throws TaskNotFoundException {
+        taskBook.markTask(task);
+        indicateTaskBookChanged();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
