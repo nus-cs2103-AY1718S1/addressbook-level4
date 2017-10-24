@@ -130,7 +130,7 @@ public class CalendarPanel extends UiPart<Region> {
                                 DateTimeFormatter format1 = DateTimeFormatter.ofPattern("ddMMyy");
                                 if (MonthDay.from(item).equals
                                         (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), format1)))) {
-                                    setTooltip(new Tooltip("Birthday!"));
+                                    setTooltip(new Tooltip(person.getName() + "'s Birthday!"));
                                     setStyle("-fx-background-color: #f1a3ff;");
                                 }
                             } catch (DateTimeParseException exc) {
