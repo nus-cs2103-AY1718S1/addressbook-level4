@@ -45,19 +45,16 @@ public class ListCommand extends Command {
             ListingUnit.setCurrentListingUnit(MODULE);
             UniqueModuleCodePredicate codePredicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
             ListingUnit.setCurrentPredicate(codePredicate);
-            EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(codePredicate);
         } else if (parameter.equals(LOCATION_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LOCATION);
             UniqueLocationPredicate locationPredicate = new UniqueLocationPredicate(model.getUniqueLocationSet());
             ListingUnit.setCurrentPredicate(locationPredicate);
-            EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(locationPredicate);
         } else if (parameter.equals(MARKED_LIST_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LESSON);
             FavouriteListPredicate favouriteListPredicate = new FavouriteListPredicate();
             ListingUnit.setCurrentPredicate(favouriteListPredicate);
-            EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(favouriteListPredicate);
         } else {
             assert false : "There cannot be other parameters passed in";
@@ -70,6 +67,9 @@ public class ListCommand extends Command {
      */
     private CommandResult executeListByAttribute(Predicate predicate) {
         model.updateFilteredLessonList(predicate);
+        if (predicate instanceof FavouriteListPredicate) {
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
+        }
         EventsCenter.getInstance().post(new RefreshPanelEvent());
         return new CommandResult(String.format(MESSAGE_SUCCESS, parameter));
     }
