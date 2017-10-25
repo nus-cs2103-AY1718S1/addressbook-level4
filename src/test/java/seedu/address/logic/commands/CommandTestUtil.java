@@ -18,7 +18,7 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.ContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.ReadOnlyTask;
@@ -142,7 +142,7 @@ public class CommandTestUtil {
     public static void showFirstPersonOnly(Model model) {
         ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
         final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredPersonList(new ContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredPersonList().size() == 1;
     }

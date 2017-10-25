@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -56,6 +57,7 @@ public interface Model {
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
     ObservableList<ReadOnlyTask> getFilteredTaskList();
 
+    SortedList<ReadOnlyTask> getSortedTaskList();
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -64,4 +66,5 @@ public interface Model {
 
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
+    void taskByEnd();
 }
