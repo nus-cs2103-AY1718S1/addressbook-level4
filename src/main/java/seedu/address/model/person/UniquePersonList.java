@@ -156,12 +156,13 @@ public class UniquePersonList implements Iterable<Person> {
                 return p2.getFavorite().getValue() - p1.getFavorite().getValue();
             } else {
                 switch (attribute) {
-                    case 1: return p1.getPhone().value.compareTo(p2.getPhone().value);
-                    case 2: return p1.getEmail().value.compareTo(p2.getEmail().value);
-                    case 3: return p1.getAddress().value.compareTo(p2.getAddress().value);
-                    default: return p1.getName().fullName.compareTo(p2.getName().fullName);
+                case 1: return p1.getPhone().value.compareTo(p2.getPhone().value);
+                case 2: return p1.getEmail().value.compareTo(p2.getEmail().value);
+                case 3: return p1.getAddress().value.compareTo(p2.getAddress().value);
+                default: return p1.getName().fullName.compareTo(p2.getName().fullName);
                 }
-            }});
+            }
+        });
     }
     //@@author
 
@@ -173,10 +174,10 @@ public class UniquePersonList implements Iterable<Person> {
         this.attribute = attribute;
         internalList.sort((ReadOnlyPerson p1, ReadOnlyPerson p2) -> {
             switch (attribute) {
-                case 1: return p1.getPhone().value.compareTo(p2.getPhone().value);
-                case 2: return p1.getEmail().value.compareTo(p2.getEmail().value);
-                case 3: return p1.getAddress().value.compareTo(p2.getAddress().value);
-                default: return p1.getName().fullName.compareTo(p2.getName().fullName);
+            case 1: return p1.getPhone().value.compareTo(p2.getPhone().value);
+            case 2: return p1.getEmail().value.compareTo(p2.getEmail().value);
+            case 3: return p1.getAddress().value.compareTo(p2.getAddress().value);
+            default: return p1.getName().fullName.compareTo(p2.getName().fullName);
             }
         });
     }

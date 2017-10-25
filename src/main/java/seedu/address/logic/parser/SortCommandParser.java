@@ -1,13 +1,13 @@
 //@@author A0144294A
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.SortCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parse user Input and create a new SortCommand object
@@ -25,10 +25,10 @@ public class SortCommandParser implements Parser<SortCommand> {
         String trimmedArg = argument.trim();
         if (attributeList.contains(trimmedArg)) {
             switch (trimmedArg) {
-                case "phone": return new SortCommand(1);
-                case "email": return new SortCommand(2);
-                case "address": return new SortCommand(3);
-                default: return new SortCommand(0);
+            case "phone": return new SortCommand(1);
+            case "email": return new SortCommand(2);
+            case "address": return new SortCommand(3);
+            default: return new SortCommand(0);
             }
         } else {
             throw new ParseException(
