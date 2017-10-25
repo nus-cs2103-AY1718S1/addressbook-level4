@@ -66,12 +66,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            persons.sortPersons();
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
-        persons.sortPersons();
         syncMasterTagListWith(persons);
     }
 

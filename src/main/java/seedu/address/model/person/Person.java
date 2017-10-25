@@ -196,7 +196,8 @@ public class Person implements ReadOnlyPerson {
                 detail += tag.tagName + " ";
             }
             return detail.trim();
-        } return "";
+        }
+        return "";
     }
 
 

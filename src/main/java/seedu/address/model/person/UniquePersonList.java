@@ -97,7 +97,10 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
-    public void sortPersons() {
+    /**
+     * Sorts the internal list of people
+     */
+    public void sortPersons() throws DuplicatePersonException {
         ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
         listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {
             int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
@@ -106,13 +109,11 @@ public class UniquePersonList implements Iterable<Person> {
             }
             return x;
         });
-        try {
-            UniquePersonList listToReplace = new UniquePersonList();
-            for (ReadOnlyPerson person : listToSort) {
-                listToReplace.add(person);
-            }
-            setPersons(listToReplace);
-        } catch (Exception e) {}
+        UniquePersonList listToReplace = new UniquePersonList();
+        for (ReadOnlyPerson person : listToSort) {
+            listToReplace.add(person);
+        }
+        setPersons(listToReplace);
     }
 
     /**
