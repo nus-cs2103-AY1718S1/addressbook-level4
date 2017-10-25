@@ -1,10 +1,13 @@
 package seedu.address.logic.parser;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
 
@@ -115,8 +118,32 @@ public class ParserUtil {
         requireNonNull(webLinks);
         final Set<WebLink> webLinkSet = new HashSet<>();
         for (String webLinkName : webLinks) {
-            webLinkSet.add(new WebLink(webLinkName));
+            if(checkRepeatedWebLinkInCategory(webLinkSet, webLinkName )) {
+                webLinkSet.add(new WebLink(webLinkName));
+            }else{
+                throw new IllegalValueException("Only one link per category: facebook ,instagram, twitter or linkedin.");
+                //TODO: how to ensure that nopersonexist expection is thrown first beofore this illegal value exception?
+            }
         }
         return webLinkSet;
     }
+
+    public static boolean checkRepeatedWebLinkInCategory (Set<WebLink> webLinkSet, String inputWebLink) throws IllegalValueException {
+        boolean duplicateCheck = TRUE;
+        if (webLinkSet.isEmpty()) {
+            return duplicateCheck;
+        } else {
+
+            for (Iterator<WebLink> iterateInternalList = webLinkSet.iterator(); iterateInternalList.hasNext(); ) {
+                WebLink checkWebLink = iterateInternalList.next();
+                String checkWeblinkTag = checkWebLink.toStringWebLinkTag();
+                if (inputWebLink.contains(checkWeblinkTag)) {
+                    duplicateCheck = FALSE;
+                    break;
+                }
+            }
+            return duplicateCheck;
+        }
+    }
+
 }
