@@ -2,39 +2,38 @@ package seedu.address.ui;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * The person information panel of the app.
  */
-public class PersonCard extends UiPart<Region> {
+public class PersonInformationPanel extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "PersonInformationPanel.fxml";
     private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
 
-    /**
-     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
-     * As a consequence, UI elements' variable names cannot be set to such keywords
-     * or an exception will be thrown by JavaFX during runtime.
-     *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
-     */
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    public final ReadOnlyPerson person;
-
-    public final int stringid;
+    private ReadOnlyPerson person;
 
     @FXML
-    private HBox cardPane;
+    private VBox informationPane;
+    @FXML
+    private FlowPane tags;
     @FXML
     private Label name;
     @FXML
@@ -45,16 +44,11 @@ public class PersonCard extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
-    @FXML
-    private FlowPane tags;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public PersonInformationPanel() {
         super(FXML);
-        this.person = person;
-        stringid = displayedIndex;
-        id.setText(displayedIndex + ". ");
-        //initTags(person);
-        bindListeners(person);
+        loadDefaultScreen();
+        registerAsAnEventHandler(this);
     }
 
     private static String getColorForTag(String tagValue) {
@@ -65,32 +59,56 @@ public class PersonCard extends UiPart<Region> {
         return tagColors.get(tagValue);
     }
 
+    private void loadDefaultScreen() {
+        this.person = null; }
+
     /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
-     * so that they will be notified of any changes.
+     * binds the person's information to that of the person card.
+     * @param person
+     * @param personid
      */
-    private void bindListeners(ReadOnlyPerson person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        /* Commented out to remove address, email and tags from Person Card
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+    private void bindListeners(ReadOnlyPerson person, int personid) {
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            initTags(person);
-        });*/
+            initTags();
+        });
+
+    }
+
+    /**
+     * loads the selected person's information to be displayed.
+     * @param person
+     * @param personid
+     */
+    private void loadPersonInformation(ReadOnlyPerson person, int personid) {
+        this.person = person;
+        tags.getChildren().clear();
+        initTags();
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        id.setText(Integer.toString(personid));
+
     }
 
     /**
      * Sets a background color for each tag.
-     * @param person
+     * @param
      */
-    private void initTags(ReadOnlyPerson person) {
+    private void initTags() {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
             tags.getChildren().add(tagLabel);
         });
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInformation(event.getNewSelection().person, event.getNewSelection().stringid);
+        bindListeners(event.getNewSelection().person, event.getNewSelection().stringid);
     }
 
     @Override
@@ -101,12 +119,12 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof PersonInformationPanel)) {
             return false;
         }
 
         // state check
-        PersonCard card = (PersonCard) other;
+        PersonInformationPanel card = (PersonInformationPanel) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }

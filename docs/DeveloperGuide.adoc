@@ -222,6 +222,8 @@ The person information panel is created using javafx. It should display detailed
 
 The event of the selection of a person is registered using the Event Bus system.
 
+The tags and various information of the person are bound to the information in PersonCard with the method bindListeners, so whenever the information updates, the information displayed in the Person Information Panel will change too.
+
 The following shows the usage of the person information panel:
 
 Before selecting a person:
@@ -415,6 +417,32 @@ A new label will be displaced for each person for each custom field.
 ==== Sequence Diagram
 image::CustomCommandSequenceProgram.png[width="800"]
 
+=== Upload photo
+==== Model
+A Photo class is created and added as an attribute to the Person class to store the icon photo of each person.
+A default photo is added to each person when they are just initialised without adding any icon photos.
+
+The icon photo of each person is identified using a String value which represents the path of the photo image.
+
+==== Logic
+A Command - UploadPhotoCommand - is used to manipulate the icon photo of a person. The UploadPhotoCommand is an undoable command.
+
+When a new Photo is created, it will be constructed with 2 parameters: Index, String.
+The 2 parameters represents the index of the person in the AddressBook, the path of the photo image indented to upload.
+
+If the icon photo of the person is previously the default photo, a photo with input path will be created and added into the person's Photo attribute.
+For example, command `upload 1 D:\Git Projects\wolf.jpg` will add a photo image with path "D:\Git Projects\wolf.jpg" for the first person in the AddressBook if photo icon previously is the default.
+Else if the icon photo of the person has already existed and is not the defaulted, the icon photo of the person will be replaced with the input value.
+For example, command `upload 1 D:\Git Projects\wolf.jpg` will update the icon photo of the person to the photo with path "D:\Git Projects\wolf.jpg".
+Else if the input photo path is empty, the icon photo of the person will be reset to the default photo.
+For example, command `upload 1` will reset the icon photo of the first person to the default photo in the AddressBook.
+
+==== Ui
+Image of the icon photo will be displayed after uploaded.
+
+==== Sequence Diagram
+image::UploadPhotoCommandSequenceProgram.png[width="800"]
+
 === Search bar
 ==== Front end
 The search bar is implemented in the front end using `SearchBox.fxml`, which controls the text field that receives query keywords from user.
@@ -476,24 +504,31 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 
 === More than one instance for each field
  (Coming in V1.3)
+
  ====Description
+
 Since our target audience are the NUS students, which include a large propotion of international students, our addressBook will support the users to add multiple phone numbers, emails addresses and home addresses.
 ==== Model
 UniquePhoneList, UniqueEmailList and UniqueAddressList Classes are created for each person to store the person's respective Fields.
+
 UniquePhoneList is a list of Phone object. It will contain at least one local phone number as the primary phone number, this phone number is recognized by the country code +65
 This primary phone number must not be null, and it will be at the front of the UniquePhoneList.
 While other additonal numbers are optional. Note that if the person has more than one local phone numbers, the one added first will be the primary number.
 Likewise for UniqueEmailList and UniqueAddressList. The primary email will be NUS webmail and the primary address will be the local address.
 Phone, Email and Address Classes are altered accordingly.
+
 A Phone object now has two field, country code ("+" + two digits integer) and the actual number.
 A Email object will be parsed in two parts, first part is the string before @ and the second part is after @, NUS webmail is recognized by the second part (.equals(u.nus.edu));
 ==== Logic
 UpdatePhoneCommand, UpdateEmailCommand and UpdateAddressCommand will be created to add/remove these fields.
+
 When a Update[sth]Command is created, it will be constructed with 3 parameters: Index, String, String.
 The 3 parameters represents the index of the person in the AddressBook, action to be taken (add/remove) and a value respectively.
+
 When action is add, we will create an object of the added instance and add it to the end of the Unique[sth]List.
 When action is remove, we first check if the value equals to the primary value in the Unique[sth]List, this will flag an "primary [field] cannot be removed" message, otherwise we will just remove the value from the Unique[sth]List.
 For example, command `updatePhone 1 add p/+8623333333` will add a phone number to the first person in the list of the addressBook.
+
 command 'updatePhone 1 remove p/+6583060774' will first check whether p/+6583060774 is the primary phone number is the UniquePhoneList.
 If yes, error messge "Primary phone number p/+6583060774 cannot be removed."
 Else, p/+6583060774 will be removed from the UniquePhoneList.
@@ -502,6 +537,7 @@ Likewise for UpdateEmail and UpdateAddress.
 Xml file for newly created list will be created and the Xml for Person is updated for storing the information of the fields of every person.
 ==== Ui
 A new label will be displaced for each person for each instance of the same fields.
+
 == Documentation
 We use asciidoc for writing documentation.
 [NOTE]
@@ -1028,6 +1064,7 @@ Use case resumes at step 2.
 .  Address Book: The specific book that the user is using the application on.
 .  Format: The way in which command is entered.
 .  History: Commands entered previously.
+.  Person Information Panel: The panel which a person's information will be displayed when any person card is clicked.
 .  UI: Short for user interface.
 .  Undo: Restores the application to the state prior to the current state.
 .  GUI: Short for graphical user interface. A user interface that allows users to interact with electronic devices through graphical icons and visual indicators.
