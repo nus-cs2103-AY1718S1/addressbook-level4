@@ -496,6 +496,8 @@ Tag to delete them. +
 ** **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
 and has to be updated whenever we edit other parcel details as well.
 
+tag::backup[]
+
 === Backup Mechanism
 
 The back up mechanism is facilitated by a `backupAddressBook()` method within the `StorageManager`. It supports the
@@ -508,6 +510,8 @@ a method that is called when `Ark` is launched. The method utilises the `Storage
 stores the backup in the same directory as the main `AddressBook` storage file. The backup file is saved and named with
 the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e. If the main `AddressBook` storage file
  is named as `addressbook.xml`, the backup storage file will be saved as `addressbook.xml-backup.xml`.
+
+end::backup[]
 
 ==== Design Considerations
 
@@ -543,6 +547,7 @@ other. +
 the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
 provides a workable copy of the data of Ark.
 
+tag::import[]
 === Import Mechanism
 
 To use this command, type `import (FILE_NAME)` into the `CommandBox`.
@@ -610,7 +615,7 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 ** **Pros:** Allows user to name his files following any conventions and be successfully imported into Ark. +
 ** **Cons:** Makes Ark vulnerable to simple directory traversal attack where user can access files outside the
 `data/import/` directory. +
-
+end::import[]
 
 === Tab autocomplete mechanism
 
@@ -651,7 +656,67 @@ functions. +
 Also creates coupling between the `Autocompleter` and `CommandBox`. +
 * **Alternative 2:** Implement `autocomplete` inside `CommandBox`
 ** **Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
-** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +
+** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +=== Tab autocomplete mechanism
+
+start::trackingNumber[]
+
+=== TrackingNumber Field
+
+Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
+This feature is important because a single person can have many parcels belonging to him. Tracking numbers are used
+to differentiate between the different parcels that are going to be delivered to the same person. Tracking numbers also
+serve as a better way of narrowing down and pinpointing parcels of interest since these numbers are more unique
+
+[NOTE]
+Presently, the `Tracking Number` Field only has support for Registered Article tracking numbers belonging to SingPost.
+You can read more about their Registered Article tracking number
+ link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here].
+
+end::trackingNumber[]
+
+tag::postalCode[]
+
+=== PostalCode Field
+
+The `PostalCode` field is implemented as part of Address. This class stores the postal address of locations in Singapore.
+It only accepts values of `s` or `S` followed by 6 digits. The value stored in this class is used to store the postal
+code of the address. The value is used to query Google Maps when the `select` command is executed.
+
+[NOTE]
+Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
+code exists even though it might meet the criteria above. The team is working on producing a database of postal codes
+ in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
+ the correct postal code.
+
+end::postalCode[]
+
+tag::status[]
+
+=== Status field
+
+`Status` is used to indicate the current stage of delivery that a parcel is at. It has 4 possible states:
+
+* `PENDING` - This means that the parcel has not been delivered and has not passed the date it is supposed to be
+delivered by. +
+* `DELIVERING` - This means that the parcel is currently working being delivered to its destination address.
+* `COMPLETED` - This indicates that the parcel has been successfully delivered to its destination.
+* `OVERDUE` - This state indicates that the parcel has not been delivered and has passed its due date.
+
+These states have different colours codes to allow users to differentiate the `Status` values more easily.
+
+==== Design Considerations
+
+** `Implementation of Status`**
+
+* **Alternative 1 (current choice):** Status is an enum class.
+** **Pros:** `Status` should only have fixed values. The user should also not be allowed to create new `Status` objects.
+** **Cons:** Less options for the user to alter the `Status` values +
+* **Alternative 2:** Allow the user to define any `Status` they wish.
+** **Pros:** Users have more versatility on naming conventions
+** **Cons:** It becomes more difficult to import data files since different users may use different terminologies to
+describe the same status of the parcel.
+
+end::status[]
 
 === Maintain sorted mechanism
 image::AddParcelSdForLOgic.png[width="300"]

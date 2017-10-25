@@ -13,6 +13,7 @@ public class Phone {
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers can only contain numbers, and should be at least 3 digits long";
+    public static final String PHONE_DEFAULT_VALUE = "NIL";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
@@ -31,10 +32,19 @@ public class Phone {
     }
 
     /**
+     *  Creates a default phone class if the user does not provide any
+     *  @throws IllegalValueException
+     */
+    public Phone() throws IllegalValueException {
+        this(PHONE_DEFAULT_VALUE);
+    }
+
+    /**
      * Returns true if a given string is a valid parcel phone number.
      */
     public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
+        return test.matches(PHONE_VALIDATION_REGEX)
+                || test.equals(PHONE_DEFAULT_VALUE);
     }
 
     @Override
