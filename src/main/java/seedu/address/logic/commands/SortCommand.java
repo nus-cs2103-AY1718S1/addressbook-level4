@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.optionparser.CommandOptionUtil.PREFIX_OPTION_INDICATOR;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -23,7 +24,11 @@ public class SortCommand extends UndoableCommand {
             + "Parameters: [OPTION] (must be one of the available field and a String)\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_NAME;
 
-    public static final String MESSAGE_SUCCESS = "Persons sorted.";
+    public static final String MESSAGE_SUCCESS_BY_NAME = "Persons sorted by name.";
+    public static final String MESSAGE_SUCCESS_BY_PHONE = "Persons sorted by phone.";
+    public static final String MESSAGE_SUCCESS_BY_EMAIL = "Persons sorted by email.";
+    public static final String MESSAGE_SUCCESS_BY_ADDRESS = "Persons sorted by address.";
+    public static final String MESSAGE_SUCCESS_BY_TAG = "Persons sorted by tag.";
     public static final String NO_PERSON_FOUND = "Empty list.";
 
     private final String option;
@@ -41,7 +46,19 @@ public class SortCommand extends UndoableCommand {
         }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        if (option.contains("-n")) {
+            return new CommandResult(MESSAGE_SUCCESS_BY_NAME);
+        } else if (option.contains("-p")) {
+            return new CommandResult(MESSAGE_SUCCESS_BY_PHONE);
+        } else if (option.contains("-e")) {
+            return new CommandResult(MESSAGE_SUCCESS_BY_EMAIL);
+        } else if (option.contains("-a")) {
+            return new CommandResult(MESSAGE_SUCCESS_BY_ADDRESS);
+        } else if (option.contains("-t")) {
+            return new CommandResult(MESSAGE_SUCCESS_BY_TAG);
+        } else {
+            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
     }
 
     @Override

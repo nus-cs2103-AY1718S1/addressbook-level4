@@ -26,7 +26,7 @@ public class DeleteAltCommand extends UndoableCommand {
     private final String targetName;
 
     public DeleteAltCommand(String targetName) {
-        this.targetName = targetName;
+        this.targetName = targetName.toLowerCase();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class DeleteAltCommand extends UndoableCommand {
         int index = 0;
 
         for (ReadOnlyPerson p : lastShownList) {
-            if (p.getName().toString().contains(targetName)) {
+            if (p.getName().toString().toLowerCase().contains(targetName) && targetName.length() > 3) {
                 index = lastShownList.indexOf(p);
                 break;
             } else {
@@ -47,7 +47,11 @@ public class DeleteAltCommand extends UndoableCommand {
         }
 
         if (index >= lastShownList.size() || index == -1) {
-            throw new CommandException(Messages.MESSAGE_PERSON_NAME_ABSENT);
+            if (targetName.length() <= 3) {
+                throw new CommandException(Messages.MESSAGE_PERSON_NAME_INSUFFICIENT);
+            } else {
+                throw new CommandException(Messages.MESSAGE_PERSON_NAME_ABSENT);
+            }
         }
 
         ReadOnlyPerson personToDelete = lastShownList.get(index);

@@ -28,7 +28,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INVALID_STRING = "String does not contain alphabets only.";
+    public static final String MESSAGE_INVALID_STRING = "String does not contain alphanum only.";
     public static final String MESSAGE_INVALID_OPTION = "String does not contain hyphen and lower case alphabet only.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
@@ -52,7 +52,7 @@ public class ParserUtil {
      */
     public static String parseString(String str) throws IllegalValueException {
         String trimmedString = str.trim();
-        if (!StringUtil.isLettersOnly(trimmedString)) {
+        if (!StringUtil.isAlnumOnly(trimmedString) || trimmedString.length() < 3) {
             throw new IllegalValueException(MESSAGE_INVALID_STRING);
         }
         return trimmedString;
@@ -65,7 +65,7 @@ public class ParserUtil {
      */
     public static String parseOption(String str) throws IllegalValueException {
         String trimmedString = str.trim();
-        if (!StringUtil.isStringOption(trimmedString)) {
+        if (!StringUtil.isSortOption(trimmedString)) {
             throw new IllegalValueException(MESSAGE_INVALID_OPTION);
         }
         return trimmedString;

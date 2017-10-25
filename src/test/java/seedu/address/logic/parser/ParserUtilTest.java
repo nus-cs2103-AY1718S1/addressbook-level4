@@ -71,7 +71,7 @@ public class ParserUtilTest {
     public void parseString_invalidInput_throwsIllegalValueExceptionException() throws Exception {
         thrown.expect(IllegalValueException.class);
         thrown.expectMessage(MESSAGE_INVALID_STRING);
-        ParserUtil.parseString("10 a");
+        ParserUtil.parseString("1a");
     }
 
     @Test
