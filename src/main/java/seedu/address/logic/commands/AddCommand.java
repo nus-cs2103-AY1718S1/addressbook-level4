@@ -72,10 +72,6 @@ public class AddCommand extends UndoableCommand {
 
     }
 
-    private int findIndex(ReadOnlyParcel target) {
-        return model.getAddressBook().getParcelList().indexOf(target);
-    }
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
