@@ -9,6 +9,9 @@ import seedu.address.model.alias.exceptions.TokenKeywordNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * The API of the Model component.
@@ -112,4 +115,43 @@ public interface Model {
 
     // ================ Related to Tasks ==============================
 
+    /**
+     * Deletes the given task
+     */
+    void deleteTask(ReadOnlyTask target) throws TaskNotFoundException;
+
+    /**
+     * Adds the given task
+     */
+    void addTask(ReadOnlyTask target) throws DuplicateTaskException;
+
+    /**
+     * Updates the given task
+     */
+    void updateTask(ReadOnlyTask target, ReadOnlyTask updatedTask)
+            throws TaskNotFoundException, DuplicateTaskException;
+
+    /**
+     * Marks the given task as completed
+     */
+    void markTask(ReadOnlyTask target)
+            throws TaskNotFoundException, DuplicateTaskException;
+
+    /**
+     * Unmarks the given task as completed
+     */
+    void unmarkTask(ReadOnlyTask target)
+            throws TaskNotFoundException, DuplicateTaskException;
+
+    /**
+     * Returns an unmodifiable view of the filtered Task list
+     */
+    ObservableList<ReadOnlyTask> getFilteredTaskList();
+
+    /**
+     * Updates the filter of the filtered task list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 }
