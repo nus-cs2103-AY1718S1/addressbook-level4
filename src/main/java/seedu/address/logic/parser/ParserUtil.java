@@ -14,6 +14,10 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.reminder.Date;
+import seedu.address.model.reminder.Message;
+import seedu.address.model.reminder.Priority;
+import seedu.address.model.reminder.Task;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -77,6 +81,42 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> taskName} into an {@code Optional<Task>} if {@code taskName} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Task> parseTask(Optional<String> taskName) throws IllegalValueException {
+        requireNonNull(taskName);
+        return taskName.isPresent() ? Optional.of(new Task(taskName.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> priority} into an {@code Optional<Priority>} if {@code priority} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Priority> parsePriority(Optional<String> priority) throws IllegalValueException {
+        requireNonNull(priority);
+        return priority.isPresent() ? Optional.of(new Priority(priority.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(new Date(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> message} into an {@code Optional<Message>} if {@code message} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Message> parseMessage(Optional<String> message) throws IllegalValueException {
+        requireNonNull(message);
+        return message.isPresent() ? Optional.of(new Message(message.get())) : Optional.empty();
     }
 
     /**

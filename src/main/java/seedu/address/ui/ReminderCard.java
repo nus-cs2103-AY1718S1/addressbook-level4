@@ -9,14 +9,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.reminder.ReadOnlyReminder;
 
 /**
- * An UI component that displays information of a {@code Person}.
+ * An UI component that displays information of a {@code Reminder}.
  */
-public class PersonCard extends UiPart<Region> {
+public class ReminderCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "ReminderListCard.fxml";
 
     private static String[] colors = { "red", "gold", "blue", "purple", "orange", "brown",
         "green", "magenta", "black", "grey" };
@@ -31,70 +31,63 @@ public class PersonCard extends UiPart<Region> {
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
 
-    public final ReadOnlyPerson person;
+    public final ReadOnlyReminder reminder;
 
+    @javafx.fxml.FXML
+    private HBox remindercardPane;
     @FXML
-    private HBox cardPane;
-    @FXML
-    private Label name;
+    private Label task;
     @FXML
     private Label id;
     @FXML
-    private Label phone;
+    private Label priority;
     @FXML
-    private Label address;
+    private Label datentime;
     @FXML
-    private Label birthday;
-    @FXML
-    private Label email;
+    private Label message;
     @FXML
     private FlowPane tags;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public ReminderCard(ReadOnlyReminder reminder, int displayedIndex) {
         super(FXML);
-        this.person = person;
+        this.reminder = reminder;
         id.setText(displayedIndex + ". ");
-        initTags(person);
-        bindListeners(person);
+        initTags(reminder);
+        bindListeners(reminder);
     }
 
-    /**
-     * Binds the individual UI elements to observe their respective {@code Person} properties
-     * so that they will be notified of any changes.
-     */
-    private void bindListeners(ReadOnlyPerson person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            initTags(person);
-        });
-    }
-
-    /**
-     * @param person
-     */
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
-    }
-
-    /**
-     * @param tagValue
-     * @return
-     */
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
 
         return tagColors.get(tagValue);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Person} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindListeners(ReadOnlyReminder reminder) {
+        task.textProperty().bind(Bindings.convert(reminder.taskProperty()));
+        priority.textProperty().bind(Bindings.convert(reminder.priorityProperty()));
+        datentime.textProperty().bind(Bindings.convert(reminder.dateProperty()));
+        message.textProperty().bind(Bindings.convert(reminder.messageProperty()));
+        reminder.tagProperty().addListener((observable, oldValue, newValue) -> {
+            tags.getChildren().clear();
+            initTags(reminder);
+        });
+    }
+
+    /**
+     * @param reminder
+     */
+    private void initTags(ReadOnlyReminder reminder) {
+        reminder.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Override
@@ -110,8 +103,9 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // state check
-        PersonCard card = (PersonCard) other;
+        ReminderCard card = (ReminderCard) other;
         return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
+                && reminder.equals(card.reminder);
     }
 }
+
