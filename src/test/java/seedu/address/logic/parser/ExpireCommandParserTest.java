@@ -29,16 +29,6 @@ public class ExpireCommandParserTest {
     }
 
     @Test
-    public void parse_noDateSpecified_failure() throws Exception {
-        Index targetIndex = INDEX_FIRST_PERSON;
-
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_EXPIRE.toString();
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExpireCommand.MESSAGE_USAGE);
-
-        assertParseFailure(parser, userInput, expectedMessage);
-    }
-
-    @Test
     public void parse_noFieldSpecified_failure() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExpireCommand.MESSAGE_USAGE);
 
