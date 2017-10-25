@@ -10,11 +10,13 @@ import seedu.address.logic.commands.SortCommand;
 
 public class SortCommandParserTest {
     private SortCommandParser parser = new SortCommandParser();
+
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "name", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-            SortCommand.MESSAGE_USAGE));
+                SortCommand.MESSAGE_USAGE));
     }
+
     @Test
     public void parse_validArg_returnsSortCommand() {
         //SortCommand exp

@@ -83,28 +83,6 @@ public class EditCommand extends UndoableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-
-        try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
-    }
-
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
@@ -127,6 +105,28 @@ public class EditCommand extends UndoableCommand {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
                 updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedTags, updatedRel);
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
     @Override
@@ -213,60 +213,60 @@ public class EditCommand extends UndoableCommand {
             this.email = email;
         }
 
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
 
-        public void setCompany(Company company) {
-            this.company = company;
+        public void setAddress(Address address) {
+            this.address = address;
         }
 
         public Optional<Company> getCompany() {
             return Optional.ofNullable(company);
         }
 
-        public void setPosition(Position position) {
-            this.position = position;
+        public void setCompany(Company company) {
+            this.company = company;
         }
 
         public Optional<Position> getPosition() {
             return Optional.ofNullable(position);
         }
 
-        public void setStatus(Status status) {
-            this.status = status;
+        public void setPosition(Position position) {
+            this.position = position;
         }
 
         public Optional<Status> getStatus() {
             return Optional.ofNullable(status);
         }
 
-        public void setPriority(Priority priority) {
-            this.priority = priority;
+        public void setStatus(Status status) {
+            this.status = status;
         }
 
         public Optional<Priority> getPriority() {
             return Optional.ofNullable(priority);
         }
 
-        public void setNote(Note note) {
-            this.note = note;
+        public void setPriority(Priority priority) {
+            this.priority = priority;
         }
 
         public Optional<Note> getNote() {
             return Optional.ofNullable(note);
         }
 
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
+        public void setNote(Note note) {
+            this.note = note;
         }
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        public void setTags(Set<Tag> tags) {
+            this.tags = tags;
         }
 
         public void setRelation(Set<Relationship> relation) {
@@ -276,6 +276,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Set<Relationship>> getRelation() {
             return Optional.ofNullable(relation);
         }
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object

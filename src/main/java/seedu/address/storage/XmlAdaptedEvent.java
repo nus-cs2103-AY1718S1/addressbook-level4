@@ -6,8 +6,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.Timing;
 import seedu.address.model.event.Title;
+import seedu.address.model.event.timeslot.Timeslot;
 
 /**
  * JAXB-friendly version of the Event.
@@ -17,7 +17,7 @@ public class XmlAdaptedEvent {
     @XmlElement(required = true)
     private String title;
     @XmlElement(required = true)
-    private String timing;
+    private String timeslot;
     @XmlElement(required = true)
     private String description;
 
@@ -36,7 +36,7 @@ public class XmlAdaptedEvent {
      */
     public XmlAdaptedEvent(ReadOnlyEvent source) {
         title = source.getTitle().toString();
-        timing = source.getTiming().toString();
+        timeslot = source.getTimeslot().toString();
         description = source.getDescription().toString();
     }
 
@@ -47,9 +47,9 @@ public class XmlAdaptedEvent {
      */
     public Event toModelType() throws IllegalValueException {
         final Title title = new Title(this.title);
-        final Timing timing = new Timing(this.timing);
+        final Timeslot timeslot = new Timeslot(this.timeslot);
         final Description description = new Description(this.description);
-        return new Event(title, timing, description);
+        return new Event(title, timeslot, description);
     }
 }
 

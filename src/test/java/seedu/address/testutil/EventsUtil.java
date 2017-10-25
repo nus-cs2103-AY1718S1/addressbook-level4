@@ -1,3 +1,4 @@
+//@@author A0162268B
 package seedu.address.testutil;
 
 import guitests.GuiRobot;

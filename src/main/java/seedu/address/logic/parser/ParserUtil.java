@@ -11,8 +11,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Description;
-import seedu.address.model.event.Timing;
 import seedu.address.model.event.Title;
+import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
@@ -133,6 +133,7 @@ public class ParserUtil {
         requireNonNull(note);
         return note.isPresent() ? Optional.of(new Note(note.get())) : Optional.empty();
     }
+
     /**
      * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -143,12 +144,13 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> timing} into an {@code Optional<Timing>} if {@code timing} is present.
+     * Parses a {@code Optional<String> timeslot} into an {@code Optional<Timeslot>} if {@code timeslot} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Timing> parseTiming(Optional<String> timing) throws IllegalValueException {
-        requireNonNull(timing);
-        return timing.isPresent() ? Optional.of(new Timing(timing.get())) : Optional.empty();
+    public static Optional<Timeslot> parseTimeslot(Optional<String> timeslot)
+            throws IllegalValueException {
+        requireNonNull(timeslot);
+        return timeslot.isPresent() ? Optional.of(new Timeslot(timeslot.get())) : Optional.empty();
     }
 
     /**

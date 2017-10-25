@@ -14,7 +14,6 @@ import javafx.collections.ObservableList;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventList;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -54,8 +53,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         relation = new UniqueRelList();
     }
 
-    public AddressBook() {
-    }
+    public AddressBook() { }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -140,12 +138,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         // in the person list.
         persons.setPerson(target, editedPerson);
     }
+
     /**
      * Sorts the list according to name
      */
     public void sortPerson(int type) throws InvalidSortTypeException {
         persons.sortPersonList(type);
     }
+
     /**
      * Ensures that every tag in this person:
      * - exists in the master list {@link #tags}
@@ -237,16 +237,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds an event to the address book.
-     * Also checks the new event's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the events to point to those in {@link #tags}.
      */
-    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
+    public void addEvent(ReadOnlyEvent e) {
         Event newEvent = new Event(e);
-        // TODO: create a master list for tags and update it
-        // syncMasterTagListWith(newEvent);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         events.add(newEvent);
     }
 

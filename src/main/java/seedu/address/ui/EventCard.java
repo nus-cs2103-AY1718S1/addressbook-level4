@@ -9,7 +9,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 
 /**
  * An UI component that displays information of a {@code Event}.
- *    //@@author yangshuang
+ * //@@author yangshuang
  */
 public class EventCard extends UiPart<Region> {
 
@@ -34,6 +34,8 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label timing;
     @FXML
+    private Label date;
+    @FXML
     private Label description;
 
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
@@ -50,6 +52,7 @@ public class EventCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyEvent event) {
         title.textProperty().bind(Bindings.convert(event.titleProperty()));
         timing.textProperty().bind(Bindings.convert(event.timingProperty()));
+        date.textProperty().bind(Bindings.convert(event.dateProperty()));
         description.textProperty().bind(Bindings.convert(event.descriptionProperty()));
     }
 

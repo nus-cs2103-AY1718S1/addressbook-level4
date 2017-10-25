@@ -46,11 +46,11 @@ public class GuiTestAssert {
      * expectedEvent}.
      */
     public static void assertCardDisplaysEvent(ReadOnlyEvent expectedEvent,
-                                           EventCardHandle actualCard) {
+                                               EventCardHandle actualCard) {
         assertEquals(expectedEvent.getTitle().title, actualCard.getTitle());
-        assertEquals(expectedEvent.getTiming().timing, actualCard.getTiming());
-        assertEquals(expectedEvent.getDescription().description, actualCard
-                .getDescription());
+        assertEquals(expectedEvent.getTiming().toString(), actualCard.getTiming());
+        assertEquals(expectedEvent.getDate().toString(), actualCard.getDate());
+        assertEquals(expectedEvent.getDescription().description, actualCard.getDescription());
     }
 
     /**

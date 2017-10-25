@@ -14,7 +14,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -105,27 +105,23 @@ public class CommandTestUtil {
 
     public static final String VALID_TITLE_MIDTERM = "CS2106 Mid-term Examination";
     public static final String VALID_TITLE_SOCCER = "Soccer Game with the boys";
-    public static final String VALID_TITLE_PRESENTATION = "Quarterly Annual Finance Presentation";
 
-    public static final String VALID_TIMING_MIDTERM = "1830-1930";
-    public static final String VALID_TIMING_SOCCER = "1930-2100";
-    public static final String VALID_TIMING_PRESENTATION = "1300-1430";
+    public static final String VALID_TIMESLOT_MIDTERM = "23/09/2017 1830-1930";
+    public static final String VALID_TIMESLOT_SOCCER = "07/07/2016 1930-2100";
 
     public static final String VALID_DESCRIPTION_MIDTERM = "MPSH-2A, Seat 727";
     public static final String VALID_DESCRIPTION_SOCCER = "Bring the ball pump and drinks";
 
-    public static final String VALID_TAG_IMPORTANT = "important";
-    public static final String VALID_TAG_LEISURE = "leisure";
 
     public static final String TITLE_MIDTERM = " " + PREFIX_NAME + VALID_TITLE_MIDTERM;
     public static final String TITLE_SOCCER = " " + PREFIX_NAME + VALID_TITLE_SOCCER;
-    public static final String TIMING_MIDTERM = " " + PREFIX_TIMING + VALID_TIMING_MIDTERM;
-    public static final String TIMING_SOCCER = " " + PREFIX_TIMING + VALID_TIMING_SOCCER;
+    public static final String TIMESLOT_MIDTERM = " " + PREFIX_TIMESLOT + VALID_TIMESLOT_MIDTERM;
+    public static final String TIMESLOT_SOCCER = " " + PREFIX_TIMESLOT + VALID_TIMESLOT_SOCCER;
     public static final String DESCRIPTION_MIDTERM = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_MIDTERM;
     public static final String DESCRIPTION_SOCCER = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_SOCCER;
 
     public static final String INVALID_TITLE = " " + PREFIX_NAME + "";
-    public static final String INVALID_TIMING = " " + PREFIX_TIMING + "700-900";
+    public static final String INVALID_TIMESLOT = " " + PREFIX_TIMESLOT + "00/2/1999 700-900";
 
     public static final EditEventCommand.EditEventDescriptor DESC_MIDTERM;
     public static final EditEventCommand.EditEventDescriptor DESC_SOCCER;
@@ -143,9 +139,11 @@ public class CommandTestUtil {
                 .withNote(VALID_NOTE_BOB).withTags(VALID_TAG_FRIEND)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withRelation(VALID_REL_SIBLINGS).build();
 
-        DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM).withTiming(VALID_TIMING_MIDTERM)
+        DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM)
+                .withTimeslot(VALID_TIMESLOT_MIDTERM)
                 .withDescription(VALID_DESCRIPTION_MIDTERM).build();
-        DESC_SOCCER = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_SOCCER).withTiming(VALID_TIMING_SOCCER)
+        DESC_SOCCER = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_SOCCER)
+                .withTimeslot(VALID_TIMESLOT_SOCCER)
                 .withDescription(VALID_DESCRIPTION_SOCCER).build();
     }
 

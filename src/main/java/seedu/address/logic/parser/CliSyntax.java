@@ -20,5 +20,5 @@ public class CliSyntax {
 
     /* Prefix definitions for Event*/
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
-    public static final Prefix PREFIX_TIMING = new Prefix("time/");
+    public static final Prefix PREFIX_TIMESLOT = new Prefix("t/");
 }

@@ -63,6 +63,7 @@ public class Person implements ReadOnlyPerson {
 
     /**
      * Constructor including all optional fields except Note. Every field must be present and not null.
+     *
      * @param name
      * @param phone
      * @param email
@@ -101,6 +102,7 @@ public class Person implements ReadOnlyPerson {
 
     /**
      * Constructor including all fields. Every field must be present and not null.
+     *
      * @param name
      * @param phone
      * @param email
@@ -198,13 +200,13 @@ public class Person implements ReadOnlyPerson {
         this.address.set(requireNonNull(address));
     }
 
-    public void setCompany(Company company) {
-        this.company.set(requireNonNull(company));
-    }
-
     @Override
     public Company getCompany() {
         return company.get();
+    }
+
+    public void setCompany(Company company) {
+        this.company.set(requireNonNull(company));
     }
 
     @Override
@@ -212,13 +214,13 @@ public class Person implements ReadOnlyPerson {
         return company;
     }
 
-    public void setPosition(Position position) {
-        this.position.set(position);
-    }
-
     @Override
     public Position getPosition() {
         return position.get();
+    }
+
+    public void setPosition(Position position) {
+        this.position.set(position);
     }
 
     public ObjectProperty<Position> positionProperty() {
@@ -230,13 +232,13 @@ public class Person implements ReadOnlyPerson {
         return status.get();
     }
 
+    public void setStatus(Status status) {
+        this.status.set(status);
+    }
+
     @Override
     public ObjectProperty<Status> statusProperty() {
         return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status.set(status);
     }
 
     @Override
@@ -244,13 +246,13 @@ public class Person implements ReadOnlyPerson {
         return priority.get();
     }
 
+    public void setPriority(Priority priority) {
+        this.priority.set(priority);
+    }
+
     @Override
     public ObjectProperty<Priority> priorityProperty() {
         return priority;
-    }
-
-    public void setPriority(Priority priority) {
-        this.priority.set(priority);
     }
 
     @Override
@@ -258,13 +260,13 @@ public class Person implements ReadOnlyPerson {
         return note.get();
     }
 
+    public void setNote(Note note) {
+        this.note.set(note);
+    }
+
     @Override
     public ObjectProperty<Note> noteProperty() {
         return note;
-    }
-
-    public void setNote(Note note) {
-        this.note.set(note);
     }
 
     /**
