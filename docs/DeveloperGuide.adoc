@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-T16-B2/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T16-B2/main/blob/master
 
-By: `CS2103AUG2017 T16-B2`      Since: `SEP 2017`      Licence: `MIT`
+By: `CS2103AUG2017 T16-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
