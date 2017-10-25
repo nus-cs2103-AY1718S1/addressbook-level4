@@ -10,6 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -36,6 +37,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Status;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -59,7 +61,8 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_NOTE + "NOTE] "
             + "[" + PREFIX_PHOTO + "PHOTO] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]"
+            + "[" + PREFIX_RELATIONSHIP + "RELATIONSHIP]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -83,28 +86,6 @@ public class EditCommand extends UndoableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-
-        try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
-    }
-
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
@@ -125,10 +106,33 @@ public class EditCommand extends UndoableCommand {
         Photo updatedPhoto = editPersonDescriptor.getPhoto().orElse(personToEdit
                 .getPhoto());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Relationship> updatedRel = editPersonDescriptor.getRelation().orElse(personToEdit.getRelation());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
                 updatedPosition, updatedStatus, updatedPriority, updatedNote,
-               updatedPhoto, updatedTags);
+               updatedPhoto, updatedTags, updatedRel);
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
     @Override
@@ -165,6 +169,7 @@ public class EditCommand extends UndoableCommand {
         private Note note;
         private Photo photo;
         private Set<Tag> tags;
+        private Set<Relationship> relation;
 
         public EditPersonDescriptor() {
         }
@@ -181,6 +186,7 @@ public class EditCommand extends UndoableCommand {
             this.note = toCopy.note;
             this.photo = toCopy.photo;
             this.tags = toCopy.tags;
+            this.relation = toCopy.relation;
         }
 
         /**
@@ -188,7 +194,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.company,
-                    this.position, this.status, this.priority, this.note, this.tags);
+                    this.position, this.status, this.priority, this.note, this.tags, this.relation);
         }
 
         public Optional<Name> getName() {
@@ -215,52 +221,56 @@ public class EditCommand extends UndoableCommand {
             this.email = email;
         }
 
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
 
-        public void setCompany(Company company) {
-            this.company = company;
+        public void setAddress(Address address) {
+            this.address = address;
         }
 
         public Optional<Company> getCompany() {
             return Optional.ofNullable(company);
         }
 
-        public void setPosition(Position position) {
-            this.position = position;
+        public void setCompany(Company company) {
+            this.company = company;
         }
 
         public Optional<Position> getPosition() {
             return Optional.ofNullable(position);
         }
 
-        public void setStatus(Status status) {
-            this.status = status;
+        public void setPosition(Position position) {
+            this.position = position;
         }
 
         public Optional<Status> getStatus() {
             return Optional.ofNullable(status);
         }
 
-        public void setPriority(Priority priority) {
-            this.priority = priority;
+        public void setStatus(Status status) {
+            this.status = status;
         }
 
         public Optional<Priority> getPriority() {
             return Optional.ofNullable(priority);
         }
 
-        public void setNote(Note note) {
-            this.note = note;
+        public void setPriority(Priority priority) {
+            this.priority = priority;
         }
 
         public Optional<Note> getNote() {
             return Optional.ofNullable(note);
+        }
+
+        public void setNote(Note note) {
+            this.note = note;
+        }
+
+        public Optional<Set<Tag>> getTags() {
+            return Optional.ofNullable(tags);
         }
 
         public void setPhoto(Photo photo) {
@@ -275,8 +285,12 @@ public class EditCommand extends UndoableCommand {
             this.tags = tags;
         }
 
-        public Optional<Set<Tag>> getTags() {
-            return Optional.ofNullable(tags);
+        public void setRelation(Set<Relationship> relation) {
+            this.relation = relation;
+        }
+
+        public Optional<Set<Relationship>> getRelation() {
+            return Optional.ofNullable(relation);
         }
 
         @Override
@@ -304,7 +318,8 @@ public class EditCommand extends UndoableCommand {
                     && getPriority().equals(e.getPriority())
                     && getNote().equals(e.getNote())
                     && getPhoto().equals(e.getPhoto())
-                    && getTags().equals(e.getTags());
+                    && getTags().equals(e.getTags())
+                    && getRelation().equals(e.getRelation());
         }
     }
 }

@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -24,6 +25,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -42,7 +44,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS,
-                        PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO, PREFIX_TAG);
+                        PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO, PREFIX_TAG,PREFIX_RELATIONSHIP);
 
         Index index;
 
@@ -68,6 +70,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO)).ifPresent
                     (editPersonDescriptor::setPhoto);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            parseRelForEdit(argMultimap.getAllValues(PREFIX_RELATIONSHIP)).ifPresent(editPersonDescriptor::setRelation);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -93,5 +96,21 @@ public class EditCommandParser implements Parser<EditCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
+    /**
+     * @@A0160452N
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
+     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Tag>} containing zero tags.
+     */
+    private Optional<Set<Relationship>> parseRelForEdit(Collection<String> rel) throws IllegalValueException {
+        assert rel != null;
+
+        if (rel.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> tagSet = rel.size() == 1 && rel.contains("") ? Collections.emptySet() : rel;
+        return Optional.of(ParserUtil.parseRel(tagSet));
+    }
+
 
 }

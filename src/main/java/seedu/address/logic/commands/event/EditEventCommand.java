@@ -1,9 +1,10 @@
+//@@author A0162268B
 package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.List;
@@ -18,9 +19,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.Timing;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.timeslot.Timeslot;
 
 /**
  * Edits the details of an existing event in the address book.
@@ -34,10 +35,10 @@ public class EditEventCommand extends UndoableCommand {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "TITLE] "
-            + "[" + PREFIX_TIMING + "TIMING] "
+            + "[" + PREFIX_TIMESLOT + "TIMING] "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_TIMING + "1300-1500 "
+            + PREFIX_TIMESLOT + "1300-1500 "
             + PREFIX_DESCRIPTION + "New description for event x";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
@@ -67,10 +68,10 @@ public class EditEventCommand extends UndoableCommand {
         assert eventToEdit != null;
 
         Title updatedTitle = editEventDescriptor.getTitle().orElse(eventToEdit.getTitle());
-        Timing updatedTiming = editEventDescriptor.getTiming().orElse(eventToEdit.getTiming());
+        Timeslot updatedTimeslot = editEventDescriptor.getTimeslot().orElse(eventToEdit.getTimeslot());
         Description updatedDescription = editEventDescriptor.getDescription().orElse(eventToEdit.getDescription());
 
-        return new Event(updatedTitle, updatedTiming, updatedDescription);
+        return new Event(updatedTitle, updatedTimeslot, updatedDescription);
     }
 
     @Override
@@ -117,7 +118,7 @@ public class EditEventCommand extends UndoableCommand {
      */
     public static class EditEventDescriptor {
         private Title title;
-        private Timing timing;
+        private Timeslot timeslot;
         private Description description;
 
         public EditEventDescriptor() {
@@ -125,7 +126,7 @@ public class EditEventCommand extends UndoableCommand {
 
         public EditEventDescriptor(EditEventDescriptor toCopy) {
             this.title = toCopy.title;
-            this.timing = toCopy.timing;
+            this.timeslot = toCopy.timeslot;
             this.description = toCopy.description;
         }
 
@@ -133,7 +134,7 @@ public class EditEventCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.title, this.timing, this.description);
+            return CollectionUtil.isAnyNonNull(this.title, this.timeslot, this.description);
         }
 
         public Optional<Title> getTitle() {
@@ -144,12 +145,12 @@ public class EditEventCommand extends UndoableCommand {
             this.title = title;
         }
 
-        public Optional<Timing> getTiming() {
-            return Optional.ofNullable(timing);
+        public Optional<Timeslot> getTimeslot() {
+            return Optional.ofNullable(timeslot);
         }
 
-        public void setTiming(Timing timing) {
-            this.timing = timing;
+        public void setTimeslot(Timeslot timeslot) {
+            this.timeslot = timeslot;
         }
 
         public Optional<Description> getDescription() {
@@ -176,7 +177,7 @@ public class EditEventCommand extends UndoableCommand {
             EditEventDescriptor e = (EditEventDescriptor) other;
 
             return getTitle().equals(e.getTitle())
-                    && getTiming().equals(e.getTiming())
+                    && getTimeslot().equals(e.getTimeslot())
                     && getDescription().equals(e.getDescription());
         }
     }

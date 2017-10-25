@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.UniqueRelList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -30,12 +32,13 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Photo> photo;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<UniqueRelList> relation;
 
     /**
      * Constructor without optional fields. Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Relationship> relation) {
+        requireAllNonNull(name, phone, email, address, tags, relation);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -58,10 +61,13 @@ public class Person implements ReadOnlyPerson {
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protect internal connections from changes in the arg list
+        this.relation = new SimpleObjectProperty<>(new UniqueRelList(relation));
     }
 
     /**
      * Constructor including all optional fields except Note. Every field must be present and not null.
+     *
      * @param name
      * @param phone
      * @param email
@@ -72,11 +78,12 @@ public class Person implements ReadOnlyPerson {
      * @param priority
      * @param photo
      * @param tags
+     * @param relation
      */
     public Person(Name name, Phone phone, Email email, Address address, Company company, Position position,
                   Status status, Priority priority, Photo photo, Set<Tag>
-                          tags) {
-        requireAllNonNull(name, phone, email, address, company, position, status, priority, tags);
+                          tags, Set<Relationship> relation) {
+        requireAllNonNull(name, phone, email, address, company, position, status, priority, photo, tags, relation);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -95,10 +102,14 @@ public class Person implements ReadOnlyPerson {
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+
+        // protect internal connections from changes in the arg list
+        this.relation = new SimpleObjectProperty<>(new UniqueRelList(relation));
     }
 
     /**
      * Constructor including all fields. Every field must be present and not null.
+     *
      * @param name
      * @param phone
      * @param email
@@ -109,11 +120,12 @@ public class Person implements ReadOnlyPerson {
      * @param priority
      * @param note
      * @param tags
+     * @param relation
      */
     public Person(Name name, Phone phone, Email email, Address address, Company company, Position position,
                   Status status, Priority priority, Note note, Photo
-                          photo, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, company, position, status, priority, note, tags);
+                          photo, Set<Tag> tags, Set<Relationship> relation) {
+        requireAllNonNull(name, phone, email, address, company, position, status, priority, note, photo, tags, relations);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -127,6 +139,8 @@ public class Person implements ReadOnlyPerson {
 
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protect internal connections from changes in the arg list
+        this.relation = new SimpleObjectProperty<>(new UniqueRelList(relation));
     }
 
     /**
@@ -135,7 +149,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getCompany(), source.getPosition(), source.getStatus(), source.getPriority(),
-                source.getNote(), source.getPhoto(), source.getTags());
+                source.getNote(), source.getPhoto(), source.getTags(), source.getRelation());
     }
 
     @Override
@@ -194,13 +208,13 @@ public class Person implements ReadOnlyPerson {
         this.address.set(requireNonNull(address));
     }
 
-    public void setCompany(Company company) {
-        this.company.set(requireNonNull(company));
-    }
-
     @Override
     public Company getCompany() {
         return company.get();
+    }
+
+    public void setCompany(Company company) {
+        this.company.set(requireNonNull(company));
     }
 
     @Override
@@ -208,13 +222,13 @@ public class Person implements ReadOnlyPerson {
         return company;
     }
 
-    public void setPosition(Position position) {
-        this.position.set(position);
-    }
-
     @Override
     public Position getPosition() {
         return position.get();
+    }
+
+    public void setPosition(Position position) {
+        this.position.set(position);
     }
 
     public ObjectProperty<Position> positionProperty() {
@@ -226,13 +240,13 @@ public class Person implements ReadOnlyPerson {
         return status.get();
     }
 
+    public void setStatus(Status status) {
+        this.status.set(status);
+    }
+
     @Override
     public ObjectProperty<Status> statusProperty() {
         return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status.set(status);
     }
 
     @Override
@@ -240,18 +254,22 @@ public class Person implements ReadOnlyPerson {
         return priority.get();
     }
 
-    @Override
-    public ObjectProperty<Priority> priorityProperty() {
-        return priority;
-    }
-
     public void setPriority(Priority priority) {
         this.priority.set(priority);
     }
 
     @Override
+    public ObjectProperty<Priority> priorityProperty() {
+        return priority;
+    }
+
+    @Override
     public Note getNote() {
         return note.get();
+    }
+
+    public void setNote(Note note) {
+        this.note.set(note);
     }
 
     @Override
@@ -277,8 +295,6 @@ public class Person implements ReadOnlyPerson {
         this.photo.set(photo);
     }
 
-
-
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -299,6 +315,25 @@ public class Person implements ReadOnlyPerson {
         return tags;
     }
 
+    /**
+     * Returns an immutable relationship set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Relationship> getRelation() {
+        return Collections.unmodifiableSet(relation.get().toSet());
+    }
+
+    /**
+     * Replaces this person's relationship with the tags in the argument tag set.
+     */
+    public void setRel(Set<Relationship> replacement) {
+        relation.set(new UniqueRelList(replacement));
+    }
+
+    public ObjectProperty<UniqueRelList> relProperty() {
+        return relation;
+    }
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

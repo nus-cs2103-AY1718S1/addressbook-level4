@@ -1,17 +1,16 @@
+//@@author A0162268B
 package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.exceptions.DuplicateEventException;
 
 /**
  * Adds an event to the address book.
@@ -23,19 +22,15 @@ public class AddEventCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "TITLE "
-            + PREFIX_TIMING + "TIMING "
+            + PREFIX_TIMESLOT + "TIMING "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John's 21st Birthday "
-            + PREFIX_TIMING + "1900-2200 "
-            + PREFIX_DESCRIPTION + "johnd@example.com "
-            + PREFIX_TAG + "birthday "
-            + PREFIX_TAG + "important";
+            + PREFIX_TIMESLOT + "22/10/2017 1900-2200 "
+            + PREFIX_DESCRIPTION + "johnd@example.com ";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This event already"
-            + " exists";
 
     private final Event toAdd;
 
@@ -47,14 +42,10 @@ public class AddEventCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() {
         requireNonNull(model);
-        try {
-            model.addEvent(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateEventException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        }
+        model.addEvent(toAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 
     @Override

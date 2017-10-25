@@ -168,7 +168,7 @@ public class MainWindow extends UiPart<Region> {
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs
-            .getAddressBookFilePath(), logic.getFilteredPersonList().size());
+                .getAddressBookFilePath(), logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -177,8 +177,7 @@ public class MainWindow extends UiPart<Region> {
         //When calendar button is clicked, the browserPlaceHolder will switch
         // to the calendar view
         calendarView = new CalendarView();
-        calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new
-                EventHandler<MouseEvent>() {
+        calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (!browserPlaceholder.getChildren().contains(calendarView

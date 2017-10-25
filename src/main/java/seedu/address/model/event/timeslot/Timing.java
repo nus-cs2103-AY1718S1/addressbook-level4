@@ -1,14 +1,15 @@
-package seedu.address.model.event;
+//@@author A0162268B
+package seedu.address.model.event.timeslot;
 
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents an Event's Timing in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidTiming(String)}
+ * Represents an Timeslot's timing in sales navigator.
+ * Is valid as declared in {@link #isValidTiming(String)}
  */
-public class Timing {
+public class Timing implements Comparable<Timing> {
     public static final String MESSAGE_TIMING_CONSTRAINTS =
             "Event timings should contain a 4-digit 24-hour format start timing and end timing separated by a \"-\", "
                     + "and it should not be blank";
@@ -16,9 +17,9 @@ public class Timing {
     public static final String TIMING_VALIDATION_REGEX =
             "(0[0-9]|1[0-9]|2[0-3])[0-5][0-9]-(0[1-9]|1[0-9]|2[0-3])[0-5][0-9]";
 
-    public final String timing;
-    public final int start;
-    public final int end;
+    private String timing;
+    private int start;
+    private int end;
 
     /**
      * Validates given Timing.
@@ -66,6 +67,14 @@ public class Timing {
         }
     }
 
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+        setTiming(this.start + "-" + this.end);
+    }
 
     @Override
     public String toString() {
@@ -82,5 +91,21 @@ public class Timing {
     @Override
     public int hashCode() {
         return timing.hashCode();
+    }
+
+    //================================= Setter methods for testing ==========================================
+
+    @Override
+    public int compareTo(Timing other) {
+        return this.getStart() - other.getStart();
+    }
+
+    public void setEnd(int end) {
+        this.end = end;
+        setTiming(this.start + "-" + this.end);
+    }
+
+    public void setTiming(String timing) {
+        this.timing = timing;
     }
 }
