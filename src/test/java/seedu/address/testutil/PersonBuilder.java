@@ -5,6 +5,7 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Cluster;
+import seedu.address.model.person.DateBorrow;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
@@ -155,6 +156,14 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("deadline is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the {@code DateBorrow} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withDateBorrow(String dateBorrow) {
+        this.person.setDateBorrow(new DateBorrow(dateBorrow));
         return this;
     }
 

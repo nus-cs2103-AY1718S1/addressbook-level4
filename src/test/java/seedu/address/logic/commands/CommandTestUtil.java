@@ -155,6 +155,17 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered whitelist to show only the first person in the {@code model}'s address book.
+     */
+    public static void showFirstWhitelistedPersonOnly(Model model) {
+        ReadOnlyPerson person = model.getAddressBook().getWhitelistedPersonList().get(0);
+        final String[] splitName = person.getName().fullName.split(ONE_OR_MORE_SPACES_REGEX);
+        model.updateFilteredWhitelistedPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredWhitelistedPersonList().size() == 1;
+    }
+
+    /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {

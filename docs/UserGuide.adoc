@@ -112,6 +112,11 @@ Format: `list`
 Shows a list of all blacklisted persons in the address book. +
 Format: `blacklist`
 
+=== Listing all whitelisted persons : `whitelist`
+
+Shows a list of all whitelisted persons in the address book. +
+Format: `whitelist`
+
 === Editing a person : `edit`
 
 Edits an existing debtor, blacklisted/whitelisted contact in the address book. +
@@ -187,6 +192,20 @@ Examples:
 Decreases the debt of the 1st person by $500.
 * `payback 2 1000.10` +
 Decreases the debt of the 2nd person by $1000.10.
+
+=== Resetting the debt of a person: `repaid`
+
+Resets the debt of a person to zero and sets the date repaid field of that person. +
+Format: `repaid INDEX`
+
+****
+* Resets the debt of the person at the specified `INDEX` to zero. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+****
+
+Examples:
+
+* `repaid 1` +
+Resets the debt of the 1st person to zero and sets the date of repayment in his record.
 
 === Deleting a person : `delete`
 
@@ -429,6 +448,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/1234
 e.g. `borrow 1 500.50`
 * *Pay back* : `payback INDEX AMOUNT` +
 e.g. `payback 1 500.50`
+* *Repaid* : `repaid INDEX` +
+e.g. `payback 1`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Ban* : `ban INDEX` +
@@ -441,6 +462,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Blacklist* : `blacklist`
+* *Whitelist* : `whitelist`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
@@ -479,12 +501,13 @@ e.g. `sort debt`
 
 * Sort by various fields (since v1.3)
 * `Payback` command (since v1.3)
+* `Repaid` command (since v1.3)
+* `Whitelist` command (since v1.3)
 
 == Features to be included by `V2.0`
 
 //[V1.3]
 * List of people who have cleared their debts.
-* A `Repaid` command to fully pay off a person's debt.
 * List of people who have overdue debts.
 * A person's debts are automatically incremented according to the interest rate of their loan.
 //[end of V1.3]

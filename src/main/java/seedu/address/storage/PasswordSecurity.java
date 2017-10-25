@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-//@@author jelneo
+//@@author jelneo-reused
 
 /*
  * This class is written with reference to an article by HowToDoInJava:

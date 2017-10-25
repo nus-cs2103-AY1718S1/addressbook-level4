@@ -140,7 +140,7 @@ public class UiManager extends ComponentManager implements Ui {
 
     /**
      * Handles change internal list event.
-     * Displays the list that user requested(e.g mainlist, blacklist etc)
+     * Displays the list that user requested(e.g masterlist, blacklist etc)
      */
     @Subscribe
     private void handleChangeInternalListEvent(ChangeInternalListEvent event) {

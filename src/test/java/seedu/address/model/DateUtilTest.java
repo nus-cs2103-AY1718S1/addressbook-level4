@@ -15,20 +15,26 @@ import java.util.GregorianCalendar;
 
 import org.junit.Test;
 
+import seedu.address.model.util.DateUtil;
+
 //@@author lawwman
 public class DateUtilTest {
     private static final String sampleDate1 = "Thu, 18 Oct, Year 2018";
     private static final String sampleDateInput1 = "18-10-2018";
     private static final Date sampleDateClass1 = new GregorianCalendar(2018, 9, 18).getTime();
+    private static final Date sampleOldDateClass1 = new GregorianCalendar(2018, 8, 18).getTime();
     private static final String sampleDate2 = "Fri, 13 Dec, Year 2019";
     private static final String sampleDateInput2 = "13-12-2019";
     private static final Date sampleDateClass2 = new GregorianCalendar(2019, 11, 13).getTime();
+    private static final Date sampleOldDateClass2 = new GregorianCalendar(2019, 10, 13).getTime();
     private static final String sampleDate3 = "Sat, 05 Jan, Year 2019";
     private static final String sampleDateInput3 = "05-01-2019";
     private static final Date sampleDateClass3 = new GregorianCalendar(2019, 0, 5).getTime();
+    private static final Date sampleOldDateClass3 = new GregorianCalendar(2018, 11, 5).getTime();
     private static final String sampleDate4 = "Sat, 23 Mar, Year 2019";
     private static final String sampleDateInput4 = "23-03-2019";
     private static final Date sampleDateClass4 = new GregorianCalendar(2019, 2, 23).getTime();
+    private static final Date sampleOldDateClass4 = new GregorianCalendar(2019, 1, 23).getTime();
 
     @Test
     public void formatDateTest() {
@@ -108,5 +114,28 @@ public class DateUtilTest {
         //second date before first one
         assertFalse(compareDates(sampleDateClass2, sampleDateClass1));
         assertFalse(compareDates(sampleDateClass4, sampleDateClass3));
+    }
+
+    @Test
+    public void generateOutdatedDebtDateTest() {
+        assertEquals(DateUtil.generateOutdatedDebtDate(sampleDateClass1), sampleOldDateClass1);
+        assertEquals(DateUtil.generateOutdatedDebtDate(sampleDateClass2), sampleOldDateClass2);
+        assertEquals(DateUtil.generateOutdatedDebtDate(sampleDateClass3), sampleOldDateClass3);
+        assertEquals(DateUtil.generateOutdatedDebtDate(sampleDateClass4), sampleOldDateClass4);
+
+    }
+
+    @Test
+    public void getNumberOfMonthBetweenDatesTest() {
+        // one month gap
+        assertEquals(DateUtil.getNumberOfMonthBetweenDates(sampleDateClass1, sampleOldDateClass1), 1);
+        // 1 month gap, but both dates have different years.
+        assertEquals(DateUtil.getNumberOfMonthBetweenDates(sampleDateClass2, sampleOldDateClass2), 1);
+        // 5 month gap, both dates have different years.
+        assertEquals(DateUtil.getNumberOfMonthBetweenDates(sampleDateClass4, sampleDateClass1), 5);
+        // Large gap between both dates.
+        assertEquals(DateUtil.getNumberOfMonthBetweenDates(new GregorianCalendar(2021, 2, 23).getTime(),
+                sampleDateClass1), 29);
+
     }
 }
