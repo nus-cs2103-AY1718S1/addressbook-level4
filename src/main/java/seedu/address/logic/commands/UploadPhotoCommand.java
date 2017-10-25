@@ -1,8 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,8 +18,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Uploads image file to specified person.
@@ -42,7 +37,7 @@ public class UploadPhotoCommand extends UndoableCommand {
     private final FileChooser fileChooser = new FileChooser();
     private Stage stage;
     private ImageView imageView = new ImageView();
-    private HashMap<Email,String> photoList;
+    private HashMap<Email, String> photoList;
 
     public UploadPhotoCommand(Index targetIndex, String filePath) {
         this.targetIndex = targetIndex;
@@ -65,17 +60,7 @@ public class UploadPhotoCommand extends UndoableCommand {
         ReadOnlyPerson personToUploadImage = lastShownList.get(targetIndex.getZeroBased());
         // ReadOnlyPerson editedPerson = lastShownList.get(targetIndex.getZeroBased());
         // editedPerson.getPhoto().setPath(imageFile.getPath());
-        photoList.put(personToUploadImage.getEmail(),imageFile.getPath());
-
-//        try {
-//            model.updatePerson(personToUploadImage, editedPerson);
-//        } catch (DuplicatePersonException dpe) {
-//            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-//        } catch (PersonNotFoundException pnfe) {
-//            throw new AssertionError("The target person cannot be missing");
-//        }
-//        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
+        photoList.put(personToUploadImage.getEmail(), imageFile.getPath());
         return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
     }
 

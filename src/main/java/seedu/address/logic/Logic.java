@@ -1,11 +1,14 @@
 package seedu.address.logic;
 
 import java.io.IOException;
+
 import javafx.collections.ObservableList;
+
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * API of the Logic component
