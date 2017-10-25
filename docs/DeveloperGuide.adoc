@@ -844,23 +844,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`**` |user |know which contact I have not viewed for a specified period of time |delete those obsolete contacts
+|`* *` |user |know which contact I have not viewed for a specified period of time |delete those obsolete contacts
 
-|`**` |user |upload pictures for my contact |I can store memories with my friend
+|`* *` |user |upload pictures for my contact |I can store memories with my friend
 
-|`**` |user |know the crash report so that when the residentbook crashes |restore backup
+|`* *` |user |know the crash report so that when the residentbook crashes |restore backup
 
-|`**` |user |encrypt selected contacts |avoid people from seeing confidential contact
+|`* *` |user |encrypt selected contacts |avoid people from seeing confidential contact
 
-|`**` |user |delete contacts by tag |remove them at one go
+|`* *` |user |delete contacts by tag |remove them at one go
 
-|`**` |user |import contacts using another xml file |add more contacts at one go
+|`* *` |user |import contacts using another xml file |add more contacts at one go
 
-|`**` |user |use autocomplete |save typing time
+|`* *` |user |use autocomplete |save typing time
 
-|`**` |user |use Facebook to search by email|add my friends to social media easily
+|`* *` |user |search my contacts by tag |make changes according to that single group
 
 |`*` |user |be able to export my residentbook information  |I can import it into another device
+
+|`* *` |user |email a group of contacts by tag |send important information efficiently
+
+|`* *` |user |be able to swap the rooms of the residents |update resident addresses conveniently
+
+|`* *` |user |pin important contacts to the top of the list |remind myself of activities
+
+|`* *` |user |remove a group of contacts using a single tag |remove contacts saved for a common purpose
+
+|`* *` |user |remove a tag that is shared by a group of contacts |update them easily when an event is over
+
+|`*` |user |be able to export my residentbook information |I can import it into another device
 
 |`*` |user |have tag coloring |find the category of contacts I am looking for
 
