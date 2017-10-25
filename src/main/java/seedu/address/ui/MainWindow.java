@@ -27,6 +27,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ToggleBrowserPanelEvent;
+import seedu.address.commons.events.ui.ToggleStatisticsPanelEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -51,11 +53,15 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private StatisticsPanel statisticsPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane browserOrStatisticsPlaceholder;
+
+    @FXML
+    private StackPane statisticsPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -135,8 +141,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        switchToBrowserPanel();
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -159,6 +164,18 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    void switchToStatisticsPanel() {
+        statisticsPanel = new StatisticsPanel(logic.getAllPersonList());
+        browserOrStatisticsPlaceholder.getChildren().clear();
+        browserOrStatisticsPlaceholder.getChildren().add(statisticsPanel.getRoot());
+    }
+
+    void switchToBrowserPanel() {
+        browserPanel = new BrowserPanel();
+        browserOrStatisticsPlaceholder.getChildren().clear();
+        browserOrStatisticsPlaceholder.getChildren().add(browserPanel.getRoot());
     }
 
     void hide() {
@@ -235,5 +252,17 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleToggleBrowserPanelEvent(ToggleBrowserPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToBrowserPanel();
+    }
+
+    @Subscribe
+    private void handleToggleStatisticsPanelEvent(ToggleStatisticsPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToStatisticsPanel();
     }
 }

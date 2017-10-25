@@ -1,6 +1,11 @@
 package seedu.address.ui;
 
 import java.time.Clock;
+import java.time.Instant;
+import java.time.Month;
+import java.time.Year;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -103,5 +108,11 @@ public class StatusBarFooter extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
         setTotalPersons(abce.data.getPersonList().size());
+        setNewPersons(abce.data.getPersonList().filtered(t-> {
+            Date givenDate = t.getCreatedAt();
+            ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of("UTC"));
+            ZonedDateTime ref = Instant.now().atZone(ZoneId.of("UTC"));
+            return Month.from(given) == Month.from(ref) && Year.from(given).equals(Year.from(ref));
+        }).size());
     }
 }

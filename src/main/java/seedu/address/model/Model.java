@@ -36,6 +36,9 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    /** Returns an unmodifiable view of all person list */
+    ObservableList<ReadOnlyPerson> getAllPersonList();
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
