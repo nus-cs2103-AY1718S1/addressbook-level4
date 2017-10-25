@@ -71,7 +71,12 @@ public class EditCommand extends UndoableCommand {
     private final Index targetIndex;
     private final EditPersonDescriptor editPersonDescriptor;
 
+    /**
+     * @param editPersonDescriptor details to edit the person with
+     */
     public EditCommand(EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(editPersonDescriptor);
+
         this.targetIndex = null;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }

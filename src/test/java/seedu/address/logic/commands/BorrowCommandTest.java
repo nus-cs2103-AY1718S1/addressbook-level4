@@ -95,9 +95,11 @@ public class BorrowCommandTest {
         try {
             BorrowCommand borrowFirstCommand = new BorrowCommand(INDEX_FIRST_PERSON, new Debt("50000"));
             BorrowCommand borrowSecondCommand = new BorrowCommand(INDEX_SECOND_PERSON, new Debt("20000"));
+            BorrowCommand borrowThirdCommand = new BorrowCommand(new Debt("20000"));
 
             // same object -> returns true
-            assertTrue(borrowFirstCommand.equals(borrowFirstCommand));
+            assertTrue(borrowThirdCommand.equals(borrowThirdCommand));
+            assertTrue(borrowThirdCommand.equals(borrowThirdCommand));
 
             // same values -> returns true
             BorrowCommand borrowFirstCommandCopy = new BorrowCommand(INDEX_FIRST_PERSON, new Debt("50000"));

@@ -192,6 +192,7 @@ public class EditCommandTest {
     @Test
     public void equals() {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        final EditCommand indexlessCommand = new EditCommand(DESC_BOB);
 
         // same values -> returns true
         EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(DESC_AMY);
@@ -200,6 +201,7 @@ public class EditCommandTest {
 
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
+        assertTrue(indexlessCommand.equals(indexlessCommand));
 
         // null -> returns false
         assertFalse(standardCommand.equals(null));

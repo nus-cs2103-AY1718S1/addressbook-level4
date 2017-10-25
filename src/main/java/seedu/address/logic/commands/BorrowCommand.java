@@ -27,7 +27,7 @@ public class BorrowCommand extends UndoableCommand {
     private final Debt amount;
 
     public BorrowCommand(Debt amount) {
-        targetIndex = null;
+        this.targetIndex = null;
         this.amount = amount;
     }
 
