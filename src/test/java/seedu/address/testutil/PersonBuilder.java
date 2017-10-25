@@ -38,8 +38,8 @@ public class PersonBuilder {
             Website defaultWebsite = new Website(DEFAULT_WEBSITE);
             Remark defaultremark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultremark, defaultWebsite,
-                    defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultremark,
+                    defaultWebsite, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
