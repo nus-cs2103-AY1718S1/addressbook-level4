@@ -45,7 +45,6 @@ public class AddEventCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addEvent(toAdd);
-            model.sortEventList();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateEventException e) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
