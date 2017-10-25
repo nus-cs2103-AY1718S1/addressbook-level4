@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -32,7 +33,7 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public CommandResult execute(String commandText) throws CommandException, ParseException, IOException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
