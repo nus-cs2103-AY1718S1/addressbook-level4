@@ -41,10 +41,9 @@ import seedu.address.ui.UiManager;
 public class MainApp extends Application {
 
     public static final Version VERSION = new Version(0, 6, 0, true);
-
+    protected static Ui ui;
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
-    protected Ui ui;
     protected Logic logic;
     protected Storage storage;
     protected Model model;
@@ -175,6 +174,11 @@ public class MainApp extends Application {
         }
 
         return initializedPrefs;
+    }
+
+    public static Ui getUi() {
+
+        return ui;
     }
 
     private void initEventsCenter() {

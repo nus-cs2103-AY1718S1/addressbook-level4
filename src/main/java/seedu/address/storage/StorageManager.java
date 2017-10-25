@@ -20,7 +20,7 @@ import seedu.address.model.UserPrefs;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private AddressBookStorage addressBookStorage;
+    private static AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
