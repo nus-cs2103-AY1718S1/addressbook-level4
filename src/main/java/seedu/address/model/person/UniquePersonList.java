@@ -97,20 +97,20 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         ArrayList<ReadOnlyPerson> temp = new ArrayList<>();
-        for(ReadOnlyPerson person: persons){
+        for (ReadOnlyPerson person: persons) {
             temp.add(new Person(person));
         }
         ObservableList<ReadOnlyPerson> temp2 = FXCollections.observableArrayList(temp);
-        Comparator<ReadOnlyPerson> ALPHA_ORDER = new Comparator<ReadOnlyPerson>() {
+        Comparator<ReadOnlyPerson> alphaOrder = new Comparator<ReadOnlyPerson>() {
             public int compare(ReadOnlyPerson first, ReadOnlyPerson second) {
                 int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
-                if (x== 0) {
+                if (x == 0) {
                     x = (first.getName().fullName).compareTo(second.getName().fullName);
                 }
                 return x;
             }
         };
-        temp2.sort(ALPHA_ORDER);
+        temp2.sort(alphaOrder);
 
         final UniquePersonList replacement2 = new UniquePersonList();
         for (final ReadOnlyPerson person : temp2) {
