@@ -26,8 +26,6 @@ public class ProfilePanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private ReadOnlyPerson person;
-
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -59,7 +57,6 @@ public class ProfilePanel extends UiPart<Region> {
      * @param person
      */
     private void loadPersonPage(ReadOnlyPerson person) {
-        this.person = person;
         bindListeners(person);
     }
 

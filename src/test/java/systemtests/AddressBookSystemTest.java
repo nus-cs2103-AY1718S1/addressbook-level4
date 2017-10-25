@@ -2,6 +2,7 @@ package systemtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
@@ -81,12 +82,12 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public ProfilePanelHandle getProfilePanel() {
-        return mainWindowHandle.getProfilePanelHandle();
-    }
-
     public InsuranceProfileHandle getInsuranceProfileHandle() {
         return mainWindowHandle.getInsurancePanelHandle();
+    }
+
+    public ProfilePanelHandle getProfilePanelHandle() {
+        return mainWindowHandle.getProfilePanelHandle();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -228,7 +229,7 @@ public abstract class AddressBookSystemTest {
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
-            assertEquals(ProfilePanel.DEFAULT_MESSAGE, getProfilePanel().getName());
+            assertNull(getProfilePanelHandle());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }
