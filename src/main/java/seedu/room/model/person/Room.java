@@ -15,7 +15,7 @@ public class Room {
      * The first character of the room must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String ROOM_VALIDATION_REGEX = "[^\\s].*";
+    public static final String ROOM_VALIDATION_REGEX = "\d{2}-\d{3}[A-Z]?";
     public static final String ROOM_NOT_SET_DEFAULT = "Not Set";
 
     public final String value;
