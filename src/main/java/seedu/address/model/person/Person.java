@@ -24,6 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Appointment> appointment;
 
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueGroupList> groups;
@@ -31,12 +32,14 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Group> groups, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Appointment appointment,
+                                        Set<Group> groups, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.appointment = new SimpleObjectProperty<>(appointment);
         // protect internal tags and groups from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.groups = new SimpleObjectProperty<>(new UniqueGroupList(groups));
@@ -46,8 +49,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getGroups(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getAppointment(),
+                source.getGroups(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -104,6 +107,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Address getAddress() {
         return address.get();
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment.set(requireNonNull(appointment));
+    }
+
+    @Override
+    public ObjectProperty<Appointment> appointmentProperty() {
+        return appointment;
+    }
+
+    @Override
+    public Appointment getAppointment() {
+        return appointment.get();
     }
 
     /**

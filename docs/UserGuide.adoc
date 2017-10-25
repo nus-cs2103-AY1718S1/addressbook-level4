@@ -242,6 +242,19 @@ Selects the 1st person in the results of the `find` command.
 `select all` +
 Selects all persons currently displayed.
 
+=== Adding an appointment: `appoint`
+
+Since v1.3
+
+Add an appointment to a person in the addressbook. +
+Format: `appoint INDEX ap/date time duration` +
+
+****
+* If the person already have an appointment, the new appointment will override the old one
+* If ap/ is left blank, the old appointment will be deleted.
+****
+
+
 === Grouping persons : `group`
 
 Since v1.2

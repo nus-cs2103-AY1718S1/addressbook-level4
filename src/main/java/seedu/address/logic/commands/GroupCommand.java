@@ -63,7 +63,8 @@ public class GroupCommand extends UndoableCommand {
         try {
             editedGroups.add(group);
             editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), editedGroups.toSet(), personToEdit.getTags());
+                    personToEdit.getAddress(), personToEdit.getAppointment(), editedGroups.toSet(),
+                    personToEdit.getTags());
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException("The person cannot be duplicated when adding to a group");

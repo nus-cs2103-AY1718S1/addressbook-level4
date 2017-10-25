@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -38,6 +39,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_GROUP_NAME_FAMILY = "Family";
     public static final String VALID_GROUP_NAME_CS2103 = "CS2103";
+    public static final String VALID_APPOINTMENT = "01/01/20 00:00 60";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -51,6 +53,7 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String GROUP_NAME_DESC_FAMILY = " " + PREFIX_GROUP_NAME + VALID_GROUP_NAME_CS2103;
     public static final String GROUP_NAME_DESC_CS2103 = " " + PREFIX_GROUP_NAME + VALID_GROUP_NAME_CS2103;
+    public static final String APPOINTMENT_DESC = " " + PREFIX_APPOINT + VALID_APPOINTMENT;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

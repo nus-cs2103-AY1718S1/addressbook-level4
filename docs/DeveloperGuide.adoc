@@ -401,6 +401,7 @@ close matches. For example, 'Dve' will return 'Dave' or 'Dove'. +
 ==== Suggesting mechanism
 The suggestion mechanism will be a hybrid of the above two functionalities, in which suggestion, whether commands or a match string inside the addressbook
 will be shown as the user type commands. This has not been implemented but will be a UI-heavy component that anchor on the fuzzy search logic.
+
 // end::searching[]
 
 // tag::findtag[]
