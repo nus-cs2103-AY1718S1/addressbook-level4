@@ -78,6 +78,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void deletePersons(ReadOnlyPerson[] targets) throws PersonNotFoundException {
+        for( ReadOnlyPerson target : targets ) {
+            addressBook.removePerson(target);
+        }
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
