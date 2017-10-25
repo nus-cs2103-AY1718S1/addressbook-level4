@@ -36,6 +36,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
 
     private boolean isBlacklisted = false;
+    private boolean isWhitelisted = false;
     private Date lastAccruedDate; // the last time debt was updated by interest
 
     /**
@@ -69,8 +70,9 @@ public class Person implements ReadOnlyPerson {
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
+        this.isBlacklisted = source.isBlacklisted();
+        this.isWhitelisted = source.isWhitelisted();
         this.lastAccruedDate = source.getLastAccruedDate();
-        this.isBlacklisted = source.getIsBlacklisted();
     }
 
     /**
@@ -262,7 +264,7 @@ public class Person implements ReadOnlyPerson {
      * Returns boolean status of a person's blacklist-status.
      */
     @Override
-    public boolean getIsBlacklisted() {
+    public boolean isBlacklisted() {
         return isBlacklisted;
     }
 
@@ -274,6 +276,21 @@ public class Person implements ReadOnlyPerson {
         this.isBlacklisted = isBlacklisted;
     }
 
+    /**
+     * Returns boolean status of a person's whitelist-status.
+     */
+    @Override
+    public boolean isWhitelisted() {
+        return isWhitelisted;
+    }
+
+    /**
+     * Sets boolean status of a person's whitelist-status using the value of {@param isWhitelisted}.
+     */
+    @Override
+    public void setIsWhitelisted(boolean isWhitelisted) {
+        this.isWhitelisted = isWhitelisted;
+    }
     //@@author
     /**
      * Sets date repaid of a person in the given {@code dateRepaid}.

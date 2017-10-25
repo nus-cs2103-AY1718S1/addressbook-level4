@@ -33,6 +33,7 @@ public interface ReadOnlyPerson {
     DateBorrow getDateBorrow();
     ObjectProperty<Deadline> deadlineProperty();
     Deadline getDeadline();
+
     ObjectProperty<DateRepaid> dateRepaidProperty();
     DateRepaid getDateRepaid();
     Date getLastAccruedDate();
@@ -42,7 +43,7 @@ public interface ReadOnlyPerson {
     /**
      * Returns true if person is blacklisted.
      */
-    boolean getIsBlacklisted();
+    boolean isBlacklisted();
 
     /**
      * Accepts {@code boolean} as parameter.
@@ -50,6 +51,17 @@ public interface ReadOnlyPerson {
      * Sets {@code boolean} variable as the value of {@param isBlacklisted}
      */
     void setIsBlacklisted(boolean isBlacklisted);
+
+    /**
+     * Returns true if person is whitelisted.
+     */
+    boolean isWhitelisted();
+
+    /**
+     * {@param} is {@code boolean} value.
+     * Sets {@code boolean} variable as the value of {@param isWhitelisted}
+     */
+    void setIsWhitelisted(boolean isWhitelisted);
 
     /**
      * Returns true if both are in same cluster.
@@ -78,7 +90,8 @@ public interface ReadOnlyPerson {
                 && other.getAddress().equals(this.getAddress()))
                 && other.getPostalCode().equals(this.getPostalCode())
                 && other.getCluster().equals(this.getCluster())
-                && (other.getIsBlacklisted() == (this.getIsBlacklisted()))
+                && (other.isBlacklisted() == (this.isBlacklisted()))
+                && (other.isWhitelisted() == (this.isWhitelisted()))
                 && other.getDebt().equals(this.getDebt())
                 && other.getInterest().equals(this.getInterest())
                 && other.getDateBorrow().equals(this.getDateBorrow())
