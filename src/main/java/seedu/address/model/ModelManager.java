@@ -88,7 +88,9 @@ public class ModelManager extends ComponentManager implements Model {
 
             for (Tag tag : tags) {
                 tagIsRemoved = newTags.remove(tag);
-                if(tagIsRemoved) hasOneOrMoreDeletion = tagIsRemoved;
+                if (tagIsRemoved) {
+                    hasOneOrMoreDeletion = tagIsRemoved;
+                }
             }
             newPerson.setTags(newTags);
 

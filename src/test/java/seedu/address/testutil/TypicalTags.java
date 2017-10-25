@@ -1,6 +1,5 @@
 package seedu.address.testutil;
 
-import com.sun.javafx.binding.StringFormatter;
 
 /**
  * @author Sri-vatsa

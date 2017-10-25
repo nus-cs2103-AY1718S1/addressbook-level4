@@ -1,17 +1,25 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalTags.MULTIPLE_TAG_DELETION;
+import static seedu.address.testutil.TypicalTags.SINGLE_TAG_DELETION;
+import static seedu.address.testutil.TypicalTags.SINGLE_TAG_DELETION_ALT;
+import static seedu.address.testutil.TypicalTags.TAG_DOES_NOT_EXIST;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 
-import seedu.address.model.*;
-
-import static org.junit.Assert.*;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-import static seedu.address.testutil.TypicalTags.*;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
 /***
  * @author Sri-vatsa
@@ -33,7 +41,7 @@ public class DeleteTagCommandTest {
     }
 
     @Test
-    public void execute_DeleteSingleTagSuccessful() throws Exception {
+    public void execute_deleteSingleTagSuccessful() throws Exception {
 
         CommandResult commandResult = getDeleteTagCommand(SINGLE_TAG_DELETION, model).executeUndoableCommand();
 
@@ -41,7 +49,7 @@ public class DeleteTagCommandTest {
     }
 
     @Test
-    public void execute_DeleteMultipleTagSuccessful() throws Exception {
+    public void execute_deleteMultipleTagSuccessful() throws Exception {
 
         CommandResult commandResult = getDeleteTagCommand(MULTIPLE_TAG_DELETION, model).executeUndoableCommand();
 
@@ -49,7 +57,7 @@ public class DeleteTagCommandTest {
     }
 
     @Test
-    public void execute_DeleteSingleTag_tagDoesNotExist() throws Exception {
+    public void execute_deleteSingleTag_tagDoesNotExist() throws Exception {
 
         CommandResult commandResult = getDeleteTagCommand(TAG_DOES_NOT_EXIST, model).executeUndoableCommand();
 

@@ -1,11 +1,11 @@
 package seedu.address.logic.commands;
 
+import java.util.Arrays;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-
-import java.util.Arrays;
 
 /**
  * @author Sri-vatsa
@@ -29,7 +29,7 @@ public class DeleteTagCommand extends UndoableCommand {
     private Tag[] mTagsToDelete;
 
     public DeleteTagCommand(String[] tag) throws NullPointerException {
-        if(tag == null) {
+        if (tag == null) {
             throw new NullPointerException("Arguments cannot be null");
         }
         mTagsArgs = tag;
@@ -67,10 +67,10 @@ public class DeleteTagCommand extends UndoableCommand {
         } catch (IllegalValueException ive) {
             assert false : "The tag is not a proper value";
         } catch (PersonNotFoundException pnfe) {
-            assert  false: "The person associated with the tag cannot be missing";
+            assert false : "The person associated with the tag cannot be missing";
         }
 
-        if(hasOneOrMoreDeletion) {
+        if (hasOneOrMoreDeletion) {
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } else {
             return new CommandResult(String.format(MESSAGE_NO_TAGS_DELETED));
@@ -81,7 +81,7 @@ public class DeleteTagCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteTagCommand // instanceof handles nulls
-                && Arrays.equals(this.mTagsArgs,((DeleteTagCommand) other).mTagsArgs)); // state check
+                && Arrays.equals(this.mTagsArgs, ((DeleteTagCommand) other).mTagsArgs)); // state check
     }
 
 }
