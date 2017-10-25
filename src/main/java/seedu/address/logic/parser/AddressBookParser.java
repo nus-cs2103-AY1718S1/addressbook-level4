@@ -112,26 +112,27 @@ public class AddressBookParser {
             }
         }
         switch (commandWord) {
-            case ClearCommand.COMMAND_WORD:
-                return new ClearCommand();
 
-            case HistoryCommand.COMMAND_WORD:
-                return new HistoryCommand();
+        case ClearCommand.COMMAND_WORD:
+            return new ClearCommand();
 
-            case ExitCommand.COMMAND_WORD:
-                return new ExitCommand();
+        case HistoryCommand.COMMAND_WORD:
+            return new HistoryCommand();
 
-            case HelpCommand.COMMAND_WORD:
-                return new HelpCommand();
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
 
-            case UndoCommand.COMMAND_WORD:
-                return new UndoCommand();
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
 
-            case RedoCommand.COMMAND_WORD:
-                return new RedoCommand();
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommand();
 
-            default:
-                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        case RedoCommand.COMMAND_WORD:
+            return new RedoCommand();
+
+        default:
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 }
