@@ -520,7 +520,7 @@ is translated on the X axis outside of the application view, and is then brought
 settings panel is then translated out of sight again.
 
 image::SettingsPaneOut.png[width="700"]
-+
+
 image::SettingsPaneIn.png[width="700"]
 
 ==== Design Considerations
