@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Circles - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -362,11 +362,34 @@ The `getSearchText` method inside the `ReadOnlyPerson` class will convert all th
 *Alternative 1 (current choice):* Search CharSequence in person's name, and full word in all other fields +
 *Pros:* By checking CharSequence only in name, and not on others, usage such as `find a` will not just show everyone that has `a` in their contact information. +
 *Cons:* Typing partial email, phone number, address and tag will not show the any result. +
+
 *Alternative 2:* Search CharSequence for all fields inside a `Person`. +
 *Pros:* Partial search words will show results for any fields in contact information +
 *Cons:* Usage such as `find a` will search for everything that contains `a` in a person's contact information, which is not useful for the user.
 
+=== Sort
 
+The `sort` command now allows for the list of contacts to be sorted via phone number, name, or email in lexicographic order.
+It uses the `sorted()` method included in `ObservableList.java`, with comparators defined by the developer.
+
+. To begin a sort, `SortCommand` will call `model.sort()` with a String parameter. This parameter defines how the list will be sorted,
+and can be one of 3 options, "name", "phone" or "email".
+
+. Next, a comparator will be chosen and passed into the `sorted()` method based on the parameter passed from the `Command`.
+
+. A sorted list will be returned and displayed.
+
+==== Design Considerations
+*Aspect:* Order of sort +
+*Alternative 1 (current choice):* `ObservableList` 's `sorted()` method +
+*Pros:* Easy to implement, relatively modular +
+*Cons:* Dependant on Java API, future changes to the method could affect the implementation
+
+*Alternative 2:* Override methods with own implementations +
+*Pros:* Less dependant on provided resources, more flexible with product's requirements +
+*Cons:* Resource-intensive
+
+<<<
 
 === Logging
 
