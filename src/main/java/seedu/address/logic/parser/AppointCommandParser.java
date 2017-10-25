@@ -32,6 +32,5 @@ public class AppointCommandParser implements Parser<AppointCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AppointCommand.MESSAGE_USAGE));
         }
         return new AppointCommand(index, new Appointment(appointmentDetails));
-       
     }
 }

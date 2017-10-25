@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 /**
  * Represents a Person's appointment created in the address book.
  * Guarantees: immutable
@@ -30,8 +28,8 @@ public class Appointment {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Address // instanceof handles nulls
-                && this.value.equals(((Address) other).value)); // state check
+                || (other instanceof Appointment // instanceof handles nulls
+                && this.value.equals(((Appointment) other).value)); // state check
     }
 
     @Override
