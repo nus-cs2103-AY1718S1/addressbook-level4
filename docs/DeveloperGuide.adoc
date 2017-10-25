@@ -658,7 +658,7 @@ Also creates coupling between the `Autocompleter` and `CommandBox`. +
 ** **Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
 ** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +=== Tab autocomplete mechanism
 
-start::trackingNumber[]
+tag::trackingNumber[]
 
 === TrackingNumber Field
 
