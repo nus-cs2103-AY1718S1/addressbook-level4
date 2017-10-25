@@ -22,6 +22,8 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.InvalidSortTypeException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.UniqueRelList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -35,6 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final EventList events;
     private final UniqueTagList tags;
     private final UniqueTagList eventTags;
+    private final UniqueRelList relation;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -48,6 +51,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
         events = new EventList();
         eventTags = new UniqueTagList();
+        relation = new UniqueRelList();
     }
 
     public AddressBook() {
@@ -75,6 +79,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setRel(Set<Relationship> relation) {
+        this.relation.setRel(relation);
+    }
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -90,6 +97,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+
+        setRel(new HashSet<>(newData.getRelList()));
+        syncMasterRelListWith(persons);
     }
 
     //// person-level operations
@@ -167,6 +177,36 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    /**
+     * Ensures that every relationships in this person:
+     * - exists in the master list {@link #relation}
+     * - points to a Relationship object in the master list
+     */
+    private void syncMasterRelListWith(Person person) {
+        final UniqueRelList personRel = new UniqueRelList(person.getRelation());
+        relation.mergeFrom(personRel);
+
+        // Create map with values = Relationship object references in the master list
+        // used for checking person relation references
+        final Map<Relationship, Relationship> masterRelObjects = new HashMap<>();
+        relation.forEach(rel -> masterRelObjects.put(rel, rel));
+
+        // Rebuild the list of person relations to point to the relevant relations in the master relation list.
+        final Set<Relationship> correctRelReferences = new HashSet<>();
+        personRel.forEach(rel -> correctRelReferences.add(masterRelObjects.get(rel)));
+        person.setRel(correctRelReferences);
+    }
+
+    /**
+     * Ensures that every relation in these persons:
+     * - exists in the master list {@link #relation}
+     * - points to a Relationship object in the master list
+     *
+     * @see #syncMasterRelListWith(Person)
+     */
+    private void syncMasterRelListWith(UniquePersonList persons) {
+        persons.forEach(this::syncMasterRelListWith);
+    }
     /**
      * Removes {@code key} from this {@code AddressBook}.
      *
@@ -264,6 +304,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+    @Override
+    public ObservableList<Relationship> getRelList() {
+        return relation.asObservableList();
     }
 
     @Override
