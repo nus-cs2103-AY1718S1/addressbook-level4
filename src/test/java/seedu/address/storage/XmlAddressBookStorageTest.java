@@ -107,6 +107,13 @@ public class XmlAddressBookStorageTest {
         addressBook.getTagList().remove(0);
     }
 
+    @Test
+    public void getRelList_modifyList_throwsUnsupportedOperationException() {
+        XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getRelList().remove(0);
+    }
+
     /**
      * Saves {@code addressBook} at the specified {@code filePath}.
      */

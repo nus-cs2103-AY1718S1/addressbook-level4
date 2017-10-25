@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.UniqueRelList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -52,6 +54,9 @@ public interface ReadOnlyPerson {
 
     Set<Tag> getTags();
 
+    Set<Relationship> getRelation();
+    ObjectProperty<UniqueRelList> relProperty();
+
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -91,6 +96,8 @@ public interface ReadOnlyPerson {
                 .append(getPriority())
                 .append(" Note: ")
                 .append(getNote())
+                .append(" Relationship: ")
+                .append(getRelation())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

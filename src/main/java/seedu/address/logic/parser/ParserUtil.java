@@ -22,6 +22,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.Status;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -172,5 +173,16 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+    /**
+     * Parses {@code Collection<String> relationship} into a {@code Set<Relationship>}.
+     */
+    public static Set<Relationship> parseRel(Collection<String> relation) throws IllegalValueException {
+        requireNonNull(relation);
+        final Set<Relationship> relationSet = new HashSet<>();
+        for (String relationType : relation) {
+            relationSet.add(new Relationship(relationType));
+        }
+        return relationSet;
     }
 }
