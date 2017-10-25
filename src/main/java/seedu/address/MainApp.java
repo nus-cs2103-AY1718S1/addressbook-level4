@@ -176,7 +176,7 @@ public class MainApp extends Application {
         return initializedPrefs;
     }
 
-    public static Ui getUi(){
+    public static Ui getUi() {
 
         return ui;
     }
