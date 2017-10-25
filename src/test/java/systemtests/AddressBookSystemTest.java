@@ -124,13 +124,6 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Displays all persons with tags matching {@code keyword} (case-sensitive).
-     */
-    protected void showPersonsWithTag() {
-        executeCommand(ListCommand.COMMAND_WORD + " t/friends");
-    }
-
-    /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
