@@ -711,7 +711,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Have a keyboard shortcut to navigate to the start or end of my input text|
 
-|`* * *` |User |Navigate through my input text be it left or right by individual words or chunks of white spaces
+|`* * *` |User |Navigate through my input text be it left or right by individual words or chunks of white spaces|
 
 |`* * *` |User |Use the add command without having to worry about the necessary prefixes|Add contacts even if i forget the format of the add command
 
