@@ -120,6 +120,10 @@ e.g.`hide` `1`
 e.g. `alias` `k/del` `s/delete`
 * *Unalias* : `unalias` `k/KEYWORD` +
 e.g. `unalias` `k/del`
+* *Pin* : `pin` `INDEX` +
+e.g. `pin` `2`
+* *Unpin* : `unpin` `INDEX` +
+e.g. `unpin` `1`
 
 == Features
 
@@ -230,7 +234,7 @@ Format: `hide` `INDEX`
 ****
 * Hides the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The indext *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
@@ -295,6 +299,31 @@ Removes the alias command 'disappear'. Next instances of disappear will no longe
 * `unalias` `k/ph` +
 Removes the alias shortcut 'ph'. Next instances of ph will no longer translate to Public Holiday.
 // end::unalias[]
+
+// tag::pin[]
+=== Pin a person
+
+Pins a person to a pin panel for easy access. +
+Format: `pin` `INDEX`
+
+****
+* Pins the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+// end::pin[]
+
+// tag::unpin[]
+=== Unpin a person
+
+Unpins a person from the pin panel. +
+Format: `unpin` `INDEX`
+
+****
+* Unpins the person at the specified `INDEX`.
+* The index refers to the index number shown in the pinned person listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
 
 === Deleting person(s) : `delete`
 
@@ -366,19 +395,19 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 Examples:
 
-* `delete 1` +
+* `delete` `1` +
 `list` +
 `undo` (reverses the `delete 1` command) +
 
-* `select 1` +
+* `select` `1` +
 `list` +
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
+* `delete` `1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `delete` `1` command) +
 
 === Redoing the previously undone command : `redo`
 
@@ -388,8 +417,8 @@ Format: `redo`
 Examples:
 
 * `delete` `1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` (reverses the `delete` `1` command) +
+`redo` (reapplies the `delete` `1` command) +
 
 * `delete` `1` +
 `redo` +
