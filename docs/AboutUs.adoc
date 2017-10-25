@@ -12,21 +12,21 @@ work with and the constant support.
 
 == Project Team
 
-=== Raisa Kabir
-image::raisa2010.png[width="150", height="150", align="left"]
-{empty} [https://github.com/raisa2010[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: Documentation + UI
-
-'''
-
 === Tan Pei Quan
 image::tpq95.png[width="150", height="150", align="left"]
 {empty}[http://github.com/tpq95[github]] [<<johndoe#, portfolio>>]
 
-Role: Developer + Tester +
-Responsibilities: Model
+Role: Team Lead +
+Responsibilities: UI + Scheduling and Tracking 
+
+'''
+
+=== Raisa Kabir
+image::raisa2010.png[width="150", height="150", align="left"]
+{empty} [https://github.com/raisa2010[github]] [<<johndoe#, portfolio>>]
+
+Role: Tester + Developer +
+Responsibilities: Documentation + Deadlines and Deliverables + Model
 
 '''
 
@@ -35,7 +35,7 @@ image::tby1994.png[width="120", height="150" align="left"]
 {empty}[http://github.com/tby1994[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Code Integration Manager +
-Responsibilities: Scheduling and Tracking + Logic
+Responsibilities: Logic
 
 '''
 
@@ -44,6 +44,6 @@ image::eryao95.png[width="120", height="150" align="left"]
 {empty}[http://github.com/eryao95[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Code Quality Manager +
-Responsibilities: Deadlines and Deliverables + Storage
+Responsibilities: Storage
 
 '''
