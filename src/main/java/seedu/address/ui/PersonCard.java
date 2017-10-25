@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -14,11 +16,20 @@ import seedu.address.model.person.ReadOnlyPerson;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
-
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] availableColors = { "red", "green", "grey" };
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static ArrayList<String> availableColors = new ArrayList<String>() {{
+            add("TOMATO");
+            add("TURQUOISE");
+            add("YELLOWGREEN");
+            add("LIGHTGRAY");
+            add("LEMONCHIFFON");
+            add("GRAY");
+            add("GOLDENROD");
+            }
+    };
 
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static Random randomiseColor = new Random();
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -68,19 +79,16 @@ public class PersonCard extends UiPart<Region> {
      */
     private static String obtainTagColors(String tagValue) {
 
+        int randomisedIndex;
+
         if (!tagColors.containsKey(tagValue)) {
-            switch(tagValue) {
-            case "friends":
-                tagColors.put(tagValue, availableColors[1]);
-                break;
-            case "colleagues":
-                tagColors.put(tagValue, availableColors[0]);
-                break;
-            default:
-                tagColors.put(tagValue, availableColors[2]);
-            }
+            randomisedIndex = randomiseColor.nextInt(availableColors.size());
+            tagColors.put(tagValue, availableColors.get(randomisedIndex));
+            availableColors.remove(randomisedIndex);
         }
+
         return tagColors.get(tagValue);
+
     }
 
     /**
