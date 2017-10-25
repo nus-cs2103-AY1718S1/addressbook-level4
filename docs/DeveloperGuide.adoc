@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T17-B2/main.git
 
-By: `Team MedNus`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team MedNus`      Since: `Oct 2017`      Licence: `MIT`
 
 == Introduction
 
@@ -33,12 +33,13 @@ developers.
 === Setting up the project in your computer
 
 . Fork this repo, and clone the fork to your computer
-. Open IntelliJ. Click Import Project.
-. Locate the build.gradle file and select it.
-. Click Open as Project, accepting the default settings.
-. This will generate all resources required by the application and tests.
-. Run the seedu.address.MainApp and try some commands.
-. Run the tests to ensure they all pass.
+. Open IntelliJ. Click `Import Project`.
+. Locate the `build.gradle` file and select it.
+. Click `Open as Project`, accepting the default settings.
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`).
+. This generates all resources required by the application and tests. It should finish with the `BUILD SUCCESSFUL` message.
+. Run the `seedu.address.MainApp` and try some commands.
+. link:#testing[Run the tests] to ensure they all pass.
 
 === Necessary configurations before writing code
 
@@ -159,6 +160,270 @@ The `Storage` component:
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Undo/Redo mechanism
+
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+
+image::LogicCommandClassDiagram.png[width="800"]
+
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+
+Commands that are not undoable are implemented this way:
+[source,java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+----
+
+With the extra layer, the commands that are undoable are implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+
+Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
+
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+
+image::UndoRedoStartingStackDiagram.png[width="800"]
+
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+
+image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+
+[NOTE]
+If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
+
+The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+
+image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+
+[NOTE]
+If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+
+The following sequence diagram shows how the undo operation works:
+
+image::UndoRedoSequenceDiagram.png[width="800"]
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+
+[NOTE]
+If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
+
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+
+image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+
+image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+
+The following activity diagram summarises what happens inside the `UndoRedoStack` when a user executes a new command:
+
+image::UndoRedoActivityDiagram.png[width="200"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `UndoableCommand` +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
+**Cons:** Hard for new developers to understand the template pattern. +
+**Alternative 2:** Just override `execute()` +
+**Pros:** Does not involve the template pattern, easier for new developers to understand. +
+**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+
+---
+
+**Aspect:** How undo & redo executes +
+**Alternative 1 (current choice):** Saves the entire address book. +
+**Pros:** Easy to implement. +
+**Cons:** May have performance issues in terms of memory usage. +
+**Alternative 2:** Individual command knows how to undo/redo by itself. +
+**Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
+**Cons:** We must ensure that the implementation of each individual command are correct.
+
+---
+
+**Aspect:** Type of commands that can be undone/redone +
+**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
+**Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
+**Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
+**Alternative 2:** Include all commands. +
+**Pros:** Might be more intuitive for the user. +
+**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
+**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
+
+---
+
+**Aspect:** Data structure to support the undo/redo commands +
+**Alternative 1 (current choice):** Use separate stack for undo and redo +
+**Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
+**Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
+**Alternative 2:** Use `HistoryManager` for undo/redo +
+**Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
+**Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
+// end::undoredo[]
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== *Enhancement: Bloodtype* +
+
+*Reason for implementation* +
+
+As our address book is designed for doctors to use, being able to record the blood types of patients will be a helpful +
+feature for them. There are many times that doctors need to know what blood type their patients have for medical +
+reasons; cases where blood transfusion is required for patients are of utmost importance to prevent a patient +
+from receiving a incompatible blood type.
+
+*How it is implemented* +
+
+A Bloodtype class is created with one constructor. +
+
+....
+new Bloodtype("AB+")
+....
+
+The constructor requires a string input with one to three character limit. "+" and "-" are allowed as Bloodtype +
+has a ascii regex. +
+
+As of version 1.1, Person constructor includes Bloodtype.
+
+....
+new Person(name, phone, email, address, bloodType, tags, remark);
+....
+
+*Reasons for how it is implemented*
+
+The reason that there is a one to three character limit as blood types are one character input at minimum (e.g "A") +
+and three characters input, inclusive of "+" or "-", at maximum (e.g "AB-"). +
+
+The reason that ascii is used as the regex is to allowed "+" and "-" to be entered as inputs to take into account +
+the Rh factor of blood types.
+
+=== *Enhancement: Set appointment* +
+
+*Reason for implementation* +
+
+Our address book is designed for doctors to use. Doctors often have fixed appointments with patients and the list
+maybe very long. This implementation allows doctors to set an appointment date with a patient. +
+On top of just setting appointment time, the user can also sort the contacts by appointment timing. This is so that the
+doctor will be remind of their most upcoming appointment in the midst of their busy schedule. +
+
+*How is it implemented* +
+
+An appointment class is created and has 2 different constructors. +
+
+ new Appointment("Alice Yeo")               new Appointment("Alice Yeo", calendarInstance);
+
+The first constructor only consists of the person's name in string. It is used if the person has no appointment set. +
+
+The second constructor has person's name in string, and also a date wrapped in a Calendar class.
+
+As of version 1.2, Person constructor includes Appointment.
+
+ new Person(name, phone, email, address, bloodType, tags, remark, appointment);
+
+*Reasons for how it is implemented*
+
+The reason for two constructors is so that the person can be initialized with or without an appointment. As of version
+1.2, our address book does not support the setting of appointment concurrent with the addition of the contact. To ease
+the implementation of that, we have decided that the Person class should have appointment in its constructor.
+
+*Future enhancements*
+
+We would like to allow users to use natural language to set appointments instead of the current rigid format. For any
+enhancements for parsing, it should be done in the AddAppointmentParser class.
+
+=== *Enhancement: List based on Tags* +
+
+*Reason for implementation* +
+
+Contacts in the address book have various tags. Be it family, patients or colleagues, users can now sort their +
+contacts based on such tags
+
+*How is it implemented* +
+
+Implementation passes through two main segments: Logic and Model for this feature
+
+1. Logic
+
+* AddressBookParser: Detects if list keyword contains tag name after +
+e.g. list friends family colleagues
+* ListByTagParser:
+** Parses the input by splitting the string of tags that come after the list keyword +
+Parsed string : friends family colleagues
+** Forms a predicate based on the parsed tags
+** Creates a ListByTagCommand class and passes the predicate as an argument
+* ListByTagCommand:
+** Sets the predicate locally
+** Runs the execution which calls the model segment for filtering using the set predicate
+
+2. Model
+
+* Updates the filter of the filtered person list to filter by the given predicate +
+e.g. Predicate with the parsed string above filters all persons in MedNus +
+that has the tag "friends", "family" or "colleague"
+* Saves the filtered list in the memory
+* Outputs the filtered list onto the result display screen of the application
+
+*Reason for how it is implemented*
+
+ListByTagCommand builds on and makes use of existing implementations +
+
+* Building on existing implementations +
+Instead of recreating the list feature, a listByTags command is created +
+so that developers can easily pinpoint the cause of the error in the unlikely event that one surfaces.
+
+* Makes use of existing implementations +
+Instead of thinking of new algorithms, the command uses existing implementations such as +
+filtering of contacts and parsing of text inputs to reduce errors and complexity.
+
+*Future enhancements*
+
+Potential enhancements include the use of complex search algorithms such as google's search algorithms +
+which involve the use of terms such as AND, OR etc. to provide users with the ability to search +
+for users with greater detail. However, this is something unlikely to have and will ensue only +
+once all existing must-have and good-to-have are completed.
+
 === *Enhancement: Command Box Keyboard Shortcuts*
 
 *Reason for implementation* +
@@ -247,6 +512,65 @@ adversely affect test coverage as these exception can never be thrown.
 +
 Potential enhancements involves syncing the shortcut to the CliSyntax.java file to obtain the necessary +
 prefixes
+
+=== *Enhancement: ListByBloodtypeCommand* +
+
+Since our address book have Bloodtype implemented, we decided that being able to list people according to blood types +
+is going to be helpful for doctors. There are going to be times where hospitals run out of blood for blood transfusion +
+and related medical procedures. Being able to find patients quicklywith compatible blood types is going to be critical +
+in these types of emergencies.
+
+*How it is implemented* +
+
+A ListByBloodtypeCommand class is created with one constructor with input from ListByBloodtypeCommandParser. +
+
+....
+new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate("B+"));
+....
+
+A ListByBloodtypeCommandParser is created with one constructor.
+
+....
+new ListByBloodtypeCommandParser("B+");
+....
+
+The first constructor takes the input from ListByBloodtypeParser and compares blood types with people listed in +
+the address book through BloodtypeContainsKeywordPredicate. +
+
+The second constructor takes in a String from the user.
+
+*Reasons for how it is implemented*
+
+The reason for the use of ListByBloodtypeCommandParser is to filter out extra spaces that the user may have typed in.
+
+
+=== *Enhancement: Batch delete all persons who share a particular tag* +
+
+MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on contacts.
+
+*How is it implemented* +
+
+An additional command class is implemented in the logic component. Its constructor is as follows: +
+
+ BatchCommand(Set<Tag> tagsToDelete)
+
+This command passes a set of tags to the model component. The model component will handle the necessary deletion
+operations. To support this, an additional method is defined in the Model interface for implementation. +
+
+ void deletePersonsByTags(Set<Tag> tags)
+
+It causes the associated addressBook attribute to iterate through each person and delete it if any of the target tags are found.
+
+*Reasons for how it is implemented*
+
+Coupling between the logic and model component is minimised into the sole function call `deletePersonsByTags(Set<Tag> tags)`. This
+is for simplicity as much as it is for ease of implementation. Future batch operations ought to be implemented
+in a similar fashion – whereby only one point of interaction occurs between components.
+
+*Future enhancements*
+
+We would like to include more batch operations beyond deletion. For example, editing tags, remarks, and other contact attributes by batch.
+A general function call between the logic and model components ought to be created. This could serve all batch operations, depending on its arguments.
 
 == Documentation
 
@@ -348,15 +672,93 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |New user |See usage instructions |Refer to instructions when I forget how to use the App
 
+|`* * *` |New user |Know how to use the application without having to read the User Guide|
+
+|`* * *` |User |Add a new person|
+
 |`* * *` |User |Delete a person |Remove entries that I no longer need
 
+|`* * *` |User |Find a person by name |Locate details of persons without having to go through the entire list
+
+|`* * *` |User |List all contacts in the Address Book |See all of my contacts’ information
+
 |`* * *` |User |Find all contacts with a given keyword |Identify all of the contacts with that name
+
+|`* * *` |User |Select a person from the previous command that brings up a numbered list|
+
+|`* * *` |User |Add a tag to my contact |Identify the contact based on the tagged relationship
 
 |`* * *` |User |Undo my previous command |Restore the Address Book to its previous state before the command
 
 |`* * *` |User |Redo an undo |Restore the Address Book to its previous state before the undo
 
+|`* * *` |User |Use the arrow keys to call previous commands used|
+
+|`* * *` |User |Use the Address Book without saving it |Avoid any loss of data in the case I forget to save
+
+|`* * *` |User |Exit the Address Book with a command|
+
+|`* * *` |User |List all contacts based on number of searches |See who I searched the most
+
+|`* * *` |User |Use single-letter short forms of commands |Type less per command
+
+|`* * *` |User |Easily navigate through the User Guide |Easily access information I need from the User Guide
+
+|`* * *` |User |Delete all text easily |Delete everything without having to slowly press the backspace key
+
+|`* * *` |User |Delete a chunk of words easily|Delete a bunch of empty spaces or words without having to slowly press the backspace
+
+|`* * *` |User |Have a keyboard shortcut to navigate to the start or end of my input text
+
+|`* * *` |User |Navigate through my input text be it left or right by individual words or chunks of white spaces
+
+|`* * *` |User |Use the add command without having to worry about the necessary prefixes|Add contacts even if i forget the format of the add command
+
+|`* * *` |Doctor |List all patients with specific tags based on number of searches|
+
+|`* * *` |Doctor |Delete contacts by tags |Delete the whole group at once
+
+|`* * *` |Doctor |Change the colour of the contact tag |Easily identify the patients
+
+|`* * *` |Doctor |Record the blood types of my patients |Easily access their information when required
+
+|`* *` |User |Hide link:#private-contact-detail[private contact details] by default |minimize the chance of someone else seeing them by accident
+
+|`* *` |User |List all contacts based on most recent search |See all contacts I searched recently
+
+|`* *` |User |Change the font size and type |Customize the font to my preference
+
+|`* *` |Doctor |Save the appointments of my patients |Eliminate the need to remember my patient’s appointments
+
+|`* *` |Doctor |Be reminded of any upcoming appointments without inputting any commands |Be constantly reminded about any upcoming appointments without consciously doing so
+
+|`* *` |Doctor |List all patients’ appointments with reference from today’s date |See all upcoming appointments
+
+|`* *` |Doctor |Create a few personalized lists of patients |Add specific patients to these separate lists
+
+|`*` |User with many persons in the Address Book |Sort persons by name |Locate a person easily
+
+|`*` |User |Access all features with keyboard keys |Use the application using only the keyboard
+
+|`*` |User |Select from a pre-configured UI theme |Change my UI's colour scheme
+
+|`*` |User |Easily edit my UI colour scheme |Change my UI colour scheme to the colour I like
+
+|`*` |User |Download information from another Address Book |Remove the need to manually input contacts
+
+|`*` |User |Add my contact on FaceBook through the Address Book |Use it with greater convenience
+
+|`*` |User |Input commands in separate lines |Easily input my command
+
+|`*` |Doctor |Keep track of patients’ medical records |Refer to the contact's’ history
+
+|`*` |Doctor |Assign a profile photo for each contact |Remember how they look like
+
+|`*` |Doctor |Enter the information of my patients in a separate window |Use the add command without typing in a long sentence
+
 |=======================================================================
+
+{More to be added}
 
 [appendix]
 == Use Cases
@@ -414,25 +816,181 @@ Use case ends.
 Use case resumes at step 1.
 [discrete]
 
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find a person
+2.  AddressBook lists the person found
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The AddressBook does not contain the person that the user request
++
+[none]
+** 2a1. AddressBook shows an empty list
++
+Use case ends.
+[none]
+* 3a. The format of find command is invalid
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+[discrete]
+
+[discrete]
+=== Use case: Adding tags to a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add tags to the person
+4.  AddressBook adds tags to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+
+[discrete]
+=== Use case: Undo previous command
+
+*MSS*
+
+1.  User deletes contact at index 1
+2.  AddressBook deletes contact at index 1
+3.  User requests to show the list of contacts
+4.  AddressBook shows a list of people without the deleted contact
+5.  User requests to undo
+6.  AddressBook undo the deletion
+7.  User request to show the list of contacts
+8.  AddressBook shows a list of people with the previously deleted contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The user undo without having made a command
++
+[none]
+** 2a.1 AddressBook shows an error message.
++
+Use case ends.
+
+
+[discrete]
+
+[discrete]
+=== Use case: Redoing the previously undone command
+
+*MSS*
+
+1.  User requests to delete contact at index 1
+2.  AddressBook deletes contact at index 1
+3.  User requests to show the list of contacts
+4.  AddressBook shows a list of people without the deleted contact
+5.  User requests to undo
+6.  AddressBook undo the deletion
+7.  User request to show the list of contacts
+8.  AddressBook shows a list of people with the previously deleted contact
+9.  User request to redo previous undone delete command
+10. Address book redoes previous undone delete command
+11. User request to show the list of contacts
+12. AddressBook shows the list of person without the deleted contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The user request redo without having made an undo command
++
+[none]
+** 2a.1 AddressBook shows an error message.
++
+Use case ends.
+
+
+[discrete]
+
+{More to be added}
+
 [appendix]
 == Non Functional Requirements
 
+.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A novice who has never used an Address Book should have no problem using it.
+.  The system should respond under a second.
+.  A user private information should not be seen by others unless they are granted access.
 .  User commands should not be case sensitive.
+.  Should back up data to cloud or have a back up program to recover any loss of data.
 .  Should have a change history up to 100000 changes.
+.  Should work offline most of the time except when accessing services requiring internet (eg. cloud, social networks).
+.  Should restore to operational status under a minute after a failure occur.
+.  Should be able to continue working even after failing to restore.
+.  Should scale to fit regardless of user's screen size.
+.  Any fault or error reported should be fixed in a week.
+.  A user with little knowledge in technology should be able to use the system
 .  Words displayed by the applications should be readable
 .  Proper documentation of existing features should be present
-.  Users should be able to easily navigate through documentation
+.  Users should be able to easily navigate through the documentations
 .  System must ensure that no contacts are lost unless initiated by the user
 
 [appendix]
 == Glossary
 
-. *Address Book*: An application to store contacts and details of people.
-. *Command*: Keywords required to use the address book.
-. *GUI*: Graphical User Interface: Use of icons and visual indicators to navigate.
-. *Parameters*: Details of a person to be added.
-. *Tag(s)*: Label(s) given to a person.
+Address Book
+
+....
+An application to store contacts and details of people.
+....
+
+Command
+
+....
+Keywords required to use the address book.
+....
+
+GUI
+
+....
+Graphical User Interface: Use of icons and visual indicators to navigate.
+....
+
+Parameters
+
+....
+Details of a person to be added.
+....
+
+Tag(s)
+
+....
+Label(s) given to a person.
+....
 
 [appendix]
 == Product Survey
@@ -451,3 +1009,4 @@ Cons:
 
 * Lacks command-line (or keyboard-only) interface for power users
 * Animations are unnecessarily slow
+* Navigating through multiple data input fields per contact is very tedious
