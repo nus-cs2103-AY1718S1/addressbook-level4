@@ -5,7 +5,11 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -35,6 +39,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         String listOfDeletedContacts = "";
+
         for (int n = 0; n < arrayOfIndex.size(); n++) {
 
             Index targetIndex = arrayOfIndex.get(n);
@@ -45,10 +50,15 @@ public class DeleteMultipleCommand extends UndoableCommand {
             }
 
             ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-            listOfDeletedContacts = listOfDeletedContacts + ", " + personToDelete.getName();
+            if (n == 0) {
+                listOfDeletedContacts = listOfDeletedContacts + personToDelete.getName();
+            } else {
+                listOfDeletedContacts = listOfDeletedContacts + ", " + personToDelete.getName();
+            }
 
             try {
                 model.deletePerson(personToDelete);
+                queue.offer(personToDelete);
             } catch (PersonNotFoundException pnfe) {
                 assert false : "The target person cannot be missing";
             }
@@ -62,5 +72,12 @@ public class DeleteMultipleCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteMultipleCommand // instanceof handles nulls
                 && this.arrayOfIndex.equals(((DeleteMultipleCommand) other).arrayOfIndex)); // state check
+    }
+
+    @Override
+    public void setData(Model model, CommandHistory commandHistory,
+                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+        this.model = model;
+        this.queue = queue;
     }
 }

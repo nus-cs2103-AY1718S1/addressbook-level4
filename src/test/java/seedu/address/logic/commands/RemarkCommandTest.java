@@ -16,6 +16,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -115,7 +116,7 @@ public class RemarkCommandTest {
      */
     private RemarkCommand prepareCommand(Index index, String remark) {
         RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));
-        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
         return remarkCommand;
     }
 }

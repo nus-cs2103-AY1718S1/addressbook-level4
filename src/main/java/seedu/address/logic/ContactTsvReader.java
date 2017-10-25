@@ -19,6 +19,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.Website;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -69,13 +70,15 @@ public class ContactTsvReader {
                             .get();
                     Address address = ParserUtil.parseAddress(checkEmptyAndReturn(retrieveColumnField(columns, 3)))
                             .get();
+                    Website website = ParserUtil.parseWebsite(checkEmptyAndReturn(retrieveColumnField(columns, 4)))
+                            .get();
                     Set<Tag> tagList = ParserUtil.parseTags(new ArrayList<String>(
-                            Arrays.asList(retrieveColumnField(columns, 4)
+                            Arrays.asList(retrieveColumnField(columns, 5)
                                     .replaceAll("^[,\"\\s]+", "")
                                     .replace("\"", "")
                                     .split("[,\\s]+"))));
                     Remark remark = new Remark("");
-                    ReadOnlyPerson toAddPerson = new Person(name, phone, email, address, remark, tagList);
+                    ReadOnlyPerson toAddPerson = new Person(name, phone, email, address, remark, website, tagList);
                     toAddPeople.add(toAddPerson);
                 } catch (IllegalValueException ive) {
                     throw new ParseException(ive.getMessage(), ive);

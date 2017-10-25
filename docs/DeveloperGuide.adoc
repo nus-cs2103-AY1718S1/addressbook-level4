@@ -98,17 +98,17 @@ The *_Architecture Diagram_* given above explains the high-level design of the A
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* Initializing the components in the correct sequence, and connects them up with each other at app launch.
+* Shutting down the components and invokes cleanup method where necessary at shut-down.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of four aditional components.
 
 * link:#ui-component[*`UI`*] : The UI of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
@@ -359,24 +359,26 @@ A valid format can be as follow. It is highly advisable that user enter the data
 
 
 |===
-|name |phone |email |address |tag
+|name |phone |email |address |website |tag
 
 |John Doe
 |98765432
 |johnd@example.com
 |John street, block 123, #01-01
+|https://github.com/JohnDoe
 |friend, neighbor
 
 |Betsy Crowe
 |1234567
 |betsycrowe@example.com
 |Newgate Prison
+|https://github.com/BetsyCrowe
 |friend, criminal
 |===
 
 `AddMultipleByTsvCommand` can throw the following exception:
 
- * `NoSuchElementException`: Just as `AddCommand`, this happens when `name` or `phone` or `email` is missing, and that specific entry will not be added.
+ * `NoSuchElementException`: Just as `AddCommand`, this happens when `name`, `phone`, `email`, `address` or `website` is missing, and that specific entry will not be added.
  * `IOException`: This happens when the system cannot find the file specified by users, and no entry will be added.
  * `DuplicatePersonException`: This happens when any entry has already been added, and that specific entry will not be added.
 
@@ -401,6 +403,16 @@ As our indexes are intended to take in multiple index values, we will use a `Str
 We will now create a `ArrayList<Index> arrayOfIndex = new ArrayList<Index>();` to store the indexes that we will need for the feature. We will store the indexes into the arraylist using a for loop. However, as the arguments in the `listOfIndex` arraylist is in a string format, we will need to convert them into an integer format before storing it into the `ArrayList<Index> arrayOfIndex`. This arrayList will be returned to the `DeleteMultipleCommand` class for use.
 
 In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `deleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
+
+=== Recently Deleted List
+
+Recently deleted command is used to allow the user to have a list of the past 30 recently deleted contacts and their details.
+
+By keying in the command word "recentlyDel", the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `RecentlyDeletedCommand` class.
+
+We will now create a 'LinkedList<Person> RecentlyDeletedQueue = new LinkedList<>();' to store the recently deleted contacts for up to the past 30 contacts.
+
+In the 'RecentlyDeletedCommand' class, the commandResult method is used which will show the deleted contacts.
 
 === Logging
 
@@ -441,7 +453,7 @@ See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to dep
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format.
+Here are the steps used to convert the project documentation files to PDF format.
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
@@ -512,7 +524,7 @@ We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor]
 
 === Making a Release
 
-Here are the steps to create a new release.
+Here are the steps for creating a new release.
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
@@ -947,19 +959,4 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
 
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
