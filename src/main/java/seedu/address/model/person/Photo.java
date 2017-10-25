@@ -18,22 +18,13 @@ public class Photo {
 
     public static final String BASE_DIR = System.getProperty("user.dir") + "/src/main/resources/person_photos/";
 
-    //public static final String DEFAULT_IMAGE = "template.jpg";
-
     private String photoDir;
-
-    //public Photo() {
-        //this.photoDir = BASE_DIR + DEFAULT_IMAGE;
-    //}
 
     public String getPhotoDir() {
         return photoDir;
     }
 
     public String getFullPhotoDir() { return BASE_DIR + photoDir; }
-//    public void setPhotoDir(String photoDir) {
-//        this.photoDir = BASE_DIR + photoDir;
-//    }
 
     /**
      * Validates given birthday.
