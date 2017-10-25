@@ -43,7 +43,11 @@ public class EditCommandParser implements Parser<EditCommand> {
         Index index;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            if (argMultimap.getPreamble().equals("")) {
+                index = null;
+            } else {
+                index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
@@ -67,10 +71,18 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+            if (index == null) {
+                throw new ParseException(EditCommand.MESSAGE_USAGE);
+            } else {
+                throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+            }
         }
 
-        return new EditCommand(index, editPersonDescriptor);
+        if (index == null) {
+            return new EditCommand(editPersonDescriptor);
+        } else {
+            return new EditCommand(index, editPersonDescriptor);
+        }
     }
 
     /**

@@ -79,7 +79,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
 
         // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "", EditCommand.MESSAGE_NOT_EDITED);
     }
 
     @Test
@@ -128,6 +128,21 @@ public class EditCommandParserTest {
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY
                 + VALID_POSTAL_CODE_AMY, Name.MESSAGE_NAME_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_noIndexAllFieldsSpecified_success() {
+        String userInput = PHONE_DESC_BOB + TAG_DESC_HUSBAND + POSTAL_CODE_DESC_BOB
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND + DEBT_DESC_AMY
+                + DEADLINE_DESC_AMY + INTEREST_DESC_AMY;
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withPostalCode(VALID_POSTAL_CODE_BOB).withDebt(VALID_DEBT_AMY).withDeadline(VALID_DEADLINE_AMY)
+                .withInterest(VALID_INTEREST_AMY).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        EditCommand expectedCommand = new EditCommand(descriptor);
+
+        assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
