@@ -163,6 +163,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    public void updateHighlight(String highlightTag) {
+        persons.updateHighlight(highlightTag);
+    }
 
     //// sort address book
     /**
@@ -214,4 +217,5 @@ public class AddressBook implements ReadOnlyAddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
     }
+
 }

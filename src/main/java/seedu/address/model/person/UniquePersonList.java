@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -12,6 +13,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -48,6 +50,20 @@ public class UniquePersonList implements Iterable<Person> {
         }
         internalList.add(new Person(toAdd));
         this.sortBy(currentlySortedBy);
+    }
+
+    /**
+     * Updates the highlight status of the persons with the specified tag
+     */
+    public void updateHighlight(String highlightTag) {
+        for (Person p : internalList) {
+            Set<Tag> personTags = p.getTags();
+            for (Tag t : personTags) {
+                if (t.toString().equals("[" + highlightTag + "]")) {
+                    p.setHighlightStatus(true);
+                }
+            }
+        }
     }
 
     /**
