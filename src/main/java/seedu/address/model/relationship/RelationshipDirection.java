@@ -5,22 +5,19 @@ package seedu.address.model.relationship;
  */
 public enum RelationshipDirection {
 
-    UNDIRECTED("undirected"),
-    DIRECTED("directed");
-
-    private final String directed = "directed";
-    private String direction;
-
-    RelationshipDirection(String direction) {
-        this.direction = direction;
-    }
+    UNDIRECTED,
+    DIRECTED;
 
     public String getDirection() {
-        return direction;
+        if (isDirected()) {
+            return "directed";
+        } else {
+            return "undirected";
+        }
     }
 
     public boolean isDirected() {
-        return this.direction.equals(directed);
+        return this == DIRECTED;
     }
 
     public String toString() {

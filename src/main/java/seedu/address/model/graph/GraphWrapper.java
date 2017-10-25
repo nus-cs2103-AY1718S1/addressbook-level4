@@ -24,12 +24,12 @@ import java.util.Set;
  */
 public class GraphWrapper {
 
-    public static final String MESSAGE_PERSON_DOESNOT_EXIST = "The person does not exist in this address book.";
+    public static final String MESSAGE_PERSON_DOES_NOT_EXIST = "The person does not exist in this address book.";
 
     private SingleGraph graph;
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
-    private final String graphId = "ImARandomGraphID";
+    private static final String graphId = "ImARandomGraphID";
 
     private final String nodeAttributePersonName = "PersonName";
     private final String nodeAttributePerson = "Person";
@@ -66,7 +66,7 @@ public class GraphWrapper {
         requireNonNull(person);
         int indexOfThePerson = filteredPersons.indexOf(person);
         if (indexOfThePerson == -1) {
-            throw new IllegalValueException(MESSAGE_PERSON_DOESNOT_EXIST);
+            throw new IllegalValueException(MESSAGE_PERSON_DOES_NOT_EXIST);
         } else {
             return Integer.toString(indexOfThePerson);
         }

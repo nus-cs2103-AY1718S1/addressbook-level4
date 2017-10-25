@@ -24,8 +24,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
-    ObjectProperty<UniqueRelationshipList> relationshipProperty();
     Set<Relationship> getRelationships();
+    ReadOnlyPerson copy();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

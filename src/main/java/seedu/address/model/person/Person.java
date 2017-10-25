@@ -153,11 +153,6 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return Collections.unmodifiableSet(relationships.get().toSet());
     }
 
-    @Override
-    public ObjectProperty<UniqueRelationshipList> relationshipProperty() {
-        return relationships;
-    }
-
     /**
      * Add a relationship to a person's relationships
      */
@@ -181,6 +176,17 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     }
 
     @Override
+    public ReadOnlyPerson copy() {
+        Name name = this.getName();
+        Phone phone = this.getPhone();
+        Email email = this.getEmail();
+        Address address = this.getAddress();
+        Set<Tag> tags = this.getTags();
+        Set<Relationship> relationships = this.getRelationships();
+        return new Person(name, phone, email, address, tags, relationships);
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyPerson // instanceof handles nulls
@@ -190,7 +196,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, relationships);
+        return Objects.hash(name, phone, email, address, tags);
     }
 
     @Override

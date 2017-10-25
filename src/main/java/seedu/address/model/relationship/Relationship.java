@@ -32,22 +32,17 @@ public class Relationship {
         return direction;
     }
 
-
-    public boolean isDirected() {
-        return (direction != null) && direction.isDirected();
-    }
-
     public boolean isUndirected() {
-        return (direction != null) && !direction.isDirected();
+        return !direction.isDirected();
     }
 
 
     @Override
     public boolean equals(Object other) {
-        boolean idCheck = this.fromPerson.equals(((Relationship) other).getFromPerson())
+        boolean personsCheck = this.fromPerson.equals(((Relationship) other).getFromPerson())
                 && this.toPerson.equals(((Relationship) other).getToPerson());
         if (isUndirected()) {
-            idCheck = (this.fromPerson.equals(((Relationship) other).getFromPerson())
+            personsCheck = (this.fromPerson.equals(((Relationship) other).getFromPerson())
                     && this.toPerson.equals(((Relationship) other).getToPerson()))
                     || (this.fromPerson.equals(((Relationship) other).getToPerson())
                     && this.toPerson.equals(((Relationship) other).getFromPerson()));
@@ -55,6 +50,6 @@ public class Relationship {
 
         return other == this // short circuit if same object
                 || (other instanceof Relationship // instanceof handles nulls
-                && idCheck);
+                && personsCheck);
     }
 }
