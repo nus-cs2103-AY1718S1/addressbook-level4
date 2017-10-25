@@ -4,15 +4,18 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * Represents a Person's birthday in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
+ * Guarantees: immutable; name is valid as declared in {@link #isValidBirthday(String)}
  */
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday can only contain numbers, and should be 8 digits long";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{8,}";
+            "Birthday can only contain numbers and in the format dd-MM-yyyy";
     public final String value;
 
     /**
@@ -23,17 +26,20 @@ public class Birthday {
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
         String trimmedBirthday = birthday.trim();
-        if (!isValidBirthday(trimmedBirthday)) {
+        if (!trimmedBirthday.isEmpty() && !isValidBirthday(trimmedBirthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
         this.value = trimmedBirthday;
     }
 
-    /**
-     * Returns true if a given string is a valid birthday.
-     */
-    public static boolean isValidBirthday(String test)  {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+    public static boolean isValidBirthday(String date) throws IllegalValueException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        try {
+            LocalDate.parse(date, formatter);
+            return true;
+        } catch (DateTimeParseException pe) {
+            return false;
+        }
     }
 
     @Override
