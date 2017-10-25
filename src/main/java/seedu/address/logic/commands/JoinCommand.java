@@ -13,11 +13,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.PersonHaveParticipateException;
+import seedu.address.model.event.exceptions.PersonNotParticipateException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
 import seedu.address.model.person.exceptions.HaveParticipateEventException;
-
+import seedu.address.model.person.exceptions.NotParticipateEventException;
 
 
 /**
@@ -78,16 +79,25 @@ public class JoinCommand extends UndoableCommand {
 
     @Override
     protected void undo() {
+        try {
+            model.quitEvent(personToJoin, eventToJoin);
+        } catch (PersonNotParticipateException pnpe) {
+            throw new AssertionError("Undo is to revert a stage; "
+                    + "it should not fail now");
+        } catch (NotParticipateEventException npee) {
+            throw new AssertionError("Undo is to revert a stage; "
+                    + "it should not fail now");
+        }
     }
 
     @Override
     protected void redo() {
         try {
             model.joinEvent(personToJoin, eventToJoin);
-        } catch (PersonHaveParticipateException pnpe) {
+        } catch (PersonHaveParticipateException phpe) {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
-        } catch (HaveParticipateEventException npee) {
+        } catch (HaveParticipateEventException hpee) {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
