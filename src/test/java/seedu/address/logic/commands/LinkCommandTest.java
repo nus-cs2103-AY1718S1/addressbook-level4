@@ -22,7 +22,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Link;
 import seedu.address.testutil.PersonBuilder;
 
@@ -56,23 +55,6 @@ public class LinkCommandTest {
         LinkCommand linkCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getLink().toString());
 
         String expectedMessage = String.format(LinkCommand.MESSAGE_DELETE_LINK_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(linkCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_filteredList_success() throws Exception {
-        showFirstPersonOnly(model);
-
-        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personInFilteredList)
-                .withLink("facebook.com/").build();
-        LinkCommand linkCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getLink().value);
-
-        String expectedMessage = String.format(LinkCommand.MESSAGE_ADD_LINK_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
