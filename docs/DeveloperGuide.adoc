@@ -764,6 +764,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+[discrete]
 === Use case: Delete person
 
 *MSS*
@@ -788,8 +789,6 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-
-[discrete]
 
 [discrete]
 === Use case: Add person
