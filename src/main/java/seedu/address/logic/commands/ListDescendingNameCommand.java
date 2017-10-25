@@ -1,12 +1,12 @@
 package seedu.address.logic.commands;
 
 /**
- * Finds and lists all persons in address book in ascending order by name
+ * Finds and lists all persons in address book in descending order by name
  */
-public class ListAscendingName extends Command{
+public class ListDescendingNameCommand extends Command {
 
-    public static final String COMMAND_WORD = "ascending";
-    public static final String COMMAND_ALIAS = "asc"; // shorthand equivalent alias
+    public static final String COMMAND_WORD = "descending";
+    public static final String COMMAND_ALIAS = "dsc"; // shorthand equivalent alias
     public static final String COMPILED_COMMAND = ListCommand.COMMAND_WORD + COMMAND_WORD;
     public static final String COMPILED_SHORTHAND_COMMAND = ListCommand.COMMAND_ALIAS + COMMAND_ALIAS;
 
@@ -15,11 +15,11 @@ public class ListAscendingName extends Command{
             + "Example: " + COMPILED_COMMAND + "\n"
             + "Shorthand Example: " + COMPILED_SHORTHAND_COMMAND;
 
-    public static final String MESSAGE_SUCCESS = "Listed persons by name in ascending order";
+    public static final String MESSAGE_SUCCESS = "Listed persons by name in descending order";
 
     @Override
     public CommandResult execute() {
-        model.listNameAscending();
+        model.listNameDescending();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

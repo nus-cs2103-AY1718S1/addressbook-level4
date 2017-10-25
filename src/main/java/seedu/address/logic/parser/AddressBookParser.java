@@ -17,11 +17,11 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListAscendingName;
+import seedu.address.logic.commands.ListAscendingNameCommand;
 import seedu.address.logic.commands.ListByBloodtypeCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListCommandFailure;
-import seedu.address.logic.commands.ListDescendingName;
+import seedu.address.logic.commands.ListFailureCommand;
+import seedu.address.logic.commands.ListDescendingNameCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -140,14 +140,14 @@ public class AddressBookParser {
             break;
         case "asc":
         case "ascending":
-            returnThisCommand = (argSplit.length == 1) ? new ListAscendingName() : new ListCommandFailure();
+            returnThisCommand = (argSplit.length == 1) ? new ListAscendingNameCommand() : new ListFailureCommand();
             break;
         case "dsc":
         case "descending":
-            returnThisCommand = (argSplit.length == 1) ? new ListDescendingName() : new ListCommandFailure();
+            returnThisCommand = (argSplit.length == 1) ? new ListDescendingNameCommand() : new ListFailureCommand();
             break;
         default:
-            returnThisCommand = new ListCommandFailure();
+            returnThisCommand = new ListFailureCommand();
         }
         return returnThisCommand;
     }
