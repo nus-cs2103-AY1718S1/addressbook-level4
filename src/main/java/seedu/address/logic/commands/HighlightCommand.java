@@ -40,24 +40,4 @@ public class HighlightCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_TAG_NOT_FOUND + highlightTag);
         }
     }
-
-//    @Override
-//    public CommandResult executeUndoableCommand() throws CommandException {
-//        requireNonNull(model);
-//        try {
-//            model.highlight(highlightTag);
-//            return new CommandResult(String.format(MESSAGE_SUCCESS, sortCriteria));
-//        } catch (AlreadySortedException e) {
-//            String failureMessage = String.format(MESSAGE_FAILURE, sortCriteria);
-//            throw new CommandException(failureMessage);
-//        }
-//    }
-
-//    @Override
-//    public boolean equals(Object other) {
-//        return other == this // short circuit if same object
-//                || (other instanceof SortCommand // instanceof handles nulls
-//                && sortCriteria.equals(((SortCommand) other).sortCriteria));
-//    }
-
 }

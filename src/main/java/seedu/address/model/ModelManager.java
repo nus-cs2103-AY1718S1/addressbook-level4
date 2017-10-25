@@ -22,7 +22,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
 
 
 /**
@@ -153,7 +152,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Updates the highlight status of a person if tag matches input tag
      */
-    public void updateHighlightStatus(String highlightTag) throws TagNotFoundException{
+    public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
         addressBook.updateHighlight(highlightTag);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
