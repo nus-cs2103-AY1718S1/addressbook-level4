@@ -19,7 +19,7 @@ public class RecentlyDeletedQueue {
     }
 
     /**
-     * Offers the {@param person} in the queue when the {@param person} is deleted by
+     * Offers the @param person in the queue when the @param person is deleted by
      * {@code DeleteCommand} or {@code DeleterMultipleCommand}.
      */
     public void offer(ReadOnlyPerson person) {
