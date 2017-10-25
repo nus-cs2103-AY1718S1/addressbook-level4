@@ -15,7 +15,7 @@ ifndef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
 
- +
+
 Welcome to MedNus! MedNus is a custom address book made for medical professionals. +
  +
 You can find many different features available in MedNus that are useful for medical professionals such as +
