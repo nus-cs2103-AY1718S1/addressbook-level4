@@ -1,11 +1,9 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's website in the address book.
@@ -24,20 +22,25 @@ public class Website {
      * @throws IllegalValueException if given website string is invalid.
      */
     public Website(String website) throws IllegalValueException {
-        requireNonNull(website);
-        String trimmedWebsite = website.trim();
-        if (!isValidWebsite(trimmedWebsite)) {
-            throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINTS);
+        //requireNonNull(website);
+        if (website == null) {
+            this.value = "";
         }
-        this.value = trimmedWebsite;
+        else {
+            String trimmedWebsite = website.trim();
+            if (!isValidWebsite(trimmedWebsite)) {
+                throw new IllegalValueException(MESSAGE_WEBSITE_CONSTRAINTS);
+            }
+            this.value = trimmedWebsite;
+        }
     }
 
     /**
      * Returns if a given string is a valid person email.
      */
     public static boolean isValidWebsite(String test) {
-        Pattern p = Pattern.compile("(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(https://)?[a-zA-Z_0-9\\-]+" +
-                "(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?");
+        Pattern p = Pattern.compile("(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(https://)?[a-zA-Z_0-9\\-]+"
+                + "(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?");
 
         Matcher m = p.matcher(test);
         return m.matches();
