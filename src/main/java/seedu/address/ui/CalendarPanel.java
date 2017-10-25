@@ -30,8 +30,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 
-import javax.tools.Tool;
-
 /**
  * The CalendarPanel panel of the App.
  */
