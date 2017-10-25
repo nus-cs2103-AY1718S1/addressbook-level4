@@ -12,7 +12,6 @@ import seedu.address.ui.OpenEmailClient;
  * The UI component that is responsible for emailing the selected person.
  */
 public class EmailCommand extends Command {
-    
     public static final String COMMAND_WORD = "email";
     public static final String COMMAND_ALIAS = "em";
     public static final String MESSAGE_SUCCESS = "Email opened!";
@@ -23,26 +22,18 @@ public class EmailCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     private int emailIndex;
-    
     public EmailCommand(String emailIndex) {
         this.emailIndex = Integer.parseInt(emailIndex.trim());
     }
-    
     public void openEmail() {}
-    
-    
     @Override
     public CommandResult execute() throws CommandException, IOException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        
-
         ReadOnlyPerson personToEmail = lastShownList.get(emailIndex - 1);
 
         OpenEmailClient emailClient = new OpenEmailClient(personToEmail.getEmail().toString());
         emailClient.sendMail();
-        
         return new CommandResult(MESSAGE_SUCCESS);
     }
-    
 }
