@@ -48,7 +48,6 @@ public class EmailManager implements Email {
         Session session = Session.getInstance(properties_SMTP, newAuthenticator);
 
         try {
-            System.out.printf("%s %s",email, password);
             Transport transport = session.getTransport("smtp");
             transport.connect(hostHashTable.get(currentEmailProvider), email, password);
             transport.close();

@@ -29,7 +29,6 @@ public class EmailLoginWindow extends UiPart<Region> {
     private static final String FXML = "EmailLoginWindow.fxml";
 
     private Stage primaryStage;
-    private UserPrefs prefs;
     private Button loginButton;
     private Logic logic;
 
@@ -97,6 +96,9 @@ public class EmailLoginWindow extends UiPart<Region> {
         });
     }
 
+    /**
+     * Show the window
+     */
     public void show() {
         primaryStage.show();
     }

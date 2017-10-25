@@ -44,7 +44,9 @@ public class FunctionButtons extends UiPart<Region> {
      */
     @FXML
     private void openEmailSendWindow() {
-
+        sendButton.setDisable(true);
+        EmailSendWindow emailSendWindow = new EmailSendWindow(sendButton, logic);
+        emailSendWindow.show();
     }
 
     /**
