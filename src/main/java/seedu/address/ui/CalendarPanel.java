@@ -23,8 +23,14 @@ import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.persons.FindCommand;
+import seedu.address.logic.commands.tasks.FindTaskCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
+
+import javax.tools.Tool;
 
 /**
  * The CalendarPanel panel of the App.
@@ -83,21 +89,23 @@ public class CalendarPanel extends UiPart<Region> {
     private void findDateForSelection() {
         // Make datePicker editable (i.e. i think can select and update value)
         datePicker.setEditable(true);
-        // TODO: 23/10/17 Able to execute findCommand when new markdate is selected
+        // TODO: 23/10/17 Able to execute findCommand when a colour date is selected
+        // TODO: 26/10/17 Able to not execute findCommand when cell is not colour, able to find birthday with dd-MM
         datePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 LocalDate date = datePicker.getValue();
-                logger.info("Date selected: " + date.toString());
-                /*
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String dateString = date.format(formatter);
+                logger.info("Date selected: " + dateString);
                 try {
-                    logic.execute(FindTaskCommand.COMMAND_WORD + " " + markdate.toString());
-                    logic.execute(FindCommand.COMMAND_WORD + " " + markdate.toString());
+                    logic.execute(FindTaskCommand.COMMAND_WORD + " " + dateString);
+                    logic.execute(FindCommand.COMMAND_WORD + " " + dateString);
                 } catch (CommandException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }*/
+                }
             }
         });
     }
