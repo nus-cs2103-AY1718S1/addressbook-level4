@@ -15,7 +15,9 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,8 +33,8 @@ public class SampleDataUtil {
                     new Deadline(Deadline.NO_DEADLINE_SET), getTagSet("friends")),
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                     new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new PostalCode("554403"),
-                    new Debt("100"), new Interest(Interest.NO_INTEREST_SET),
-                    new Deadline(Deadline.NO_DEADLINE_SET), getTagSet("colleagues", "friends")),
+                    new Debt("100"), new Interest("1"),
+                    new Deadline("02-02-2020"), getTagSet("colleagues", "friends")),
                 new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                     new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new PostalCode("560011"),
                     new Debt("300"), new Interest(Interest.NO_INTEREST_SET),
@@ -41,10 +43,26 @@ public class SampleDataUtil {
                     new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new PostalCode("554436"),
                     new Debt("50"), new Interest(Interest.NO_INTEREST_SET),
                     new Deadline(Deadline.NO_DEADLINE_SET), getTagSet("family")),
+                new Person(new Name("Eileen Choo"), new Phone("91373723"), new Email("elchoo@example.com"),
+                    new Address("Blk 432 Tiong Bahru Avenue 2, #16-43"), new PostalCode("144432"),
+                    new Debt("2000"), new Interest("1"),
+                    new Deadline("25-12-2050"), getTagSet("family")),
+                new Person(new Name("Farhan Mohammed"), new Phone("82837273"), new Email("fhmm@example.com"),
+                    new Address("Blk 22 Queenstown Street 25, #16-43"), new PostalCode("164422"),
+                    new Debt("2000"), new Interest("4"),
+                    new Deadline("01-01-2040"), getTagSet("bad")),
+                new Person(new Name("Gisela Tan"), new Phone("87727737"), new Email("ggwantan@example.com"),
+                    new Address("Blk 23 Queenstown Street 25, #12-37"), new PostalCode("164423"),
+                    new Debt("0"), new Interest(Interest.NO_INTEREST_SET),
+                    new Deadline(Deadline.NO_DEADLINE_SET), getTagSet("family")),
+                new Person(new Name("Herbert He"), new Phone("90093007"), new Email("hehehe@example.com"),
+                    new Address("Blk 3 HillView Avenue, #16-43"), new PostalCode("674433"),
+                    new Debt("2000"), new Interest("4"),
+                    new Deadline("31-01-2030"), getTagSet("bad")),
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                     new Address("Blk 47 Tampines Street 20, #17-35"), new PostalCode("515047"),
-                    new Debt("90000"), new Interest(Interest.NO_INTEREST_SET),
-                    new Deadline(Deadline.NO_DEADLINE_SET), getTagSet("classmates")),
+                    new Debt("90000"), new Interest("3"),
+                    new Deadline("15-03-2015"), getTagSet("classmates")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"), new PostalCode("389045"),
                     new Debt("15630"), new Interest(Interest.NO_INTEREST_SET),
@@ -58,9 +76,26 @@ public class SampleDataUtil {
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
-            for (Person samplePerson : getSamplePersons()) {
+            Person[] samplePersons = getSamplePersons();
+            samplePersons[5].setIsBlacklisted(true);
+            samplePersons[7].setIsBlacklisted(true);
+
+            for (Person samplePerson : samplePersons) {
                 sampleAb.addPerson(samplePerson);
+                if (samplePerson.getDebt().toNumber() == 0.00) {
+                    sampleAb.addWhitelistedPerson(samplePerson);
+                }
             }
+
+            for (ReadOnlyPerson person : sampleAb.getWhitelistedPersonList()) {
+                try {
+                    sampleAb.setDateRepaid(person);
+                } catch (PersonNotFoundException pnfe) {
+                    throw new AssertionError("This is not possible as we are iterating through a list of"
+                            + "people and this person is from list.");
+                }
+            }
+
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
