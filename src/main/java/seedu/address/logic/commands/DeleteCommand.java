@@ -1,8 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -38,22 +35,7 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        ReadOnlyPerson personToDelete;
-        if (targetIndex == null) {
-            if (model.getSelectedPerson() == null) {
-                throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
-            } else {
-                personToDelete = model.getSelectedPerson();
-            }
-        } else {
-            List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-
-            personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        }
+        ReadOnlyPerson personToDelete = selectPerson(targetIndex);
         try {
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
@@ -68,6 +50,6 @@ public class DeleteCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && ((this.targetIndex == ((DeleteCommand) other).targetIndex)
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex))); // state check
+                || this.targetIndex.equals(((DeleteCommand) other).targetIndex))); // state check
     }
 }

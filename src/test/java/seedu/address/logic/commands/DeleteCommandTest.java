@@ -79,7 +79,7 @@ public class DeleteCommandTest {
 
     //@@author khooroko
     @Test
-    public void execute_noIndex_personSelected_success() throws Exception {
+    public void execute_noIndexPersonSelected_success() throws Exception {
         model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         ReadOnlyPerson personToDelete = model.getSelectedPerson();
         DeleteCommand deleteCommand = prepareCommand();
@@ -93,7 +93,7 @@ public class DeleteCommandTest {
     }
 
     @Test
-    public void execute_noIndex_noSelection_failure() throws Exception {
+    public void execute_noIndexNoSelection_failure() throws Exception {
         DeleteCommand deleteCommand = prepareCommand();
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
