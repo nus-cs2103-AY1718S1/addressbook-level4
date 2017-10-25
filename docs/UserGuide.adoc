@@ -190,8 +190,20 @@ Selects the 1st person in the results of the `find` command.
 
 Synonyms/Aliases for the command: `h`, `past` +
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` / `h` / `past
+Format: `history` / `h` / `past`
 
+=== Setting relationship between 2 persons: `set`
+
+`Coming in v2.0` +
+Synonyms/Aliases for the command: `set`, `connect` +
+Sets the relationship between 2 persons
+Format: `set [INDEX] [INDEX] [RELATIONSHIP]`
+
+Examples:
+
+*`list` + 
+* `set 1 2 siblings` +
+Sets the relationship between John and Betsy to siblings.
 
 === Sorting all entries : `sort`
 
@@ -201,6 +213,7 @@ That are represented by 1, 2 and 3 respectively +
 Format: `sort [NUMBER]`
 
 Examples:
+
 * `sort 1`
 
 * `sort 2`
