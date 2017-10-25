@@ -55,7 +55,7 @@ public class EditEventCommandTest {
         ReadOnlyEvent lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
 
         EventBuilder eventInList = new EventBuilder(lastEvent);
-        Event editedEvent = eventInList.withEventName(VALID_NAME_EVENT1).withDateTime(VALID_DATE_EVENT1).build();
+        Event editedEvent = eventInList.withName(VALID_NAME_EVENT1).withDateTime(VALID_DATE_EVENT1).build();
 
         EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1)
                 .withTime(VALID_DATE_EVENT1).build();
@@ -87,7 +87,7 @@ public class EditEventCommandTest {
         showFirstEventOnly(model);
 
         ReadOnlyEvent eventInFilteredList = model.getFilteredEventList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Event editedEvent = new EventBuilder(eventInFilteredList).withEventName(VALID_NAME_EVENT1).build();
+        Event editedEvent = new EventBuilder(eventInFilteredList).withName(VALID_NAME_EVENT1).build();
         EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1).build());
 

@@ -58,21 +58,15 @@ public interface Model {
 
     //=========== Model support for activity component =============================================================
 
-    /** Sorts the events list according to date/time */
-    void sortEventList();
-
-    /** Sorts the persons list according to name */
-    void sortPersonList();
-
     /** Adds an event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
-
-    /** Deletes the given event */
-    void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
     /** Updates the given event */
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws DuplicateEventException, EventNotFoundException;
+
+    /** Deletes the given event */
+    void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
     //=========== Filtered Person/Activity List support =============================================================
 
