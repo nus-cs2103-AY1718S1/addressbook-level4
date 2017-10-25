@@ -47,21 +47,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ** This allows the user to have a variety of choices of commands instead of having to remember or to execute the `help`
 window every time one forgets it.
 * In the examples given below for each command, note that all commands written there are interchangeable with its synonyms/aliases
-====
+* Most commands are interchangeable with the relevant substitute command listed below.
 
-[NOTE]
-====
-Most command can be interchangeable with the relevant substitute command listed below.
-====
-
-====
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
 
 === Viewing help : `help`
 
@@ -69,10 +62,10 @@ Format: `help`
 
 === Adding a person: `add`
 
+`Since v1.3` +
 Synonyms/Aliases for the command: `a`, `create`, `input`, `insert` +
-`COMPANY, POSITION, PRIORITY Coming in v2.0` +
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [pr/PRIORITY] [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [s/STATUS] [pr/PRIORITY] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -80,7 +73,7 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison c/ABC Foods po/Manager pr/L p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison c/ABC Foods po/Manager s/Requires follow up pr/L p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
@@ -90,10 +83,10 @@ Format: `list` / `show` / `display`
 
 === Editing a person : `edit`
 
+`Since v1.3` +
 Synonyms/Aliases for the command: `e`, `change`, `modify`, `revise` +
-`COMPANY, POSITION, PRIORITY Coming in v2.0` +
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/COMPANY] [po/POSITION] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/COMPANY] [po/POSITION] [s/STATUS] [pr/PRIORITY] [no/NOTE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -109,6 +102,9 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 3 no/Hates western food. Can only take him out to Chinese and Japanese restaurants.` +
+Edits the note of the 3rd person to be the string displayed above. This is the only way to add a note to a person
+as notes cannot be initialized when adding the person.
 
 === Exporting of person's data command: `export`
 
@@ -195,6 +191,82 @@ Selects the 1st person in the results of the `find` command.
 Synonyms/Aliases for the command: `h`, `past` +
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` / `h` / `past
+
+
+=== Sorting all entries : `sort`
+
+Synonyms/Aliases for the command: `arrange`, `organise` +
+Sorts list by name, tag or address. +
+That are represented by 1, 2 and 3 respectively +
+Format: `sort [NUMBER]`
+
+Examples:
+* `sort 1`
+
+* `sort 2`
+
+* `sort 3`
+
+// tag::undoredo[]
+=== Undoing previous command : `undo`
+
+Restores the address book to the state before the previous _undoable_ command was executed. +
+Format: `undo`
+
+[NOTE]
+====
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+====
+
+Examples:
+
+* `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+=== Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command. +
+Format: `redo`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredo[]
+
+=== Clearing all entries : `clear`
+
+Clears all entries from the address book. +
+Format: `clear`
+
+=== Exiting the program : `exit`
+
+Synonyms/Aliases for the command: `quit` +
+Exits the program. +
+Format: `exit` / `quit`
 
 === Adding an event: `eventadd`
 
@@ -314,67 +386,6 @@ Checks if ANSWER is yes/no and perform the relevant answer choice. +
 * `startup` yes +
 Sets opening app at startup of user's OS yes.
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
-
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Sorting all entries : `sort`
-
-`Coming in v2.0` +
-Sorts list by name or priority. +
-Format: `sort [NAME_OR_PRIORITY]`
-
-Examples:
-* `sort name`
-
-* `sort priority`
-
 === Adding notes to persons : `note`
 
 `Coming in v2.0` +
@@ -420,17 +431,6 @@ Format: `email [PERSON]`
 Examples:
 * `email John Doe`
 
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
-
-Synonyms/Aliases for the command: `quit` +
-Exits the program. +
-Format: `exit` / `quit`
-
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -447,7 +447,7 @@ There is no need to save manually.
 Most commands are interchangeable with the relevant substitute command listed above.
 ====
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [pr/PRIORITY] [t/TAG]...` +
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [s/STATUS] [pr/PRIORITY] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/ABC Foods po/CEO pr/HIGH t/friend t/colleague`
 * *Add Event* `eventadd n/TITLE time/TIMING d/DESCRIPTION` +
 e.g. `eventadd n/Alice's Birthday time/1300-1830 d/Bestie's 21st, bring drinks!`
@@ -456,7 +456,7 @@ e.g. `eventadd n/Alice's Birthday time/1300-1830 d/Bestie's 21st, bring drinks!`
 e.g. `delete 3`
 * *Delete Event* : `eventdel INDEX` +
 e.g. `delete 1`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/COMPANY] [po/POSITION] [s/STATUS] [pr/PRIORITY] [no/NOTE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit Event* : `eventedit INDEX [n/TITLE] [time/TIMING] [d/DESCRIPTION]` +
 e.g. `edit 1 time/1400-1830 d/Bring drinks and buy cake!`
