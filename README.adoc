@@ -25,7 +25,7 @@ patient's injury. +
 With MedNus's unique UI theme, keyboard shortcuts and productivity features, you can do your job effectively +
 and productively. +
  +
-Head over to our link:UserGuide#[user guide] to get started with MedNus. +
+Head over to our link:docs/UserGuide.adoc[user guide] to get started with MedNus. +
 
 == Site Map
 
