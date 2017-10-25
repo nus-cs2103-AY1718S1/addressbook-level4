@@ -31,8 +31,8 @@ public class UniqueMeetingList implements Iterable<Meeting> {
 
     private final ObservableList<Meeting> internalMeetingList = FXCollections.observableArrayList();
     // used by asObservableList()
-    private final ObservableList<ReadOnlyMeeting> mappedMeetingList = EasyBind.map(internalMeetingList,
-            (meeting) -> meeting);
+    private final ObservableList<ReadOnlyMeeting> mappedMeetingList
+            = EasyBind.map(internalMeetingList, (meeting) -> meeting);
 
 
     /**
