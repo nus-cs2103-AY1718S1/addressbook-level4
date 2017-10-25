@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.BIRTHDAY_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_BIRTHDAY_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -48,6 +49,7 @@ import seedu.address.logic.commands.persons.FindCommand;
 import seedu.address.logic.commands.persons.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -191,6 +193,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC
                 + BIRTHDAY_DESC_AMY;
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
+
+        /* Case: invalid birthday -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + INVALID_BIRTHDAY_DESC;
+        assertCommandFailure(command, Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
