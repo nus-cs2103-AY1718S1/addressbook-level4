@@ -38,6 +38,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPriority(person.getPriority());
         descriptor.setNote(person.getNote());
         descriptor.setTags(person.getTags());
+        descriptor.setRelation(person.getRelation());
     }
 
     /**
@@ -157,6 +158,19 @@ public class EditPersonDescriptorBuilder {
             descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withRelation(String... relation) {
+        try {
+            descriptor.setRelation(ParserUtil.parseRel(Arrays.asList(relation)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("relationships are expected to be unique.");
         }
         return this;
     }
