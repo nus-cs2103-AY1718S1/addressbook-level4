@@ -165,12 +165,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    /**
+     * Updates highlight status of person with specified tag
+     */
     public void updateHighlight(String highlightTag) {
         try {
+            persons.updateHighlight(highlightTag);
             if (!this.tags.contains(new Tag(highlightTag))) {
                 throw new TagNotFoundException("Tag not found");
-            } else {
-                persons.updateHighlight(highlightTag);
             }
         } catch (IllegalValueException e) {
             throw new TagNotFoundException("Tag not found");
