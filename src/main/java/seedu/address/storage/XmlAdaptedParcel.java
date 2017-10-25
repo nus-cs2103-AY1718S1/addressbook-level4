@@ -82,7 +82,7 @@ public class XmlAdaptedParcel {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final DeliveryDate deliveryDate = new DeliveryDate(this.deliveryDate);
-        final Status status = Status.getStatusInstance(this.status);
+        final Status status = Status.getInstance(this.status);
         final Set<Tag> tags = new HashSet<>(parcelTags);
         return new Parcel(trackingNumber, name, phone, email, address, deliveryDate, status, tags);
     }
