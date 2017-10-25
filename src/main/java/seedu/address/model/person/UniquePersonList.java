@@ -121,22 +121,21 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
-
-
+    //sorting methods
 
     /***
      * sort addressbook persons by number of times they were searched for
      * @author Sri-vatsa
      */
     public void sortBySearchCount () {
-        internalList.sort(new ReadOnlyPersonComparator());
+        internalList.sort(new SearchCountComparator());
     }
 
     /**
      * Custom Comparator class to compare two ReadOnlyPerson Objects by their search Count
      * @author Sri-vatsa
      */
-    public class ReadOnlyPersonComparator implements Comparator<ReadOnlyPerson> {
+    public class SearchCountComparator implements Comparator<ReadOnlyPerson> {
 
         /**
          * @author Sri-vatsa
@@ -160,6 +159,39 @@ public class UniquePersonList implements Iterable<Person> {
                 return 0;
             }
 
+        }
+
+    }
+
+    /***
+     * @author Sri-vatsa
+     * sort address book persons in alphabetical order
+     */
+    public void sortLexicographically () {
+        internalList.sort(new LexicographicComparator());
+    }
+
+    /**
+     * @author Sri-vatsa
+     * Custom Comparator class to compare two ReadOnlyPerson Objects lexicographically
+     */
+    public class LexicographicComparator implements Comparator<ReadOnlyPerson> {
+
+        /**
+         * @author Sri-vatsa
+         * Basis of comparison between ReadOnlyPerson
+         * Compares two persons lexicographically
+         *
+         * @param o1 is an instance of ReadOnlyPerson
+         * @param o2 is another instance of ReadOnlyPerson
+         * @return Result of Comparison
+         */
+        public int compare (ReadOnlyPerson o1, ReadOnlyPerson o2) {
+
+            String personAFullName = o1.getName().fullName;
+            String personBFullName = o2.getName().fullName;
+
+            return personAFullName.compareTo(personBFullName);
         }
 
     }
