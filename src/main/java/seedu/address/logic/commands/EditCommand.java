@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -34,6 +35,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Status;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -56,7 +58,8 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_NOTE + "NOTE] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]"
+            + "[" + PREFIX_RELATIONSHIP + "RELATIONSHIP]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -120,9 +123,10 @@ public class EditCommand extends UndoableCommand {
         Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
         Note updatedNote = editPersonDescriptor.getNote().orElse(personToEdit.getNote());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Relationship> updatedRel = editPersonDescriptor.getRelation().orElse(personToEdit.getRelation());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
-                updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedTags);
+                updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedTags, updatedRel);
     }
 
     @Override
@@ -158,6 +162,7 @@ public class EditCommand extends UndoableCommand {
         private Priority priority;
         private Note note;
         private Set<Tag> tags;
+        private Set<Relationship> relation;
 
         public EditPersonDescriptor() {
         }
@@ -173,6 +178,7 @@ public class EditCommand extends UndoableCommand {
             this.priority = toCopy.priority;
             this.note = toCopy.note;
             this.tags = toCopy.tags;
+            this.relation = toCopy.relation;
         }
 
         /**
@@ -180,7 +186,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.company,
-                    this.position, this.status, this.priority, this.note, this.tags);
+                    this.position, this.status, this.priority, this.note, this.tags, this.relation);
         }
 
         public Optional<Name> getName() {
@@ -263,6 +269,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
+        public void setRelation(Set<Relationship> relation) {
+            this.relation = relation;
+        }
+
+        public Optional<Set<Relationship>> getRelation() {
+            return Optional.ofNullable(relation);
+        }
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -287,7 +300,8 @@ public class EditCommand extends UndoableCommand {
                     && getStatus().equals(e.getStatus())
                     && getPriority().equals(e.getPriority())
                     && getNote().equals(e.getNote())
-                    && getTags().equals(e.getTags());
+                    && getTags().equals(e.getTags())
+                    && getRelation().equals(e.getRelation());
         }
     }
 }
