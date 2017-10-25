@@ -1,5 +1,7 @@
 package seedu.address.email;
 
+import java.util.Hashtable;
+import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,8 +12,6 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Hashtable;
-import java.util.Properties;
 
 import seedu.address.email.exceptions.EmailSendFailedException;
 import seedu.address.email.exceptions.LoginFailedException;

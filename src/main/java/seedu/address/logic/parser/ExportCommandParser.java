@@ -35,7 +35,9 @@ public class ExportCommandParser implements Parser<ExportCommand> {
             char[] tmp = args.toCharArray();
             if (tmp[tmp.length - 1] == '/') {
                 args = new String(tmp, 6, args.length() - 7);
-            } else args = new String(tmp, 6, args.length() - 6);
+            } else {
+                args = new String(tmp, 6, args.length() - 6);
+            }
 
             Path exportPath = Paths.get(args);
             return new ExportCommand(".txt", args);

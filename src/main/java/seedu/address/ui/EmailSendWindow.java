@@ -79,6 +79,9 @@ public class EmailSendWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    /**
+     * action for clicking send button
+     */
     @FXML
     private void onSendButtonClicked() {
         String recipients = recipientsField.getText();

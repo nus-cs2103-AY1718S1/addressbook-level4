@@ -102,6 +102,9 @@ public class PersonCard extends UiPart<Region> {
                 && person.equals(card.person);
     }
 
+    /**
+     * actions when checkbox is clicked: this person is added to tickedPersons in personListPanel
+     */
     @FXML
     private void onCheckBoxClicked() {
         if (checkBox.isSelected()) {
