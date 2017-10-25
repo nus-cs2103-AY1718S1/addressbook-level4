@@ -69,9 +69,6 @@ public class AddressBookParser {
             case ChangeModeCommand.COMMAND_WORD:
                 return new ChangeModeCommandParser().parse(arguments);
 
-            case ClearCommand.COMMAND_WORD:
-                return new ClearCommand();
-
             case EditCommand.COMMAND_WORD:
                 return new EditCommandParser().parse(arguments);
 
@@ -90,23 +87,6 @@ public class AddressBookParser {
             case DetagCommand.COMMAND_WORD:
                 return new DetagCommandParser().parse(arguments);
 
-            case HistoryCommand.COMMAND_WORD:
-                return new HistoryCommand();
-
-            case ExitCommand.COMMAND_WORD:
-                return new ExitCommand();
-
-            case HelpCommand.COMMAND_WORD:
-                return new HelpCommand();
-
-            case UndoCommand.COMMAND_WORD:
-                return new UndoCommand();
-
-            case RedoCommand.COMMAND_WORD:
-                return new RedoCommand();
-
-            default:
-                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
             }
         } else if (StringUtil.containsWordIgnoreCase(MODE_TASK_MANAGER, commandMode)) {
             switch (commandWord) {
@@ -129,6 +109,9 @@ public class AddressBookParser {
             case ListTasksCommand.COMMAND_WORD:
                 return new ListTasksCommand();
 
+            }
+        }
+        switch (commandWord) {
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
 
@@ -149,9 +132,6 @@ public class AddressBookParser {
 
             default:
                 throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-            }
         }
-        throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
     }
-
 }
