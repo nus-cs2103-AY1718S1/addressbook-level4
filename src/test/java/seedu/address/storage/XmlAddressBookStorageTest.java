@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
@@ -15,6 +16,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.EncryptOrDecryptException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -124,5 +126,53 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
+    @Test
+    public void test_isEncrypted() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+
+        //Save in new file
+        AddressBook original = getTypicalAddressBook();
+        xmlAddressBookStorage.saveAddressBook(original, filePath);
+
+        assertFalse(xmlAddressBookStorage.isEncrypted());
+
+        xmlAddressBookStorage.encryptAddressBook("tempPassword");
+
+        assertTrue(xmlAddressBookStorage.isEncrypted());
+
+        xmlAddressBookStorage.decryptAddressBook("tempPassword");
+
+        assertFalse(xmlAddressBookStorage.isEncrypted());
+    }
+
+    @Test
+    public void decrypt_notEncrypt_throwsException() throws Exception {
+        thrown.expect(EncryptOrDecryptException.class);
+
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+
+        //Save in new file
+        AddressBook original = getTypicalAddressBook();
+        xmlAddressBookStorage.saveAddressBook(original, filePath);
+
+        xmlAddressBookStorage.decryptAddressBook("tempPassword");
+    }
+
+    @Test
+    public void decrypt_wrongPassword_throwsException() throws Exception {
+        thrown.expect(EncryptOrDecryptException.class);
+
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+
+        //Save in new file
+        AddressBook original = getTypicalAddressBook();
+        xmlAddressBookStorage.saveAddressBook(original, filePath);
+
+        xmlAddressBookStorage.encryptAddressBook("password");
+        xmlAddressBookStorage.decryptAddressBook("wrong password");
+    }
 
 }

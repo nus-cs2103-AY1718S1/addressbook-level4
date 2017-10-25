@@ -19,10 +19,6 @@ public class FindDetailDescriptorBuilder {
         descriptor = new FindDetailDescriptor();
     }
 
-    public FindDetailDescriptorBuilder(FindDetailDescriptor descriptor) {
-        this.descriptor = new FindDetailDescriptor(descriptor);
-    }
-
     /**
      * Returns an {@code FindDetailDescriptorBuilder} with fields containing {@code person}'s details
      * in string and tag set.
