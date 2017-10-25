@@ -117,7 +117,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withPhoto(VALID_PHOTO_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + BIRTHDAY_DESC_AMY + PHOTO_DESC_AMY +TAG_DESC_FRIEND;
+                + BIRTHDAY_DESC_AMY + PHOTO_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a person with all fields same as another person in the address book except email -> added */

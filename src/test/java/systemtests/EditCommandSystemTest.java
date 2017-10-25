@@ -186,7 +186,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_BIRTHDAY_DESC,
                 Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
 
-         /* Case: invalid photo -> rejected */
+        /* Case: invalid photo -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + INVALID_PHOTO_DESC,
                 Photo.MESSAGE_PHOTO_CONSTRAINTS);
 
