@@ -112,6 +112,12 @@ public interface Model {
      * Method to force the model to select a card without using the select command.
      */
     void forceSelect(Index target);
+
+    /**
+     * Method to reselect a parcel card if there is a card selected.
+     */
+    void reselectIfNeeded(Model model, ReadOnlyParcel parcel);
+
 }
 
 
