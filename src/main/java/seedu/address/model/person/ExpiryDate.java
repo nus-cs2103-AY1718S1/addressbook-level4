@@ -31,7 +31,10 @@ public class ExpiryDate {
      * @throws IllegalValueException if given date string is invalid.
      */
     public ExpiryDate(String date) throws IllegalValueException {
-        if (date.isEmpty()) {
+        if (date == null) {
+            this.value = null;
+            return;
+        } else if (date.isEmpty()) {
             this.value = null;
             return;
         } else if (!isValidExpiryDate(date)) {
