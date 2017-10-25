@@ -25,7 +25,7 @@ Responsibilities: Model
 image::raisa2010.png[width="150", height="150", align="left"]
 {empty} [https://github.com/raisa2010[github]] [<<johndoe#, portfolio>>]
 
-Role: Tester + Developer
+Role: Tester + Developer +
 Responsibilities: Documentation + Deadlines and Deliverables + Model
 
 '''
