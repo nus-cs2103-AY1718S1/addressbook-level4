@@ -351,7 +351,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 * Conceptually different. Groups are long-term, standalone constructs, while Tags are individual Person's attributes
 * Groups have attributes (number of members)
 * Groups can be listed together with their members
-* Adding and removal from a Group can be done in batches (multiple Persons at a time)
 
 Big picture. Note that AddressBook further updates the Person's references to the groups.
 `filtered` denotes the Person extracted by applying the index filtering.
@@ -414,7 +413,7 @@ The `FindTagCommand` allows the user to locate persons in the addressbook by the
 * Utilises a `TagContainsKeywordsPredicate` class that extends the `Predicate` class.
 ** Allows the `FindTag` feature to function with more than 1 keyword at a time easily.
 
-image::FindTagSequenceDiagram.png[width="1200"]
+image::FindTagSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 **Aspect:** Searching for tags  +
@@ -433,14 +432,44 @@ image::FindTagSequenceDiagram.png[width="1200"]
 **Cons:** Looking for specific contacts that have more than 1 tag becomes impossible. +
 **Alternative 2:** Utilising AND logic  +
 **Pros:** Allows finding of specific contacts with more than 1 tag. +
-**Cons:** Limits flexibility for power users that wish to a various contacts across more than 1 tag.
+**Cons:** Limits flexibility for power users that wish to view various contacts across more than 1 tag.
 
 ==== Future Improvements
 
-* Combining all `Find` features into 1 `Filter` feautre to allow filtering across all parameters of `Person` class.
+* Combining all `Find` features into 1 `Filter` feature to allow filtering across all parameters of `Person` class.
 * Introducing `and` and `or` commands within `Filter` to reap benefits of both AND and OR logic.
 
 // end::findtag[]
+
+=== Filter feature implementation
+
+The `FilterCommand` and `FilterAllCommand` serve very similar functions to the `FindCommand` and `FindTagCommand`.
+However, they differ in the way that they allow more flexcibility to the user in terms of filtering contacts
+because:
+
+* All parameters are included in the seraching implementation
+* Users are able to utilise OR or AND logic to make the searcha s narrow or wide as desired.
+** This eliminatest the drawbacks of previous `FindCommand` and `FindTagCommand` implementations.
+
+Sequence diagram can be inferred from `FindTagCommand` sequence diagram above.
+
+image::FilterCommand.png[width="800"]
+
+image::FilterAllDiagram.png[width="800"]
+
+AS shown above, `FilterCommand` will output a list of contacts that match any of the given keywords, while `FilterAllCommand`
+will output only contacts that match all keywords.
+
+==== Design Considerations
+**Aspect:** how filter implementation is executed (AND logic vs OR logic) +
+**Alternative 1 (`FilterCommand`):** Utilising OR logic +
+**Pros:** More flexible usage allows user to view contacts across various parameters , +
+          user does not have to utilise more than 1 command to view various contacts. +
+          user is able to searcha wide array of contacts with one command
+**Cons:** Looking for specific contacts by using more than one keyword is not possible. +
+**Alternative 2 (`FilterAllCommand`):** Utilising AND logic  +
+**Pros:** Allows finding of specific contacts with more than 1 tag. +
+**Cons:** Limits flexibility for power users that wish to view various contacts across more than 1 tag.
 
 === Logging
 

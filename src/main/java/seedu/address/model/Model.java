@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -39,6 +40,10 @@ public interface Model {
 
     /** Removes the given tag from everyone in the address book and deletes it from the addressBook tag list. */
     void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
+
+    /** Checks if the group has some members. If it does, does nothing,
+     * otherwise removes the group from the group list of the addressBook */
+    void updateGroups(Group group);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();

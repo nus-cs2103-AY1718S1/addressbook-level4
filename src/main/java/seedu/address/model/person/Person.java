@@ -151,15 +151,6 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Adds a group to this person's groups.
-     */
-    public void addGroup(Group newGroup) {
-        Set<Group> replacement = groups.get().toSet();
-        replacement.add(newGroup);
-        setGroups(replacement);
-    }
-
-    /**
      * Returns an immutable group set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */

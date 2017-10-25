@@ -143,9 +143,51 @@ Examples:
 * `find friends` +
 Returns `Alex Yeoh` and `Bernice Yu`
 * `find colleagues` +
-Returns 'bernice Yu' and 'Roy Balakrishnan'
+Returns `Bernice Yu` and `Roy Balakrishnan`
 * `ft Malay` +
 Returns `Adil`
+
+=== Locating persons by any parameter: `filter` (alias `fi`)
+
+Finds persons who has parameters that matches the given keyword. +
+Format: `filter KEYWORD [MORE_KEYWORDS]` or `fi KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `Alex CS2103 Groupmate` will match `Groupmate CS2103 Alex`
+* All parameters are searched.
+****
+
+Examples:
+
+* `filter friends` +
+Returns `Alex Yeoh` and `Bernice Yu`
+* `filter colleagues` +
+Returns `Bernice Yu` and `Roy Balakrishnan`
+* `ft alex Colleagues` +
+Returns `Alex Yeoh`, `Bernice Yu` and `Roy Balakrishnan`
+
+=== Locating persons by all parameter: `filterall` (alias `fa`)
+
+Finds persons who has parameters that matches the given keyword. +
+Format: `filterall KEYWORD [MORE_KEYWORDS]` or `fa KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `Alex CS2103 Groupmate` will match `Groupmate CS2103 Alex`
+* All parameters are searched.
+****
+
+Examples:
+
+* `filterall friends` +
+Returns `Alex Yeoh` and `Bernice Yu`
+* `filterall colleagues` +
+Returns `Bernice Yu` and `Roy Balakrishnan`
+* `ft Bernice Colleagues` +
+Returns `Bernice Yu`
+* `ft colleagues friends` +
+Returns `Bernice Yu`
 
 === Deleting a person : `delete` (alias `del`)
 
@@ -224,7 +266,7 @@ Format: `group INDEX gn/GROUP_NAME` +
 ****
 * If a group with such a name exists, adds the persons at `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1`
+* The index *must be a positive integer* `1, 2, 3...`
 ****
 
 Examples:
@@ -241,13 +283,13 @@ Adds the 1st person from the results of the `find` command to the group Family.
 [NOTE]
 Coming in v2.0: ungroup
 
-Used to remove from groups persons identified by the indices used in the last person listing. +
-Format: `ungroup n/NAME INDEX...` +
+Used to remove from a group person identified by the index used in the last person listing. +
+Format: `ungroup INDEX gn/GROUP_NAME` +
 
 ****
 * If a group ends up being empty, it is removed.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1, 2, 3...`
 ****
 
 Examples:
@@ -429,8 +471,8 @@ e.g.: `select 2`, `select all` +
 `select me`
 * *Group* : `group INDEX gn/GROUP_NAME` +
 e.g.: `group 2 gn/Family`
-* *Ungroup* : `ungroup n/NAME INDEX...` +
-e.g.: `ungroup n/Family 2 3`
+* *Ungroup* : `ungroup INDEX gn/NAME` +
+e.g.: `ungroup 2 gn/Family`
 * *History* : `history` (`h`)
 * *Undo* : `undo`
 * *Redo* : `redo`
