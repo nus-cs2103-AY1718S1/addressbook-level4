@@ -32,7 +32,7 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label timeslot;
+    private Label timing;
     @FXML
     private Label date;
     @FXML
@@ -51,7 +51,8 @@ public class EventCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyEvent event) {
         title.textProperty().bind(Bindings.convert(event.titleProperty()));
-        timeslot.textProperty().bind(Bindings.convert(event.timeslotProperty()));
+        timing.textProperty().bind(Bindings.convert(event.timingProperty()));
+        date.textProperty().bind(Bindings.convert(event.dateProperty()));
         description.textProperty().bind(Bindings.convert(event.descriptionProperty()));
     }
 

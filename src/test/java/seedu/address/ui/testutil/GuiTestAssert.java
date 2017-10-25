@@ -48,9 +48,9 @@ public class GuiTestAssert {
     public static void assertCardDisplaysEvent(ReadOnlyEvent expectedEvent,
                                                EventCardHandle actualCard) {
         assertEquals(expectedEvent.getTitle().title, actualCard.getTitle());
-        assertEquals(expectedEvent.getTimeslot().toString(), actualCard.getTimeslot());
-        assertEquals(expectedEvent.getDescription().description, actualCard
-                .getDescription());
+        assertEquals(expectedEvent.getTiming().toString(), actualCard.getTiming());
+        assertEquals(expectedEvent.getDate().toString(), actualCard.getDate());
+        assertEquals(expectedEvent.getDescription().description, actualCard.getDescription());
     }
 
     /**

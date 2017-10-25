@@ -10,6 +10,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
+import seedu.address.model.event.timeslot.Timing;
 
 /**
  * Represents an Event in the address book.
@@ -19,6 +20,7 @@ public class Event implements ReadOnlyEvent {
 
     private ObjectProperty<Title> title;
     private ObjectProperty<Date> date;
+    private ObjectProperty<Timing> timing;
     private ObjectProperty<Timeslot> timeslot;
     private ObjectProperty<Description> description;
 
@@ -30,6 +32,7 @@ public class Event implements ReadOnlyEvent {
         requireAllNonNull(title, timeslot, description);
         this.title = new SimpleObjectProperty<>(title);
         this.date = new SimpleObjectProperty<>(timeslot.getDate());
+        this.timing = new SimpleObjectProperty<>(timeslot.getTiming());
         this.timeslot = new SimpleObjectProperty<>(timeslot);
         this.description = new SimpleObjectProperty<>(description);
     }
@@ -72,6 +75,20 @@ public class Event implements ReadOnlyEvent {
     @Override
     public ObjectProperty<Timeslot> timeslotProperty() {
         return timeslot;
+    }
+
+    @Override
+    public ObjectProperty<Timing> timingProperty() {
+        return timing;
+    }
+
+    @Override
+    public Timing getTiming() {
+        return timing.get();
+    }
+
+    public void setTiming(Timing timing) {
+        this.timing.set(requireNonNull(timing));
     }
 
     @Override
