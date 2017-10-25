@@ -8,12 +8,13 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} and {@code Tag} and {@code Birthday}
+ * matches any of the keywords given.
  */
-public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
-    public NameContainsKeywordsPredicate(List<String> keywords) {
+    public PersonContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -23,14 +24,15 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
                 .replaceAll("[\\[\\](),{}]", "");
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword)
-                || StringUtil.containsWordIgnoreCase(tag, keyword));
+                || StringUtil.containsWordIgnoreCase(tag, keyword)
+                || StringUtil.containsWordIgnoreCase(person.getBirthday().value, keyword));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof PersonContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((PersonContainsKeywordsPredicate) other).keywords)); // state check
     }
 
 }
