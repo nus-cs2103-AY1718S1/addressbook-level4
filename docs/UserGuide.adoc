@@ -287,6 +287,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::nearby[]
 === Selecting a nearby person: `nearby`
 
 Selects the person identified by the index number used in the listing of nearby contacts of currently selected person, +
@@ -305,6 +306,7 @@ Examples:
 Selects the 2nd person in the address book.
 * `nearby 1` +
 Selects the 1st person in the nearby contacts listing of the previously selected person.
+// end::nearby[]
 
 === Listing entered commands : `history`
 
@@ -316,6 +318,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+// tag::sort[]
 === Sorting all contacts : `sort`
 
 Sorts all the contacts in the address book in specified order. If no order is specified, the contacts are sorted in ascending lexographical order. +
@@ -331,6 +334,7 @@ Examples:
 Sorts the contacts in the address book by name.
 * `sort cluster` +
 Sorts the contacts in the address book by their postal districts.
+// end::sort[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -392,6 +396,7 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+// tag::saveload[]
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -425,6 +430,7 @@ To quickly revert address book data to the state of last use:
 [none]
 * 2. Rename addressbook.xml-backup.xml to addressbook.xml.
 ====
+// end::saveload[]
 
 == FAQ
 
