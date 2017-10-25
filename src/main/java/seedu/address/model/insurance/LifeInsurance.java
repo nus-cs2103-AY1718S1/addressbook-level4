@@ -3,6 +3,8 @@ package seedu.address.model.insurance;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.UUID;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -18,6 +20,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class LifeInsurance implements ReadOnlyInsurance {
 
+    private ObjectProperty<UUID> id;
     private ObjectProperty<ReadOnlyPerson> owner;
     private ObjectProperty<ReadOnlyPerson> insured;
     private ObjectProperty<ReadOnlyPerson> beneficiary;
@@ -26,9 +29,33 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private StringProperty signingDate;
     private StringProperty expiryDate;
 
+    public LifeInsurance(UUID id) {
+        this.id = new SimpleObjectProperty<>(id);
+    }
+    public LifeInsurance(Double premium) {
+        this.premium = new SimpleDoubleProperty(premium);
+    }
+    public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary, Double premium) {
+        this.owner = new SimpleObjectProperty<>(owner);
+        this.insured = new SimpleObjectProperty<>(insured);
+        this.beneficiary = new SimpleObjectProperty<>(beneficiary);
+        this.premium = new SimpleDoubleProperty(premium);
+
+    }
+    /*
+    public LifeInsurance(String owner, String insured, String beneficiary, Double premium) {
+        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
+        this.insured = new SimpleObjectProperty<>(insured);
+        this.beneficiary = new SimpleObjectProperty<>(beneficiary);
+        this.premium = new SimpleDoubleProperty(premium);
+
+    }
+    */
+
     public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary,
                          Double premium, String contractPath, String signingDate, String expiryDate) {
         requireAllNonNull(owner, insured, beneficiary, premium, contractPath);
+        this.id = new SimpleObjectProperty<>(UUID.randomUUID());
         this.owner = new SimpleObjectProperty<>(owner);
         this.insured = new SimpleObjectProperty<>(insured);
         this.beneficiary = new SimpleObjectProperty<>(beneficiary);
@@ -42,8 +69,17 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Creates a copy of the given ReadOnlyInsurance.
      */
     public LifeInsurance(ReadOnlyInsurance source) {
-        this(source.getOwner(), source.getInsured(), source.getBeneficiary(), source.getPremium(),
-                source.getContractPath(), source.getSigningDate(), source.getExpiryDate());
+        this(source.getOwner(), source.getInsured(), source.getBeneficiary(), source.getPremium());
+    }
+
+    @Override
+    public ObjectProperty<UUID> idProperty() {
+        return id;
+    }
+
+    @Override
+    public String getId() {
+        return id.toString();
     }
 
     public void setOwner(Person owner) {
@@ -101,7 +137,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     public Double getPremium() {
         return premium.get();
     }
-
+    /*
     public void setContractPath(String contractPath) {
         this.contractPath.set(requireNonNull(contractPath));
     }
@@ -143,4 +179,5 @@ public class LifeInsurance implements ReadOnlyInsurance {
     public String getExpiryDate() {
         return expiryDate.get();
     }
+    */
 }
