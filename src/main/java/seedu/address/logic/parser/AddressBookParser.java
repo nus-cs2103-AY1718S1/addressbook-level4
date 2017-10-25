@@ -22,6 +22,7 @@ import seedu.address.logic.commands.ListByBloodtypeCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListFailureCommand;
 import seedu.address.logic.commands.ListDescendingNameCommand;
+import seedu.address.logic.commands.ListReverseCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -145,6 +146,10 @@ public class AddressBookParser {
         case "dsc":
         case "descending":
             returnThisCommand = (argSplit.length == 1) ? new ListDescendingNameCommand() : new ListFailureCommand();
+            break;
+        case "rev":
+        case "reverse":
+            returnThisCommand = (argSplit.length == 1) ? new ListReverseCommand() : new ListFailureCommand();
             break;
         default:
             returnThisCommand = new ListFailureCommand();

@@ -239,6 +239,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableListSortedByNameDsc();
     }
 
+    public ObservableList<ReadOnlyPerson> getPersonListReversed() {
+        return persons.asObservableListReversed();
+    }
+
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();

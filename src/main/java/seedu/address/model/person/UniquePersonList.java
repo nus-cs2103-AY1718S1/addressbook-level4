@@ -144,6 +144,14 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    /**
+     * @return a reversed list
+     */
+    public ObservableList<ReadOnlyPerson> asObservableListReversed() {
+        FXCollections.reverse(internalList);
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();

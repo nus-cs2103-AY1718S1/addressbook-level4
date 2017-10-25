@@ -77,4 +77,9 @@ public interface Model {
      * Returns a list of ReadOnlyPerson that is ordered in terms of name in descending order
      */
     ObservableList<ReadOnlyPerson> listNameDescending();
+
+    /**
+     * Reverses displayed list
+     */
+    ObservableList<ReadOnlyPerson> listNameReversed();
 }

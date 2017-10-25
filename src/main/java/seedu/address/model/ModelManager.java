@@ -159,6 +159,15 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(list);
     }
 
+    /**
+     * @return an unmodifiable view of the list of ReadOnlyPerson that is reversed
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> listNameReversed() {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListReversed();
+        return FXCollections.unmodifiableObservableList(list);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
