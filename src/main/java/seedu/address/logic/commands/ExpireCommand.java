@@ -64,8 +64,6 @@ public class ExpireCommand extends UndoableCommand {
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTags(), date, personToEdit.getRemark());
 
-        System.out.println("*** At expire command execution: after creating person\n");
-
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
@@ -74,11 +72,7 @@ public class ExpireCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
 
-        System.out.println("*** At expire command execution: no exception thrown\n");
-
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        System.out.println("*** At expire command execution: person should be updated\n");
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
