@@ -20,4 +20,5 @@ public class CliSyntax {
     public static final Prefix PREFIX_CONTRACT = new Prefix("c/");
     public static final Prefix PREFIX_SIGNING_DATE = new Prefix("sd/");
     public static final Prefix PREFIX_EXPIRY_DATE = new Prefix("ed/");
+    public static final Prefix PREFIX_GENDER = new Prefix("g/");
 }
