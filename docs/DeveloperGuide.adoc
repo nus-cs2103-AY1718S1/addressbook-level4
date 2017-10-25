@@ -461,6 +461,10 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 The remove tag function is done by calling a `removetag` function which resides in the `ModelManager` class. Currently it supports removing the tag from every individual of the addressbook as well as removing a specific tag from a specified person shown on the list.
 
+The following is the sequence diagram of how the RemoveTagCommands removes the tag from the list of persons.
+
+image::RemoveTagAllSequenceDiagram.png[width="800"]
+
 If no `INDEX` is given to the Remove Tag command, the remove tag command will run the following code during execution.
 ----
     @Override
