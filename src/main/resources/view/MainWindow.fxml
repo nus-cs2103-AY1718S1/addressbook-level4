@@ -10,59 +10,64 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@DarkTheme.css"/>
-        <URL value="@Extensions.css"/>
+        <URL value="@DarkTheme.css" />
+        <URL value="@Extensions.css" />
     </stylesheets>
 
     <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
         </Menu>
     </MenuBar>
 
     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
-            <Insets bottom="5" left="10" right="10" top="5"/>
+            <Insets bottom="5" left="10" right="10" top="5" />
         </padding>
     </StackPane>
 
-    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100"
-               styleClass="pane-with-border" VBox.vgrow="NEVER">
+    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
-            <Insets bottom="5" left="10" right="10" top="5"/>
+            <Insets bottom="5" left="10" right="10" top="5" />
         </padding>
     </StackPane>
 
     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
         <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
         </VBox>
-        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+        <SplitPane fx:id="rightViewSplitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
             <items>
-                <AnchorPane maxHeight="40.0" minHeight="40.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                    <StackPane fx:id="websiteButtonbarPlaceholder" AnchorPane.bottomAnchor="5.0"
-                               AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                <AnchorPane maxHeight="150.0" minHeight="150.0" minWidth="0.0" prefHeight="150.0" prefWidth="160.0">
+               <SplitPane dividerPositions="0.5" layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                  <items>
+                     <StackPane fx:id="detailedPersonCardPlaceholder">
                         <padding>
-                            <Insets bottom="10" left="10" right="10" top="10"/>
+                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </padding>
-                    </StackPane>
+                     </StackPane>
+                          <StackPane fx:id="websiteButtonbarPlaceholder">
+                              <padding>
+                                  <Insets bottom="10" left="10" right="10" top="10" />
+                              </padding>
+                          </StackPane>
+                  </items>
+               </SplitPane>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                     <children>
 
-                        <StackPane fx:id="browserPlaceholder" prefHeight="163.0" prefWidth="199.0"
-                                   AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
-                                   AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <StackPane fx:id="browserPlaceholder" prefHeight="163.0" prefWidth="199.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                             <padding>
-                                <Insets bottom="10" left="10" right="10" top="10"/>
+                                <Insets bottom="10" left="10" right="10" top="10" />
                             </padding>
                         </StackPane>
                     </children>
@@ -71,5 +76,5 @@
         </SplitPane>
     </SplitPane>
 
-    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>

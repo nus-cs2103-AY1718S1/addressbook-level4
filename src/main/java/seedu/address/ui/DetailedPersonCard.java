@@ -2,6 +2,9 @@ package seedu.address.ui;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -9,14 +12,16 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class PersonCard extends UiPart<Region> {
+public class DetailedPersonCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    private static final String FXML = "DetailedPersonListCard.fxml";
     private static String[] colors = {"red", "yellow", "blue", "orange", "brown", "green", "pink", "black"};
     private static HashMap<String, String> tagColors = new HashMap<>();
     private static HashMap<String, String> webLinkColors = new HashMap<>();
@@ -31,15 +36,9 @@ public class PersonCard extends UiPart<Region> {
 
     private static Random random = new Random();
 
-    /**
-     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
-     * As a consequence, UI elements' variable names cannot be set to such keywords
-     * or an exception will be thrown by JavaFX during runtime.
-     *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
-     */
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    public final ReadOnlyPerson person;
+    private ReadOnlyPerson selectedPerson;
 
     @FXML
     private HBox cardPane;
@@ -60,13 +59,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public DetailedPersonCard() {
         super(FXML);
-        this.person = person;
-        id.setText(displayedIndex + ". ");
-        initTags(person);
-        initWebLinks(person);
-        bindListeners(person);
+        registerAsAnEventHandler(this);
     }
 
     private static String getColorForTag(String tagValue) {
@@ -134,13 +129,20 @@ public class PersonCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof DetailedPersonCard)) {
             return false;
         }
 
         // state check
-        PersonCard card = (PersonCard) other;
+        DetailedPersonCard card = (DetailedPersonCard) other;
         return id.getText().equals(card.id.getText())
-                && person.equals(card.person);
+                && selectedPerson.equals(card.selectedPerson);
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        selectedPerson = event.getNewSelection().person;
+        bindListeners(selectedPerson);
     }
 }
