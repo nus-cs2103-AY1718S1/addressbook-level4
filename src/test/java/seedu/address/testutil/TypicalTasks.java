@@ -25,13 +25,18 @@ public class TypicalTasks {
             .withStartDate("21-10-2017")
             .withDeadline("28-10-2017").build();
     public static final ReadOnlyTask GYM = new TaskBuilder().withDescription("Start going to the gym")
-            .withStartDate("20-05-2017").build();
+            .withStartDate("20-05-2017")
+            .withDeadline("23-10-2017").build();
     public static final ReadOnlyTask BUY_TICKETS = new TaskBuilder()
             .withDescription("Get tickets two weeks before flight")
-            .withDeadline("20-11-2017").build();
+            .withStartDate("11-11-2017")
+            .withDeadline("01-11-2017").build();
     public static final ReadOnlyTask SUBMISSION = new TaskBuilder().withDescription("Self evaluation submission due")
+            .withStartDate("08-08-2017")
             .withDeadline("30-11-2017").build();
-    public static final ReadOnlyTask PERSONAL_PROJECT = new TaskBuilder().withDescription("Finish art piece").build();
+    public static final ReadOnlyTask PERSONAL_PROJECT = new TaskBuilder().withDescription("Finish art piece")
+            .withStartDate("01-01-2017")
+            .withDeadline("12-12-2017").build();
 
     // Manually added
     public static final ReadOnlyTask SCHOOL = new TaskBuilder().withDescription("Semester two starts")
