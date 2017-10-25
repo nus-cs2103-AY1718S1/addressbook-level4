@@ -20,6 +20,7 @@ import guitests.guihandles.InsuranceProfileHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.ProfilePanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.TestApp;
@@ -79,9 +80,7 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public InsuranceProfileHandle getProfilePanel() {
-        return mainWindowHandle.getProfilePanelHandle();
-    }
+    public ProfilePanelHandle getProfilePanel() { return mainWindowHandle.getProfilePanelHandle(); }
 
     public StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();
