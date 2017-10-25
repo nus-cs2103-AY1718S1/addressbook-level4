@@ -44,7 +44,7 @@
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
         </VBox>
-        <SplitPane fx:id="rightViewSplitPane" disable="true" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+        <SplitPane fx:id="rightViewSplitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
             <items>
                 <AnchorPane maxHeight="150.0" minHeight="150.0" minWidth="0.0" prefHeight="150.0" prefWidth="160.0">
                <SplitPane dividerPositions="0.5" layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
