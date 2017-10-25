@@ -41,7 +41,7 @@ public class SortCommandParser implements Parser<SortCommand> {
         String filterType;
         filterType = argMultimap.getPreamble().toLowerCase();
 
-        if (filterType.equals("")) {
+        if ("".equals(filterType)) {
             // No arguments, set to default
             filterType = ARG_DEFAULT;
         }
@@ -83,12 +83,7 @@ public class SortCommandParser implements Parser<SortCommand> {
      * @return
      */
     public boolean isValidFilterType(String filterType) {
-
-        if (acceptedFilterTypes.contains(filterType)) {
-            return true;
-        } else {
-            return false;
-        }
+        return acceptedFilterTypes.contains(filterType);
     }
 
     public HashSet<String> getAcceptedFilterTypes() {
