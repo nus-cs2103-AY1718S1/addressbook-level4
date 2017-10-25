@@ -5,62 +5,53 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
-        <birthday isPrivate="false">11/08/2002</birthday>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
-        <birthday isPrivate="false">04/09/2000</birthday>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
-        <birthday isPrivate="false">10/12/2013</birthday>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
-        <birthday isPrivate="false">28/02/2009</birthday>
     </persons>
     <persons>
         <name>Werner Meyer</name>
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
-        <birthday isPrivate="false">20/04/2001</birthday>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
-        <birthday isPrivate="false">11/08/1992</birthday>
     </persons>
     <persons>
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
-        <birthday isPrivate="false">01/01/2001</birthday>
     </persons>
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
-        <birthday isPrivate="false">11/09/2000</birthday>
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
-        <birthday isPrivate="false">12/08/2012</birthday>
     </persons>
 </addressbook>

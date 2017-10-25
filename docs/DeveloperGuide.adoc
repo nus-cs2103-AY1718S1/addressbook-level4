@@ -345,30 +345,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-// tag::sortcommand[]
-=== Sort mechanism
-
-The sort mechanism is facilitated by an `Event`. When a sort command is executed, the sort command will conduct a sort on the current `list` in the address book based on the full name in alphabetical order.
-
-The following sequence diagram shows how the sort operation works:
-
-image::SortCommandSequenceDiagram.png[width="800"]
-
-The following activity diagram summarize what happens inside the `Sort Command` when a user executes the command:
-
-image::SortCommandActivityDiagram.png[width="800"]
-
-==== Design Considerations
-
-**Aspect:** Implementation of `SortCommand` +
-**Alternative 1 (current choice):** Sort list by triggering an event to sort the current ObservableList<ReadOnlyPerson> person list. +
-**Pros:** We will not make any changes to the current `internalList` thus will not affect any other commands that we have implemented. +
-**Cons:** Hard for new developers to understand the way we sort the read only person list. +
-**Alternative 2:** Just sort the `internalList` +
-**Pros:** Does not involve the `ObservableList`, easier for new developers to understand. +
-**Cons:** Changes made to the `internalList` might affect other existing commands.
-// end::sortcommand[]
-
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -383,22 +359,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-=== Birthday attribute
-
-Person class consists of five different attributes: `Name`, `Address`, `Phone`, `Email` and `Birthday`. Birthday class has a very similar implementation compared to the other attribute classes. New instance of Birthday is initialized by giving the constructor the parameter birthday in String format. The parameter is required to be non-null, and it is first validated before accepting it as a birthday value for the class.
-
-*Validation*
-
-The valid form for a birthday string is `DD/MM/YYYY`, where every character must be a digit except for the slashes. This validation is performed to prohibit the user from inputting something completely peculiar, for example a string of spaces or a long sequence of characters.
-
-Examples for a valid birthday:
-
-* `14/12/1993`
-* `22/02/2001`
-* `99/99/9999`
-
-Notice that the current implementation doesn't validate the validity of the date, only the format of the birthday and this was a conscious decision. This implementation manages to preserve the simplicity of this class. It could have been possible to use for example Java's Date class to implement a second validator for also the date, but this would have created inconsistency between the other attribute classes. Also, because the end product is an address book which only has to store the birthday, the validity of the date is not a concern for the program.
 
 === Configuration
 
@@ -793,8 +753,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user with many persons in the address book |make groups of contacts |group relevant contacts together
 
-|`*` |user |add a picture of the person |make it easier for myself to identify the person
-
 |`* *` |user with many persons in the address book |see the contact details in grid view |find information faster
 
 |`*` |user |sync contacts from online services like facebook,google etc |add contacts directly without entering them
@@ -880,9 +838,12 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. The searched person is not in the AddressBook.
+* 2a. The searched person is not in the AddressBook.
 +
-Use case ends.
+[none]
+** 2a1. Steps 1-2 are repeated as long as the person is not found.
++
+Use case resumes from step 3.
 
 === Use case: List people with a specific tag
 
@@ -896,7 +857,10 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. No contacts are found.
+* 2a. The person types the tag incorrectly and no contacts are found.
++
+[none]
+** 2a1. Steps 1-2 are repeated as long as the tag is typed incorrectly.
 +
 Use case ends.
 
