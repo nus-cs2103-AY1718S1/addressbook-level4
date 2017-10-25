@@ -54,7 +54,7 @@ public class Phone {
         return value.hashCode();
     }
 
-    
+
     /**
      * Format given phone number into typical mobile format
      * For example for Singapore numbers: xxxx-xxxx
