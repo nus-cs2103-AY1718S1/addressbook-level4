@@ -32,7 +32,7 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        model.sortFilteredPersonList();
+        model.sortFilteredPersonList(filterType);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

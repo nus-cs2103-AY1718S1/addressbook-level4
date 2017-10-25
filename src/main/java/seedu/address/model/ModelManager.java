@@ -119,8 +119,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortFilteredPersonList() {
-        addressBook.sortPersons();
+    public void sortFilteredPersonList(String filterType) {
+        addressBook.sortPersons(filterType);
         ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
         filteredPersons = new FilteredList<>(sortedList);
         indicateAddressBookChanged();

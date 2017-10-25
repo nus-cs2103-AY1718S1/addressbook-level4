@@ -44,7 +44,12 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
-    void sortFilteredPersonList();
+    /**
+     * Sorts the filteredPerson list by the filterType, one of [Name/Email/Address/Phone]
+     * @param filterType
+     */
+
+    void sortFilteredPersonList(String filterType);
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

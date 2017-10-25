@@ -30,13 +30,14 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void sortFilteredPersonList_sortListSuccess() {
+    public void sortFilteredPersonListByName_sortListSuccess() {
+        String filterType = "name";
         UserPrefs userPrefs = new UserPrefs();
         AddressBook unSortedTypicalPersons = getUnsortedTypicalAddressBook();
         AddressBook sortedTypicalPersons = getSortedTypicalAddressBook();
         ModelManager modelManager1 = new ModelManager(unSortedTypicalPersons, userPrefs, new UserPerson());
         ModelManager modelManager2 = new ModelManager(sortedTypicalPersons, userPrefs, new UserPerson());
-        modelManager1.sortFilteredPersonList();
+        modelManager1.sortFilteredPersonList(filterType);
         assertTrue(modelManager1.equals(modelManager2));
     }
 
