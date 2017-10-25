@@ -494,6 +494,50 @@ image::LockSequenceDiagram.png[width="800"]
 
 // end::lock[]
 
+=== Favourite mechanism
+
+The favourite mechanism is very similar to the one used in edit command. The feature follows the sequence of steps:
+
+. `FavouriteCommandParser` calls upon `FavouriteCommand` and parses the argument as an index.
+. It replaces the person identified in `AddressBook` with a new person that has its `favourite` instance inverted to either `true` or `false`.
+. The `favouritePerson` method in AddressBook then creates two `UniquePersonList` to implement the sorting. Persons with `favourite` = `true` will be sorted into the `favouriteList`. Persons with `favourite` = `false` will be sorted into the `notFavouriteList`.
+. The two lists will then be merged into the `persons` list in `AddressBook`, with `favouriteList` being at the top.
+
+The code below shows how FavouriteCommand is implemented:
+
+[source,java]
+----
+public class FavouriteCommand extends UndoableCommand {
+
+    public FavouriteCommand(Index index) {
+        requireNonNull(index);
+       this.index = index;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... Favourite logic
+    }
+
+    @Override
+    private static Person createFavouritePerson(ReadOnlyPerson personToFavourite) {
+        // ... update status of personToFavourite
+    }
+}
+----
+
+==== Design Consideration
+
+**Aspect:** Sorting of contact list with favourites +
+**Alternative 1 (current choice):** Create two lists to overwrite original order. +
+**Pros:** Easy to implement. +
+**Cons:** Does not preserve the original order of the contact list. +
+**Alternative 2:** Save the favourite contacts in a separate list without overwriting the original contact list +
+**Pros:** Does not mess up the original order. +
+**Cons:** Will use more memory (significant if favourite list is large).
+
+---
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.

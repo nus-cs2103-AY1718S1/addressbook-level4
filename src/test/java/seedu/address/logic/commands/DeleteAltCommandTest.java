@@ -47,6 +47,13 @@ public class DeleteAltCommandTest {
     }
 
     @Test
+    public void execute_insufficientInput_throwsCommandException() throws Exception {
+        DeleteAltCommand deleteAltCommand = prepareCommand("al");
+
+        assertCommandFailure(deleteAltCommand, model, Messages.MESSAGE_PERSON_NAME_INSUFFICIENT);
+    }
+
+    @Test
     public void equals() {
         DeleteAltCommand deleteFirstAltCommand = new DeleteAltCommand(NAME_FIRST_PERSON);
         DeleteAltCommand deleteSecondAltCommand = new DeleteAltCommand(NAME_SECOND_PERSON);
