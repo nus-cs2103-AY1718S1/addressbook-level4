@@ -66,14 +66,7 @@ public class TypicalPersons {
     public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
-    public static final ReadOnlyPerson JOHN_DOE = new PersonBuilder().withName("John Doe").withPhone("98765432")
-            .withEmail("johnd@example.com").withTags("friend neighbor")
-            .withAddress("John street, block 123, #01-01")
-            .build();
-    public static final ReadOnlyPerson BETSY_CROWE = new PersonBuilder().withName("Betsy Crowe").withPhone("1234567")
-            .withEmail("betsycrowe@example.com").withTags("friend, criminal")
-            .withAddress("Newgate Prison")
-            .build();
+
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
     public static final String KEYWORD_MATCHING_FRIENDS = "friends";
