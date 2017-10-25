@@ -4,7 +4,7 @@ package seedu.address.logic.commands;
  * Prints failure message if invalid arguments are passed after
  * a list command
  */
-public class ListCommandFailure extends Command{
+public class ListCommandFailure extends Command {
 
     public static final String COMMAND_WORD = "list";
 

@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -122,10 +123,15 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     *
-     * @return the list as an unmodifiable list and sorted by appointment
+     * @return the list as an unmodifiable list and sorted by name in ascending order
      */
-
+    public ObservableList<ReadOnlyPerson> asObservableListSortedByNameAsc() {
+        internalList.sort((o1,o2) -> {
+            int output = (o1.getName().fullName.compareToIgnoreCase(o2.getName().fullName)>=0) ? 1 : -1 ;
+            return output;
+        });
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
 
     @Override
     public Iterator<Person> iterator() {

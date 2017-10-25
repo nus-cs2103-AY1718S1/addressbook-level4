@@ -67,4 +67,9 @@ public interface Model {
      * Returns a list of ReadOnlyPerson that is ordered chronologically in terms of appointment time
      */
     ObservableList<ReadOnlyPerson> listAppointment();
+
+    /**
+     * Returns a list of ReadOnlyPerson that is ordered chronologically in terms of name
+     */
+    ObservableList<ReadOnlyPerson> listNameAscending();
 }
