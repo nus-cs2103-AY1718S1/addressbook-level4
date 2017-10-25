@@ -92,7 +92,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initPhoto(ReadOnlyPerson person) {
         try {
-            if(person.getPhoto() != null) {
+            if (person.getPhoto() != null) {
                 File photoFile = new File(person.getPhoto().getFullPhotoDir());
                 FileInputStream fileStream = new FileInputStream(photoFile);
                 Image personPhoto = new Image(fileStream);
