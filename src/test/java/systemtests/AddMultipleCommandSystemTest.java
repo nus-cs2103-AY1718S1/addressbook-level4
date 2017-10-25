@@ -46,7 +46,7 @@ public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, NOT_EXISTS_FILE);
         assertCommandFailure(command, expectedResultMessage);
 
-       /* Case add from a file containing valid persons --> added */ 
+       /* Case add from a file containing valid persons --> added */
         String VALID_PERSONS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/validPersons_missingOptionalFields.txt";
         ArrayList<ReadOnlyPerson> personList = new ArrayList<>();
         ReadOnlyPerson amy = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
