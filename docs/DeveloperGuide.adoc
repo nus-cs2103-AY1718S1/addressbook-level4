@@ -693,8 +693,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Redo an undo |Restore the Address Book to its previous state before the undo
 
-|`* * *` |User |Use the arrow keys to call previous commands used|
-
 |`* * *` |User |Use the Address Book without saving it |Avoid any loss of data in the case I forget to save
 
 |`* * *` |User |Exit the Address Book with a command|
@@ -723,7 +721,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |Doctor |Record the blood types of my patients |Easily access their information when required
 
-|`* *` |User |Hide link:#private-contact-detail[private contact details] by default |minimize the chance of someone else seeing them by accident
+|`* * *` |Doctor |Display potential duplicate contacts |Resolve points of confusion amongst my contacts
+
+|`* *` |User |Hide link:#private-contact-detail[private contact details] by default |Minimize the chance of someone else seeing them by accident
 
 |`* *` |User |List all contacts based on most recent search |See all contacts I searched recently
 
