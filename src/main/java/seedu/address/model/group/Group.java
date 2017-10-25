@@ -1,11 +1,14 @@
 package seedu.address.model.group;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -21,7 +24,8 @@ public class Group implements ReadOnlyGroup {
     /**
      *  A Group will have an empty persons list by default
      */
-    private final UniquePersonList groupMembers = new UniquePersonList();
+    private ObjectProperty<UniquePersonList> groupMembers =
+            new SimpleObjectProperty<>(new UniquePersonList());
 
     /**
      * Every field must be present and not null.
@@ -29,6 +33,15 @@ public class Group implements ReadOnlyGroup {
     public Group(GroupName name) {
         requireNonNull(name);
         this.groupName = new SimpleObjectProperty<>(name);
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Group(GroupName name, Set<Person> groupMembers) {
+        requireAllNonNull(name, groupMembers);
+        this.groupName = new SimpleObjectProperty<>(name);
+        this.groupMembers = new SimpleObjectProperty<>(new UniquePersonList(groupMembers));
     }
 
     /**
@@ -42,7 +55,7 @@ public class Group implements ReadOnlyGroup {
      * Creates a copy of the given ReadOnlyGroup.
      */
     public Group(ReadOnlyGroup source) {
-        this(source.getName());
+        this(source.getName(), source.getMembers());
     }
 
     @Override
@@ -65,11 +78,11 @@ public class Group implements ReadOnlyGroup {
     }
 
     public void addMember(ReadOnlyPerson person) throws DuplicatePersonException {
-        this.groupMembers.add(person);
+        this.groupMembers.get().add(person);
     }
 
     public void deleteMember(ReadOnlyPerson person) throws PersonNotFoundException {
-        this.groupMembers.remove(person);
+        this.groupMembers.get().remove(person);
     }
 
     @Override
@@ -82,13 +95,20 @@ public class Group implements ReadOnlyGroup {
         return groupName.get();
     }
 
+    @Override
+    public ObjectProperty<UniquePersonList> groupMembersProperty() {
+        return groupMembers;
+    }
+
     public void setGroupName(GroupName name) {
         this.groupName.set(requireNonNull(name));
     }
 
     @Override
-    public ObservableList<ReadOnlyPerson> getMembers() {
-        return groupMembers.asObservableList();
+    public Set<Person> getMembers() {
+        return groupMembers.get().toSet();
     }
+
+
 
 }

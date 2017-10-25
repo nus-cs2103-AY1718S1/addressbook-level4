@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.UniqueGroupList;
@@ -246,6 +247,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a person to a group in the address book.
+     *
+     * @throws GroupNotFoundException if group does not exist.
+     * @throws PersonNotFoundException if person does not exist.
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     *
+     */
+
+    public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
+            throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
+        groups.addPersonToGroup(targetGroup, toAdd);
+    }
+
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws GroupNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
@@ -286,7 +301,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, "
+                + groups.asObservableList().size() + " groups, "
+                + tags.asObservableList().size() +  " tags";
+
         // TODO: refine later
     }
 

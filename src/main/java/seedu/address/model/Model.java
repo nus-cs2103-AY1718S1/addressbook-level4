@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
@@ -57,6 +58,14 @@ public interface Model {
 
     /** Deletes the given schedule */
     void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException;
+  
+    /** Adds given person to given group */
+    void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd) throws
+            GroupNotFoundException, PersonNotFoundException, DuplicatePersonException;
+
+    /** Deletes given person from given group */
+    void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove) throws
+            GroupNotFoundException, PersonNotFoundException, NoPersonsException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -77,6 +86,8 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered schedule list */
     ObservableList<ReadOnlySchedule> getFilteredScheduleList();
+
+    void showUnfilteredPersonList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

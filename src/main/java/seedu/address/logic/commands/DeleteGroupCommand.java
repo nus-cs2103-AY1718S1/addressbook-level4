@@ -21,7 +21,7 @@ public class DeleteGroupCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Deleted Group: %1$s";
 
     private final Index targetIndex;
 

@@ -12,7 +12,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ListEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
@@ -71,6 +73,11 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /** Raises an event to indicate a list command has occurred */
+    private void indicateListEvent() {
+        raise(new ListEvent(getFilteredPersonList()));
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -124,6 +131,11 @@ public class ModelManager extends ComponentManager implements Model {
     public void addSchedule(ReadOnlySchedule schedule) throws DuplicateScheduleException {
         addressBook.addSchedule(schedule);
         updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+
+    public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
+            throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
+        addressBook.addPersonToGroup(targetGroup, toAdd);
+
         indicateAddressBookChanged();
     }
 
@@ -131,6 +143,11 @@ public class ModelManager extends ComponentManager implements Model {
     public void deleteSchedule(ReadOnlySchedule target) throws ScheduleNotFoundException {
         addressBook.removeSchedule(target);
         indicateAddressBookChanged();
+    }
+
+    public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
+            throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
+
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -150,15 +167,22 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+
     public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
         return FXCollections.unmodifiableObservableList(filteredSchedules);
+
+    public void showUnfilteredPersonList() {
+        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
+        indicateListEvent();
     }
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+        indicateListEvent();
     }
+
 
     @Override
     public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {

@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -132,6 +133,16 @@ public class AddCommandTest {
 
         @Override
         public void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException {
+
+        @Override
+        public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
+                throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
+                throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
             fail("This method should not be called.");
         }
 
@@ -176,6 +187,10 @@ public class AddCommandTest {
         @Override
         public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
             return null;
+        }
+        
+        public void showUnfilteredPersonList() {
+            fail("This method should not be called.");
         }
 
         @Override

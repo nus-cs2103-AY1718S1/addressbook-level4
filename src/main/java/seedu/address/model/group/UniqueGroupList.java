@@ -1,5 +1,6 @@
 package seedu.address.model.group;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -12,9 +13,13 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 
 /**
@@ -44,14 +49,9 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 
     /**
-     * Constructs empty GroupList.
+     * Constructs empty UniqueGroupList.
      */
     public UniqueGroupList() {}
-
-    /**
-     * Returns all groups in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
-     */
 
     /**
      * Returns true if the list contains an equivalent Group as the given argument.
@@ -62,7 +62,8 @@ public class UniqueGroupList implements Iterable<Group> {
     }
 
     /**
-     * Returns a set representation of the group.
+     * Returns all groups in this list as a Set.
+     * This set is mutable and change-insulated against the internal list.
      */
     public Set<Group> toSet() {
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -111,11 +112,37 @@ public class UniqueGroupList implements Iterable<Group> {
         return groupFoundAndDeleted;
     }
 
+    /**
+     * Adds person to specified group in the list.
+     *
+     * @throws GroupNotFoundException if no such group could be found in the list.
+     */
+    public void addPersonToGroup(Index target, ReadOnlyPerson toAdd)
+            throws GroupNotFoundException, DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(toAdd);
+        requireNonNull(target);
+
+        Group targetGroup = internalList.get(target.getZeroBased());
+
+        if (isNull(targetGroup)) {
+            throw new GroupNotFoundException();
+        }
+
+        try {
+            targetGroup.addMember(toAdd);
+        } catch (DuplicatePersonException dpe) {
+            throw new DuplicatePersonException();
+        }
+
+        internalList.set(target.getZeroBased(), targetGroup);
+    }
+
     @Override
     public Iterator<Group> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.iterator();
     }
+
 
     public void setGroups(UniqueGroupList replacement) {
         this.internalList.setAll(replacement.internalList);
@@ -128,6 +155,7 @@ public class UniqueGroupList implements Iterable<Group> {
         }
         setGroups(replacement);
     }
+
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

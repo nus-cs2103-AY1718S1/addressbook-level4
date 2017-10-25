@@ -23,10 +23,10 @@ import seedu.address.model.tag.Tag;
 /**
  * Sets Favourite attribute of Indexed person as false in the address book. (remove from favourites)
  */
-public class RemoveFaveCommand extends UndoableCommand {
+public class RemoveFavouriteCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "removeFave";
-    public static final String COMMAND_ALT = "rf";
+    public static final String COMMAND_WORD = "fremove";
+    public static final String COMMAND_ALT = "fr";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes the favourite status from the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
@@ -37,7 +37,7 @@ public class RemoveFaveCommand extends UndoableCommand {
 
     private final Index targetIndex;
 
-    public RemoveFaveCommand(Index index) {
+    public RemoveFavouriteCommand(Index index) {
         requireNonNull(index);
         this.targetIndex = index;
     }
