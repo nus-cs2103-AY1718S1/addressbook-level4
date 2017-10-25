@@ -147,6 +147,9 @@ This makes it convenient for finding and resolving duplicate contacts.
 *Format:* `duplicates` +
 *Shorthand Format:* `dups`
 
+[NOTE]
+The results are from case-sensitive comparisons.
+
 === Editing a person : `edit`
 
 You can edit the information of a person you have added in the address book. +
