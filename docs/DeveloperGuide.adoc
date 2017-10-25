@@ -709,7 +709,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |User |Delete a chunk of words easily|Delete a bunch of empty spaces or words without having to slowly press the backspace
 
-|`* * *` |User |Have a keyboard shortcut to navigate to the start or end of my input text
+|`* * *` |User |Have a keyboard shortcut to navigate to the start or end of my input text|
 
 |`* * *` |User |Navigate through my input text be it left or right by individual words or chunks of white spaces
 
