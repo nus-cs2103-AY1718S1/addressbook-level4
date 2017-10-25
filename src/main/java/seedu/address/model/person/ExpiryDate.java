@@ -37,7 +37,7 @@ public class ExpiryDate {
         } else if (!isValidExpiryDate(date)) {
             throw new IllegalValueException(MESSAGE_EXPIRY_DATE_CONSTRAINTS);
         }
-        // catches invalid month/day combination
+        // catches invalid month/day combination .NOT
         ParsePosition parsePos = new ParsePosition(0);
         this.value = DATE_FORMATTER.parse(date, parsePos);
 
@@ -56,7 +56,12 @@ public class ExpiryDate {
 
     @Override
     public String toString() {
-        return DATE_FORMATTER.format(value);
+        if (value == null) {
+            return "";
+        }
+        else {
+            return DATE_FORMATTER.format(value);
+        }
     }
 
     @Override
