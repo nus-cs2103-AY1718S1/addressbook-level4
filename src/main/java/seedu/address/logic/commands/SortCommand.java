@@ -12,6 +12,7 @@ public class SortCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         model.sortPersons();
+        graphWrapper.buildGraph(model);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

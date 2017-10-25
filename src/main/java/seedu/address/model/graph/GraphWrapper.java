@@ -173,4 +173,8 @@ public class GraphWrapper {
 
         return graph;
     }
+
+    public void display() {
+        this.graph.display();
+    }
 }

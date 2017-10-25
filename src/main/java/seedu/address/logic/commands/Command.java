@@ -6,7 +6,6 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.graph.GraphWrapper;
-import seedu.address.model.GraphAndRelationshipManager;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.
@@ -17,7 +16,6 @@ public abstract class Command {
     protected UndoRedoStack undoRedoStack;
 
     protected GraphWrapper graphWrapper;
-    protected GraphAndRelationshipManager graphAndRelationshipManager;
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
@@ -46,6 +44,5 @@ public abstract class Command {
                         GraphWrapper graphWrapper) {
         this.model = model;
         this.graphWrapper = graphWrapper;
-        this.graphAndRelationshipManager = new GraphAndRelationshipManager();
     }
 }

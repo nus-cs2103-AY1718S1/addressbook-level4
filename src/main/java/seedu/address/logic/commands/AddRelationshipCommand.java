@@ -47,13 +47,13 @@ public class AddRelationshipCommand extends UndoableCommand {
         this.indexFromPerson = indexFrom;
         this.indexToPerson = indexTo;
         this.direction = direction;
-        this.graphAndRelationshipManager.setData(model, graphWrapper);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            graphAndRelationshipManager.addRelationship(indexFromPerson, indexToPerson, direction);
+            model.addRelationship(indexFromPerson, indexToPerson, direction);
+            graphWrapper.buildGraph(model);
         } catch (IllegalValueException ive) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
