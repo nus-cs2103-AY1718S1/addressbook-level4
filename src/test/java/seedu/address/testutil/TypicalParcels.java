@@ -46,7 +46,6 @@ public class TypicalParcels {
             .withName("Daniel Meier").withPhone("87652533").withEmail("cornelia@example.com")
             .withAddress("59 Namly Garden S267387").withStatus("overdue")
             .withDeliveryDate("04-02-2000").build();
-
     public static final ReadOnlyParcel ELLE = new ParcelBuilder().withTrackingNumber("RR111321124SG")
             .withName("Elle Meyer").withPhone("9482224").withEmail("werner@example.com")
             .withAddress("2 Finlayson Green, S049247").withTags("bbc").withDeliveryDate("05-02-2000").build();
