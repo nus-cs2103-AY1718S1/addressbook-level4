@@ -46,7 +46,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Ark application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ark_Main_Window.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -61,22 +61,22 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Layout
 What you see in the picture below is an example of what the main window
-of the Ark application looks like. +
+of the Ark application looks like separated into it's sections. +
 
-image::Ark_Main_Window.png[width="790"]
+image::Ark_Main_Window_Sections.png[width="790"]
 
 The main window is separated into 8 sections from the top to bottom:
 
 . Red - Menu Bar
-. Blue - Command Box
-. Green - Results Box
-. Yellow - Browser
-. Purple - Divider (divides the Browser from the Parcel List)
-. White - Parcel Card
-. Orange - Parcel List
-. Pink - Status Bar
+. Green - Command Box
+. Pink - Results Box
+. Yellow - Browser Panel
+. Purple - Divider (divides the Browser Panel from the Parcel List)
+. Orange - Parcel List Panel
+. Blue - Parcel Card
+. Cyan - Status Bar Footer
 
-The Browser and Parcel List sections sizes can be changed by commands
+The Browser and Parcel List Panel sections sizes can be changed either by commands
 or by dragging the Divider part up or down to either increase or decrease either
 section's sizes.
 
@@ -146,12 +146,11 @@ end::import[]
 
 === Listing all parcels : `list`
 
-Shows a list of all parcels in Ark and expands the Parcel List section in the main window.
+Shows a list of all parcels in Ark and expands the Parcel List Panel section in the main window.
 The Parcel List section is scrollable and shows you all the information of a parcel.
-You can see an example in the two pictures below. +
+You can see an example in the picture below. +
 
 image::Ark_Parcel_List.png[width="790"]
-image::Ark_Parcel_List_2.png[width="790"]
 
 Format: `list`
 
@@ -238,7 +237,8 @@ Deletes the tag "urgent" from each parcel in the address book.
 === Selecting a parcel : `select`
 
 Selects the parcel identified by the index number used in the last parcel listing
-and expands the Browser section in the main window. The Browser section will then show a google map search
+and expands the Browser Panel section in the main window.
+The Browser Panel section will then show a google map search
 of the selected parcel's delivery address (postal code). You can see an example in the picture below. +
 
 image::Ark_Browser.png[width="790"]
@@ -246,7 +246,7 @@ image::Ark_Browser.png[width="790"]
 Format: `select INDEX`
 
 [TIP]
-A parcel can also be selected by mousing over and clicking on the parcel card in the parcel list.
+You can also select a parcel by mousing over and clicking on the specific Parcel Card in the Parcel List Panel.
 
 ****
 * Selects the parcel and loads the Google map page showing the delivery location of the parcel at the specified `INDEX`.
