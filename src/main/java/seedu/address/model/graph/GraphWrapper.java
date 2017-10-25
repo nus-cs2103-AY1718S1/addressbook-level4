@@ -80,6 +80,22 @@ public class GraphWrapper {
                 + Integer.toString(filteredPersons.indexOf(person2));
     }
 
+    private String checkForRedundantEdgeAndRemove(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson,
+                                                RelationshipDirection intendedDirectionOfRedundantEdge) {
+        requireAllNonNull(fromPerson, toPerson, intendedDirectionOfRedundantEdge);
+        String redundantEdgeId = computeEdgeId(fromPerson, toPerson);
+        Edge redundantEdge = graph.getEdge(redundantEdgeId);
+        if (intendedDirectionOfRedundantEdge == RelationshipDirection.UNDIRECTED) {
+            if (redundantEdge != null && !redundantEdge.isDirected()) {
+                graph.removeEdge(redundantEdge);
+            }
+        } else {
+            if (redundantEdge != null && redundantEdge.isDirected()) {
+                graph.removeEdge(redundantEdge);
+            }
+        }
+        return redundantEdgeId;
+    }
 
     /**
      * Add a directed edge from one person to another
@@ -87,11 +103,9 @@ public class GraphWrapper {
      * @return the directed edge from fromPerson to toPerson
      */
     private Edge addDirectedEdge(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson) {
-        String designatedEdgeId = computeEdgeId(fromPerson, toPerson);
-        Edge previousEdge = graph.getEdge(designatedEdgeId);
-        if (previousEdge != null && !previousEdge.isDirected()) {
-            graph.removeEdge(previousEdge);
-        }
+        String designatedEdgeId = checkForRedundantEdgeAndRemove(fromPerson,
+                toPerson, RelationshipDirection.UNDIRECTED);
+
         try {
             graph.addEdge(designatedEdgeId, getNodeIdFromPerson(fromPerson),
                     getNodeIdFromPerson(toPerson), true);
@@ -108,16 +122,11 @@ public class GraphWrapper {
      * @return the undirected edge between firstPerson and secondPerson
      */
     private Edge addUndirectedEdge(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson) {
-        String designatedEdgeId1 = computeEdgeId(firstPerson, secondPerson);
-        Edge previousEdge1 = graph.getEdge(designatedEdgeId1);
-        String designatedEdgeId2 = computeEdgeId(secondPerson, firstPerson);
-        Edge previousEdge2 = graph.getEdge(designatedEdgeId2);
-        if (previousEdge1 != null && previousEdge1.isDirected()) {
-            graph.removeEdge(previousEdge1);
-        }
-        if (previousEdge2 != null && previousEdge2.isDirected()) {
-            graph.removeEdge(previousEdge2);
-        }
+        String designatedEdgeId1 = checkForRedundantEdgeAndRemove(firstPerson,
+                secondPerson, RelationshipDirection.DIRECTED);
+        String designatedEdgeId2 = checkForRedundantEdgeAndRemove(secondPerson,
+                firstPerson, RelationshipDirection.DIRECTED);
+
         try {
             graph.addEdge(designatedEdgeId1, getNodeIdFromPerson(firstPerson),
                     getNodeIdFromPerson(secondPerson), false);
