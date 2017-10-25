@@ -35,8 +35,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
-import seedu.address.ui.CommandBox;
 import seedu.address.commons.core.PossibleLinks;
+import seedu.address.ui.CommandBox;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
