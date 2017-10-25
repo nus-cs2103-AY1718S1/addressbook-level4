@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ResidentBook Level 4 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -22,21 +22,32 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `residentbook.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Resident Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
++
+image::Ui_help.png[width="790"]
++
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Resident Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
+.  The following is an example of a successful execution of commands.
++
+image::Ui_success.PNG[width="790"]
++
 
+.  The following is an example of a unsuccessful execution of commands.
++
+image::Ui_short_error.PNG[width="790"]
++
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
@@ -48,6 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Autocomplete options show up upon input
 ====
 
 === Viewing help : `help`
@@ -56,8 +68,8 @@ Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a person to the resident book +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ROOM [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -67,15 +79,55 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+
+=== Adding a temporary person:
+
+Adds a temporary person to the resident book which will be deleted when the number of days specified has elapsed +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ROOM [temp/NUMBER_OF_DAYS] [t/TAG]...`
+
+[TIP]
+Deletion of temporary person is done at the start up of the residentbook.
+
+Examples:
+
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 temp/2 t/criminal`
+
+=== Adding a picture: `GUI button`
+
+Adds a person to the resident book +
+Format: `click on '+' button after adding the person into the residentbook`
+
+[TIP]
+Once person can only have 1 picture, adding additional images replaces the current one
+
+Examples:
+
+image::add_person1.png[width="400"]
+image::add_person2.png[width="400"]
+
+
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the resident book. +
 Format: `list`
+
+=== Sorting the Resident Book: `sort`
+
+Sorts the resident book +
+Format: `sort `sorting-criteria``
+
+
+Examples:
+
+* `sort name`
+* `sort room`
+* `sort phone`
+* `sort email`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing person in the resident book. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ROOM] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -88,7 +140,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
@@ -114,7 +166,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from the resident book. +
 Format: `delete INDEX`
 
 ****
@@ -127,7 +179,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the resident book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -147,7 +199,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the resident book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -165,12 +217,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the resident book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the resident book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -214,7 +266,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the resident book. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -224,22 +276,46 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Resident book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+=== Back up of data : `backup`
+
+Resident book data can be stored in a back up file when necessary. This is good in case any the existing resident book is corrupted. +
+Format: `backup`
+
+=== Import data : `import` (Since v1.2)
+
+Add contact details from external xml file into current resident book. +
+Format: import FILE_PATH
+
+****
+* Adds all person that is not already in the resident book.
+* The FILE_PATH must contain a valid xml file.
+****
+
+Examples:
+
+* `import C:\Desktop\colleagues.xml` +
+Imports colleagues.xml into current resident book.
+
+=== Facebook Search (coming in V2.0)
+
+Query Facebook using list of emails from resident book.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Resident Book folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ROOM [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ROOM] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -250,3 +326,4 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Backup* : `backup`
