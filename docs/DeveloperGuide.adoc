@@ -680,6 +680,50 @@ Then `Model` process the person list.
 The show participants command object creates `CommandResult` object and return it.
 `LogicManager` receives the result and shows it through `UI`.
 
+=== ShowAllJoinedEvent mechanism
+
+The selectE command is facilitated by the `LogicManager`.
+
+The following *_sequence_* diagram below, Figure 3.8, show how the show all joined events operation works:
+
+image::ShowAllJoinedEventsSequenceDiagram.png[width="800"]
+_Figure 3.8: sequence diagram for selectE command_
+
+The user enters a SelectE command which is received by `LogicManger`.
+``LogicManager` calls `AddressBookParser` to parse the user command.
+`AddressBookParser` will call `SelectJoinedEventsCommandParser` to parse the list of INDEXES.
+`AddressBookParser` creates an `SelectJoinedEventsCommand` object and returns it.
+`LogicManager` receives the `Command` object and executes it.
+The `SelectJoinedEventsCommand` calls `getFilteredPersonList()` in the `Model` to get the person list.
+The `SelectJoinedEventsCommand` then creates a list of event names using the person list and list of INDEXES.
+The `SelectJoinedEventsCommand` then proceeds to create a `EventContainsKeywordsPredicate` with the list of event names.
+The `SelectJoinedEventsCommand` then calls `updateFilteredEventList(p)` in the `Model`.
+The `Model` processes the event list.
+The `SelectJoinedEventsCommand` then creates a `CommandResult` object and returns it to `LogicManager`.
+`LogicManager` receives the result and displays it through the `UI`.
+
+[discrete]
+===== Design Considerations
+
+**Aspect:** Implementation of `DeleteEventCommand` +
+**Alternative 1 (current choice):** Create a new command to delete events. +
+**Pros:** It is responsible only for deleting events, and not people. Easier to implement. +
+**Cons:** Users may accidentally type in "delete" for deleting a person instead of "deleteE" for deleting an event. +
+**Alternative 2:** Modify `DeleteCommand` to handle deletion for both persons and events. +
+**Pros:** Users would be less likely to type the wrong command. +
+**Cons:** Any changes to the deletion process of either a person or event may affect the other . Harder to implement. +
+
+---
+
+**Aspect:** How deleteE command executes +
+**Alternative 1 (current choice):** Deletes the event at the specified index. +
+**Pros:** Easy to imlement. +
+**Cons:** User has to list/sort event list first. +
+**Alternative 2:** Delete the event with the specified name. +
+**Pros:** Users can delete directly without having to get the index. +
+**Cons:** Users would have to type more if the event name is long. It will be more complex for developers to maintain and test. +
+// end::deleteE[]
+
 === Person-Event interaction
 In this application, we allow users to connect events and persons to show that some persons participate some events. +
 We will explain it in terms of Model and Storage. +
