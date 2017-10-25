@@ -3,6 +3,7 @@ package seedu.address.model;
 import static seedu.address.commons.core.GuiSettings.DEFAULT_HEIGHT;
 import static seedu.address.commons.core.GuiSettings.DEFAULT_WIDTH;
 
+import java.io.File;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
@@ -13,7 +14,7 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
+    private String addressBookFilePath = "data" + File.separator + "addressbook.xml";
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
