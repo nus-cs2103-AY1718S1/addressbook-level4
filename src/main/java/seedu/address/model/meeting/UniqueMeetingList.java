@@ -33,7 +33,8 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     // used by asObservableList()
     private final ObservableList<ReadOnlyMeeting> mappedMeetingList = EasyBind.map(internalMeetingList,
             (meeting) -> meeting);
-    
+
+
     /**
      * Returns true if the list contains an equivalent meeting as the given argument.
      */
