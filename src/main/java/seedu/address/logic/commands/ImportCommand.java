@@ -57,7 +57,7 @@ public class ImportCommand extends UndoableCommand {
 
                 namesFeedback = getNamesFeedback(namesAdded, namesFeedback);
 
-                return new CommandResult(String.format(MESSAGE_SUCCESS + " Added: "+ namesFeedback));
+                return new CommandResult(String.format(MESSAGE_SUCCESS + " Added: " + namesFeedback));
             }
             return new CommandResult(String.format(MESSAGE_ERROR));
         } catch (DataConversionException e) {
