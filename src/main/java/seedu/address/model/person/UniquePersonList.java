@@ -2,7 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
@@ -53,7 +52,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -126,8 +125,8 @@ public class UniquePersonList implements Iterable<Person> {
      * @return the list as an unmodifiable list and sorted by name in ascending order
      */
     public ObservableList<ReadOnlyPerson> asObservableListSortedByNameAsc() {
-        internalList.sort((o1,o2) -> {
-            int output = (o1.getName().fullName.compareToIgnoreCase(o2.getName().fullName)>=0) ? 1 : -1 ;
+        internalList.sort((o1, o2) -> {
+            int output = (o1.getName().fullName.compareToIgnoreCase(o2.getName().fullName) >= 0) ? 1 : -1;
             return output;
         });
         return FXCollections.unmodifiableObservableList(mappedList);
@@ -137,8 +136,8 @@ public class UniquePersonList implements Iterable<Person> {
      * @return the list as an unmodifiable list and sorted by name in descending order
      */
     public ObservableList<ReadOnlyPerson> asObservableListSortedByNameDsc() {
-        internalList.sort((o1,o2) -> {
-            int output = (o1.getName().fullName.compareToIgnoreCase(o2.getName().fullName)<=0) ? 1 : -1 ;
+        internalList.sort((o1, o2) -> {
+            int output = (o1.getName().fullName.compareToIgnoreCase(o2.getName().fullName) <= 0) ? 1 : -1;
             return output;
         });
         return FXCollections.unmodifiableObservableList(mappedList);
@@ -161,7 +160,7 @@ public class UniquePersonList implements Iterable<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                && this.internalList.equals(((UniquePersonList) other).internalList));
     }
 
     @Override
@@ -171,6 +170,7 @@ public class UniquePersonList implements Iterable<Person> {
 
     /**
      * Adds appointment to a person in the internal list.
+     *
      * @param appointment
      * @throws PersonNotFoundException if no such person exist in the internal list
      */

@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 /**
  * Reverses existing displayed list
  */
-public class ListReverseCommand extends Command{
+public class ListReverseCommand extends Command {
 
     public static final String COMMAND_WORD = "reverse";
     public static final String COMMAND_ALIAS = "rev"; // shorthand equivalent alias

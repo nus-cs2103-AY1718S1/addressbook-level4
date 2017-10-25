@@ -20,8 +20,8 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListAscendingNameCommand;
 import seedu.address.logic.commands.ListByBloodtypeCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListFailureCommand;
 import seedu.address.logic.commands.ListDescendingNameCommand;
+import seedu.address.logic.commands.ListFailureCommand;
 import seedu.address.logic.commands.ListReverseCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
@@ -127,6 +127,13 @@ public class AddressBookParser {
         }
     }
 
+    /**
+     * Returns the correct list feature based on word after list
+     *
+     * @param arguments full user input arguments
+     * @return the command based on arguments provided
+     * @throws ParseException if the user input does not conform the expected format
+     */
     private Command listEvaluator(String arguments) throws ParseException {
         String[] argSplit = arguments.trim().split(" ");
         String firstArg = argSplit[0];

@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 /**
  * Finds and lists all persons in address book in ascending order by name
  */
-public class ListAscendingNameCommand extends Command{
+public class ListAscendingNameCommand extends Command {
 
     public static final String COMMAND_WORD = "ascending";
     public static final String COMMAND_ALIAS = "asc"; // shorthand equivalent alias
