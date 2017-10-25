@@ -18,9 +18,7 @@ public class SortCommand extends Command {
             + " [name/email/phone/address/tag]\n"
             + "Example: " + COMMAND_WORD + " name";
 
-    public static final String MESSAGE_SUCCESS = "Sorted successfully, Listing all persons below";
-
-    public static final String MESSAGE_ARGUMENTS = "Filter type: %1$s";
+    public static final String MESSAGE_SUCCESS = "Sorted successfully by %1$s, Listed all persons.";
 
     private String filterType;
 
@@ -33,7 +31,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         model.sortFilteredPersonList(filterType);
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, filterType));
     }
 
     @Override
