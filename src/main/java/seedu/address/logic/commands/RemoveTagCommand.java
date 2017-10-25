@@ -92,4 +92,21 @@ public class RemoveTagCommand extends UndoableCommand {
         return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTimestamp(), updatedTags);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof RemoveTagCommand)) {
+            return false;
+        }
+
+        // state check
+        RemoveTagCommand e = (RemoveTagCommand) other;
+        return tagName.equals(e.tagName);
+    }
 }
