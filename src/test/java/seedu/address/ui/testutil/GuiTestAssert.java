@@ -37,7 +37,7 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
         assertEquals(expectedPerson.getRemark().remark, actualCard.getRemark());
-        assertEquals(expectedPerson.getExpiryDate().value, actualCard.getExpiryDate());
+        assertEquals(expectedPerson.getExpiryDate().toString(), actualCard.getExpiryDate());
     }
 
     /**
