@@ -173,6 +173,69 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + POSTALCODE_DESC_BOB + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
+        /* Case: missing email -> added */
+        toAdd = new PersonBuilder().withName("Amy Beenn").withPhone(VALID_PHONE_BOB).withEmail("(Email not recorded)")
+                .withAddress(VALID_ADDRESS_AMY).withFormClass(VALID_FORMCLASS_AMY).withGrades(VALID_GRADES_AMY)
+                .withPostalCode(VALID_POSTALCODE_AMY).withTags(VALID_TAG_FRIEND)
+                .build();
+        command = AddCommand.COMMAND_WORD + " n/ Amy Beenn" + PHONE_DESC_BOB + ADDRESS_DESC_AMY
+                + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + POSTALCODE_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: missing address -> added */
+        toAdd = new PersonBuilder().withName("Johnny").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress("(Address not recorded)").withFormClass(VALID_FORMCLASS_AMY).withGrades(VALID_GRADES_AMY)
+                .withPostalCode(VALID_POSTALCODE_BOB).withTags(VALID_TAG_FRIEND)
+                .build();
+        command = AddCommand.COMMAND_WORD + " n/ Johnny" + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + POSTALCODE_DESC_BOB + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: missing postalCode -> added */
+        toAdd = new PersonBuilder().withName("June").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withFormClass(VALID_FORMCLASS_AMY).withGrades(VALID_GRADES_AMY)
+                .withPostalCode("(Postal code not recorded)").withTags(VALID_TAG_FRIEND)
+                .build();
+        command = AddCommand.COMMAND_WORD + " n/ June" + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: missing postalCode and address -> added */
+        toAdd = new PersonBuilder().withName("July").withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress("(Address not recorded)").withFormClass(VALID_FORMCLASS_AMY).withGrades(VALID_GRADES_AMY)
+                .withPostalCode("(Postal code not recorded)").withTags(VALID_TAG_FRIEND)
+                .build();
+        command = AddCommand.COMMAND_WORD + " n/ July" + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: missing email, postalCode and address -> added */
+        toAdd = new PersonBuilder().withName("Midoriya").withPhone(VALID_PHONE_AMY).withEmail("(Email not recorded)")
+                .withAddress("(Address not recorded)").withFormClass(VALID_FORMCLASS_AMY).withGrades(VALID_GRADES_AMY)
+                .withPostalCode("(Postal code not recorded)").withTags(VALID_TAG_FRIEND)
+                .build();
+        command = AddCommand.COMMAND_WORD + " n/ Midoriya" + PHONE_DESC_AMY
+                + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: missing address and email -> added */
+        toAdd = new PersonBuilder().withName("Sally").withPhone(VALID_PHONE_AMY).withEmail("(Email not recorded)")
+                .withAddress("(Address not recorded)").withFormClass(VALID_FORMCLASS_AMY).withGrades(VALID_GRADES_AMY)
+                .withPostalCode(VALID_POSTALCODE_BOB).withTags(VALID_TAG_FRIEND)
+                .build();
+        command = AddCommand.COMMAND_WORD + " n/ Sally" + PHONE_DESC_AMY
+                + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + POSTALCODE_DESC_BOB + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: missing postalCode and email -> added */
+        toAdd = new PersonBuilder().withName("Ray").withPhone(VALID_PHONE_AMY).withEmail("(Email not recorded)")
+                .withAddress(VALID_ADDRESS_AMY).withFormClass(VALID_FORMCLASS_AMY).withGrades(VALID_GRADES_AMY)
+                .withPostalCode("(Postal code not recorded)").withTags(VALID_TAG_FRIEND)
+                .build();
+        command = AddCommand.COMMAND_WORD + " n/ Ray" + PHONE_DESC_AMY + ADDRESS_DESC_AMY
+                + FORMCLASS_DESC_AMY + GRADES_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
+
         /* Case: filters the person list before adding -> added */
         executeCommand(FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER);
         assert getModel().getFilteredPersonList().size()
@@ -199,23 +262,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person, missing tags -> added */
         assertCommandSuccess(HOON);
 
-        /* Case: missing name -> rejected */
-        command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + FORMCLASS_DESC_AMY
-                + GRADES_DESC_AMY + POSTALCODE_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-
-        /* Case: missing phone -> rejected */
+        /* Case: missing parent phone -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + FORMCLASS_DESC_AMY
-                + GRADES_DESC_AMY + POSTALCODE_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-
-        /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + FORMCLASS_DESC_AMY
-                + GRADES_DESC_AMY + POSTALCODE_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-
-        /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + FORMCLASS_DESC_AMY
                 + GRADES_DESC_AMY + POSTALCODE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
@@ -226,11 +274,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: missing grades -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + GRADES_DESC_AMY + POSTALCODE_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-
-        /* Case: missing postalCode -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + FORMCLASS_DESC_AMY
                 + GRADES_DESC_AMY + POSTALCODE_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
