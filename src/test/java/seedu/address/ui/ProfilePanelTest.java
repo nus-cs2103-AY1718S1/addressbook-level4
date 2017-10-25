@@ -7,24 +7,24 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import org.junit.Before;
 import org.junit.Test;
 
-import guitests.guihandles.InsuranceProfileHandle;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import guitests.guihandles.ProfilePanelHandle;
+import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class ProfilePanelTest extends GuiUnitTest {
-    private PersonPanelSelectionChangedEvent selectionChangedEventStub;
+    private PersonNameClickedEvent personNameClickedEventStub;
 
     private ProfilePanel profilePanel;
-    private InsuranceProfileHandle profilePanelHandle;
+    private ProfilePanelHandle profilePanelHandle;
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        personNameClickedEventStub = new PersonNameClickedEvent(ALICE);
 
         guiRobot.interact(() -> profilePanel = new ProfilePanel());
         uiPartRule.setUiPart(profilePanel);
 
-        profilePanelHandle = new InsuranceProfileHandle(profilePanel.getRoot());
+        profilePanelHandle = new ProfilePanelHandle(profilePanel.getRoot());
 
     }
 
@@ -41,7 +41,7 @@ public class ProfilePanelTest extends GuiUnitTest {
         assertEquals(emptyText, profilePanelHandle.getAddress());
 
         // select Stub Person
-        postNow(selectionChangedEventStub);
+        postNow(personNameClickedEventStub);
 
         ReadOnlyPerson expectedSelectedPerson = ALICE;
 
