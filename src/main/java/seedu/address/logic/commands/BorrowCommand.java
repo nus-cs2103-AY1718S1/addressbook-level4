@@ -16,7 +16,7 @@ public class BorrowCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": increase the debt of a person by "
             + "the amount of money entered.\n"
-            + "Parameters: INDEX (optional, must be a positive integer if present) "
+            + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "AMOUNT (must have at least 1 digit and either a positive integer or a positive number with "
             + "two decimal places)\n"
             + "Example 1: " + COMMAND_WORD + " 1 120.50\n"

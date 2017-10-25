@@ -48,7 +48,7 @@ public class EditCommand extends UndoableCommand {
             + "by the index number used in the last person listing or of the currently selected person if no"
             + "index is specified. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (optional, must be a positive integer if present) "
+            + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
