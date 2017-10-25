@@ -659,6 +659,27 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 **Cons:** Users would have to type more if the event name is long. It will be more complex for developers to maintain and test. +
 // end::deleteE[]
 
+=== ShowParticipants mechanism
+
+The show participants mechanism is facilitated by `PersonJoinsEventsPredicate` and `LogicManager`. This command will help users to find participants of an event. For achieving this function, `PersonJoinsEventsPredicate` will filter the person list. This command inherits from `Command`.
+
+The following *_sequence_* diagram below, Figure 3.7, show how the show participants operation works:
+
+image::ShowParticipantsSequenceDiagram.png[width="800"]
+_Figure 3.7: sequence diagram for showP INDEX command_
+
+The user enters a showP INDEX command which is got by `LogicManager`.
+`LogicManager` calls `AddressBookParser` to parse the command.
+`AddressBookParser` will call `ShowParticipantsCommandParser` to parse the INDEX.
+`ShowParticipantsCommandParser` will create `ShowParticipantsCommand` object using the INDEX.
+Then `AddressBookParser` receives the command object and return it to `LogicManager`.
+`LogicManager` receives the command object and executes the command.
+`ShowParticipantsCommand` will create the `PersonJoinsEventsPredicate` according to the INDEX.
+Then, `ShowParticipantsCommand` calls `updateFilteredPersonList(p)` in the `Model`,  which uses the predicate created before.
+Then `Model` process the person list.
+The show participants command object creates `CommandResult` object and return it.
+`LogicManager` receives the result and shows it through `UI`.
+
 === Person-Event interaction
 In this application, we allow users to connect events and persons to show that some persons participate some events. +
 We will explain it in terms of Model and Storage. +
