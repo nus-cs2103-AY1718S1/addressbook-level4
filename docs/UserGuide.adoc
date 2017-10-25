@@ -85,7 +85,7 @@ Format: `multiple FILE_PATH`
 Examples:
 
 * `multiple ./data/personsToAdd.txt`
-* `multiple ./data/newStudentsToAdd.txt` 
+* `multiple ./data/newStudentsToAdd.txt`
 
 Person format in `.txt` file: `n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/AVATAR_FILE_PATH [t/TAG]...`
 

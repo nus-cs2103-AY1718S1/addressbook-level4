@@ -28,7 +28,7 @@ public class AddMultipleCommand extends UndoableCommand {
             + "FILE_PATH\n"
             + "Example: " + COMMAND_WORD + " "
             + "./data/personsToAdd.txt";
-    
+
     public static final String MESSAGE_PERSON_FORMAT = "Person format in .txt file: "
             + "Parameters: "
             + PREFIX_NAME + "NAME "

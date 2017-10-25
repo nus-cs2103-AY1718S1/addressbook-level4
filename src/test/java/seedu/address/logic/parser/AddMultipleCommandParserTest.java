@@ -34,33 +34,33 @@ import seedu.address.testutil.PersonBuilder;
 
 public class AddMultipleCommandParserTest {
     private AddMultipleCommandParser parser = new AddMultipleCommandParser();
-    
+
     @Test
     public void parse_fileNotExist_failure() {
         final String FILE_NOT_EXIST = "./src/test/data/AddMultipleCommandSystemTest/doesNotExist.txt";
         String expectedMessage = String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, FILE_NOT_EXIST);
         assertParseFailure(parser, FILE_NOT_EXIST, expectedMessage);
     }
-    
+
     @Test
     public void parse_emptyInput_failure() {
         final String EMPTY_INPUT = "";
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMultipleCommand.MESSAGE_USAGE);
         assertParseFailure(parser, EMPTY_INPUT, expectedMessage);
     }
-    
+
     @Test
     public void parse_compulsoryFieldsPresent_success() {
         final String VALID_PERSONS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/validPersons.txt";
         ArrayList<ReadOnlyPerson> expectedPersonList = new ArrayList<>();
-        
+
         expectedPersonList.add(ALICE);
         expectedPersonList.add(BENSON);
         expectedPersonList.add(CARL);
         expectedPersonList.add(HOON);
         expectedPersonList.add(AMY);
         expectedPersonList.add(BOB);
-        
+
         assertParseSuccess(parser, VALID_PERSONS_FILEPATH, new AddMultipleCommand(expectedPersonList));
     }
 
@@ -68,18 +68,18 @@ public class AddMultipleCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         final String MISSING_OPTIONAL_FILE_PATH = "./src/test/data/AddMultipleCommandSystemTest/validPersons_missingOptionalFields.txt";
         ArrayList<ReadOnlyPerson> expectedPersonList = new ArrayList<>();
-        
+
         ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().build();
         ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags().build();
-        
+
         expectedPersonList.add(AMY);
         expectedPersonList.add(BOB);
-        
+
         assertParseSuccess(parser, MISSING_OPTIONAL_FILE_PATH, new AddMultipleCommand(expectedPersonList));
     }
-    
+
     @Test
     public void parse_compulsoryFieldMissing_failure() {
         final String MISSING_FIELD_NAME_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/missingPrefix_name.txt";
@@ -113,7 +113,7 @@ public class AddMultipleCommandParserTest {
         final String INVALID_FIELD_ADDRESS_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/invalidAddressFormat.txt";
         final String INVALID_FIELD_TAG_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/invalidTagFormat.txt";
         final String INVALID_FIELD_NAME_PHONE_FILEPATH = "./src/test/data/AddMultipleCommandSystemTest/invalidFormatNamePhone.txt";
-        
+
         // invalid name
         assertParseFailure(parser, INVALID_FIELD_NAME_FILEPATH, Name.MESSAGE_NAME_CONSTRAINTS);
 
