@@ -93,16 +93,7 @@ public class UniqueWebLinkList implements Iterable<WebLink> {
         if (contains(toAdd)) {
             throw new DuplicateWebLinkException();
         }
-
-        for(Iterator<WebLink> iterateInternalList = iterator(); iterateInternalList.hasNext();){
-            WebLink checkWebLink = iterateInternalList.next();
-            String checkWeblinkTag = checkWebLink.toStringWebLinkTag();
-            String weblinkTagOfToAdd = toAdd.toStringWebLinkTag();
-            if(weblinkTagOfToAdd.equals(checkWeblinkTag)) {
-                throw new DuplicateWebLinkException();
-            }
-            break;
-        }
+        
         internalList.add(toAdd);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
