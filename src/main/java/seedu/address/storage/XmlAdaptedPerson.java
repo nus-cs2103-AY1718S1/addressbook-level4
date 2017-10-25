@@ -80,7 +80,7 @@ public class XmlAdaptedPerson {
         final Favourite favourite = new Favourite();
         if (this.favourite.equals("True")) {
             favourite.toggleFavourite();
-        } else if (!this.favourite.equals("False")){
+        } else if (!this.favourite.equals("False")) {
             throw new IllegalValueException("Illegal favourite status");
         }
         final Birthday birthday = new Birthday(this.birthday);
