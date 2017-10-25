@@ -12,8 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonNameClickedEvent;
-import seedu.address.commons.events.ui.SwitchPanelRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -21,10 +20,12 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class ProfilePanel extends UiPart<Region> {
 
-    public static final String DEFAULT_MESSAGE = "Ain't Nobody here but us chickens!";
+    public static final String DEFAULT_MESSAGE = "Insurance profile";
     private static final String FXML = "ProfilePanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private ReadOnlyPerson person;
 
     @FXML
     private ScrollPane scrollPane;
@@ -33,13 +34,19 @@ public class ProfilePanel extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
-    private Label phone;
+    private Label owner;
     @FXML
-    private Label address;
+    private Label insured;
     @FXML
-    private Label dob;
+    private Label beneficiary;
     @FXML
-    private Label email;
+    private Label premium;
+    @FXML
+    private Label contractPath;
+    @FXML
+    private Label signingDate;
+    @FXML
+    private Label expiryDate;
 
     public ProfilePanel() {
         super(FXML);
@@ -57,6 +64,7 @@ public class ProfilePanel extends UiPart<Region> {
      * @param person
      */
     private void loadPersonPage(ReadOnlyPerson person) {
+        this.person = person;
         bindListeners(person);
     }
 
@@ -65,10 +73,13 @@ public class ProfilePanel extends UiPart<Region> {
      */
     private void loadDefaultPage() {
         name.setText(DEFAULT_MESSAGE);
-        phone.setText("");
-        address.setText("");
-        dob.setText("");
-        email.setText("");
+        owner.setText("");
+        insured.setText("");
+        beneficiary.setText("");
+        premium.setText("");
+        contractPath.setText("");
+        signingDate.setText("");
+        expiryDate.setText("");
     }
 
     /**
@@ -76,18 +87,39 @@ public class ProfilePanel extends UiPart<Region> {
      * @param person
      */
     private void bindListeners(ReadOnlyPerson person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        dob.textProperty().bind(Bindings.convert(person.dobProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        if (person.getLifeInsurance() == null) {
+            owner.textProperty().unbind();
+            insured.textProperty().unbind();
+            beneficiary.textProperty().unbind();
+            premium.textProperty().unbind();
+            contractPath.textProperty().unbind();
+            signingDate.textProperty().unbind();
+            expiryDate.textProperty().unbind();
+
+            owner.setText("");
+            insured.setText("");
+            beneficiary.setText("");
+            premium.setText("");
+            contractPath.setText("");
+            signingDate.setText("");
+            expiryDate.setText("");
+        } else {
+            owner.textProperty().bind(Bindings.convert(person.getLifeInsurance().getOwner().nameProperty()));
+            insured.textProperty().bind(Bindings.convert(person.getLifeInsurance().getInsured().nameProperty()));
+            beneficiary.textProperty().bind(Bindings.convert(person.getLifeInsurance()
+                    .getBeneficiary().nameProperty()));
+            premium.textProperty().bind(Bindings.convert(person.getLifeInsurance().premiumProperty()));
+            /*
+            contractPath.textProperty().bind(Bindings.convert(person.getLifeInsurance().contractPathProperty()));
+            signingDate.textProperty().bind(Bindings.convert(person.getLifeInsurance().signingDateProperty()));
+            expiryDate.textProperty().bind(Bindings.convert(person.getLifeInsurance().expiryDateProperty()));
+            */
+        }
     }
 
     @Subscribe
-    private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getPerson());
-
-        raise(new SwitchPanelRequestEvent());
+        loadPersonPage(event.getNewSelection().person);
     }
 }

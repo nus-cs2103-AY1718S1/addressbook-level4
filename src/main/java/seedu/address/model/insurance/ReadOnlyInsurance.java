@@ -1,5 +1,7 @@
 package seedu.address.model.insurance;
 
+import java.util.UUID;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -10,6 +12,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public interface ReadOnlyInsurance {
 
+    ObjectProperty<UUID> idProperty();
+    String getId();
     ObjectProperty<ReadOnlyPerson> ownerProperty();
     ReadOnlyPerson getOwner();
     ObjectProperty<ReadOnlyPerson> insuredProperty();
@@ -18,10 +22,12 @@ public interface ReadOnlyInsurance {
     ReadOnlyPerson getBeneficiary();
     DoubleProperty premiumProperty();
     Double getPremium();
+    /*
     StringProperty contractPathProperty();
     String getContractPath();
     StringProperty signingDateProperty();
     String getSigningDate();
     StringProperty expiryDateProperty();
     String getExpiryDate();
+    */
 }
