@@ -13,9 +13,12 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.*;
-import seedu.address.model.person.phone.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicatePhoneException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.PhoneNotFoundException;
+import seedu.address.model.person.phone.Phone;
 import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 
@@ -27,7 +30,8 @@ public class PhoneCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "updatePhone";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Updates one person's additional phone identified by the index number used in the last person listing.\n"
+            + ": Updates one person's additional phone identified by the index"
+            + " number used in the last person listing.\n"
             + "Parameters: "
             + "INDEX (must be a positive integer)\n"
             + "ACTION \n"
@@ -66,20 +70,19 @@ public class PhoneCommand extends UndoableCommand {
                 uniquePhoneList.remove(phone);
             } catch (PhoneNotFoundException e) {
                 throw new AssertionError("phone number cannot be found");
-            } catch (NoLocalNumberException e) {
-                throw new AssertionError("cannot remove primary phone number");
             }
-        } else if (action.equals("add")){
+        } else if (action.equals("add")) {
             try {
                 uniquePhoneList.add(phone);
             } catch (DuplicatePhoneException e) {
                 throw new AssertionError("number adding already in the list");
             }
-        } else if(action.equals("showAllPhones")) {
+        } else if (action.equals("showAllPhones")) {
 
         }
 
-        Person personUpdated = new Person(name, primaryPhone, uniquePhoneList, email, address, tags, customFields.toSet());
+        Person personUpdated = new Person(name, primaryPhone, uniquePhoneList, email,
+                address, tags, customFields.toSet());
 
         return personUpdated;
     }
@@ -106,15 +109,17 @@ public class PhoneCommand extends UndoableCommand {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         if (action.equals("showAllPhones")) {
-            String str = "The primary number is "+primaryPhone+"\n";
-            return new CommandResult(str+uniquePhoneList.getAllPhone());
+            String str = "The primary number is " + primaryPhone + "\n";
+            return new CommandResult(str + uniquePhoneList.getAllPhone());
         } else if (action.equals("add")) {
             String successMessage = "Phone number " + phone.number + " has been added, ";
-            String info = "the updated phone list now has " + (uniquePhoneList.getSize()+1) + " phone numbers, and the primary phone number is " + primaryPhone;
+            String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
+                    + " phone numbers, and the primary phone number is " + primaryPhone;
             return new CommandResult(successMessage + info);
         } else {
             String successMessage = "Phone number " + phone.number + " has been removed, ";
-            String info = "the updated phone list now has " + (uniquePhoneList.getSize()+1) + " phone numbers, and the primary phone number is " + primaryPhone;
+            String info = "the updated phone list now has " + (uniquePhoneList.getSize() + 1)
+                    + " phone numbers, and the primary phone number is " + primaryPhone;
             return new CommandResult(successMessage + info);
         }
     }

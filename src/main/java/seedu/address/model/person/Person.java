@@ -49,7 +49,8 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList());
     }
 
-    public Person(Name name, Phone phone, UniquePhoneList uniquePhoneList, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, UniquePhoneList uniquePhoneList,
+                  Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, uniquePhoneList, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.primaryPhone = new SimpleObjectProperty<>(phone);
@@ -78,7 +79,8 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList(customFields));
     }
 
-    public Person(Name name, Phone phone, UniquePhoneList uniquePhoneList, Email email, Address address, Set<Tag> tags, Set<CustomField> customFields) {
+    public Person(Name name, Phone phone, UniquePhoneList uniquePhoneList,
+                  Email email, Address address, Set<Tag> tags, Set<CustomField> customFields) {
         requireAllNonNull(name, uniquePhoneList, email, address, tags, customFields);
         this.name = new SimpleObjectProperty<>(name);
         this.primaryPhone = new SimpleObjectProperty<>(phone);
@@ -212,7 +214,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
      */
     public void setCustomFields(Set<CustomField> replacement) {
         customFields.set(new UniqueCustomFieldList(replacement));
-   }
+    }
 
 
     @Override

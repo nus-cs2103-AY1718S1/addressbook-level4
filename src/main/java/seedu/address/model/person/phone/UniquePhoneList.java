@@ -1,16 +1,15 @@
 package seedu.address.model.person.phone;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.person.exceptions.DuplicatePhoneException;
-import seedu.address.model.person.exceptions.NoLocalNumberException;
-import seedu.address.model.person.exceptions.PhoneNotFoundException;
+import static java.util.Objects.requireNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
 
-import static java.util.Objects.requireNonNull;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.person.exceptions.DuplicatePhoneException;
+import seedu.address.model.person.exceptions.PhoneNotFoundException;
 
 
 
@@ -32,7 +31,7 @@ public class UniquePhoneList implements Iterable<Phone> {
 
     public UniquePhoneList() {}
 
-    public UniquePhoneList(Phone phone){
+    public UniquePhoneList(Phone phone) {
 
         requireNonNull(phone);
         internalList.add(phone);
@@ -64,7 +63,7 @@ public class UniquePhoneList implements Iterable<Phone> {
      *
      * @throws PhoneNotFoundException if no such person could be found in the list.
      */
-    public boolean remove(Phone toRemove) throws PhoneNotFoundException, NoLocalNumberException {
+    public boolean remove(Phone toRemove) throws PhoneNotFoundException {
         requireNonNull(toRemove);
         final boolean phoneFoundAndDeleted = internalList.remove(toRemove);
         if (!phoneFoundAndDeleted) {
@@ -74,7 +73,7 @@ public class UniquePhoneList implements Iterable<Phone> {
     }
 
 
-    public int getSize(){
+    public int getSize() {
         return internalList.size();
     }
 
@@ -84,9 +83,9 @@ public class UniquePhoneList implements Iterable<Phone> {
         if (internalList.size() > 1) {
             String rest = "The additional phone number(s) are/is \n";
             int index = 1;
-            for(Phone phone: internalList){
+            for (Phone phone: internalList) {
                 rest = rest + index + "/ " + phone.number + "\n";
-                index ++;
+                index++;
             }
             return rest;
         } else {

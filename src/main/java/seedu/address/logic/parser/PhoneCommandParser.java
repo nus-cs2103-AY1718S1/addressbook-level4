@@ -27,7 +27,7 @@ public class PhoneCommandParser implements Parser<PhoneCommand> {
             Index index = ParserUtil.parseIndex(st.nextToken());
             String action = st.nextToken();
             String value = "00000";
-            if (st.hasMoreTokens()){
+            if (st.hasMoreTokens()) {
                 value = st.nextToken();
             }
 
