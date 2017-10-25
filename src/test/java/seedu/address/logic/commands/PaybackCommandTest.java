@@ -58,6 +58,29 @@ public class PaybackCommandTest {
         }
     }
 
+    //@@author khooroko
+    @Test
+    public void execute_noIndex_successfulPayback() {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personWhoPayback = model.getSelectedPerson();
+        String expectedMessage = String.format(PaybackCommand.MESSAGE_PAYBACK_SUCCESS,
+                personWhoPayback.getName().toString(), VALID_DEBT_FIGURE);
+        try {
+            Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+            expectedModel.deductDebtFromPerson(personWhoPayback, new Debt(VALID_DEBT_FIGURE));
+
+            PaybackCommand paybackCommand = new PaybackCommand(new Debt(VALID_DEBT_FIGURE));
+            paybackCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+
+            assertCommandSuccess(paybackCommand, model, expectedMessage, expectedModel);
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        } catch (PersonNotFoundException pnfe) {
+            pnfe.printStackTrace();
+        }
+    }
+
+    //@@author jelneo
     @Test
     public void execute_unsuccessfulPayback_dueToInvalidFigure() {
         Index firstPerson = Index.fromOneBased(1);
@@ -70,6 +93,7 @@ public class PaybackCommandTest {
             ive.printStackTrace();
         }
     }
+
     @Test
     public void execute_unsuccessfulPayback_dueToAmountExceedingDebtOwed() {
         Index firstPerson = Index.fromOneBased(1);
@@ -88,9 +112,11 @@ public class PaybackCommandTest {
         try {
             PaybackCommand paybackFirstCommand = new PaybackCommand(INDEX_FIRST_PERSON, new Debt("500"));
             PaybackCommand paybackSecondCommand = new PaybackCommand(INDEX_SECOND_PERSON, new Debt("300"));
+            PaybackCommand paybackThirdCommand = new PaybackCommand(new Debt("200"));
 
             // same object -> returns true
             assertTrue(paybackFirstCommand.equals(paybackFirstCommand));
+            assertTrue(paybackThirdCommand.equals(paybackThirdCommand));
 
             // same values -> returns true
             PaybackCommand paybackFirstCommandCopy = new PaybackCommand(INDEX_FIRST_PERSON, new Debt("500"));
