@@ -89,7 +89,7 @@ public class AddCommandTest {
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
         return command;
     }
 

@@ -9,8 +9,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Appoint;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -72,6 +72,10 @@ public class AppointCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     * Produces success/failure messages when adding an appointment
+     * @param personToEdit the person making the appointment for
+     */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!appoint.value.isEmpty()) {
             return String.format(MESSAGE_ADD_APPOINT_SUCCESS, personToEdit);

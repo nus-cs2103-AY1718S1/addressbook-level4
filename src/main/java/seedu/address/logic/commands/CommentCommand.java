@@ -9,8 +9,8 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Comment;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -72,6 +72,9 @@ public class CommentCommand extends UndoableCommand {
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
+    /**
+     * @param personToEdit the person adding the comment for
+     */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!comment.value.isEmpty()) {
             return String.format(MESSAGE_ADD_COMMENT_SUCCESS, personToEdit);

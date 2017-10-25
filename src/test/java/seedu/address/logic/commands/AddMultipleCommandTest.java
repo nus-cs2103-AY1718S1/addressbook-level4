@@ -5,16 +5,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import com.sun.org.apache.regexp.internal.RE;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
@@ -117,7 +113,7 @@ public class AddMultipleCommandTest {
      */
     private AddMultipleCommand getAddMultipleCommandForPerson(ArrayList<ReadOnlyPerson> personList, Model model) {
         AddMultipleCommand command = new AddMultipleCommand(personList);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
         return command;
     }
 

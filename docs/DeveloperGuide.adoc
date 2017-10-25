@@ -417,7 +417,7 @@ image::AddMultipleCommandSequenceDiagram.png[width="800"]
 
 *Parsing of persons' particulars*
 
-The `AddMultipleCommandParser` implements `Parser`, and it handles the parsing of user input file name and the data that contains in the `.txt` file.
+The `AddMultipleCommandParser` implements `Parser`, and it handles the parsing of user input file path and the data that contains in the `.txt` file.
 
 As shown in the sequence diagram above, `AddMultipleCommandParser` utilizes the FileUtil to retrieve the data as a String from the `.txt` file. The retrieved data is then transformed to be stored in an array split by `System.lineSeparator()` to be parsed based on each line.
 The result of the parsed data is stored in an `ArrayList`, then it is returned with the construction of `AddMultipleCommand`.
@@ -426,7 +426,7 @@ The result of the parsed data is stored in an `ArrayList`, then it is returned w
 
 The `AddMultipleCommand` contains two `ArrayList`; One `Person` array list to facilitate adding new persons and one `ReadOnlyPerson` array list to facilitate deletion of persons in the event of unexpected result that requires the command to roll back.
 
-The user executes a new `AddMultipleCommand`, `multiple personsToAdd.txt`, to add a list of persons' particulars contained in `personsToAdd.txt`.
+The user executes a new `AddMultipleCommand`, `multiple ./data/personsToAdd.txt`, to add a list of persons' particulars contained in `personsToAdd.txt`.
 
 After the parsing of inputs and construction of a new `AddMultipleCommand`, the `ArrayList`, `readOnlyPeople` will point to the `personsList` that was passed in from `AddMultipleCommandParser` while `ArrayList`, `toAdd` will contain `Person` that was constructed with `personsList`.
 The below is a graphical representation of two examples `ArrayList`.
@@ -1051,13 +1051,14 @@ Use case resumes at step 2.
 2.  AddressBook parse persons' particulars from file
 3.  AddressBook adds all persons in the file
 
+*Extensions*
+
+[none]
 * 2a. The file does not exist.
 +
 ** 2a1. AddressBook shows an error message.
 +
 Use case ends.
-
-*Extensions*
 
 [none]
 * 2b. The persons' particulars format are invalid.
@@ -1073,7 +1074,7 @@ Use case ends.
 ** 3a2. AddressBook shows an error message.
 +
 Use case ends.
-a
+
 === Use case:  History
 
 *MSS*
@@ -1202,6 +1203,44 @@ Use case ends
 +
 Use case ends
 
+[discrete]
+=== Use case: Merging storage files
+
+*MSS*
+
+1.  User requests to merge a given file to default storage file
+2.  AddressBook merges the data of the two files
+3.  AddressBook output the merged data file to a specified default path
+
+*Extensions*
+
+[none]
+* 2a. The user given file does not exist.
++
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2b. The persons' particulars format are invalid.
++
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2c. The given file contain person(s) that already exist in AddressBook.
++
+** 2c1. AddressBook ignores the duplicated person(s) and sieve out unique person(s) from the given file.
++
+Use case resumes at step 2.
+
+[none]
+* 3a. The merged data file does not exist
++
+** 3c1. AddressBook creates the file
++
+Use case resumes at step 3.
 
 [appendix]
 == Non Functional Requirements
