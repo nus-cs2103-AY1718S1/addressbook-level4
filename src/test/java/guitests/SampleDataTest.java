@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.AddressBook;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
