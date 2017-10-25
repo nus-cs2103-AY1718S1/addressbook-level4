@@ -110,8 +110,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
             }
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,
-                    note, photo, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address,
+                    company, position, status, priority, note, photo, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

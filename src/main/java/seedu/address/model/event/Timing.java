@@ -59,11 +59,7 @@ public class Timing {
      * @return if timing is a valid 24-hour interval
      */
     public static boolean isValidTimingInterval(int start, int end) {
-        if (start > end) {
-            return false;
-        } else {
-            return true;
-        }
+        return start <= end;
     }
 
 
