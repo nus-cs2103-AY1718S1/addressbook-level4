@@ -12,7 +12,7 @@ public class MainWindowHandle extends StageHandle {
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
-    private final ProfilePanelHandle profilePanelHandle;
+    private final InsuranceProfileHandle insurancePanelHandle;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -22,7 +22,7 @@ public class MainWindowHandle extends StageHandle {
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-        profilePanelHandle = new ProfilePanelHandle(getChildNode(ProfilePanelHandle.PROFILE_ID));
+        insurancePanelHandle = new InsuranceProfileHandle(getChildNode(InsuranceProfileHandle.INSURANCE_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -46,6 +46,11 @@ public class MainWindowHandle extends StageHandle {
     }
 
     public ProfilePanelHandle getProfilePanelHandle() {
-        return profilePanelHandle;
+        // ProfilePanel shares holder ID with insurance profile and doesn't exist at initial state
+        return null;
+    }
+
+    public InsuranceProfileHandle getInsurancePanelHandle() {
+        return insurancePanelHandle;
     }
 }

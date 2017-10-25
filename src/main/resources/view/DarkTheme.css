@@ -32,6 +32,20 @@
     -fx-opacity: 1;
 }
 
+.particular-person {
+    -fx-font-size: 18pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.particular-person:hover {
+    -fx-font-size: 18pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #d06651;
+    -fx-opacity: 1;
+}
+
 .text-field {
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";

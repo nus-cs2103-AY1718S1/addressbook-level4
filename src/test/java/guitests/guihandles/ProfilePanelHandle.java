@@ -9,41 +9,46 @@ import javafx.scene.control.Label;
 public class ProfilePanelHandle extends NodeHandle<Node> {
 
     public static final String PROFILE_ID = "#profilePanel";
-    private static final String OWNER_FIELD_ID = "#owner";
-    private static final String INSURED_FIELD_ID = "#insured";
-    private static final String BENEFICIARY_FIELD_ID = "#beneficiary";
-    private static final String PREMIUM_FIELD_ID = "#premium";
-    //TODO: Complete the other fields
+    private static final String NAME_FIELD_ID = "#name";
+    private static final String ADDRESS_FIELD_ID = "#address";
+    private static final String DOB_FIELD_ID = "#dob";
+    private static final String PHONE_FIELD_ID = "#phone";
+    private static final String EMAIL_FIELD_ID = "#email";
 
-    private final Label ownerLabel;
-    private final Label insuredLabel;
-    private final Label beneficiaryLabel;
-    private final Label premiumLabel;
+    private final Label nameLabel;
+    private final Label addressLabel;
+    private final Label dobLabel;
+    private final Label phoneLabel;
+    private final Label emailLabel;
 
     public ProfilePanelHandle(Node profilePanelNode) {
         super(profilePanelNode);
 
-        this.ownerLabel = getChildNode(OWNER_FIELD_ID);
-        this.insuredLabel = getChildNode(INSURED_FIELD_ID);
-        this.beneficiaryLabel = getChildNode(BENEFICIARY_FIELD_ID);
-        this.premiumLabel = getChildNode(PREMIUM_FIELD_ID);
+        this.nameLabel = getChildNode(NAME_FIELD_ID);
+        this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
+        this.dobLabel = getChildNode(DOB_FIELD_ID);
+        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
+        this.emailLabel = getChildNode(EMAIL_FIELD_ID);
 
     }
-
-    public String getOwner() {
-        return ownerLabel.getText();
+    public String getName() {
+        return nameLabel.getText();
     }
 
-    public String getInsured() {
-        return insuredLabel.getText();
+    public String getAddress() {
+        return addressLabel.getText();
     }
 
-    public String getBeneficiary() {
-        return beneficiaryLabel.getText();
+    public String getDateOfBirth() {
+        return dobLabel.getText();
     }
 
-    public String getPremium() {
-        return premiumLabel.getText();
+    public String getPhone() {
+        return phoneLabel.getText();
+    }
+
+    public String getEmail() {
+        return emailLabel.getText();
     }
 
 }
