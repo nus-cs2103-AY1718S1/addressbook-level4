@@ -113,8 +113,8 @@ public class UniquePhoneList implements Iterable<Phone> {
     public boolean equals(Object other) {
         assert CollectionUtil.elementsAreUnique(internalList);
         return other == this // short circuit if same object
-                || (other instanceof seedu.address.model.customField.UniqueCustomFieldList // instanceof handles nulls
-                && this.internalList.equals(((seedu.address.model.customField.UniqueCustomFieldList) other).internalList));
+                || (other instanceof seedu.address.model.person.phone.UniquePhoneList // instanceof handles nulls
+                && this.internalList.equals(((seedu.address.model.person.phone.UniquePhoneList) other).internalList));
     }
 
     /**
