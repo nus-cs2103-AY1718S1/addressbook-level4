@@ -100,6 +100,11 @@ public interface Model {
     ObservableList<ReadOnlyPerson> getNearbyPersons();
 
     /**
+     * Retrieves the currently selected person.
+     */
+    ReadOnlyPerson getSelectedPerson();
+
+    /**
      * Obtains and updates the list of persons that share the same cluster as {@param person}.
      */
     void updateSelectedPerson(ReadOnlyPerson person);

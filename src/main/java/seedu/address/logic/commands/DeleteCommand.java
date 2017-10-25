@@ -17,13 +17,18 @@ public class DeleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD_ALIAS = "d";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+            + ": Deletes the selected person or the person identified by the index number used in the last person "
+            + "listing.\n"
+            + "Parameters: NONE or INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
     private final Index targetIndex;
+
+    public DeleteCommand() {
+        targetIndex = null;
+    }
 
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -33,14 +38,22 @@ public class DeleteCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        ReadOnlyPerson personToDelete;
+        if (targetIndex == null) {
+            if (model.getSelectedPerson() == null) {
+                throw new CommandException(Messages.MESSAGE_NO_PERSON_SELECTED);
+            } else {
+                personToDelete = model.getSelectedPerson();
+            }
+        } else {
+            List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            personToDelete = lastShownList.get(targetIndex.getZeroBased());
         }
-
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-
         try {
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
@@ -54,6 +67,7 @@ public class DeleteCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+                && ((this.targetIndex == ((DeleteCommand) other).targetIndex)
+                && this.targetIndex.equals(((DeleteCommand) other).targetIndex))); // state check
     }
 }
