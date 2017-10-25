@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Group;
+import seedu.address.model.person.GroupContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicateGroupException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -59,5 +60,10 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given group predicate
+     */
+    void updateFilteredPersonList(GroupContainsKeywordsPredicate predicate);
 
 }

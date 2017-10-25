@@ -24,6 +24,8 @@ public class GroupListPanel extends UiPart<Region> {
 
     public GroupListPanel(ObservableList<Group> groupList) {
         super(FXML);
+        setConnections(groupList);
+        registerAsAnEventHandler(this);
     }
 
     private void setConnections (ObservableList<Group> groupList) {

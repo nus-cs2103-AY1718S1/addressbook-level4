@@ -6,13 +6,17 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.model.person.Group;
+import seedu.address.model.person.GroupContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicateGroupException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -116,6 +120,13 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+
+    @Override
+    public void updateFilteredPersonList(GroupContainsKeywordsPredicate predicate) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -132,6 +143,17 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
+    }
+
+
+    @Subscribe
+    private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        requireNonNull(event.getNewSelection().group.groupName);
+        GroupContainsKeywordsPredicate predicate = new GroupContainsKeywordsPredicate(event.getNewSelection()
+                .group.groupName);
+        updateFilteredPersonList(predicate);
     }
 
 }
