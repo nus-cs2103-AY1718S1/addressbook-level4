@@ -92,8 +92,8 @@ image::helpUI.png[width="500"]
 === Adding a person: `add`
 
 You can add a person to the address book by following the format below. +
-*Format:* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE d/APPOINTMENTDATE [t/TAG]...` +
-*Shorthand Format:* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE d/APPOINTMENTDATE [t/TAG]...`
+*Format:* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...` +
+*Shorthand Format:* `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...`
 
 [TIP]
 You can add any number of tags for a person or none at all. +
@@ -103,6 +103,11 @@ You can add appointment or none at all.
 
 * `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/O+`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/AB d/2018/01/01 00:00 t/criminal`
+
+[NOTE]
+You can only use the following twelve inputs for BLOODTYPE. +
+A, A+, A-, B, B+, B-, AB, AB+, AB-, O, O+, O-. +
+Both capital letters and small letters are can be entered.
 
 <<<
 
@@ -138,8 +143,8 @@ BLOODTYPE is case insensitive.
 === Editing a person : `edit`
 
 You can edit the information of a person you have added in the address book. +
-*Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` +
-*Shorthand Format:* `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...`
+*Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...` +
+*Shorthand Format:* `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...`
 
 [width="59%",cols="22%,<30%",options="header",]
 |=======================================================================
@@ -321,14 +326,24 @@ You can set a color to a specific tag type. +
 *Shorthand Format:* `tc TAGNAME COLOR`
 
 [NOTE]
-You can see all available colors in the following https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[link] +
+You can see all available colors in the following
+https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[link] +
 Color name input can be in english or hexadecimal form.
 
 === Set appointment: `appointment`
 
 You can set an appointment to a specific contact at a given index. +
-*Format:* `appointment INDEX d/YYYY/MM/DD HH:MM` +
-*Shorthand format:* `apt INDEX d/YYYY/MM/DD HH:MM`
+
+[NOTE]
+Appointment can be set using natural language. +
+However, please include at least the hour and a day that can be specified.
+
+
+*Format:* `appointment INDEX d/TIME` +
+*Shorthand format:* `apt INDEX d/TIME`
+
+Example: `apt 1 d/next monday 3pm` +
+Example: `apt 1 d/Sun, Nov 21, 2pm` +
 
 You can sort list by appointment dates. +
 *Format:* `appointment` +
@@ -336,7 +351,7 @@ You can sort list by appointment dates. +
 
 [NOTE]
 You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
-Input is case-sensitive. e.g. `hans` will not match `Hans`.
+
 
 
 === Adding/Removing Remarks to a person : `remark`
