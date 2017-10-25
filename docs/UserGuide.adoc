@@ -59,7 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  You can refer to the link:#features[Features] section below for details of each command. +
+.  You can refer to the features section below for details of each command. +
 
 <<<
 
@@ -114,7 +114,7 @@ Both capital letters and small letters are can be entered.
 === List
 
 You have a variety of ways to list your contacts. +
-Click link:#MedNusFeatures[here] for a tabulated version of all available listing options. +
+Click <<MedNus Features, here>> for a tabulated version of all available listing options. +
 
 * *Listing all persons* +
 You can use `list` to show a list of all persons in the address book. +
