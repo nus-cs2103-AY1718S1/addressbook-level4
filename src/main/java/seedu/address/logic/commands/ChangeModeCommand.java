@@ -10,7 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
  */
 public class ChangeModeCommand extends Command {
 
-    public static final String COMMAND_WORD = "changemode";
+    public static final String COMMAND_WORD = "switchMode";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
         + ": Change the current command mode.\n"
@@ -21,7 +21,7 @@ public class ChangeModeCommand extends Command {
     public static final String MESSAGE_INVALID_MODE = "The mode can only be either addressbook (ab) "
         + "or taskmanager (tm)";
 
-    private static String mode;
+    private String mode;
 
     /**
      * Create an ChangeModeCommand to change current command mode
@@ -46,7 +46,7 @@ public class ChangeModeCommand extends Command {
      * @param mode
      */
     private String paraphraseCurrentMode(String mode) {
-        if (mode.equals("ab") || mode.equals("addressbook")) {
+        if ("ab".equals(mode) || "addressbook".equals(mode)) {
             return "addressbook";
         } else {
             return "taskmanager";

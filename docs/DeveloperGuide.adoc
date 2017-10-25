@@ -1,5 +1,6 @@
-= AddressBook Level 4 - Developer Guide
+= Mobilize - Developer Guide
 :toc:
+:toclevels: 3
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -13,6 +14,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T11-B3/main
 
 By: `Team T11-B3`      Since: `Aug 2017`      Licence: `MIT`
+
+== Welcome to Mobilize!
+
+Mobilize is a desktop application built to help people organize their contacts and tasks. It is primarily written
+in Java and uses the Object Oriented Paradigm. Continuous Integration is done by the Travis-CI. Code quality checks are maintained
+by Codacy and Coveralls tests the coverage of tests in the application.
+
+This Developer Guide will help you get started in understanding the architecture of the software and the mechanism of its features.
+It assumes prior knowledge of Java and Object Oriented Programming.
 
 == Setting up
 
@@ -66,10 +76,6 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
-
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
-
 ==== Setting up CI
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
@@ -84,7 +90,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 When you are ready to start coding,
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+2. Take a look at the section link:#implementation[Implementation] to understand how some of the key features are implemented.
 
 == Design
 
@@ -146,7 +152,9 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-=== UI component
+==== UI component
+
+The following diagram shows the structure of the UI Component:
 
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
@@ -157,22 +165,31 @@ The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `Re
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `UI` component does the following:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-=== Logic component
+==== Logic component
+
+The following diagram shows the structure of the `Logic` Component:
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
+
+The `Logic` Component consists of an interface `Logic` which is implemented directly or indirectly by all other classes, e.g.
+`LogicManager`, `CommandResult` etc.
+
+The `Logic` Component is where all Commands are situated and structured. This is elaborated below:
 
 image::LogicCommandClassDiagram.png[width="800"]
 _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+
+When a `Command` is executed, the `Logic` Component does the following:
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -184,21 +201,25 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
-=== Model component
+==== Model component
+
+The following shows a diagram for the `Model` Component:
 
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model` Component does the following:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-=== Storage component
+==== Storage component
+
+The following diagram represents the `Storage` Component:
 
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
@@ -218,13 +239,14 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-=== Birthday mechanism
+// tag::birthday[]
+=== Add contact mechanism: birthday parameter
 
-The birthday mechanism is facilitated by the `AddCommand` class which inherited from the `UndoableCommand` class. It allows user to add the birthday of the contact by putting another parameter into the `AddCommand`.
+Addition of the birthday parameter is facilitated by the `AddCommand` class which inherited from the `UndoableCommand` class. It allows user to add the birthday of the contact by putting another parameter into the `AddCommand`.
 
-Suppose the user has just executed the `AddCommand` using `AddCommand` using the following code
+Suppose the user has just executed the `AddCommand` using `AddCommand` using the following:
 ----
-add n/eryao p/96965340 e/lite0520@gmail.com a/blk 254, ang mo kio b/081295
+`add n/eryao p/96965340 e/lite0520@gmail.com a/blk 254, ang mo kio b/081295`
 ----
 
 The `AddCommandParser` class will check for the validity of the parameter entered. Afterwards, the `LogicManager` invokes the method `AddCommand`, which creates a new person and update the storage.
@@ -232,47 +254,67 @@ The `AddCommandParser` class will check for the validity of the parameter entere
 [NOTE]
 If the birthday parameter is not specified, the `AddCommand` will give an invalid command message.
 
+[discrete]
 ==== Design Considerations
 **Aspect:** Implementation of birthday feature in `AddCommand` +
 **Alternative 1 (current choice):** Make adding birthday optional +
-**Pros:** User can take note of contact's birthday easier
+**Pros:** User can take note of contact's birthday more easily
 **Cons:** User has to input an additional parameter
+
+// end::birthday[]
 
 // tag::detag[]
 === Detag mechanism
 
-The detag mechanism is facilitated by the `DetagCommand` class which inherited from the `UndoableCommand` class. It allows for the removing of existing tag from multiple person, i.e. detag. The minimum number of person specified is 1 and the maximum number is the number of person on the filtered list.
+The detag mechanism is facilitated by the `DetagCommand` class which is inherited from the `UndoableCommand` class. It allows for the removal of existing tags from multiple contacts, i.e. detag. The minimum number of contacts that can be specified is 1 and the maximum number is the number of contacts in the current list.
 
-Suppose the user to execute the command `detag` using the following code
+Suppose the user executes the command `detag` using the following code
 ----
-detag 1, 2 t/friends
+`detag 1, 2 t/friends`
 ----
 
-The `DetagCommandParser` class will check for the validity of the indices specified, i.e. within the range of the filtered list. Afterwards, the `LogicManager` invokes the method `deleteTag`, which removes the specific tag from the `Set` of tags from the specified persons, and update the storage.
+The `DetagCommandParser` class will check for the validity of the indices specified, i.e. within the range of the filtered list. Afterwards, the `LogicManager` invokes the method `deleteTag`, which removes the specific tag from the `Set` of tags from the specified contacts, and updates the storage.
 
 [NOTE]
-If one or more of the persons specified by the indices does not contain the specified tag to remove, the removal will not be executed even for those persons that have the tag.
+If one or more of the contacts specified by the indices does not contain the specified tag to remove, the removal will not be executed even for those contacts that have the tag.
 
 [NOTE]
-The current detag mechanism does not support multiple tags removal, i.e. remove 2 different tags in one command line.
+The current detag mechanism does not support multiple tag removal, i.e. remove 2 different tags in one command line.
 
+[discrete]
 ==== Design Considerations
 **Aspect:** Implementation of `DetagCommand` +
 **Alternative 1 (current choice):** Directly removes the tag from `Set` of person(s) +
-**Pros:** Easier and more specific command to remove tag, and could remove from multiple persons in one command +
-**Cons:** Makes the tags of person skeptical for changes, and introducing of new additional command specifically for removal of tag may be not necessary +
+**Pros:** Easier and more specific command to remove tag, and allows removal from multiple persons in one command +
+**Cons:** Introducing of new additional command specifically for removal of tag may not be necessary +
 **Alternative 2:** Just use the `EditCommand` to change the tag +
 **Pros:** Use of one command to edit any details of a person is more organised +
-**Cons:** Could not remove tag of multiple persons, and have to type in the tags that do not need to be remove +
+**Cons:** Cannot not remove tags of multiple contacts, and it is mandatory to retype the tags that do not need to be removed +
 // end::detag[]
 
 === FindTag mechanism
 
-The FindTag mechanism is facilitated by the `FindTagCommand` class which inherits from `Command` class. It allows the user to find persons using tags. User can search using multiple tags too.
+The FindTag mechanism is facilitated by the `FindTagCommand` class which inherits from `Command` class. It allows the user to find persons using tags. Users can search using multiple tags too.
 
 Suppose the user has just executed the `FindTagCommand` using `findtag friends`.
 
-At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTagCommand` feature is being evoked and calls the `FindTagCommandParser` to parse the string and compare the tags. These are validated and formatted by the `TagContainsKeywordsPredicate` and return as a `TagContainsKeywordsPredicate` object to be used to call the `FindTagCommand` class. The `LogicManager` then calls the `execute()` in the `FindTagCommand` class which creates and return a `CommandResult` object.
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTagCommand` feature is being evoked and calls the `FindTagCommandParser` to parse the string and compare the tags. These are validated and formatted by the `TagContainsKeywordsPredicate` and returned as a `TagContainsKeywordsPredicate` object to be used to call the `FindTagCommand` class. The `LogicManager` then calls the `execute()` in the `FindTagCommand` class which creates and returns a `CommandResult` object.
+
+=== Tag mechanism
+
+The Tag mechanism is a specialised form of the edit feature that allows users to tag multiple contacts with multiple tags.
+The mechanism is facilitated by the TagCommand class which inherits from the UndoableCommand class, indicating that it can be undone.
+
+Suppose the user has just executed the `TagCommand` using `tag 1,2 t/friend t/classmate`.
+
+At first the `execute()` function of the `Logic Manager` is called, which passes the command string to the `parseCommand()` function of the `AddressBookParser` class. This determines that the `TagCommand` feature is being evoked
+and calls the `TagCommandParser` class.
+
+Here, the arguments are validated and tokenized and new `TagCommand` object is returned with parsed indices and tags.
+
+The `ModelManager` class in the `Model` component is then called to update all the tags of the respective people using the `updatePersonTags()` method.
+
+The Storage and UI are subsequently updated with the new information.
 
 === AddTask mechanism
 
@@ -286,14 +328,53 @@ The following sequence diagram summarizes how this operation works:
 
 image::AddTaskCommandSequenceDiagram.png[width="800", height="500"]
 
+[discrete]
 ==== Design Considerations
-**Aspect:** Implementation of AddTaskCommand +
+**Aspect:** Creating classes for StartDate and Deadline +
 **Alternative 1 (current choice):** Use Strings to contains the StartDates and Deadlines. +
-**Pros:** Easy to assign an empty string to the instance variable so that the dates are optional and do not show up in the UI. +
-**Cons:** Date not stored the correct format. +
+**Pros:** * Easy to assign an empty string to the instance variable so that the dates are optional and do not show up in the UI.
+In addition, dates can be stored after being formatted to a more user-friendly style (i.e. Tue, Oct 24, '17). This prevents dates from becoming confusing (i.e. distinguishing between dd-MM-yyyy and mm-DD-yyyy) +
+**Cons:** Dates are not stored the correct format. This makes it more difficult to compare and validate later on as they have to be reformatted into Date objects every time. For example,
+ in validating whether a start date is indeed before a deadline. +
 **Alternative 2:** Use java.time.LocalDate class. +
-**Pros:** Dates are in correct format. +
-**Cons:** LocalDate cannot be initialized when no input is given. Extra code needed to make dates optional.
+**Pros:** Dates are in correct format. Validation becomes easier and reformatting is not necessary.+
+**Cons:** LocalDate cannot be initialized when no input is given. In order to make dates optional, phony values would have to be used which violates the coding standard. +
+**Alternative 3:**  Use java.util.Optional class for instance variables along with the LocalDate class. +
+**Pros:** Easy to understand reasoning, for new developers looking to contribute. Easy to format specifically for display (once) and allows empty values when no dates are supplied. +
+**Cons** The general agreement in the software engineering community seems to be that it is better not to use extra wrapping for an instance variable, that might pose problems in unwrapping later on. +
+
+---
+
+**Aspect:** Natural Language Processing +
+**Alternative 1 (current choice):** Use an external library (PrettyTime) to process dates in natural language __after__ they have been tokenized by their respective prefixes
+and categorized according to type. +
+**Pros** Dates are sure to be instantiated according to the correct class. +
+**Cons** Command format becomes less flexible. +
+**Alternative 2:** Parse all dates first then scan the argument string for keywords. +
+**Pros** More flexible command format and consequently, more user-friendly. +
+**Cons** Open to more mistakes in setting starting dates and deadlines. +
+
+---
+
+**Aspect:** Assigning starting dates and deadlines +
+**Alternative 1 (current choice):** Use an abstract parent TaskDates class to hold all validator and formatting methods. +
+**Pros** Prevents code duplication for common methods and prevents abstract class from being instantiated ensuring that
+there are only two types of task dates. +
+**Cons** Other classes have no direct interaction with parent class. +
+**Alternative 2:** Use a single TaskDates class and set instance variables to contain starting and deadline dates. +
+**Pros** Easier to implement. +
+**Cons** Might violate SRP as the class is now concerned with two different kinds of dates. +
+
+---
+
+**Aspect:** Setting prefixes for adding tasks +
+**Alternative 1 (current choice):** Use natural language prefixes i.e. from, to, by +
+**Pros** Easier to type and remember. +
+**Cons** Difficult to implement as descriptions containing these words must be separated from dates. +
+**Alternative 2** Use slashes such as in task commands i.e. f/, o/, b/ etc. +
+**Pros** Faster to type. +
+**Cons** Description might contain slashes. t/ (to) would clash with t/ prefix for tags so to/ would have to be used.
+Limits possibilities of adding new prefixes and making the format more flexible in the future. +
 
 === DeleteTask mechanism
 
@@ -305,7 +386,7 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 
 // tag::undoredo[]
 
-== FindTask mechanism
+=== FindTask mechanism
 
 The FindTask mechanism is facilitated by the `FindTaskCommand` class which inherits from `Command` class. It allows the user to find tasks using descriptions. User can search using multiple descriptions too.
 
@@ -313,16 +394,17 @@ Suppose the user has just executed the `FindTaskCommand` using `findtask finish 
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTaskCommand` feature is being evoked and calls the `FindTaskCommandParser` to parse the string and compare the descriptions. These are validated and formatted by the `TaskContainsKeywordsPredicate` and return as a `TaskContainsKeywordsPredicate` object to be used to call the `FindTaskCommand` class. The `LogicManager` then calls the `execute()` in the `FindTaskCommand` class which creates and return a `CommandResult` object.
 
+[discrete]
 ==== Design Considerations
 **Aspect:** Implementation of FindTaskCommand +
 **Alternative 1 (current choice):** Use String Util.contansword() to find tasks. +
 **Pros:** Easy to find matching descriptions among all the tasks accurately. +
 **Cons:** The keywords have to be exactly the save i.e friend is not the same as friends. +
 **Alternative 2:** Use string.contains() to find tasks. +
-**Pros:** Keywords do not have to be exactly the same as descriptions in tasks. +
-**Cons:** The search result might not be accurate if the user search using the keyword 'a' all the tasks'descriptions that contains the character 'a' will appear.
+**Pros:** Keywords do not have to be exactly the same as those in the description of tasks. +
+**Cons:** The search result might not be accurate. For e.g. if the user searches using the keyword 'a' all the tasks'descriptions that contains the character 'a' will appear.
 
-== ListTask mechanism
+=== ListTask mechanism
 
 The ListTask mechanism is facilitated by the `ListTaskCommand` class which inherits from `Command` class. It allows the user to list out all the current tasks.
 
@@ -330,7 +412,7 @@ Suppose the user has just executed the `ListTaskCommand` using `listtask`.
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `ListTaskCommand` feature is being evoked and calls the `execute()` in the `ListTaskCommand` class which update the current list to show all tasks creates and return a `CommandResult` object.
 
-== SelectTask mechanism
+=== SelectTask mechanism
 
 The SelectTask mechanism is facilitated by the `SelectTaskCommand` class which inherits from `Command` class. It allows the user to select the task at specific index.
 
@@ -422,6 +504,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+[discrete]
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -464,7 +547,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== Logging
+== Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
@@ -479,7 +562,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
-=== Configuration
+== Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
@@ -930,7 +1013,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
+
 === Use case: Delete person
 
 *MSS*
@@ -956,7 +1039,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-[discrete]
+
 === Use case: Find person
 
 *MSS*
@@ -988,7 +1071,7 @@ Use case ends.
 +
 Use case ends.
 
-[discrete]
+
 === Use Case: Edit details of person
 
 *MSS*
@@ -1025,7 +1108,7 @@ Use case resumes at step 2.
 ** Repeat 5a1-5a3 until valid category is entered.
 ** User resumes from step 6.
 
-[discrete]
+
 === Use Case: Tag multiple people with the same tag
 
 1. User requests to list people.
@@ -1049,7 +1132,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-=== Use Case: Remove tag of multiple person
+=== Use Case: Remove tag of multiple people
 
 1. User requests to list people.
 2. Addressbook lists all contacts.
@@ -1080,7 +1163,7 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-=== Use Case: Find the person using tags
+=== Use Case: Find a person using tags
 
 1. User requests to find person.
 2. User enters the category (i.e. tag) and details to search for person.
