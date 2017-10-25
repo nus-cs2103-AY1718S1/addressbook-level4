@@ -104,8 +104,11 @@ public class PersonCard extends UiPart<Region> {
 
     @FXML
     private void onCheckBoxClicked() {
-        if (checkBox.isSelected()) personListPanel.getTickedPersons().add(this);
-        else personListPanel.getTickedPersons().remove(this);
+        if (checkBox.isSelected()) {
+            personListPanel.getTickedPersons().add(this);
+        } else {
+            personListPanel.getTickedPersons().remove(this);
+        }
     }
 
     public String getEmail() {

@@ -1,16 +1,17 @@
 package seedu.address.ui;
 
-import javafx.collections.ObservableList;
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import seedu.address.email.Email;
 import seedu.address.logic.Logic;
 
-import java.util.ArrayList;
-
+/**
+ * A panel for function button on the main window
+ */
 public class FunctionButtons extends UiPart<Region> {
     private static final String FXML = "FunctionButtons.fxml";
     private Logic logic;
@@ -51,14 +52,16 @@ public class FunctionButtons extends UiPart<Region> {
      */
     @FXML
     private void openEmailSendWindow() {
-        ArrayList<PersonCard> tickedPersons
-                = mainWindow.getPersonListPanel().getTickedPersons();
+        ArrayList<PersonCard> tickedPersons = mainWindow.getPersonListPanel().getTickedPersons();
         String recipients = new String();
         ArrayList<PersonCard> cardWithOutEmail = new ArrayList<PersonCard>();
         for (PersonCard card : tickedPersons) {
             if (card.isTicked()) {
-                if (card.getEmail() != null) recipients += card.getEmail() + ";";
-                else cardWithOutEmail.add(card);
+                if (card.getEmail() != null) {
+                    recipients += card.getEmail() + ";";
+                } else {
+                    cardWithOutEmail.add(card);
+                }
             }
         }
 

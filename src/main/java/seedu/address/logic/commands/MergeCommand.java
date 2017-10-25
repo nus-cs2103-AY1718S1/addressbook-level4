@@ -13,11 +13,14 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.storage.AddressBookStorage;
 
+/**
+ * Merge the file given with the default storage file
+ */
 public class MergeCommand extends Command {
 
     public static final String COMMAND_WORD = "merge";
 
-    public static String MESSAGE_USAGE = COMMAND_WORD + ": merge the file given with the default storage file\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": merge the file given with the default storage file\n"
             + "Parameters: "
             + "XML_FILE_PATH\n"
             + "Example: " + COMMAND_WORD + " ./data/newFile.xml";
@@ -48,7 +51,8 @@ public class MergeCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Email emailManager, AddressBookStorage addressBookStorage) {
+    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Email emailManager,
+                        AddressBookStorage addressBookStorage) {
         this.model = model;
         this.addressBookStorage = addressBookStorage;
     }

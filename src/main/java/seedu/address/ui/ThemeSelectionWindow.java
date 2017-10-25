@@ -10,11 +10,16 @@ import javafx.stage.Stage;
 import seedu.address.MainApp;
 import seedu.address.model.UserPrefs;
 
+/**
+ * Theme selection window
+ */
 public class ThemeSelectionWindow extends UiPart<Region> {
 
     private static final String FXML = "ThemeSelectionWindow.fxml";
     private Stage primaryStage;
     private UserPrefs prefs;
+    private Image theme1Thumbnail;
+    private Image theme2Thumbnail;
 
     @FXML
     private ImageView thumbnail1;
@@ -24,10 +29,6 @@ public class ThemeSelectionWindow extends UiPart<Region> {
 
     @FXML
     private Label currentThemeLabel;
-
-    Image theme1Thumbnail;
-    Image theme2Thumbnail;
-
 
     public ThemeSelectionWindow(UserPrefs prefs) {
         super(FXML);
@@ -39,7 +40,8 @@ public class ThemeSelectionWindow extends UiPart<Region> {
         this.primaryStage.setScene(scene);
 
         // Set theme
-        scene.getStylesheets().add(MainApp.class.getResource("/view/"+prefs.getCurrentUserTheme()+".css").toExternalForm());
+        scene.getStylesheets().add(
+                MainApp.class.getResource("/view/" + prefs.getCurrentUserTheme() + ".css").toExternalForm());
 
         // Configure UI
         this.primaryStage.setTitle("Theme Selection");
@@ -47,8 +49,10 @@ public class ThemeSelectionWindow extends UiPart<Region> {
         /**
          * TODO: Scalable implementation using additional JSON file
          */
-        theme1Thumbnail = new Image(MainApp.class.getResource("/images/theme_thumbnails/DarkTheme.png").toExternalForm());
-        theme2Thumbnail = new Image(MainApp.class.getResource("/images/theme_thumbnails/LightTheme.png").toExternalForm());
+        theme1Thumbnail = new Image(
+                MainApp.class.getResource("/images/theme_thumbnails/DarkTheme.png").toExternalForm());
+        theme2Thumbnail = new Image(
+                MainApp.class.getResource("/images/theme_thumbnails/LightTheme.png").toExternalForm());
 
         thumbnail1.setImage(theme1Thumbnail);
         thumbnail2.setImage(theme2Thumbnail);
@@ -62,12 +66,18 @@ public class ThemeSelectionWindow extends UiPart<Region> {
         primaryStage.showAndWait();
     }
 
+    /**
+     * select theme 1
+     */
     public void handleTheme1() {
         System.out.println("Theme 1 selected!");
         prefs.setCurrentUserTheme("DarkTheme");
         currentThemeLabel.setText("Current Theme: " + prefs.getCurrentUserTheme());
     }
 
+    /**
+     * select theme 2
+     */
     public void handleTheme2() {
         System.out.println("Theme 2 selected!");
         prefs.setCurrentUserTheme("LightTheme");

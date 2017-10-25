@@ -10,7 +10,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -77,14 +81,15 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> avatar_image_path} into an {@code Optional<Avatar>} if {@code avatar_image_path} is present.
+     * Parses a {@code Optional<String> avatarImagePath} into an {@code Optional<Avatar>} if {@code avatarImagePath}
+     * is present.
      */
     public static Optional<Avatar> parseAvatar(
-            Optional<String> avatar_image_path) throws IllegalValueException {
+            Optional<String> avatarImagePath) throws IllegalValueException {
         // Return default Avatar image if empty
-        return avatar_image_path.isPresent() ? Optional.of(
+        return avatarImagePath.isPresent() ? Optional.of(
                 new Avatar(Avatar.getDirectoryPath(
-                        avatar_image_path.get()))) : Optional.of(new Avatar());
+                        avatarImagePath.get()))) : Optional.of(new Avatar());
     }
 
     /**

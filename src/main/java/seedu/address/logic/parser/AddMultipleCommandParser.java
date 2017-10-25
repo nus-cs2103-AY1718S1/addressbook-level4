@@ -60,14 +60,16 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
             throw new ParseException(String.format(AddMultipleCommand.MESSAGE_ERROR_FILE, filePath));
         }
 
-        String lines[] = data.split(System.lineSeparator());
+        String[] lines = data.split(System.lineSeparator());
 
         for (String eachLine: lines) {
             String toAdd = " " + eachLine;
             ArgumentMultimap argMultimap =
-                    ArgumentTokenizer.tokenize(toAdd, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                    ArgumentTokenizer.tokenize(toAdd, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                            PREFIX_TAG);
             if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_PERSON_FORMAT, AddMultipleCommand.MESSAGE_PERSON_FORMAT));
+                throw new ParseException(String.format(MESSAGE_INVALID_PERSON_FORMAT,
+                        AddMultipleCommand.MESSAGE_PERSON_FORMAT));
             }
             try {
                 Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();

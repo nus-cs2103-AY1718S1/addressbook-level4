@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
-import javafx.event.EventHandler;
+import java.util.logging.Logger;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,17 +10,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-import java.util.logging.Logger;
-
+/**
+ * A pop up Window for email sending
+ */
 public class EmailSendWindow extends UiPart<Region> {
     private static final String FXML = "EmailSendWindow.fxml";
     private final Logger logger = LogsCenter.getLogger(EmailSendWindow.class);

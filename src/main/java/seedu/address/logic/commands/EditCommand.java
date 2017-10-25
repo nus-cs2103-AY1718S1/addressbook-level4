@@ -1,21 +1,34 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.*;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Appoint;
+import seedu.address.model.person.Avatar;
+import seedu.address.model.person.Comment;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -25,7 +38,8 @@ public class EditCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "edit";
     public static final String COMMAND_ALIAS = "e";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " or " + COMMAND_ALIAS + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " or " + COMMAND_ALIAS
+            + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -97,7 +111,8 @@ public class EditCommand extends UndoableCommand {
         Appoint updatedAppoint = personToEdit.getAppoint();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedComment, updatedAppoint, updatedAvatar, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedComment, updatedAppoint,
+                updatedAvatar, updatedTags);
     }
 
     @Override
@@ -180,9 +195,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
-        public void setAvatar(Avatar avatar) { this.avatar = avatar; }
+        public void setAvatar(Avatar avatar) {
+            this.avatar = avatar;
+        }
 
-        public Optional<Avatar> getAvatar() { return Optional.ofNullable(avatar); }
+        public Optional<Avatar> getAvatar() {
+            return Optional.ofNullable(avatar);
+        }
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;

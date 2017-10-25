@@ -1,14 +1,17 @@
 package seedu.address.logic.commands;
 
-import seedu.address.email.exceptions.LoginFailedException;
 import seedu.address.email.Email;
+import seedu.address.email.exceptions.LoginFailedException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.storage.AddressBookStorage;
 
-public class EmailLoginCommand extends Command{
+/**
+ * Login with an email address
+ */
+public class EmailLoginCommand extends Command {
     public static final String COMMAND_WORD = "email_login";
     public static final String MESSAGE_SUCCESS = "Successfully logged in as ";
     public static final String MESSAGE_FAILED = "Log in failed: ";
@@ -29,7 +32,7 @@ public class EmailLoginCommand extends Command{
     public CommandResult execute() throws CommandException {
         try {
             emailManager.login(email, password);
-        } catch (LoginFailedException e){
+        } catch (LoginFailedException e) {
             return new CommandResult(MESSAGE_FAILED + e.getMessage());
         }
 
@@ -40,7 +43,8 @@ public class EmailLoginCommand extends Command{
      * Overridden as access to email manager is needed
      */
     @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager, AddressBookStorage addressBookStorage) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager,
+                        AddressBookStorage addressBookStorage) {
         this.emailManager = emailManager;
     }
 }

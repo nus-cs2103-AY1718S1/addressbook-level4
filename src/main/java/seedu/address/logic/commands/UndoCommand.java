@@ -32,7 +32,8 @@ public class UndoCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Email emailManager, AddressBookStorage addressBookStorage) {
+    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Email emailManager,
+                        AddressBookStorage addressBookStorage) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
     }
