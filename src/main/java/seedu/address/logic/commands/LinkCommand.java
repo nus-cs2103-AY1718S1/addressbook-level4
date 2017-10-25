@@ -28,7 +28,7 @@ public class LinkCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_LINK + "[LINK]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_LINK + "facebook.com/johndoe";
+            + PREFIX_LINK + "twitter.com/KingJames";
 
     public static final String MESSAGE_ADD_LINK_SUCCESS = "Added link to Person: %1$s";
     public static final String MESSAGE_DELETE_LINK_SUCCESS = "Removed link from Person: %1$s";

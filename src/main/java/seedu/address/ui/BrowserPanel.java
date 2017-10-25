@@ -22,8 +22,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String FACEBOOK_SEARCH_URL_PREFIX = "https://www.facebook.com/public?query=";
-    public static final String FACEBOOK_SEARCH_URL_SUFFIX = "&type=all&init=ffs&nomc=0";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -53,8 +51,8 @@ public class BrowserPanel extends UiPart<Region> {
         } else if (person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_1)) {
             loadPage("https://www." + person.getLink().value);
         } else {
-            loadPage(FACEBOOK_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                    + FACEBOOK_SEARCH_URL_SUFFIX);
+            loadPage(PossibleLinks.SEARCH_URL_PREFIX_1 + person.getName().fullName.replaceAll(" ", "+")
+                    + PossibleLinks.SEARCH_URL_SUFFIX_1);
         }
     }
 

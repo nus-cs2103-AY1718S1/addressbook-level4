@@ -174,7 +174,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_link() throws Exception {
-        final Link link = new Link("facebook.com");
+        final Link link = new Link("twitter.com/");
         LinkCommand command = (LinkCommand) parser.parseCommand(LinkCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_LINK + " " + link.value);
         assertEquals(new LinkCommand(INDEX_FIRST_PERSON, link), command);

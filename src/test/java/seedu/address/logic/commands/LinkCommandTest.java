@@ -35,7 +35,7 @@ public class LinkCommandTest {
     @Test
     public void execute_addLink_success() throws Exception {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withLink("facebook.com/").build();
+                .withLink("twitter.com/").build();
 
         LinkCommand linkCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getLink().value);
 
