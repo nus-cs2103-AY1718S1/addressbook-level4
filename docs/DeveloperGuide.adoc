@@ -665,10 +665,10 @@ We will explain it in terms of Model and Storage. +
 
 [discrete]
 ==== Model level
-For model, we simply use the "referencing model", which is shown in the diagram below: +
+For model, we simply use the "referencing model", which is shown in the diagram _(Figure 3.7.1)_ below: +
 
 image::DG_model_join.png[width = "800"]
-_Figure ?.?.? interaction model_
+_Figure 3.7.1 interaction model_
 
 Refer to the diagram above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
 Similarly, the participation list in Person model stores all the event in which this person joins.
@@ -685,17 +685,17 @@ public void disjoin(Person personToRemove, Event eventToRemove) {
 
 [discrete]
 ==== Storage level
-For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram below:
+For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram _(Figure 3.7.2)_ below:
 
 image::DG_infinity loop.png[width = "800"]
-_Figure ?.?.? infinity loop_
+_Figure 3.7.2 infinity loop_
 
 To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`, both of them does not have participant or participation information.
 Hence, we can avoid the infinity referencing problem. +
-The updated storage is shown in the diagram below:
+The updated storage is shown in the diagram _(Figure 3.7.3)_ below:
 
 image::DG_join_storage.png[width = "800"]
-_Figure ?.?.? interaction storage_
+_Figure 3.7.3 interaction storage_
 
 [discrete]
 ===== Design Considerations
