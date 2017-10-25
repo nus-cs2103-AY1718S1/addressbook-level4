@@ -497,7 +497,7 @@ The implementation process consisted of +
 1) Introducing an empty 'comment' command which does nothing, +
 2) making the command accept arguments, +
 3) modify the UI by adding room for 'comment' in the 'PersonCard', +
-4)adding a 'Comment' class, +
+4) adding a 'Comment' class, +
 5) making changes to Storage by adding 'comment' field to 'XmlAdaptedPerson' class, and finally, +
 6) implementing 'CommentCommand#execute()' in logic.
 
@@ -509,6 +509,25 @@ The implementation process consisted of +
 **Alternative 2:** Create the 'comment' feature with a more user-friendly (post-it like) interface +
 **Pros:** This GUI will be user-friendly, being close to our familiar habit of post and scrapping post-it notes +
 **Cons:** The present project lacks the GUI to implement this. It may also be more difficult to work with other commands.
+
+=== Making Appointments
+The appointment feature was implemented as an end-to-end feature that added modifications to all components.
+
+The implementation process consisted of first creating the appoint command which behaves just like the comment command, making the new command accept arguments, adding extra line in Person Card reserved for the appointment information, and implementing the Appoint Command execution in Logic. 
+
+==== Design Considerations
+**Aspect:** Implementation of `Appoint` +
+**Alternative 1 (current choice):** Simply create a new `Appoint` Component which behaves very similarly to the `Comment` feature +
+**Pros:** Works well with the already existing commands and can be modified easily +
+**Cons:** Command line interface is not user friendly & the Appointment acts just like a normal comment +
+**Alternative 2:** Create the 'appoint' feature defined in a more structured class which restricts the formatting of the appointment +
+**Pros:** This restriction of the formatting will prevent the user from inserting any information that are not appointments +
+**Cons:** The formatting restriction may diminish the freedom the user may have when allocating appointments
+
+==== Possible Improvements
+1) Further modify this feature so that every new appointment checks if the time clashes with any pre-existing appointments
+2) Make multiple appointments for one person
+3) Contruct a new GUI where all the appointments can be viewed on one screen
 
 == Documentation
 
