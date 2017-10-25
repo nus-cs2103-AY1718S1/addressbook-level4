@@ -150,6 +150,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void markTask(ReadOnlyTask task) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
