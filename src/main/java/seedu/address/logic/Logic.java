@@ -19,15 +19,6 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
-    /**
-     * Executes the command that requires a user's reply and returns the result.
-     * @param permissionText The permission as entered by the user.
-     * @return the result of the command execution.
-     * @throws CommandException If an error occurs during command execution.
-     * @throws ParseException If an error occurs during parsing.
-     */
-    CommandResult executeAfterUserPermission(String permissionText) throws CommandException, ParseException;
-
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
