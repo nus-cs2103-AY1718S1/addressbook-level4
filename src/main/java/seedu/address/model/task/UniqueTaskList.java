@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -116,6 +117,18 @@ public class UniqueTaskList implements Iterable<Task> {
         Task incompleteTask = new Task(toSetIncomplete);
         incompleteTask.setIncomplete();
         setTask(toSetIncomplete, incompleteTask);
+    }
+
+    public void setTasks(UniqueTaskList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setTasks(List<? extends ReadOnlyTask> tasks) throws DuplicateTaskException {
+        final UniqueTaskList replacement = new UniqueTaskList();
+        for (final ReadOnlyTask task : tasks) {
+            replacement.add(new Task(task));
+        }
+        setTasks(replacement);
     }
 
     public ObservableList<ReadOnlyTask> asObservableLis() {

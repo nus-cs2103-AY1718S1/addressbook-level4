@@ -204,7 +204,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.lastUpdatedTime = LocalDateTime.now().withNano(0);
     }
 
-    // ================ Misc methods ==============================
+    // ================ Utility methods ==============================
 
     @Override
     public boolean equals(Object other) {
