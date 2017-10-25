@@ -134,7 +134,8 @@ public class CalendarPanel extends UiPart<Region> {
                             try {
                                 if (MonthDay.from(item).equals
                                         (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), format)))) {
-                                    if (bCount++ == 0) {
+                                    if (bCount == 0) {
+                                        bCount++;
                                         s.append(person.getName() + "'s Birthday");
                                     }
                                     else if (bCount > 0) {
@@ -142,6 +143,9 @@ public class CalendarPanel extends UiPart<Region> {
                                         s.delete(0, endIndex);
                                         bCount++;
                                         s.insert(0, bCount + " ");
+                                        if (bCount == 2) {
+                                            s.append("s");
+                                        }
                                     }
                                     colour = new StringBuilder("-fx-background-color: #f1a3ff;");
                                 }
@@ -156,18 +160,27 @@ public class CalendarPanel extends UiPart<Region> {
                                 assert LocalDate.parse(task.getDeadline().toString(), format).getYear()
                                         >= (LocalDate.now().getYear() - 100);
                                 if (item.equals(LocalDate.parse(task.getDeadline().toString(), format))) {
-                                    if ((bCount == 0) && (dCount++ == 0)) {
-                                        s.append(dCount + " Deadline!");
+                                    if ((bCount == 0) && (dCount == 0)) {
+                                        dCount++;
+                                        s.append(dCount + " Deadline");
+                                    }
+                                    else if ((bCount > 0) && (dCount == 0)) {
+                                        dCount++;
+                                        s.append(" + " + dCount + " Deadline");
+                                    }
+                                    else if (dCount > 0) {
+                                        dCount++;
+                                        int endIndex = s.indexOf(" Deadline");
+                                        s.replace(endIndex - 1, endIndex, dCount + "");
+                                        if (dCount == 2) {
+                                            s.append("s");
+                                        }
+                                    }
+
+                                    if (bCount == 0) {
                                         colour = new StringBuilder("-fx-background-color: #ff444d;");
                                     }
-                                    else if (bCount > 0){
-                                        if (dCount++ == 0) {
-                                            s.append(dCount + " Deadline!");
-                                        }
-                                        else if (dCount++ > 0) {
-                                            int endIndex = s.indexOf(" Deadline");
-                                            s.replace(endIndex - 1, endIndex, dCount + "");
-                                        }
+                                    else if (bCount > 0) {
                                         colour = new StringBuilder("-fx-background-color: #feff31;");
                                     }
                                 }
