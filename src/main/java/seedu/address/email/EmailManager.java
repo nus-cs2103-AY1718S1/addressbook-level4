@@ -45,11 +45,12 @@ public class EmailManager implements Email {
             }
         };
 
-        Session session = Session.getDefaultInstance(properties_IMAP, newAuthenticator);
+        Session session = Session.getInstance(properties_SMTP, newAuthenticator);
 
         try {
-            Store store = session.getStore("imaps");
-            store.connect(hostHashTable.get(currentEmailProvider), email, password);
+            Transport transport = session.getTransport("smtp");
+            transport.connect(hostHashTable.get(currentEmailProvider), email, password);
+            transport.close();
             this.currentEmail = email;
             this.currentAuthenticator = newAuthenticator;
         } catch (NoSuchProviderException e) {
@@ -106,7 +107,7 @@ public class EmailManager implements Email {
         return (currentAuthenticator != null);
     }
 
-    private void init(String email) {
+    private void init(String email) throws LoginFailedException {
         String domain = (((email.split("@"))[1]).split("\\."))[0];
 
         switch (domain) {
@@ -127,12 +128,13 @@ public class EmailManager implements Email {
                 this.properties_SMTP.put("mail.smtp.port", "465");
                 break;
             default:
+                throw new LoginFailedException("The email domain is not supported");
         }
     }
 
     private void initHostHashTable() {
         this.hostHashTable = new Hashtable<String, String>();
-        hostHashTable.put("gmail", "imap.gmail.com");
-        hostHashTable.put("yahoo", "imap.mail.yahoo.com");
+        hostHashTable.put("gmail", "smtp.gmail.com");
+        hostHashTable.put("yahoo", "smtp.mail.yahoo.com");
     }
 }

@@ -18,6 +18,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
+import seedu.address.email.Email;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -62,6 +63,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane functionButtonsPanel;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -141,6 +145,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        FunctionButtons functionButtons = new FunctionButtons(logic);
+        functionButtonsPanel.getChildren().add(functionButtons.getRoot());
     }
 
     void hide() {

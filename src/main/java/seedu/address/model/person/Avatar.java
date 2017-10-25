@@ -49,9 +49,6 @@ public class Avatar {
 
     public boolean validFile(String avatarFilePath) {
         File f = new File(MainApp.class.getResource(avatarFilePath).getFile());
-        if (f.exists() && f.canRead()) {
-            return true;
-        }
-        return false;
+        return f.exists() && f.canRead();
     }
 }

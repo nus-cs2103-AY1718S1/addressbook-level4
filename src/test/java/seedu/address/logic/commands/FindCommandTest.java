@@ -48,8 +48,8 @@ public class FindCommandTest {
         HashMap<String, List<String>> secondPredicateMap = new HashMap<>();
         firstPredicateMap.put("first", Collections.singletonList("first"));
         secondPredicateMap.put("second", Collections.singletonList("second"));
-        
-        PersonContainsKeywordsPredicate firstPredicate = 
+
+        PersonContainsKeywordsPredicate firstPredicate =
                 new PersonContainsKeywordsPredicate(firstPredicateMap);
         PersonContainsKeywordsPredicate secondPredicate =
                 new PersonContainsKeywordsPredicate(secondPredicateMap);
@@ -92,7 +92,7 @@ public class FindCommandTest {
      * Parses {@code userInput} into a {@code FindCommand}.
      */
     private FindCommand prepareCommand(String userInput) throws ParseException {
-        ArgumentMultimap argumentMultimap = 
+        ArgumentMultimap argumentMultimap =
                 ArgumentTokenizer.tokenize(userInput, PREFIX_NAME, PREFIX_TAG, PREFIX_EMAIL);
 
         String trimmedArgsName;
@@ -134,7 +134,7 @@ public class FindCommandTest {
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-        
+
         FindCommand command =
                 new FindCommand(new PersonContainsKeywordsPredicate(mapKeywords));
         command.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);

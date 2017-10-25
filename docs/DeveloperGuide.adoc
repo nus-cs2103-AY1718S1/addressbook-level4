@@ -363,7 +363,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 === Email Component
 The email component ultilised the external library `javax.mail` for sending and receiving emails.
 
-The `EmailManager.java` class implementing `Email` manages the login status by keeping an `Autheticator` object along with its email `String`. 
+The `EmailManager.java` class implementing `Email` manages the login status by keeping an `Autheticator` object along with its email `String`.
 
 As the library `javax.mail` uses `IMAP` protocol for receving emails and `SMTP` for sending emails, the `EmailManager` also holds a `Hashtable` of `IMAP` hosts and `SMTP` hosts / ports for different email providers. This allows future support for more providers.
 
@@ -419,7 +419,7 @@ image::AddMultipleCommandSequenceDiagram.png[width="800"]
 
 The `AddMultipleCommandParser` implements `Parser`, and it handles the parsing of user input file name and the data that contains in the `.txt` file.
 
-As shown in the sequence diagram above, `AddMultipleCommandParser` utilizes the FileUtil to retrieve the data as a String from the `.txt` file. The retrieved data is then transformed to be stored in an array split by `System.lineSeparator()` to be parsed based on each line. 
+As shown in the sequence diagram above, `AddMultipleCommandParser` utilizes the FileUtil to retrieve the data as a String from the `.txt` file. The retrieved data is then transformed to be stored in an array split by `System.lineSeparator()` to be parsed based on each line.
 The result of the parsed data is stored in an `ArrayList`, then it is returned with the construction of `AddMultipleCommand`.
 
 *Implementation as an independent Undoable/Redoable command*
@@ -491,15 +491,15 @@ In the next version a format will be incorporated to standardize theme name, res
 // end::themeing[]
 
 === Commenting
-The commenting feature was implemented as an end-to-end feature that touched upon all components. 
+The commenting feature was implemented as an end-to-end feature that touched upon all components.
 
 The implementation process consisted of +
 1) Introducing an empty 'comment' command which does nothing, +
 2) making the command accept arguments, +
 3) modify the UI by adding room for 'comment' in the 'PersonCard', +
 4)adding a 'Comment' class, +
-5) making changes to Storage by adding 'comment' field to 'XmlAdaptedPerson' class, and finally, + 
-6) implementing 'CommentCommand#execute()' in logic. 
+5) making changes to Storage by adding 'comment' field to 'XmlAdaptedPerson' class, and finally, +
+6) implementing 'CommentCommand#execute()' in logic.
 
 ==== Design Considerations
 **Aspect:** Implementation of `Comment` +
