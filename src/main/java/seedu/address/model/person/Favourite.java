@@ -26,6 +26,10 @@ public class Favourite {
         status = favourite ? "True" : "False";
     }
 
+    /**
+     * Sets favourite to the opposite value.
+     * Updates the status too.
+     */
     public void toggleFavourite() {
         favourite = !favourite;
         setFavouriteStatus();
