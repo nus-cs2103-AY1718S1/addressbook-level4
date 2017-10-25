@@ -205,6 +205,20 @@
     -fx-background-color: black;
 }
 
+.axis {
+    -fx-tick-label-fill: #ffffff;
+}
+
+.axis-label {
+    -fx-text-fill: white;
+}
+
+.chart-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 1.6em;
+}
+
+
 /*
  * Metro style Push Button
  * Author: Pedro Duque Vieira
