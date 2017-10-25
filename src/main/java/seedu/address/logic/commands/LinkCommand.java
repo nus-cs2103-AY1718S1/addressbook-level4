@@ -1,66 +1,71 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LINK;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.PossibleLinks;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Adds remarks to a person in the address book.
+ * Changes the facebook link of an existing person in the address book.
  */
-public class RemarkCommand extends UndoableCommand {
+public class LinkCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "remark";
+    public static final String COMMAND_WORD = "link";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds a remark to the person identified by the index number used in the last person listing."
-            + "Existing remark will be overwritten by the input.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a facebook link to person identified "
+            + "by the index number used in the last person listing. "
+            + "Existing links will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_REMARK + "REMARK\n"
+            + PREFIX_LINK + "[LINK]\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_REMARK + "Get charger back from him";
+            + PREFIX_LINK + "twitter.com/KingJames";
 
-    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
-    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
+    public static final String MESSAGE_ADD_LINK_SUCCESS = "Added link to Person: %1$s";
+    public static final String MESSAGE_DELETE_LINK_SUCCESS = "Removed link from Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
-    private final ArrayList<Remark> remarkArrayList;
+    private final Link link;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param remarkArrayList details to add remarks
+     * @param index of the person in the filtered person list to edit the link
+     * @param link of the person
      */
-    public RemarkCommand(Index index, ArrayList<Remark> remarkArrayList) {
+    public LinkCommand(Index index, Link link) {
         requireNonNull(index);
-        requireNonNull(remarkArrayList);
+        requireNonNull(link);
 
         this.index = index;
-        this.remarkArrayList = remarkArrayList;
+        this.link = link;
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        if (!(link.value.startsWith(PossibleLinks.POSSIBLE_LINK_1)
+                || link.value.startsWith(PossibleLinks.POSSIBLE_LINK_2)) && !link.value.isEmpty()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_LINK_FORMAT);
+        }
+
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), remarkArrayList, personToEdit.getFavouriteStatus(), personToEdit.getTags(),
-                personToEdit.getLink());
+                personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getFavouriteStatus(),
+                personToEdit.getTags(), link);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -69,7 +74,6 @@ public class RemarkCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        //model.updateFilteredListToShowAll();
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
@@ -80,10 +84,10 @@ public class RemarkCommand extends UndoableCommand {
      * @return String that shows whether add or delete was successfully done
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        if (!remarkArrayList.isEmpty() && !remarkArrayList.get(0).value.isEmpty()) {
-            return String.format(MESSAGE_ADD_REMARK_SUCCESS, personToEdit);
+        if (!link.value.isEmpty()) {
+            return String.format(MESSAGE_ADD_LINK_SUCCESS, personToEdit);
         } else {
-            return String.format(MESSAGE_DELETE_REMARK_SUCCESS, personToEdit);
+            return String.format(MESSAGE_DELETE_LINK_SUCCESS, personToEdit);
         }
     }
 
@@ -93,13 +97,15 @@ public class RemarkCommand extends UndoableCommand {
         if (other == this) {
             return true;
         }
+
         // instanceof handles nulls
-        if (!(other instanceof RemarkCommand)) {
+        if (!(other instanceof LinkCommand)) {
             return false;
         }
+
         // state check
-        RemarkCommand e = (RemarkCommand) other;
+        LinkCommand e = (LinkCommand) other;
         return index.equals(e.index)
-                && remarkArrayList.equals(e.remarkArrayList);
+                && link.equals(e.link);
     }
 }
