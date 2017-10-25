@@ -69,8 +69,9 @@ public class BrowserPanelTest extends GuiUnitTest {
 
         // associated Google map of a person's address
         postNow(showLocationEventStub);
+        String address = ALICE.getAddress().toString().substring(0, ALICE.getAddress().toString().indexOf(","));
         URL expectedPersonUrl = new URL(GOOGLE_MAP_SEARCH_URL_PREFIX
-                + ALICE.getAddress().toString().replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX);
+                + address.replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX + "?dg=dbrw&newdg=1");
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
