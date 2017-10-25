@@ -19,6 +19,7 @@ import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Status;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -47,6 +48,8 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedRelationship> relation = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -75,6 +78,9 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        for (Relationship rel : source.getRelation()) {
+            relation.add(new XmlAdaptedRelationship(rel));
+        }
     }
 
     /**
@@ -86,6 +92,10 @@ public class XmlAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+        final List<Relationship> personRel = new ArrayList<>();
+        for (XmlAdaptedRelationship rel : relation) {
+            personRel.add(rel.toModelType());
         }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
@@ -112,6 +122,7 @@ public class XmlAdaptedPerson {
             note = new Note(this.note);
         }
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, company, position, status, priority, note, tags);
+        final Set<Relationship> rel = new HashSet<>(personRel);
+        return new Person(name, phone, email, address, company, position, status, priority, note, tags, rel);
     }
 }
