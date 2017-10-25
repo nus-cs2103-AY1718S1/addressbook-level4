@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -86,6 +87,14 @@ public class UniquePersonList implements Iterable<Person> {
         }
         this.sortBy(currentlySortedBy);
         return personFoundAndDeleted;
+    }
+
+    public void removeByTag(Tag tag) {
+        for (Person p: internalList ) {
+            if (p.getTags().contains(tag)) {
+                internalList.remove(p);
+            }
+        }
     }
 
     public void setPersons(UniquePersonList replacement) {
