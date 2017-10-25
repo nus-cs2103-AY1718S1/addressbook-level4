@@ -339,6 +339,18 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::merge[]
+=== Merging given file to default storage file : `merge`
+
+Merges the given `.xml` file to the default storage `.xml` file specified in `preferences.json`. +
+Format: `merge NEW_FILE_PATH`
+
+Examples:
+
+* `merge ./data/newFile.xml`
+* `merge ./data/otherClass.xml`
+
+// end::merge[]
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -399,3 +411,4 @@ e.g. `email_send "firstemail@gmail.com;secondemail@yahoo.com" "Test title" "Test
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Merge* : `merge`

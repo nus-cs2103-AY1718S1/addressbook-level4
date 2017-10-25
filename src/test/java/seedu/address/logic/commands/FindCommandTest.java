@@ -137,7 +137,7 @@ public class FindCommandTest {
 
         FindCommand command =
                 new FindCommand(new PersonContainsKeywordsPredicate(mapKeywords));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
         return command;
     }
 

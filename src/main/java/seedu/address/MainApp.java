@@ -74,7 +74,7 @@ public class MainApp extends Application {
 
         email = new EmailManager();
 
-        logic = new LogicManager(model, email);
+        logic = new LogicManager(model, email, userPrefs.getAddressBookFilePath());
 
         ui = new UiManager(logic, config, userPrefs);
 
