@@ -35,19 +35,19 @@ public class SampleDataUtil {
                         new Remark("Woman"), getTagSet("colleagues", "friends")),
                 new Person(new Name("Charlotte Oliveiro"), new Phone("student/97272031 parent/97979797 "),
                         new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                        new FormClass("6E1"), new Grades("123.0"), new PostalCode("987654"),
+                        new FormClass("6E1"), new Grades("886.0"), new PostalCode("987654"),
                         new Remark("Awesome mate"), getTagSet("neighbours")),
                 new Person(new Name("David Li"), new Phone("student/97272031 parent/97979797 "),
                         new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                        new FormClass("12S23"), new Grades("123.0"), new PostalCode("676767"),
+                        new FormClass("12S23"), new Grades("345.0"), new PostalCode("676767"),
                         new Remark("Git Gud"), getTagSet("family")),
                 new Person(new Name("Irfan Ibrahim"), new Phone("student/97272031 parent/97979797 "),
                         new Email("irfan@example.com"), new Address("Blk 47 Tampines Street 20, #17-35"),
-                        new FormClass("12s23"), new Grades("123.0"), new PostalCode("999999"),
+                        new FormClass("12s23"), new Grades("564.0"), new PostalCode("999999"),
                         new Remark("Look at me"), getTagSet("classmates")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("student/97272031 parent/97979797 "),
                         new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
-                        new FormClass("12s23"), new Grades("123.0"), new PostalCode("999666"),
+                        new FormClass("12s23"), new Grades("234.0"), new PostalCode("999666"),
                         new Remark("Yay done"), getTagSet("colleagues"))
             };
         } catch (IllegalValueException e) {
