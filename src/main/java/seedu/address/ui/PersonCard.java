@@ -1,6 +1,9 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -14,10 +17,19 @@ import seedu.address.model.person.ReadOnlyPerson;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
-
     private static final String FXML = "PersonListCard.fxml";
-    private static String[] availableColors = { "red", "green", "grey" };
-    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static ArrayList<String> availableColorsLeft = new ArrayList<String>(
+            Arrays.asList(
+                    "TOMATO",
+                    "TURQUOISE",
+                    "LIGHTGRAY",
+                    "GOLDENROD",
+                    "LAWNGREEN",
+                    "BURLYWOOD",
+                    "PALEVIOLETRED",
+                    "CORNFLOWERBLUE",
+                    "CORAL"));
+    private static HashMap<String, String> currentTagColors = new HashMap<String, String>();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -62,25 +74,24 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Obtain tag colors
-     * @param tagValue is the String description of the tag
-     * @return the designated tag colors according to the tag description
+     * This method takes in the tagName, and returns the color associated with that tagName
+     * If the if the tag has no associated color, a random one from the list available will be given.
+     * Once the list runs out, all other tags will be grey.
+     *
+     * @param tagName is the String name of the tag
+     * @return the color associated to the tagName
      */
-    private static String obtainTagColors(String tagValue) {
+    private static String obtainTagColors(String tagName) {
+        if (!currentTagColors.containsKey(tagName) && availableColorsLeft.size() > 0) {
+            Random rand = new Random();
+            int randIndex = rand.nextInt(availableColorsLeft.size());
 
-        if (!tagColors.containsKey(tagValue)) {
-            switch(tagValue) {
-            case "friends":
-                tagColors.put(tagValue, availableColors[1]);
-                break;
-            case "colleagues":
-                tagColors.put(tagValue, availableColors[0]);
-                break;
-            default:
-                tagColors.put(tagValue, availableColors[2]);
-            }
+            currentTagColors.put(tagName, availableColorsLeft.get(randIndex));
+            availableColorsLeft.remove(randIndex);
+        } else {
+            currentTagColors.put(tagName, "GRAY");
         }
-        return tagColors.get(tagValue);
+        return currentTagColors.get(tagName);
     }
 
     /**
@@ -104,6 +115,7 @@ public class PersonCard extends UiPart<Region> {
 
     /**
      * Initialise the {@code person} tags
+     *
      * @param person Person to be assigned tag colour.
      */
     private void initialiseTags(ReadOnlyPerson person) {
