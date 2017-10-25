@@ -347,11 +347,12 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 // tag::RemarkCommand[]
 === Remark mechanism
-The remark command takes in the user input through command line in the format remark INDEX /r REMARK, where INDEX is the index of the person in the addressbook and REMARK is the remark of the relationship of that person to another person. +
-Eg. remark 1 /r is the husband of Chelsea +
-image::RemarkLogicDiagram.png[width="200"]
+The remark command takes in the user input through command line in the format remark INDEX r/ REMARK, where INDEX is the index of the person in the addressbook and REMARK is the remark of the relationship of that person to another person. +
+Eg. remark 1 r/ is the husband of Chelsea +
 
-image::RemarkModelDiagram.png[width="200"]
+image::RemarkLogicDiagram.png[width="800"]
+
+image::RemarkModelDiagram.png[width="800"]
 
 ==== Design Considerations
 
@@ -372,6 +373,8 @@ image::RemarkModelDiagram.png[width="200"]
 **Alternative 2:** update the tag to accept sentences for remarks +
 **Pros:** Easy to implement as we do not need to add a new command. +
 **Cons:** The Tag may be more difficult to find and more work is needed to change the find tag command. Additionally, the user interface of tag command also needs to be changed to accommodate long tags. +
+
+Credits: Mechanism adapted from Yamgent https://github.com/se-edu/addressbook-level4/pull/599
 // end::RemarkCommand[]
 
 === Logging
