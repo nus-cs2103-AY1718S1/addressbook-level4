@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
+import guitests.guihandles.ExtendedPersonCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
@@ -30,6 +31,21 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPerson.getFormClass().value, actualCard.getFormclass());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, ExtendedPersonCardHandle actualCard) {
+        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
+        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedPerson.getFormClass().value, actualCard.getFormclass());
+        assertEquals(expectedPerson.getGrades().value, actualCard.getGrades());
+        assertEquals(expectedPerson.getPostalCode().value, actualCard.getPostalCode());
+        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
+        assertEquals(expectedPerson.getRemark().value, actualCard.getRemark());
+        assertEquals(expectedPerson.getTags().stream(), actualCard.getTags());
     }
 
     /**

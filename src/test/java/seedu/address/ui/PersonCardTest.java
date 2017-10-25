@@ -17,25 +17,41 @@ public class PersonCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        // no formClass
-        Person personWithNoFormClass = new PersonBuilder().withFormClass(new String("")).build();
-        PersonCard personCard = new PersonCard(personWithNoFormClass, 1);
+        // check if the attributes of a person is binded in the card
+        Person personWithRightAttributes = new PersonBuilder().withFormClass("6E1").withName("Alice Pauline")
+                .withPhone("student: 97272031 parent: 97979797").build();
+        PersonCard personCard = new PersonCard(personWithRightAttributes, 1);
         uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, personWithNoFormClass, 1);
+        assertCardDisplay(personCard, personWithRightAttributes, 1);
+    }
 
-        // with formClass
-        Person personWithFormClass = new PersonBuilder().build();
-        personCard = new PersonCard(personWithFormClass, 2);
+    @Test
+    public void displayPerson() {
+        // no tags
+        Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
+        PersonCard personCard = new PersonCard(personWithNoTags, 1);
         uiPartRule.setUiPart(personCard);
-        assertCardDisplay(personCard, personWithFormClass, 2);
+        assertCardDisplay(personCard, personWithNoTags, 1);
+
+        // with tags
+        Person personWithTags = new PersonBuilder().build();
+        personCard = new PersonCard(personWithTags, 2);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithTags, 2);
 
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
-            personWithFormClass.setName(ALICE.getName());
-            personWithFormClass.setPhone(ALICE.getPhone());
-            personWithFormClass.setFormClass(ALICE.getFormClass());
+            personWithTags.setName(ALICE.getName());
+            personWithTags.setPhone(ALICE.getPhone());
+            personWithTags.setAddress(ALICE.getAddress());
+            personWithTags.setFormClass(ALICE.getFormClass());
+            personWithTags.setGrades(ALICE.getGrades());
+            personWithTags.setEmail(ALICE.getEmail());
+            personWithTags.setPostalCode(ALICE.getPostalCode());
+            personWithTags.setRemark(ALICE.getRemark());
+            personWithTags.setTags(ALICE.getTags());
         });
-        assertCardDisplay(personCard, personWithFormClass, 2);
+        assertCardDisplay(personCard, personWithTags, 2);
     }
 
     @Test

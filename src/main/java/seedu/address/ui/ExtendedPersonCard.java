@@ -50,7 +50,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     /**
      * Updates person details as displayed on the extended person card panel
      */
-    private void loadPersonDetails(ReadOnlyPerson person) {
+    protected void loadPersonDetails(ReadOnlyPerson person) {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().toString());
         address.setText(person.getAddress().toString());
@@ -76,7 +76,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     protected void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-font-size:" + "15px");
+            tagLabel.setStyle("-fx-font-size:15px");
             tags.getChildren().add(tagLabel);
         });
     }

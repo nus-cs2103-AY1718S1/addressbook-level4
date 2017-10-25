@@ -18,11 +18,12 @@ public class MainWindowHandle extends StageHandle {
         super(stage);
 
         personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
+        extendedPersonCard = new ExtendedPersonCardHandle(getChildNode(ExtendedPersonCardHandle
+                .EXTENDED_PERSON_CARD_ID));
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-        extendedPersonCard = new ExtendedPersonCardHandle(getChildNode(ExtendedPersonCardHandle.EXTENDED_PERSON_CARD_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {

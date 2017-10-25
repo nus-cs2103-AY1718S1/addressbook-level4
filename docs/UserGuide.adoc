@@ -1,4 +1,4 @@
-= cherBook v1.2 - User Guide
+= cherBook v1.3 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T16-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017 T16-B2`      Since: `SEP 2017`      Licence: `MIT`
 
 == Introduction
 
@@ -344,7 +344,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 | List | `l` + | `l` +
 | Help | NA | `help` +
 | Select | `s` + | `s INDEX` +
-| Sort | `st` | `sort` +
+| Sort | `st` | `st` +
 | History | `h` + | `h` +
 | Undo | `u` + | `u` +
 | Redo | `r` + | `r` +
