@@ -49,9 +49,13 @@
 
     <TabPane fx:id="infoDisplayPlaceHolder" prefHeight="200.0" prefWidth="340.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
-        <Tab fx:id="contactDetailsPlaceHolder" text="Contact Details">
+        <Tab text="Contact Details">
           <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="340.0" />
+            <StackPane fx:id="contactDetailsPlaceHolder" prefWidth="340">
+              <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+              </padding>
+            </StackPane>
           </content>
         </Tab>
         <Tab text="Browser">
