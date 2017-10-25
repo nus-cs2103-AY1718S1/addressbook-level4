@@ -519,9 +519,7 @@ commands related to settings, the settings panel is brought in via a translation
 is translated on the X axis outside of the application view, and is then brought into view via the animation. When the String in the command box does not contain `choose` or `pref`, the
 settings panel is then translated out of sight again.
 
-image::SettingsPaneOut.png[width="700"]
-
-image::SettingsPaneIn.PNG[width="700"]
+image::SettingsPaneInOut.png[width="700"]
 
 ==== Design Considerations
 
