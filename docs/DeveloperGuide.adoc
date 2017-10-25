@@ -240,7 +240,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::birthday[]
-=== Add contact mechanism: birthday parameter 
+=== Add contact mechanism: birthday parameter
 
 Addition of the birthday parameter is facilitated by the `AddCommand` class which inherited from the `UndoableCommand` class. It allows user to add the birthday of the contact by putting another parameter into the `AddCommand`.
 
@@ -254,6 +254,7 @@ The `AddCommandParser` class will check for the validity of the parameter entere
 [NOTE]
 If the birthday parameter is not specified, the `AddCommand` will give an invalid command message.
 
+[discrete]
 ==== Design Considerations
 **Aspect:** Implementation of birthday feature in `AddCommand` +
 **Alternative 1 (current choice):** Make adding birthday optional +
@@ -280,6 +281,7 @@ If one or more of the contacts specified by the indices does not contain the spe
 [NOTE]
 The current detag mechanism does not support multiple tag removal, i.e. remove 2 different tags in one command line.
 
+[discrete]
 ==== Design Considerations
 **Aspect:** Implementation of `DetagCommand` +
 **Alternative 1 (current choice):** Directly removes the tag from `Set` of person(s) +
@@ -326,10 +328,11 @@ The following sequence diagram summarizes how this operation works:
 
 image::AddTaskCommandSequenceDiagram.png[width="800", height="500"]
 
+[discrete]
 ==== Design Considerations
 **Aspect:** Creating classes for StartDate and Deadline +
 **Alternative 1 (current choice):** Use Strings to contains the StartDates and Deadlines. +
-**Pros:** * Easy to assign an empty string to the instance variable so that the dates are optional and do not show up in the UI. 
+**Pros:** * Easy to assign an empty string to the instance variable so that the dates are optional and do not show up in the UI.
 In addition, dates can be stored after being formatted to a more user-friendly style (i.e. Tue, Oct 24, '17). This prevents dates from becoming confusing (i.e. distinguishing between dd-MM-yyyy and mm-DD-yyyy) +
 **Cons:** Dates are not stored the correct format. This makes it more difficult to compare and validate later on as they have to be reformatted into Date objects every time. For example,
  in validating whether a start date is indeed before a deadline. +
@@ -383,7 +386,7 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 
 // tag::undoredo[]
 
-== FindTask mechanism
+=== FindTask mechanism
 
 The FindTask mechanism is facilitated by the `FindTaskCommand` class which inherits from `Command` class. It allows the user to find tasks using descriptions. User can search using multiple descriptions too.
 
@@ -391,6 +394,7 @@ Suppose the user has just executed the `FindTaskCommand` using `findtask finish 
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTaskCommand` feature is being evoked and calls the `FindTaskCommandParser` to parse the string and compare the descriptions. These are validated and formatted by the `TaskContainsKeywordsPredicate` and return as a `TaskContainsKeywordsPredicate` object to be used to call the `FindTaskCommand` class. The `LogicManager` then calls the `execute()` in the `FindTaskCommand` class which creates and return a `CommandResult` object.
 
+[discrete]
 ==== Design Considerations
 **Aspect:** Implementation of FindTaskCommand +
 **Alternative 1 (current choice):** Use String Util.contansword() to find tasks. +
@@ -500,6 +504,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+[discrete]
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -542,7 +547,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== Logging
+== Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
@@ -557,7 +562,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
-=== Configuration
+== Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 

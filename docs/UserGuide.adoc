@@ -616,7 +616,7 @@ There is no need to save manually.
 Having trouble? Here's a list of common errors and why they occur:
 
 * Error: Invalid Command Format +
-Occurs if a mandatory prefix has been left out. 
+Occurs if a mandatory prefix has been left out.
 
 * Error: Invaid Date Format +
 Occurs if the date given cannot be parsed.
