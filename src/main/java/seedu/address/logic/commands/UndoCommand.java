@@ -26,6 +26,8 @@ public class UndoCommand extends Command {
         }
 
         undoRedoStack.popUndo().undo();
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Undo");
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
