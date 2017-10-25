@@ -87,6 +87,7 @@ public class AddressBookParser {
             case DetagCommand.COMMAND_WORD:
                 return new DetagCommandParser().parse(arguments);
 
+            default:
             }
         } else if (StringUtil.containsWordIgnoreCase(MODE_TASK_MANAGER, commandMode)) {
             switch (commandWord) {
@@ -109,6 +110,7 @@ public class AddressBookParser {
             case ListTasksCommand.COMMAND_WORD:
                 return new ListTasksCommand();
 
+            default:
             }
         }
         switch (commandWord) {
