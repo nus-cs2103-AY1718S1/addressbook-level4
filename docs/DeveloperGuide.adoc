@@ -16,8 +16,8 @@ By: `Team The Myth`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-The Myth's Book is an address book dedicated for university students to store useful information
-about the people around them. The Myth's Book is a `Command Line Input` based software that is coded
+The Myth's Book is an address book dedicated for university students to store events, birthdays, school email
+and home number  in addition to the existing fields of a normal Address Book. The Myth's Book is a `Command Line Input` based software that is coded
 in Java programming language.
 
 == About
