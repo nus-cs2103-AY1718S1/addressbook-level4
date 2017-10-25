@@ -125,6 +125,16 @@ MedNus can list selected contacts with specific tag(s). +
 *Example:* `list tag colleagues friends` +
 This shows you all contacts with the tag `colleagues`, `friends` or both.
 
+* *Listing contacts by name (Ascending)* +
+You can use `list ascending` to show a list of contacts sorted by name in ascending order. +
+*Format:* `list ascending` +
+*Shorthand Format:* `l asc`
+
+* *Listing contacts by name (Descending)* +
+You can use `list descending` to show a list of contacts sorted by name in descending order. +
+*Format:* `list descending` +
+*Shorthand Format:* `l dsc`
+
 === Listing persons by blood type : `bloodtype` [Since v1.2]
 
 You can use `bloodtype` to show a list of people with that specific blood type. +
@@ -473,6 +483,16 @@ You do not need to save data manually.
 |*List* |Lists all existing contacts |`list` |`list`
 
 |*List* |Lists contacts with specific tag |`list tag TAG/s` |`list tag colleagues`
+
+|*List* |Lists contacts by name in ascending order |`list asc` |`list asc`
+
+|*List* |Lists contacts by name in descending order |`list dsc` |`list dsc`
+
+|*List Shorthand* |Lists all existing contacts |`l` |`l`
+
+|*List Shorthand* |Lists contacts by name in ascending order |`l asc` |`l asc`
+
+|*List Shorthand* |Lists contacts by name in descending order |`l dsc` |`l dsc`
 
 |*Help* |Shows you the user guide |`help` |`help`
 
