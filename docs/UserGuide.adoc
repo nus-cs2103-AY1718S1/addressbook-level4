@@ -102,7 +102,7 @@ Format: `help`
 === Adding a parcel: `add`
 
 Adds a parcel to Ark +
-Format: `add #/TRACKING_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERYDATE s/STATUS [t/TAG]...`
+Format: `add #/TRACKING_ID n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE s/STATUS [t/TAG]...`
 
 [TIP]
 A parcel can have any number of tags (including 0)
@@ -110,15 +110,19 @@ A parcel can only have one of four `STATUS` input. i.e. `PENDING`, `DELIVERING`,
 If there is no `STATUS` input, it defaults to `PENDING`
 
 Examples:
+
 * `add #/RR000000000SG n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001
  s/DELIVERING`
 * `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
  t/fragile`
 
- [NOTE]
- Parcel Tracking numbers presently support only tracking numbers for registered articles managed by SingPost. These
- numbers include two `R`s followed by nine digits and ending with `SG`. +
- Support for other delivery companies will come in future patches.
+[NOTE]
+Parcel Tracking numbers presently support only tracking numbers for registered articles managed by SingPost. These
+numbers include two `R`s followed by nine digits and ending with `SG`. +
+Support for other delivery companies will come in future patches.
+
+[NOTE]
+If not included in the add command, the default value of both the phone and email field is `NIL`.
 
 tag::import[]
 
