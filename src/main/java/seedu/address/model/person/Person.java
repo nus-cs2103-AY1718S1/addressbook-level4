@@ -130,7 +130,7 @@ public class Person implements ReadOnlyPerson {
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
-    
+
     public void setExpiryDate(ExpiryDate date) {
         this.expiryDate.set(date);
     }
