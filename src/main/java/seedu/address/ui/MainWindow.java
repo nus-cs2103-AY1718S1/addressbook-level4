@@ -227,13 +227,4 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
-
-//    public void fillGroupMenuItem() {
-//        ObservableList<Group> groupList = logic.getGroupList();
-//
-//        for (Group g: groupList) {
-//            MenuItem item = new MenuItem(g.getGroupName());
-//            groupMenu.getItems().add(item);
-//        }
-//    }
 }

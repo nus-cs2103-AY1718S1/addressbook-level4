@@ -116,6 +116,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    public ObjectProperty<Group> groupProperty() { return group; }
+
+    @Override
     public Address getAddress() {
         return address.get();
     }

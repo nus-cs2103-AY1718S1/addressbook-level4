@@ -60,6 +60,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setGroups(List<? extends Group> groups) throws DuplicateGroupException {
+        this.groups.setGroups(groups);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -88,12 +92,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setGroups(newData.getGroupList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateGroupException e) {
+            assert false : "AddressBooks should not have duplicate groups";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+        syncGroupListWith(groups);
     }
 
     //// person-level operations
@@ -134,6 +142,29 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+    }
+
+    /**
+     * Ensures that group assigned to person exists in master list
+     */
+
+    private void syncGroupListWith (Group group) {
+        if (!groups.contains(group)) {
+            try {
+                groups.add(group);
+            } catch (DuplicateGroupException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Ensures that group assigned to person exists in master list
+     *  @see #syncGroupListWith(Group)
+     */
+
+    private void syncGroupListWith (UniqueGroupList groups) {
+        groups.forEach(this::syncGroupListWith);
     }
 
     /**

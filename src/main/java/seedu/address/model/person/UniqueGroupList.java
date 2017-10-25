@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,6 +58,18 @@ public class UniqueGroupList implements Iterable<Group> {
         return other == this // short circuit if same object
                 || (other instanceof UniqueGroupList // instanceof handles nulls
                 && this.groups.equals(((UniqueGroupList) other).groups));
+    }
+
+    public void setGroups(UniqueGroupList replacement) {
+        this.groups.setAll(replacement.groups);
+    }
+
+    public void setGroups(List<? extends Group> groups) throws DuplicateGroupException {
+        final UniqueGroupList replacement = new UniqueGroupList();
+        for (int i = 0; i < groups.size(); i++) {
+            replacement.add(new Group(groups.get(i).getGroupName()));
+        }
+        setGroups(replacement);
     }
 
     @Override

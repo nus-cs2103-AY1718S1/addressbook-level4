@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import com.sun.xml.internal.xsom.impl.WildcardImpl;
+
 /**
  * Class for group feature
  * A group is a field in the person object used to filter UI display
@@ -7,12 +9,10 @@ package seedu.address.model.person;
  */
 public class Group {
 
-    private String groupName;
-    private String groupComment;
+    public final String groupName;
 
-    public Group (String groupName, String groupComment) {
-        this.groupName = groupName;
-        this.groupComment = groupComment;
+    public Group (Group group) {
+        this.groupName = group.getGroupName();
     }
 
     public Group (String groupName) {
@@ -23,15 +23,10 @@ public class Group {
         return groupName;
     }
 
-    public String getgroupComment () {
-        return groupComment;
-    }
-
-    public void setGroupName (String groupName) {
-        this.groupName = groupName;
-    }
-
-    public void setgroupComment (String groupComment) {
-        this.groupComment = groupComment;
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof Group
+                && this.groupName.equals(((Group) other).groupName));
     }
 }

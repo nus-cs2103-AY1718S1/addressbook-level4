@@ -14,7 +14,8 @@
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
   </stylesheets>
-  <SplitPane VBox.vgrow="ALWAYS" id="menuDivider" fx:id="menuDivider" dividerPositions="0.5">
+  <SplitPane VBox.vgrow="ALWAYS" id="menuDivider" fx:id="menuDivider" dividerPositions="0.5"
+             styleClass="pane-with-border">
     <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
       <Menu mnemonicParsing="false" text="File">
         <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />

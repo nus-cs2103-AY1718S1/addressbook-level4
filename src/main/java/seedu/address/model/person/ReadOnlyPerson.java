@@ -24,6 +24,7 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
+    ObjectProperty<Group> groupProperty();
     Group getGroup();
 
     /**
@@ -36,7 +37,8 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
-                && other.getRemark().equals(this.getRemark());
+                && other.getRemark().equals(this.getRemark())
+                && other.getGroup().equals(this.getGroup());
     }
 
     /**
@@ -54,7 +56,8 @@ public interface ReadOnlyPerson {
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         builder.append(" Remarks: ")
-                .append(getRemark());
+                .append(getRemark())
+                .append(getGroup());
         return builder.toString();
     }
 
