@@ -337,6 +337,7 @@ public class CommandBox extends UiPart<Region> {
         // keywordLabel.setStyle("-fx-background-color: " + color + ";\n"
         // + "-fx-text-fill: red;");
         keywordLabel.setStyle(("-fx-text-fill: " + color));
+        keywordLabel.setOpacity(0.7);
         keywordLabel.toFront();
     }
 
