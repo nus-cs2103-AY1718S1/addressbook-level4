@@ -8,7 +8,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W15-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-W15-B4/main/tree/master/src/test[Test code]]
 
-=== Enhancement Added: 
+=== Enhancement Added:
 ==== TaskBook
 * A parallel book besides addressbook to record the user's multiple events.
 * It uses external storage different from addressbook.
