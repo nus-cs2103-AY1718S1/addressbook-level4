@@ -50,7 +50,12 @@ public class DeleteMultipleCommand extends UndoableCommand {
             }
 
             ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-            listOfDeletedContacts = listOfDeletedContacts + ", " + personToDelete.getName();
+            if (n == 0) {
+                listOfDeletedContacts = listOfDeletedContacts + personToDelete.getName();
+            }
+            else {
+                listOfDeletedContacts = listOfDeletedContacts + ", " + personToDelete.getName();
+            }
 
             try {
                 model.deletePerson(personToDelete);
