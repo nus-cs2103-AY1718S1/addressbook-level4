@@ -28,6 +28,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.TabCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.parcel.NameContainsKeywordsPredicate;
 import seedu.address.model.parcel.Parcel;
@@ -114,6 +115,12 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PARCEL.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PARCEL), command);
+    }
+
+    @Test
+    public void parseCommand_tab() throws Exception {
+        TabCommand command = (TabCommand) parser.parseCommand(TabCommand.COMMAND_WORD);
+        assertTrue(command instanceof TabCommand);
     }
 
     @Test
