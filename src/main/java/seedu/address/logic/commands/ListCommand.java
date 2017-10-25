@@ -44,17 +44,20 @@ public class ListCommand extends Command {
         if (parameter.equals(MODULE_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(MODULE);
             UniqueModuleCodePredicate codePredicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             ListingUnit.setCurrentPredicate(codePredicate);
             return executeListByAttribute(codePredicate);
         } else if (parameter.equals(LOCATION_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LOCATION);
             UniqueLocationPredicate locationPredicate = new UniqueLocationPredicate(model.getUniqueLocationSet());
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             ListingUnit.setCurrentPredicate(locationPredicate);
             return executeListByAttribute(locationPredicate);
         } else if (parameter.equals(MARKED_LIST_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LESSON);
             FavouriteListPredicate favouriteListPredicate = new FavouriteListPredicate();
             ListingUnit.setCurrentPredicate(favouriteListPredicate);
+            EventsCenter.getInstance().post(new ViewedLessonEvent());
             return executeListByAttribute(favouriteListPredicate);
         } else {
             assert false : "There cannot be other parameters passed in";
