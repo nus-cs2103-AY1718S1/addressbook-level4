@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import java.util.HashMap;
 import java.util.Random;
 
@@ -9,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -34,6 +39,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private ImageView photo;
+    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -54,6 +61,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        initPhoto(person);
     }
 
     private static String getColorForTag(String tagValue) {
@@ -78,6 +86,26 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
+
+    /**
+     * Initialise each image and assign a person a photo
+     */
+    private void initPhoto(ReadOnlyPerson person) {
+        try {
+            if(person.getPhoto() != null){
+                File photoFile = new File(person.getPhoto().getFullPhotoDir());
+                FileInputStream fileStream = new FileInputStream(photoFile);
+                Image personPhoto = new Image(fileStream);
+                photo = new ImageView(personPhoto);
+                photo.setFitHeight(person.getPhoto().HEIGHT);
+                photo.setFitWidth(person.getPhoto().WIDTH);
+                cardPane.getChildren().add(photo);
+            }
+        } catch(Exception e) {
+            System.out.println("Image not found");
+        }
+    }
+
     /**
      * Initialise each tag and assign a unique color
      */
