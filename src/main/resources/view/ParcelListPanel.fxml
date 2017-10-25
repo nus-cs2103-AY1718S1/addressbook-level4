@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="240.0" prefWidth="1543.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <TabPane tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane">
+   <TabPane fx:id="tabPanePlaceholder" tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane">
      <tabs>
        <Tab text="All Parcels">
             <content>

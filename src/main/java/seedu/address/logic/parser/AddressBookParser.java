@@ -93,8 +93,9 @@ public class AddressBookParser {
         case ImportCommand.COMMAND_WORD:
             return new ImportCommandParser().parse(arguments);
 
-            case TabCommand.COMMAND_WORD:
-                return new TabCommand();
+        case TabCommand.COMMAND_WORD:
+            return new TabCommandParser().parse(arguments);
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
