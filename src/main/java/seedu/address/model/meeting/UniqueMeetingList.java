@@ -29,10 +29,10 @@ import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
  */
 public class UniqueMeetingList implements Iterable<Meeting> {
 
-    private final ObservableList<Meeting> internalList = FXCollections.observableArrayList();
+    private final ObservableList<Meeting> internalMeetingList = FXCollections.observableArrayList();
     // used by asObservableList()
-    private final ObservableList<ReadOnlyMeeting> mappedList = EasyBind.map(internalList, (meeting) -> meeting);
-
+    private final ObservableList<ReadOnlyMeeting> mappedMeetingList =
+            EasyBind.map(internalMeetingList, (meeting) -> meeting);
 
 
     /**
@@ -40,14 +40,14 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      */
     public boolean contains(ReadOnlyMeeting toCheck) {
         requireNonNull(toCheck);
-        return internalList.contains(toCheck);
+        return internalMeetingList.contains(toCheck);
     }
 
     /**
      * Returns true if the list contains a clashing meeting that has a different name of meeting as the given argument.
      */
     public boolean diffNameOfMeeting(ReadOnlyMeeting toCheck) {
-        for (Meeting meeting : internalList) {
+        for (Meeting meeting : internalMeetingList) {
             if (toCheck.getDate().equals(meeting.getDate())) {
                 if (!toCheck.getName().equals(meeting.getName())) {
                     return true;
@@ -61,7 +61,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      * Returns true if the list contains a clashing meeting that has a different meeting location as the given argument.
      */
     public boolean diffLocationOfMeeting(ReadOnlyMeeting toCheck) {
-        for (Meeting meeting : internalList) {
+        for (Meeting meeting : internalMeetingList) {
             if (toCheck.getDate().equals(meeting.getDate())) {
                 if (!toCheck.getPlace().equals(meeting.getPlace())) {
                     return true;
@@ -85,8 +85,8 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         } else if (diffLocationOfMeeting(toAdd)) {
             throw new MeetingClashException();
         }
-        internalList.add(new Meeting(toAdd));
-        internalList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
+        internalMeetingList.add(new Meeting(toAdd));
+        internalMeetingList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
 
@@ -100,11 +100,11 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             throws DuplicateMeetingException, MeetingNotFoundException, MeetingClashException {
         requireNonNull(editedMeeting);
 
-        int index = internalList.indexOf(target);
+        int index = internalMeetingList.indexOf(target);
         if (index == -1) {
             throw new MeetingNotFoundException();
         }
-        if (!target.equals(editedMeeting) && internalList.contains(editedMeeting)) {
+        if (!target.equals(editedMeeting) && internalMeetingList.contains(editedMeeting)) {
             throw new DuplicateMeetingException();
         } else if (diffNameOfMeeting(editedMeeting)) {
             throw new MeetingClashException();
@@ -112,8 +112,8 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             throw new MeetingClashException();
         }
 
-        internalList.set(index, new Meeting(editedMeeting));
-        internalList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
+        internalMeetingList.set(index, new Meeting(editedMeeting));
+        internalMeetingList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
                 .compareTo(m2.getActualDate(m2.getDate().toString())));
     }
 
@@ -124,7 +124,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      */
     public boolean remove(ReadOnlyMeeting toRemove) throws MeetingNotFoundException {
         requireNonNull(toRemove);
-        final boolean meetingFoundAndDeleted = internalList.remove(toRemove);
+        final boolean meetingFoundAndDeleted = internalMeetingList.remove(toRemove);
         if (!meetingFoundAndDeleted) {
             throw new MeetingNotFoundException();
         }
@@ -132,7 +132,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
     }
 
     public void setMeetings(UniqueMeetingList replacement) {
-        this.internalList.setAll(replacement.internalList);
+        this.internalMeetingList.setAll(replacement.internalMeetingList);
     }
 
     public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException,
@@ -153,24 +153,24 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyMeeting> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
+        return FXCollections.unmodifiableObservableList(mappedMeetingList);
     }
 
     @Override
     public Iterator<Meeting> iterator() {
-        return internalList.iterator();
+        return internalMeetingList.iterator();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniqueMeetingList // instanceof handles nulls
-                && this.internalList.equals(((UniqueMeetingList) other).internalList));
+                && this.internalMeetingList.equals(((UniqueMeetingList) other).internalMeetingList));
     }
 
     @Override
     public int hashCode() {
-        return internalList.hashCode();
+        return internalMeetingList.hashCode();
     }
 
 }
