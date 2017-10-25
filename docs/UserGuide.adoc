@@ -201,7 +201,7 @@ Format: `set [INDEX] [INDEX] [RELATIONSHIP]`
 
 Examples:
 
-*`list` + 
+*`list` +
 * `set 1 2 siblings` +
 Sets the relationship between John and Betsy to siblings.
 
