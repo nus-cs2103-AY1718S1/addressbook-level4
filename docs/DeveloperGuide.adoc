@@ -446,6 +446,39 @@ image::RetrieveSequenceDiagram.png[width="800"]
 **Pros:** Faster to get the persons as the filtered person list is already created. +
 **Cons:** Requires to save the lists to storage file. +
 
+=== Reminder list
+
+The `Reminder` list mechanism works similar to the `Person` list. +
+It integrates the `Logic`, `Model`, `Storage`, `UI` component. +
+It consists of different commands that allow users to store reminders into the address book. +
+
+==== Commands
+Resides in the `commands` of `Logic` +
+
+`AddReminderCommand`: Adds information of reminders in address book. +
+ e.g. `addReminder z/Proposal Submission p/Low d/12/11/2017 m/Submit to Manager t/Friends` +
+
+`EditReminderCommand`: Edits the details of reminders in address book. +
+e.g. `editReminder 2 p/Medium m/Submit to Department Head`
+
+`DeleteReminderCommand`: Deletes the reminder of the last reminder list. +
+e.g. `deleteReminder 3`
+
+`SortPriorityCommand`: Sorts the reminder list in order of `priority` . +
+(*High* -> *Medium* -> *Low*) +
+e.g. `sortPriority`
+
+[NOTE]
+Missing details during adding of reminders will result in Invalid Command format.
+
+[NOTE]
+If an invalid Index is given during editing and deleting reminders, an `Exception` would be thrown.
+
+==== Expansion
+Clicking on any of the `Reminder` card will expand its details. The expanded
+details would be displayed beside it. +
+It allow viewing of the entire `message` field if it is too long.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -875,15 +908,48 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+
 [discrete]
-=== Use case: Delete person
+=== Use case: Add person / reminder
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add person / reminder
+2. AddressBook adds the person / reminder in the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Parameter(s) required are missing.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+* 1b. Parameter(s) are in the wrong format.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+* 1c. Duplicate contact / reminder is added.
++
+[none]
+** 1c1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person / reminder
+
+*MSS*
+
+1.  User requests to list persons / reminders
+2.  AddressBook shows a list of persons / reminders
+3.  User requests to edit a specific person / reminder in the list
+4.  AddressBook update the person’s / reminder's details
 +
 Use case ends.
 
@@ -900,36 +966,37 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-
-[discrete]
-=== Use case: Edit person
-
-*MSS*
-
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to edit a specific person in the list
-4.  AddressBook update the person’s contact details
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
-* 3b. New contact’s details provided by user are invalid.
+* 3b. New contact’s / reminder's details provided by user are invalid.
 +
 [none]
 ** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: Delete person / reminder
+
+*MSS*
+
+1.  User requests to list persons / reminder
+2.  AddressBook shows a list of persons / reminders
+3.  User requests to delete a specific person / reminder in the list
+4.  AddressBook deletes the person / reminder
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
@@ -965,6 +1032,7 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
+[discrete]
 === Use case: Add birthday
 
 *MSS*
@@ -1055,6 +1123,23 @@ Use case ends.
 
 1.  User requests to sort persons by birthday
 2.  AddressBook shows a list of persons from Jan to Dec
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort reminder by priority
+
+*MSS*
+
+1.  User requests to sort reminders by priority
+2.  AddressBook shows a list of reminders from High to Medium to Low.
 +
 Use case ends.
 
