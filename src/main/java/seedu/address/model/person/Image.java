@@ -7,7 +7,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class Image {
 
-    public final String path;
+    private String path;
 
     public Image(String path) {
         requireNonNull(path);
@@ -17,6 +17,14 @@ public class Image {
     @Override
     public String toString() {
         return path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
