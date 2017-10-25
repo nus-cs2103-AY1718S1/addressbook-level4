@@ -64,7 +64,7 @@ public class AddTagCommandTest {
         assertCommandFailure(addTagCommand, model, expectedMessage);
     }
 
-   /* @Test
+    /* @Test
     public void execute_validTagMultipleIndexes_success() throws Exception {
         Tag tagToAdd = new Tag("enemy");
         Set<Index> indexSet = new HashSet<>();
