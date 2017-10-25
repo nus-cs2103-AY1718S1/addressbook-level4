@@ -33,6 +33,8 @@ public class PersonInformationPanel extends UiPart<Region> {
     @FXML
     private VBox informationPane;
     @FXML
+    private FlowPane tags;
+    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -42,8 +44,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
-    @FXML
-    private FlowPane tags;
 
     public PersonInformationPanel() {
         super(FXML);
@@ -63,19 +63,33 @@ public class PersonInformationPanel extends UiPart<Region> {
         this.person = null; }
 
     /**
-     * loads the selected person's information to be displayed.
+     * binds the person's information to that of the person card.
      * @param person
+     * @param personid
      */
-    private void loadPersonInformation(ReadOnlyPerson person) {
-        this.person = person;
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+    private void bindListeners(ReadOnlyPerson person, int personid) {
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags();
         });
+
+    }
+
+    /**
+     * loads the selected person's information to be displayed.
+     * @param person
+     * @param personid
+     */
+    private void loadPersonInformation(ReadOnlyPerson person, int personid) {
+        this.person = person;
+        tags.getChildren().clear();
+        initTags();
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        id.setText(Integer.toString(personid));
+
     }
 
     /**
@@ -93,7 +107,8 @@ public class PersonInformationPanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonInformation(event.getNewSelection().person);
+        loadPersonInformation(event.getNewSelection().person, event.getNewSelection().stringid);
+        bindListeners(event.getNewSelection().person, event.getNewSelection().stringid);
     }
 
     @Override

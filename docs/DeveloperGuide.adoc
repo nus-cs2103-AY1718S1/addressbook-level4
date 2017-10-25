@@ -222,6 +222,8 @@ The person information panel is created using javafx. It should display detailed
 
 The event of the selection of a person is registered using the Event Bus system.
 
+The tags and various information of the person are bound to the information in PersonCard with the method bindListeners, so whenever the information updates, the information displayed in the Person Information Panel will change too.
+
 The following shows the usage of the person information panel:
 
 Before selecting a person:
@@ -1055,6 +1057,7 @@ Use case resumes at step 2.
 .  Address Book: The specific book that the user is using the application on.
 .  Format: The way in which command is entered.
 .  History: Commands entered previously.
+.  Person Information Panel: The panel which a person's information will be displayed when any person card is clicked.
 .  UI: Short for user interface.
 .  Undo: Restores the application to the state prior to the current state.
 .  GUI: Short for graphical user interface. A user interface that allows users to interact with electronic devices through graphical icons and visual indicators.
