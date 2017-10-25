@@ -57,9 +57,20 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
+        boolean temp;
+
+        try {
+            Integer.parseInt(args.trim());
+            temp = true;
+        } catch (Exception e) {
+            temp = false;
+        }
+
+        if (!editPersonDescriptor.isAnyFieldEdited() || temp) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
+
+        //if (args.split(" ").length < 2) throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
 
         return new EditCommand(index, editPersonDescriptor);
     }
