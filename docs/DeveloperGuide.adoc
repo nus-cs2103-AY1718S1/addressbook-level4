@@ -900,7 +900,7 @@ Figure 5.8.2 What the user sees
 
 ==== Design Considerations
 **Aspect:** UI of `BirthdaysCommand` +
-**Alternative 1 (current choice):** Showing the persons as a list+
+**Alternative 1 (current choice):** Showing the persons as a list +
 **Pros:** g: Voluntary action. users can check birthday if they want to and won't get confused even if there are multiple contacts with the same name as to whose birthday it is +
 **Cons:** Some users might want the birthdays to appear as a pop up +
 **Alternative 2:** Use a pop up which is triggered when the app is opened +
