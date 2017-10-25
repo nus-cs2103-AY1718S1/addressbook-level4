@@ -46,29 +46,29 @@ public class EventNameContainsKeywordsPredicateTest {
         // One keyword
         EventNameContainsKeywordsPredicate predicate =
                 new EventNameContainsKeywordsPredicate(Collections.singletonList("Alice"));
-        assertTrue(predicate.test(new EventBuilder().withEventName("Alice Bob").build()));
+        assertTrue(predicate.test(new EventBuilder().withName("Alice Bob").build()));
 
         // Multiple keywords
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
-        assertTrue(predicate.test(new EventBuilder().withEventName("Alice Bob").build()));
+        assertTrue(predicate.test(new EventBuilder().withName("Alice Bob").build()));
 
         // Only one matching keyword
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
-        assertTrue(predicate.test(new EventBuilder().withEventName("Alice Carol").build()));
+        assertTrue(predicate.test(new EventBuilder().withName("Alice Carol").build()));
 
         // Mixed-case keywords
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
-        assertTrue(predicate.test(new EventBuilder().withEventName("Alice Bob").build()));
+        assertTrue(predicate.test(new EventBuilder().withName("Alice Bob").build()));
     }
 
     @Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         EventNameContainsKeywordsPredicate predicate = new EventNameContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new EventBuilder().withEventName("Alice").build()));
+        assertFalse(predicate.test(new EventBuilder().withName("Alice").build()));
 
         // Non-matching keyword
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Carol"));
-        assertFalse(predicate.test(new EventBuilder().withEventName("Alice Bob").build()));
+        assertFalse(predicate.test(new EventBuilder().withName("Alice Bob").build()));
     }
 }

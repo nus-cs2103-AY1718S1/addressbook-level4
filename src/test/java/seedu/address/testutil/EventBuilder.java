@@ -14,8 +14,6 @@ import seedu.address.model.property.exceptions.PropertyNotFoundException;
  * A utility class to help with building Event objects.
  */
 public class EventBuilder {
-
-
     public static final String DEFAULT_EVENT_NAME = "Hack Your Way 2017";
     public static final String DEFAULT_TIME = "25102010 12:00";
     public static final String DEFAULT_VENUE = "123, Clementi West Ave 6, #08-123";
@@ -47,7 +45,7 @@ public class EventBuilder {
     /**
      * Sets the {@code Name} of the {@code Event} that we are building.
      */
-    public EventBuilder withEventName(String name) {
+    public EventBuilder withName(String name) {
         try {
             this.event.setName(new Name(name));
         } catch (IllegalValueException | PropertyNotFoundException ive) {
@@ -55,6 +53,7 @@ public class EventBuilder {
         }
         return this;
     }
+
     /**
      * Sets the {@code Address} of the {@code Event} that we are building.
      */

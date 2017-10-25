@@ -50,7 +50,7 @@ public class AddEventCommandTest {
 
     @Test
     public void execute_duplicateEvent_throwsCommandException() throws Exception {
-        AddEventModelStub modelStub = new ModelStubThrowingDuplicateEventException();
+        ModelStub modelStub = new ModelStubThrowingDuplicateEventException();
         Event validEvent = new EventBuilder().build();
 
         thrown.expect(CommandException.class);
@@ -61,8 +61,8 @@ public class AddEventCommandTest {
 
     @Test
     public void equals() {
-        Event event1 = new EventBuilder().withEventName("Nelsons birthday").build();
-        Event event2 = new EventBuilder().withEventName("Mellys birthday").build();
+        Event event1 = new EventBuilder().withName("Nelsons birthday").build();
+        Event event2 = new EventBuilder().withName("Mellys birthday").build();
         AddEventCommand addEvent1Command = new AddEventCommand(event1);
         AddEventCommand addEvent2Command = new AddEventCommand(event2);
 
@@ -93,18 +93,9 @@ public class AddEventCommandTest {
     }
 
     /**
-     * Inherit from default {@link ModelStub}, however, modifying {@link #sortEventList} so that it will not fail.
-     */
-    private class AddEventModelStub extends ModelStub {
-        @Override
-        public void sortEventList()  {
-        }
-    }
-
-    /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */
-    private class ModelStubThrowingDuplicatePersonException extends AddEventModelStub {
+    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             throw new DuplicatePersonException();
@@ -119,7 +110,7 @@ public class AddEventCommandTest {
     /**
      * A Model stub that always throw a DuplicateEventException when trying to add a event.
      */
-    private class ModelStubThrowingDuplicateEventException extends AddEventModelStub {
+    private class ModelStubThrowingDuplicateEventException extends ModelStub {
         @Override
         public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
             throw new DuplicateEventException();
@@ -134,7 +125,7 @@ public class AddEventCommandTest {
     /**
      * A Model stub that always accept the person being added.
      */
-    private class ModelStubAcceptingEventAdded extends AddEventModelStub {
+    private class ModelStubAcceptingEventAdded extends ModelStub {
         final ArrayList<Event> eventsAdded = new ArrayList<>();
 
         @Override
@@ -151,7 +142,7 @@ public class AddEventCommandTest {
     /**
      * A Model stub that always accept the person being added.
      */
-    private class ModelStubAcceptingPersonAdded extends AddEventModelStub {
+    private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
 
         @Override
