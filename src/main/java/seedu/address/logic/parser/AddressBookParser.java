@@ -122,7 +122,7 @@ public class AddressBookParser {
 
         case EmailCommand.COMMAND_WORD:
         case EmailCommand.COMMAND_ALIAS:
-            return new EmailCommand(Integer.parseInt(arguments));
+            return new EmailCommand(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

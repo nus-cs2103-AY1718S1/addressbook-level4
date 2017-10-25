@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -47,7 +48,7 @@ public class EditButton extends UiPart<Region> {
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleEditButtonPressed() throws CommandException, ParseException {
+    private void handleEditButtonPressed() throws CommandException, ParseException, IOException {
         StringBuilder command = new StringBuilder();
         command.append("edit " + getSelectedIndex() + " n/"
                 + nameTextField.getNameTextField() + " p/" + phoneTextField.getPhoneTextField() + " e/"
