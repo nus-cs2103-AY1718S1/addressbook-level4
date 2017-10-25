@@ -40,7 +40,7 @@ public class MergeCommandTest {
         MergeCommand mergeCommandFirst = new MergeCommand("./dummy/path/file1.txt");
         MergeCommand mergeCommandSecond = new MergeCommand("./dummy/path/file2.txt");
 
-        // same object -> returns true 
+        // same object -> returns true
         assertTrue(mergeCommandFirst.equals(mergeCommandFirst));
 
         // same values -> returns true

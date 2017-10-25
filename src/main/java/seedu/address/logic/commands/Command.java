@@ -17,7 +17,7 @@ public abstract class Command {
     protected UndoRedoStack undoRedoStack;
     protected Email emailManager;
     protected AddressBookStorage addressBookStorage;
-    
+
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
