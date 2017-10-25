@@ -134,20 +134,20 @@ public class AddCommandParserTest {
         // no phone number
         Parcel expectedParcelDefaultPhone = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
                 .withName(VALID_NAME_BOB).withPhone(Phone.PHONE_DEFAULT_VALUE).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERYDATE_BOB).withStatus(VALID_STATUS_BOB)
+                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_BOB)
                 .withTags(VALID_TAG_FRIEND).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERYDATE_DESC_BOB
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_BOB
                         + STATUS_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedParcelDefaultPhone));
 
         // no email
         Parcel expectedParcelDefaultEmail = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
                 .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(Email.EMAIL_DEFAULT_VALUE)
-                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERYDATE_BOB).withStatus(VALID_STATUS_BOB)
+                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_BOB)
                 .withTags(VALID_TAG_FRIEND).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
-                        + PHONE_DESC_BOB + ADDRESS_DESC_BOB + DELIVERYDATE_DESC_BOB
+                        + PHONE_DESC_BOB + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_BOB
                         + STATUS_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedParcelDefaultEmail));
 
@@ -165,7 +165,7 @@ public class AddCommandParserTest {
         // missing name prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + VALID_NAME_BOB
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_BOB, expectedMessage);
-      
+
         // missing address prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB + DELIVERY_DATE_DESC_BOB, expectedMessage);
