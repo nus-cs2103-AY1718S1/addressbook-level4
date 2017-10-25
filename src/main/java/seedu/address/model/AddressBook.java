@@ -179,7 +179,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @author Sri-vatsa
      * sorts persons in the addressbook alphabetically
      */
-    public void sortLexicographically() {persons.sortLexicographically();}
+    public void sortLexicographically() {
+        persons.sortLexicographically();
+    }
 
     //// util methods
 

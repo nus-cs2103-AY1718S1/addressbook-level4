@@ -40,17 +40,17 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_list_check_alphabetical_sequence() {
+    public void execute_listCheckAlphabeticalSequence() {
         listCommand.executeUndoableCommand();
 
-        String PersonAFullName;
-        String PersonBFullName;
+        String personAFullName;
+        String personBFullName;
 
         for (int i = 0; i < model.getFilteredPersonList().size(); i++) {
             for (int j = i + 1; j < model.getFilteredPersonList().size(); j++) {
-                PersonAFullName = model.getFilteredPersonList().get(i).getName().fullName;
-                PersonBFullName = model.getFilteredPersonList().get(j).getName().fullName;
-                assertTrue(PersonAFullName.compareTo(PersonBFullName) <=  0);
+                personAFullName = model.getFilteredPersonList().get(i).getName().fullName;
+                personBFullName = model.getFilteredPersonList().get(j).getName().fullName;
+                assertTrue(personAFullName.compareTo(personBFullName) <=  0);
             }
         }
 
