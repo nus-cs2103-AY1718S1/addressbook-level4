@@ -163,12 +163,22 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Sort addressBook methods =============================================================
 
     /***
-     * Sorts persons in Addressbook by searchCount
+     * Sorts persons in address book by searchCount
      * @author Sri-vatsa
      */
     @Override
     public void sortPersonListBySearchCount() {
         addressBook.sortBySearchCount();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    /***
+     * Sorts persons in Address book alphabetically
+     */
+    @Override
+    public void sortPersonListLexicographically() {
+        addressBook.sortLexicographically();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }

@@ -79,8 +79,9 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
+`From V1.3`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the address book in alphabetical order. +
 Format: `list`
 
 
