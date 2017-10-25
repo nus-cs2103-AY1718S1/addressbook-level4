@@ -1,9 +1,9 @@
 package seedu.address.ui;
 
-import javafx.fxml.FXML;
-
+import java.awt.Label;
 import javax.swing.plaf.synth.Region;
-import java.awt.*;
+
+import javafx.fxml.FXML;
 
 /**
  * The Contact Details Panel of the App.
