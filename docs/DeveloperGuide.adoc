@@ -960,7 +960,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |debt collector |sort my contacts by the amount owed |
 
-|`* * *` |debt collector |have a list of people who have cleared their debts |refer to their recorded info when they require my services again
+|`* * *` |debt collector |have a link:#whitelist[whitelist] |use that list for record keeping
 
 |`* * *` |debt collector |have link:#critical[critical] lists |quickly view which debtors I have to chase for repayment soon
 
@@ -1203,6 +1203,14 @@ Critical
 
 ....
 Requiring immediate attention of debt collectors
+....
+
+
+[[whitelist]]
+Whitelist
+
+....
+A list of people who have cleared their debts
 ....
 
 [[blacklist]]
