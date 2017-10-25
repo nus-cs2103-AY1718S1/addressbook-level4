@@ -16,33 +16,48 @@ public class Statistics {
     private int size;
 
     public Statistics(ObservableList<ReadOnlyPerson> personList) {
-        size = personList.size();
-        scoreArray = new double[size];
-        for (int i = 0; i < this.size; i++) {
+        int listSize = personList.size();
+        double[] listArray = new double[listSize];
+        for (int i = 0; i < listSize; i++) {
             Person person = (Person) personList.get(i);
-            scoreArray[i] = Double.parseDouble((person.getGrades().value));
+            listArray[i] = Double.parseDouble((person.getGrades().value));
         }
-        Arrays.sort(scoreArray);
+        initScore(listArray);
     }
 
-    private double getMean() {
+    protected Statistics(double[] scoreArray) {
+        initScore(scoreArray);
+    }
+
+    /**
+     * Sorts an array and assigns the appropriate values to the Statistics instance
+     *
+     * @param scoreArray the array of doubles used fo calculating statistics
+     */
+    public void initScore(double[] scoreArray) {
+        Arrays.sort(scoreArray);
+        this.scoreArray = scoreArray;
+        this.size = scoreArray.length;
+    }
+
+    public double getMean() {
         return DoubleStream.of(scoreArray).sum() / size;
     }
 
-    private double getMedian() {
+    public double getMedian() {
         return (size % 2 == 1)
                 ? scoreArray[(size - 1) / 2]
                 : (scoreArray[(size - 1) / 2] + scoreArray[((size - 1) / 2) + 1]) / 2;
     }
 
-    private double getMedianWithIndexes(double[] arr, int startIndex, int endIndex) {
+    public double getMedianWithIndexes(double[] arr, int startIndex, int endIndex) {
         int currSize = endIndex - startIndex + 1;
         return (currSize % 2 == 0)
                 ? (arr[startIndex + currSize / 2 - 1] + arr[startIndex + currSize / 2]) / 2
                 : arr[startIndex + (currSize - 1) / 2];
     }
 
-    private double getMode() {
+    public double getMode() {
         double mode = 0;
         double currPersonScore;
         int maxCount = 0;
@@ -62,35 +77,34 @@ public class Statistics {
         return mode;
     }
 
-    private double getQuartile1() {
+    public double getQuartile1() {
         return getMedianWithIndexes(scoreArray, 0, size / 2 - 1);
     }
 
-    private double getQuartile2() {
+    public double getQuartile2() {
         return getMedianWithIndexes(scoreArray, 0, size - 1);
     }
 
-    private double getQuartile3() {
+    public double getQuartile3() {
         return (size % 2 == 0)
                 ? getMedianWithIndexes(scoreArray, size / 2, size - 1)
                 : getMedianWithIndexes(scoreArray, size / 2 + 1, size - 1);
     }
 
-    private double getInterQuartileRange() {
+    public double getInterQuartileRange() {
         return getQuartile3() - getQuartile1();
     }
 
-    private double getVariance() {
+    public double getVariance() {
         double temp = 0;
         double mean = getMean();
         for (double score : scoreArray) {
             temp += (score - mean) * (score - mean);
         }
         return temp / (size - 1);
-
     }
 
-    private double getStdDev() {
+    public double getStdDev() {
         return Math.sqrt(getVariance());
     }
 
