@@ -26,6 +26,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 |Add `resize` command|Zeyong |18 Oct
 |Restore AddressBook backup |Yang Sheng|18 Oct
 |Google People API integration |Derrick|20 Oct
+|Allow wildcard symbol * in find command| Zeyong|24 Oct
+|Meetings implementation |Alex|24 Oct
+|Add optional parameters |Derrick |24 Oct
+|Confirmation prompt for restoring|Yang Sheng|24 Oct
 |=======================================================================
 
 == In progress
@@ -33,8 +37,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 [width=100%",cols="50%,<25%,<25%",options="header",]
 |=======================================================================
 |Feature |Developer |Delivery Date
-|Allow wildcard symbol * in find command| Zeyong| In progress
-
 |=======================================================================
 
 == Upcoming

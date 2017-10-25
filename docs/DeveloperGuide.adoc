@@ -465,7 +465,14 @@ public class AddTagCommand extends UndoableCommand {
         // ... try to replace personToEdit with editedPerson ...
     }
 }
+
 ----
+The diagram below (Figure 3.3.1) shows how `AddTagCommand` works.
+
+image::AddTagSequenceDiagram.png[]
+_Figure 3.3.1 : Sequence Diagram for AddTag_
+
+`RemoveTagCommand` works in a similar way. Note that `AddTagCommand` will throw an exception if the `Tag` already exists for the `Person` selected. `DeleteTagCommand` throws an exception if the `Tag` is not found on the `Person`.
 
 ==== Design Considerations
 
@@ -513,7 +520,7 @@ Given a new Predicate `newPredicate`, filtering on the existing list is equivale
 From Figure 3.2.1, it can also be viewed as the intersection of two lists of `person` objects, each satisfying one of the two predicates respectively.
 
 image::venn_diagram.png[height = 200, width = 250]
-_Figure 3.2.1 : Venn Diagram for Filtering_
+_Figure 3.4.1 : Venn Diagram for Filtering_
 
 ===== Implementation
 The actual implementation of filtering on the existing list involves three steps. +
@@ -521,6 +528,11 @@ The actual implementation of filtering on the existing list involves three steps
 .  Invoke `getPersonListPredicate()` provided in the Model interface to get the `currentPredicate`.
 .  Use [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html#and-java.util.function.Predicate-[Predicate.and()]] to generated the logical AND of the two predicates.
 .  Update the list using the predicate generated in step 2.
+
+For more detail, refer to the sequence diagram(Figure 3.4.2) below.
+
+image::FilterCommandSequenceDiagram.png[]
+_Figure 3.4.2 : Sequence Diagram for Filter_
 
 ===== Design consideration
 The design for filtering on the existing list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]].

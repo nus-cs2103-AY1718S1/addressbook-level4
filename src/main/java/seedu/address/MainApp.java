@@ -41,7 +41,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 2, 0, true);
+    public static final Version VERSION = new Version(1, 3, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -70,7 +70,6 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
-        storage.backupAddressBook(model.getAddressBook());
 
         logic = new LogicManager(model);
 
@@ -193,6 +192,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
+        storage.backupAddressBook(model.getAddressBook());
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
         try {

@@ -10,11 +10,15 @@ public class Note {
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Person notes can take any values";
 
-    public final String value;
+    private final String value;
 
     public Note(String value) {
         requireNonNull(value);
         this.value = value;
+    }
+
+    public String getValue() {
+        return this.value;
     }
 
     @Override

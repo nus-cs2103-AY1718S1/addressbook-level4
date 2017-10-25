@@ -5,20 +5,30 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.RequestingUserPermissionEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RestoreBackupCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.ui.testutil.EventsCollectorRule;
 
 public class CommandBoxTest extends GuiUnitTest {
 
-    private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
+    private static final String COMMAND_THAT_SUCCEEDS_COMMON = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
+    private static final String COMMAND_THAT_SUCCEEDS_PERMISSION = RestoreBackupCommand.COMMAND_WORD;
+    private static final String COMMAND_WITH_VALID_USER_PERMISSION = "no";
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -42,19 +52,34 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void commandBox_startingWithSuccessfulCommand() {
-        assertBehaviorForSuccessfulCommand();
+    public void commandBox_startingWithSuccessfulCommand_forHandleCommonCommandInputChanged() {
+        assertBehaviorForSuccessfulCommonCommand();
         assertBehaviorForFailedCommand();
     }
 
     @Test
-    public void commandBox_startingWithFailedCommand() {
+    public void commandBox_startingWithFailedCommand_forHandleCommonCommandInputChanged() {
         assertBehaviorForFailedCommand();
-        assertBehaviorForSuccessfulCommand();
+        assertBehaviorForSuccessfulCommonCommand();
 
         // verify that style is changed correctly even after multiple consecutive failed commands
-        assertBehaviorForSuccessfulCommand();
+        assertBehaviorForSuccessfulCommonCommand();
         assertBehaviorForFailedCommand();
+        assertBehaviorForFailedCommand();
+    }
+
+    @Test
+    public void commandBox_successfulCommand_forHandlePermissionCommandInputChanged() {
+        assertBehaviorForSuccessfulPermissionCommand();
+        EventsCenter.getInstance().post(new RequestingUserPermissionEvent());
+        assertBehaviorForPermissionInput();
+        assertBehaviorForFailedCommand();
+    }
+
+    @Test
+    public void commandBox_unsuccessfulCommand_forHandlePermissionCommandInputChangedParseException() {
+        assertBehaviorForSuccessfulPermissionCommand();
+        EventsCenter.getInstance().post(new RequestingUserPermissionEvent());
         assertBehaviorForFailedCommand();
     }
 
@@ -76,14 +101,14 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.DOWN, "");
 
         // one command
-        commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
+        commandBoxHandle.run(COMMAND_THAT_SUCCEEDS_COMMON);
+        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS_COMMON);
         assertInputHistory(KeyCode.DOWN, "");
 
         // two commands (latest command is failure)
         commandBoxHandle.run(COMMAND_THAT_FAILS);
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS_COMMON);
+        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS_COMMON);
         assertInputHistory(KeyCode.DOWN, COMMAND_THAT_FAILS);
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.DOWN, "");
@@ -95,7 +120,7 @@ public class CommandBoxTest extends GuiUnitTest {
         commandBoxHandle.run(thirdCommand);
         assertInputHistory(KeyCode.UP, thirdCommand);
         assertInputHistory(KeyCode.UP, COMMAND_THAT_FAILS);
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS_COMMON);
         assertInputHistory(KeyCode.DOWN, COMMAND_THAT_FAILS);
         assertInputHistory(KeyCode.DOWN, thirdCommand);
         assertInputHistory(KeyCode.DOWN, "");
@@ -108,9 +133,9 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, "");
 
         // one command
-        commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
+        commandBoxHandle.run(COMMAND_THAT_SUCCEEDS_COMMON);
         assertInputHistory(KeyCode.DOWN, "");
-        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS_COMMON);
 
         // two commands
         commandBoxHandle.run(COMMAND_THAT_FAILS);
@@ -141,8 +166,30 @@ public class CommandBoxTest extends GuiUnitTest {
      *      - the text is cleared <br>
      *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
      */
-    private void assertBehaviorForSuccessfulCommand() {
-        commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
+    private void assertBehaviorForSuccessfulCommonCommand() {
+        commandBoxHandle.run(COMMAND_THAT_SUCCEEDS_COMMON);
+        assertEquals("", commandBoxHandle.getInput());
+        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+    }
+
+    /**
+     * Runs a Permission command that succeeds, then verifies that <br>
+     *      - the text is cleared <br>
+     *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
+     */
+    private void assertBehaviorForSuccessfulPermissionCommand() {
+        commandBoxHandle.run(COMMAND_THAT_SUCCEEDS_PERMISSION);
+        assertEquals("", commandBoxHandle.getInput());
+        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+    }
+
+    /**
+     * Runs a valid user input following a Permission command, then verifies that <br>
+     *      - the text is cleared <br>
+     *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
+     */
+    private void assertBehaviorForPermissionInput() {
+        commandBoxHandle.run(COMMAND_WITH_VALID_USER_PERMISSION);
         assertEquals("", commandBoxHandle.getInput());
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
@@ -154,4 +201,5 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(keycode);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
+
 }

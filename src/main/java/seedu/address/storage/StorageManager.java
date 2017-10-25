@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -10,6 +11,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.BackupDataEvent;
+import seedu.address.commons.events.storage.BackupFilePresentEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.events.storage.RestoreBackupDataEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -80,10 +82,14 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) {
         String backupAddressBookFilePath = createBackupAddressBookFilePath(addressBookStorage.getAddressBookFilePath());
         logger.info("Attempting to backup data to data file: " + backupAddressBookFilePath);
-        saveAddressBook(addressBook, backupAddressBookFilePath);
+        try {
+            saveAddressBook(addressBook, backupAddressBookFilePath);
+        } catch (IOException e) {
+            raise (new DataSavingExceptionEvent(e));
+        }
     }
 
     /**
@@ -112,11 +118,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Subscribe
     public void handleBackupDataEvent(BackupDataEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        try {
-            backupAddressBook(event.getAddressBookData());
-        } catch (IOException e) {
-            raise (new DataSavingExceptionEvent(e));
-        }
+        backupAddressBook(event.getAddressBookData());
     }
 
     @Override
@@ -127,6 +129,18 @@ public class StorageManager extends ComponentManager implements Storage {
         String backupFilePath = createBackupAddressBookFilePath(addressBookStorage.getAddressBookFilePath());
         backupAddressBookData = readAddressBook(backupFilePath).get();
         event.updateAddressBookData(backupAddressBookData);
+    }
+
+    @Override
+    @Subscribe
+    public void handleBackupFilePresentEvent(BackupFilePresentEvent event) {
+        String backupAddressBookFilePath = createBackupAddressBookFilePath(addressBookStorage.getAddressBookFilePath());
+        File f = new File(backupAddressBookFilePath);
+        if (f.exists()) {
+            event.updateBackupFilePresenceStatus(true);
+        } else {
+            event.updateBackupFilePresenceStatus(false);
+        }
     }
 
 }
