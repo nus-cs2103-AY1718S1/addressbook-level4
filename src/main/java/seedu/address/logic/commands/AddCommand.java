@@ -12,6 +12,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.Set;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -82,6 +83,9 @@ public class AddCommand extends UndoableCommand {
             model.deletePerson(toAdd);
             model.removeTags(newTags);
         } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        } catch (DeleteOnCascadeException doce) {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
