@@ -35,7 +35,7 @@ image::eryao95.png[width="120", height="150" align="left"]
 {empty}[http://github.com/eryao95[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer + Code Quality Manager +
-Responsibilities: Deadlines and Deliverables + Documentation + Storage
+Responsibilities: Documentation + Storage
 
 '''
 
@@ -44,7 +44,7 @@ image::raisa2010.png[width="150", height="150", align="left"]
 {empty} [https://github.com/raisa2010[github]] [<<johndoe#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Scheduling and Tracking
+Responsibilities: Scheduling and Tracking + Deadlines and Deliverables
 
 '''
 
