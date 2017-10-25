@@ -3,6 +3,8 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -41,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label remark;
+    @FXML
+    private ImageView pImage;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -64,10 +68,55 @@ public class PersonCard extends UiPart<Region> {
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
+        assignImage(person);
     }
 
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    /**
+     *  Assigns URL to the image depending on the path
+     *  @param person image to be shown
+     */
+    private void assignImage(ReadOnlyPerson person) {
+
+        if (!person.getImage().getPath().equals("")) {
+
+            Image imageToSet = new Image("file:" + "images/" + person.getImage().getPath() + ".png",
+                    100, 100, false, false);
+
+            centerImage();
+            pImage.setImage(imageToSet);
+        }
+    }
+
+    /**
+     * Centre the image in ImageView
+     */
+    public void centerImage() {
+        Image img = pImage.getImage();
+        if (img != null) {
+            double w = 0;
+            double h = 0;
+
+            double ratioX = pImage.getFitWidth() / img.getWidth();
+            double ratioY = pImage.getFitHeight() / img.getHeight();
+
+            double reducCoeff = 0;
+            if (ratioX >= ratioY) {
+                reducCoeff = ratioY;
+            } else {
+                reducCoeff = ratioX;
+            }
+
+            w = img.getWidth() * reducCoeff;
+            h = img.getHeight() * reducCoeff;
+
+            pImage.setX((pImage.getFitWidth() - w) / 2);
+            pImage.setY((pImage.getFitHeight() - h) / 2);
+
+        }
     }
 
     @Override
