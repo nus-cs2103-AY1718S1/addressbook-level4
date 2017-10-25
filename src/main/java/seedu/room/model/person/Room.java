@@ -9,13 +9,15 @@ import seedu.room.commons.exceptions.IllegalValueException;
 public class Room {
 
     public static final String MESSAGE_ROOM_CONSTRAINTS =
-            "Person rooms can take any values, and it should not be blank";
+            "Room should be in the format FF-UUUA where FF is the floor, "
+                   + "UUU is unit number and A is an optional letter "
+                   + "to denote exact room within a suite";
 
     /*
      * The first character of the room must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String ROOM_VALIDATION_REGEX = "\d{2}-\d{3}[A-Z]?";
+    public static final String ROOM_VALIDATION_REGEX = "\\d{2}-\\d{3}[A-Z]?";
     public static final String ROOM_NOT_SET_DEFAULT = "Not Set";
 
     public final String value;

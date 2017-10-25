@@ -12,11 +12,11 @@ public class RoomTest {
         // invalid rooms
         assertFalse(Room.isValidRoom("")); // empty string
         assertFalse(Room.isValidRoom(" ")); // spaces only
+        assertFalse(Room.isValidRoom("-")); // one character
+        assertFalse(Room.isValidRoom("123-1234")); // long room
 
         // valid rooms
-        assertTrue(Room.isValidRoom("Blk 456, Den Road, #01-355"));
-        assertTrue(Room.isValidRoom("-")); // one character
-        assertTrue(Room.isValidRoom("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long room
+        assertTrue(Room.isValidRoom("09-100"));
 
         // default empty room
         assertTrue(Room.isValidRoom("Not Set"));
