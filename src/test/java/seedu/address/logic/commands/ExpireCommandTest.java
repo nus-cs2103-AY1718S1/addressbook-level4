@@ -5,7 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPIRE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EXPIRE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.ExpireCommand.MESSAGE_ARGUMENTS;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.ExpireCommand.MESSAGE_SET_EXPIRY_DATE_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -24,13 +25,6 @@ import seedu.address.model.person.ExpiryDate;
 public class ExpireCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute() throws Exception {
-        final String dateString = "2011-01-01";
-        assertCommandFailure(prepareCommand(INDEX_FIRST_PERSON, dateString), model,
-                String.format(MESSAGE_ARGUMENTS, INDEX_FIRST_PERSON.getOneBased(), dateString));
-    }
 
     @Test
     public void equals() throws IllegalValueException {

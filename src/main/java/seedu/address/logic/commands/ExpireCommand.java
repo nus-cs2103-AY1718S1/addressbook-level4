@@ -35,7 +35,6 @@ public class ExpireCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_EXPIRE + "2017-09-09";
 
-    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Date string: %2$s";
     public static final String MESSAGE_SET_EXPIRY_DATE_SUCCESS = "Expiry date of %1$s set as %2$s.";
     public static final String MESSAGE_DELETE_EXPIRY_DATE_SUCCESS = "Removed expiry date of Person: %1$s.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
