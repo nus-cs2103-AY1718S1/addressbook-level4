@@ -91,7 +91,7 @@ Each component has different functions:
 
 == Using Mobilize
 
-==== Formatting Commands
+=== Formatting Commands
 
 For the following tutorials, command formatting will be explained using the following syntax:
 
@@ -441,7 +441,7 @@ All you have to do is type in:
 
 Format: `edittask INDEX DESCRIPTION from START DATE to DEADLINE`
 
-[Tip]
+[TIP]
 One or more parameters can be specified.
 
 For example:
