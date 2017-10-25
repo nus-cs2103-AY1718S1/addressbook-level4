@@ -1,9 +1,14 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.UniqueLifeInsuranceIdList;
+import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -26,7 +31,10 @@ public interface ReadOnlyPerson {
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     String getReason();
-    ReadOnlyInsurance getLifeInsurance();
+    ObjectProperty<List<UUID>> lifeInsuranceIdProperty();
+    List<UUID> getLifeInsuranceIds();
+    ObjectProperty<UniqueLifeInsuranceList> lifeInsuranceProperty();
+
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

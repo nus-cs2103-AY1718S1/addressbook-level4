@@ -4,13 +4,17 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.UniqueLifeInsuranceIdList;
+import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -25,11 +29,28 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<DateOfBirth> dob;
-    private ReadOnlyInsurance lifeInsurance;
 
     private String reason;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<List<UUID>> lifeInsuranceIds;
+    private ObjectProperty<UniqueLifeInsuranceList> lifeInsurances;
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, DateOfBirth dob, Set<Tag> tags,
+                  List<UUID> lifeInsuranceIds) {
+        requireAllNonNull(name, phone, email, address, dob, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.dob = new SimpleObjectProperty<>(dob);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.lifeInsuranceIds = new SimpleObjectProperty<>(lifeInsuranceIds);
+    }
 
     /**
      * Every field must be present and not null.
@@ -51,15 +72,17 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
+        /*
         if (source.getLifeInsurance() != null) {
             this.lifeInsurance = source.getLifeInsurance();
         }
+        */
     }
 
     public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
-        this.lifeInsurance = lifeInsurance;
+        //this.lifeInsurance = lifeInsurance;
     }
 
     public void setName(Name name) {
@@ -140,6 +163,21 @@ public class Person implements ReadOnlyPerson {
         return reason;
     }
 
+    @Override
+    public ObjectProperty<List<UUID> > lifeInsuranceIdProperty() {
+        return this.lifeInsuranceIds;
+    }
+
+    @Override
+    public List<UUID> getLifeInsuranceIds() {
+        return this.lifeInsuranceIds.get();
+    }
+
+    @Override
+    public ObjectProperty<UniqueLifeInsuranceList> lifeInsuranceProperty() {
+        return this.lifeInsurances;
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -160,16 +198,16 @@ public class Person implements ReadOnlyPerson {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
-
+    /*
     public void setLifeInsurance(LifeInsurance lifeInsurance) {
         this.lifeInsurance = lifeInsurance;
     }
 
     @Override
-    public ReadOnlyInsurance getLifeInsurance() {
+    public  getLifeInsuranceIds() {
         return lifeInsurance;
     }
-
+    */
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
