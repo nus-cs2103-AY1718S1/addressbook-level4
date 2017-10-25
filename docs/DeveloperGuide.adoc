@@ -404,7 +404,7 @@ A UniqueEventList is also created to store the list of Events in AddressBook.jav
 Code of `UniqueEventList.java` when an Event is created and stored into the UniqueEventList:
 
 The new Events will be stored in UniqueEventList in AddressBook.
----
+----
 public class UniqueEventList implements Iterable<Event> {
 
     private final ObservableList<Event> internalList = FXCollections.observableArrayList();
@@ -418,7 +418,7 @@ public class UniqueEventList implements Iterable<Event> {
     }
     ...
 }
----
+----
 
 ==== Design Consideration
 **Aspect:** Implementation of `AddEventCommand` +
