@@ -113,7 +113,8 @@ public class EditCommand extends UndoableCommand {
         Remark updatedRemark = personToEdit.getRemark();
         Image updatedImage = personToEdit.getImage();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedRemark, updatedImage);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedTags, updatedRemark, updatedImage);
     }
 
     @Override

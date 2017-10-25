@@ -33,7 +33,8 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Remark remarks, Image image) {
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, Remark remarks, Image image) {
         requireAllNonNull(name, phone, email, address, tags, remarks, image);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -45,7 +46,8 @@ public class Person implements ReadOnlyPerson {
         this.image = new SimpleObjectProperty<>(image);
     }
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Remark remarks, Group group, Image image) {
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, Remark remarks, Group group, Image image) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
