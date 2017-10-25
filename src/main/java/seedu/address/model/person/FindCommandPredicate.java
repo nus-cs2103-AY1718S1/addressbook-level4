@@ -19,13 +19,13 @@ public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
 
         boolean number = keywords.stream()
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
-        
+
         boolean address = keywords.stream()
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().toString(), keyword));
-        
+
         boolean email = keywords.stream()
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().toString(), keyword));
-        
+
         if (name || number || address || email) {
             return true;
         } else {
