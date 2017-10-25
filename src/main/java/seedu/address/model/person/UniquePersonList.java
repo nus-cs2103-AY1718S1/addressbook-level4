@@ -90,9 +90,11 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     public void removeByTag(Tag tag) {
-        for (Person p: internalList ) {
+        Iterator<Person> itr = this.iterator();
+        while (itr.hasNext()) {
+            Person p = itr.next();
             if (p.getTags().contains(tag)) {
-                internalList.remove(p);
+                itr.remove();
             }
         }
     }
@@ -108,6 +110,10 @@ public class UniquePersonList implements Iterable<Person> {
         }
         setPersons(replacement);
         sortBy(currentlySortedBy);
+    }
+
+    public ObservableList<Person> getInternalList() {
+        return internalList;
     }
 
     /**
