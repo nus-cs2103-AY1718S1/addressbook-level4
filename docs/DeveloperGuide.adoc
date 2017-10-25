@@ -895,7 +895,7 @@ What the user finally sees is a list of people with their birthday today as show
     }
 ----
 
-image::BirthdaysMechanism2.png[width="800"]
+image::BirthdaysMechanism2.png[width="400"]
 Figure 5.8.2 What the user sees
 
 ==== Design Considerations
