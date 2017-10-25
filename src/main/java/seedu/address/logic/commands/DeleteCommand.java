@@ -43,21 +43,22 @@ public class DeleteCommand extends UndoableCommand {
         ReadOnlyPerson personToDelete = null;
         ReadOnlyPerson[] personsToDelete = null;
 
-        if( targetIndex != null) {
+        if (targetIndex != null) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
             personToDelete = lastShownList.get(targetIndex.getZeroBased());
         }
-        if (targetIndexes != null ) {
-           personsToDelete = new ReadOnlyPerson[targetIndexes.length];
-           for( int i = 0; i < personsToDelete.length; i++) {
-               personsToDelete[i] = lastShownList.get(targetIndexes[i].getZeroBased());
-           }
+
+        if (targetIndexes != null) {
+            personsToDelete = new ReadOnlyPerson[targetIndexes.length];
+            for (int i = 0; i < personsToDelete.length; i++) {
+                personsToDelete[i] = lastShownList.get(targetIndexes[i].getZeroBased());
+            }
         }
 
         try {
-            if ( personsToDelete == null ) {
+            if (personsToDelete == null) {
                 model.deletePerson(personToDelete);
             } else {
                 model.deletePersons(personsToDelete);

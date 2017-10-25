@@ -133,6 +133,8 @@ public class AddCommandTest {
 
         @Override
         public void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException {
+            fail("This method should not be called.");
+        }
 
         @Override
         public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
@@ -188,7 +190,7 @@ public class AddCommandTest {
         public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
             return null;
         }
-        
+
         public void showUnfilteredPersonList() {
             fail("This method should not be called.");
         }

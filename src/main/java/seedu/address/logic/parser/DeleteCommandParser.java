@@ -20,12 +20,12 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     public DeleteCommand parse(String args) throws ParseException {
         try {
             String[] arguments = args.trim().split(" ");
-            if( arguments.length == 1 ) {
+            if (arguments.length == 1) {
                 Index index = ParserUtil.parseIndex(args);
                 return new DeleteCommand(index);
             } else {
                 Index[] indexes = new Index[arguments.length];
-                for( int i = 0; i< indexes.length; i++) {
+                for (int i = 0; i < indexes.length; i++) {
                     indexes[i] = ParserUtil.parseIndex(arguments[i]);
                 }
                 return new DeleteCommand(indexes);

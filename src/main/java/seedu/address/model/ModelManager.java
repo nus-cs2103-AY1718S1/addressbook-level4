@@ -86,7 +86,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void deletePersons(ReadOnlyPerson[] targets) throws PersonNotFoundException {
-        for( ReadOnlyPerson target : targets ) {
+        for (ReadOnlyPerson target : targets) {
             addressBook.removePerson(target);
         }
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -131,7 +131,9 @@ public class ModelManager extends ComponentManager implements Model {
     public void addSchedule(ReadOnlySchedule schedule) throws DuplicateScheduleException {
         addressBook.addSchedule(schedule);
         updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+    }
 
+    @Override
     public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
             throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
         addressBook.addPersonToGroup(targetGroup, toAdd);
@@ -170,7 +172,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
         return FXCollections.unmodifiableObservableList(filteredSchedules);
+    }
 
+    @Override
     public void showUnfilteredPersonList() {
         filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
         indicateListEvent();

@@ -58,7 +58,7 @@ public interface Model {
 
     /** Deletes the given schedule */
     void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException;
-  
+
     /** Adds given person to given group */
     void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd) throws
             GroupNotFoundException, PersonNotFoundException, DuplicatePersonException;
