@@ -76,22 +76,22 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public HashMap<String, String> getCommandKeywordColorMap() {
         HashMap<String, String> keywordColorMap = new HashMap<>();
-        keywordColorMap.put(AddCommand.COMMAND_WORD, "#66ff00"); //Bright green
-        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "#ff2800"); //Ferrari red
-        keywordColorMap.put(EditCommand.COMMAND_WORD, "#00ffef"); //Turquoise blue
-        keywordColorMap.put(ExitCommand.COMMAND_WORD, "#c80815"); //Venetian red
-        keywordColorMap.put(FindCommand.COMMAND_WORD, "#ffff66"); //Unmellow yellow
-        keywordColorMap.put(HelpCommand.COMMAND_WORD, "#e4d96f"); //Straw
-        keywordColorMap.put(ListCommand.COMMAND_WORD, "#00ffff"); //Waterspout
-        keywordColorMap.put(SelectCommand.COMMAND_WORD, "#30d5c8"); //Turquoise
-        keywordColorMap.put(SortCommand.COMMAND_WORD, "#a0d6b4"); //Turquoise green
-        keywordColorMap.put(ClearCommand.COMMAND_WORD, "#746cc0"); //Toolbox
-        keywordColorMap.put(UndoCommand.COMMAND_WORD, "#dbd7d2"); //Timberwolf
-        keywordColorMap.put(RedoCommand.COMMAND_WORD, "#0abab5"); //Tiffany blud
-        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "#ABCDED");
-        keywordColorMap.put(HistoryCommand.COMMAND_WORD, "#ffcc00"); //Tangerline yellow
-        keywordColorMap.put(ViewCommand.COMMAND_WORD, "#f28500"); //Tangerine
-        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "#f94d00"); //Tangelo
+        keywordColorMap.put(AddCommand.COMMAND_WORD, "#662c91");
+        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "#ff2800");
+        keywordColorMap.put(EditCommand.COMMAND_WORD, "#208cd5");
+        keywordColorMap.put(ExitCommand.COMMAND_WORD, "#cf9904");
+        keywordColorMap.put(FindCommand.COMMAND_WORD, "#87255b");
+        keywordColorMap.put(HelpCommand.COMMAND_WORD, "#ad9672");
+        keywordColorMap.put(ListCommand.COMMAND_WORD, "#838469");
+        keywordColorMap.put(SelectCommand.COMMAND_WORD, "#49a0a0");
+        keywordColorMap.put(SortCommand.COMMAND_WORD, "#a0d6b4");
+        keywordColorMap.put(ClearCommand.COMMAND_WORD, "#746cc0");
+        keywordColorMap.put(UndoCommand.COMMAND_WORD, "#dbd7d2");
+        keywordColorMap.put(RedoCommand.COMMAND_WORD, "#0abab5");
+        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "#e89eb4");
+        keywordColorMap.put(HistoryCommand.COMMAND_WORD, "#ffcc00");
+        keywordColorMap.put(ViewCommand.COMMAND_WORD, "#6f7aea");
+        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "#f94d00");
         return keywordColorMap;
     }
 }

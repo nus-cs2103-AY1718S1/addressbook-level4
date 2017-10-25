@@ -27,7 +27,7 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a lesson to the address book. "
             + "Parameters: "
             + PREFIX_MODULE_CODE + "MODULE_CODE "
-            + PREFIX_CLASS_TYPE + " CLASS_TYPE "
+            + PREFIX_CLASS_TYPE + "CLASS_TYPE "
             + PREFIX_VENUE + "VENUE "
             + PREFIX_GROUP + "GROUP "
             + PREFIX_TIME_SLOT + "TIME_SLOT "
@@ -38,7 +38,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_VENUE + "LT27 "
             + PREFIX_GROUP + "1 "
             + PREFIX_TIME_SLOT + "FRI[1400-1600] "
-            + PREFIX_LECTURER + " Ma Siu Lun";
+            + PREFIX_LECTURER + "Ma Siu Lun";
 
     public static final String MESSAGE_SUCCESS = "New lesson added: %1$s";
     public static final String MESSAGE_DUPLICATE_LESSON = "This lesson already exists in the address book";

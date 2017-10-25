@@ -392,7 +392,7 @@ public class CommandBox extends UiPart<Region> {
         // tagLabel.setStyle("-fx-background-color:yellow;\n"
         // + "-fx-text-fill: red; ");
 
-        tagLabel.setStyle("-fx-text-fill: yellow");
+        tagLabel.setStyle("-fx-text-fill: #b06901");
 
         tagLabel.setVisible(true);
         tagLabel.toFront();
