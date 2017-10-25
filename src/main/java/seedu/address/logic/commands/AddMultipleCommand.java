@@ -71,7 +71,7 @@ public class AddMultipleCommand extends UndoableCommand {
         StringBuilder successMessage = new StringBuilder();
         requireNonNull(model);
         try {
-            for(Person personToAdd: toAdd) {
+            for (Person personToAdd: toAdd) {
                 model.addPerson(personToAdd);
                 successMessage.append(System.lineSeparator());
                 successMessage.append(personToAdd);
