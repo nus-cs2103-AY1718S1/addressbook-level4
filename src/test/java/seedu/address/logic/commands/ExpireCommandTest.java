@@ -22,6 +22,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ExpiryDate;
 
 public class ExpireCommandTest {
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -32,7 +33,7 @@ public class ExpireCommandTest {
     }
 
     @Test
-    public void equals() throws IllegalValueException{
+    public void equals() throws IllegalValueException {
         final ExpireCommand standardCommand = new ExpireCommand(INDEX_FIRST_PERSON, new ExpiryDate(VALID_EXPIRE_AMY));
 
         // same value -> returns true
@@ -58,7 +59,7 @@ public class ExpireCommandTest {
     /**
      * Returns an {@code ExpireCommand} with parameters {@code index} and {@code dateString}
      */
-    private ExpireCommand prepareCommand(Index index, String dateString) throws IllegalValueException{
+    private ExpireCommand prepareCommand(Index index, String dateString) throws IllegalValueException {
         ExpireCommand expireCommand = new ExpireCommand(index, new ExpiryDate(dateString));
         expireCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return expireCommand;
