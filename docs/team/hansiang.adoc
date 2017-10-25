@@ -49,6 +49,17 @@ include::../UserGuide.adoc[tag=commandaliases]
 
 This allows a user to use short form commands rather than the actual full command name.
 
+=== Enhancement Added:  View social media links of contact
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=websiteselectionevent]
+
+#End of Extract#
+
+---
+
 === Enhancement Added: Viewing of Address
 
 ==== External behavior
@@ -75,11 +86,7 @@ include::../DeveloperGuide.adoc[tag=websitebuttonbar]
 
 ==== Justification
 
-This allows a user view the address of a contact directly within the application.
-
-=== Enhancement Proposed: View social media links of contact
-
-{to be updated}
+This allows a user view the Social Links and Address of a contact directly within the application.
 
 === Other contributions
 

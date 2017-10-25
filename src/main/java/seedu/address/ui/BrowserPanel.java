@@ -12,8 +12,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -54,6 +54,30 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(MAPS_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
     }
 
+    /**
+     * Loads the selected Person's others page.
+     */
+    private void loadPersonPersonal(ReadOnlyPerson selectedPerson) {
+        selectedPerson.getWebLinks().forEach(webLink -> {
+            if (webLink.webLinkTag.equals("others")) {
+                loadPage(webLink.webLinkInput);
+                return;
+            }
+        });
+    }
+
+    /**
+     * Loads the selected Person's social page.
+     */
+    private void loadPersonSocial(ReadOnlyPerson selectedPerson, String websiteRequested) {
+        selectedPerson.getWebLinks().forEach(webLink -> {
+            if (websiteRequested.toLowerCase() == webLink.webLinkTag.trim().toLowerCase()) {
+                loadPage(webLink.webLinkInput);
+                return;
+            }
+        });
+    }
+
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -81,10 +105,10 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Called when the user clicks on the button bar buttons.
+     * Called when the user clicks on the button bar buttons or via the "web" command.
      */
     @Subscribe
-    private void handleButtonPressedEvent(WebsiteSelectionRequestEvent event) {
+    private void handleWebsiteSelectionEvent(WebsiteSelectionRequestEvent event) {
         switch (event.getWebsiteRequested()) {
         case "mapsView":
             loadPersonAddress(selectedPerson);
@@ -92,7 +116,11 @@ public class BrowserPanel extends UiPart<Region> {
         case "searchView":
             loadPersonPage(selectedPerson);
             break;
+        case "othersView":
+            loadPersonPersonal(selectedPerson);
+            break;
         default:
+            loadPersonSocial(selectedPerson, event.getWebsiteRequested());
             break;
         }
     }
