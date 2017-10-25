@@ -23,10 +23,6 @@ import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.persons.FindCommand;
-import seedu.address.logic.commands.tasks.FindTaskCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
 
@@ -93,8 +89,7 @@ public class CalendarPanel extends UiPart<Region> {
             public void handle(ActionEvent event) {
                 LocalDate date = datePicker.getValue();
                 logger.info("Date selected: " + date.toString());
-
-/*
+                /*
                 try {
                     logic.execute(FindTaskCommand.COMMAND_WORD + " " + markdate.toString());
                     logic.execute(FindCommand.COMMAND_WORD + " " + markdate.toString());
@@ -126,7 +121,8 @@ public class CalendarPanel extends UiPart<Region> {
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
                         StringBuilder s = new StringBuilder();
-                        int bCount = 0, dCount = 0;
+                        int bCount = 0;
+                        int dCount = 0;
                         StringBuilder colour = new StringBuilder();
                         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -137,8 +133,7 @@ public class CalendarPanel extends UiPart<Region> {
                                     if (bCount == 0) {
                                         bCount++;
                                         s.append(person.getName() + "'s Birthday");
-                                    }
-                                    else if (bCount > 0) {
+                                    } else if (bCount > 0) {
                                         int endIndex = s.indexOf("Birthday");
                                         s.delete(0, endIndex);
                                         bCount++;
@@ -163,12 +158,10 @@ public class CalendarPanel extends UiPart<Region> {
                                     if ((bCount == 0) && (dCount == 0)) {
                                         dCount++;
                                         s.append(dCount + " Deadline");
-                                    }
-                                    else if ((bCount > 0) && (dCount == 0)) {
+                                    } else if ((bCount > 0) && (dCount == 0)) {
                                         dCount++;
                                         s.append(" + " + dCount + " Deadline");
-                                    }
-                                    else if (dCount > 0) {
+                                    } else if (dCount > 0) {
                                         dCount++;
                                         int endIndex = s.indexOf(" Deadline");
                                         s.replace(endIndex - 1, endIndex, dCount + "");
@@ -179,8 +172,7 @@ public class CalendarPanel extends UiPart<Region> {
 
                                     if (bCount == 0) {
                                         colour = new StringBuilder("-fx-background-color: #ff444d;");
-                                    }
-                                    else if (bCount > 0) {
+                                    } else if (bCount > 0) {
                                         colour = new StringBuilder("-fx-background-color: #feff31;");
                                     }
                                 }
