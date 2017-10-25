@@ -42,6 +42,8 @@ public class CommandTestUtil {
     public static final String VALID_REMARK_AMY = "Like skiing.";
     public static final String VALID_REMARK_BOB = "Favourite pastime: Food";
     public static final String VALID_REMARK_LORETTA = "Likes to play pranks";
+    public static final String VALID_LINK_AMY = "https://www.twitter.com/amy";
+    public static final String VALID_LINK_BOB = "https://www.twitter.com/bob";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

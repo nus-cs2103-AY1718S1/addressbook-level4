@@ -7,6 +7,7 @@
         <address isPrivate="false">4th street</address>
         <remark isPrivate="false">""</remark>
         <favouriteStatus isPrivate="false">true</favouriteStatus>
+        <link isPrivate="false">""</link>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -15,6 +16,7 @@
         <address isPrivate="false">81th street</address>
         <remark isPrivate="false">""</remark>
         <favouriteStatus isPrivate="false">false</favouriteStatus>
+        <link isPrivate="false">""</link>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -23,6 +25,7 @@
         <address isPrivate="false">wall street</address>
         <remark isPrivate="false">""</remark>
         <favouriteStatus isPrivate="false">true</favouriteStatus>
+        <link isPrivate="false">""</link>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -31,6 +34,7 @@
         <address isPrivate="false">10th street</address>
         <remark isPrivate="false">""</remark>
         <favouriteStatus isPrivate="false">false</favouriteStatus>
+        <link isPrivate="false">""</link>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -39,6 +43,7 @@
         <address isPrivate="false">michegan ave</address>
         <remark isPrivate="false">""</remark>
         <favouriteStatus isPrivate="false">false</favouriteStatus>
+        <link isPrivate="false">""</link>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -47,6 +52,7 @@
         <address isPrivate="false">little tokyo</address>
         <remark isPrivate="false">""</remark>
         <favouriteStatus isPrivate="false">false</favouriteStatus>
+        <link isPrivate="false">""</link>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -55,6 +61,7 @@
         <address isPrivate="false">4th street</address>
         <remark isPrivate="false">""</remark>
         <favouriteStatus isPrivate="false">false</favouriteStatus>
+        <link isPrivate="false">""</link>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -63,6 +70,7 @@
         <address isPrivate="false">little india</address>
         <remark isPrivate="false">""</remark>
         <favouriteStatus isPrivate="false">false</favouriteStatus>
+        <link isPrivate="false">""</link>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -71,5 +79,6 @@
         <address isPrivate="false">chicago ave</address>
         <remark isPrivate="false">""</remark>
         <favouriteStatus isPrivate="false">false</favouriteStatus>
+        <link isPrivate="false">""</link>
     </persons>
 </addressbook>
