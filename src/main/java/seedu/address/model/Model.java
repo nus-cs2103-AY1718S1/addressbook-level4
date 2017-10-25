@@ -14,6 +14,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * The API of the Model component.
  */
 public interface Model {
+
     /**
      * {@code Predicate} that always evaluate to true
      */
@@ -33,10 +34,7 @@ public interface Model {
      */
     ReadOnlyAddressBook getAddressBook();
 
-    /**
-     * Sorts the AddressBook.
-     */
-    void sortList(String toSort);
+    // ================ Related to Persons ==============================
 
     /**
      * Deletes the given person.
@@ -74,6 +72,11 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     /**
+     * Sorts the AddressBook.
+     */
+    void sortList(String toSort);
+
+    /**
      * Returns an unmodifiable view of the filtered person list
      */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -84,6 +87,8 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    // ================ Related to AliasTokens ==============================
 
     /**
      * Adds the given AliasToken
@@ -104,5 +109,7 @@ public interface Model {
      * Returns an unmodifiable view of the filtered AliasToken list
      */
     ObservableList<ReadOnlyAliasToken> getFilteredAliasTokenList();
+
+    // ================ Related to Tasks ==============================
 
 }
