@@ -50,7 +50,7 @@ public class DeleteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
         String personToDeleteName = personToDelete.getName().toString();
-        String[] nameArray ={personToDeleteName};
+        String[] nameArray = {personToDeleteName};
         model.updateFilteredMeetingList(new MeetingContainsFullWordPredicate(Arrays.asList(nameArray)));
         List<ReadOnlyMeeting> lastShownMeetingList = model.getFilteredMeetingList();
 
