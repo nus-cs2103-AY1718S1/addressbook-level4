@@ -19,7 +19,13 @@ public class TagMatchingKeywordPredicate implements Predicate<ReadOnlyPerson> {
     public boolean test(ReadOnlyPerson person) {
         Set<Tag> tagList = person.getTags();
         for (Tag tag : tagList) {
-            if (tag.tagName.equalsIgnoreCase(keyword)) {
+            String current = tag.tagName;
+            if (current.equalsIgnoreCase(keyword)) {
+                return true;
+            } else if (keyword.trim().isEmpty()) {
+                return false;
+            } else if (current.toLowerCase().contains(keyword.toLowerCase())
+                || keyword.toLowerCase().contains(current.toLowerCase())) {
                 return true;
             }
         }
@@ -31,5 +37,9 @@ public class TagMatchingKeywordPredicate implements Predicate<ReadOnlyPerson> {
         return other == this // short circuit if same object
                 || (other instanceof TagMatchingKeywordPredicate // instanceof handles nulls
                 && this.keyword.equalsIgnoreCase(((TagMatchingKeywordPredicate) other).keyword)); // state check
+    }
+
+    public String getKeyword() {
+        return keyword;
     }
 }

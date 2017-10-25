@@ -36,6 +36,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.TagAddCommand;
 import seedu.address.logic.commands.TagAddCommand.TagAddDescriptor;
+import seedu.address.logic.commands.TagFindCommand;
 import seedu.address.logic.commands.TagRemoveCommand;
 import seedu.address.logic.commands.TagRemoveCommand.TagRemoveDescriptor;
 import seedu.address.logic.commands.UndoCommand;
@@ -43,6 +44,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.TagMatchingKeywordPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -135,7 +137,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_tAdd() throws Exception {
+    public void parseCommandTagAdd() throws Exception {
         Person person = new PersonBuilder().build();
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
@@ -145,12 +147,20 @@ public class AddressBookParserTest {
         TagAddDescriptor descriptor = new TagAddDescriptor(person);
         descriptor.setTags(tagSet);
         TagAddCommand command = (TagAddCommand) parser.parseCommand(TagAddCommand.COMMAND_WORD + " "
-                + "friend " + INDEX_FIRST_PERSON.getOneBased());
+            + INDEX_FIRST_PERSON.getOneBased() + " friend");
         assertEquals(new TagAddCommand(singlePersonIndexList, descriptor), command);
     }
 
     @Test
-    public void parseCommand_tRemove() throws Exception {
+    public void parseCommandTagFind() throws Exception {
+        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("friend");
+        TagFindCommand command = (TagFindCommand) parser.parseCommand(TagFindCommand.COMMAND_WORD
+                + " friend");
+        assertEquals(new TagFindCommand(predicate), command);
+    }
+
+    @Test
+    public void parseCommandTagRemove() throws Exception {
         Person person = new PersonBuilder().build();
         ArrayList<Index> singlePersonIndexList = new ArrayList<>();
         singlePersonIndexList.add(INDEX_FIRST_PERSON);
@@ -160,7 +170,7 @@ public class AddressBookParserTest {
         TagRemoveDescriptor descriptor = new TagRemoveDescriptor(person);
         descriptor.setTags(tagSet);
         TagRemoveCommand command = (TagRemoveCommand) parser.parseCommand(TagRemoveCommand.COMMAND_WORD + " "
-                + "friend " + INDEX_FIRST_PERSON.getOneBased());
+                + INDEX_FIRST_PERSON.getOneBased() + " friend");
         assertEquals(new TagRemoveCommand(singlePersonIndexList, descriptor), command);
     }
 

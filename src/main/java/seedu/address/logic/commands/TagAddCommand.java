@@ -34,10 +34,10 @@ public class TagAddCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add tag to the person(s) identified "
             + "by the index number used in the last person listing. "
             + "Input tag will append to the existing tags.\n"
-            + "Parameters: [TAG] "
-            + "INDEX1 INDEX2... (must be a positive integer)"
-            + "Example: " + COMMAND_WORD + " [friends] "
-            + "1 2 3 ";
+            + "Parameters: INDEX1 INDEX2... (must be a positive integer) "
+            + "[TAG] (TAG Should not start with a number).\n"
+            + "Example: " + COMMAND_WORD + " 1 2 3 "
+            + "[friends]";
 
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";

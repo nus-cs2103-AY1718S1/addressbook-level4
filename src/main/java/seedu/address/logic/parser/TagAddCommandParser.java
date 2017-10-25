@@ -29,35 +29,35 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
      */
     public TagAddCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        String newTag;
-        int lastIndex = 0;
+        String newTag = "";
+        int lastIndex = -1;
         String[] argsArray;
+        ArrayList<Index> index = new ArrayList<>();
         if (args.isEmpty() || (argsArray = args.trim().split(" ")).length < 2) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
         }
-        newTag = argsArray[0];
-        for (int i = 1; i < argsArray.length; i++) {
-            if (!argsArray[i].matches("\\d?")) {
-                newTag = newTag.concat(" " + argsArray[i]);
-                lastIndex = i;
-            }
-        }
-        HashSet<String> tagSet = new HashSet<>();
-        tagSet.add(newTag);
-        ArrayList<Index> index = new ArrayList<>();
-
-        if (lastIndex == argsArray.length - 1) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
-        }
-
         try {
-            for (int i = lastIndex + 1; i < argsArray.length; i++) {
-                index.add(ParserUtil.parseIndex(argsArray[i]));
+            for (int i = 0; i < argsArray.length; i++) {
+                if (argsArray[i].matches("\\d?")) {
+                    index.add(ParserUtil.parseIndex(argsArray[i]));
+                    lastIndex = i;
+                } else {
+                    break;
+                }
             }
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
         }
 
+        if (lastIndex == -1 || lastIndex == (argsArray.length - 1)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagAddCommand.MESSAGE_USAGE));
+        }
+        HashSet<String> tagSet = new HashSet<>();
+        for (int i = lastIndex + 1; i < argsArray.length; i++) {
+            newTag = newTag.concat(argsArray[i] + " ");
+        }
+        newTag = newTag.trim();
+        tagSet.add(newTag);
         TagAddDescriptor tagAddDescriptor = new TagAddDescriptor();
         try {
             parseTagsForEdit(tagSet).ifPresent(tagAddDescriptor::setTags);

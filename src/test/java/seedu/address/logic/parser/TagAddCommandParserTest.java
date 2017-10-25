@@ -31,8 +31,8 @@ public class TagAddCommandParserTest {
         // no index specified
         assertParseFailure(parser, VALID_TAG_FRIEND, MESSAGE_INVALID_FORMAT);
 
-        // invalid index input
-        assertParseFailure(parser, VALID_TAG_FRIEND + SPACE + VALID_TAG_FRIEND, MESSAGE_INVALID_FORMAT);
+        // no tag input
+        assertParseFailure(parser, "1 2", MESSAGE_INVALID_FORMAT);
 
         // no tag specified
         assertParseFailure(parser, TAG_EMPTY, MESSAGE_INVALID_FORMAT);
@@ -50,7 +50,7 @@ public class TagAddCommandParserTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(new Tag(VALID_TAG_FRIEND));
 
-        String userInput = VALID_TAG_FRIEND + SPACE + targetIndex.getOneBased();
+        String userInput = targetIndex.getOneBased() + SPACE + VALID_TAG_FRIEND;
         TagAddCommand.TagAddDescriptor descriptor = new TagAddCommand.TagAddDescriptor();
         descriptor.setTags(tagSet);
         TagAddCommand expectedCommand = new TagAddCommand(singlePersonIndexList, descriptor);

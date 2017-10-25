@@ -51,6 +51,9 @@ public class TagMatchingKeywordPredicateTest {
         // One keyword
         assertTrue(predicate1.test(new PersonBuilder().withTags("husband").build()));
 
+        // One keyword
+        assertTrue(predicate1.test(new PersonBuilder().withTags("husbands").build()));
+
         //Mixed-case keyword
         assertTrue(predicate1.test(new PersonBuilder().withTags("HUSBAND").build()));
 
@@ -59,6 +62,9 @@ public class TagMatchingKeywordPredicateTest {
 
         //Mixed-case multiple words keyword
         assertTrue(predicate2.test(new PersonBuilder().withTags("College Friend").build()));
+
+        // Multiple words keyword
+        assertTrue(predicate2.test(new PersonBuilder().withTags("college friend 1").build()));
     }
 
     @Test
@@ -75,6 +81,11 @@ public class TagMatchingKeywordPredicateTest {
         predicate = new TagMatchingKeywordPredicate("Alice");
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
+    }
+    @Test
+    public void testKeywordReturnsTrue() {
+        TagMatchingKeywordPredicate predicate = new TagMatchingKeywordPredicate("");
+        assertTrue("".equals(predicate.getKeyword()));
     }
 
 }

@@ -36,11 +36,11 @@ public class TagRemoveCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remove tag to the person(s) identified "
             + "by the index number used in the last person listing.\n"
-            + "Parameters: [TAG] "
-            + "INDEX1 INDEX2... (must be a positive integer).\n"
+            + "Parameters: INDEX1 INDEX2... (must be a positive integer) "
+            + "[TAG] (TAG should not start with a number).\n"
             + "If no index is provided, remove the tag from all people. "
-            + "Example: " + COMMAND_WORD + " [friends] "
-            + "1 2 3 ";
+            + "Example: " + COMMAND_WORD + " 1 2 3 "
+            + "[friends]";
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -164,7 +164,7 @@ public class TagRemoveCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
+    public Person createEditedPerson(ReadOnlyPerson personToEdit,
                                              TagRemoveDescriptor tagRemoveDescriptor) {
         assert personToEdit != null;
 

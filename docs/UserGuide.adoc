@@ -205,33 +205,36 @@ Format: `t-add [TAG] INDEX`
 * Adds tag to the person(s) at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
+* The [TAG] *must not have its first word as number*
 ****
 
 Examples:
 
 * `list` +
-`t-add friends 2 3` +
+`t-add 2 3 friends` +
 Adds the tag friends to the 2nd and 3rd person in the address book
 
 === Removing a tag to a person(s) : `t-remove` _[Since v1.2]_
 
 Removes a tag from specified person(s) from the address book. +
-Format: `t-remove [TAG] INDEX`
+Format: `t-remove INDEX... [TAG]`
 
 ****
 * Removes a tag from the person(s) at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
+* The [TAG] *must not have its first word as number*
 ****
 
 Examples:
 
 * `list` +
-`t-remove friends 2 3` +
+`t-remove 2 3 friends` +
 Removes the tag friends from the 2nd and 3rd person in the address book
 
 === Find the person(s) with given tags: `t-find` _[Since v1.3]_
-Format: `t-find TAG TAG..`
+
+Format: `t-find TAG`
 
 ****
 * Find the person(s) with given tags.
@@ -421,8 +424,12 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3 4`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *TagAdd* : `t-add [TAG] INDEX INDEX...` +
-e.g. `t-add friends 3 4`
+* *TagAdd* : `t-add INDEX INDEX... [TAG]` +
+e.g. `t-add 3 4 friends`
+* *TagFind* : `t-find [TAG]` +
+e.g. `t-find friends`
+* *TagRemove* : `t-remove INDEX INDEX... [TAG]` +
+e.g. `t-remove 3 4 friends`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Sort* : `sort [n/(ASC/DSC)] [p/(ASC/DSC)] [e/(ASC/DSC)] [a/(ASC/DSC)]` +

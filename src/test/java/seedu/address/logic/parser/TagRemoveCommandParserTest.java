@@ -42,7 +42,7 @@ public class TagRemoveCommandParserTest {
         Set<Tag> tagSet = new HashSet<Tag>();
         tagSet.add(new Tag(VALID_TAG_FRIEND));
 
-        String userInput = VALID_TAG_FRIEND + " " + targetIndex.getOneBased();
+        String userInput = targetIndex.getOneBased() + " " + VALID_TAG_FRIEND;
         TagRemoveCommand.TagRemoveDescriptor descriptor = new TagRemoveDescriptor();
         descriptor.setTags(tagSet);
         TagRemoveCommand expectedCommand = new TagRemoveCommand(singlePersonIndexList, descriptor);
