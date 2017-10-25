@@ -11,6 +11,7 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.exceptions.TagNotFoundException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -55,8 +56,9 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Updates the highlight status of the persons with the specified tag
      */
-    public void updateHighlight(String highlightTag) {
+    public void updateHighlight(String highlightTag) throws TagNotFoundException {
         for (Person p : internalList) {
+            p.setHighlightStatus(false);
             Set<Tag> personTags = p.getTags();
             for (Tag t : personTags) {
                 if (t.toString().equals("[" + highlightTag + "]")) {

@@ -70,6 +70,14 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
         picture = new ImageView();
         initImage();
+        System.out.println("Creating person card");
+        if (person.getHighlightStatus()) {
+            cardPane.setStyle("-fx-border-style: solid inside;" +
+                    "-fx-border-width: 2;" +
+                    "-fx-border-insets: 5;" +
+                    "-fx-border-radius: 5;" +
+                    "-fx-border-color: red;");
+        }
     }
 
     /**
