@@ -11,14 +11,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday can only contain numbers, and should be 6 digits long";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{6,}";
+            "Birthday can only contain numbers, and should be 8 digits long";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{8,}";
     public final String value;
 
     /**
      * Validates given birthday.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if given birthday string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
@@ -30,7 +30,7 @@ public class Birthday {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid birthday.
      */
     public static boolean isValidBirthday(String test)  {
         return test.matches(BIRTHDAY_VALIDATION_REGEX);
