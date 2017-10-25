@@ -79,10 +79,10 @@ public class PersonCard extends UiPart<Region> {
      * Sets the colour of a favourite label based on its favourite status
      */
     private void initFavouriteLabel(ReadOnlyPerson person) {
-        String favouriteStatus = person.getFavourite().getStatus();
-        String textToDisplay = (favouriteStatus.equals("True")) ? "Fav" : "";
+        boolean favouriteStatus = person.getFavourite().getFavourite();
+        String textToDisplay = favouriteStatus ? "Fav" : "";
         Label favouriteLabel = new Label(textToDisplay);
-        if (favouriteStatus.equals("True")) {
+        if (favouriteStatus) {
             favouriteLabel.setStyle("-fx-background-color: orangered");
         } else {
             favouriteLabel.setStyle("-fx-background-color: cornflowerblue");

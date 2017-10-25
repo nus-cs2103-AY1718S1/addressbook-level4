@@ -26,7 +26,7 @@ public class FavouriteTest {
 
         // different values -> returns false
         Favourite differentFavourite = new Favourite();
-        differentFavourite.setFavourite();
+        differentFavourite.toggleFavourite();
         assertFalse(favourite.equals(differentFavourite));
     }
 }

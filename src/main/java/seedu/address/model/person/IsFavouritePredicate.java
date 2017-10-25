@@ -9,7 +9,7 @@ public class IsFavouritePredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return person.getFavourite().getStatus().equals("True");
+        return person.getFavourite().getFavourite();
     }
 
     @Override
