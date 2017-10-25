@@ -18,6 +18,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -40,7 +41,7 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private BrowserPanel browserPanel = new BrowserPanel();
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -53,6 +54,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private MenuItem calendarItem;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -90,10 +94,12 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(calendarItem, KeyCombination.valueOf("F2"));
     }
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -152,6 +158,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -192,6 +199,16 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+
+    /**
+     * Opens the Calendar window.
+     */
+    @FXML
+    public void handleCalendar() {
+        browserPanel.loadPage("https://www.timeanddate.com/calendar/");
+    }
+
+
     void show() {
         primaryStage.show();
     }
@@ -217,4 +234,11 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    @Subscribe
+    private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleCalendar();
+    }
 }
+

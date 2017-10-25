@@ -11,6 +11,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.email.Email;
 
 /**
  * Changes the remark of an existing person in the address book.
@@ -48,7 +49,9 @@ public class CopyCommand extends Command {
             }
 
             ReadOnlyPerson targetPerson = lastShownList.get(targetIndex.getZeroBased());
-            outputList.add((targetPerson.getEmail()).toString());
+            for (Email email: targetPerson.getEmails()) {
+                outputList.add(email.toString());
+            }
         }
 
         // outputList without square brackets

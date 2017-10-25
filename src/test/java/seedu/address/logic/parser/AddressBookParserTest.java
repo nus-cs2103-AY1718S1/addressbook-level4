@@ -18,6 +18,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -29,6 +30,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.AddressContainsKeywordsPredicate;
@@ -37,10 +39,12 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.TagContainsKeywordsPredicate;
-
+import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.ScheduleBuilder;
+import seedu.address.testutil.ScheduleUtil;
 
 public class AddressBookParserTest {
     @Rule
@@ -197,6 +201,17 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_schedule() throws Exception {
+        Schedule schedule = new ScheduleBuilder().build();
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleUtil.getScheduleCommand(
+                INDEX_FIRST_PERSON, schedule));
+        ScheduleCommand commandUsingAlias = (ScheduleCommand) parser.parseCommand(ScheduleUtil
+                .getScheduleCommandUsingAlias(INDEX_FIRST_PERSON, schedule));
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), command);
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), commandUsingAlias);
+    }
+
+    @Test
     public void parseCommand_select() throws Exception {
         LocateCommand command = (LocateCommand) parser.parseCommand(
                 LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
@@ -205,6 +220,12 @@ public class AddressBookParserTest {
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
         assertEquals(new LocateCommand(INDEX_FIRST_PERSON), commandUsingAlias);
     }
+
+    @Test
+    public void parseCommand_calendar() throws Exception {
+        assertTrue(parser.parseCommand(CalendarCommand.COMMAND_WORD) instanceof CalendarCommand);
+    }
+
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
