@@ -198,7 +198,9 @@ public class Person implements ReadOnlyPerson {
         int numberOfKeywords = tagsList.size();
         for (Tag t : this.tags.get().toSet()) {
             boolean exist = tagsList.stream().anyMatch(tag -> t.tagName.equals(tag));
-            if (exist) { matchTagsCount++; }
+            if (exist) {
+                matchTagsCount++;
+            }
         }
 
         return matchTagsCount == numberOfKeywords;
