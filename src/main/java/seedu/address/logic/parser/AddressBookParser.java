@@ -85,7 +85,7 @@ public class AddressBookParser {
             return new DeleteEventCommandParser().parse(arguments);
 
         case DisJoinCommand.COMMAND_WORD:
-            return new DeleteEventCommandParser().parse(arguments);
+            return new DisjoinCommandParser().parse(arguments);
 
         case JoinCommand.COMMAND_WORD:
             return  new JoinCommandParser().parse(arguments);
