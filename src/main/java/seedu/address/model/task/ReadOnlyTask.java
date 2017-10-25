@@ -44,13 +44,24 @@ public interface ReadOnlyTask {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" Description: ")
+                .append(getDescription())
                 .append(" Start: ")
                 .append(getStartDateTime())
                 .append(" End: ")
                 .append(getEndDateTime())
+                .append(" Complete: ")
+                .append(getComplete())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
+
+    /**
+     * return true if the underlying two tasks have the same content.
+     * @param other
+     * @return
+     */
+    boolean equals(Object other);
 
 }

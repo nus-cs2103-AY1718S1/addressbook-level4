@@ -128,6 +128,15 @@ public class Task implements ReadOnlyTask {
     }
 
     /**
+     * Copy constructor for task class with complete
+     * @param task
+     */
+    public Task (ReadOnlyTask task, boolean complete) {
+        this(task.getName(), task.getDescription(), task.getStartDateTime(),
+                task.getEndDateTime(), task.getTags(), complete);
+    }
+
+    /**
      * get index from this task
      * @return index
      */
