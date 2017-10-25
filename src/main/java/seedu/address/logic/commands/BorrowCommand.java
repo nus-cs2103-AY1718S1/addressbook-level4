@@ -16,11 +16,11 @@ public class BorrowCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": increase the debt of a person by "
             + "the amount of money entered.\n"
-            + "Parameters: INDEX (optional, must be a positive integer) "
+            + "Parameters: INDEX (optional, must be a positive integer if present) "
             + "AMOUNT (must have at least 1 digit and either a positive integer or a positive number with "
             + "two decimal places)\n"
             + "Example 1: " + COMMAND_WORD + " 1 120.50\n"
-            + "Example 2: " + COMMAND_WORD + "120.50";
+            + "Example 2: " + COMMAND_WORD + " 120.50";
     public static final String MESSAGE_BORROW_SUCCESS = "%1$s has borrowed $%2$s";
 
     private final Index targetIndex;
@@ -38,7 +38,6 @@ public class BorrowCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
         ReadOnlyPerson personThatBorrowed = selectPerson(targetIndex);
 
         try {
@@ -57,7 +56,7 @@ public class BorrowCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof BorrowCommand // instanceof handles nulls
-                && ((this.targetIndex == ((BorrowCommand) other).targetIndex)
+                && ((this.targetIndex == null && ((BorrowCommand) other).targetIndex == null) // both targetIndex null
                 || this.targetIndex.equals(((BorrowCommand) other).targetIndex))); // state check
     }
 }

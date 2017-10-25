@@ -14,9 +14,9 @@ public class DeleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD_ALIAS = "d";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the selected person or the person identified by the index number used in the last person "
-            + "listing.\n"
-            + "Parameters: NONE or INDEX (must be a positive integer)\n"
+            + ": Deletes the currently selected person or the person identified by the index number used in the last "
+            + "person listing.\n"
+            + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
@@ -34,8 +34,8 @@ public class DeleteCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
         ReadOnlyPerson personToDelete = selectPerson(targetIndex);
+
         try {
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
@@ -49,7 +49,7 @@ public class DeleteCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && ((this.targetIndex == ((DeleteCommand) other).targetIndex)
+                && ((this.targetIndex == null && ((DeleteCommand) other).targetIndex == null) // both targetIndex null
                 || this.targetIndex.equals(((DeleteCommand) other).targetIndex))); // state check
     }
 }

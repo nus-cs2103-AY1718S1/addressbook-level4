@@ -67,6 +67,7 @@ public class BorrowCommandTest {
         Debt debtAmount = new Debt(INVALID_DEBT_FIGURE);
     }
 
+    //@@author khooroko
     @Test
     public void execute_successfulBorrowing_withoutIndex() {
         model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
@@ -88,6 +89,7 @@ public class BorrowCommandTest {
         }
     }
 
+    //@@author jelneo
     @Test
     public void equals() {
         try {
