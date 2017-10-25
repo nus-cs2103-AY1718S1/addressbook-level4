@@ -140,6 +140,16 @@ List people with  blood type AB+. +
 [NOTE]
 BLOODTYPE is case insensitive.
 
+=== Showing duplicate persons: `duplicates` [Since v1.3]
+
+You can use duplicates to show a list of people who share the same name. +
+This makes it convenient for finding and resolving duplicate contacts. +
+*Format:* `duplicates` +
+*Shorthand Format:* `dups`
+
+[NOTE]
+The results are from case-sensitive comparisons.
+
 === Editing a person : `edit`
 
 You can edit the information of a person you have added in the address book. +
@@ -522,4 +532,3 @@ You do not need to save data manually.
 
 |*Right* |Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
 |=======================================================================
-

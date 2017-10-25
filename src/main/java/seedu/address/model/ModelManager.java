@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -15,6 +16,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Appointment;
+import seedu.address.model.person.HasPotentialDuplicatesPredicate;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -139,6 +142,23 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(list);
     }
 
+    /**
+     * Gets a list of duplicate names
+     */
+    private ArrayList<Name> getDuplicateNames() {
+        ArrayList<Name> examinedNames = new ArrayList<>();
+        ArrayList<Name> duplicateNames = new ArrayList<>();
+        ObservableList<ReadOnlyPerson> allPersonsInAddressBook = getFilteredPersonList();
+
+        for (ReadOnlyPerson person : allPersonsInAddressBook) {
+            if (examinedNames.contains(person.getName())) {
+                duplicateNames.add(person.getName());
+            }
+            examinedNames.add(person.getName());
+        }
+        return duplicateNames;
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -154,6 +174,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateDuplicatePersonList() {
+        ArrayList<Name> duplicateNames = getDuplicateNames();
+        HasPotentialDuplicatesPredicate predicate = new HasPotentialDuplicatesPredicate(duplicateNames);
+        updateFilteredPersonList(predicate);
     }
 
     @Override
