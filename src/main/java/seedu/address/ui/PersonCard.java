@@ -20,11 +20,13 @@ public class PersonCard extends UiPart<Region> {
     private static ArrayList<String> availableColors = new ArrayList<String>() {{
             add("TOMATO");
             add("TURQUOISE");
-            add("YELLOWGREEN");
             add("LIGHTGRAY");
-            add("LEMONCHIFFON");
-            add("GRAY");
             add("GOLDENROD");
+            add("lawngreen");
+            add("burlywood");
+            add("palevioletred");
+            add("cornflowerblue");
+            add("coral");
             }
     };
 
@@ -82,9 +84,13 @@ public class PersonCard extends UiPart<Region> {
         int randomisedIndex;
 
         if (!tagColors.containsKey(tagValue)) {
-            randomisedIndex = randomiseColor.nextInt(availableColors.size());
-            tagColors.put(tagValue, availableColors.get(randomisedIndex));
-            availableColors.remove(randomisedIndex);
+            if (availableColors.size() != 0) {
+                randomisedIndex = randomiseColor.nextInt(availableColors.size());
+                tagColors.put(tagValue, availableColors.get(randomisedIndex));
+                availableColors.remove(randomisedIndex);
+            } else {
+                tagColors.put(tagValue, "GRAY");
+            }
         }
 
         return tagColors.get(tagValue);
