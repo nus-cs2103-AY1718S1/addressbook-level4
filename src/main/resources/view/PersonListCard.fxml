@@ -31,7 +31,7 @@
       <FlowPane fx:id="tags" />
     </VBox>
       <rowConstraints>
-         <RowConstraints />
+         <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" />
       </rowConstraints>
       <HBox.margin>
          <Insets />
