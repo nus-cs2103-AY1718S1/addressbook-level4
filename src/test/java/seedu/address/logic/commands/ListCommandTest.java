@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
+import static seedu.address.logic.parser.CliSyntax.ARG_EMAIL;
 import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
 
 import org.junit.Before;
@@ -40,6 +41,13 @@ public class ListCommandTest {
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showFirstPersonOnly(model);
+        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_showsLastSortedList() {
+        model.sortFilteredPersonList(ARG_EMAIL);
+        expectedModel.sortFilteredPersonList(ARG_EMAIL);
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }

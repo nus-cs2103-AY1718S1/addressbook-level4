@@ -44,7 +44,9 @@ A GUI will allow the user to view their current User Person details, and allow e
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=SortCommand]
+
+include::../DeveloperGuide.adoc[tag=UserProfile]
 
 #End of Extract#
 
