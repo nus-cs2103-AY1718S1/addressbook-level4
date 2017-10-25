@@ -9,7 +9,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 /**
  * Replace the current address book with data from backup address book.
  */
-public class RestoreBackupCommand extends Command {
+public class RestoreBackupCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "restore";
     public static final String COMMAND_ALIAS = "rb";
     public static final String MESSAGE_SUCCESS = "Data has been restored";
@@ -17,7 +17,7 @@ public class RestoreBackupCommand extends Command {
             "Unable to execute restore as there is no backup file available";
 
     @Override
-    public CommandResult execute() throws CommandException {
+    protected CommandResult executeUndoableCommand() {
         if (backupFilePresent()) {
             RestoreBackupDataEvent event = new RestoreBackupDataEvent();
             EventsCenter.getInstance().post(event);
