@@ -35,7 +35,8 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Country country, Set<Email> emails, Address address, Set<Schedule> schedules, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Country country, Set<Email> emails, Address address, Set<Schedule> schedules,
+                  Set<Tag> tags) {
         requireAllNonNull(name, phone, country, emails, address, schedules, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -96,9 +97,9 @@ public class Person implements ReadOnlyPerson {
         return country.get();
     }
 
-     /**
-     * Replaces this person's emails with the emails in the argument tag set.
-     */
+    /**
+    * Replaces this person's emails with the emails in the argument tag set.
+    */
     public void setEmails(Set<Email> replacement) {
         emails.set(new UniqueEmailList(replacement));
     }

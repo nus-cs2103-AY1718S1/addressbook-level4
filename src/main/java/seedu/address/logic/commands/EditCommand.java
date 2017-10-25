@@ -110,7 +110,8 @@ public class EditCommand extends UndoableCommand {
         Set<Schedule> updatedSchedule = personToEdit.getSchedules(); //ScheduleCommand does not allow editing schedule
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedCountry, updatedEmail, updatedAddress, updatedSchedule, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedCountry, updatedEmail, updatedAddress,
+                updatedSchedule, updatedTags);
     }
 
     @Override
@@ -158,7 +159,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.country, this.emails, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.country, this.emails, this.address,
+                    this.tags);
         }
 
         public void setName(Name name) {
