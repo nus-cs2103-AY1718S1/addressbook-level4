@@ -127,6 +127,8 @@ Examples:
 * `list` +
 `remark 1 r/Snores loudly` +
 Attaches `Snores loudly` as remark to first person on the list.
+* `remark 1 r/` +
+Removes the remark for the first person.
 
 === Locating persons by name: `find`
 
