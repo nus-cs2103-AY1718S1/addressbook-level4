@@ -8,25 +8,24 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import java.io.File;
-import java.io.IOException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.commands.AddMultipleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appoint;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Comment;
-import seedu.address.model.person.Appoint;
 import seedu.address.model.tag.Tag;
 
 /**
