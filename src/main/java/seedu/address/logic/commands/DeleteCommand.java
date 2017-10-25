@@ -10,6 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.ParserUtil;
+import seedu.address.model.meeting.MeetingContainsFullWordPredicate;
 import seedu.address.model.meeting.MeetingContainsKeywordsPredicate;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
@@ -50,8 +51,8 @@ public class DeleteCommand extends UndoableCommand {
 
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
         String personToDeleteName = personToDelete.getName().toString();
-        String[] splitName = personToDeleteName.split("\\s+");
-        model.updateFilteredMeetingList(new MeetingContainsKeywordsPredicate(Arrays.asList(splitName)));
+        String[] nameArray = {personToDeleteName};
+        model.updateFilteredMeetingList(new MeetingContainsFullWordPredicate(Arrays.asList(nameArray)));
         List<ReadOnlyMeeting> lastShownMeetingList = model.getFilteredMeetingList();
 
         while (true) {
