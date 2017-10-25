@@ -12,7 +12,10 @@ public class ListCommandFailure extends Command {
             + COMMAND_WORD + " \n"
             + COMMAND_WORD + " tag [TAG/s] \n"
             + COMMAND_WORD + " asc \n"
-            + COMMAND_WORD + " ascending \n";
+            + COMMAND_WORD + " ascending \n"
+            + COMMAND_WORD + " dsc \n"
+            + COMMAND_WORD + " descending \n";
+
 
     @Override
     public CommandResult execute() {

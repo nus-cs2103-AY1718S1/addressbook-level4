@@ -21,6 +21,7 @@ import seedu.address.logic.commands.ListAscendingName;
 import seedu.address.logic.commands.ListByBloodtypeCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListCommandFailure;
+import seedu.address.logic.commands.ListDescendingName;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -125,24 +126,28 @@ public class AddressBookParser {
         }
     }
 
-    private Command listEvaluator(String arguments) throws ParseException{
+    private Command listEvaluator(String arguments) throws ParseException {
         String[] argSplit = arguments.trim().split(" ");
         String firstArg = argSplit[0];
         int firstArgLength = firstArg.length();
         Command returnThisCommand;
         switch (firstArg) {
-            case "":
-                returnThisCommand = new ListCommand();
-                break;
-            case "tag":
-                returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength));
-                break;
-            case "asc":
-            case "ascending":
-                returnThisCommand = (argSplit.length == 1) ? new ListAscendingName() : new ListCommandFailure();
-                break;
-            default:
-                returnThisCommand = new ListCommandFailure();
+        case "":
+            returnThisCommand = new ListCommand();
+            break;
+        case "tag":
+            returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength));
+            break;
+        case "asc":
+        case "ascending":
+            returnThisCommand = (argSplit.length == 1) ? new ListAscendingName() : new ListCommandFailure();
+            break;
+        case "dsc":
+        case "descending":
+            returnThisCommand = (argSplit.length == 1) ? new ListDescendingName() : new ListCommandFailure();
+            break;
+        default:
+            returnThisCommand = new ListCommandFailure();
         }
         return returnThisCommand;
     }

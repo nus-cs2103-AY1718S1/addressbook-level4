@@ -35,8 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */
-    {
+     */ {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
     }
@@ -172,6 +171,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
      * @param tag all persons containing this tag will be deleted
      */
     public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
@@ -233,6 +233,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public ObservableList<ReadOnlyPerson> getPersonListSortByNameAscending() {
         return persons.asObservableListSortedByNameAsc();
+    }
+
+    public ObservableList<ReadOnlyPerson> getPersonListSortByNameDescending() {
+        return persons.asObservableListSortedByNameDsc();
     }
 
     @Override

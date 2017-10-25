@@ -149,6 +149,16 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(list);
     }
 
+    /**
+     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
+     * in decreasing chronological order
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> listNameDescending() {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByNameDescending();
+        return FXCollections.unmodifiableObservableList(list);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
