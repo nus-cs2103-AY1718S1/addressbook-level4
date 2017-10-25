@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.AlreadySortedException;
+import seedu.address.logic.commands.exceptions.TagNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -49,4 +50,9 @@ public interface Model {
     /** Sorts the Address Book by name, phone, address or phone depending on the sortCriteria */
     void sortBy(String sortCriteria) throws AlreadySortedException;
 
+    /**
+     * Updates the highlight status of persons with the specified tag
+     * @throws TagNotFoundException if no specified tag exists
+     */
+    void updateHighlightStatus(String highlightTag);
 }
