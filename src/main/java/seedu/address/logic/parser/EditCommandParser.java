@@ -72,7 +72,7 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             if (index == null) {
-                throw new ParseException(EditCommand.MESSAGE_USAGE);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
             } else {
                 throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
             }
