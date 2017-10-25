@@ -67,6 +67,19 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding a reminder: `addReminder`
+
+Adds a reminder to the address book +
+Format `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...`
+
+[TIP]
+A person can have any number of tags (including 0)
+
+Examples:
+
+* `addReminder z/Proposal Submission p/High d/20/12/2017 1500 m/Submit by 20th December t/Work`
+* `addReminder z/Meet Jane for Lunch p/Medium d/24/01/2017 1200 m/Meet at KFC`
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
@@ -91,6 +104,26 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Editing a reminder: `editReminder`
+
+Edits an existing reminder in the address book. +
+Format: `editReminder INDEX [z/TASK] [p/PRIORITY] [d/DATE and TIME] [m/MESSAGE] [t/TAG]...`
+
+****
+* Edits the reminder at the specified `INDEX`. The index refers to the index number shown in the last reminder listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the message will be removed i.e adding of tags is not cumulative.
+* You can remove all the message's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `editReminder 1 p/Low m/venue at NUS` +
+Edits the priority and message of the 1st reminder to be `Low` and `venue at NUS` respectively.
+* `edit 2 z/Progress Report t/` +
+Edits the task name of the 2nd reminder to be `Progress Report` and clears all existing tags.
 
 === Locating persons by name: `find`
 
@@ -132,6 +165,23 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Deleting a reminder : `deleteReminder`
+
+Deletes the specified reminder from the address book. +
+Format: `deleteReminder INDEX`
+
+****
+* Deletes the reminder at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd reminder in the address book.
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -151,6 +201,87 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Modifying birthday to person: `birthday`
+
+Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
+Format: `birthday INDEX [b/dd/mm/yyyy]`
+
+****
+* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
+* For removing : input nothing after " `b/` "
+****
+
+Examples:
+
+* `birthday 1 b/20/07/1995` +
+Adds / changes birthday of the 1st person to be `20/07/1995`
+* `birthday 3 b/` +
+Removes the birthday of the 3rd person.
+
+=== Sorting all entries by name: `sort`
+
+Sorts all entries in the address book by alphabetical order. +
+Format: `sort`
+
+Below is an illustration of an unsorted and sort list of contacts.
+
+**Before**
+
+image::unsortedlist.png[width="300"]
+
+**After**
+
+image::sortedlist.png[width="300"]
+
+=== Sorting all entries by age : `sortAge`
+
+Sorts all entries in the person list by their age, from the oldest to youngest. +
+Format: `sortAge`
+
+=== Sorting all entries by birthday: `sortBirthday`
+
+Sorts all entries in the person list by their birthday, from 1st Jan to 31st Dec. +
+Format: `sortBirthday`
+
+=== Sorting all entries by priority: `sortPriority`
+
+Sorts all entires in the reminder list by their priority, from High to Medium to Low. +
+Format: `sortPriority`
+
+=== Retrieving all persons having an existing tag : `retrieve`
+
+Lists all contacts having a certain existing tag in the address book. +
+Format: `retrieve TAGNAME`
+
+****
+* Retrieves all person having the specified `TAGNAME` tag.
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `retrieve friends` +
+Retrieves all persons with friends tag in the address book.
+
+=== Tagging multiple persons : `tag`
+
+Tags the persons identified by the index numbers used in the last person listing. +
+Format: `tag INDEX,[MORE_INDEXES]... TAGNAME`
+
+****
+* Tags the persons at the specified `INDEX,[MORE_INDEXES]...` with the `TAGNAME` tag.
+* The indexes refers to the index numbers shown in the most recent listing.
+* The indexes *must be positive integers* `1, 2, 3, ...`
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `list` +
+`tag 1,2,3 friends` +
+Tags the 1st and 2nd person with the friends tag in the address book.
 
 === Listing entered commands : `history`
 
@@ -226,86 +357,6 @@ Format: `exit`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-=== Adding / Editing / Removing birthday to person: `birthday` (Since v1.2)
-
-Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
-Format: `birthday INDEX [b/dd/mm/yyyy]`
-
-****
-* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
-* For removing : input nothing after " `b/` "
-****
-
-Examples:
-
-* `birthday 1 b/20/07/1995` +
-Adds / changes birthday of the 1st person to be `20/07/1995`
-* `birthday 3 b/` +
-Removes the birthday of the 3rd person.
-
-=== Sorting all entries by name: `sort`
-
-Sorts all entries in the address book by alphabetical order. +
-Format: `sort`
-
-Below is an illustration of an unsorted and sort list of contacts.
-
-**Before**
-
-image::unsortedlist.png[width="300"]
-
-**After**
-
-image::sortedlist.png[width="300"]
-
-=== Sorting all entries by age : `sortAge`    (Since v1.2)
-
-Sorts all entries in the address book by their age, from the oldest to youngest. +
-Format: `sortAge`
-
-=== Sorting all entries by birthday: `sortBirthday`    (Since v1.2)
-
-Sorts all entries in the address book by their birthday, from 1st Jan to 31st Dec. +
-Format: `sortBirthday`
-
-=== Retrieving all persons having an existing tag : `retrieve`    (Since v1.2)
-
-Lists all contacts having a certain existing tag in the address book. +
-Format: `retrieve TAGNAME`
-
-****
-* Retrieves all person having the specified `TAGNAME` tag.
-* The tag name *must be alphanumeric*
-****
-
-Examples:
-
-* `retrieve friends` +
-Retrieves all persons with friends tag in the address book.
-
-=== Tagging multiple persons : `tag`    (Since v1.3)
-
-Tags the persons identified by the index numbers used in the last person listing. +
-Format: `tag INDEX,[MORE_INDEXES]... TAGNAME`
-
-****
-* Tags the persons at the specified `INDEX,[MORE_INDEXES]...` with the `TAGNAME` tag.
-* The indexes refers to the index numbers shown in the most recent listing.
-* The indexes *must be positive integers* `1, 2, 3, ...`
-* The tag name *must be alphanumeric*
-****
-
-Examples:
-
-* `list` +
-`tag 1,2,3 friends` +
-Tags the 1st and 2nd person with the friends tag in the address book.
-
-=== List the birthday of contacts in calendar mode (Coming in v2.0)
-Able to view contacts in calendar mode so that users can look at who's birthday is coming up soon.
-Contacts with birthday within a week will have a special colour or icon to notify user of upcoming birthdays.
 
 == FAQ
 
