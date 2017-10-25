@@ -472,6 +472,8 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
  in future versions of the Ark application. +
 ** **Cons:** More difficult to implement and integrate into a command line interface.
 
+//tag::deleteTag[]
+
 === Delete Tag mechanism
 
 The delete tag mechanism is facilitated by a `deleteTag` method within the `ModelManager`. It supports the deletion
@@ -495,6 +497,8 @@ Tag to delete them. +
 ** **Pros:** Computationally quicker to just find the tag and remove the tag from every parcel in the list of tags +
 ** **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
 and has to be updated whenever we edit other parcel details as well.
+
+//end::deleteTag[]
 
 tag::backup[]
 
@@ -704,6 +708,15 @@ delivered by. +
 
 These states have different colours codes to allow users to differentiate the `Status` values more easily.
 
+//tag::deliveryDate[]
+=== Delivery Date field
+
+`Delivery Date` is used to indicate the delivery date that the parcel must be delivered by.
+The dates are only accepted if they are valid. The parcel list is maintained in sorted order by comparing
+their delivery dates, with the earliest on top.
+
+//end::deliveryDate[]
+
 ==== Design Considerations
 
 ** `Implementation of Status`**
@@ -717,6 +730,8 @@ These states have different colours codes to allow users to differentiate the `S
 describe the same status of the parcel.
 
 end::status[]
+
+//tag::sortedList[]
 
 === Maintain sorted mechanism
 image::AddParcelSdForLOgic.png[width="300"]
@@ -747,6 +762,8 @@ potentially could disrupt the order of the list. +
 **Pros:** Use less computation as the list of parcels is already sorted. +
 **Cons:** More difficult to implement as we'll need to implement our own sorting algorithm as opposed to
 just using the built in sorting methods. +
+
+//tag::sortedList[]
 
 == Documentation
 
