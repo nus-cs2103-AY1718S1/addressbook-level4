@@ -26,7 +26,7 @@ public class ParcelBuilder {
     public static final String DEFAULT_ADDRESS = "6, Jurong West Ave 1, #08-111 S649520";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_TRACKING_NUMBER = "RR999966699SG";
-    public static final String DEFAULT_DELIVERYDATE = "01-01-2001";
+    public static final String DEFAULT_DELIVERY_DATE = "01-01-2001";
     public static final String DEFAULT_STATUS = "PENDING";
 
     private Parcel parcel;
@@ -38,7 +38,7 @@ public class ParcelBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            DeliveryDate defaultDeliveryDate = new DeliveryDate(DEFAULT_DELIVERYDATE);
+            DeliveryDate defaultDeliveryDate = new DeliveryDate(DEFAULT_DELIVERY_DATE);
             Status defaultStatus = Status.getInstance(DEFAULT_STATUS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.parcel = new Parcel(defaultTrackingNumber, defaultName, defaultPhone, defaultEmail, defaultAddress,
