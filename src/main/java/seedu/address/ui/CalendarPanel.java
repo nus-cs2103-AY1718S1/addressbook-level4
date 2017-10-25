@@ -93,6 +93,7 @@ public class CalendarPanel extends UiPart<Region> {
             public void handle(ActionEvent event) {
                 LocalDate date = datePicker.getValue();
                 logger.info("Date selected: " + date.toString());
+
 /*
                 try {
                     logic.execute(FindTaskCommand.COMMAND_WORD + " " + markdate.toString());
@@ -124,14 +125,25 @@ public class CalendarPanel extends UiPart<Region> {
                     @Override
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
+                        StringBuilder s = new StringBuilder();
+                        int bCount = 0, dCount = 0;
+                        StringBuilder colour = new StringBuilder();
+                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
                         for (ReadOnlyPerson person: personList) {
-                            // TODO: 22/10/17 change Birthday format to include full year
                             try {
-                                DateTimeFormatter format1 = DateTimeFormatter.ofPattern("ddMMyy");
                                 if (MonthDay.from(item).equals
-                                        (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), format1)))) {
-                                    setTooltip(new Tooltip(person.getName() + "'s Birthday!"));
-                                    setStyle("-fx-background-color: #f1a3ff;");
+                                        (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), format)))) {
+                                    if (bCount++ == 0) {
+                                        s.append(person.getName() + "'s Birthday");
+                                    }
+                                    else if (bCount > 0) {
+                                        int endIndex = s.indexOf("Birthday");
+                                        s.delete(0, endIndex);
+                                        bCount++;
+                                        s.insert(0, bCount + " ");
+                                    }
+                                    colour = new StringBuilder("-fx-background-color: #f1a3ff;");
                                 }
                             } catch (DateTimeParseException exc) {
                                 logger.warning("Not parsable: " + person.getBirthday().toString());
@@ -140,19 +152,32 @@ public class CalendarPanel extends UiPart<Region> {
                         }
                         for (ReadOnlyTask task: taskList) {
                             try {
-                                DateTimeFormatter format2 = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                                 //ensure that Deadline/Startdate is valid, after computer is invented
-                                assert LocalDate.parse(task.getDeadline().toString(), format2).getYear()
+                                assert LocalDate.parse(task.getDeadline().toString(), format).getYear()
                                         >= (LocalDate.now().getYear() - 100);
-                                if (item.equals(LocalDate.parse(task.getDeadline().toString(), format2))) {
-                                    setTooltip(new Tooltip("Deadline!"));
-                                    setStyle("-fx-background-color: #ff444d;");
+                                if (item.equals(LocalDate.parse(task.getDeadline().toString(), format))) {
+                                    if ((bCount == 0) && (dCount++ == 0)) {
+                                        s.append(dCount + " Deadline!");
+                                        colour = new StringBuilder("-fx-background-color: #ff444d;");
+                                    }
+                                    else if (bCount > 0){
+                                        if (dCount++ == 0) {
+                                            s.append(dCount + " Deadline!");
+                                        }
+                                        else if (dCount++ > 0) {
+                                            int endIndex = s.indexOf(" Deadline");
+                                            s.replace(endIndex - 1, endIndex, dCount + "");
+                                        }
+                                        colour = new StringBuilder("-fx-background-color: #feff31;");
+                                    }
                                 }
                             } catch (DateTimeParseException exc) {
                                 logger.warning("Not parsable: " + task.getDeadline().toString());
                                 throw exc;
                             }
                         }
+                        setTooltip(new Tooltip(s.toString()));
+                        setStyle(colour.toString());
                     }
                 };
             }
