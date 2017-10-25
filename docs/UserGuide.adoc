@@ -50,7 +50,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help` `h` _[Coming in v2.0]_
+=== Viewing help : `help` `h` _[Since v1.3]_
 
 Format: `help command`
  (or) `h command`
@@ -233,6 +233,7 @@ Examples:
 Removes the tag friends from the 2nd and 3rd person in the address book
 
 === Find the person(s) with given tags: `t-find` _[Since v1.3]_
+
 Format: `t-find TAG`
 
 ****
@@ -245,8 +246,8 @@ Examples:
 * `t-find friend classmate`
 Shows all the people with tag `friend` or tag `classmate`
 
-=== Find the location of a person using Google Map: `m-show` _[Coming in v2.0]_
-Format: `s-show INDEX`
+=== Find the location of a person using Google Map: `m-show` _[Since v1.3]_
+Format: `m-show INDEX`
 
 ****
 * Find the person with the index number.
@@ -257,11 +258,11 @@ Format: `s-show INDEX`
 
 Examples:
 
-* `s-show 1` +
+* `m-show 1` +
 Shows the address of person with index 1 on the google map
 
-=== Find the route from user's current location to the person seleted: `m-route` _[Coming in v2.0]_
-Format: `s-route INDEX ADDRESS`
+=== Find the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
+Format: `m-route INDEX a/ADDRESS`
 
 ****
 * Find the address of the person with the index number.
@@ -273,9 +274,9 @@ Format: `s-route INDEX ADDRESS`
 
 Examples:
 
-* `s-route 1 Clementi Street` +
+* `m-route 1 a/Clementi Street` +
 Shows the route from `Clementi Street` to the address of person with index number `1`
-* `s-route 7 John street, block 123, #01-01` +
+* `m-route 7 a/John street, block 123, #01-01` +
 Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
 
 === Making a backup address book: `export` _[Coming in v2.0]_
