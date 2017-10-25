@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 /**
  * A handler for the {@code InsuranceProfile} of the UI.
  */
-public class ProfilePanelHandle extends NodeHandle<Node> {
+public class InsuranceProfileHandle extends NodeHandle<Node> {
 
     public static final String PROFILE_ID = "#profilePanel";
     private static final String OWNER_FIELD_ID = "#owner";
@@ -20,7 +20,7 @@ public class ProfilePanelHandle extends NodeHandle<Node> {
     private final Label beneficiaryLabel;
     private final Label premiumLabel;
 
-    public ProfilePanelHandle(Node profilePanelNode) {
+    public InsuranceProfileHandle(Node profilePanelNode) {
         super(profilePanelNode);
 
         this.ownerLabel = getChildNode(OWNER_FIELD_ID);

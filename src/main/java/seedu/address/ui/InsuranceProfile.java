@@ -31,7 +31,7 @@ public class InsuranceProfile extends UiPart<Region> {
     @FXML
     private ScrollPane scrollPane;
     @FXML
-    private AnchorPane profilePanel;
+    private AnchorPane insuranceProfile;
     @FXML
     private Label name;
     @FXML
@@ -52,7 +52,7 @@ public class InsuranceProfile extends UiPart<Region> {
     public InsuranceProfile() {
         super(FXML);
         scrollPane.setFitToWidth(true);
-        profilePanel.prefWidthProperty().bind(scrollPane.widthProperty());
+        insuranceProfile.prefWidthProperty().bind(scrollPane.widthProperty());
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 

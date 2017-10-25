@@ -10,10 +10,10 @@ import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.InsuranceProfileHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
-import guitests.guihandles.ProfilePanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;
@@ -79,7 +79,7 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected ProfilePanelHandle getBrowserPanel() {
+    protected InsuranceProfileHandle getBrowserPanel() {
         return mainWindowHandle.getProfilePanelHandle();
     }
 

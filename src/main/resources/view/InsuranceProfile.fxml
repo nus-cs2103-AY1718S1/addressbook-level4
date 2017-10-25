@@ -11,7 +11,7 @@
    <children>
       <ScrollPane fx:id="scrollPane" prefHeight="600.0" prefWidth="800.0" styleClass="anchor-pane">
          <content>
-            <AnchorPane fx:id="profilePanel" prefHeight="1000.0" prefWidth="1200" styleClass="anchor-pane">
+            <AnchorPane fx:id="insuranceProfile" prefHeight="1000.0" prefWidth="1200" styleClass="anchor-pane">
                <children>
                    <Label fx:id="name" layoutX="2.0" styleClass="particular-name" text="\$name" />
                   <VBox layoutX="14.0" layoutY="72.0" spacing="3.0">

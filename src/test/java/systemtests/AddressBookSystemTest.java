@@ -16,10 +16,10 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.InsuranceProfileHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
-import guitests.guihandles.ProfilePanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.TestApp;
@@ -79,7 +79,7 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public ProfilePanelHandle getProfilePanel() {
+    public InsuranceProfileHandle getProfilePanel() {
         return mainWindowHandle.getProfilePanelHandle();
     }
 
@@ -143,7 +143,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Calls {@code ProfilePanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code InsuranceProfileHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
