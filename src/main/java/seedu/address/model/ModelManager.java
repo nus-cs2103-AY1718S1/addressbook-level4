@@ -11,9 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
@@ -23,7 +23,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
-import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -133,10 +132,12 @@ public class ModelManager extends ComponentManager implements Model {
          Updating the model
          */
         try {
-            ((Person) fromPersonCopy).addRelationship(relationshipForFromPerson);
-            ((Person) toPersonCopy).addRelationship(relationshipForToPerson);
-            this.updatePerson(fromPerson, fromPersonCopy);
-            this.updatePerson(toPerson, toPersonCopy);
+            Person fPerson = (Person) fromPersonCopy;
+            Person tPerson = (Person) toPersonCopy;
+            fPerson.addRelationship(relationshipForFromPerson);
+            tPerson.addRelationship(relationshipForToPerson);
+            this.updatePerson(fromPerson, fPerson);
+            this.updatePerson(toPerson, tPerson);
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("the person's relationship is unmodified. IMPOSSIBLE.");
         } catch (PersonNotFoundException pnfe) {

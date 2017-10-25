@@ -3,6 +3,8 @@ package seedu.address.model.graph;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
+
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
@@ -15,7 +17,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 
-import java.util.Set;
+
+
 
 
 /**
@@ -25,11 +28,11 @@ import java.util.Set;
 public class GraphWrapper {
 
     public static final String MESSAGE_PERSON_DOES_NOT_EXIST = "The person does not exist in this address book.";
+    private static final String graphId = "ImARandomGraphID";
 
     private SingleGraph graph;
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
-    private static final String graphId = "ImARandomGraphID";
 
     private final String nodeAttributePersonName = "PersonName";
     private final String nodeAttributePerson = "Person";
@@ -80,6 +83,14 @@ public class GraphWrapper {
                 + Integer.toString(filteredPersons.indexOf(person2));
     }
 
+    /**
+     * removes the previous edge (if exists) with a different RelationshipDirection from
+     * the edge to be added.
+     * @param fromPerson
+     * @param toPerson
+     * @param intendedDirectionOfRedundantEdge
+     * @return String
+     */
     private String checkForRedundantEdgeAndRemove(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson,
                                                 RelationshipDirection intendedDirectionOfRedundantEdge) {
         requireAllNonNull(fromPerson, toPerson, intendedDirectionOfRedundantEdge);
@@ -137,6 +148,9 @@ public class GraphWrapper {
         return graph.getEdge(designatedEdgeId1);
     }
 
+    /**
+     * add an edge between two persons with direction specified
+     */
     public Edge addEdge(ReadOnlyPerson firstPerson, ReadOnlyPerson secondPerson, RelationshipDirection direction) {
         requireAllNonNull(firstPerson, secondPerson, direction);
         if (direction.isDirected()) {
@@ -152,6 +166,10 @@ public class GraphWrapper {
         this.filteredPersons = null;
     }
 
+    /**
+     * Read all the edges from model and store into graph
+     * @return
+     */
     private SingleGraph initiateGraphEdges() {
         for (ReadOnlyPerson person: filteredPersons) {
             Set<Relationship> relationshipSet = person.getRelationships();
@@ -163,6 +181,9 @@ public class GraphWrapper {
         return graph;
     }
 
+    /**
+     * Produce a graph based on model given
+     */
     public SingleGraph buildGraph(Model model) {
         requireNonNull(model);
         this.clear();

@@ -4,7 +4,6 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.relationship.Relationship;
-import seedu.address.model.relationship.UniqueRelationshipList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
