@@ -60,7 +60,8 @@ Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0) +
+Format of birthdate must strictly follow `DD-MM-YY`
 
 Examples:
 
