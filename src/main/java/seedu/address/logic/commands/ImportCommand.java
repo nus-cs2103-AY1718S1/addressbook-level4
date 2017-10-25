@@ -55,14 +55,9 @@ public class ImportCommand extends UndoableCommand {
                     namesAdded.add(p.getName().fullName);
                 }
 
-                for (int i = 0; i < namesAdded.size(); i++) {
-                    namesFeedback += namesAdded.get(i);
+                namesFeedback = getNamesFeedback(namesAdded, namesFeedback);
 
-                    if (i + 1 != namesAdded.size()) {
-                        namesFeedback += ", ";
-                    }
-                }
-                return new CommandResult(String.format(MESSAGE_SUCCESS, namesFeedback));
+                return new CommandResult(String.format(MESSAGE_SUCCESS + " Added: "+ namesFeedback));
             }
             return new CommandResult(String.format(MESSAGE_ERROR));
         } catch (DataConversionException e) {
@@ -70,5 +65,16 @@ public class ImportCommand extends UndoableCommand {
         } catch (IOException e) {
             throw new CommandException(MESSAGE_ERROR);
         }
+    }
+
+    private String getNamesFeedback(ArrayList<String> namesAdded, String namesFeedback) {
+        for (int i = 0; i < namesAdded.size(); i++) {
+            namesFeedback += namesAdded.get(i);
+
+            if (i + 1 != namesAdded.size()) {
+                namesFeedback += ", ";
+            }
+        }
+        return namesFeedback;
     }
 }
