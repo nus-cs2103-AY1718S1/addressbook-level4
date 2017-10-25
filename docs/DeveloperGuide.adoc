@@ -487,50 +487,11 @@ To help with this feature, we planned to use an ArrayList to store the remarks u
 As ArrayLists naturally update the index of the its list, we do not need additional functions to handle indexing. +
 On top of this, we decided that remarks should be updated with any changes, either to selection or file storage. +
 Thus, we subscribed the remark panel UI to any person selection changes or person storage changes to allow for a constantly updated UI. +
-[source,java]
-----
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        tempPerson = event.getNewSelection().person;
-        String printedString = "Remarks regarding " + String.valueOf(event.getNewSelection().person.getName()) + ":\n"
-                + "---------------------------------------------------\n";
-        for (int i = 0; i < event.getNewSelection().person.getRemark().size(); i++) {
-            if (!event.getNewSelection().person.getRemark().get(i).value.equals("")) {
-                printedString = printedString.concat(i + 1 + "). " //Shows a list of remark numbered from 1 to size()
-                        + event.getNewSelection().person.getRemark().get(i).value + "\n");
-            }
-        }
-        final String finalString = printedString;
-        Platform.runLater(() -> displayed.setValue(finalString));
-    }
 
-
-    @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        ObservableList<ReadOnlyPerson> personList = event.data.getPersonList();
-        for (int i = 0; i < personList.size(); i++) {
-            if (personList.get(i).getName().fullName.equals(tempPerson.getName().fullName)) {
-                String printedString = "Remarks regarding " + String.valueOf(personList.get(i).getName()) + ":\n"
-                        + "---------------------------------------------------\n";
-                for (int j = 0; j < personList.get(i).getRemark().size(); j++) {
-                    if (!personList.get(i).getRemark().get(j).value.equals("")) {
-                        printedString = printedString.concat(j + 1 + "). "
-                                + personList.get(i).getRemark().get(j).value + "\n");
-                    }
-                }
-                final String finalString = printedString;
-                Platform.runLater(() -> displayed.setValue(finalString));
-                break;
-            }
-        }
-    }
-----
 Since remarks tend to be lengthy, we decided that a large amount of space on the app should be dedicated to them. +
 Instead of implementing similar UI design as the tags feature, we decided to display the remarks using a large stackpane. +
 
-image::remarkUI.png[width="800"]
+image::UI.png[width="800"]
 
 [NOTE]
 Remarks can not be added when adding a person. It can only be done to a person already existing in the address book.

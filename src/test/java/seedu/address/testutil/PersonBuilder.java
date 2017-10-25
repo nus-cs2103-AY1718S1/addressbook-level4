@@ -7,6 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FavouriteStatus;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -27,6 +28,7 @@ public class PersonBuilder {
     public static final String DEFAULT_REMARK = "";
     public static final boolean DEFAULT_FAVOURITE_STATUS = false;
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_LINK = "";
 
     private Person person;
 
@@ -40,8 +42,9 @@ public class PersonBuilder {
             defaultRemark.add(new Remark(DEFAULT_REMARK));
             FavouriteStatus defaultFavouriteStatus = new FavouriteStatus(DEFAULT_FAVOURITE_STATUS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+            Link defaultLink = new Link(DEFAULT_LINK);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultRemark, defaultFavouriteStatus, defaultTags);
+                    defaultRemark, defaultFavouriteStatus, defaultTags, defaultLink);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -123,6 +126,14 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("remarks should not be null.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Link} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withLink(String link) {
+        this.person.setLink(new Link(link));
         return this;
     }
 

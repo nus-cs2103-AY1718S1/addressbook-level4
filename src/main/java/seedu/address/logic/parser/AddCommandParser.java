@@ -17,6 +17,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.FavouriteStatus;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -53,8 +54,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             // add command does not allow setting person as favourite immediately
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Link link = new Link(""); // add command does not allow adding links straight away
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, remark, favouriteStatus, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, remark, favouriteStatus, tagList, link);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
