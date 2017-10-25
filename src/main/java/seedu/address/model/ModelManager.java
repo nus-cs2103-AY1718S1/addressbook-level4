@@ -120,6 +120,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
             throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
+        addressBook.deletePersonFromGroup(targetGroup, toRemove);
+        /** Update filtered list with predicate for current group members in group after removing a person */
+        updateFilteredPersonList(addressBook.getGroupList()
+                .get(targetGroup.getZeroBased()).getMembers()::contains);
+        indicateAddressBookChanged();
 
     }
 
