@@ -101,8 +101,10 @@ public class EditTaskCommand extends UndoableCommand {
         String updatedStartDateTime = editTaskDescriptor.getStartDateTime().orElse(taskToEdit.getStartDateTime());
         String updatedEndDateTime = editTaskDescriptor.getEndDateTime().orElse(taskToEdit.getEndDateTime());
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
+        Boolean updateComplete = editTaskDescriptor.getComplete().orElse(taskToEdit.getComplete());
         //Remark updatedRemark = taskToEdit.getRemark(); // edit command does not allow editing remarks
-        return new Task(updatedTaskName, updatedDescription, updatedStartDateTime, updatedEndDateTime, updatedTags);
+        return new Task(updatedTaskName, updatedDescription, updatedStartDateTime, updatedEndDateTime,
+                updatedTags, updateComplete);
     }
 
     @Override
@@ -133,6 +135,7 @@ public class EditTaskCommand extends UndoableCommand {
         private String start;
         private String end;
         private Set<Tag> tags;
+        private Boolean complete;
 
         public EditTaskDescriptor() {}
 
@@ -142,13 +145,15 @@ public class EditTaskCommand extends UndoableCommand {
             this.start = toCopy.start;
             this.end = toCopy.end;
             this.tags = toCopy.tags;
+            this.complete = toCopy.complete;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.taskName, this.description, this.start, this.end, this.tags);
+            return CollectionUtil.isAnyNonNull(this.taskName, this.description, this.start, this.end,
+                    this.tags, this.complete);
         }
 
         public void setName(String taskName) {
@@ -191,6 +196,14 @@ public class EditTaskCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
+        public void setComplete(Boolean complete) {
+            this.complete = complete;
+        }
+
+        public Optional<Boolean> getComplete() {
+            return Optional.ofNullable(complete);
+        }
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -210,7 +223,8 @@ public class EditTaskCommand extends UndoableCommand {
                     && getDescription().equals(e.getDescription())
                     && getStartDateTime().equals(e.getStartDateTime())
                     && getEndDateTime().equals(e.getEndDateTime())
-                    && getTags().equals(e.getTags());
+                    && getTags().equals(e.getTags())
+                    && getComplete().equals(e.getComplete());
         }
     }
 }

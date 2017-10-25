@@ -222,6 +222,22 @@ Examples:
 * `deleteTask` 1 +
 Deletes the 1st task in the task book.
 
+=== Marking a task : `markTask`
+
+Marks the specific task from the task book. +
+Format: `markTask IDNEX`
+
+****
+* Marks the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+* `markTask` 1 +
+Marks the 1st task in the task book to be completed.
 
 === Selecting a person : `select`
 

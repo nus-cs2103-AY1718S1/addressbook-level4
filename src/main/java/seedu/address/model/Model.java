@@ -53,6 +53,8 @@ public interface Model {
             throws DuplicateTaskException, TaskNotFoundException;
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+
+    void markTask(ReadOnlyTask task) throws TaskNotFoundException;
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
     ObservableList<ReadOnlyTask> getFilteredTaskList();

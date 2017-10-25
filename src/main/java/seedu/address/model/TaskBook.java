@@ -94,6 +94,15 @@ public class TaskBook implements ReadOnlyTaskBook {
     }
 
     /**
+     * Marks an existing task to be completed.
+     * @throws TaskNotFoundException if the task could not be found in the list..
+     */
+    public void markTask(ReadOnlyTask p) throws TaskNotFoundException {
+        Task newTask = new Task(p);
+        tasks.setComplete(newTask);
+    }
+
+    /**
      * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyTask}.
      *
