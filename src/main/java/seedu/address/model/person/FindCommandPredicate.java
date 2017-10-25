@@ -9,7 +9,6 @@ public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
     public FindCommandPredicate(List<String> keywords) {
-        
         this.keywords = keywords;
     }
 
@@ -17,7 +16,7 @@ public class FindCommandPredicate implements Predicate<ReadOnlyPerson> {
     public boolean test(ReadOnlyPerson person) {
         boolean name = keywords.stream()
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
-        
+
         boolean number = keywords.stream()
             .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
         

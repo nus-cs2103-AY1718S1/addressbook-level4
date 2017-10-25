@@ -18,7 +18,6 @@ public class FindCommand extends Command {
     private final FindCommandPredicate predicate;
 
     public FindCommand(FindCommandPredicate predicate) {
-        
         this.predicate = predicate;
     }
 
