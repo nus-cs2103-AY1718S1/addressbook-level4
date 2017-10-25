@@ -109,7 +109,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case RemarkCommand.COMMAND_WORD:
-            return new RemarkCommandParser().parse(arguments);
+        return new RemarkCommandParser().parse(arguments);
 
         case FavoriteCommand.COMMAND_WORD:
             return new FavoriteCommandParser().parse(arguments);
