@@ -17,6 +17,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_DEADLINE_BY = new Prefix("by ");
     public static final Prefix PREFIX_DEADLINE_ON = new Prefix("on ");
     public static final Prefix PREFIX_RECURRING_DATES = new Prefix("every ");
-    public static final Prefix PREFIX_RECURRING_DATE_WEEKLY = new Prefix("weekly");
-    public static final Prefix PREFIX_RECURRING_DATE_MONTHLY = new Prefix("monthly");
+    public static final Suffix SUFFIX_RECURRING_DATE_WEEKLY = new Suffix("weekly");
+    public static final Suffix SUFFIX_RECURRING_DATE_MONTHLY = new Suffix("monthly");
+    public static final Suffix SUFFIX_RECURRING_DATE_YEARLY = new Suffix("yearly");
+    public static final Suffix SUFFIX_NO_RECUR_INTERVAL = new Suffix("");
 }

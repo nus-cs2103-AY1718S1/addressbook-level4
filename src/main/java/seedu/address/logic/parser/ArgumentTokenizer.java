@@ -16,7 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class ArgumentTokenizer {
     
-    private static final String DOUBLE_QUOTE_REGEX = "\"";
+    private static final String QUOTE_REGEX = "\"";
 
     /**
      * Tokenizes an arguments string and returns an {@code ArgumentMultimap} object that maps prefixes to their
@@ -32,8 +32,11 @@ public class ArgumentTokenizer {
     }
     
     private static String extractUnquotedArgsString(String argsString) {
-        String[] unquotedArgsString = argsString.split(DOUBLE_QUOTE_REGEX);
-        return (unquotedArgsString.length == 1) ? argsString : unquotedArgsString[unquotedArgsString.length - 1];
+        if (argsString.indexOf(QUOTE_REGEX) == argsString.lastIndexOf(QUOTE_REGEX)) {
+            return argsString;
+        }
+        String[] unquotedArgsString = argsString.split(QUOTE_REGEX);
+        return (unquotedArgsString.length == 2) ? "" : unquotedArgsString[2];
     }
 
     /**

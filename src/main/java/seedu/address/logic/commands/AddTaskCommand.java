@@ -24,7 +24,6 @@ public class AddTaskCommand extends UndoableCommand {
             + "DESCRIPTION "
             + PREFIX_STARTDATE + " START DATE "
             + PREFIX_DEADLINE_TO + " DEADLINE DATE "
-            //+ PREFIX_SINGLEEVENTDATE + " SINGLE DATE "
             + PREFIX_TAG + "TAG";
 
     public static final String MESSAGE_SUCCESS = "Task has been added: %1$s";

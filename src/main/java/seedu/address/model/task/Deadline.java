@@ -2,6 +2,10 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
+
+import seedu.address.logic.parser.Suffix;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -11,18 +15,22 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Deadline extends TaskDates {
 
     public final String date;
-    public final long recurInterval;
+    public final Suffix recurInterval;
+    
+    public Deadline() {
+        this.date = "";
+        this.recurInterval = SUFFIX_NO_RECUR_INTERVAL;
+    }
 
     /**
      * Validates given deadline date.
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public Deadline(String date, long recurInterval) throws IllegalValueException {
+    public Deadline(String date, Suffix recurInterval) throws IllegalValueException {
         requireNonNull(date);
         this.date = date.trim();
         this.recurInterval = recurInterval;
-        System.out.println(recurInterval + " " + date);
     }
 
     public boolean isEmpty() {

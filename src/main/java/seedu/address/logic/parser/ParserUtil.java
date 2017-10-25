@@ -21,6 +21,11 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_MONTHLY;
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_WEEKLY;
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
+
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
@@ -126,8 +131,8 @@ public class ParserUtil {
      */
     public static Optional<StartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())))) :
-                Optional.empty();
+        return date.isPresent() ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())),
+                parseRecurInterval(date.get()))) : Optional.empty();
     }
 
     /**
@@ -136,8 +141,8 @@ public class ParserUtil {
      */
     public static Optional<Deadline> parseDeadline(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())))) :
-                Optional.empty();
+        return date.isPresent() ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())),
+                parseRecurInterval(date.get()))) : Optional.empty();
     }
     
     public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {
@@ -149,7 +154,10 @@ public class ParserUtil {
         return dates.get(dates.size()-1);
     }
     
-    public static int parseRecurInterval(String date) {
-        if (date.contains(PREFIX))
+    public static Suffix parseRecurInterval(String dateString) {
+        return (dateString.contains(SUFFIX_RECURRING_DATE_WEEKLY.toString()) ? SUFFIX_RECURRING_DATE_WEEKLY :
+                (dateString.contains(SUFFIX_RECURRING_DATE_MONTHLY.toString())) ? SUFFIX_RECURRING_DATE_MONTHLY :
+                        (dateString.contains(SUFFIX_RECURRING_DATE_YEARLY.toString())) ? SUFFIX_RECURRING_DATE_YEARLY :
+                                SUFFIX_NO_RECUR_INTERVAL);
     }
 }

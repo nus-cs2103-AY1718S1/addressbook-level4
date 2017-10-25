@@ -7,10 +7,14 @@ import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_GRAD_S
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 import static seedu.address.testutil.TypicalTasks.BUY_PRESENTS;
 import static seedu.address.testutil.TypicalTasks.GRAD_SCHOOL;
 import static seedu.address.testutil.TypicalTasks.GYM;

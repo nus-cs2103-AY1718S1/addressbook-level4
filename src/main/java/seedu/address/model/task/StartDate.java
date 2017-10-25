@@ -2,6 +2,9 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
+import seedu.address.logic.parser.Suffix;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -11,14 +14,19 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class StartDate extends TaskDates {
 
     public final String date;
-    public final long recurInterval;
+    public final Suffix recurInterval;
+    
+    public StartDate() {
+        this.date = "";
+        this.recurInterval = SUFFIX_NO_RECUR_INTERVAL;
+    }
 
     /**
      * Validates given starting date.
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public StartDate(String date, long recurInterval) throws IllegalValueException {
+    public StartDate(String date, Suffix recurInterval) throws IllegalValueException {
         requireNonNull(date);
         this.date = date.trim();
         this.recurInterval = recurInterval;

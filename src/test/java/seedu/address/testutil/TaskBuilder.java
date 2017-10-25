@@ -2,7 +2,10 @@ package seedu.address.testutil;
 
 import java.util.Set;
 
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
+
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.Suffix;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
@@ -19,6 +22,7 @@ public class TaskBuilder {
     public static final String DEFAULT_DESCRIPTION = "CS2103T assignment due";
     public static final String DEFAULT_STARTDATE = "Tue, Oct 24, '17";
     public static final String DEFAULT_DEADLINE = "Thu, Oct 26, '17";
+    public static final Suffix DEFAULT_RECUR_INTERVAL = SUFFIX_NO_RECUR_INTERVAL;
     public static final String DEFAULT_TAG = "projectGroup";
 
     private Task task;
@@ -26,8 +30,8 @@ public class TaskBuilder {
     public TaskBuilder() {
         try {
             Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
-            StartDate defaultStartDate = new StartDate(DEFAULT_STARTDATE);
-            Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
+            StartDate defaultStartDate = new StartDate(DEFAULT_STARTDATE, DEFAULT_RECUR_INTERVAL);
+            Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE, DEFAULT_RECUR_INTERVAL);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAG);
             this.task = new Task(defaultDescription, defaultStartDate, defaultDeadline, defaultTags);
         } catch (IllegalValueException ive) {
@@ -59,7 +63,7 @@ public class TaskBuilder {
      */
     public TaskBuilder withStartDate(String startDate) {
         try {
-            this.task.setStartDate(new StartDate((startDate)));
+            this.task.setStartDate(new StartDate(startDate, DEFAULT_RECUR_INTERVAL));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("dates should be unique and in the correct format");
         }
@@ -71,7 +75,7 @@ public class TaskBuilder {
      */
     public TaskBuilder withDeadline(String deadline) {
         try {
-            this.task.setDeadline(new Deadline(deadline));
+            this.task.setDeadline(new Deadline(deadline, DEFAULT_RECUR_INTERVAL));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("dates should be unique and in the correct format");
         }

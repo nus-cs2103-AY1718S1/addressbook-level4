@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.Suffix;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
@@ -23,10 +24,10 @@ public class XmlAdaptedTask {
     private String description;
     @XmlElement
     private String startDate;
-    private long startDateRecurInterval;
+    private Suffix startDateRecurInterval;
     @XmlElement
     private String deadline;
-    private long deadlineRecurInterval;
+    private Suffix deadlineRecurInterval;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
