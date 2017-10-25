@@ -12,6 +12,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -68,7 +69,7 @@ public class AddMultipleByTsvCommandTest {
                                                                         ArrayList<Integer> failedEntries,
                                                                         boolean isFileFound, Model model) {
         AddMultipleByTsvCommand command = new AddMultipleByTsvCommand(toAddPeople, failedEntries, isFileFound);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
         return command;
     }
 
