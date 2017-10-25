@@ -21,9 +21,13 @@ public class Autocompleter {
     private static final String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history",
         "list", "redo", "select", "undo"};
 
+    private AutocompleteState state;
+
 
     public Autocompleter() {
         registerAsAnEventHandler(this);
+        //default state will be autocomplete for command
+        state = AutocompleteState.COMMAND;
     }
 
     /**
