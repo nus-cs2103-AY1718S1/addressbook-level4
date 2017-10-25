@@ -400,6 +400,53 @@ Examples for a valid birthday:
 
 Notice that the current implementation doesn't validate the validity of the date, only the format of the birthday and this was a conscious decision. This implementation manages to preserve the simplicity of this class. It could have been possible to use for example Java's Date class to implement a second validator for also the date, but this would have created inconsistency between the other attribute classes. Also, because the end product is an address book which only has to store the birthday, the validity of the date is not a concern for the program.
 
+=== Phone attribute
+
+Person class consists of five different attributes: `Name`, `Address`, `Phone`, `Email` and `Birthday`. The Phone class +
+has implementation similar to other attribute classes. New instance of Phone is initialized through constructor. Important +
+thing to note here is the once the phone is validated to be only numbers, it is also followed by the conversion of phone +
+into the national convention format as well.
+
+The conversion to national convention is done within the Phone class in the following way:
+[source,java]
+----
+public Phone(String phone) throws IllegalValueException {
+    // ... phone validation logic ...
+
+    this.value = formatPhone(trimmedPhone);
+}
+
+public static String formatPhone(String trimmedPhone) {
+    // ... variable declarations ...
+    String formattedPhone = generateFormattedPhone(trimmedPhone, phoneLength);
+
+    return formattedPhone;
+}
+----
+
+*Validation*
+
+The valid form of phone is `xxxxxxxx` with as many characters as the user want, but no less than 3. Every character must +
+be a digit and there should be no other character like `+`. This prevents the user to enter alphabets or other invalid +
+characters while entering phone numbers.
+
+The example of valid phone numbers are:
+
+* `6596631234`
+* `919911204422`
+* `15671237070`
+
+The example of invalid phone numbers are:
+
+* `6596asd`
+* `+919911204422`
+* `12`
+
+The current validation allows the user to enter as many digits as he/she wants which is not the case in real life. The +
+numbers must be restricted to certain number of digits based on the country. Such validation will be performed in the future +
+version of the tool. The validation for number of digits will be quite extensive since different countries have different +
+number of digits in their phone numbers, which is the reason it is noe done yet.
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
