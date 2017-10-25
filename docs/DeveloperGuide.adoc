@@ -876,7 +876,7 @@ return (((cal.get(Calendar.MONTH)) == Calendar.getInstance().get(Calendar.MONTH)
 
 An overall view of birthdays command logic is shown in Figure 5.8.1
 
-image::BirthdaysMechanism.PNG[width="800"]
+image::BirthdaysMechanism.png[width="800"]
 Figure 5.8.1 Birthdays Command Logic Sequence Diagram
 
 What the user finally sees is a list of people with their birthday today as shown in figure 5.8.2. This is because the `executeUndoableCommand()` which is overriden in the BirthdaysCommand class updates the `filteredPersonList`.
@@ -889,7 +889,7 @@ What the user finally sees is a list of people with their birthday today as show
     }
 ----
 
-image::BirthdaysMechanism2.PNG[width="800"]
+image::BirthdaysMechanism2.png[width="800"]
 Figure 5.8.2 What the user sees
 
 ==== Design Considerations
