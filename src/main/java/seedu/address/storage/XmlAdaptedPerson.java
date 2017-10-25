@@ -7,11 +7,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlIDREF;
-
-import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
-
-import com.sun.org.apache.regexp.internal.RE;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.insurance.LifeInsurance;
