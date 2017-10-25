@@ -430,19 +430,19 @@ Examples:
 * `remark 1 1`
 * `remark 2 1`
 
-=== Link facebook page to contact: `link`
+=== Link twitter page to contact: `link`
 
-Adds a facebook link to a person existing in the address book based on their index +
+Adds a twitter link to a person existing in the address book based on their index +
 
 Format: `link PERSONINDEX l/WEBSITEURL` +
 
 [TIP]
 A person can have only one link, any changes will update the existing link to be the new link +
-Only facebook links are accepted
+Only twitter links are accepted
 
 Examples:
 
-* `link 1 l/https://www.facebook.com/john.doe`
+* `link 1 l/https://www.twitter.com/john.doe`
 
 === Ability to add `tags` cumulatively to a person
 
