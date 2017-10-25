@@ -128,8 +128,8 @@ public class ModelManager extends ComponentManager implements Model {
         UniqueTagList updatedTags = new UniqueTagList(personToPin.getTags());
         updatedTags.addPinTag();
 
-        return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getEmail(),
-                personToPin.getAddress(), updatedTags.toSet());
+        return new Person(personToPin.getName(), personToPin.getPhone(), personToPin.getBirthday(),
+                personToPin.getEmail(), personToPin.getAddress(), updatedTags.toSet());
     }
 
     /**
@@ -141,8 +141,9 @@ public class ModelManager extends ComponentManager implements Model {
         try {
             UniqueTagList updatedTags = new UniqueTagList(personToUnpin.getTags());
             updatedTags.removePinTag();
-            return new Person(personToUnpin.getName(), personToUnpin.getPhone(), personToUnpin.getEmail(),
-                    personToUnpin.getAddress(), updatedTags.toSet());
+            return new Person(personToUnpin.getName(), personToUnpin.getPhone(),
+                    personToUnpin.getBirthday(), personToUnpin.getEmail(), personToUnpin.getAddress(),
+                    updatedTags.toSet());
         } catch (IllegalValueException ive) {
             throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
