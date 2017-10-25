@@ -1,7 +1,12 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_TASK_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalTasks.*;
+import static seedu.address.testutil.TypicalTasks.ASSIGNMENT;
+import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
+import static seedu.address.testutil.TypicalTasks.QUIZ;
+import static seedu.address.testutil.TypicalTasks.GYM;
+import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
+import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
 
 import org.junit.Test;
 
@@ -138,7 +143,7 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 
-       /* Case: find deadline of task in address book, keyword is substring of deadline -> 0 tasks found */
+        /* Case: find deadline of task in address book, keyword is substring of deadline -> 0 tasks found */
         command = FindTaskCommand.COMMAND_WORD + " 20-10";
         ModelHelper.setFilteredTaskList(expectedModel);
         assertCommandSuccess(command, expectedModel);
