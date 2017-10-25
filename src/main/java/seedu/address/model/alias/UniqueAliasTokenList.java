@@ -35,7 +35,7 @@ public class UniqueAliasTokenList implements Iterable<AliasToken> {
 
     /**
      * Creates a UniqueAliasTokenList using given AliasTokens.
-     * Enforces no nulls.
+     * Enforces no nulls
      */
     public UniqueAliasTokenList(Set<AliasToken> aliasTokens) {
         requireAllNonNull(aliasTokens);
