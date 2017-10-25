@@ -17,7 +17,9 @@ import seedu.address.model.reminder.ReadOnlyReminder;
 public class ReminderCard extends UiPart<Region> {
 
     private static final String FXML = "ReminderListCard.fxml";
-    private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+
+    private static String[] colors = { "red", "gold", "blue", "purple", "orange", "brown",
+        "green", "magenta", "black", "grey" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
 

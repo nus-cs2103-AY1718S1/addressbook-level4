@@ -62,7 +62,7 @@ public class BrowserPanel extends UiPart<Region> {
     /**
      * @param reminder
      */
-    private void DisplayReminder(ReadOnlyReminder reminder) {
+    private void displayReminder(ReadOnlyReminder reminder) {
         try {
             browserPanel.getChildren().remove(displayPanel.getRoot());
         } catch (Exception e) {
@@ -93,6 +93,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleReminderPanelSelectionChangedEvent(ReminderPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        DisplayReminder(event.getNewSelection().reminder);
+        displayReminder(event.getNewSelection().reminder);
     }
 }
