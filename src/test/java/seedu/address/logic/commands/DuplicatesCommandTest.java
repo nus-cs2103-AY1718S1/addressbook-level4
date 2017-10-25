@@ -26,7 +26,7 @@ public class DuplicatesCommandTest {
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
-    private DuplicatesCommand prepareCommand(String userInput) {
+    private DuplicatesCommand prepareCommand() {
         DuplicatesCommand command = new DuplicatesCommand();
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
@@ -35,7 +35,7 @@ public class DuplicatesCommandTest {
     @Test
     public void executeZeroDuplicatesFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        DuplicatesCommand command = prepareCommand("list");
+        DuplicatesCommand command = prepareCommand();
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
