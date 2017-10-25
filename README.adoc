@@ -15,11 +15,16 @@ ifndef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-
-* It is a Java Address Book application intended for Medical Professionals
-
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC) than what students usually write in beginner-level SE modules.
+Welcome to MedNus! MedNus is a custom address book made for medical professionals. +
+ +
+You can find many different features available in MedNus that are useful for medical professionals such as +
+recording appointments, listing your patients based on blood type and even saving a canvas drawing of your +
+patient's injury. +
+ +
+With MedNus's unique UI theme, keyboard shortcuts and productivity features, you can do your job effectively +
+and productively. +
+ +
+Head over to our link:repo/docs/UserGuide.adoc[user guide] to get started with MedNus. +
 
 == Site Map
 
@@ -39,4 +44,3 @@ _Marco Jakob_.
 * Credits to Joestalmach for the date parsing NLP library
 
 == Licence : link:LICENSE[MIT]
-
