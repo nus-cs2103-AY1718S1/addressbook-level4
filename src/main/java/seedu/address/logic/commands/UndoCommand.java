@@ -31,7 +31,8 @@ public class UndoCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+    public void setData(Model model, CommandHistory commandHistory,
+                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
     }
