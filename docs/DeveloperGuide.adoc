@@ -245,6 +245,16 @@ image::OCPLogic.png[width="800"]
 
 ==== Liskov Substitution Principle (LSP)
 
+ Liskov Substitution Principle (LSP): Derived classes must be substitutable for their base classes.
+
+Bluebird applies the Liskov Substitution Principle to avoid breaking the functionality of the code.
+An example of this can be seen below:
+
+image::LSP-CommandClass.png[width="500"]
+
+The `UndoableCommand` class follows the Liskov Substitution Principle.
+
+
 ==== Dependency Inversion Principle (DIP)
 
 == Implementation
