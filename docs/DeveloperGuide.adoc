@@ -383,31 +383,86 @@ image::FavouritePersonSequenceDiagram.png[width="800"]
 **Cons:** Is not necessary when existing code is able to perform the same action +
 // end::favourite[]
 
+// tag::sort[]
+=== Sort mechanism
+
+The sort feature allows users to sort the person list according to the `DATAFIELD` that they want. Note that favourite sorting comes first before sorting by `DATAFIELD`. +
+
+Current `DATAFIELD` entries that are allowed are: `Name`, `Phone`, `Email` and `Address`. +
+
+The sort feature uses *JavaFX 8's* `SortedList` to wrap around the `FilteredList` in `ModelManager` to enable sorting. This is because `FilteredList` is *unmodifiable* as of *JavaFX 8* and thus cannot be sorted. +
+
+Firstly, `SortCommandParser` parses the user input and creates a `SortCommand` with the user-specified `DATAFIELD`. `SortCommand` then calls the `sortByDataFieldFirst` method in `ModelManager` which sets the appropriate order of `Comparators` for `SortedList`. +
+
+`Comparators` are gotten from the `ComparatorUtil` class.
+
+==== Design Considerations
+**Aspect:** Implementation of `Comparators` +
+**Alternative 1 (current choice):** Consolidate all the `Comparators` in the class `ComparatorUtil` and provide getter methods for them +
+**Pros:** Allows for code reuse, able to extend easily when more `DATAFIELD` details are added +
+**Cons:** More planning required for implementation +
+**Alternative 2:** Create `Comparators` in `ModelManager` and use them to sort +
+**Pros:** Less planning required for implementation +
+**Cons:** Results in messy code +
+
+//end::end::sort[]
+
+// tag::addtag[]
+=== Tag addition mechanism
+
+The add tag feature allows users to add specified `Tag(s)` cumulatively to specified `Indexes`.
+
+The following sequence diagram shows how the remove operation works:
+
+image::addTag.png[width="800"]
+As seen above, execution of `AddTagCommand` is governed by the `addTag` method located in the `Model` interface and implemented by
+`ModelManager`.
+
+==== Design Considerations
+**Aspect:** Execution of AddTag command  +
+**Alternative 1 (current choice):** Accepts multiple `Tags` and `Indexes` as a single command input. +
+**Pros:** Allows greater efficiency in adding multiple `Tags` instead of doing it singly. +
+**Cons:** May pose an inconvenience for users to add `Tag` a to wide range of `Index`. +
+**Alternative 2:** Allow range of `Index` to be accepted as parameters. +
+**Pros:** Better efficiency in mass addition of `Tags` from persons that are listed consecutively. +
+**Cons:** Pose the same inconvenience to users if the index of the persons specified are widely scattered. +
+
+---
+
+**Aspect:** Implementation of AddTag command. +
+**Alternative 1 (current choice):** Executes user input and provides one result of command output. +
+**Pros:** With current implementation, it allows for multiple addition of `Tags` in one command execution. +
+**Cons:** The use of the `Undo/Redo` command may not be applicable. +
+**Alternative 2:** Incorporate mechanism such as Stacks to store individual addition of `Tag`. +
+**Pros:** Complements the use of `Undo/Redo`. +
+**Cons:** Current method of adding tags has to be amended to accommodate the use of the new mechanism. +
+
+// end::addtag[]
+
 // tag::remove[]
 === Tag removal mechanism
 
-The remove feature allows users to either remove a `Tag` from a multiple persons, remove multiple `Tags` from
-a single person or remove `Tag(s)` from the whole address book.
+The remove tag feature allows users to remove specified `Tag(s)` either from specified `Indexes` or from the whole address book.
 The distinction in execution of the command lies in the format of the user command.
 
 The following sequence diagram shows how the remove operation works:
 
 image::removeTag.png[width="800"]
-As seen above, execution of `RemoveCommand` is governed by the `removeTag` method located in the `Model` interface and implemented by
+As seen above, execution of `RemoveTagCommand` is governed by the `removeTag` method located in the `Model` interface and implemented by
 `ModelManager`.
 
 ==== Design Considerations
-**Aspect:** Execution of remove command  +
-**Alternative 1 (current choice):** Accepts multiple `Tags` and *one* `Index` or *one* `Tag` and multiple `Index` as a single command input. +
+**Aspect:** Execution of RemoveTag command  +
+**Alternative 1 (current choice):** Accepts multiple `Tags` and `Indexes` as a single command input. +
 **Pros:** Allows greater efficiency in removing multiple `Tags` instead of doing it singly. +
-**Cons:** May pose an inconvenience for users to remove `Tag` a wide range of `Index`. +
+**Cons:** May pose an inconvenience for users to remove `Tag` from a wide range of `Index`. +
 **Alternative 2:** Allow range of `Index` to be accepted as parameters. +
 **Pros:** Better efficiency in mass removal of `Tags` from persons that are listed consecutively. +
 **Cons:** Pose the same inconvenience to users if the person whose `Tag` to be removed are widely scattered. +
 
 ---
 
-**Aspect:** Implementation of remove command. +
+**Aspect:** Implementation of RemoveTag command. +
 **Alternative 1 (current choice):** Executes user input and provides one result of command output. +
 **Pros:** With current implementation, it allows for multiple removal of `Tags` in one command execution. +
 **Cons:** The use of the `Undo/Redo` command may not be applicable. +
@@ -415,7 +470,7 @@ As seen above, execution of `RemoveCommand` is governed by the `removeTag` metho
 **Pros:** Complements the use of `Undo/Redo`. +
 **Cons:** Current method of removing tags has to accommodate the use of the new mechanism. +
 
-// end::remove[]
+// end::removetag[]
 
 // tag:: remark[]
 === Remark CheckList Implementation

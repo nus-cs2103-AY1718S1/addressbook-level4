@@ -48,8 +48,23 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Removes given tag from specified index
+     * @param tag
+     * @param index
+     * @throws PersonNotFoundException
+     * @throws DuplicatePersonException
+     */
+    void sortByDataFieldFirst(String dataField);
 
     void removeTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException, DuplicatePersonException;
 
-
+    /**
+     * Adds tag to specified index
+     * @param tag
+     * @param index
+     * @throws PersonNotFoundException
+     * @throws DuplicatePersonException
+     */
+    void addTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException, DuplicatePersonException;
 }

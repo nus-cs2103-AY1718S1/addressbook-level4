@@ -105,7 +105,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Favouriting a person : `favourite`
 
-Favourites or unfavourites an existing perosn in the address book. +
+Favourites or unfavourites an existing person in the address book. +
 Format: `favourite INDEX`
 
 ****
@@ -177,6 +177,25 @@ Deletes the 2nd person in the address book.
 * `find n/Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Sorting the person list : `sort`
+
+Sorts the person list according to the data field the user specifies. +
+Format: `sort DATAFIELD`
+
+****
+* Sorts the person list according to the specified `DATAFIELD`.
+* Possible `DATAFIELD` entries are: `Name`, `Phone`, `Email`, `Address`.
+* `DATAFIELD` is case-insensitive.
+* Note that favourite contacts will be shown first.
+****
+
+Examples:
+
+* `sort Phone` +
+Sorts the person list according to their phone numbers.
+* `sort address` +
+Sorts the person list according to their addresses.
 
 === Selecting a person : `select`
 
@@ -259,10 +278,38 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Removing tag(s) : `remove`
+=== Adding tag(s) : `addtag`
+
+Adds the specified tag(s). +
+Format: `addtag [TAG]... [INDEX]...`
+
+
+****
+* The index refers to the index number shown in the last person listing.
+* The index must be a positive integer `1, 2, 3, ...`
+* Adds multiple tags to multiple indexes as specified.
+****
+
+Examples:
+
+* `list` +
+`addtag friends 1` +
+Adds the `friends` tag to the first person in the address book.
+
+* `list` +
+`addtag friends family 2` +
+Adds the `friends` and `family` tag to the second person in the address book.
+
+* `list` +
+`addtag friends family 2 5` +
+Adds the `friends` and `family` tag to the second and fifth person in the address book.
+
+// end::addtag[]
+
+=== Removing tag(s) : `removetag`
 
 Removes the specified tag(s). +
-Format: `remove [TAG]... [INDEX]...`
+Format: `removetag [TAG]... [INDEX]...`
 
 [NOTE]
 ====
@@ -272,31 +319,29 @@ Executing command without the INDEX field will remove the given tag(s) from the 
 ****
 * The index refers to the index number shown in the last person listing.
 * The index must be a positive integer `1, 2, 3, ...`
-* Removes the specified tags from *ONE* specified index.
-* Removes *ONE* tag from the specified indexes.
-* Multiple tags and indexes input are *NOT* allowed.
+* Removes multiple tags from multiple indexes as specified.
 ****
 
 Examples:
 
 * `list` +
-`remove friends 1` +
+`removetag friends 1` +
 Removes the `friends` tag from the first person in the address book.
 
 * `list` +
-`remove friends` +
+`removetag friends` +
 Removes the `friends` tag from every person in the address book.
 
 * `list` +
-`remove friends family 2` +
+`removetag friends family 2` +
 Removes the `friends` and `family` tag from the second person in the address book.
 
 * `list` +
-`remove friends 2 5` +
-Removes the `friends` tag from the second and fifth person in the address book.
+`removetag friends family 2 5` +
+Removes the `friends` and `family` tag from the second and fifth person in the address book.
 
 
-// end::remove[]
+// end::removetag[]
 
 === Clearing all entries : `clear`
 
@@ -325,11 +370,13 @@ There is no need to save manually.
 | *Favourite* | *fav* | `favourite INDEX` +
 | *Find* | *f* | `find [PREFIX KEYWORD]...` +
 | *Delete* | *d* | `delete INDEX` +
-| *Select* | *s* | `select INDEX` +
+| *Sort* | *s* | `sort DATAFIELD` +
+| *Select* | *sel* | `select INDEX` +
 | *History* | *hs* | `history` +
 | *Undo* | *u* | `undo` +
 | *Redo* | *r* | `redo` +
-| *Remove* | *rm* | `remove [TAG]... [INDEX]...` +
+| *Remove tag* | *rt* | `removetag [TAG]... [INDEX]...` +
+| *Add tag* | *at* | `addtag [TAG]... [INDEX]...` +
 | *Clear* | *c* | `clear` +
 | *exit* | *x* | `exit` +
 |=======================================================================
@@ -376,6 +423,18 @@ Format: `remove friends family 1`
 Allows user to remove a single tag from multiple person in the address book by specifying the corresponding indexes. +
 
 Format: `remove friends 1 3`
+
+=== Ability to add `tags` cumulatively to a person
+
+Adds tag(s) to a person in the address book by specifying the corresponding indexes. +
+
+Format: `addtag brother 1`
+
+=== Ability to remove multiple `tags` from multiple persons in one command
+
+Remove specified tags from multiple persons in the address book by specifying the corresponding indexes. +
+
+Format: `remove friends family 1 3`
 
 
 
@@ -443,18 +502,6 @@ Only twitter links are accepted
 Examples:
 
 * `link 1 l/https://www.twitter.com/john.doe`
-
-=== Ability to add `tags` cumulatively to a person
-
-Adds tag(s) to a person in the address book by specifying the corresponding indexes. +
-
-Format: `tag brother 1`
-
-=== Ability to remove multiple `tags` from multiple persons in one command
-
-Remove specified tags from multiple persons in the address book by specifying the corresponding indexes. +
-
-Format: `remove friends family 1 3`
 
 === Ability to highlight keyword from the `Find Command` result
 

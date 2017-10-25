@@ -22,6 +22,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -34,7 +35,7 @@ import seedu.address.logic.commands.LinkCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.RemoveCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -142,13 +143,25 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_remove() throws Exception {
         Tag tag = new Tag("friends");
-        RemoveCommand command = (RemoveCommand) parser.parseCommand(
-                RemoveCommand.COMMAND_WORD + " friends 1");
+        RemoveTagCommand command = (RemoveTagCommand) parser.parseCommand(
+                RemoveTagCommand.COMMAND_WORD + " friends 1");
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tag);
         indexSet.add(INDEX_FIRST_PERSON);
-        assertEquals(new RemoveCommand(tagSet, indexSet), command);
+        assertEquals(new RemoveTagCommand(tagSet, indexSet), command);
+    }
+
+    @Test
+    public void parseCommand_addTag() throws Exception {
+        Tag tag = new Tag("enemy");
+        AddTagCommand command = (AddTagCommand) parser.parseCommand(
+                AddTagCommand.COMMAND_WORD + " enemy 1");
+        Set<Index> indexSet = new HashSet<>();
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(tag);
+        indexSet.add(INDEX_FIRST_PERSON);
+        assertEquals(new AddTagCommand(tagSet, indexSet), command);
     }
 
     @Test
