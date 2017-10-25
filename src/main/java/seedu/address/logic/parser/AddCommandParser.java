@@ -56,14 +56,12 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        final Logger logger = LogsCenter.getLogger(AddCommandParser.class);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS,
                         PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO,
                         PREFIX_TAG);
 
-        logger.info("PhotoURL is: " + argMultimap.getValue(PREFIX_PHOTO));
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -110,7 +108,6 @@ public class AddCommandParser implements Parser<AddCommand> {
                 photo = ParserUtil.parsePhoto(argMultimap.getValue
                         (PREFIX_PHOTO)).get();
 
-                logger.info("Parsed photoURL = " + photo.photoURL);
             }
 
             ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,

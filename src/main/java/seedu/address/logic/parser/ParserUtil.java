@@ -139,6 +139,7 @@ public class ParserUtil {
         return note.isPresent() ? Optional.of(new Note(note.get())) : Optional.empty();
     }
 
+    //@@author a0107442n
     /**
      * Parses a {@code Optional<String> photo} into an {@code Optional<Photo>}
      * if {@code photo} is present.
@@ -183,6 +184,8 @@ public class ParserUtil {
         return photoURL.isPresent() ? Optional.of(new Photo(photoURL.get())) :
                 Optional.empty();
     }
+
+    //@@author a0107442n
 
     /**
      * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.

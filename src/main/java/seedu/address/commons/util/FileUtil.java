@@ -96,7 +96,7 @@ public class FileUtil {
         return pathWithForwardSlash.replace("/", File.separator);
     }
 
-    // @@ author a0107442
+    // @@ author a0107442n
     /**
      * Copy a file from its source position to a new destination.
      *
