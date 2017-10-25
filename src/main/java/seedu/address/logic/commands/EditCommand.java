@@ -113,7 +113,8 @@ public class EditCommand extends UndoableCommand {
         ExpiryDate updatedExpiryDate = personToEdit.getExpiryDate();
         Remark updatedRemark = personToEdit.getRemark();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedExpiryDate, updatedRemark);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                updatedExpiryDate, updatedRemark);
     }
 
     @Override
