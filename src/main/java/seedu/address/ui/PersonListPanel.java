@@ -33,7 +33,7 @@ public class PersonListPanel extends UiPart<Region> {
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
         ArrayList<ReadOnlyPerson> temp = new ArrayList<>();
-
+        /*
         for(ReadOnlyPerson person: personList){
             //System.out.println(person.getAddress().value);
             temp.add(person);
@@ -49,7 +49,8 @@ public class PersonListPanel extends UiPart<Region> {
             }
         };
         temp2.sort(ALPHA_ORDER);
-        setConnections(temp2);
+        */
+        setConnections(personList);
         registerAsAnEventHandler(this);
     }
 
