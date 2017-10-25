@@ -24,8 +24,8 @@
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
         </Menu>
         <Menu mnemonicParsing="false" text="Theme">
-            <MenuItem fx:id="changeTheme" mnemonicParsing="false" onAction="#handleTheme" text="Dark Theme"/>
-            <MenuItem fx:id="changeTheme2" mnemonicParsing="false" onAction="#handleTheme" text="Light Theme"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleTheme" text="Dark Theme"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleTheme" text="Light Theme"/>
         </Menu>
     </MenuBar>
 
