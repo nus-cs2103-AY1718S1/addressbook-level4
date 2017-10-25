@@ -111,7 +111,7 @@ Both capital letters and small letters are can be entered.
 
 <<<
 
-=== Listing persons - All / By tag : `list`
+=== List
 
 * *Listing all persons* +
 You can use `list` to show a list of all persons in the address book. +
@@ -120,9 +120,9 @@ You can use `list` to show a list of all persons in the address book. +
 
 * *Listing persons by tag* +
 MedNus can list selected contacts with specific tag(s). +
-*Format:* `list TAG1 TAG2...` +
+*Format:* `list tag TAG1 TAG2...` +
  +
-*Example:* `list colleagues friends` +
+*Example:* `list tag colleagues friends` +
 This shows you all contacts with the tag `colleagues`, `friends` or both.
 
 === Listing persons by blood type : `bloodtype` [Since v1.2]
@@ -471,6 +471,8 @@ You do not need to save data manually.
 |*Find Shorthand* |Finds a contact based on keyword |`f KEYWORD [MORE_KEYWORDS]` |`f James Jake`
 
 |*List* |Lists all existing contacts |`list` |`list`
+
+|*List* |Lists contacts with specific tag |`list tag TAG/s` |`list tag colleagues`
 
 |*Help* |Shows you the user guide |`help` |`help`
 
