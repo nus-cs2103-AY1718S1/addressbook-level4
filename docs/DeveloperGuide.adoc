@@ -364,6 +364,40 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Highlight Command
+
+The sort command is implemented to highlight the contacts with the specified tag
+
+If the tag specified does not exist, trying to highlight the persons with the tag will raise an exception:
+[source,java]
+----
+public void updateHighlight(String highlightTag) {
+    try {
+        persons.updateHighlight(highlightTag);
+        if (!this.tags.contains(new Tag(highlightTag))) {
+            throw new TagNotFoundException("Tag not found");
+        }
+    } catch (IllegalValueException e) {
+        throw new TagNotFoundException("Tag not found");
+    }
+}
+----
+
+This exception is later caught higher up the execution stack and the user receives a message that the tag does not exist.
+
+To highlight the persons with the specified tags, the list of persons is indicated to be updated every time the command is run.
+This change is reflected in the UI with the refreshing of the persons list and the instantiation of the highlight styling
+in the generation of the PersonCard
+
+[source,java]
+----
+private void initHighlightStatus() {
+    if (person.getHighlightStatus()) {
+        cardPane.setStyle("-fx-border-style: solid inside; -fx-border-width: 2;"
+            + "-fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: red;");
+    }
+}
+----
 
 // tag::undoredo[]
 === Temporary Contact mechanism
