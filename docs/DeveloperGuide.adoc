@@ -385,10 +385,11 @@ As a result, when implement the redo mechanism, we can obtain the `currentPredic
 **Aspect:** Implementation of `ListingUnit` +
 **Alternative 1 (current choice):**  Construct a enumeration class `ListingUnit` and record current listing type and predicates.
 **Pros:** It makes the implementation of many other features easier. +
-**Cons:** Hard for new developers to understand the listing unit mechanism. +
+**Cons:** In testing, `ListingUnit` class carry data from one test to another even when we want each test to be independent of the others. +
 **Alternative 2 (previous choice):** Use a variable in model manager to keep record of currentListingUnit +
 **Pros:** No need for extra enumeration class. +
 **Cons:** In order to access the variable in other components, the variable must be declared static. But we cannot define static abstract method in interface.
+
 // end::list[]
 
 === List/View mechanism
