@@ -25,6 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private boolean pinned;
 
     /**
      * Every field must be present and not null.
@@ -38,6 +39,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        pinned = checkPinTag(tags);
     }
 
     /**
@@ -46,6 +48,20 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getBirthday(), source.getEmail(), source.getAddress(),
                 source.getTags());
+    }
+
+    /**
+     * Checks whether person in pinned in addressbook
+     * @param tags
+     * @return true if Pinned is one of the tags, false if not
+     */
+    private boolean checkPinTag(Set<Tag> tags) {
+        for (Tag tag: tags) {
+            if ("Pinned".equals(tag.tagName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setName(Name name) {
@@ -129,6 +145,11 @@ public class Person implements ReadOnlyPerson {
 
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
+    }
+
+    @Override
+    public boolean isPinned() {
+        return pinned;
     }
 
     /**

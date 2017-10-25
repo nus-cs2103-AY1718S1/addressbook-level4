@@ -24,6 +24,7 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    boolean isPinned();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -54,6 +55,27 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        return builder.toString();
+    }
+
+    default String getSearchText() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" ")
+                .append(getPhone())
+                .append(" ")
+                .append(getAddress())
+                .append(" ")
+                .append(getEmail())
+                .append(" ")
+                .append(getEmail().getUserName())
+                .append(" ")
+                .append(getEmail().getDomainName());
+        for (Tag tag: getTags()) {
+            builder.append(" ")
+                .append(tag.tagName);
+        }
+
         return builder.toString();
     }
 

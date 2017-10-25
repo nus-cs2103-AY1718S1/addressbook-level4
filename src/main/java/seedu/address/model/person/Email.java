@@ -15,6 +15,8 @@ public class Email {
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
 
     public final String value;
+    private final String userName;
+    private final String domainName;
 
     /**
      * Validates given email.
@@ -28,6 +30,9 @@ public class Email {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }
         this.value = trimmedEmail;
+        String[] splitEmail = trimmedEmail.split("@");
+        userName = splitEmail[0];
+        domainName = splitEmail[1];
     }
 
     /**
@@ -35,6 +40,14 @@ public class Email {
      */
     public static boolean isValidEmail(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX);
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getDomainName() {
+        return domainName;
     }
 
     @Override
@@ -54,4 +67,7 @@ public class Email {
         return value.hashCode();
     }
 
+    public int compareTo(Email compareTarget) {
+        return this.toString().compareToIgnoreCase(compareTarget.toString());
+    }
 }
