@@ -1,8 +1,13 @@
 package seedu.address.logic.commands;
 
 /**
- * Prints failure message if invalid arguments are passed after
- * a list command
+ * Prints failure message if invalid arguments are passed after a list command
+ *
+ * Command is created for list failure detection instead of command parser because list methods
+ * are not taking in any arguments and thus there is nothing for the command to parse.
+ * Another option to throw this message is to save it in the Messages.java class but since
+ * commands are returned in the AddressBookParser.class, it would be more convenient to catch
+ * all errors pertaining to the list features and throw the message via a command class instead.
  */
 public class ListFailureCommand extends Command {
 
