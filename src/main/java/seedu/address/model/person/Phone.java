@@ -17,6 +17,13 @@ public class Phone {
     public final String value;
 
     /**
+     * The default Phone constructor when phone is not specified by the user
+     */
+    public Phone() {
+        value = "<Unspecified phone number>";
+    }
+
+    /**
      * Validates given phone number.
      * An exception to the ILLegalValueException is the String "Unspecified phone number"
      * @throws IllegalValueException if given phone string is invalid.

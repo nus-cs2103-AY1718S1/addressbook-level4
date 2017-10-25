@@ -22,6 +22,13 @@ public class Address {
     public final String value;
 
     /**
+     * The default Address constructor when address is not specified by the user
+     */
+    public Address() {
+        value = "<Unspecified address>";
+    }
+
+    /**
      * Validates given address.
      *
      * @throws IllegalValueException if given address string is invalid.
