@@ -7,25 +7,27 @@ import seedu.address.model.Model;
 import seedu.address.storage.Storage;
 
 /**
- * Clears the command history and the undo/redo stack.
+ * Backs up the address book to a fixed location (current file name).bak.
  */
-public class ClearHistoryCommand extends Command {
+public class BackupCommand extends Command {
 
-    public static final String COMMAND_WORD = "clearhistory";
-    public static final String COMMAND_ALIAS = "ch";
-    public static final String MESSAGE_SUCCESS = "Command history cleared.";
+    public static final String COMMAND_WORD = "backup";
+    public static final String COMMAND_ALIAS = "bak";
+    public static final String MESSAGE_SUCCESS = "Backup created.";
 
     @Override
     public CommandResult execute() throws CommandException {
-        undoRedoStack.clear();
-        history.clear();
+        try {
+            storage.backupAddressBook(storage.readAddressBook().get());
+        } catch (Exception e) {
+            throw new CommandException(e.getMessage());
+        }
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Storage storage) {
         super.setData(model, history, undoRedoStack, storage);
-        this.history = history;
-        this.undoRedoStack = undoRedoStack;
+        this.storage = storage;
     }
 }

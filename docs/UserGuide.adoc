@@ -73,6 +73,11 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Sorting all persons : `sort`
+
+Shows a list of all persons in the address book sorted alphanumerically by name. +
+Format: `sort`
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -93,25 +98,113 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose details contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* The search works even in the presence of whitespaces
+* All details, including names, addresses, emails, phones and tags are searched
+* Partial words will also be matched e.g. `Han` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* If a prefix is specified, the scope of the search will be narrowed to a particular detail set (see sections below)
+* If more than one type of prefix is specified, the search will be treated as an invalid search
 ****
 
 Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
+* `find Jo` +
+Returns `john` and `John Doe`
 * `find Betsy Tim John` +
+Returns any person having names or email addresses containing `Betsy`, `Tim`, or `John`
+* `find 92334266` +
+Returns any person having phone number/email address/address containing `92334266`
+* `find Alice 92334266` +
+Returns any person having name `Alice` AND/OR having phone number/email address/address containing `92334266`
+
+==== Locating persons by name: `find n/`
+
+Finds persons whose names contain any of the given keywords. +
+Format: `find n/[KEYWORDS]`
+
+Examples:
+
+* `find n/John` +
+Returns `john` and `John Doe`
+* `find n/Jo` +
+Returns `john` and `John Doe`
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+[TIP]
+You can find multiple persons with a single name search
+
+==== Locating persons by address: `find a/`
+
+Finds persons whose addresses contain any of the given keywords. +
+Format: `find a/[KEYWORDS]`
+
+Examples:
+
+* `find a/Serangoon` +
+Returns any persons having addresses in Serangoon
+* `find a/seRangOOn` +
+Returns any persons having addresses in Serangoon
+* `find a/Ser` +
+Returns any persons having addresses containing the phrase `Ser`
+* `find a/Serangoon Gardens` +
+Returns any person having addresses containing the phrase `Serangoon` AND/OR `Gardens`
+
+==== Locating persons by email: `find e/`
+
+Finds persons whose emails contain any of the given keywords. +
+Format: `find e/[KEYWORDS]`
+
+Examples:
+
+* `find e/alice@example.com` +
+Returns `Alice`
+* `find e/AliCE@ExaMPle.com` +
+Returns `Alice`
+* `find e/@example.com` +
+Returns any persons having email addresses containing the suffix `@example.com`
+* `find e/@example.com @yahoo.com` +
+Returns any person having email addresses containing the suffix `@example.com` or `@yahoo.com`
+
+==== Locating persons by phone: `find p/`
+
+Finds persons whose phone numbers contain any of the given keywords. +
+Format: `find p/[KEYWORDS]`
+
+Examples:
+
+* `find p/97734225` +
+Returns any persons having phone numbers matching `97734225`
+* `find p/9773` +
+Returns any persons having phone numbers containing the sequence `9773`
+* `find p/97734225 90329038` +
+Returns any persons having phone numbers matching `97734225` OR `90329038`
+
+==== Locating persons by tag: `find t/`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `find t/[KEYWORDS]`
+
+Examples:
+
+* `find t/friends` +
+Returns any persons having tags matching `friends`
+* `find t/FriEndS` +
+Returns any persons having tags matching `friends`
+* `find t/frIe` +
+Returns any persons having tags containing the phrase `frie`
+* `find t/friends family` +
+Returns any persons having tags matching `friends` AND/OR `family`
 
 === Deleting a person : `delete`
 
@@ -186,7 +279,8 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `removeTag` +
+and `clear`).
 ====
 
 Examples:
@@ -267,6 +361,15 @@ Examples:
 * `remark 3 r/Is the husband of Jessie`
 * `remark 2 r/Is the wife of John`
 
+=== Backing up: `backup`
+
+Backs up the current address book to a fixed location (`addressbook.xml.bak` in current working directory).
+
+[WARNING]
+====
+Any existing backup at the same location will be overwritten after running this command.
+====
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -277,7 +380,102 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== Features (Coming in v2.0)
+== Features(Coming in v2.0)
+
+=== Add a relationship
+
+Adds a relationship between two persons. +
+Format: `addRelationship SOURCE_INDEX DESTINATION_INDEX DIRECTION`
+
+****
+* Add a relationship between the person with `SOURCE_INDEX` and `DESTINATION_INDEX`, with the direction of the relationship specified.
+* All indexes refer to the indexes shown in the most recent listing.
+* `SOURCE_INDEX` refers to the index of the person from whom the relationship is initiated.
+* `DESTINATION_INDEX` refers to the index of the person to whom the relationship is directed.
+* `DIRECTION` which refers to the direction of this relationship, can only be `directed` or `undirected`.
+* If the `DIRECTION` is `directed`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` matters.
+* If the `DIRECTION` is `undirected`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` does not matter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`addRelationship 2 3 directed` +
+Adds a directed relationship starting from the 2nd person to the 3rd person in the list.
+* `list` +
+`addRelationship 2 3 undirected` +
+Adds an undirected relationship between the 2nd person and the 3rd person in the list.
+
+=== Add a named relationship
+
+Adds a relationship between two persons and gives this relationship a name. +
+Format: `addNamedRelationship SOURCE_INDEX DESTINATION_INDEX DIRECTION NAME`
+
+****
+* Adds a relationship between `SOURCE_INDEX` and `DESTINATION_INDEX` with the direction of the relationship specified and name of the relationship given.
+* All indexes refer to the indexes shown in the most recent listing.
+* `SOURCE_INDEX` refers to the index of the person from whom the relationship is initiated.
+* `DESTINATION_INDEX` refers to the index of the person to whom the relationship is directed.
+* `DIRECTION` which refers to the direction of this relationship, can only be `directed` or `undirected`.
+* `NAME` referring to the name of the relationship *can only be alphanumeric*.
+* If the `DIRECTION` is `directed`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` matters.
+* If the `DIRECTION` is `undirected`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` does not matter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`addRelationship 2 3 directed knows` +
+Adds a directed relationship named `knows` starting from the 2nd person to the 3rd person in the list.
+* `list` +
+`addRelationship 2 3 undirected cousins` +
+Adds an undirected relationship named `cousins` between the 2nd person and the 3rd person in the list.
+
+=== Add a confidence estimate
+
+Adds a confidence estimate for an attribute of a person. +
+Format: `addConfidenceEstimate INDEX ATTRIBUTE_TYPE ESTIMATE`
+
+****
+* `INDEX` refers to the index of the person whose attribute the user wants to add a confidence estimate to as shown in the most recent listing.
+* `ATTRIBUTE_TYPE` refers to the type of attribute that the confidence estimate is added to (e.g. Address, Email, Name, Phone, Tags, Relationships).
+* `ESTIMATE` refers to the estimate the user gives to the attribute.
+* The estimate *has to be non-negative and smaller or equal to 1*.
+****
+
+Example:
+
+* `list` +
+`addConfidenceEstimate 2 Address 0.8` +
+Adds a confidence estimate of 0.8 to the `Address` of the 2nd person in the list.
+
+=== Delete a confidence estimate
+
+Deletes a confidence estimate for an attribute of a person. +
+Format: `deleteConfidenceEstimate INDEX ATTRIBUTE_TYPE`
+
+****
+* `INDEX` refers to the index of the person whose attribute the user wants to delete the confidence estimate to as shown in the most recent listing.
+* `ATTRIBUTE_TYPE` refers to the type of attribute that the confidence estimate is added to (e.g. Address, Email, Name, Phone, Tags, Relationships).
+****
+
+Example:
+
+* `list` +
+`deleteConfidenceEstimate 2 Address` +
+Deletes a confidence estimate from the `Address` of the 2nd person in the list.
+
+=== List all related persons : `listrelated`
+
+Shows a list of all persons in the address book related to a given person. +
+Format: `listrelated INDEX`
+
+=== View shortest relationship path between two persons : `viewpath`
+
+Shows the shortest path of people to contact in order to reach a destination person . +
+Format: `viewpath START_INDEX END_INDEX`
 
 === User login
 
@@ -319,6 +517,7 @@ e.g. `removeTag friend`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Sort* : `sort`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
