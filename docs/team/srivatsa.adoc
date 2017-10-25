@@ -88,6 +88,73 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 
 #End of Extract#
 
+=== Enhancement Added: Delete tag Command
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.8. Deleting Tags : deleteTag]]#
+
+Deletes the specified tags from everyone in address book. +
+Format: `deleteTag TAG1 TAG2 ...`
+
+****
+* Deletes all tags specified `TAG1 TAG2 ...`.
+* If a particular is not used in address book, user is notified that no tag is deleted.
+****
+
+Examples:
+
+* `deleteTag friends` +
+Deletes the tag `friends` from everyone in the address book.
+
+* `deleteTag friends colleagues` +
+Deletes tags `friends` and `colleagues` from everyone in the address book.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to delete particular tags from every person on the address book.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+The specified arguments `TAG1 TAG2 ...` are parsed to generate an array of `String`.
+
+The generated string array is then used to generate an array of type `Tag`
+
+[source,java]
+----
+private Tag[] stringToTag (String[] tag);
+----
+
+Using this array of type `Tag` as parameter, the `deleteTag` method is executed as follows:
+
+image::deleteTagModelDiagram.png[width="200"]
+
+If `hasOneOrMoreDeletion` is true, user will be notified that tags are successfully deleted. +
+Otherwise, users will be notified that specified tags are not used in address book, and thus cannot be deleted.
+
+==== Design Considerations
+
+**Aspect:** implementation of `deleteTag` method in `modelManager`  +
+**Alternative 1 (current choice):** Iterate through every person & delete relevant tags +
+**Pros:** Increased storage efficiency +
+**Cons:** Unnecessary `remove` operations are carried out
+**Alternative 2:** Populate list of people with relevant tags & delete relevant tags +
+**Pros:** Fewer `remove` operations +
+**Cons:** [Space complexity (O(n)) is higher] More storage elements required to store temorary lists +
+**Cons:** More complex implementation
+
+---
+
+#End of Extract#
+
 === Enhancement Proposed: Find LinkedIn Contact
 
 ==== External behavior
