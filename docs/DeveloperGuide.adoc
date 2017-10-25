@@ -448,10 +448,10 @@ image::CalendarBirthdayTooltip.png[width="150", height"100"]
 ---
 
 **Aspect:** Loading of data to Calendar +
-**Alternative 1 (current choice):** Use address book data that pass to the `CalendarPanel` through `Model` +
+**Alternative 1 (current choice):** Use address book data that is passed to the `CalendarPanel` through `Model` +
 **Pros:** Able to retrieve updated data from `UniquePersonList` and `UniqueTaskList` that are already available. +
 **Cons:** Increase coupling with `Person` and `Task`. +
-**Alternative 2:** Create a separate `UniqueMarkDateList` that stored required dates with relevant info (e.g. Person's name and Task's description) +
+**Alternative 2:** Create a separate `UniqueMarkDateList` that stores required dates with relevant information (e.g. Person's name and Task's description) +
 **Pros:** Reduces coupling as the data will be stored during initialisation of address book and addition/deletion of person/task. +
 **Cons:** We must ensure that the data stored is bound to the individual person and task, such that editing of such person/task will be reflected.
 // end::calendar[]
