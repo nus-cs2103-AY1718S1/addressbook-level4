@@ -45,8 +45,8 @@ public class GuiTestAssert {
     public static String formOriginalPhone(String currentPhone) {
         StringBuilder originalPhone = new StringBuilder();
         int phoneLength = currentPhone.length();
-        for (int count = phoneLength - 1; count >= 0; count-- ) {
-            if(currentPhone.charAt(count) == '-') {
+        for (int count = phoneLength - 1; count >= 0; count--) {
+            if (currentPhone.charAt(count) == '-') {
                 continue;
             }
             originalPhone.insert(0, currentPhone.charAt(count));

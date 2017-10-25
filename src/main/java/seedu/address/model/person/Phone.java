@@ -27,6 +27,7 @@ public class Phone {
         if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
+
         this.value = trimmedPhone;
     }
 
