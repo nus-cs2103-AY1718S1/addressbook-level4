@@ -369,6 +369,31 @@ image::SortCommandActivityDiagram.png[width="800"]
 **Cons:** Changes made to the `internalList` might affect other existing commands.
 // end::sortcommand[]
 
+// tag::listcommand[]
+=== List mechanism
+
+The list mechanism is assisted by two classes `ListCommandParser` residing in `parser` and `PersonContainsKeywordsPredicate` residing in `person`. +
+It supports the listing of contacts which do not modify the addressbook(e.g. `Exit`, `Find`). Such commands inherit from `Command`, unlike commands inheriting from `UndoableCommand` which modify the state of the address book.
+
+The following sequence diagram shows how the list operation works:
+
+image::ListCommandSequenceDiagram.png[width="800"]
+
+The following activity diagram shows what happens when a user executes a new list command:
+
+image::ListCommandActivityDiagram.png[width="400"]
+
+=== Design Considerations
+
+**Aspect:** Implementation of `ListCommand` +
+**Alternative 1 (current choice):** Add a new class ListCommandParser +
+**Pros:** We will be able to provide arguments to list only certain types of contacts +
+**Cons:** Hard for new developers to understand why we used `list` command instead of `find` to get contacts with certain tags. +
+**Alternative 2:** No parser class +
+**Pros:** Easier for new developers to understand +
+**Cons:** All contacts are listed every time which may be an issue if user is trying to filter contacts by tags
+//end::listcommand[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
