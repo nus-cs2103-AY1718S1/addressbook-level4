@@ -56,7 +56,7 @@ public class StringUtil {
         requireNonNull(sentence);
         requireNonNull(word);
 
-        if (sentence.equalsIgnoreCase(word)){
+        if (sentence.equalsIgnoreCase(word)) {
             return true;
         }
         return false;
