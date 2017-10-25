@@ -403,7 +403,7 @@ Format: `(p)export FILEPATH`
 ****
 * Exports data to the location and file name specified by `FILEPATH`.
 * `FILEPATH` must end with an extension of `.xml`.
-* `FILEPATH` should not contain any prohibited characters `?!%*+|"<>`.
+* The file name and any non-existent folder names in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
 * If a relative path is provided, the data will be exported to the *BoNUS* installation directory.
 * Existing data file at `FILEPATH` will be overwritten.
 * Parent directories, if specified in `FILEPATH`, will be created if they do not exist.
