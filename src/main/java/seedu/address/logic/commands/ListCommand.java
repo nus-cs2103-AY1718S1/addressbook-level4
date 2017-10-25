@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import seedu.address.model.Model;
+
 /**
  * Lists all persons in the address book to the user.
  */
@@ -13,7 +15,7 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.showUnfilteredPersonList();
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,7 +16,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.model.ListEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
@@ -66,11 +68,6 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
-    }
-
-    /** Raises an event to indicate a list command has occurred */
-    private void indicateListEvent() {
-        raise(new ListEvent(getFilteredPersonList()));
     }
 
     @Override
@@ -126,7 +123,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     }
 
-
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -144,16 +140,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void showUnfilteredPersonList() {
-        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
-        indicateListEvent();
-    }
-
-    @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
-        indicateListEvent();
+
     }
 
 
@@ -161,6 +151,15 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
         requireNonNull(predicate);
         filteredGroups.setPredicate(predicate);
+    }
+
+    /** Handle any GroupPanelSelectionChangedEvent raised and set predicate to show group members only */
+    @Subscribe
+    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+        ObservableList<ReadOnlyPerson> personList = event.getNewSelection()
+                .group.groupMembersProperty().get().asObservableList();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        filteredPersons.setPredicate(personList::contains);
     }
 
     @Override
@@ -181,5 +180,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredGroups.equals(other.filteredGroups);
     }
+
+
 
 }
