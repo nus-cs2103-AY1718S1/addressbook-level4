@@ -113,7 +113,7 @@ public class PersonBuilder {
     }
 
     /**
-     *  Sets the {@code Remark} of the {@code Preson} that we are building.
+     *  Sets the {@code Remark} of the {@code Person} that we are building.
      */
     public PersonBuilder withRemark(String remark) {
         this.person.setRemark(new Remark(remark));
@@ -121,7 +121,7 @@ public class PersonBuilder {
     }
 
     /**
-     *  Sets the {@code Remark} of the {@code Preson} that we are building.
+     *  Sets the {@code Website} of the {@code Person} that we are building.
      */
     public PersonBuilder withWebsite(String website) {
         try {
