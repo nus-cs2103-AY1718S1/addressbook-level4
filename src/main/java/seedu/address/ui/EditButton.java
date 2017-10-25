@@ -31,10 +31,15 @@ public class EditButton extends UiPart<Region> {
 
     @FXML
     private Button editButton;
-    public EditButton(Logic logic, NameTextField ntf, PhoneTextField pft,
+    public EditButton(Logic logic, NameTextField ntf, PhoneTextField ptf,
                       EmailTextField etf, AddressTextField atf, TagTextField ttf) {
         super(FXML);
         this.logic = logic;
+        this.nameTextField = ntf;
+        this.phoneTextField = ptf;
+        this.emailTextField = etf;
+        this.addressTextFieldTextField = atf;
+        this.tagTextField = ttf;
         registerAsAnEventHandler(this);
     }
 
@@ -43,10 +48,19 @@ public class EditButton extends UiPart<Region> {
      */
     @FXML
     private void handleEditButtonPressed() throws CommandException, ParseException {
-        CommandResult commandResult = logic.execute("delete " + getSelectedIndex());
+        StringBuilder command = new StringBuilder();
+        command.append("edit " + getSelectedIndex() + " n/"
+                + nameTextField.getNameTextField() + " p/" + phoneTextField.getPhoneTextField() + " e/"
+                + emailTextField.getEmailTextField()
+                + " a/" + addressTextFieldTextField.getAddressTextField());
+        String tagTextArea = tagTextField.getTagTextArea();
+        String[] tagSplit = tagTextArea.split(",");
+        for ( String s : tagSplit) {
+            command.append(" t/" + s.trim());
+        }
+        CommandResult commandResult = logic.execute(command.toString());
         logger.info("Result: " + commandResult.feedbackToUser);
     }
-
     private void setSelectedIndex(int i) {
         selectedIndex = i;
     }

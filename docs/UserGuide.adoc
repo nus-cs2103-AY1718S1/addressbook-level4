@@ -302,6 +302,14 @@ File must also be placed in the main folder.
 
 Format: `import FILENAME.vcf` or `im FILENAME.vcf` where `FILENAME` is the name of the file that you wish to import.
 
+=== Exporting Contacts to external source : `export`
+(added in v1.3)
+
+Export contacts to external source from the addressbook. The exported file will be in `.vcf` format. +
+File will be exported onto the main folder as `output.vcf`
+
+Format: `export` or `ex`
+
 === Upload photo image for a contact : `photo`
 (added in v1.3)
 
@@ -386,6 +394,7 @@ e.g.`select 2`
 e.g. `tag friends classmates`
 * *Remove Tag* : `rtag KEYWORD [MORE_KEYWORDS]`
 * *Import* : `import FILENAME.vcf`
+* *Export* : `export`
 * *Upload Photo* : `photo INDEX` +
 e.g. `photo 3`
 
@@ -410,5 +419,6 @@ e.g.`select 2`
 * *Tag*  : `t`
 * *Remove Tag*  : `rt`
 * *Import* : `im FILENAME.vcf`
+* *Export* : `ex`
 * *Upload Photo* : `p INDEX` +
 e.g. `p 3`
