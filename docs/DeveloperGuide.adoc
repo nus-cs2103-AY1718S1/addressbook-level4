@@ -927,7 +927,7 @@ information from other sources
 *MSS*
 
 1.  User requests to list parcels
-2.  AddressBook shows a list of parcels
+2.  AddressBook shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
 3.  User requests to delete a specific parcel in the list
 4.  AddressBook deletes the parcel
 +
@@ -1028,7 +1028,7 @@ Use case ends
 *MSS*
 
 1.  User requests to list parcels
-2.  AddressBook shows a list of parcels
+2.  AddressBook shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
 3.  User requests to upload image of a specific parcel in the list
 4.  AddressBook prompts for location of image
 5.  User inputs file path
