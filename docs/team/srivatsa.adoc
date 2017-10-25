@@ -8,6 +8,53 @@ OurAb is a CLI(Command Line Interface)-based desktop Address Book application wr
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
 
+=== Enhancement Added: List (with lexicographic sort)
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.3. Listing all persons : list]]#
+
+Shows a list of all persons in the address book in alphabetical order. +
+Format: `list`
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to list contacts alphabetically, for a more intuitive address book user interface.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+When the `List` command is executed, `UniquePersonList` is sorted lexicographically. +
+[source,java]
+----
+public void sortLexicographically () {
+        internalList.sort(new LexicographicComparator());
+ }
+----
+The `LexicographicComparator` compares which person should come before another based on alphabet sequences.
+This updates the address book storage file. When model calls for `filteredPersons` list, all persons are read from +
+the address book storage and then displayed on `PersonListPanel` on the GUI.
+
+
+==== Design Considerations
+
+**Aspect:** Persistent sort +
+**Alternative 1(current choice):** Persistent sort (Sort persons, by modifying `addressbook.xml`) +
+**Pros:** Reduces need for repeated sorting +
+**Cons:** Unnecessary operations on storage `addressbook.xml` +
+**Alternative 2:** Non-persistent sort (Sort persons in a temporary list) +
+**Pros:** Reduce operations on storage file, `Addressbook.xml` +
+**Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
+
+#End of Extract#
+
 === Enhancement Added: List by most searched command
 
 ==== External behavior
