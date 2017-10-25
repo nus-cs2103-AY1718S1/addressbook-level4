@@ -4,6 +4,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -21,6 +22,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_DOB = "27 01 1997";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -31,8 +33,10 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            DateOfBirth defaultDateOfBirth = new DateOfBirth(DEFAULT_DOB);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.person = new Person(
+                    defaultName, defaultPhone, defaultEmail, defaultAddress, defaultDateOfBirth, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -82,7 +86,35 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Address} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withEmptyAddress() {
+        this.person.setAddress(new Address());
+        return this;
+    }
+
+    /**
+     * Sets the {@code Address} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withDateOfBirth(String dob) {
+        try {
+            this.person.setDateOfBirth(new DateOfBirth(dob));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Date of Birth is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Address} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withEmptyDateOfBirth() {
+        this.person.setDateOfBirth(new DateOfBirth());
+        return this;
+    }
+
+    /**
+     * Sets the {@code DateOfBirth} of the {@code Person} that we are building.
      */
     public PersonBuilder withPhone(String phone) {
         try {
@@ -90,6 +122,14 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("phone is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets an empty {@code Phone} for the {@code Person} that we are building.
+     */
+    public PersonBuilder withEmptyPhone() {
+        this.person.setPhone(new Phone());
         return this;
     }
 
@@ -102,6 +142,14 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets an empty {@code Email} for the {@code Person} that we are building.
+     */
+    public PersonBuilder withEmptyEmail() {
+        this.person.setEmail(new Email());
         return this;
     }
 

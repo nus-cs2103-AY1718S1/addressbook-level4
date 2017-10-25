@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddLifeInsuranceCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -16,15 +17,24 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.PartialFindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.WhyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses user input.
  */
 public class AddressBookParser {
+
+    /**
+     * Enumerator list to define the types of commands.
+     */
+    private enum CommandType {
+        ADD, ADDLI, CLEAR, DEL, EDIT, EXIT, FIND, PFIND, HELP, HISTORY, LIST, REDO, UNDO, SELECT, WHY, NONE
+    }
 
     /**
      * Used for initial separation of command word and args.
@@ -46,47 +56,143 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
+        CommandType commandType = getCommandType(commandWord.toLowerCase());
+
+        switch (commandType) {
+
+        case ADD:
             return new AddCommandParser().parse(arguments);
-
-        case EditCommand.COMMAND_WORD:
+        case ADDLI:
+            return new AddLifeInsuranceCommandParser().parse(arguments);
+        case EDIT:
             return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
+        case SELECT:
             return new SelectCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case DEL:
             return new DeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
+        case CLEAR:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
+        case FIND:
             return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
+        case PFIND:
+            return new PartialFindCommandParser().parse(arguments);
+
+        case LIST:
             return new ListCommand();
 
-        case HistoryCommand.COMMAND_WORD:
+        case HISTORY:
             return new HistoryCommand();
 
-        case ExitCommand.COMMAND_WORD:
+        case EXIT:
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD:
+        case HELP:
             return new HelpCommand();
 
-        case UndoCommand.COMMAND_WORD:
+        case UNDO:
             return new UndoCommand();
 
-        case RedoCommand.COMMAND_WORD:
+        case REDO:
             return new RedoCommand();
+
+        case WHY:
+            return new WhyCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
+
+    /**
+     * Searches the entire list of acceptable command words in each command and returns the enumerated value type.
+     * @param commandWord
+     * @return enumerated value for the switch statement to process
+     */
+
+    private CommandType getCommandType(String commandWord) {
+        for (String word : AddCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.ADD;
+            }
+        }
+        for (String word : AddLifeInsuranceCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.ADDLI;
+            }
+        }
+        for (String word : ClearCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.CLEAR;
+            }
+        }
+        for (String word : DeleteCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.DEL;
+            }
+        }
+        for (String word : EditCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.EDIT;
+            }
+        }
+        for (String word : ExitCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.EXIT;
+            }
+        }
+        for (String word : FindCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.FIND;
+            }
+        }
+        for (String word : PartialFindCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.PFIND;
+            }
+        }
+        for (String word : HelpCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.HELP;
+            }
+        }
+        for (String word : HistoryCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.HISTORY;
+            }
+        }
+        for (String word : ListCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.LIST;
+            }
+        }
+        for (String word : RedoCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.REDO;
+            }
+        }
+        for (String word : SelectCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.SELECT;
+            }
+        }
+        for (String word : UndoCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.UNDO;
+            }
+        }
+        for (String word : WhyCommand.COMMAND_WORDS) {
+            if (commandWord.contentEquals(word)) {
+                return CommandType.WHY;
+            }
+        }
+        return CommandType.NONE;
+    }
+
 
 }

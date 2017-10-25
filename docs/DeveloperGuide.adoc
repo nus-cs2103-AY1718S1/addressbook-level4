@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= LISA: Levels Integrated Secretarial Agent - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `SearchBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `ProfilePanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -217,6 +217,269 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::add
+=== Making Name as the only compulsory field in Add Command
+
+The `add` command follows the format below:
+
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
+
+This means when adding a new person in LISA, the user only need to provide value for the compulsory `NAME` field. Every other field is optional.
+
+Every field has one corresponding class. Inside each class, there exists a `final String FIELD_VALIDATION_REGEX` used for validation during construction.
+For instance, the `PHONE` field has `Phone` class containing a `PHONE_VALIDATION_REGEX` which only accepts numbers that are at least three digits long:
+[source,java]
+----
+public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
+----
+
+Whenever the phone tag `p/` is provided in the input, e.g. `add n/John Doe p/98765432` and `add n/Johnny Doe p/`,
+the string after `p/` is trimmed and passed into `isValidPhone(String test)` for validation when constructing the `Phone` object.
+[source,java]
+----
+public Phone(String phone) throws IllegalValueException {
+    // ... constructor logic ...
+    if (!isValidPhone(trimmedPhone)) {
+        throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+    }
+    this.value = trimmedPhone;
+}
+
+public static boolean isValidPhone(String test) {
+    return test.matches(PHONE_VALIDATION_REGEX);
+}
+----
+
+Therefore, in the first example, `"98765432"` is passed as the argument. In the second example, `""` is passed in since nothing was provided after `p/`.
+According to `PHONE_VALIDATION_REGEX`, the former passes the validation while the latter throws an `IllegalValueException`.
+Overall, this guarantees that the user input will always be validated.
+
+If the phone tag is not provided, e.g. `add n/John Doe e/johnd@email.com`, the no-argument constructor is used.
+It sets the `value` of the `Phone` object to an empty string without any validation.
+[source,java]
+----
+public Phone() {
+    this.value = "";
+}
+----
+
+The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, and `[d/DATE_OF_BIRTH]`.
+`[t/TAG]...` uses a different implementation and will not be covered in this section.
+
+Due to this implementation, the field attribute of a `Person` object can never be `null`.
+If a field is not provided during input, an object with the value of an empty string will still be created and assigned to the corresponding attribute in `Person`.
+
+
+An alternative implementation would be "Do not create the field object at all if it is not specified in the user input".
+This approach is more flexible, but may require resolving `null` value problems when adding and editing a person.
+// end::add[]
+
+// tag::dob
+=== Addition of Date of Birth field
+
+The Date of birth field includes information concerning the age of the user stored in the record.
+Its impact is noticed in the add and edit command.
+
+The `add` command has the following format:
+
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
+
+The prefix d/ as indicated in the CliSyntax.java denotes the beginning of the date of birth argument.
+
+The class DateOfBirth.java within the Model component , validates the input from the user through the following regex:
+[source,java]
+----
+ public static final String DOB_VALIDATION_REGEX = "[0-9][0-9]\\s+[0-9][0-9]\\s+[0-9][0-9][0-9][0-9].*";
+----
+The above regex only accepts dates with format : dd mm yyyy
+
+When the d/ is encountered , the trailing argument is passed into `isValidDateOfBirth(String test)` for validation when constructing the `DateOfBirth` object.
+eg : `add n/John Doe p/98765432 d/27 01 1997`
+
+[source,java]
+----
+ /**
+ * Validates given Date of Birth.
+ *
+ * @throws IllegalValueException if given date of birth string is invalid.
+ */
+ public DateOfBirth(String dob) throws IllegalValueException {
+        requireNonNull(dob);
+        if (!isValidDateOfBirth(dob)) {
+            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
+        }
+        this.finalDateOfBirth = dob;
+  }
+
+ /**
+ * Returns true if a given string is a valid person date of birth.
+ */
+ public static boolean isValidDateOfBirth(String test) {
+        return test.matches(DOB_VALIDATION_REGEX);
+ }
+----
+
+Therefore, in the above example, `"27 01 1997"` is passed as the argument.
+
+Date of birth field is also an optional field , unlike the Name field. When the date of birth is not specified,
+eg :  add n/Johnny Doe  , the no-argument constructor is used.
+It sets the `value` of the `DateOfBirth` object to an empty string without any validation.
+
+[source,java]
+----
+public DateOfBirth() {
+        this.finalDateOfBirth = "";
+    }
+----
+
+An alternative implementation would be to implement JAVA 8 to easily calculate the age of the entry using the string input.
+
+
+// end::dob[]
+
+=== Improved Tag Management
+
+The original tag system management with the edit function have several difficulties which cause the user to too much trouble,
+ inconvenience and inefficiency in managing their tags. This is mainly due to how the editing of a tag works. When using the
+ edit function, just like how entering a new name will replace the existing name,
+ using the tag prefix to add tags on to a user will end up overwriting all the existing tags and replace it
+ with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following: +
+Command entered:
+
+image::addtagui.jpg[]
+
+Original result:
+
+image::addtagoverwritten.png[]
+
+Main use case:
+
+image::addtagadded.png[]
+
+
+What would be in line with a main use case of `edit 1 t/trainer` is to add the `trainer` tag onto
+ existing tags instead. This entire process is controlled by the edit function whereby an
+ `editPersonDescriptor`, which is a class within the `EditCommand` class
+ is created using all the parsed arguments and represents all the changes
+ that are to be made. Then the `createEditedPerson` method is called to compare between
+ the `personToEdit` and the `editPersonDescriptor` and merge all the changes to create a new `Person`.
+
+
+
+Thus, the changes to enable such a feature is mainly implemented in the `createEditedPerson` method
+ the `Set` method `addAll()` is called to facilitate the merging of the tags.
+
+However, one thing to note here is that since the overwriting implementation is no longer used,
+ the only way for the tags to be deleted is gone which means we must also implement a method
+ of deleting tags. The intent to delete a tag must be clear and it is difficult to represent
+ the intention to delete using the current notation for the edit command. This is why we introduced a new
+ prefix to process detagging `dt/`. This way the user can clearly express the intent on which tags
+ are to be deleted and which are to remain, along with the ability to add on. The detagging is parsed
+ and implemented the same way as the tagging which simplifies constructing and understanding
+ the structure of tag deletion. We added a new `Set<Tag> tagsToBeDeleted` in the `editPersonDescriptor`
+ to signify deletion changes. Then we use the `removeAll` method from the `Set` class
+ which allows us to selectively only remove the tags in the user input.
+
+Then there comes a difficulty where an ambitious user wishes to express multiple tag managing commands
+ on one line. Regardless, this method is still very viable as the original structure supports the
+ input of multiple tags, and since the detagging mimics tagging, it is also supported.
+ However, one convenience that came with the overwriting method is the ease of deletion
+ which we would wish to allow users to perform as well. Thus, using `dt/all` will delete all existing
+ tags a contact has. The only issue with this is that a tag named `all` cannot be deleted if added.
+
+In the case of multiple tagging and detagging in one command line, we have chosen the
+ detagging to executed first because of the following reasons:
+
+****
+* Users are unlikely to remove a tag that is being added in the same line. The result of this would be that the deleted
+tag is added back.
+* Tags and detags are handled 1 by 1 so there is usually no conflict between tagging and detagging.
+* The only sensible conflict is when the user does `dt/all` and adds tags on the same line.
+The main use case for this is to mimic the overwriting method. Thus, if adding was executed first,
+the added tags will be deleted afterwards.
+* With respect to the previous reason, users are also given the freedom to type the prefix
+in any part of the command and the program will be able to execute the user's intention.
+****
+
+// tag::searchbox[]
+=== Searchbox
+
+The additional searchbox used for quick partial search/filter is a child of `UiParts` and is based on using `Listener` to detect any changes to `TextProperty`.
+
+Upon detecting changes in observables, a handler (using Lambda Expression) then passes them to `Logic` to execute the pfind command.
+----
+public SearchBox (Logic logic) {
+        super(FXML);
+
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (newValue.equals("")) {
+                try {
+                    CommandResult commandResult = logic.execute("list");
+                    // ... log ...
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+
+                } catch (CommandException | ParseException e) {
+                    // ...
+                }
+            } else {
+                try {
+                    CommandResult commandResult = logic.execute("pfind " + newValue);
+                    // ... log ....
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+
+                } catch (CommandException | ParseException e) {
+                    // ...
+                }
+            }
+
+        });
+    }
+----
+
+Seen from the script, this handle takes care of 2 cases.
+
+1) When `newValue` is empty string, it calls `list` command
+
+2) Otherwise, calls `pfind` command with the `newValue` as arguments
+
+[NOTE]
+Case (1) is to restore the default list of all contacts after users have used the searchbox and removed all text from field after usage
+
+The rest of the execution then, follows closely to the case where the command is executed through `CommandBox`
+
+
+==== Design Considerations
+
+**Aspect:** Approach user should follow to input the command +
+**Alternative 1 (current choice):** Track every single changes in `SearchBox` textField. +
+**Pros:** Intuitive, need no additional step as the person card below changes real-time. +
+**Cons:** Many handler calls, duplicate execution when retyping same characters +
+**Alternative 2:** Confirmation with `Enter` key or similar feedback. +
+**Pros:** Less calls and hence more effective logging. +
+**Cons:** May not be intuitive pressing `Enter` with partially filled input.
+
+---
+
+**Aspect:** Execution of `pfind` +
+**Alternative 1 (current choice):** Through `Logic` +
+**Pros:** Reusing code. Binding it to `Logic` will automatically update any related possible changes occuring in `Logic Component`. Also easier to perform tests. +
+**Cons:** More detoured execution, going through checking of command type and parser. +
+**Alternative 2:** Directly create `PartialCommand` object with trimmed list of arguments. +
+**Pros:** Lowers coupling and dependencies, less irrelevant logs.  +
+**Cons:** Lower accountability and assumes no future changes to `Command` signature +
+
+---
+
+**Aspect:** Position and choice of FXML container  +
+**Alternative 1 (current choice):** Follows `CommandBox` styleClass` which is in turn contained by `VBox` together with and directly above `PersonListCard`. +
+**Pros:** Similar aesthetic look to `CommandBox` to promote intuition to type in command, but within immediate proximity of person cards to suggest some sort of filtering. +
+**Cons:** Looks somewhat awkward if the person list is scrolled down (slight disjoint in seperation line and card) +
+**Alternative 2:** Popup textField ui upon hover +
+**Pros:** Can save space in case this software is run on very low resolution. Also prevent confusion of which textField to type in command. +
+**Cons:** More keyboard-based user may not notice the feature and/or movement in cursor may close the popup unintentionally. +
+// end::searchbox[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -723,15 +986,47 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |Include date of birth as a field in record entry|
+
+|`* * *` |user |add a new person by providing only his/her name|
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |careless user| undo/redo previous command | to easily correct the mistake I made
+
+|`* * *` |user | add/delete tags without overwriting/rewriting the entire tag list |
+
+|`* * *` |user | be able to edit a small typo in the contact without re-typing the entire contact detail |
+
+|`* *` |user | search with partial keyword | find details I'm not sure of
+
+|`* *` |user | import contact from other types of file|
+
+|`* *` |user | add birthday to contacts |
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |artistic user| customize the GUI without extensive programming knowledge|
+
+|`* *` |forgetful user| have reminder for upcoming link:#event[events]|
+
+|`* *` |lazy user | auto-complete my command| reduce typing
+
+|`* *` |secured user| set password to unlock the addressbook| have enhanced security
+
+|`* *` |unorganized user| add link:#appointment[appointment] to contacts|
+
+|`* *` |user with international friends| add country/area code to phone number| know exactly where the number connects to
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user | check last modified date for a contact| identify possible outdated contacts
+
+|`*` |lazy user| create an email by clicking on email address on person card| send email on the fly
+
+
 |=======================================================================
 
 {More to be added}
@@ -767,6 +1062,35 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Filter contact with search box
+
+*MSS*
+
+1. User types the desired contact partially into the search box
+2. AddressBooks shows specific contacts that matched the partial search
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User input too few partial keywords
++
+[none]
+** 1a1. AddressBook shows filtered list with too many contacts
+** 1a2. User extends the keyword to narrow down the search further
++
+Use case resumes at step 2.
++
+[none]
+* 1b. No match for given keywords
++
+[none]
+** 1b1. AddressBook shows empty contact panel
++
+Use case ends.
+
+
 {More to be added}
 
 [appendix]
@@ -781,6 +1105,20 @@ Use case resumes at step 2.
 [appendix]
 == Glossary
 
+[[appointment]]
+Appointment
+
+....
+Agenda, Venue, Date and Time
+....
+
+[[event]]
+Event
+
+....
+Things specific to a contact which requires attention. eg: appointment, birthday, etc.
+....
+
 [[mainstream-os]]
 Mainstream OS
 
@@ -794,6 +1132,7 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
+
 
 [appendix]
 == Product Survey

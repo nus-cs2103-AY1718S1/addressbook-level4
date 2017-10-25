@@ -1,8 +1,10 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.exceptions.EmptyFieldException;
 
 /**
  * Represents a Person's address in the address book.
@@ -22,12 +24,23 @@ public class Address {
     public final String value;
 
     /**
+     * Initialise a Address object with value of empty String. This can ONLY be used in the default field of
+     * {@code AddPersonOptionalFieldDescriptor}
+     */
+    public Address() {
+        this.value = "";
+    }
+
+    /**
      * Validates given address.
      *
      * @throws IllegalValueException if given address string is invalid.
      */
     public Address(String address) throws IllegalValueException {
         requireNonNull(address);
+        if (address.isEmpty()) {
+            throw new EmptyFieldException(PREFIX_ADDRESS);
+        }
         if (!isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }

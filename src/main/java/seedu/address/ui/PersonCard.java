@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,6 +17,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static HashMap<String, String> tagToColor = new HashMap<String, String>();
+
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -24,6 +29,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+    private Random random = new Random(System.currentTimeMillis());
 
     @FXML
     private HBox cardPane;
@@ -35,6 +41,8 @@ public class PersonCard extends UiPart<Region> {
     private Label phone;
     @FXML
     private Label address;
+    @FXML
+    private Label dob;
     @FXML
     private Label email;
     @FXML
@@ -49,6 +57,34 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
+     * Generate random colour with slight dark tint
+     * and return it as hexadecimal String
+     */
+    private String generateRandomColor() {
+        // Factor to divide down the random color to better contrast white text
+        final double darkColorBase = 1.2;
+
+        final int red = (int) Math.round((random.nextInt(256)) / darkColorBase);
+        final int green = (int) Math.round((random.nextInt(256)) / darkColorBase);
+        final int blue = (int) Math.round((random.nextInt(256)) / darkColorBase);
+
+        // Convert RBG to Hex String
+        return String.format("#%02x%02x%02x", red, blue, green);
+    }
+
+    /**
+     * Store initialized tag into HashMap to remember the colour already given
+     * so that subsequent occurence will use the same colour
+     */
+    private String getTagColor(String tagName) {
+        if (!tagToColor.containsKey(tagName)) {
+            tagToColor.put(tagName, generateRandomColor());
+        }
+        return tagToColor.get(tagName);
+    }
+
+
+    /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
@@ -56,16 +92,26 @@ public class PersonCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        dob.textProperty().bind(Bindings.convert(person.dobProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
+    /**
+     * Retrieve all tags from a person and initialize them
+     * with a unique tag colour
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label uniqueTagLabel = new Label(tag.tagName);
+            uniqueTagLabel.setStyle("-fx-background-color: " + getTagColor(tag.tagName));
+            tags.getChildren().add(uniqueTagLabel);
+        });
     }
+
 
     @Override
     public boolean equals(Object other) {

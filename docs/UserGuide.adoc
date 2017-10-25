@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= LISA: Levels Integrated Secretarial Agent - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -54,19 +54,25 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+
+// tag::add[]
 === Adding a person: `add`
+`since v1.1`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person must have a name and can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe`
+* `add n/Mary Jane p/98765432 e/maryjane@example.com a/Mary street, block 123, #01-01`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison d/28 02 1996 t/criminal`
 
+// end::add[]
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
@@ -75,22 +81,26 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE OF BIRTH] [t/TAG] [dt/TAG_TO_DELETE]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, tags will be added on to the current existing tags.
+* You can remove all the person's tags by typing dt/all.
+* Autofill feature is enabled, by typing the prefix of interest and pressing enter, the details of the selected person is autofilled.
+* Press multiple times to autofill multiple prefixes.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 2 n/Betsy Crower dt/all t/cute` +
+Edits the name of the 2nd person to be `Betsy Crower`, clears all existing tags and add the cute tag.
+* `edit 1 n/` +
+Triggers the programme to autofill the name into the prefix becoming `edit 1 n/Betsy Crower`
 
 === Locating persons by name: `find`
 
@@ -111,6 +121,27 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Locating persons by the first few alphabets of the name: `pfind`
+
+Finds persons whose names begins with the given keywords. +
+Format: `pfind PARTIALNAME [MORE_PARTIALNAMES]`
+
+****
+* The search is case insensitive. e.g `ha` will match `Hans`
+* Only search for given name.
+* Both partial or full name will be matched. e.g. A or Alice will both return `Alice`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Ha B` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `pfind Jo` +
+Returns any name starting with Jo, eg: `John`, `Joe` or `Joy`
+
+Alternatively, this command can perform by directly inputting `PARTIALNAME` into the search box right above the contact panel.
+
+image::searchbox.png[width="380"]
 
 === Deleting a person : `delete`
 
@@ -234,15 +265,17 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE OF BIRTH] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Partial Find* : `pfind PARTIALNAME [MORE_PARTIALNAMES]` +
+e.g. `pfind Ja Carl Al`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +

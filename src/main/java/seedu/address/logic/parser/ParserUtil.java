@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -69,7 +70,6 @@ public class ParserUtil {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
     }
-
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -78,7 +78,14 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
-
+    /**
+     * Parses a {@code Optional<String> dob} into an {@code Optional<Date of Birth>} if {@code dob} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DateOfBirth> parseDateOfBirth(Optional<String> dob) throws IllegalValueException {
+        requireNonNull(dob);
+        return dob.isPresent() ? Optional.of(new DateOfBirth(dob.get())) : Optional.empty();
+    }
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -89,5 +96,37 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+    /**
+     * Parses a {@code Optional<String> owner} into an {@code Optional<String>} if {@code owner} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseNameForInsurance(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(name.get()) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> premium} into an {@code Optional<Double>} if {@code premium} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Double> parsePremium(Optional<String> premium) throws IllegalValueException {
+        requireNonNull(premium);
+        return premium.isPresent() ? Optional.of(Double.parseDouble(premium.get())) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> contract} into an {@code Optional<String>} if {@code contract} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseContract(Optional<String> contract) throws IllegalValueException {
+        requireNonNull(contract);
+        return contract.isPresent() ? Optional.of(contract.get()) : Optional.empty();
+    }
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<String>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(date.get()) : Optional.empty();
     }
 }

@@ -1,8 +1,10 @@
 package seedu.address.model.tag;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.exceptions.EmptyFieldException;
 
 /**
  * Represents a Tag in the address book.
@@ -23,6 +25,9 @@ public class Tag {
     public Tag(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
+        if (trimmedName.isEmpty()) {
+            throw new EmptyFieldException(PREFIX_TAG);
+        }
         if (!isValidTagName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
@@ -55,4 +60,7 @@ public class Tag {
         return '[' + tagName + ']';
     }
 
+    public String getTagName() {
+        return tagName;
+    }
 }

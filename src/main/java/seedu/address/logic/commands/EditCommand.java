@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -17,6 +19,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -31,9 +34,11 @@ import seedu.address.model.tag.Tag;
  */
 public class EditCommand extends UndoableCommand {
 
+    public static final String[] COMMAND_WORDS = {"edit", "e", "change", "ed"};
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
+            + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -41,7 +46,9 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_DOB + "DATE OF BIRTH] "
+            + "[" + PREFIX_TAG + "TAG] "
+            + "[" + PREFIX_DELTAG + "TAG_TO_DELETE] ...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -99,9 +106,23 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
+        Set<Tag> updatedTags = personToEdit.getTags();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        if (editPersonDescriptor.getTagsToDel().isPresent()) {
+            for (Tag tag : editPersonDescriptor.getTagsToDel().get()) {
+                if (tag.getTagName().equals("all")) {
+                    updatedTags.clear();
+                }
+            }
+            updatedTags.removeAll(editPersonDescriptor.getTagsToDel().get());
+        }
+
+        if (editPersonDescriptor.getTags().isPresent()) {
+            updatedTags.addAll(editPersonDescriptor.getTags().get());
+        }
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDateOfBirth, updatedTags);
     }
 
     @Override
@@ -131,7 +152,9 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private DateOfBirth dob;
         private Set<Tag> tags;
+        private Set<Tag> tagsToDel;
 
         public EditPersonDescriptor() {}
 
@@ -140,14 +163,17 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.dob = toCopy.dob;
             this.tags = toCopy.tags;
+            this.tagsToDel = toCopy.tagsToDel;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(
+                    this.name, this.phone, this.email, this.address, this.dob, this.tags, this.tagsToDel);
         }
 
         public void setName(Name name) {
@@ -182,12 +208,28 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setDateOfBirth(DateOfBirth dob) {
+            this.dob = dob;
+        }
+
+        public Optional<DateOfBirth> getDateOfBirth() {
+            return Optional.ofNullable(dob);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        public void setTagsToDel(Set<Tag> tagsToDel) {
+            this.tagsToDel = tagsToDel;
+        }
+
+        public Optional<Set<Tag>> getTagsToDel() {
+            return Optional.ofNullable(tagsToDel);
         }
 
         @Override
@@ -209,6 +251,7 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getDateOfBirth().equals(e.getDateOfBirth())
                     && getTags().equals(e.getTags());
         }
     }

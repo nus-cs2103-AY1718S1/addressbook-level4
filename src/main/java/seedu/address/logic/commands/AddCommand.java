@@ -2,13 +2,18 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.DateOfBirth;
+import seedu.address.model.person.Email;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -17,20 +22,24 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  */
 public class AddCommand extends UndoableCommand {
 
+    public static final String[] COMMAND_WORDS = {"add", "a", "+"};
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
+            + ": Adds a person to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS "
+            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_DOB + "DATE OF BIRTH] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_DOB + "20 01 1997 "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
@@ -63,5 +72,77 @@ public class AddCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddCommand // instanceof handles nulls
                 && toAdd.equals(((AddCommand) other).toAdd));
+    }
+
+    /**
+     * Stores the optional details to add the person with. By default each field is an object
+     * with value of empty String.
+     */
+    public static class AddPersonOptionalFieldDescriptor {
+        private Phone phone;
+        private Email email;
+        private Address address;
+        private DateOfBirth dateofbirth;
+
+        public AddPersonOptionalFieldDescriptor() {
+            this.phone = new Phone();
+            this.email = new Email();
+            this.address = new Address();
+            this.dateofbirth = new DateOfBirth();
+        }
+
+        public void setPhone(Phone phone) {
+            this.phone = phone;
+        }
+
+        public Phone getPhone() {
+            return phone;
+        }
+
+        public void setEmail(Email email) {
+            this.email = email;
+        }
+
+        public Email getEmail() {
+            return email;
+        }
+
+        public void setAddress(Address address) {
+            this.address = address;
+        }
+
+        public Address getAddress() {
+            return address;
+        }
+
+        public void setDateOfBirth(DateOfBirth dateofbirth) {
+            this.dateofbirth = dateofbirth;
+        }
+
+        public DateOfBirth getDateOfBirth() {
+            return dateofbirth;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof AddCommand.AddPersonOptionalFieldDescriptor)) {
+                return false;
+            }
+
+            // state check
+            AddCommand.AddPersonOptionalFieldDescriptor a =
+                    (AddCommand.AddPersonOptionalFieldDescriptor) other;
+
+            return getPhone().equals(a.getPhone())
+                    && getEmail().equals(a.getEmail())
+                    && getAddress().equals(a.getAddress())
+                    && getDateOfBirth().equals(a.getDateOfBirth());
+        }
     }
 }
