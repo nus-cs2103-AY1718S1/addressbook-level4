@@ -490,6 +490,8 @@ When methods in interface `SecureStorage` are called, `SecurityManager` will not
 
 The "raise" method is used to communicate with the `UI` component while "isPermittedCommand" is called in `Logic` component to check whether a certain command have enough permission to be executed. The `Security` component acts like a bridge. It fulfills its function by communicating with every component.
 
+image::LockSequenceDiagram.png[width="800"]
+
 // end::lock[]
 
 === Logging
