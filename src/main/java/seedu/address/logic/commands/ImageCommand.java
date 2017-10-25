@@ -91,7 +91,7 @@ public class ImageCommand extends UndoableCommand {
 
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getTags(),
-                personToEdit.getRemark(), personToEdit.getGroup(), image);
+                personToEdit.getRemark(), image);
 
         try {
             model.updatePerson(personToEdit, editedPerson);

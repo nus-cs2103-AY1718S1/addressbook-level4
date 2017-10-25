@@ -36,7 +36,7 @@ public class ImageUtil {
 
             uniquePath = Integer.toString(newPath);
 
-            fileToWrite = new File("pictures/" + uniquePath + ".png");
+            fileToWrite = new File("images/" + uniquePath + ".png");
             ImageIO.write(image, "png", fileToWrite);
 
         } catch (IOException e) {
