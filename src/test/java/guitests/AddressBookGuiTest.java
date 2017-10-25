@@ -80,7 +80,13 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected ProfilePanelHandle getProfilePanel() { return mainWindowHandle.getProfilePanelHandle(); }
+    protected ProfilePanelHandle getProfilePanel() {
+        return mainWindowHandle.getProfilePanelHandle();
+    }
+
+    protected InsuranceProfileHandle getInsuranceProfileHandle() {
+        return mainWindowHandle.getInsurancePanelHandle();
+    }
 
     protected StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();

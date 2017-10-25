@@ -51,5 +51,7 @@ public class MainWindowHandle extends StageHandle {
         return profilePanelHandle;
     }
 
-    public InsuranceProfileHandle getInsurancePanelHandle() { return insurancePanelHandle; }
+    public InsuranceProfileHandle getInsurancePanelHandle() {
+        return insurancePanelHandle;
+    }
 }

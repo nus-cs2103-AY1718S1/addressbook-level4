@@ -33,6 +33,10 @@ public class HelpWindowTest extends AddressBookGuiTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowNotOpen();
 
+        getInsuranceProfileHandle().click();
+        getMainMenu().openHelpWindowUsingAccelerator();
+        assertHelpWindowNotOpen();
+
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
