@@ -20,9 +20,18 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.*;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.*;
+import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
+import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.XmlAddressBookStorage;
 
 /**
  * The manager of the UI component.
@@ -47,13 +56,13 @@ public class UiManager extends ComponentManager implements Ui {
     protected Model model;
 
 
-
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
     }
+
     // From here, use the commented code is you want the full feature.
     // i left it commented as i didnt  have time to make it pass the tests
     @Override
@@ -74,7 +83,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     @Override
-    public void restart(String userName){
+    public void restart(String userName) {
         logger.info("0");
         stop();
         primaryStage = new Stage();
@@ -90,7 +99,7 @@ public class UiManager extends ComponentManager implements Ui {
         prefs = userPrefs;
 
 
-        primaryStage.setTitle(config.getAppTitle()+" "+ userName);
+        primaryStage.setTitle(config.getAppTitle() + " " + userName);
 
 
         try {
@@ -101,67 +110,73 @@ public class UiManager extends ComponentManager implements Ui {
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             logger.info("Fatal error during initializing" + e);
-        }}
+        }
+    }
 
-        protected UserPrefs initPrefs(UserPrefsStorage storage) {
+    /**
+     * get new user prefs
+     */
+    protected UserPrefs initPrefs(UserPrefsStorage storage) {
 
-            String prefsFilePath = storage.getUserPrefsFilePath();
-            logger.info("Using prefs file : " + prefsFilePath);
+        String prefsFilePath = storage.getUserPrefsFilePath();
+        logger.info("Using prefs file : " + prefsFilePath);
 
-            UserPrefs initializedPrefs;
+        UserPrefs initializedPrefs;
 
-            try {
+        try {
 
-                Optional<UserPrefs> prefsOptional = storage.readUserPrefs();
+            Optional<UserPrefs> prefsOptional = storage.readUserPrefs();
 
-                initializedPrefs = prefsOptional.orElse(new UserPrefs());
+            initializedPrefs = prefsOptional.orElse(new UserPrefs());
 
-            } catch (DataConversionException e) {
+        } catch (DataConversionException e) {
 
-                logger.warning("UserPrefs file at " + prefsFilePath + " is not in the correct format. "
-                        + "Using default user prefs");
-                initializedPrefs = new UserPrefs();
-            } catch (IOException e) {
+            logger.warning("UserPrefs file at " + prefsFilePath + " is not in the correct format. "
+                    + "Using default user prefs");
+            initializedPrefs = new UserPrefs();
+        } catch (IOException e) {
 
-                logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-                initializedPrefs = new UserPrefs();
-            }
-
-            //Update prefs file in case it was missing to begin with or there are new/unused fields
-            try {
-
-                storage.saveUserPrefs(initializedPrefs);
-
-            } catch (IOException e) {
-
-                logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
-            }
-
-            return initializedPrefs;
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initializedPrefs = new UserPrefs();
         }
 
-        private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-            Optional<ReadOnlyAddressBook> addressBookOptional;
-            ReadOnlyAddressBook initialData;
-            try {
-                addressBookOptional = storage.readAddressBook();
-                if (!addressBookOptional.isPresent()) {
-                    logger.info("Data file not found. Will be starting with a sample AddressBook");
-                }
-                initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
-            } catch (DataConversionException e) {
-                logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-                initialData = new AddressBook();
-            } catch (IOException e) {
-                logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-                initialData = new AddressBook();
-            }
+        //Update prefs file in case it was missing to begin with or there are new/unused fields
+        try {
 
-            return new ModelManager(initialData, userPrefs);
+            storage.saveUserPrefs(initializedPrefs);
+
+        } catch (IOException e) {
+
+            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
         }
 
+        return initializedPrefs;
+    }
+    /**
+     *
+     * @param storage
+     * @param userPrefs
+     * @return
+     */
+    private Model initModelManager(Storage storage, UserPrefs userPrefs) {
+        Optional<ReadOnlyAddressBook> addressBookOptional;
+        ReadOnlyAddressBook initialData;
+        try {
+            addressBookOptional = storage.readAddressBook();
+            if (!addressBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            }
+            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+            initialData = new AddressBook();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initialData = new AddressBook();
+        }
 
-
+        return new ModelManager(initialData, userPrefs);
+    }
 
 
     @Override
