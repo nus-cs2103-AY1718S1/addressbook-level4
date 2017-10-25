@@ -3,4 +3,4 @@
 <?import javafx.scene.control.Button?>
 
 
-<Button fx:id="editButton" mnemonicParsing="false" onAction="#handleEditButtonPressed" text="Edit" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
+<Button fx:id="editButton" mnemonicParsing="false" onAction="#handleEditButtonPressed" text="Save" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
