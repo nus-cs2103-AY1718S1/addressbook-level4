@@ -130,7 +130,6 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
-        private UniquePhoneList uniquePhoneList;
         private Email email;
         private Address address;
         private Set<Tag> tags;
@@ -140,7 +139,6 @@ public class EditCommand extends UndoableCommand {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
-            this.uniquePhoneList = toCopy.uniquePhoneList;
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
