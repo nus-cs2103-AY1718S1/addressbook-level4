@@ -6,11 +6,11 @@
 .fit { /* set relative picture size */
     max-width: 100%;
     max-height: 100%;
-    }
+}
 .center {
     display: block;
     margin: auto;
-    }
+}
 
 .label {
     -fx-font-size: 11pt;
@@ -66,10 +66,10 @@
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, 80%)
-        transparent;
+            transparent
+            transparent
+            derive(-fx-base, 80%)
+            transparent;
     -fx-border-insets: 0 10 1 0;
 }
 
@@ -142,13 +142,13 @@
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .pane-with-border {
-     -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: derive(#1d1d1d, 10%);
+    -fx-border-top-width: 1px;
 }
 
 .status-bar {
@@ -244,8 +244,8 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-color: white;
-  -fx-text-fill: #1d1d1d;
+    -fx-background-color: white;
+    -fx-text-fill: #1d1d1d;
 }
 
 .button:focused {
@@ -388,5 +388,10 @@
     -fx-font-style: italic;
     -fx-font-weight: bolder;
     -fx-font-size: 25px;
+    -fx-text-fill: white;
+}
+
+#displayClock {
+    -fx-font-size: 50;
     -fx-text-fill: white;
 }
