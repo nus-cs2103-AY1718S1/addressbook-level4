@@ -516,11 +516,11 @@ Edit a person, Add a person or Favorite a person.
 
 A birthday detail is implemented under the Person class as Birthday. Users will add the birthday in along with the add command.
 
-==== Description
+=== Description
 
 Format: b/[dd/mm/yyyy]
 
-==== Full solution
+=== Full solution
 
 See this http://github.com/NgSuli/main[PR] for the full solution.
 
