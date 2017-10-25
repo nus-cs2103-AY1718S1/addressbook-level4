@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
@@ -62,6 +63,9 @@ public class AddEventCommand extends UndoableCommand {
         try {
             model.deleteEvent(toAdd);
         } catch (EventNotFoundException enfe) {
+            throw new AssertionError("The command has been successfully executed previously; "
+                    + "it should not fail now");
+        } catch (DeleteOnCascadeException doce) {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }

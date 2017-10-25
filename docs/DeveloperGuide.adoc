@@ -659,6 +659,55 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 **Cons:** Users would have to type more if the event name is long. It will be more complex for developers to maintain and test. +
 // end::deleteE[]
 
+=== Person-Event interaction
+In this application, we allow users to connect events and persons to show that some persons participate some events. +
+We will explain it in terms of Model and Storage. +
+
+[discrete]
+==== Model level
+For model, we simply use the "referencing model", which is shown in the diagram below: +
+
+image::DG_model_join.png[width = "800"]
+_Figure ?.?.? interaction model_
+
+Refer to the diagram above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
+Similarly, the participation list in Person model stores all the event in which this person joins.
+
+Hence, we need to maintain both lists when operating `join` and `disjoin` commands.+
+The following code shows how to operate `disjoin`:
+
+[source,java]
+public void disjoin(Person personToRemove, Event eventToRemove) {
+    eventList.remove(personToRemove); //Maintain participantList in Event
+    personList.remove(eventToRemove); //Maintain participationList in Person
+    // Save changes to the storage.
+}
+
+[discrete]
+==== Storage level
+For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram below:
+
+image::DG_infinity loop.png[width = "800"]
+_Figure ?.?.? infinity loop_
+
+To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`, both of them does not have participant or participation information.
+Hence, we can avoid the infinity referencing problem. +
+The updated storage is shown in the diagram below:
+
+image::DG_join_storage.png[width = "800"]
+_Figure ?.?.? interaction storage_
+
+[discrete]
+===== Design Considerations
+
+**Aspect:** How to implement person-event interaction. +
+**Alternative 1 (current choice):** Set `participationList` in Person, and `participantList` in Event. They references to each other. +
+**Pros:** Easy to implement. +
+**Cons:** Need to maintain both lists when operating `join` and `disjoin`. +
+**Alternative 2:** Use association class. +
+**Pros:** Can save every participation entry. +
+**Cons:** Need to implement extra storage for association class, and cost more time to operate `show person` and `select event`.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
