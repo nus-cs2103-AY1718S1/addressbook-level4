@@ -40,17 +40,18 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
-        //if Person is called without Company, Position, Status or Photo
+        //if Person is called without Company, Position or Status
         // parameters, initialize them to "NIL".
         //if Person is called without Priority, initialize it to L. Note is initialized to "NIL" in all cases
         //as it is meant to be added after creating the person.
+        //if Person is called without Photo, initialize it to the default photo.
         try {
             this.company = new SimpleObjectProperty<>(new Company("NIL"));
             this.position = new SimpleObjectProperty<>(new Position("NIL"));
             this.status = new SimpleObjectProperty<>(new Status("NIL"));
             this.priority = new SimpleObjectProperty<>(new Priority("L"));
             this.note = new SimpleObjectProperty<>(new Note("NIL"));
-            this.photo = new SimpleObjectProperty<>(new Photo("NIL"));;
+            this.photo = new SimpleObjectProperty<>(new Photo("src/main/resources/images/default.jpg"));;
         } catch (Exception e) {
             e.printStackTrace();
         }

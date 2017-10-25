@@ -14,8 +14,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -32,6 +34,7 @@ import seedu.address.model.person.Priority;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
+import seedu.address.ui.CommandBox;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -53,12 +56,14 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
+        final Logger logger = LogsCenter.getLogger(AddCommandParser.class);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS,
                         PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO,
                         PREFIX_TAG);
 
+        logger.info("PhotoURL is: " + argMultimap.getValue(PREFIX_PHOTO));
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -74,8 +79,8 @@ public class AddCommandParser implements Parser<AddCommand> {
             Status status = new Status("NIL");
             Priority priority = new Priority("L");
             Note note = new Note("NIL");
-            //Initialize photo to NIL
-            Photo photo = new Photo("NIL");
+            //Initialize photo to the default icon
+            Photo photo = new Photo("src/main/resources/images/default.jpg");
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
@@ -102,7 +107,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             }
 
             if (arePrefixesPresent(argMultimap, PREFIX_PHOTO)) {
-                note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE)).get();
+                photo = ParserUtil.parsePhoto(argMultimap.getValue
+                        (PREFIX_PHOTO)).get();
+
+                logger.info("Parsed photoURL = " + photo.photoURL);
             }
 
             ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,

@@ -33,7 +33,7 @@ public class PersonBuilder {
     public static final String DEFAULT_STATUS = "NIL";
     public static final String DEFAULT_PRIORITY = "L";
     public static final String DEFAULT_NOTE = "NIL";
-    public static final String DEFAULT_PHOTO = "NIL";
+    public static final String DEFAULT_PHOTO = "src/main/resources/images/default.jpg";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;

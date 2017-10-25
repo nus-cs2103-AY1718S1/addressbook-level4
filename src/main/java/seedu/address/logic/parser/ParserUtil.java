@@ -3,12 +3,14 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
@@ -142,21 +144,18 @@ public class ParserUtil {
      * if {@code photo} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Photo> parsePhoto(Optional<String>
-                                                     filePath)
-            throws
-            IllegalValueException {
+    public static Optional<Photo> parsePhoto(Optional<String> filePath)
+            throws IllegalValueException {
         requireNonNull(filePath);
-        String originalFilePath = filePath.get();
-        String destFilePath;
-        if (filePath == null) {
-            throw new IllegalValueException("Empty File Path");
-        } else {
+        String originalFilePath;
+        String destFilePath = null;
+        if (filePath.isPresent()) {
+            originalFilePath = filePath.get();
             int lastDelimiterPosition = originalFilePath.lastIndexOf("/");
             String fileName = originalFilePath.substring(lastDelimiterPosition+1);
-            if (lastDelimiterPosition == -1 || !fileName.matches("\\w+\\." +
-                    "jpg")) {
-                throw new IllegalValueException("Invalid File Path");
+            if (lastDelimiterPosition == -1 || !fileName.matches
+                    ("[\\w\\/\\-\\_\\.\\h]+\\.jpg")) {
+                throw new IllegalValueException(Photo.MESSAGE_PHOTO_CONSTRAINTS);
             } else {
                 try {
                     destFilePath = "src/main/resources/images/" + fileName;
@@ -164,11 +163,13 @@ public class ParserUtil {
                     File destFile = new File(destFilePath);
                     FileUtil.copyFile(originalFile, destFile);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    throw new RuntimeException("Invalid file path. " +
+                            "Please try again.");
                 }
             }
         }
-        return  Optional.of(new Photo(destFilePath));
+        return  filePath.isPresent()? Optional.of(new Photo(destFilePath)) :
+                Optional.empty();
     }
 
     /**

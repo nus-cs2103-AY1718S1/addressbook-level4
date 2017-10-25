@@ -12,9 +12,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Photo {
     public static final String MESSAGE_PHOTO_CONSTRAINTS =
-            "Photo can only be in JPG format";
+            "Please enter the correct file path. Photos can only be in JPG " +
+                    "format, and cannot contain empty spaces in the filename.";
     public static final String PHOTOURL_VALIDATION_REGEX =
-            "\\w+\\.jpg";
+            "[\\w\\/\\-\\_\\.\\h]+\\.jpg";
     public final String photoURL;
 
     /**
@@ -24,10 +25,11 @@ public class Photo {
      */
     public Photo(String photoURL) throws IllegalValueException {
         requireNonNull(photoURL);
-        if (!isValidPhotoURL(photoURL)) {
+        String photoURLTrimmed = photoURL.trim();
+        if (!isValidPhotoURL(photoURLTrimmed)) {
             throw new IllegalValueException(MESSAGE_PHOTO_CONSTRAINTS);
         }
-        this.photoURL = photoURL;
+        this.photoURL = photoURLTrimmed;
     }
 
     /**
