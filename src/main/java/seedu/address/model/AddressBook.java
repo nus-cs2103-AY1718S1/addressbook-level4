@@ -10,7 +10,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.AlreadySortedException;
+import seedu.address.logic.commands.exceptions.TagNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -164,7 +166,15 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void updateHighlight(String highlightTag) {
-        persons.updateHighlight(highlightTag);
+        try {
+            if (!this.tags.contains(new Tag(highlightTag))) {
+                throw new TagNotFoundException("Tag not found");
+            } else {
+                persons.updateHighlight(highlightTag);
+            }
+        } catch (IllegalValueException e) {
+            throw new TagNotFoundException("Tag not found");
+        }
     }
 
     //// sort address book
