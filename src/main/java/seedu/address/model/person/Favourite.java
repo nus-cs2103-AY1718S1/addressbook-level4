@@ -5,30 +5,44 @@ package seedu.address.model.person;
  */
 public class Favourite {
 
+    private boolean favourite;
     private String status;
 
+    /**
+     * Default constructor
+     * if no parameter is passed in, the favourite value is initialised to false
+     */
     public Favourite() {
-        this.status = "False"; // default state
+        this.favourite = false;
+        this.status = "False";
     }
 
-    public Favourite(String status) {
-        this.status = status;
+    public Favourite(boolean favourite) {
+        this.favourite = favourite;
+        this.status = favourite ? "True" : "False";
     }
 
-    public void setFavourite() {
-        if (this.status.equals("False")) {
-            this.status = "True";
-        } else {
-            this.status = "False";
-        }
+    private void setFavouriteStatus() {
+        status = favourite ? "True" : "False";
+    }
+
+    public void toggleFavourite() {
+        favourite = !favourite;
+        setFavouriteStatus();
+    }
+
+    public boolean getFavourite() {
+        return favourite;
     }
 
     public String getStatus() {
+        setFavouriteStatus(); // Ensure the status is in sync with favourite
         return status;
     }
 
     @Override
     public String toString() {
+        setFavouriteStatus(); // Ensure the status is in sync with favourite
         return status;
     }
 
@@ -36,11 +50,12 @@ public class Favourite {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Favourite) // instanceof handles nulls
-                && this.status.equals(((Favourite) other).status); // state check
+                && this.favourite == ((Favourite) other).favourite; // state check
     }
 
     @Override
     public int hashCode() {
+        setFavouriteStatus();
         return status.hashCode();
     }
 }
