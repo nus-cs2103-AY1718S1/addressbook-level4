@@ -433,6 +433,17 @@ link:#the-myths-book---user-guide[Back To Top]
 
 UI that shows all details of a person that is not shown in person card
 
+=== Calendar
+
+`since v1.3` `Chia Cherng Hann`
+
+UI that displays a calendar for the user.
+You will be able to toggle through different months to view the day and date of different months.
+
+image::calendar.PNG[width="800"]
+
+link:#the-myths-book---user-guide[Back To Top]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
