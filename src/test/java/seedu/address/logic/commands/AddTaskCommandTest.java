@@ -135,7 +135,7 @@ public class AddTaskCommandTest {
         }
 
         @Override
-        public void markTask(ReadOnlyTask Task) throws TaskNotFoundException {
+        public void markTask(ReadOnlyTask task) throws TaskNotFoundException {
             fail("This method should not be called.");
         }
 
