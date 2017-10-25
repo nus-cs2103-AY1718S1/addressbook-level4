@@ -6,34 +6,34 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="400.0" prefWidth="400.0">
+      <VBox>
          <children>
-            <Label fx:id="id" text="\$id" />
-            <Label fx:id="name" text="\$name" />
-            <HBox prefHeight="0.0" prefWidth="400.0">
+            <Label fx:id="id" styleClass="label-header" />
+            <Label fx:id="name" styleClass="label-header" />
+            <HBox>
                <children>
-                  <Label prefHeight="17.0" prefWidth="75.0" text="Tags: " />
+                  <Label styleClass="label-bright" text="Tags: " />
                   <FlowPane fx:id="tags" />
                </children>
             </HBox>
-            <HBox prefHeight="41.0" prefWidth="400.0">
+            <HBox>
                <children>
-                  <Label text="Phone: " />
-                  <Label fx:id="phone" text="\$phone" />
+                  <Label styleClass="label-bright" text="Phone: " />
+                  <Label fx:id="phone" styleClass="label-bright" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
-                  <Label text="Address: " />
-                  <Label fx:id="address" text="\$address" />
+                  <Label styleClass="label-bright" text="Address: " />
+                  <Label fx:id="address" styleClass="label-bright" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox>
                <children>
-                  <Label text="Email: " />
-                  <Label fx:id="email" text="\$email" />
+                  <Label styleClass="label-bright" text="Email: " />
+                  <Label fx:id="email" styleClass="label-bright" />
                </children>
             </HBox>
          </children>
