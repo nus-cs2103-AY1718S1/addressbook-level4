@@ -459,12 +459,12 @@ listing, which is date added.
     }
 ----
 
-Sorting by name will display the list with names in ascending alphabetical order, regardless of capitalisation.
-Sorting by phone will display the list with phone numbers in ascending order.
-Sorting by email will display the list with emails in ascending alphabetical order, with priority given to the first
++ Sorting by name will display the list with names in ascending alphabetical order, regardless of capitalisation.
++ Sorting by phone will display the list with phone numbers in ascending order.
++ Sorting by email will display the list with emails in ascending alphabetical order, with priority given to the first
 email entered for a person. This means that the primary email for a person should be entered first.
-Sorting by address will display the list with addresses in ascending alphabetical order.
-Sorting by default will do the same as sorting by name currently.
++ Sorting by address will display the list with addresses in ascending alphabetical order.
++ Sorting by default will do the same as sorting by name currently.
 
 ==== Design Considerations
 **Aspect:** Implementation of sorting. +
@@ -507,8 +507,8 @@ to the file.
 ==== Design Considerations
 **Aspect:** Choice of location for storing UserProfile Data +
 **Alternative 1 (current choice)**: Separately from AddressBook. +
-**Justification:** This path was chosen taking into consideration the two following cases: +
-A User can have multiple AddressBooks, or multiple users can share one AddressBook.
+**Justification:** This path was chosen taking into consideration the two following cases:
++ A User can have multiple AddressBooks, or multiple users can share one AddressBook.
 + In the former case, the User would not have to modify his UserProfile for each AddressBook.
 + In the latter case, an AddressBook should not be tied to only one UserPerson in particular.
 + **Pros:** Greater flexibility, portability
@@ -519,8 +519,8 @@ variables.
 + **Cons:** Reduced flexibility as now, both AddressBook data and UserProfile cannot be separated
 
 ==== Further enhancements
-Share UserProfile with others
-Display UserProfile graphically
++ Share UserProfile with others
++ Display UserProfile graphically
 
 // end::UserProfile[]
 
