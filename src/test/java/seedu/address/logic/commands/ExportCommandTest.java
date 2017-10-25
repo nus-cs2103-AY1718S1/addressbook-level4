@@ -110,24 +110,24 @@ public class ExportCommandTest {
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+        ExportCommand exportFirstCommand = new ExportCommand(INDEX_FIRST_PERSON);
+        ExportCommand exportSecondCommand = new ExportCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
-        assertTrue(selectFirstCommand.equals(selectFirstCommand));
+        assertTrue(exportFirstCommand.equals(exportFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
-        assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
+        ExportCommand exportFirstCommandCopy = new ExportCommand(INDEX_FIRST_PERSON);
+        assertTrue(exportFirstCommand.equals(exportFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(selectFirstCommand.equals(1));
+        assertFalse(exportFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(selectFirstCommand.equals(null));
+        assertFalse(exportFirstCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(selectFirstCommand.equals(selectSecondCommand));
+        assertFalse(exportFirstCommand.equals(exportSecondCommand));
     }
 
     /**
