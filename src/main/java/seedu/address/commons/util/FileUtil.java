@@ -17,7 +17,7 @@ public class FileUtil {
     private static final Pattern XML_FILE_FORMAT = Pattern.compile(".*\\.xml$");
     private static final Pattern UNIX_NAME_SEPARATOR_FORMAT = Pattern.compile(".*/.*");
     private static final Pattern WINDOWS_NAME_SEPARATOR_FORMAT = Pattern.compile(".*\\\\.*");
-    private static final Pattern INVALID_NAME_CHARACTERS_FORMAT = Pattern.compile(".*[?!%*+|\"<>].*");
+    private static final Pattern INVALID_NAME_CHARACTERS_FORMAT = Pattern.compile(".*[?!%*+:|\"<>].*");
     private static final Pattern CONSECUTIVE_NAME_SEPARATOR_FORMAT = Pattern.compile("(.*//.*)|(.*\\\\\\\\.*)");
     private static final Pattern CONSECUTIVE_EXTENSION_SEPARATOR_FORMAT = Pattern.compile(".*\\.\\..*");
 
@@ -122,10 +122,23 @@ public class FileUtil {
     }
 
     /**
-     * Checks whether the file name and folder names in {@filePath} are valid
+     * Checks whether the non-existent file name and folder names in {@filePath} are valid
      */
-    public static boolean hasInvalidName(String filePath) {
-        return INVALID_NAME_CHARACTERS_FORMAT.matcher(filePath).matches();
+    public static boolean hasInvalidNonExistentNames(String filePath) {
+        File file = new File(filePath);
+        // taking account into relative paths with non-existent parent folders
+        if (!file.isAbsolute()) {
+            String userDir = System.getProperty("user.dir");
+            file = new File(userDir + File.separator + filePath);
+        }
+
+        File parentFile = file.getParentFile();
+        while (!parentFile.exists()) {
+            parentFile = parentFile.getParentFile();
+        }
+        String nonExistentNames = file.getAbsolutePath().substring(parentFile.getAbsolutePath().length());
+
+        return INVALID_NAME_CHARACTERS_FORMAT.matcher(nonExistentNames).matches();
     }
 
     /**

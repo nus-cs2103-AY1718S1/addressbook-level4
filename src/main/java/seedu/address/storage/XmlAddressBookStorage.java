@@ -94,7 +94,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     private void validateFilePath(String filePath) throws InvalidFilePathException {
         if (!FileUtil.isValidXmlFile(filePath)) {
             throw new InvalidFileExtensionException();
-        } else if (FileUtil.hasInvalidName(filePath)) {
+        } else if (FileUtil.hasInvalidNonExistentNames(filePath)) {
             throw new InvalidNameException();
         } else if (FileUtil.hasInvalidNameSeparators(filePath)) {
             throw new InvalidNameSeparatorException();
