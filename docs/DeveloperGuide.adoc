@@ -348,7 +348,7 @@ maybe very long. This implementation allows doctors to set an appointment date w
 On top of just setting appointment time, the user can also sort the contacts by appointment timing. This is so that the
 doctor will be remind of their most upcoming appointment in the midst of their busy schedule. +
 
-*How is it implemented* +
+*How it is implemented* +
 
 An appointment class is created and has 2 different constructors. +
 
@@ -380,7 +380,7 @@ enhancements for parsing, it should be done in the AddAppointmentParser class.
 Contacts in the address book have various tags. Be it family, patients or colleagues, users can now sort their +
 contacts based on such tags
 
-*How is it implemented* +
+*How it is implemented* +
 
 Implementation passes through two main segments: Logic and Model for this feature
 
@@ -433,7 +433,7 @@ newly implemented features with greater ease that requires the use of the comman
 
 The feature allows users and developers to easily navigate and edit input text.
 
-*How is it implemented* +
+*How it is implemented* +
 
 There are three key improvements that the enhancement brings
 
@@ -546,9 +546,9 @@ The reason for the use of ListByBloodtypeCommandParser is to filter out extra sp
 
 === *Enhancement: Batch delete all persons who share a particular tag* +
 
-MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on contacts.
+MedNus is designed for power users. Thus, batch deletions are a welcome addition since they make it less tedious to perform deletions on multiple contacts.
 
-*How is it implemented* +
+*How it is implemented* +
 
 An additional command class is implemented in the logic component. Its constructor is as follows: +
 
@@ -563,8 +563,9 @@ It causes the associated addressBook attribute to iterate through each person an
 
 *Reasons for how it is implemented*
 
-Coupling between the logic and model component is minimised into the sole function call `deletePersonsByTags(Set<Tag> tags)`. This
-is for simplicity as much as it is for ease of implementation. Future batch operations ought to be implemented
+Coupling between the logic and model component is minimised into the sole function call +
+ deletePersonsByTags(Set<Tag> tags)
+This is for simplicity as much as it is for ease of implementation. Future batch operations ought to be implemented
 in a similar fashion – whereby only one point of interaction occurs between components.
 
 *Future enhancements*
