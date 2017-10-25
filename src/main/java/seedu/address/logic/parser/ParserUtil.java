@@ -138,7 +138,7 @@ public class ParserUtil {
      */
     public static Optional<Status> parseStatus(Optional<String> status) throws IllegalValueException {
         requireNonNull(status);
-        return status.isPresent() ? Optional.of(Status.getStatusInstance(status.get())) : Optional.empty();
+        return status.isPresent() ? Optional.of(Status.getInstance(status.get())) : Optional.empty();
     }
 
     /**

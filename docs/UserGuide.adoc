@@ -106,7 +106,7 @@ Format: `add #/TRACKING_ID n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVER
 
 [TIP]
 A parcel can have any number of tags (including 0)
-A parcel can only have one of three `STATUS` input. i.e. `PENDING`, `DELIVERING`, `DELIVERED`
+A parcel can only have one of four `STATUS` input. i.e. `PENDING`, `DELIVERING`, `COMPLETED` and `OVERDUE`.
 If there is no `STATUS` input, it defaults to `PENDING`
 
 Examples:
@@ -124,6 +124,8 @@ Support for other delivery companies will come in future patches.
 [NOTE]
 If not included in the add command, the default value of both the phone and email field is `NIL`.
 
+tag::import[]
+
 === Import multiple parcels stored in an xml storage file: `import`
 
 Imports the parcels in an Ark storage `.xml` file stored in `/data/import/` folder to Ark +
@@ -139,6 +141,8 @@ Examples:
 File names should be alphanumeric i.e. `addressBook12.xml`, `12.xml`
 Non alphanumeric file names will not be accepted. i.e. `$addressbook#!@,xml`
 ====
+
+end::import[]
 
 === Listing all parcels : `list`
 
@@ -331,6 +335,53 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+tag::trackingNumber[]
+
+=== Tracking Number Recognition
+
+Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
+This feature is important because a single person can have many parcels belonging to him. Tracking numbers are used
+to differentiate between the different parcels that are going to be delivered to the same person. Tracking numbers also
+serve as a better way of narrowing down and pinpointing parcels of interest since these numbers are more unique
+
+[NOTE]
+Presently, the `Tracking Number` Field only has support for Registered Article tracking numbers belonging to SingPost.
+You can read more about their Registered Article tracking number
+ link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here].
+
+end::trackingNumber[]
+
+tag::postalCode[]
+
+=== Postal Code Recognition
+
+Ark can store the postal address of locations in Singapore. It only accepts values of `s` or `S` followed by 6 digits.
+The postal code of a parcel is used to query Google Maps when the `select` command is executed.
+
+[NOTE]
+Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
+code exists even though it might meet the criteria above. The team is working on producing a database of postal codes
+ in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
+ the correct postal code.
+
+end::postalCode[]
+
+tag::status[]
+
+=== Status field
+
+`Status` is used to indicate the current stage of delivery that a parcel is at. It has 4 possible states:
+
+* `PENDING` - This means that the parcel has not been delivered and has not passed the date it is supposed to be
+delivered by. +
+* `DELIVERING` - This means that the parcel is currently working being delivered to its destination address.
+* `COMPLETED` - This indicates that the parcel has been successfully delivered to its destination.
+* `OVERDUE` - This state indicates that the parcel has not been delivered and has passed its due date.
+
+These states have different colours codes to allow you to differentiate the `Status` values more easily.
+
+end::status[]
+
 === Google Maps Browser
 
 Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
@@ -361,13 +412,17 @@ Examples:
 Ark data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+tag::backup[]
+
 === Backing up the data
 
 Ark data are backed up in the hard disk automatically at the start of every session of the program. +
 There is no need to back up the data manually. +
 The backup file is appended with `-backup.xml` and is stored in the same folder as the main storage file. +
 The data from the backup file has to be loaded manually by copying the contents of the backup file into your main
- storage file.
+ storage file. i.e. `./data/` folder
+
+end::backup[]
 
 == FAQ
 
@@ -419,7 +474,7 @@ In version v1.2, users will be able to: +
 === Features added in v1.3
 In version v1.3, users will be able to: +
 
-* Add one of three Status to parcels. i.e. `PENDING`, `DELIVERING`, `DELIVERED`
+* Add one of four possible Status to parcels. i.e. `PENDING`, `DELIVERING`, `COMPLETED` and `OVERDUE`.
 * Import parcels stored in an Ark storage file in xml format into Ark.
 
 {{More to be added}}
@@ -441,8 +496,8 @@ In `Ark v2.0`, the delivery vendor will be able to do the following: +
 * Update status of `Parcel`
 * Color code `ParcelCard` based on impending deadlines.
 * Generate the optimal route for the day's deliveries, based on shortest time, shortest distance travelled or most
- parcels delivered.
 * Archive completed deliveries
+ parcels delivered.
 * Add multiple parcels by importing a XML file
 * Store the sender's and receiver's details (i.e. `Name`, `Phone`, `Email Address`, `Address`)
 * Autocomplete input commands.
