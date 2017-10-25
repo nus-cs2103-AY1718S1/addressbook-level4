@@ -52,8 +52,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
             ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
             if (n == 0) {
                 listOfDeletedContacts = listOfDeletedContacts + personToDelete.getName();
-            }
-            else {
+            } else {
                 listOfDeletedContacts = listOfDeletedContacts + ", " + personToDelete.getName();
             }
 
@@ -76,7 +75,8 @@ public class DeleteMultipleCommand extends UndoableCommand {
     }
 
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
+    public void setData(Model model, CommandHistory commandHistory,
+                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue) {
         this.model = model;
         this.queue = queue;
     }

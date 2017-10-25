@@ -1,7 +1,8 @@
 package seedu.address.logic;
 
-import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Queue;
+
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
