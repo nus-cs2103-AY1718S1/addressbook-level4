@@ -20,10 +20,11 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.phone.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -129,6 +130,7 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
+        private UniquePhoneList uniquePhoneList;
         private Email email;
         private Address address;
         private Set<Tag> tags;
@@ -138,6 +140,7 @@ public class EditCommand extends UndoableCommand {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
+            this.uniquePhoneList = toCopy.uniquePhoneList;
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;

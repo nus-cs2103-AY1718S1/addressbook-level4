@@ -20,7 +20,7 @@ import seedu.address.commons.util.CollectionUtil;
  */
 public class UniqueCustomFieldList implements Iterable<CustomField> {
 
-    private final ObservableList<CustomField> internalList = FXCollections.observableArrayList();
+    public final ObservableList<CustomField> internalList = FXCollections.observableArrayList();
 
     /**
      * Constructs empty CustomFieldList.
