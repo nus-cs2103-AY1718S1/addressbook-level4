@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -34,6 +35,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final TaskBook taskBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyTask> filteredTasks;
+    private final SortedList<ReadOnlyTask> sortedTasks;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -48,7 +50,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.taskBook = new TaskBook(taskBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredTasks = new FilteredList<>(this.taskBook.getTaskList());
-
+        sortedTasks = new SortedList<ReadOnlyTask>(filteredTasks);
     }
 
     public ModelManager() {
@@ -160,6 +162,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public SortedList<ReadOnlyTask> getSortedTaskList() {
+        return sortedTasks;
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
@@ -169,6 +176,11 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
+    }
+
+    @Override
+    public void taskByEnd() {
+        sortedTasks.setComparator((t1, t2) -> t1.getEndDateTime().compareTo(t2.getEndDateTime()));
     }
 
     @Override
@@ -186,7 +198,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredTasks.equals(other.filteredTasks);
     }
 
 }
