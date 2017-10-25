@@ -34,8 +34,10 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        registerAsAnEventHandler(this);
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        commandTextField.textProperty().addListener((observable, oldInput, newInput) -> updateAutocompleter());
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -51,14 +53,17 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToPreviousInput();
             break;
+
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
             break;
+
         case TAB:
             keyEvent.consume();
             processAutocomplete();
             break;
+
         default:
             // let JavaFx handle the keypress
         }
@@ -69,8 +74,13 @@ public class CommandBox extends UiPart<Region> {
      */
     private void processAutocomplete() {
         String currentText = commandTextField.getText();
-        String autocompleteText = autocompleter.autocomplete(currentText);
+        String autocompleteText = autocompleter.autocomplete();
         replaceText(autocompleteText);
+    }
+
+    private void updateAutocompleter() {
+        String currentText = commandTextField.getText();
+        autocompleter.updateState(currentText);
     }
 
     /**
