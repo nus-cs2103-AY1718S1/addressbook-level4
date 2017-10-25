@@ -124,6 +124,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the currently selected person is edited instead.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * The date of debt borrowed cannot be edited.
@@ -137,6 +138,10 @@ Examples:
 Edits the phone number, postal code, and email address of the 1st person to be `91234567`, `333111`, and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `list` +
+`select 1` +
+`edit n/Peeta Pen` +
+Edits the name of the 2nd person in the address book to be `Peeta Pen`.
 
 === Locating persons by name: `find`
 
@@ -164,7 +169,8 @@ Increase the debt of a debtor by the amount entered. +
 Format: `borrow INDEX AMOUNT`
 
 ****
-* Increases the debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* Increases the debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the debt of the currently selected person is increased instead.
 * `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
 ****
 
@@ -174,6 +180,10 @@ Examples:
 Increases the debt of the 1st person by $500.
 * `borrow 2 1000.10` +
 Increases the debt of the 2nd person by $1000.10.
+* `list` +
+`select 2` +
+`borrow 234` +
+Increases the debt of the 2nd person by $234.
 
 === Decreasing the debt of a person: `payback`
 
@@ -181,7 +191,8 @@ Decrease the debt of a person by the amount entered. +
 Format: `payback INDEX AMOUNT`
 
 ****
-* Decrease the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* Decrease the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the debt of the currently selected person is decreased instead.
 * `AMOUNT` has to be in dollars and cents. For example: `600` which represents $600.
 * `AMOUNT` repaid cannot be more than the debt owed by the person at the specifiec `INDEX`
 ****
@@ -192,6 +203,10 @@ Examples:
 Decreases the debt of the 1st person by $500.
 * `payback 2 1000.10` +
 Decreases the debt of the 2nd person by $1000.10.
+* `list` +
+`select 3` +
+`payback 234` +
+Increases the debt of the 3rd person by $234.
 
 === Resetting the debt of a person: `repaid`
 
@@ -213,9 +228,8 @@ Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* Deletes the person at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the currently selected person is deleted instead.
 ****
 
 Examples:
@@ -226,6 +240,10 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list` +
+`select 4` +
+`delete` +
+Deletes the 4th person in the address book.
 
 === Banning a debtor : `ban`
 
