@@ -218,6 +218,45 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Autofill Feature
+
+The `edit` command now allows empty fields to be entered to trigger an autofill response.
+The autofill replaces all empty fields entered in the command box at once.
+This idea stems from the consideration of convenience in editing typos in a contact. This is especially so
+when the user wishes to update a small typo in very long field but does not wish to re-type out everything in the current field.
+
+The `Undo` command can help reverse an added contact and pressing the up button will recall the used `add` command but
+this causes more hassle than needed. Also, the up button will not be able to recall a command that was used in a previous
+session which increases the need for an autofill feature.
+
+*How it is triggered* +
+Below is the activity diagram on how the `editCommandParser` works while editing the `editPersonDescriptor`.
+
+image::autofillactivitydiagram.png[]
+
+The part in orange is the added branch to the the flow of activities. The set of argument validation events happen within each `Person`
+attribute's constructor. (i.e. constructors of `Name` `Email` `Address` `Phone` `DateOfBirth`)
+
+The exception thrown, `EmptyFieldException`, is a subclass of `ParserException` and helps indicate the presence of an empty field
+which is to be distinguished from an argument regex mismatch and to be thrown out to the `LogicManager` which has access to
+the contacts and is able to carry out the autofill feature. The `EmptyFieldException` is conceptually
+correct to be a subclass of `ParserException` as it is indeed a type of exception when processing invalid arguments.
+Furthermore, there is no need to declare a new type of exception thrown as it is a type of `ParseException`.
+
+*How the autofilling is done* +
+`v1.2` +
+The `EmptyFieldException` contains the empty field prefix and the index of the contact in concern which allows the
+`LogicManager` to retrieve the relevant detail and replace the prefix with the filled prefix. However, this method
+restricts the feature to only fill one prefix at a time, per enter key pressed. Also, in conjunction with the feature
+as in *3.2*, this causes a problem as contacts with empty fields will not be able to have other specified fields filled.
+
+`v1.3` +
+The autofill function now scans and replaces every prefix that is present in the command line. Effectively
+solving the problem of inconvenience where multiple enter key presses is required to fill multiple fields and
+contacts with empty fields no longer prevent the autofilling of other empty prefixes. This also means that
+the `EmptyFieldException` is no longer unique to the empty prefix and thus, there is no need for the prefix parameter,
+which is removed from the constructor of the exception.
+
 // tag::add
 === Making Name as the only compulsory field in Add Command
 
@@ -225,7 +264,7 @@ The `add` command follows the format below:
 
 `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
 
-This means when adding a new person in LISA, the user only need to provide value for the compulsory `NAME` field. Every other field is optional.
+This means when adding a new person in LISA, the user only needs to provide value for the compulsory `NAME` field. Every other field is optional.
 
 Every field has one corresponding class. Inside each class, there exists a `final String FIELD_VALIDATION_REGEX` used for validation during construction.
 For instance, the `PHONE` field has `Phone` class containing a `PHONE_VALIDATION_REGEX` which only accepts numbers that are at least three digits long:
