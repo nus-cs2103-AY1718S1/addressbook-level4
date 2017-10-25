@@ -5,6 +5,7 @@ package seedu.address.ui;
  */
 public enum AutocompleteState {
     COMMAND,
+    EMPTY,
     MULTIPLE_COMMAND,
     ADD,
     EDIT,

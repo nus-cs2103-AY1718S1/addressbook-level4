@@ -6,6 +6,10 @@ import java.util.Arrays;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
+
 
 /**
  * Autocomplete utility used in the command box
@@ -21,48 +25,112 @@ public class Autocompleter {
     private static final String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history",
         "list", "redo", "select", "undo"};
 
+    private int resultIndex;
+    private CommandBoxParser parser;
     private AutocompleteState state;
+    private ArrayList<String> possibleAutocompleteResults;
 
 
     public Autocompleter() {
         registerAsAnEventHandler(this);
+        resultIndex = 0;
+        parser = new CommandBoxParser();
         //default state will be autocomplete for command
-        state = AutocompleteState.COMMAND;
+        state = AutocompleteState.EMPTY;
+        possibleAutocompleteResults = new ArrayList<>();
     }
 
     /**
      * Returns the autocompleted command to be filled into the command box
-     * @param commandBoxText from the command box
      * @return autocomplete text
      */
-    public String autocomplete(String commandBoxText) {
+    public String autocomplete() {
+        /*
         String[] commandBoxTextArray = commandBoxText.trim().split("\\s+");
         String autocompleteText = commandBoxText;
         if (commandBoxText.equals(EMPTY_STRING)) {
             raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
         } else if (commandBoxTextArray.length == 1) {
-            autocompleteText = processOneWordAutocomplete(commandBoxTextArray[0]);
+            autocompleteText = autocompleteCommandWord(commandBoxTextArray[0]);
         }
         return autocompleteText;
+        */
+        switch (state) {
+            case COMMAND:
+                clearResultsWindow();
+                return (possibleAutocompleteResults.isEmpty())? EMPTY_STRING : possibleAutocompleteResults.get(0);
+
+            case EMPTY:
+                raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
+                return EMPTY_STRING;
+
+            case MULTIPLE_COMMAND:
+                displayMultipleResults(possibleAutocompleteResults);
+                int currentIndex = resultIndex;
+                resultIndex = (resultIndex + 1) % possibleAutocompleteResults.size();
+                return possibleAutocompleteResults.get(currentIndex);
+        }
+        return EMPTY_STRING;
+    }
+
+    /**
+     * Updates the state of the autocompleter
+     * @param commandBoxText from CommandBox
+     */
+    public void updateState(String commandBoxText) {
+
+        if (commandBoxText.equals(EMPTY_STRING)) {
+            state = AutocompleteState.EMPTY;
+            return;
+        }
+        String[] currentTextArray = parser.parseTextBox(commandBoxText);
+        String commandWord = currentTextArray[CommandBoxParser.COMMAND_INDEX];
+        String arguments = currentTextArray[CommandBoxParser.ARGUMENT_INDEX];
+
+        if (commandWord.equals(EMPTY_STRING) && arguments.equals(EMPTY_STRING)) {
+            autocompleteCommandWord(commandBoxText);
+            return;
+        }
+
+        switch (commandWord) {
+            case AddCommand.COMMAND_WORD:
+                state = AutocompleteState.ADD;
+                break;
+
+            case EditCommand.COMMAND_WORD:
+                state = AutocompleteState.EDIT;
+                break;
+
+            case FindCommand.COMMAND_WORD:
+                state = AutocompleteState.FIND;
+                break;
+        }
+
+
     }
 
     /**
      * Handle autocomplete when there is only word in the command box
      * @param commandBoxText
-     * @return
+     * @return result to be placed in side text box
      */
-    private String processOneWordAutocomplete(String commandBoxText) {
+    private void autocompleteCommandWord(String commandBoxText) {
         ArrayList<String> possibleResults = getClosestCommands(commandBoxText);
+        possibleAutocompleteResults = possibleResults;
+        System.out.println(commandBoxText);
         switch (possibleResults.size()) {
         case 0:
-            clearResultsWindow();
-            return commandBoxText;
+            state = AutocompleteState.COMMAND;
+            break;
+
         case 1:
-            clearResultsWindow();
-            return possibleResults.get(0);
+            state = AutocompleteState.COMMAND;
+            break;
+
         default:
-            displayMultipleResults(possibleResults);
-            return commandBoxText;
+            state = AutocompleteState.MULTIPLE_COMMAND;
+            resultIndex = 0;
+            break;
         }
     }
 
