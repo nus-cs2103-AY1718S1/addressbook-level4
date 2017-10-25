@@ -14,10 +14,33 @@ endif::[]
 
 By: `Team W15-B3`      Since: `Jun 2016`      Licence: `MIT`
 
-== Quick Start
+== Introduction
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
+ConnectUs is a professional address book application tailored to small to medium enterprises
+who wish for prompt lookup of their business partners particulars. It allows for storage and management of business contacts, quick and easy
+access to their emails, and displays their location on Google Maps.
+
+ConnectUs v1.2 is available for Windows and Mac OS X Operating Systems.
+
+== About
+
+This tutorial gives an overview on the basic functions of ConnectUs such as adding a contact, emailing a contact
+and displaying their location on Google Maps. Being a very simple application, no prior technical knowledge is required to use this application.
+
+Below lists the command terminology which would be used throughout this guide:
+====
+*Command Format*
+
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+====
+
+== Installation - Getting Started
+
+
+.  Ensure you have Java link:http://www.oracle.com/technetwork/java/javase/8u60-relnotes-2620227.html[version] `1.8.0_60` or later installed in your Computer.
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
@@ -40,15 +63,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
-
-====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
 
 === Viewing help : `help`
 
@@ -288,6 +302,35 @@ File must also be placed in the main folder.
 
 Format: `import FILENAME.vcf` or `im FILENAME.vcf` where `FILENAME` is the name of the file that you wish to import.
 
+=== Exporting Contacts to external source : `export`
+(added in v1.3)
+
+Export contacts to external source from the addressbook. The exported file will be in `.vcf` format. +
+File will be exported onto the main folder as `output.vcf`
+
+Format: `export` or `ex`
+
+=== Upload photo image for a contact : `photo`
+(added in v1.3)
+
+Uploads the photo to the specified person from the address book. +
+
+. Upon entering the command, a file explorer will appear to allow you to choose the image from your computer.
+. Click "Open" once you choose your image and it will be added to the person you specified.
+
+Format: `photo INDEX` or `p INDEX`
+
+****
+* Uploads photo to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `photo 1` +
+* `p 1` +
+Uploads photo to the 2nd person in the address book.
 
 === Clearing all entries : `clear`
 
@@ -325,6 +368,9 @@ Sorts the contact in the address book based on the name of the contact by clicki
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: How do I change the theme? +
+*A*: Click on the `File` drop down menu on the top left hand corner of the screen. A drop down menu appears. Click on the theme you want to apply.
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
@@ -347,6 +393,10 @@ e.g.`select 2`
 * *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
 e.g. `tag friends classmates`
 * *Remove Tag* : `rtag KEYWORD [MORE_KEYWORDS]`
+* *Import* : `import FILENAME.vcf`
+* *Export* : `export`
+* *Upload Photo* : `photo INDEX` +
+e.g. `photo 3`
 
 == Command Shortcuts Summary
 
@@ -369,4 +419,6 @@ e.g.`select 2`
 * *Tag*  : `t`
 * *Remove Tag*  : `rt`
 * *Import* : `im FILENAME.vcf`
-
+* *Export* : `ex`
+* *Upload Photo* : `p INDEX` +
+e.g. `p 3`

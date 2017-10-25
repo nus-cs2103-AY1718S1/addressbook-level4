@@ -16,6 +16,8 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "List");
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
