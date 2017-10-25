@@ -112,6 +112,31 @@ public class UniquePersonList implements Iterable<Person> {
         FXCollections.sort(internalList);
     }
 
+    /**
+     * Swaps the rooms of the two persons passed as arguments
+     */
+    public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2)
+        throws PersonNotFoundException {
+        requireNonNull(person1);
+        requireNonNull(person2);
+
+        final boolean person1FoundAndDeleted = internalList.remove(person1);
+        final boolean person2FoundAndDeleted = internalList.remove(person2);
+        if (!person1FoundAndDeleted || !person2FoundAndDeleted) {
+            throw new PersonNotFoundException();
+        }
+
+        Person newPerson1 = new Person(person1.getName(), person1.getPhone(), person1.getEmail(), person2.getRoom(),
+                person1.getTimestamp(), person1.getTags());
+        Person newPerson2 = new Person(person2.getName(), person2.getPhone(), person2.getEmail(), person1.getRoom(),
+                person2.getTimestamp(), person2.getTags());
+
+        internalList.add(new Person(newPerson1));
+        internalList.add(new Person(newPerson2));
+        this.sortBy(currentlySortedBy);
+
+    }
+
     public String getCurrentlySortedBy() {
         return this.currentlySortedBy;
     }

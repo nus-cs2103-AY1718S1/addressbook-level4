@@ -146,10 +146,24 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     //=========== Sorting Person List =============================================================
+
     /** Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria */
     public void sortBy(String sortCriteria) throws AlreadySortedException {
         residentBook.sortBy(sortCriteria);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateResidentBookChanged();
+    }
+
+    //=========== Swapping Residents' Rooms =============================================================
+
+    /**
+     * Swaps the rooms between two residents.
+     * @throws PersonNotFoundException if the persons specified are not found in the list.
+     */
+    @Override
+    public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2)
+            throws PersonNotFoundException {
+        residentBook.swapRooms(person1, person2);
         indicateResidentBookChanged();
     }
 

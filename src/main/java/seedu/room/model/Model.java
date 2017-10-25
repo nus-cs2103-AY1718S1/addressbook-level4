@@ -49,4 +49,7 @@ public interface Model {
     /** Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria */
     void sortBy(String sortCriteria) throws AlreadySortedException;
 
+    /** Swaps two residents' rooms */
+    void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException;
+
 }
