@@ -421,6 +421,31 @@ The following sequence diagram shows how the view command works:
 **Pros:** More well-organized structure. +
 **Cons:** Much harder to implement and overhead of switching to different panels instead of using one.
 
+=== Mark/Unmark mechanism
+
+The mark mechanism is facilitated by an extra attribute `isMarked` of `Lesson` class. `isMarked` is a boolean attribute which indicates if the given lesson is in the marked list.
+
+When user `mark` a lesson. The `isMarked` attribute of the specified lesson will be set to `true`.
+When user `unmark` a lesson, the `isMarked` attribute of the specified lesson will be set to `false`.
+
+When a new lesson is added. By default it is not in the marked list thus the `isMarked` filed will be set to false.
+
+The following sequence diagram shows how the mark command works:
+
+You can see a list of all marked lesson by command `list marked`.
+
+[NOTE]
+Each lesson is only allowed to be added into the `marked list` once, thus any further `mark` attempt will cause an exception being thrown.
+
+==== Design Considerations
+
+**Aspect:** Implementation of mark/unmark. +
+**Alternative 1 (current choice):**  Create an extra attribute `isMarked` for each lesson to record if the lesson is in the `marked list`.
+**Pros:** Easy to implement `list marked` since we are always using predicates to update the lesson list showing. +
+**Cons:** Need to filter out marked lessons every time. +
+**Alternative 2 (previous choice):** Store an extra marked lesson list. +
+**Pros:** We do not need to filter out the marked lessons each time. +
+**Cons:** Inefficient storage, many lessons might be stored multiple times.
 
 // tag::find[]
 === Find mechanism
