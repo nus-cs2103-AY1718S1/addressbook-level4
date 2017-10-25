@@ -28,7 +28,8 @@ public class ExpireCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the expiry date "
             + "of the person identified by the index number used in the last person listing. "
-            // overwrittable?
+            + "Existing expiry date will be updated with the input. "
+            + "Expiry date will be removed if input is empty. \n"
             + "Parameters: INDEX (must be positive integer) "
             + PREFIX_EXPIRE + "[DATE in YYYY-MM-DD format]\n"
             + "Example: " + COMMAND_WORD + " 1 "
