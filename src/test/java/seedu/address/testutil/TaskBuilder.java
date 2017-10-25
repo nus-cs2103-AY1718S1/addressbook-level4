@@ -23,7 +23,7 @@ public class TaskBuilder {
     public static final String DEFAULT_STARTDATE = "Tue, Oct 24, '17";
     public static final String DEFAULT_DEADLINE = "Thu, Oct 26, '17";
     public static final Suffix DEFAULT_RECUR_INTERVAL = SUFFIX_NO_RECUR_INTERVAL;
-    public static final String DEFAULT_TAG = "projectGroup";
+    public static final String DEFAULT_TAG = "urgent";
 
     private Task task;
 

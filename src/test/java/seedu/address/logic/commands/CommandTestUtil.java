@@ -75,9 +75,10 @@ public class CommandTestUtil {
     public static final String VALID_STARTDATE_PAPER = "Fri, Oct 20, '17";
     public static final String VALID_DEADLINE_PAPER = "Wed, Oct 25, '17";
     public static final String VALID_TAG_URGENT = "urgent";
-    public static final String VALID_TAG_GROUP = "group3";
+    public static final String VALID_TAG_GROUP = "projectGroup";
     
     public static final String INVALID_DESCRIPTION = " " + "///??::!!";
+    public static final String INVALID_DATE_FORMAT = "12.02.2012";
 
     public static final String DESCRIPTION_QUOTED_PAPER = " " + "\"" + VALID_DESCRIPTION_PAPER + "\"";
     public static final String STARTDATE_DESC_INTERNSHIP = " " + PREFIX_STARTDATE + " " + VALID_STARTDATE_INTERNSHIP;

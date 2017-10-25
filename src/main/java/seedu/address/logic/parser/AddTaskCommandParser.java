@@ -35,8 +35,6 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
     public AddTaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
         
-        
-        
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_TO, PREFIX_DEADLINE_ON,
                         PREFIX_DEADLINE_BY, PREFIX_TAG);

@@ -135,8 +135,7 @@ public class AddTaskCommandParserTest {
                 + VALID_DEADLINE_INTERNSHIP + VALID_TAG_URGENT, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
         
         // invalid start date - invalid format
-       // assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + );
-        
+
         // invalid start date - not enough information
         
         // invalid start date - after deadline
