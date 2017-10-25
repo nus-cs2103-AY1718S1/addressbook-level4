@@ -114,13 +114,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //@@author A0144294A
     /**
-     *
+     * sort the unique person list by the given attribute, then put the favorite contacts at the top of the list
      */
     public void sortPersonBy(int attribute) {
         persons.sortPersonBy(attribute);
         persons.sort();
     }
+    //@@author
 
     /**
      * Ensures that every tag in this person:
