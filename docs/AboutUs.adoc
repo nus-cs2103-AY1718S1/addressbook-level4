@@ -56,6 +56,17 @@ image::fongwz.jpg[width="150", align="left"]
 {empty}[https://github.com/fongwz[github]] [<<weizheng#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities:
+
+a) Technical :
+
+** Implement Command Box Helper
+** Revamp the tag system
+** Implement a display to show the users being sorted by the starting alphabet of their names
+** Ensure UI methods conform to style regulations
+
+b) Project management:
+
+** Ensure that the documentation of the project is properly done throughout the project
 
 '''
