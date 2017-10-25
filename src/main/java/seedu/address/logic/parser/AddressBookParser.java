@@ -113,7 +113,7 @@ public class AddressBookParser {
 
         case HelpCommand.COMMAND_WORD:
         case HelpCommand.COMMAND_WORD_2:
-            return new HelpCommand();
+            return new HelpCommandParser().parse(arguments);
 
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();

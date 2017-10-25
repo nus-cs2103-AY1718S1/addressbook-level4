@@ -21,4 +21,49 @@ public class HelpCommandTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ShowHelpRequestEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
     }
+
+    @Test
+    public void excutesuccess() {
+        CommandResult result = new HelpCommand("add").execute();
+        assertEquals(AddCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("clear").execute();
+        assertEquals(ClearCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("delete").execute();
+        assertEquals(DeleteCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("edit").execute();
+        assertEquals(EditCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("exit").execute();
+        assertEquals(ExitCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("find").execute();
+        assertEquals(FindCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("history").execute();
+        assertEquals(HistoryCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("list").execute();
+        assertEquals(ListCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("redo").execute();
+        assertEquals(RedoCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("select").execute();
+        assertEquals(SelectCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("sort").execute();
+        assertEquals(SortCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("tagadd").execute();
+        assertEquals(TagAddCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("tagremove").execute();
+        assertEquals(TagRemoveCommand.MESSAGE_USAGE, result.feedbackToUser);
+
+        result = new HelpCommand("undo").execute();
+        assertEquals(UndoCommand.MESSAGE_USAGE, result.feedbackToUser);
+    }
 }
