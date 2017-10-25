@@ -5,6 +5,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+import java.util.Arrays;
 
 /**
  * @author Sri-vatsa
@@ -20,13 +21,19 @@ public class DeleteTagCommand extends UndoableCommand {
             + "Parameters: Tag1(text) Tag2(text)\n"
             + "Example: " + COMMAND_WORD + " friends" + " family";
 
-    public static final String MESSAGE_DELETE_TAG_SUCCESS = "Deleted Tag(s)";
+    public static final String MESSAGE_SUCCESS = "Tag(s) successfully deleted";
+    public static final String MESSAGE_NO_TAGS_DELETED = "Tag(s) not in address book; Nothing to delete";
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " TAG 1" + " TAG2" + " ...";
 
     private final String[] mTagsArgs;
     private Tag[] mTagsToDelete;
 
-    public DeleteTagCommand(String[] tag) { mTagsArgs = tag; }
+    public DeleteTagCommand(String[] tag) throws NullPointerException {
+        if(tag == null) {
+            throw new NullPointerException("Arguments cannot be null");
+        }
+        mTagsArgs = tag;
+    }
 
     /***
      * @author Sri-vatsa
@@ -52,17 +59,29 @@ public class DeleteTagCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
+        boolean hasOneOrMoreDeletion = false;
         try {
             mTagsToDelete = stringToTag(mTagsArgs);
-            model.deleteTag(mTagsToDelete);
+            hasOneOrMoreDeletion = model.deleteTag(mTagsToDelete);
+
         } catch (IllegalValueException ive) {
             assert false : "The tag is not a proper value";
         } catch (PersonNotFoundException pnfe) {
             assert  false: "The person associated with the tag cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS));
+        if(hasOneOrMoreDeletion) {
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } else {
+            return new CommandResult(String.format(MESSAGE_NO_TAGS_DELETED));
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteTagCommand // instanceof handles nulls
+                && Arrays.equals(this.mTagsArgs,((DeleteTagCommand) other).mTagsArgs)); // state check
     }
 
 }

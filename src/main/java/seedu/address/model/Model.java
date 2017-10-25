@@ -25,7 +25,7 @@ public interface Model {
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Deletes given tag from everyone in the addressbook */
-    void deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
+    boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
