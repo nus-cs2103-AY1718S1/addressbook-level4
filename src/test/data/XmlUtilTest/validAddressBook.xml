@@ -38,6 +38,7 @@
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
         <remark isPrivate="false"></remark>
+        <image></image>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
