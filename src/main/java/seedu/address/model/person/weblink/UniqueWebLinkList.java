@@ -41,6 +41,10 @@ public class UniqueWebLinkList implements Iterable<WebLink> {
     }
 
     /**
+     * @throws multipleLinkForOneCategoryException
+     */
+
+    /**
      * Returns all tags in this list as a Set.
      * This set is mutable and change-insulated against the internal list.
      */
@@ -85,11 +89,21 @@ public class UniqueWebLinkList implements Iterable<WebLink> {
      */
     public void add(WebLink toAdd) throws DuplicateWebLinkException {
         requireNonNull(toAdd);
+
         if (contains(toAdd)) {
             throw new DuplicateWebLinkException();
         }
-        internalList.add(toAdd);
 
+        for(Iterator<WebLink> iterateInternalList = iterator(); iterateInternalList.hasNext();){
+            WebLink checkWebLink = iterateInternalList.next();
+            String checkWeblinkTag = checkWebLink.toStringWebLinkTag();
+            String weblinkTagOfToAdd = toAdd.toStringWebLinkTag();
+            if(weblinkTagOfToAdd.equals(checkWeblinkTag)) {
+                throw new DuplicateWebLinkException();
+            }
+            break;
+        }
+        internalList.add(toAdd);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
