@@ -23,7 +23,7 @@ public class AppointCommand extends UndoableCommand {
     public static final String MESSAGE_APPOINT_SUCCESS = "New appointment added: %1$s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an appointment to a person to the address book "
-            + "by the index number in the last person listing."
+            + "by the index number in the last person listing. "
             + "Parameters: INDEX (must be a positive integer) "
             + "[date (dd/mm/yy)] [time (hh:mm)] [duration (mins)";
 
