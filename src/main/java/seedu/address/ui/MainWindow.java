@@ -44,7 +44,6 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
-    private CalendarPanel calendarPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -139,7 +138,7 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        calendarPanel = new CalendarPanel(logic, model.getAddressBook().getPersonList(),
+        CalendarPanel calendarPanel = new CalendarPanel(logic, model.getAddressBook().getPersonList(),
                 model.getAddressBook().getTaskList());
         calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
 

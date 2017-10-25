@@ -40,7 +40,6 @@ public class CalendarPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
 
-    private DatePickerSkin datePickerSkin;
     private DatePicker datePicker;
 
     @FXML
@@ -59,7 +58,7 @@ public class CalendarPanel extends UiPart<Region> {
      * Load the calendar which is the datePickerSkin with DateCell from datePicker
      */
     private void loadDefaultPage() {
-        datePickerSkin = new DatePickerSkin(datePicker);
+        DatePickerSkin datePickerSkin = new DatePickerSkin(datePicker);
         DatePickerContent popupContent = (DatePickerContent) datePickerSkin.getPopupContent();
 
         popupContent.setPrefHeight(calendarPane.getPrefHeight());
@@ -196,8 +195,10 @@ public class CalendarPanel extends UiPart<Region> {
         return dayCellFactory;
     }
 
+    // TODO: 26/10/17 implement event in the calendar, such that binding of dates is possible
+    /*
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    }
+    } */
 }

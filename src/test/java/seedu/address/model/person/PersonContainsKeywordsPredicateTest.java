@@ -34,14 +34,14 @@ public class PersonContainsKeywordsPredicateTest {
         assertFalse(firstPredicate.equals(1));
 
         // null -> returns false
-        assertFalse(firstPredicate.equals(null));
+        assertFalse(firstPredicate == null);
 
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
 
     @Test
-    public void test_nameContainsKeywords_returnsTrue() {
+    public void testNameContainsKeywordsReturnsTrue() {
         // One keyword
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("Alice"));
@@ -61,7 +61,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_nameDoesNotContainKeywords_returnsFalse() {
+    public void testNameDoesNotContainKeywordsReturnsFalse() {
         // Zero keywords
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
@@ -77,7 +77,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_tagContainKeywords_returnTrue() {
+    public void testTagContainKeywordsReturnTrue() {
         // One keyword
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("friend"));
@@ -97,7 +97,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_tagDoesNotContainKeywords_returnFalse() {
+    public void testTagDoesNotContainKeywordsReturnFalse() {
         // Zero keywords
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withTags("friend").build()));
@@ -113,7 +113,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_containBirthday_returnTrue() {
+    public void testContainBirthdayReturnTrue() {
         // One keyword
         PersonContainsKeywordsPredicate predicate =
                 new PersonContainsKeywordsPredicate(Collections.singletonList("09-08-1956"));
@@ -125,7 +125,7 @@ public class PersonContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_doesNotContainBirthday_returnFalse() {
+    public void testDoesNotContainBirthdayReturnFalse() {
         // Zero keywords
         PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withBirthday("09-08-1956").build()));
