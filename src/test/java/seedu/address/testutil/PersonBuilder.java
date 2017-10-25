@@ -116,7 +116,11 @@ public class PersonBuilder {
      * Sets the {@code Favourite} of the {@code Person} that we are building
      */
     public PersonBuilder withFavourite(String favourite) {
-        this.person.setFavourite(new Favourite(favourite));
+        if (favourite.equals("True")) {
+            this.person.setFavourite(new Favourite(true));
+        } else if (favourite.equals("False")) {
+            this.person.setFavourite(new Favourite());
+        }
         return this;
     }
 
