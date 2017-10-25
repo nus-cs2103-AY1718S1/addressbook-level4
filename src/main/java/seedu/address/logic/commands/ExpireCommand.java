@@ -35,7 +35,7 @@ public class ExpireCommand extends UndoableCommand {
             + PREFIX_EXPIRE + "2017-09-09";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Date string: %2$s";
-    public static final String MESSAGE_SET_EXPIRY_DATE_SUCCESS = "Expiry date of Person: %1$s set as %2s.";
+    public static final String MESSAGE_SET_EXPIRY_DATE_SUCCESS = "Expiry date of %1$s set as %2$s.";
     public static final String MESSAGE_DELETE_EXPIRY_DATE_SUCCESS = "Removed expiry date of Person: %1$s.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_PERSON_NOT_FOUND = "No such person in Address Book.";
@@ -84,9 +84,9 @@ public class ExpireCommand extends UndoableCommand {
      */
     private String generateSuccessMessage(ReadOnlyPerson person) {
         if (!date.toString().isEmpty()) {
-            return String.format(MESSAGE_SET_EXPIRY_DATE_SUCCESS, person, date);
+            return String.format(MESSAGE_SET_EXPIRY_DATE_SUCCESS, person.getName(), date.toString());
         } else {
-            return String.format(MESSAGE_DELETE_EXPIRY_DATE_SUCCESS, person);
+            return String.format(MESSAGE_DELETE_EXPIRY_DATE_SUCCESS, person.getName());
         }
     }
 
