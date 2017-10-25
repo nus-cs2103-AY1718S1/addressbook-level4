@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+
+
+<?import javafx.scene.control.Label?>
+
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" spacing="5"
+      alignment="TOP_CENTER" maxHeight="120">
+    <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+</HBox>

@@ -4,9 +4,11 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -22,6 +24,7 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Group;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -44,6 +47,7 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private GroupListPanel groupListPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -62,6 +66,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -140,6 +147,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        groupListPanel = new GroupListPanel(logic.getGroupList());
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
     }
 
     void hide() {
@@ -217,4 +227,13 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+//    public void fillGroupMenuItem() {
+//        ObservableList<Group> groupList = logic.getGroupList();
+//
+//        for (Group g: groupList) {
+//            MenuItem item = new MenuItem(g.getGroupName());
+//            groupMenu.getItems().add(item);
+//        }
+//    }
 }

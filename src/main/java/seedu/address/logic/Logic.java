@@ -5,6 +5,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.trie.Trie;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -28,4 +29,7 @@ public interface Logic {
 
     /** Returns the command trie */
     Trie getCommandTrie();
+
+    /** Returns an unmodifiable view of the group list */
+    ObservableList<Group> getGroupList();
 }
