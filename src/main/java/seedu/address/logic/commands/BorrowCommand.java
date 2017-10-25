@@ -1,8 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Debt;
@@ -19,14 +16,20 @@ public class BorrowCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": increase the debt of a person by "
             + "the amount of money entered.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: INDEX (optional, must be a positive integer) "
             + "AMOUNT (must have at least 1 digit and either a positive integer or a positive number with "
             + "two decimal places)\n"
-            + "Example: " + COMMAND_WORD + " 1 120.50";
+            + "Example 1: " + COMMAND_WORD + " 1 120.50\n"
+            + "Example 2: " + COMMAND_WORD + "120.50";
     public static final String MESSAGE_BORROW_SUCCESS = "%1$s has borrowed $%2$s";
 
     private final Index targetIndex;
     private final Debt amount;
+
+    public BorrowCommand(Debt amount) {
+        targetIndex = null;
+        this.amount = amount;
+    }
 
     public BorrowCommand(Index targetIndex, Debt amount) {
         this.targetIndex = targetIndex;
@@ -35,13 +38,8 @@ public class BorrowCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personThatBorrowed = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personThatBorrowed = selectPerson(targetIndex);
 
         try {
             if (personThatBorrowed.isWhitelisted()) {
@@ -57,19 +55,9 @@ public class BorrowCommand extends UndoableCommand {
 
     @Override
     public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof BorrowCommand)) {
-            return false;
-        }
-
-        // state check
-        BorrowCommand e = (BorrowCommand) other;
-        return targetIndex.equals(e.targetIndex)
-                && amount.equals(e.amount);
+        return other == this // short circuit if same object
+                || (other instanceof BorrowCommand // instanceof handles nulls
+                && ((this.targetIndex == ((BorrowCommand) other).targetIndex)
+                || this.targetIndex.equals(((BorrowCommand) other).targetIndex))); // state check
     }
 }
