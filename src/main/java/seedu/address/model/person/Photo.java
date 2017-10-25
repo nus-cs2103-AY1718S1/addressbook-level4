@@ -14,7 +14,7 @@ public class Photo {
     public static final String MESSAGE_PHOTO_CONSTRAINTS =
             "Photo can only be in JPG format";
     public static final String PHOTOURL_VALIDATION_REGEX =
-            "file:\\/\\/\\w+\\.\\w";
+            "\\w+\\.jpg";
     public final String photoURL;
 
     /**

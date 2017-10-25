@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPANY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -33,6 +34,7 @@ public class AddCommand extends UndoableCommand {
             + "[" + PREFIX_POSITION + "POSITION] "
             + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
+            + "[" + PREFIX_PHOTO + "PRIORITY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -43,6 +45,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_POSITION + "Manager "
             + PREFIX_STATUS + "Requires immediate follow up "
             + PREFIX_PRIORITY + "H "
+            + PREFIX_PHOTO + "file:///~/Images/image.jpg "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 

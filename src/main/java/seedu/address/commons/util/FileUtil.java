@@ -3,7 +3,10 @@ package seedu.address.commons.util;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 
 /**
@@ -90,6 +93,31 @@ public class FileUtil {
     public static String getPath(String pathWithForwardSlash) {
         checkArgument(pathWithForwardSlash.contains("/"));
         return pathWithForwardSlash.replace("/", File.separator);
+    }
+
+    // @@ author a0107442
+    /**
+     * Copy a file from its source position to a new destination.
+     *
+     * @return true if file is copied, false if file already exists
+     */
+    public static boolean copyFile(File source, File destination) throws
+            IOException {
+        if (destination.exists()) {
+            return false;
+        }
+        FileChannel inputChannel = null;
+        FileChannel outputChannel = null;
+        try {
+            inputChannel = new FileInputStream(source).getChannel();
+            outputChannel = new FileOutputStream(destination).getChannel();
+            outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+        } finally {
+            inputChannel.close();
+            outputChannel.close();
+        }
+
+        return true;
     }
 
 }

@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -9,6 +11,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Timing;
@@ -132,6 +135,40 @@ public class ParserUtil {
     public static Optional<Note> parseNote(Optional<String> note) throws IllegalValueException {
         requireNonNull(note);
         return note.isPresent() ? Optional.of(new Note(note.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> photo} into an {@code Optional<Photo>}
+     * if {@code photo} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Photo> parsePhoto(Optional<String>
+                                                     filePath)
+            throws
+            IllegalValueException {
+        requireNonNull(filePath);
+        String originalFilePath = filePath.get();
+        String destFilePath;
+        if (filePath == null) {
+            throw new IllegalValueException("Empty File Path");
+        } else {
+            int lastDelimiterPosition = originalFilePath.lastIndexOf("/");
+            String fileName = originalFilePath.substring(lastDelimiterPosition+1);
+            if (lastDelimiterPosition == -1 || !fileName.matches("\\w+\\." +
+                    "jpg")) {
+                throw new IllegalValueException("Invalid File Path");
+            } else {
+                try {
+                    destFilePath = "src/main/resources/images/" + fileName;
+                    File originalFile = new File(originalFilePath);
+                    File destFile = new File(destFilePath);
+                    FileUtil.copyFile(originalFile, destFile);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return  Optional.of(new Photo(destFilePath));
     }
 
     /**

@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -28,6 +29,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -56,6 +58,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_NOTE + "NOTE] "
+            + "[" + PREFIX_PHOTO + "PHOTO] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -119,10 +122,13 @@ public class EditCommand extends UndoableCommand {
         Status updatedStatus = editPersonDescriptor.getStatus().orElse(personToEdit.getStatus());
         Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
         Note updatedNote = editPersonDescriptor.getNote().orElse(personToEdit.getNote());
+        Photo updatedPhoto = editPersonDescriptor.getPhoto().orElse(personToEdit
+                .getPhoto());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
-                updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedTags);
+                updatedPosition, updatedStatus, updatedPriority, updatedNote,
+               updatedPhoto, updatedTags);
     }
 
     @Override
@@ -157,6 +163,7 @@ public class EditCommand extends UndoableCommand {
         private Status status;
         private Priority priority;
         private Note note;
+        private Photo photo;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {
@@ -172,6 +179,7 @@ public class EditCommand extends UndoableCommand {
             this.status = toCopy.status;
             this.priority = toCopy.priority;
             this.note = toCopy.note;
+            this.photo = toCopy.photo;
             this.tags = toCopy.tags;
         }
 
@@ -255,6 +263,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(note);
         }
 
+        public void setPhoto(Photo photo) {
+            this.photo = photo;
+        }
+
+        public Optional<Photo> getPhoto() {
+            return Optional.ofNullable(photo);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -287,6 +303,7 @@ public class EditCommand extends UndoableCommand {
                     && getStatus().equals(e.getStatus())
                     && getPriority().equals(e.getPriority())
                     && getNote().equals(e.getNote())
+                    && getPhoto().equals(e.getPhoto())
                     && getTags().equals(e.getTags());
         }
     }
