@@ -10,6 +10,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -18,12 +21,15 @@ import seedu.address.model.tag.Tag;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<ReadOnlyReminder> PREDICATE_SHOW_ALL_REMINDERS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
+
+    //// person-level operations
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
@@ -41,7 +47,7 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
-    void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+    void deletePersonTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -56,7 +62,42 @@ public interface Model {
      * Checks if list is empty
      * Returns true if is empty
      */
-    Boolean checkIfListEmpty(ArrayList<ReadOnlyPerson> contactList);
+    Boolean checkIfPersonListEmpty(ArrayList<ReadOnlyPerson> contactList);
+
+    //// reminder-level operations
+
+    /** Deletes the given reminder. */
+    void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException;
+
+    /** Adds the given reminder */
+    void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException;
+
+    /**
+     * Replaces the given reminder {@code target} with {@code editedReminder}.
+     *
+     * @throws DuplicateReminderException if updating the reminder's details causes the reminder to be equivalent to
+     *      another existing reminder in the list.
+     * @throws ReminderNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateReminder(ReadOnlyReminder target, ReadOnlyReminder editedReminder)
+            throws DuplicateReminderException, ReminderNotFoundException;
+
+    void deleteReminderTag(Tag tag) throws ReminderNotFoundException, DuplicateReminderException;
+
+    /** Returns an unmodifiable view of the filtered reminder list */
+    ObservableList<ReadOnlyReminder> getFilteredReminderList();
+
+    /**
+     * Updates the filter of the filtered reminder list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate);
+
+    /**
+     * Checks if list is empty
+     * Returns true if is empty
+     */
+    Boolean checkIfReminderListEmpty(ArrayList<ReadOnlyReminder> reminderList);
 
     /**
      * Sort contact list in alphabetical order
@@ -75,5 +116,11 @@ public interface Model {
      * @throws CommandException
      */
     void sortListByAge(ArrayList<ReadOnlyPerson> contactList)  throws CommandException;
+
+    /**
+     * @param contactList
+     * @throws CommandException
+     */
+    void sortListByPriority(ArrayList<ReadOnlyReminder> contactList)  throws CommandException;
 
 }

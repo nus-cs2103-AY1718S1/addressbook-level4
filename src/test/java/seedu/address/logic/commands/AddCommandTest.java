@@ -24,6 +24,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
@@ -103,6 +106,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addReminder(ReadOnlyReminder newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -119,8 +127,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException {
+            fail("This method should not be called.");
+        }
+        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateReminder(ReadOnlyReminder target, ReadOnlyReminder editedReminder)
+                throws DuplicateReminderException {
             fail("This method should not be called.");
         }
 
@@ -131,16 +149,37 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
 
         @Override
-        public void deleteTag(Tag tag) {
+        public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePersonTag(Tag tag) {
             fail("This metthod should not be called.");
         }
 
-        public Boolean checkIfListEmpty(ArrayList<ReadOnlyPerson> contactList) {
+        @Override
+        public void deleteReminderTag(Tag tag) {
+            fail("This metthod should not be called.");
+        }
+
+        public Boolean checkIfPersonListEmpty(ArrayList<ReadOnlyPerson> contactList) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        public Boolean checkIfReminderListEmpty(ArrayList<ReadOnlyReminder> reminderList) {
             fail("This method should not be called.");
             return false;
         }
@@ -157,6 +196,11 @@ public class AddCommandTest {
 
         @Override
         public void sortListByAge(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortListByPriority(ArrayList<ReadOnlyReminder> contactList)  throws CommandException {
             fail("This method should not be called.");
         }
     }
