@@ -1,10 +1,16 @@
 package seedu.address.ui;
 
+import java.util.Comparator;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -21,8 +27,17 @@ public class ExtendedPersonCard extends UiPart<Region> {
     private static final String FXML = "ExtendedPersonCard.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private ObservableList<ReadOnlyPerson> people;
+    private XYChart.Series<String, Double> series = new XYChart.Series<>();
+
     @FXML
     private HBox cardpane;
+    @FXML
+    private CategoryAxis xNameAxis;
+    @FXML
+    private NumberAxis yGradeAxis;
+    @FXML
+    private LineChart<String, Double> lineChart;
     @FXML
     private Label name;
     @FXML
@@ -42,8 +57,9 @@ public class ExtendedPersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public ExtendedPersonCard() {
+    public ExtendedPersonCard(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
+        this.people = personList;
         registerAsAnEventHandler(this);
     }
 
@@ -63,10 +79,44 @@ public class ExtendedPersonCard extends UiPart<Region> {
         initTags(person);
     }
 
+    /**
+     * @param person
+     */
+    private void displayGraphStats (ReadOnlyPerson person) {
+        xNameAxis.setLabel("Student Names");
+        yGradeAxis.setLabel("Grades");
+        lineChart.setTitle(person.getFormClass().toString());
+        lineChart.layout();
+        lineChart.setAnimated(false);
+
+        for (ReadOnlyPerson people : people) {
+            if (people.getFormClass().equals(person.getFormClass())) {
+                series.getData().add(new XYChart.Data<>(people.getName().toString(),
+                        Double.parseDouble(people.getGrades().toString())));
+            }
+        }
+
+        try {
+            series.getData().sort(Comparator.comparingDouble(d -> d.getYValue()));
+        } catch (NullPointerException e) {
+            throw new NullPointerException();
+        }
+        lineChart.getData().add(series);
+        lineChart.setLegendVisible(false);
+
+    }
+
+
+    private void resetGraphStats() {
+        series.getData().clear();
+    }
+
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);
+        resetGraphStats();
+        displayGraphStats(event.getNewSelection().person);
     }
 
     /**

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -107,4 +111,15 @@
             <RowConstraints />
         </rowConstraints>
     </GridPane>
+   <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <children>
+         <LineChart fx:id="lineChart" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0">
+           <xAxis>
+             <CategoryAxis minHeight="400.0" minWidth="400.0" side="BOTTOM" fx:id="xNameAxis" />
+           </xAxis>
+           <yAxis>
+             <NumberAxis fx:id="yGradeAxis" side="LEFT" tickLabelFill="#ffffff2e" />
+           </yAxis>
+         </LineChart>
+      </children></AnchorPane>
 </HBox>

@@ -133,7 +133,7 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        extendedPersonCard = new ExtendedPersonCard();
+        extendedPersonCard = new ExtendedPersonCard(logic.getFilteredPersonList());
         extendedPersonCardPlaceholder.getChildren().add(extendedPersonCard.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
