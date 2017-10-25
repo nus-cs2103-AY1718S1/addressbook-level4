@@ -26,7 +26,7 @@ public class UniquePersonList implements Iterable<Person> {
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
-
+    private int attribute;
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -155,7 +155,28 @@ public class UniquePersonList implements Iterable<Person> {
             if (!p1.getFavorite().equals(p2.getFavorite())) {
                 return p2.getFavorite().getValue() - p1.getFavorite().getValue();
             } else {
-                return p1.getName().fullName.compareTo(p2.getName().fullName);
+                switch (attribute) {
+                    case 1: return p1.getPhone().value.compareTo(p2.getPhone().value);
+                    case 2: return p1.getEmail().value.compareTo(p2.getEmail().value);
+                    case 3: return p1.getAddress().value.compareTo(p2.getAddress().value);
+                    default: return p1.getName().fullName.compareTo(p2.getName().fullName);
+                }
+            }});
+    }
+    //@@author
+
+    //@@author A0144294A
+    /**
+     * sort the list by a user specified attribute
+     */
+    public void sortPersonBy(int attribute) {
+        this.attribute = attribute;
+        internalList.sort((ReadOnlyPerson p1, ReadOnlyPerson p2) -> {
+            switch (attribute) {
+                case 1: return p1.getPhone().value.compareTo(p2.getPhone().value);
+                case 2: return p1.getEmail().value.compareTo(p2.getEmail().value);
+                case 3: return p1.getAddress().value.compareTo(p2.getAddress().value);
+                default: return p1.getName().fullName.compareTo(p2.getName().fullName);
             }
         });
     }

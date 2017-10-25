@@ -89,6 +89,12 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void sortBy(int attribute) {
+        addressBook.sortPersonBy(attribute);
+        indicateAddressBookChanged();
+    }
+
     /**
      * Delete a tag from all persons in the addressbook
      * @param tag to be deleted

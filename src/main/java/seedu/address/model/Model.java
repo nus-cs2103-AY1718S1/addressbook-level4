@@ -49,4 +49,9 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Sort current person list based on an attribute input by the user
+     */
+    void sortBy(int attribute);
+
 }

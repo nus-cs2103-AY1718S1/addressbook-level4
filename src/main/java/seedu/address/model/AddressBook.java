@@ -115,6 +115,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     *
+     */
+    public void sortPersonBy(int attribute) {
+        persons.sortPersonBy(attribute);
+        persons.sort();
+    }
+
+    /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list
