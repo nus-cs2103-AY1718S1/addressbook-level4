@@ -9,13 +9,13 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.event.EventListPanelHandle;
+import guitests.guihandles.person.PersonListPanelHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -71,16 +71,16 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getCommandBox();
     }
 
+    public EventListPanelHandle getEventListPanel() {
+        return mainWindowHandle.getEventListPanel();
+    }
+
     protected PersonListPanelHandle getPersonListPanel() {
         return mainWindowHandle.getPersonListPanel();
     }
 
     protected MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
-    }
-
-    protected BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
     }
 
     protected StatusBarFooterHandle getStatusBarFooter() {

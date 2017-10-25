@@ -146,7 +146,7 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
                     AddPropertyCommand.MESSAGE_USAGE));
         }
         String shortName = argMultimap.getValue(PREFIX_SHORT_NAME).get();
-        String fullName = argMultimap.getValue(PREFIX_FULL_NAME).get();
+        String fullName = capitalize(argMultimap.getValue(PREFIX_FULL_NAME).get());
 
         // message and regex must be supplied together or both be absent.
         if (!(ParserUtil.arePrefixesPresent(argMultimap, PREFIX_MESSAGE, PREFIX_REGEX)
@@ -169,5 +169,16 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
         }
 
         return new ImportCalenderCommand(value);
+    }
+
+    /**
+     * Converts the first letter in {@code str} to upper-case (only if it starts with an alphabet).
+     */
+    private String capitalize(String original) {
+        if (original == null || original.length() == 0) {
+            return original;
+        }
+
+        return original.substring(0, 1).toUpperCase() + original.substring(1);
     }
 }

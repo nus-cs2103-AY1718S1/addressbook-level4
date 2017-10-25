@@ -1,10 +1,11 @@
-package guitests.guihandles;
+package guitests.guihandles.event;
 
+import guitests.guihandles.NodeHandle;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
 /**
- * Provides a handle to a person card in the person list panel.
+ * Provides a handle to an event card in the {@code EventListPanel}.
  */
 public class EventCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";

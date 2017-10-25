@@ -44,7 +44,7 @@
             <Insets bottom="10.0" top="10.0" />
          </padding>
          <children>
-            <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#handleSwitchToContacts" pickOnBounds="true" styleClass="sidebar-button">
+            <ImageView fx:id="switchToContactsButton" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#handleSwitchToContacts" pickOnBounds="true" styleClass="sidebar-button">
                <VBox.margin>
                   <Insets bottom="50.0" top="50.0" />
                </VBox.margin>
@@ -52,7 +52,7 @@
                   <Image url="@../images/contacts.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#handleSwitchToEvents" pickOnBounds="true" styleClass="sidebar-button">
+            <ImageView fx:id="switchToEventsButton" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="20.0" onMouseClicked="#handleSwitchToEvents" pickOnBounds="true" styleClass="sidebar-button">
                <image>
                   <Image url="@../images/events.png" />
                </image>
@@ -69,7 +69,7 @@
       <StackPane fx:id="dataListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="dataDetailsPanelPlaceholder" prefWidth="580.0">
+    <StackPane fx:id="dataDetailsPanelPlaceholder">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>

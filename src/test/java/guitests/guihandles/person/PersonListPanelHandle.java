@@ -1,8 +1,9 @@
-package guitests.guihandles;
+package guitests.guihandles.person;
 
 import java.util.List;
 import java.util.Optional;
 
+import guitests.guihandles.NodeHandle;
 import javafx.scene.control.ListView;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.person.PersonCard;
@@ -55,7 +56,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     }
 
     /**
-     * Navigates the listview to display and select the person.
+     * Navigates the list view to display and select the person.
      */
     public void navigateToCard(ReadOnlyPerson person) {
         List<PersonCard> cards = getRootNode().getItems();
