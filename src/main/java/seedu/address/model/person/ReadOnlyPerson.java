@@ -64,6 +64,8 @@ public interface ReadOnlyPerson {
                 .append(" ")
                 .append(getPhone())
                 .append(" ")
+                .append(getBirthday())
+                .append(" ")
                 .append(getAddress())
                 .append(" ")
                 .append(getEmail())
