@@ -1,12 +1,14 @@
 package seedu.address.logic.parser;
 
 import org.junit.Test;
-import seedu.address.logic.commands.RemoveTagCommand;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import seedu.address.logic.commands.RemoveTagCommand;
+
 
 public class RemoveTagParserTest {
 
@@ -23,7 +25,7 @@ public class RemoveTagParserTest {
     }
 
     @Test
-    public void parse_validFields_success(){
+    public void parse_validFields_success() {
         String userInput = VALID_TAG_FRIEND;
         RemoveTagCommand expectedCommand = new RemoveTagCommand(userInput);
 
