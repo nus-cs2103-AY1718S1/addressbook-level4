@@ -390,3 +390,8 @@
     -fx-font-size: 25px;
     -fx-text-fill: white;
 }
+
+#displayClock {
+    -fx-font-size: 50;
+    -fx-text-fill: white;
+}
