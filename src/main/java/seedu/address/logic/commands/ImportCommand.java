@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.util.HashMap;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -13,7 +15,7 @@ public class ImportCommand extends Command {
             + ": Imports data from the location specified by the file path to the application.\n"
             + "The file can be either XML format (default) or BoNUS script format.\n"
             + "Examples:\n"
-            + COMMAND_WORD + " C:\\Users\\John Doe\\Documents\\bonus.bo (Windows)\n"
+            + COMMAND_WORD + " --script C:\\Users\\John Doe\\Documents\\bonus.bo (Windows)\n"
             + COMMAND_WORD + " /Users/John Doe/Documents/bonus.xml (macOS, Linux)\n";
 
     public static final String MESSAGE_EXPORT_SUCCESS = "Imported data from: %1$s";
@@ -23,6 +25,20 @@ public class ImportCommand extends Command {
             + "script file (should end with .bo).";
     public static final String MESSAGE_PROBLEM_READING_FILE = "There is a problem when the application tried to"
             + " read the given file. Please check the file permission.";
+
+    /**
+     * Different types of sub-commands within {@link ImportCommand}.
+     */
+    public enum ImportType {
+        XML, SCRIPT
+    }
+
+    public static final HashMap<String, ImportType> TO_ENUM_IMPORT_TYPE = new HashMap<>();
+
+    static {
+        TO_ENUM_IMPORT_TYPE.put("xml", ImportType.XML);
+        TO_ENUM_IMPORT_TYPE.put("script", ImportType.SCRIPT);
+    }
 
     @Override
     public CommandResult execute() throws CommandException {

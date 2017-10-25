@@ -23,7 +23,7 @@ public abstract class ConfigCommand extends Command {
      * Different types of sub-commands within {@link ConfigCommand}.
      */
     public enum ConfigType {
-        ADD_PROPERTY, IMPORT_CALENDAR, TAG_COLOR,
+        ADD_PROPERTY, IMPORT_CALENDAR, TAG_COLOR
     }
 
     public static final HashMap<String, ConfigType> TO_ENUM_CONFIG_TYPE = new HashMap<>();
