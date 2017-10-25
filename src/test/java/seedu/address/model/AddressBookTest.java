@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -30,6 +31,7 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getRelList());
     }
 
     @Test
@@ -50,7 +52,8 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Relationship> newRel = new ArrayList<>(ALICE.getRelation());
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newRel);;
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -67,6 +70,12 @@ public class AddressBookTest {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
     }
+    @Test
+    public void getRelList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getRelList().remove(0);
+    }
+
 
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
@@ -75,10 +84,12 @@ public class AddressBookTest {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ReadOnlyEvent> events = FXCollections.observableArrayList();
-
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        private final ObservableList<Relationship> relation = FXCollections.observableArrayList();
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags, Collection<?
+            extends Relationship> relation) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.relation.setAll(relation);
         }
 
         @Override
@@ -89,6 +100,10 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+        @Override
+        public ObservableList<Relationship> getRelList() {
+            return relation;
         }
 
         @Override
