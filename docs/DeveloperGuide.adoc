@@ -372,23 +372,16 @@ The User can choose to Create an account if he does not already have one, but he
 **Cons:** Doesnt look as good.
 
 
-=== BirthdayCommand, sortAgeCommand, sortBirthdayCommand
+=== Birthday
 
-The `BirthdayCommand`, together with `sortAgeCommand` and `sortBirthdayCommand` lies in the `commands` of `Logic`. +
+==== BirthdayCommand
 
 `BirthdayCommand` : It allows the adding, editing and removing of birthday parameter to/from a person. +
 
-`sortAgeCommand` : Sorts the contact list in terms of their age, from the oldest to youngest.
 
-`sortBirthdayCommand`: Sorts the contact list in from 1st January to 31st December, irregardless of their age.
-
-`BirthdayCommand`, `sortAgeCommand` and `sortBirthdayCommand` does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
+The `BirthdayCommand` lies in the `commands` of `Logic`. and does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
 
 image::logic_birthday.png[width="700"]
-
-
-
-
 
 The user will not be able to enter the birthday parameter when adding contacts. +
 Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
@@ -399,8 +392,13 @@ The following sequence diagram shows how the birthday operation works:
 
 image::birthday_sd.png[width="800"]
 
+==== sortAgeCommand
 
+`sortAgeCommand` : Sorts the contact list in terms of their age, from the oldest to youngest. +
 
+==== sortBirthdayCommand
+
+`sortBirthdayCommand`: Sorts the contact list in from 1st January to 31st December, irregardless of their age. +
 
 ==== Design Considerations
 
@@ -447,6 +445,39 @@ image::RetrieveSequenceDiagram.png[width="800"]
 **Alternative 2:**  Create a list attribute for `Tag` to store all persons having that tag. +
 **Pros:** Faster to get the persons as the filtered person list is already created. +
 **Cons:** Requires to save the lists to storage file. +
+
+=== Reminder list
+
+The `Reminder` list mechanism works similar to the `Person` list. +
+It integrates the `Logic`, `Model`, `Storage`, `UI` component. +
+It consists of different commands that allow users to store reminders into the address book. +
+
+==== Commands
+Resides in the `commands` of `Logic` +
+
+`AddReminderCommand`: Adds information of reminders in address book. +
+ e.g. `addReminder z/Proposal Submission p/Low d/12/11/2017 m/Submit to Manager t/Friends` +
+
+`EditReminderCommand`: Edits the details of reminders in address book. +
+e.g. `editReminder 2 p/Medium m/Submit to Department Head`
+
+`DeleteReminderCommand`: Deletes the reminder of the last reminder list. +
+e.g. `deleteReminder 3`
+
+`SortPriorityCommand`: Sorts the reminder list in order of `priority` . +
+(*High* -> *Medium* -> *Low*) +
+e.g. `sortPriority`
+
+[NOTE]
+Missing details during adding of reminders will result in Invalid Command format.
+
+[NOTE]
+If an invalid Index is given during editing and deleting reminders, an `Exception` would be thrown.
+
+==== Expansion
+Clicking on any of the `Reminder` card will expand its details. The expanded
+details would be displayed beside it. +
+It allow viewing of the entire `message` field if it is too long.
 
 === Logging
 
@@ -826,7 +857,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |basic user |add a new person |
+|`* * *` |basic user |add a new person |store the person's information into address book
 
 |`* * *` |basic user |delete a person |remove entries that I no longer need
 
@@ -844,51 +875,30 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |basic user |edit a person's information |update changes to their particulars
 
-|`* * *` |user with many people in the address book |make relation links between contacts |link up contacts that have connections with each other
+|`* * *` |basic user |add birthday details to a contact| store and access their birthday easily
 
-|`* * *` |user with many people in the address book |sort contacts by different fields in alphabetical order |arrange them according to the fields
+|`* * *` |user with many people in the address book |sort contacts by names in alphabetical order |have a clearer view
 
-|`* * *` |user with many people in the address book |sort contacts to my preference |arrange them according to their importance / significance
+|`* * *` |user with many people in the address book |sort contacts by age |look at the list from oldest to youngest
+
+|`* * *` |user with many people in the address book |sort contacts by birthday |look for upcoming birthdays
 
 |`* * *` |user with many people in the address book |find users based on tags |locate different groups easily
 
 |`* * *` |user with many people in the address book |rename an existing tag |update a tag which is no longer suitable to describe the people who have it
 
-|`* *` |user with many people in the address book |delete people in address book by tags |remove people of the same group
-
-|`* *` |user with many people in the address book |change the view mode of GUI |display different number of contacts per page
-
-|`* *` |user with many people in the address book |sort people by birthday |check for upcoming birthdays
-
-|`* *` |user with many people in the address book |highlight contacts |place it at the top
-
-|`* *` |user with many people in the address book |displays the most searched contacts |display the most searched contacts
-
 |`* *` |user with many people in the address book |tag multiple people at the same time |quickly tag all people who share the similarities conveniently
-
-|`* *` |creative user |change font size, colours, etc |customize the layout according to preference
 
 |`* *` |careful user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |careful user |view [private contact details](#private-contact-detail) |view details of hidden contacts
-
-|`* *` |original user |set password for access |enhance the security of Address Book
+|`* *` |careful user |set password for access |view details of hidden contacts
 
 |`* *` |business-man |set reminders for tasks that need to be done |be constantly reminded about the upcoming deadlines
 
 |`* *` |business-man | display addresses in contacts and reminders on map | access their locations
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-
-|`*` |user | update data to server | access it from any device
-
 |`*` |user | add photos to contacts in GUI | recognize the contacts easily
 
-|`*` |user | add speech recognition | make it a hands-free device
-
-|`*` |expert user | import data file from another device | access from different devices
-
-|`*` |expert user | export data file to another format | transfer to different devices
 |=======================================================================
 
 {More to be added}
@@ -898,15 +908,48 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
+
 [discrete]
-=== Use case: Delete person
+=== Use case: Add person / reminder
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add person / reminder
+2. AddressBook adds the person / reminder in the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Parameter(s) required are missing.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+* 1b. Parameter(s) are in the wrong format.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+* 1c. Duplicate contact / reminder is added.
++
+[none]
+** 1c1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person / reminder
+
+*MSS*
+
+1.  User requests to list persons / reminders
+2.  AddressBook shows a list of persons / reminders
+3.  User requests to edit a specific person / reminder in the list
+4.  AddressBook update the person’s / reminder's details
 +
 Use case ends.
 
@@ -923,36 +966,37 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-
-[discrete]
-=== Use case: Edit person
-
-*MSS*
-
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to edit a specific person in the list
-4.  AddressBook update the person’s contact details
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
-* 3b. New contact’s details provided by user are invalid.
+* 3b. New contact’s / reminder's details provided by user are invalid.
 +
 [none]
 ** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: Delete person / reminder
+
+*MSS*
+
+1.  User requests to list persons / reminder
+2.  AddressBook shows a list of persons / reminders
+3.  User requests to delete a specific person / reminder in the list
+4.  AddressBook deletes the person / reminder
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
@@ -989,14 +1033,14 @@ Use case resumes at step 2.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Tag multiple people concurrently
+=== Use case: Add birthday
 
-**MSS**
+*MSS*
 
-1.  User requests to list all people
-2.  AddressBook shows a list of people
-3.  User requests to tag multiple people
-4.  AddressBook tags all specified people
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add birthday to a person in the list
+4.  AddressBook adds the details fo birthday to the person
 +
 Use case ends.
 
@@ -1007,12 +1051,19 @@ Use case ends.
 +
 Use case ends.
 
-* 3a. One or more given indexes are invalid.
+* 3a. The given index is invalid.
 +
 [none]
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
+* 3b. The given birthday is invalid.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 
 [discrete]
 === Use case: List all the persons
@@ -1028,27 +1079,6 @@ Use case ends.
 
 [none]
 * 2a. The list is empty.
-+
-Use case ends.
-
-[discrete]
-=== Use case: Make relation links with contacts
-
-*MSS*
-
-1.  User requests for name of person to be linked, the name of person with the link, and the relation between both person
-2.   AddressBook displays the details of the person with the link.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. The list is empty.
-+
-Use case ends.
-
-* 1b. The given name(s) is invalid
 +
 Use case ends.
 
@@ -1070,60 +1100,55 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Sort person by fields in alphabetical order
+=== Use case: Sort person by age
 
 *MSS*
 
-1.  User requests to sort persons by field
-2.  AddressBook requests user for the field
-3.  User requests to sort persons by a specified field
-4.  AddressBook shows a list of persons by the fields in alphabetical order
+1.  User requests to sort persons by age
+2.  AddressBook shows a list of persons from oldest to youngest.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 3a. The given field is invalid
-+
-Use case resumes at step 2.
-
-* 4a. The list is empty.
+* 1a. The list is empty.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Sort person to user preference
+=== Use case: Sort person by birthday
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to list contacts in new order of preference
-4.  AddressBook shows a list of persons by user preference
+1.  User requests to sort persons by birthday
+2.  AddressBook shows a list of persons from Jan to Dec
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 1a. The list is empty.
 +
 Use case ends.
 
-* 3a. The given index(es) is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
+[discrete]
+=== Use case: Sort reminder by priority
 
-* 3b. The given index(es) is repetitive.
+*MSS*
+
+1.  User requests to sort reminders by priority
+2.  AddressBook shows a list of reminders from High to Medium to Low.
 +
+Use case ends.
+
+*Extensions*
+
 [none]
-** 3a1. AddressBook shows an error message.
+* 1a. The list is empty.
 +
-Use case resumes at step 2.
+Use case ends.
 
 [discrete]
 === Use case: Find contacts by tags
@@ -1150,17 +1175,6 @@ Use case ends.
 ** 3a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
-
-[discrete]
-=== Use case: Running Executable file
-
-*MSS*
-
-1.  User runs the executable file
-2.  AddressBook runs the software
-+
-Use case ends.
-
 
 [appendix]
 == Non Functional Requirements

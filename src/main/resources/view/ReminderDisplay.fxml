@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.TextArea?>
+<HBox id="remindercardPane" fx:id="remindercardPane" maxWidth="350" maxHeight="400" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+            <padding>
+                <Insets top="25" right="25" bottom="25" left="25" />
+            </padding>
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <Label fx:id="task" text="\$first" styleClass="cell_big_label" />
+            </HBox>
+            <Label fx:id="priority" styleClass="cell_big_label" text="\$priority" />
+            <Label fx:id="datentime" styleClass="cell_big_label" text="\$datentime" />
+            <TextArea fx:id="message" styleClass="reminder-display" editable="false" text="\$message" wrapText="true" maxWidth="300" prefRowCount="10" />
+            <FlowPane fx:id="tags" />
+        </VBox>
+    </GridPane>
+</HBox>
