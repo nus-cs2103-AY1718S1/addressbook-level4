@@ -55,7 +55,7 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
-     * Replaces the event {@code target} in the list with {@code editedPerson}.
+     * Replaces the event {@code target} in the list with {@code editedEvent}.
      *
      * @throws DuplicateEventException if the replacement is equivalent to another existing person in the list.
      * @throws EventNotFoundException if {@code target} could not be found in the list.

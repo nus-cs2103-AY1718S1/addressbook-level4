@@ -369,19 +369,19 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 === Add Event mechanism
 // tag::addevent[]
-Add event mechanism adds an event which stores in the AddressBook,
+Add event mechanism adds an event which stores in the The Myth's Book,
 which will then be used in a Calendar in future implementation. A reminder feature will also be tagged on to the event.
 
-The add event mechanism is facilitated by a `EventList`, which is stored in AddressBook. Similar to the PersonList and TagList, the list contains the
+The add event mechanism is facilitated by a `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
 different events with their information given by the user. This command inherits from `UndoableCommand`.
 
 From Figure 5.2.1 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the SortCommand
 can be undoable, where the previous state of the address book before sorting is saved.
 
-image::AddEventCommandLogicClassDiagram.png[width="800"]
+image::AddEventCommandLogicClassDiagram.PNG[width="800"]
 Figure 5.2.1 AddEventCommand Logic Class Diagram
 
-Code of AddEventCommand:
+Code of `AddEventCommand`:
 
 ----
 public class AddEventCommand extends UndoableCommand {
@@ -399,7 +399,26 @@ public class AddEventCommand extends UndoableCommand {
 }
 ----
 
+A UniqueEventList is also created to store the list of Events in AddressBook.java
+
+Code of `UniqueEventList.java` when an Event is created and stored into the UniqueEventList:
+
 The new Events will be stored in UniqueEventList in AddressBook.
+----
+public class UniqueEventList implements Iterable<Event> {
+
+    private final ObservableList<Event> internalList = FXCollections.observableArrayList();
+    ...
+    public void add(ReadOnlyEvent toAdd) throws DuplicateEventException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateEventException();
+        }
+        internalList.add(new Event(toAdd));
+    }
+    ...
+}
+----
 
 ==== Design Consideration
 **Aspect:** Implementation of `AddEventCommand` +
