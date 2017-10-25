@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane fx:id="scrollPane" prefHeight="600.0" prefWidth="800.0" styleClass="anchor-pane">
+         <content>
+            <AnchorPane fx:id="insuranceProfile" prefHeight="1000.0" prefWidth="1200" styleClass="anchor-pane">
+               <children>
+                   <Label fx:id="name" layoutX="2.0" styleClass="particular-name" text="\$name" />
+                  <VBox layoutX="14.0" layoutY="72.0" spacing="3.0">
+                     <HBox>
+                        <children>
+                           <Label styleClass="particular-field" text="Owner: " />
+                               <Label fx:id="owner" styleClass="particular-person" text="\$owner" />
+                        </children>
+                     </HBox>
+                     <HBox>
+                        <children>
+                           <Label styleClass="particular-field" text="Insured: " />
+                               <Label fx:id="insured" styleClass="particular-person" text="\$insured" />
+                        </children>
+                     </HBox>
+                     <HBox>
+                        <children>
+                           <Label styleClass="particular-field" text="Beneficiary: " />
+                               <Label fx:id="beneficiary" styleClass="particular-person" text="\$beneficiary" />
+                        </children>
+                     </HBox>
+                     <HBox>
+                        <children>
+                           <Label styleClass="particular-field" text="Premium: " />
+                               <Label fx:id="premium" styleClass="particular-field" text="\$premium" />
+                        </children>
+                     </HBox>
+                     <HBox>
+                        <children>
+                           <Label styleClass="particular-field" text="Contract File: " />
+                           <Label fx:id="contractPath" styleClass="particular-field" text="\$contractPath" />
+                        </children>
+                     </HBox>
+                     <HBox layoutX="10.0" layoutY="70.0">
+                        <children>
+                           <Label styleClass="particular-field" text="Signing Date: " />
+                           <Label fx:id="signingDate" styleClass="particular-field" text="\$signingDate" />
+                        </children>
+                     </HBox>
+                     <HBox>
+                        <children>
+                           <Label styleClass="particular-field" text="Expiry Date: " />
+                           <Label fx:id="expiryDate" styleClass="particular-field" text="\$expiryDate" />
+                        </children>
+                     </HBox>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</StackPane>

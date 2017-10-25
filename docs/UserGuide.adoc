@@ -79,9 +79,11 @@ Shows a list of all persons in the address book. +
 Format: `list`
 
 === Editing a person : `edit`
+`v1.3` Autofill replaces all empty fields at once +
+`v1.2` Only Name field necessary +
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE OF BIRTH] [t/TAG] [dt/TAG_TO_DELETE]...`
+Format: `edit INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DATE OF BIRTH] [t/TAG] [dt/TAG_TO_DELETE]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -123,6 +125,7 @@ Returns `john` and `John Doe`
 Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Locating persons by the first few alphabets of the name: `pfind`
+`since v1.1`
 
 Finds persons whose names begins with the given keywords. +
 Format: `pfind PARTIALNAME [MORE_PARTIALNAMES]`
@@ -247,6 +250,16 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== Tracing a person from insurance profile
+`since v1.3`
+
+Directly switching to a person profile page by clicking on their name on insurance profile
+
+image::ProfileJump.PNG[width="380"]
+
+Person name will be highlighted upon hover to indicate it is a link
+
 
 === Exiting the program : `exit`
 

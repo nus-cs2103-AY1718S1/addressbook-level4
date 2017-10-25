@@ -1,13 +1,9 @@
 package seedu.address.logic;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIXES_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Set;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -24,7 +20,6 @@ import seedu.address.logic.parser.exceptions.EmptyFieldException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
 
 /**
  * The main LogicManager of the app.
@@ -55,42 +50,42 @@ public class LogicManager extends ComponentManager implements Logic {
             return result;
         } catch (EmptyFieldException efe) {
             // index check was bypassed, this checks the index before filling empty prefix
-            if (efe.getIndex().getOneBased() >= model.getFilteredPersonList().size()) {
+            if (efe.getIndex().getOneBased() > model.getFilteredPersonList().size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            commandText = getAutoFilledCommand(commandText, efe.getIndex(), efe.getEmptyFieldPrefix());
+            commandText = getAutoFilledCommand(commandText, efe.getIndex());
             throw efe;
         } finally {
             history.add(commandText);
         }
     }
 
-    private String getAutoFilledCommand(String commandText, Index index, Prefix emptyFieldPrefix) {
-        String filledPrefix = new String();
-        if (emptyFieldPrefix.equals(PREFIX_ADDRESS)) {
-            filledPrefix = emptyFieldPrefix.getPrefix()
-                    + model.getAddressBook().getPersonList().get(index.getZeroBased()).getAddress().toString();
-        } else if (emptyFieldPrefix.equals(PREFIX_PHONE)) {
-            filledPrefix = emptyFieldPrefix.getPrefix()
-                    + model.getAddressBook().getPersonList().get(index.getZeroBased()).getPhone().toString();
-        } else if (emptyFieldPrefix.equals(PREFIX_EMAIL)) {
-            filledPrefix = emptyFieldPrefix.getPrefix()
-                    + model.getAddressBook().getPersonList().get(index.getZeroBased()).getEmail().toString();
-        } else if (emptyFieldPrefix.equals(PREFIX_NAME)) {
-            filledPrefix = emptyFieldPrefix.getPrefix()
-                    + model.getAddressBook().getPersonList().get(index.getZeroBased()).getName().toString();
-        }  else if (emptyFieldPrefix.equals(PREFIX_TAG)) {
-            Set<Tag> tags = model.getAddressBook().getPersonList().get(index.getZeroBased()).getTags();
-            for (Tag tag : tags) {
-                filledPrefix += PREFIX_TAG + tag.getTagName() + " ";
-            }
-        } else if (emptyFieldPrefix.equals(PREFIX_DELTAG)) {
-            Set<Tag> tags = model.getAddressBook().getPersonList().get(index.getZeroBased()).getTags();
-            for (Tag tag : tags) {
-                filledPrefix += PREFIX_DELTAG + tag.getTagName() + " ";
+    /**
+     * Replaces the given command text with filled command text
+     * @param commandText original input command text
+     * @param index index of person to edit
+     * @return filled command
+     */
+    private String getAutoFilledCommand(String commandText, Index index) {
+        ReadOnlyPerson person = model.getAddressBook().getPersonList().get(index.getZeroBased());
+        for (Prefix prefix : PREFIXES_PERSON) {
+            String prefixInConcern = prefix.getPrefix();
+            if (commandText.contains(prefixInConcern)) {
+                String replacementText = prefixInConcern + person.getDetailByPrefix(prefix) + " ";
+                commandText = commandText.replaceFirst(prefixInConcern, replacementText);
             }
         }
-        return commandText.replaceFirst(emptyFieldPrefix.getPrefix(), filledPrefix).trim();
+        if (commandText.contains(PREFIX_TAG.getPrefix())) {
+            String formattedTags = PREFIX_TAG.getPrefix()
+                    + person.getDetailByPrefix(PREFIX_TAG).replaceAll(" ", " t/") + " ";
+            commandText = commandText.replaceFirst(PREFIX_TAG.getPrefix(), formattedTags);
+        }
+        if (commandText.contains(PREFIX_DELTAG.getPrefix())) {
+            String formattedTags = PREFIX_DELTAG.getPrefix()
+                    + person.getDetailByPrefix(PREFIX_DELTAG).replaceAll(" ", " t/") + " ";
+            commandText = commandText.replaceFirst(PREFIX_DELTAG.getPrefix(), formattedTags);
+        }
+        return commandText.trim();
     }
 
     @Override

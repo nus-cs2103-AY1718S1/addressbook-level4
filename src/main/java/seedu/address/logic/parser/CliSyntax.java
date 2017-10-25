@@ -1,5 +1,9 @@
 package seedu.address.logic.parser;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Contains Command Line Interface (CLI) syntax definitions common to multiple commands
  */
@@ -21,4 +25,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_SIGNING_DATE = new Prefix("sd/");
     public static final Prefix PREFIX_EXPIRY_DATE = new Prefix("ed/");
     public static final Prefix PREFIX_GENDER = new Prefix("g/");
+    public static final Set<Prefix> PREFIXES_PERSON = new HashSet<>(Arrays.asList(
+            PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB, PREFIX_GENDER));
 }
