@@ -759,14 +759,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
-{More to be added}
-
 [appendix]
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
 === Use case: Delete person
 
 *MSS*
@@ -931,11 +928,6 @@ Use case ends.
 ** 2a.1 AddressBook shows an error message.
 +
 Use case ends.
-
-
-[discrete]
-
-{More to be added}
 
 [appendix]
 == Non Functional Requirements
