@@ -310,6 +310,28 @@ File will be exported onto the main folder as `output.vcf`
 
 Format: `export` or `ex`
 
+=== Upload photo image for a contact : `photo`
+(added in v1.3)
+
+Uploads the photo to the specified person from the address book. +
+
+. Upon entering the command, a file explorer will appear to allow you to choose the image from your computer.
+. Click "Open" once you choose your image and it will be added to the person you specified.
+
+Format: `photo INDEX` or `p INDEX`
+
+****
+* Uploads photo to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `photo 1` +
+* `p 1` +
+Uploads photo to the 2nd person in the address book.
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -371,9 +393,10 @@ e.g.`select 2`
 * *Tag* : `tag KEYWORD [MORE_KEYWORDS]` +
 e.g. `tag friends classmates`
 * *Remove Tag* : `rtag KEYWORD [MORE_KEYWORDS]`
-* *Import* :  `import FILENAME.vcf` or `im FILENAME.vcf` +
-e.g `import contacts.vcf`
+* *Import* : `import FILENAME.vcf`
 * *Export* : `export`
+* *Upload Photo* : `photo INDEX` +
+e.g. `photo 3`
 
 == Command Shortcuts Summary
 
@@ -397,4 +420,5 @@ e.g.`select 2`
 * *Remove Tag*  : `rt`
 * *Import* : `im FILENAME.vcf`
 * *Export* : `ex`
-
+* *Upload Photo* : `p INDEX` +
+e.g. `p 3`
