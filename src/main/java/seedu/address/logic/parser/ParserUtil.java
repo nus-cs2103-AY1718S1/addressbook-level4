@@ -107,8 +107,7 @@ public class ParserUtil {
      */
     public static String parseWebname(String webname) throws IllegalValueException {
         requireNonNull(webname);
-        webname = webname.trim();
-        return webname;
+        return webname.trim();
     }
 
     /**

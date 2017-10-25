@@ -47,6 +47,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+This is applicable to email and weblinks as well.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
@@ -57,15 +58,15 @@ Format: `help`
 === Adding a person: `add` or `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL... a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags, email and weblink (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal w/google.com`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com e/betsy@workemail.com a/Newgate Prison p/1234567 t/criminal w/google.com`
 
 === Listing all persons : `list` or `l`
 
@@ -87,14 +88,14 @@ Examples:
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [w/WEBLINK]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]... [w/WEBLINK]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, emails or weblinks, the existing valus of each component of the person will be removed i.e adding of these components is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it. Similarly, you can use `e/` and `w/` for emails and weblinks respectively.
 ****
 
 Examples:
@@ -286,7 +287,7 @@ Edits the User Profile contact card similar to edit command, but does not take i
 Only the name, email, address and phone number of the User Person can be updated. +
 The user profile is stored in data/userProfile.xml by default. +
 
-Format: 'update [n/Name] [p/Phone] [e/Email] [a/Address]'
+Format: 'update [n/Name] [p/Phone] [e/Email]... [a/Address]'
 
 Examples:
 
@@ -344,7 +345,7 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [w/WEBLINK]...` +
+* *Add* `add n/NAME p/PHONE_NUMBER [e/EMAIL]... a/ADDRESS [t/TAG]... [w/WEBLINK]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague w/google.com`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +

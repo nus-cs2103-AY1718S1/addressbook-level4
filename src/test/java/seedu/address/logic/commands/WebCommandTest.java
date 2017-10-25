@@ -4,21 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
 import static seedu.address.testutil.TypicalWebLinks.WEBLINK_FACEBOOK;
 import static seedu.address.testutil.TypicalWebLinks.WEBLINK_MAPS;
 import static seedu.address.testutil.TypicalWebLinks.WEBLINK_SEARCH;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.UserPerson;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 /**
@@ -28,13 +22,6 @@ public class WebCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    private Model model;
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getSortedTypicalAddressBook(), new UserPrefs(), new UserPerson());
-    }
-
     @Test
     public void execute_validWebLinkName_success() {
         assertExecutionSuccess(WEBLINK_FACEBOOK);
@@ -42,9 +29,6 @@ public class WebCommandTest {
         assertExecutionSuccess(WEBLINK_MAPS);
     }
 
-    @Test
-    public void execute_invalidIndexFilteredList_failure() {
-    }
 
     @Test
     public void equals() {

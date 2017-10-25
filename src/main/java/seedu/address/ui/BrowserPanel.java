@@ -59,7 +59,7 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadPersonPersonal(ReadOnlyPerson selectedPerson) {
         selectedPerson.getWebLinks().forEach(webLink -> {
-            if (webLink.webLinkTag == "others") {
+            if (webLink.webLinkTag.equals("others")) {
                 loadPage(webLink.webLinkInput);
                 return;
             }
