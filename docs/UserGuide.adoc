@@ -407,7 +407,7 @@ Format: `favouritelist`
 
 Returns a list of all contacts who have their birthdays today
 
-Format: `birthdays` or `bd`
+Format: `birthdays`
 
 === Clearing all entries : `clear`
 

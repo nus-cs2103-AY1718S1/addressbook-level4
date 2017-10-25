@@ -11,13 +11,13 @@
 <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
     <children>
         <Label fx:id="name" alignment="TOP_LEFT" prefHeight="80.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true" />
-        <TextFlow prefHeight="50.0" prefWidth="400.0">
+        <TextFlow prefHeight="50.0" prefWidth="100.0">
             <children>
                 <Text fx:id="phoneField" fill="gray" styleClass="window_small_label" text="Phone: " />
                 <Label fx:id="phone" styleClass="window_small_label" text="\$phone" />
             </children>
         </TextFlow>
-        <TextFlow prefHeight="50.0" prefWidth="400.0">
+        <TextFlow prefHeight="50.0" prefWidth="100.0">
             <children>
                 <Text fx:id="homePhoneField" fill="gray" styleClass="window_small_label" text="Home Phone: " />
                 <Label fx:id="homePhone" styleClass="window_small_label" text="\$homePhone" />

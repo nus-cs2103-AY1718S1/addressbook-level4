@@ -804,7 +804,7 @@ The find mechanism is facilitated by the `NameContainsKeyWordsPredicate` class w
 
 However, if a user is searching by part of a name, the substring must be in the beginning of the first name or last name and it has to be at least two characters long.
 
-The `find` command is an undoable command and therefore it inherits from `Command` rather than `Undoablecommand`.
+The `find` command is not an undoable command and therefore it inherits from `Command` rather than `UndoableCommand`.
 
 The `NameContainsKeyWordsPredicate` class has a test function that uses stream, a new feature of Java 8 to process data more efficiently than using loops. The `test()` returns true if either the full name(first name + last name) ignoring case or it contains a substring of the name ignoring case.
 
@@ -860,6 +860,55 @@ If yes, then the function returns true else it returns false.
 **Cons:** No purpose of using find as if you search for one character, all contacts might get filtered +
 // end::find[]
 
+//tag::birthday[]
+=== Birthdays mechanism
+The Birthdays mechanism is facilitated by the `CheckIfBirthday` class which resides in the person class. It lists out all contacts that have their birthdays today.
+
+The `Birthdays` command is an undoable command and thus inherits from `UndoableCommand` rather than `Command`.
+
+The `CheckIfBirthday` class checks if the birth month and day of a contact matches today. As the birthday field is a birthday object, it is converted to a string using the `toString()` method in the `Birthday` class and then parsed into a date object using `simpleDateFormat()`.
+[source,java]
+----
+ Date date = new SimpleDateFormat("dd/MM/yyyy").parse(birthday);
+----
+
+The date is then converted into a `Calendar` object for easier comparison. Then the Day and Month of today is compared with the day and month of a person's birthday in the following way.
+[source,java]
+----
+return (((cal.get(Calendar.MONTH)) == Calendar.getInstance().get(Calendar.MONTH))
+                && ((cal.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH))));
+    }
+----
+
+An overall view of birthdays command logic is shown in Figure 5.8.1
+
+image::BirthdaysMechanism.png[width="800"]
+Figure 5.8.1 Birthdays Command Logic Sequence Diagram
+
+What the user finally sees is a list of people with their birthday today as shown in figure 5.8.2. This is because the `executeUndoableCommand()` which is overriden in the BirthdaysCommand class updates the `filteredPersonList`.
+[source,java]
+----
+ @Override
+    public CommandResult executeUndoableCommand() {
+        model.updateFilteredPersonList(check);
+        return new CommandResult(getBirthdayMessageSummary(model.getFilteredPersonList().size()));
+    }
+----
+
+image::BirthdaysMechanism2.png[width="200"]
+Figure 5.8.2 What the user sees
+
+==== Design Considerations
+**Aspect:** UI of `BirthdaysCommand` +
+**Alternative 1 (current choice):** Showing the persons as a list +
+**Pros:** g: Voluntary action. users can check birthday if they want to and won't get confused even if there are multiple contacts with the same name as to whose birthday it is +
+**Cons:** Some users might want the birthdays to appear as a pop up +
+**Alternative 2:** Use a pop up which is triggered when the app is opened +
+**Pros:** Involuntary and less effort from the users' part +
+**Cons:** If pop up only shows a list of names, users might get confused as to who the person is if there are multiple persons with the same name. +
+
+
+//end::brithday[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
