@@ -417,7 +417,7 @@ image::AddMultipleCommandSequenceDiagram.png[width="800"]
 
 *Parsing of persons' particulars*
 
-The `AddMultipleCommandParser` implements `Parser`, and it handles the parsing of user input file name and the data that contains in the `.txt` file.
+The `AddMultipleCommandParser` implements `Parser`, and it handles the parsing of user input file path and the data that contains in the `.txt` file.
 
 As shown in the sequence diagram above, `AddMultipleCommandParser` utilizes the FileUtil to retrieve the data as a String from the `.txt` file. The retrieved data is then transformed to be stored in an array split by `System.lineSeparator()` to be parsed based on each line.
 The result of the parsed data is stored in an `ArrayList`, then it is returned with the construction of `AddMultipleCommand`.
@@ -426,7 +426,7 @@ The result of the parsed data is stored in an `ArrayList`, then it is returned w
 
 The `AddMultipleCommand` contains two `ArrayList`; One `Person` array list to facilitate adding new persons and one `ReadOnlyPerson` array list to facilitate deletion of persons in the event of unexpected result that requires the command to roll back.
 
-The user executes a new `AddMultipleCommand`, `multiple personsToAdd.txt`, to add a list of persons' particulars contained in `personsToAdd.txt`.
+The user executes a new `AddMultipleCommand`, `multiple ./data/personsToAdd.txt`, to add a list of persons' particulars contained in `personsToAdd.txt`.
 
 After the parsing of inputs and construction of a new `AddMultipleCommand`, the `ArrayList`, `readOnlyPeople` will point to the `personsList` that was passed in from `AddMultipleCommandParser` while `ArrayList`, `toAdd` will contain `Person` that was constructed with `personsList`.
 The below is a graphical representation of two examples `ArrayList`.

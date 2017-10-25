@@ -78,16 +78,16 @@ Format: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123,
 // tag::multiple[]
 === Adding multiple persons: `multiple`
 
-Adds multiple persons to the address book with inputs from a `.txt` file stored in the default data folder +
-Default data folder: `./data` +
-Format: `multiple FILE_NAME.txt`
+Adds multiple persons to the address book from a given file path of a `.txt` file. +
+Default avatar folder: `./images/avatars` +
+Format: `multiple FILE_PATH`
 
 Examples:
 
-* `multiple personsToAdd.txt`
-* `multiple newStudentsToAdd.txt`
+* `multiple ./data/personsToAdd.txt`
+* `multiple ./data/newStudentsToAdd.txt`
 
-Person format in `.txt` file: `n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Person format in `.txt` file: `n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/AVATAR_FILE_PATH [t/TAG]...`
 
 [TIP]
 The format in the `.txt` file is the same as `add` command except without the `add`
@@ -95,9 +95,9 @@ The format in the `.txt` file is the same as `add` command except without the `a
 Example of `.txt` file:
 
 ****
-n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 +
-n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal +
-n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 t/pretty
+n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/john_doe.png +
+n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 r/criminal +
+n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 r/pretty
 ****
 // end::multiple[]
 
