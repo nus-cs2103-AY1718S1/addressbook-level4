@@ -883,7 +883,7 @@ If yes, then the function returns true else it returns false.
 === Birthdays mechanism
 The Birthdays mechanism is facilitated by the `CheckIfBirthday` class which resides in the person class. It lists out all contacts that have their birthdays today.
 
-The `Birthdays` command is an undoable command and thus inherits from `UndoableCommand` rather than `Command`.
+The `Birthdays` command is not an undoable command and thus inherits from `Command` rather than `UndoableCommand`.
 
 The `CheckIfBirthday` class checks if the birth month and day of a contact matches today. As the birthday field is a birthday object, it is converted to a string using the `toString()` method in the `Birthday` class and then parsed into a date object using `simpleDateFormat()`.
 [source,java]
