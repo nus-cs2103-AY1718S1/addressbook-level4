@@ -9,7 +9,12 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+
+<VBox xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+  <stylesheets>
+    <URL value="@DarkTheme.css" />
+    <URL value="@Extensions.css" />
+  </stylesheets>
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
@@ -19,6 +24,7 @@
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>
   </MenuBar>
+
    <SplitPane dividerPositions="0.5" VBox.vgrow="NEVER">
       <items>
         <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
@@ -40,19 +46,21 @@
     </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
+      <StackPane fx:id="personInformationPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" />
 
+<!-- Commented out to remove browser panel
     <StackPane fx:id="browserPlaceholder" prefWidth="340">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-    </StackPane>
+    </StackPane>-->
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

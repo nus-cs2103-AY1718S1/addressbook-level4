@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox>
+         <children>
+            <Label fx:id="id" styleClass="label-header" />
+            <Label fx:id="name" styleClass="label-header" />
+            <HBox>
+               <children>
+                  <Label styleClass="label-bright" text="Tags: " />
+                  <FlowPane fx:id="tags" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label styleClass="label-bright" text="Phone: " />
+                  <Label fx:id="phone" styleClass="label-bright" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label styleClass="label-bright" text="Address: " />
+                  <Label fx:id="address" styleClass="label-bright" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label styleClass="label-bright" text="Email: " />
+                  <Label fx:id="email" styleClass="label-bright" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
