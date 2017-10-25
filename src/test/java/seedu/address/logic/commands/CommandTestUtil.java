@@ -20,6 +20,7 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -36,9 +37,12 @@ public class CommandTestUtil {
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
-    public static final String VALID_EVENT_B_NAME = "Finals";
-    public static final String VALID_EVENT_B_DATE = "2017-12-04";
-    public static final String VALID_EVENT_B_ADDRESS = "MPSH 2A, NUS";
+    public static final String VALID_EVENT_A_NAME = "Chinese New Year";
+    public static final String VALID_EVENT_A_DATE = "2017-01-25";
+    public static final String VALID_EVENT_A_ADDRESS = "ChinaTown";
+    public static final String VALID_EVENT_B_NAME = "Christmas";
+    public static final String VALID_EVENT_B_DATE = "2017-12-25";
+    public static final String VALID_EVENT_B_ADDRESS = "Iceland";
     public static final String VALID_HOME_NUM_AMY = "65656511";
     public static final String VALID_HOME_NUM_BOB = "65656522";
     public static final String VALID_SCH_EMAIL_AMY = "amy@u.nus.edu";
@@ -60,8 +64,11 @@ public class CommandTestUtil {
     public static final String HOME_NUM_DESC_BOB = " " + PREFIX_HOME_NUMBER + VALID_HOME_NUM_BOB;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
+    public static final String EVENT_NAME_A_DESC = " " + PREFIX_NAME + VALID_EVENT_A_NAME;
     public static final String EVENT_NAME_B_DESC = " " + PREFIX_NAME + VALID_EVENT_B_NAME;
+    public static final String EVENT_DATE_A_DESC = " " + PREFIX_DATE + VALID_EVENT_A_DATE;
     public static final String EVENT_DATE_B_DESC = " " + PREFIX_DATE + VALID_EVENT_B_DATE;
+    public static final String EVENT_ADDRESS_A_DESC = " " + PREFIX_ADDRESS + VALID_EVENT_A_ADDRESS;
     public static final String EVENT_ADDRESS_B_DESC = " " + PREFIX_ADDRESS + VALID_EVENT_B_ADDRESS;
     public static final String SCH_EMAIL_DESC_AMY = " " + PREFIX_SCH_EMAIL + VALID_SCH_EMAIL_AMY;
     public static final String SCH_EMAIL_DESC_BOB = " " + PREFIX_SCH_EMAIL + VALID_SCH_EMAIL_BOB;
@@ -128,6 +135,7 @@ public class CommandTestUtil {
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
         List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyEvent> expectedList = new ArrayList<>(actualModel.getFilteredEventList());
 
         try {
             command.execute();
@@ -136,6 +144,7 @@ public class CommandTestUtil {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedList, actualModel.getFilteredEventList());
         }
     }
 
