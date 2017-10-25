@@ -11,8 +11,10 @@ public class SortCommand extends Command {
     public static final String COMMAND_ALIAS = "s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sorts the address book in ascending order by an indicated format. "
-            + "Currently supports NAME only. "
+            + ": Sorts the address book in ascending order by an indicated format."
+            + "Sorts by default (Name) if no argument. "
+            + "Currently 4 possible formats: Name, Email, Phone, Address.\n"
+            + "Accepts aliases 'n', 'e', 'p', 'a' respectively."
             + "Parameters: "
             + COMMAND_WORD
             + " [name/email/phone/address/tag]\n"
