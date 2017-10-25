@@ -9,11 +9,11 @@ import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -92,7 +92,7 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initPhoto(ReadOnlyPerson person) {
         try {
-            if(person.getPhoto() != null){
+            if(person.getPhoto() != null) {
                 File photoFile = new File(person.getPhoto().getFullPhotoDir());
                 FileInputStream fileStream = new FileInputStream(photoFile);
                 Image personPhoto = new Image(fileStream);
@@ -101,7 +101,7 @@ public class PersonCard extends UiPart<Region> {
                 photo.setFitWidth(person.getPhoto().WIDTH);
                 cardPane.getChildren().add(photo);
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("Image not found");
         }
     }

@@ -20,16 +20,10 @@ public class Photo {
 
     private String photoDir;
 
-    public String getPhotoDir() {
-        return photoDir;
-    }
-
-    public String getFullPhotoDir() { return BASE_DIR + photoDir; }
-
     /**
-     * Validates given birthday.
+     * Validates given photo.
      *
-     * @throws IllegalValueException if given birthday address string is invalid.
+     * @throws IllegalValueException if given photo address string is invalid.
      */
     public Photo(String photoDir) throws IllegalValueException {
         requireNonNull(photoDir);
@@ -38,6 +32,14 @@ public class Photo {
             throw new IllegalValueException(MESSAGE_PHOTO_CONSTRAINTS);
         }
         this.photoDir = trimmedPhoto;
+    }
+
+    public String getPhotoDir() {
+        return photoDir;
+    }
+
+    public String getFullPhotoDir() {
+        return BASE_DIR + photoDir;
     }
 
     /**
