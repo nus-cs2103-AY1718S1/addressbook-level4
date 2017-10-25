@@ -1,16 +1,147 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.testutil.TsvFileBuilder;
+import seedu.address.testutil.TypicalTsvFiles;
+
 public class AddMultipleByTsvCommandTest {
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullTsvFile_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
+    }
+
+    @Test
+    public void execute_tsvFileAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        TsvFileBuilder validTsvFile = new TsvFileBuilder();
+        boolean isFileFound = validTsvFile.getIsFileFound();
+        ArrayList<ReadOnlyPerson> toAddPeople = validTsvFile.getToAddPeople();
+        ArrayList<Integer> failedEntries = validTsvFile.getFailedEntries();
+
+        CommandResult commandResult = getAddMultipleByTsvCommandForPerson(toAddPeople, failedEntries,
+                isFileFound, modelStub).execute();
+
+        assertEquals(String.format(TypicalTsvFiles.PERFECT_TSV_FILE_MESSAGE_SUCCESS), commandResult.feedbackToUser);
+        assertEquals(toAddPeople, modelStub.personsAdded);
+    }
+
+    @Test
+    public void execute_duplicatePerson_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
+        TsvFileBuilder validTsvFile = new TsvFileBuilder();
+        boolean isFileFound = validTsvFile.getIsFileFound();
+        ArrayList<ReadOnlyPerson> toAddPeople = validTsvFile.getToAddPeople();
+        ArrayList<Integer> failedEntries = validTsvFile.getFailedEntries();
+
+        CommandResult commandResult = getAddMultipleByTsvCommandForPerson(toAddPeople, failedEntries,
+                isFileFound, modelStub).execute();
+
+        assertEquals(String.format(TypicalTsvFiles.PERFECT_TSV_FILE_MESSAGE_ALL_DUPLICATED),
+                commandResult.feedbackToUser);
+    }
+
+    private AddMultipleByTsvCommand getAddMultipleByTsvCommandForPerson(ArrayList<ReadOnlyPerson> toAddPeople,
+                                                                        ArrayList<Integer> failedEntries,
+                                                                        boolean isFileFound, Model model) {
+        AddMultipleByTsvCommand command = new AddMultipleByTsvCommand(toAddPeople, failedEntries, isFileFound);
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
+        return command;
+    }
+
+    private class ModelStub implements Model {
+        @Override
+        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetData(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+                throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+    }
+
+    /**
+     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     */
+    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+        @Override
+        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            throw new DuplicatePersonException();
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that always accept the person being added.
+     */
+    private class ModelStubAcceptingPersonAdded extends ModelStub {
+        final ArrayList<Person> personsAdded = new ArrayList<>();
+
+        @Override
+        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            personsAdded.add(new Person(person));
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
     }
 }
