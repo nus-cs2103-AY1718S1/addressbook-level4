@@ -146,7 +146,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        FunctionButtons functionButtons = new FunctionButtons(logic);
+        FunctionButtons functionButtons = new FunctionButtons(logic, primaryStage, this);
         functionButtonsPanel.getChildren().add(functionButtons.getRoot());
     }
 
@@ -201,7 +201,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
-     * Opens themeing window.
+     * Opens theme window.
      */
     @FXML
     public void handleTheme() {

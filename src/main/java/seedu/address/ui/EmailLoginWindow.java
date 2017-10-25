@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import seedu.address.commons.core.LogsCenter;
@@ -29,7 +30,6 @@ public class EmailLoginWindow extends UiPart<Region> {
     private static final String FXML = "EmailLoginWindow.fxml";
 
     private Stage primaryStage;
-    private Button loginButton;
     private Logic logic;
 
     @FXML
@@ -50,13 +50,14 @@ public class EmailLoginWindow extends UiPart<Region> {
     @FXML
     private Label feedbackLabel;
 
-    public EmailLoginWindow(Button loginButton, Logic logic) {
+    public EmailLoginWindow(Logic logic, Stage parentStage) {
         super(FXML);
 
         this.primaryStage = new Stage();
         Scene scene = new Scene(getRoot());
         this.primaryStage.setScene(scene);
-        this.loginButton = loginButton;
+        this.primaryStage.initOwner(parentStage);
+        this.primaryStage.initModality(Modality.WINDOW_MODAL);
         this.logic = logic;
 
         setOnCloseEvent();
@@ -88,12 +89,7 @@ public class EmailLoginWindow extends UiPart<Region> {
      * Enable the login / logout button when this window closes
      */
     public void setOnCloseEvent() {
-        primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                loginButton.setDisable(false);
-            }
-        });
+
     }
 
     /**

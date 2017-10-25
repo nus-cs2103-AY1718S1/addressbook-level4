@@ -1,7 +1,10 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableSet;
 import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
@@ -15,6 +18,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -24,18 +28,29 @@ public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
+    private ObservableList<PersonCard> mappedList;
+    private ArrayList<PersonCard> tickedPersons;
+
     @FXML
     private ListView<PersonCard> personListView;
 
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
+        this.tickedPersons = new ArrayList<PersonCard>();
         setConnections(personList);
         registerAsAnEventHandler(this);
+
+        personList.addListener(new ListChangeListener<ReadOnlyPerson>() {
+            @Override
+            public void onChanged(Change<? extends ReadOnlyPerson> c) {
+                tickedPersons = new ArrayList<PersonCard>();
+            }
+        });
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
-        ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+        mappedList = EasyBind.map(
+                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1, this));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
@@ -61,6 +76,10 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
+    public ArrayList<PersonCard> getTickedPersons() {
+        return tickedPersons;
+    }
+
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -84,5 +103,4 @@ public class PersonListPanel extends UiPart<Region> {
             }
         }
     }
-
 }
