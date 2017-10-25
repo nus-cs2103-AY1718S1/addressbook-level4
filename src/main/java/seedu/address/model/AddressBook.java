@@ -199,7 +199,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void sort() {
         try {
-            this.setParcels(parcels.sortedList());
+            this.setParcels(parcels.getSortedList());
         } catch (DuplicateParcelException e) {
             e.printStackTrace();
         }

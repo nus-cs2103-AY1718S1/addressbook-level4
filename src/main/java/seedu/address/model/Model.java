@@ -116,7 +116,7 @@ public interface Model {
     /**
      * Method to reselect a parcel card if there is a card selected.
      */
-    void reselectIfNeeded(Model model, ReadOnlyParcel parcel);
+    void reselect(ReadOnlyParcel parcel);
 
 }
 

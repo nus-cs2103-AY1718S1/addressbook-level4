@@ -104,7 +104,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void reselectIfNeeded(Model model, ReadOnlyParcel parcel) {
+    public void reselect(ReadOnlyParcel parcel) {
         fail("This method should not be called.");
     }
 }

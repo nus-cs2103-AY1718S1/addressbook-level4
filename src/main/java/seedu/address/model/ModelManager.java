@@ -186,37 +186,36 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void reselectIfNeeded(Model model, ReadOnlyParcel parcel) {
+    public void reselect(ReadOnlyParcel parcel) {
         // With sorting, we lose our selected card. As such we have to reselect the
         // parcel that was previously selected. This leads to the need to have some way of
         // keeping track of which card had been previously selected. Hence the prevIndex
         // attribute in the ModelManager class and also it's corresponding to get and set it.
-        if (model.hasSelected()) { // if the model has a selected card
-            // We then get the identity of the previously selected parcel.
-            ReadOnlyParcel previous = model.getAddressBook()
-                    .getParcelList()
-                    .get(model.getPrevIndex().getZeroBased());
-            // if the previous parcel belongs after the editedParcel, we just reselect the parcel
-            // at the previous index because all the parcels get pushed down.
-            if (previous.compareTo(parcel) > 0) {
-                model.forceSelect(model.getPrevIndex());
-            } else {
-                // otherwise the parcel toAdd belongs before the previously selected parcel
-                // so we select the parcel with the next index.
-                model.forceSelect(Index.fromZeroBased(findIndex(model, previous)));
-            }
+        // We first get the identity of the previously selected parcel.
+        ReadOnlyParcel previous = getAddressBook()
+                .getParcelList()
+                .get(getPrevIndex().getZeroBased());
+        // if the previous parcel belongs after the editedParcel, we just reselect the parcel
+        // at the previous index because all the parcels get pushed down.
+        if (previous.compareTo(parcel) > 0) {
+            forceSelect(getPrevIndex());
+        } else {
+            // otherwise the parcel toAdd belongs before the previously selected parcel
+            // so we select the parcel with the next index.
+            forceSelect(Index.fromZeroBased(findIndex(previous)));
         }
     }
 
-    private int findIndex(Model model, ReadOnlyParcel target) {
-        return model.getAddressBook().getParcelList().indexOf(target);
+    private int findIndex(ReadOnlyParcel target) {
+        return getAddressBook().getParcelList().indexOf(target);
     }
 
-
+    @Override
     public void setPrevIndex(Index newIndex) {
         prevIndex = newIndex;
     }
 
+    @Override
     public Index getPrevIndex() {
         return prevIndex;
     }

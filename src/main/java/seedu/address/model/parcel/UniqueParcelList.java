@@ -124,7 +124,7 @@ public class UniqueParcelList implements Iterable<Parcel> {
     /**
      * Sorts the internal list and returns it.
      */
-    public ObservableList<Parcel> sortedList() {
+    public ObservableList<Parcel> getSortedList() {
         try {
             setParcels(internalList.sorted());
         } catch (DuplicateParcelException e) {

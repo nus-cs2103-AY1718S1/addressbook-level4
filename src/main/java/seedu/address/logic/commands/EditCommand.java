@@ -88,7 +88,9 @@ public class EditCommand extends UndoableCommand {
         try {
             model.updateParcel(parcelToEdit, editedParcel);
             model.maintainSorted();
-            model.reselectIfNeeded(model, editedParcel);
+            if (model.hasSelected()) {
+                model.reselect(editedParcel);
+            }
 
         } catch (DuplicateParcelException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PARCEL);
