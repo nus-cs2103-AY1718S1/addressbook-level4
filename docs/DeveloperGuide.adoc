@@ -505,6 +505,36 @@ The 4 required fields are checked to see if they are present. If any of them are
 
 The 5 optional fields are handled differently. They are first initialized to a placeholder value ("NIL" for Company, Position, Status and Note, "L" for Priority, indicating the lowest priority). Each field is then checked to see if it has been entered in the user command through its prefix. If it has, the placeholder value is replaced by the entered string. This way, the user is able to selectively enter any of these fields (or none at all) and the `ReadOnlyPerson` object created will still have all fields initialized properly.
 
+// tag::photo[]
+=== Attaching photo to a contact
+
+Another optional field that can be added to a contact is the photo field. It
+can be added either:
+
+* through the `add` or `edit` command; OR
+
+* through the GUI
+
+==== Command-line implementation
+
+When the image file location is specified in the `add` or `edit` command, the
+ `AddCommandParser` and `EditCommandParser` parses the command and copy the
+ file specified from the local file system to the
+ `/src/main/resources/images` directory. The URL string of the copied image
+ file is then stored as the `photoURL` String in the `Photo` field of a
+ `Person`.
+
+When the person's details are loaded in the `PersonPanel`, the `photoURL`
+stored in the person is then loaded as an image and displayed in the graphic
+UI.
+
+==== GUI implementation
+
+For every `PersonPanel`, there is an `Import Image` button which allows the
+user to select a file from the local file system to import. Similar to the
+command-line implementation, this file is then copied to the
+`/src/main/resources/images` directory and then loaded in the graphic UI.
+
 // tag::Sorting[]
 === Sorting of persons list
 

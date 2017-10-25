@@ -88,6 +88,7 @@ public class PersonPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author a0107442n
     /**
      * Register the image import button for click event.
      */
@@ -123,6 +124,7 @@ public class PersonPanel extends UiPart<Region> {
              }
         });
     }
+    //@@author
 
     /**
      * Shows the details of the person selected. Called by the handlePersonPanelSelectionChangedEvent event listener,
