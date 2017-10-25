@@ -102,7 +102,7 @@ Format: `help`
 === Adding a parcel: `add`
 
 Adds a parcel to Ark +
-Format: `add #/TRACKING_ID n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE s/STATUS [t/TAG]...`
+Format: `add #/TRACKING_ID n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE [s/STATUS] [t/TAG]...`
 
 [TIP]
 A parcel can have any number of tags (including 0)
