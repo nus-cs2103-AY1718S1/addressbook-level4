@@ -35,7 +35,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */ {
+     */
+    {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
     }
@@ -165,6 +166,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    /**
+     * Removes {@code tag} from this {@code AddressBook}.
+     */
     public void removeTag(Tag t) {
         Iterator<Tag> itr = tags.iterator();  // list is a Set<String>!
         while (itr.hasNext()) {

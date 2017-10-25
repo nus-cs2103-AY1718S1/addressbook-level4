@@ -1,4 +1,4 @@
-import static org.junit.Assert.*;
+package seedu.address.logic.parser;
 
 public class RemoveTagParserTest {
 

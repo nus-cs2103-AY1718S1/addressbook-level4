@@ -1,5 +1,12 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
@@ -8,12 +15,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
  * Removes a tag that is shared by a group of contacts.
@@ -55,6 +56,9 @@ public class RemoveTagCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS));
     }
 
+    /**
+     * Update the tag list of person and refresh on model.
+     */
     private void updateTagList(List<ReadOnlyPerson> lastShownList, int i) throws CommandException {
         ReadOnlyPerson personToEdit = lastShownList.get(i);
         Person editedPerson = removedTagFromPerson(personToEdit);
@@ -85,6 +89,7 @@ public class RemoveTagCommand extends UndoableCommand {
             }
         }
 
-        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(), personToEdit.getAddress(), personToEdit.getTimestamp(), updatedTags);
+        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getTimestamp(), updatedTags);
     }
 }
