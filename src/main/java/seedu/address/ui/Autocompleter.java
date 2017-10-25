@@ -20,7 +20,8 @@ public class Autocompleter {
             + "into the command box";
     private static final String MULTIPLE_RESULT_MESSAGE = "Multiple matches found";
 
-    private static final  String EMPTY_STRING = "";
+    private static final String EMPTY_STRING = "";
+    private static final String SPACE = " ";
 
     private static final String[] commandList = {"add", "clear", "delete", "edit", "exit", "find", "help", "history",
         "list", "redo", "select", "undo"};
@@ -66,9 +67,7 @@ public class Autocompleter {
 
             case MULTIPLE_COMMAND:
                 displayMultipleResults(possibleAutocompleteResults);
-                int currentIndex = resultIndex;
-                resultIndex = (resultIndex + 1) % possibleAutocompleteResults.size();
-                return possibleAutocompleteResults.get(currentIndex);
+                return possibleAutocompleteResults.get(cycleIndex());
         }
         return EMPTY_STRING;
     }
@@ -98,7 +97,9 @@ public class Autocompleter {
                 break;
 
             case EditCommand.COMMAND_WORD:
-                state = AutocompleteState.EDIT;
+                if (commandBoxText.substring(commandBoxText.length() - 1).equals(SPACE)) {
+                    state = AutocompleteState.EDIT;
+                }
                 break;
 
             case FindCommand.COMMAND_WORD:
@@ -106,6 +107,17 @@ public class Autocompleter {
                 break;
         }
 
+
+    }
+
+    /**
+     * return the current value of resultIndex and then increment it by 1 with wrap-around
+     * @return current value of resultIndex
+     */
+    private int cycleIndex() {
+        int currentIndex = resultIndex;
+        resultIndex = (resultIndex + 1) % possibleAutocompleteResults.size();
+        return currentIndex;
 
     }
 
