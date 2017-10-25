@@ -4,16 +4,16 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Status represents the delivery status of a parcel
- * It can only be one of these values: PENDING, DELIVER, DELIVERED
+ * It can only be one of these values: PENDING, DELIVER, COMPLETED
  */
 public enum Status {
 
-    PENDING, DELIVERING, DELIVERED;
+    PENDING, DELIVERING, COMPLETED, OVERDUE;
 
     public static final String MESSAGE_STATUS_CONSTRAINTS =
-            "Status can only be PENDING, DELIVERED or DELIVERING";
+            "Status can only be PENDING, COMPLETED, COMPLETED or OVERDUE";
 
-    public static Status getStatusInstance(String status) throws IllegalValueException {
+    public static Status getInstance(String status) throws IllegalValueException {
         String trimmedAndUpperCasedStatus = status.trim().toUpperCase();
 
         if (!isValidStatus(trimmedAndUpperCasedStatus)) {
@@ -22,14 +22,17 @@ public enum Status {
 
         switch (trimmedAndUpperCasedStatus) {
 
+        case "OVERDUE":
+            return OVERDUE;
+
         case "PENDING":
             return PENDING;
 
         case "DELIVERING":
             return DELIVERING;
 
-        case "DELIVERED":
-            return DELIVERED;
+        case "COMPLETED":
+            return COMPLETED;
 
         default:
             throw new IllegalValueException(MESSAGE_STATUS_CONSTRAINTS);
@@ -43,7 +46,8 @@ public enum Status {
         switch(status) {
         case "PENDING":  // fallthrough
         case "DELIVERING": // fallthrough
-        case "DELIVERED": // fallthrough
+        case "COMPLETED": // fallthrough
+        case "OVERDUE": // fallthrough
             return true;
 
         default:

@@ -31,7 +31,7 @@ Responsibilities: TBA
 
 === Kennard Ng Pool Hua
 image::kennard123661.jpg[width="150", align="left"]
-{empty}[https://github.com/Kennard123661[github]] [<<kennardngpoolhua#, portfolio>>]
+{empty}[https://github.com/Kennard123661[github]] [<<kennard123661#, portfolio>>]
 
 Role: Testing, Scheduling and Tracking, Deliverables and Deadlines, Documentation, Developer in charge of Storage Component +
 Responsibilities: TBA

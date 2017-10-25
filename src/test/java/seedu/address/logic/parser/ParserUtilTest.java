@@ -176,7 +176,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseStatus_validValue_returnsStatus() throws Exception {
-        Status expectedStatus = Status.getStatusInstance(VALID_STATUS);
+        Status expectedStatus = Status.getInstance(VALID_STATUS);
         Optional<Status> actualStatus = ParserUtil.parseStatus(Optional.of(VALID_STATUS));
 
         assertEquals(expectedStatus, actualStatus.get());

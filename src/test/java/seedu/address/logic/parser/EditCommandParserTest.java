@@ -3,12 +3,12 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.DELIVERYDATE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DELIVERYDATE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERYDATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERY_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -25,8 +25,8 @@ import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERYDATE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -102,8 +102,8 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_PHONE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
-        assertParseFailure(parser, "1" + INVALID_DELIVERYDATE_DESC,
-                DeliveryDate.MESSAGE_DELIVERYDATE_CONSTRAINTS); // invalid delivery date
+        assertParseFailure(parser, "1" + INVALID_DELIVERY_DATE_DESC,
+                DeliveryDate.MESSAGE_DELIVERY_DATE_CONSTRAINTS); // invalid delivery date
         assertParseFailure(parser, "1" + INVALID_STATUS_DESC, Status.MESSAGE_STATUS_CONSTRAINTS);
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
@@ -132,13 +132,13 @@ public class EditCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PARCEL;
         String userInput = targetIndex.getOneBased() + TRACKING_NUMBER_DESC_AMY + PHONE_DESC_BOB + TAG_DESC_HUSBAND
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + DELIVERYDATE_DESC_AMY + STATUS_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
                 + TAG_DESC_FRIEND;
 
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder()
                 .withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-                .withDeliveryDate(VALID_DELIVERYDATE_AMY).withStatus(VALID_STATUS_AMY).build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -192,8 +192,8 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // delivery date
-        userInput = targetIndex.getOneBased() + DELIVERYDATE_DESC_AMY;
-        descriptor = new EditParcelDescriptorBuilder().withDeliveryDate(VALID_DELIVERYDATE_AMY).build();
+        userInput = targetIndex.getOneBased() + DELIVERY_DATE_DESC_AMY;
+        descriptor = new EditParcelDescriptorBuilder().withDeliveryDate(VALID_DELIVERY_DATE_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -214,13 +214,13 @@ public class EditCommandParserTest {
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_PARCEL;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY
-                + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + DELIVERYDATE_DESC_AMY + STATUS_DESC_AMY
+                + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
                 + EMAIL_DESC_AMY + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB
-                + DELIVERYDATE_DESC_BOB + STATUS_DESC_BOB + TAG_DESC_HUSBAND;
+                + DELIVERY_DATE_DESC_BOB + STATUS_DESC_BOB + TAG_DESC_HUSBAND;
 
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
-                .withDeliveryDate(VALID_DELIVERYDATE_BOB).withStatus(VALID_STATUS_BOB).build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_BOB).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

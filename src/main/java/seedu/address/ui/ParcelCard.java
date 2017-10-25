@@ -85,14 +85,18 @@ public class ParcelCard extends UiPart<Region> {
     private void setColorForStatus() {
         switch (status.textProperty().get()) {
         case "PENDING":
-            status.setStyle("-fx-background-color: " + "#ff4500");
+            status.setStyle("-fx-background-color: " + "#ff4800");
             break;
 
         case "DELIVERING":
             status.setStyle("-fx-background-color: " + "#ffc200");
             break;
 
-        case "DELIVERED":
+        case "OVERDUE":
+            status.setStyle("-fx-background-color: " + "red");
+            break;
+
+        case "COMPLETED":
         default: // fall through
             status.setStyle("-fx-background-color: " + "#00bf00");
             break;
