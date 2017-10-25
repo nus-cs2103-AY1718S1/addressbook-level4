@@ -10,4 +10,8 @@ public class ImageException extends IllegalValueException {
     public ImageException(String message) {
         super(message);
     }
+
+    public ImageException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IMAGE;
 
-import java.io.IOException;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -85,7 +84,7 @@ public class ImageCommand extends UndoableCommand {
         try {
             ImageUtil imageUtil = new ImageUtil();
             image.setPath(imageUtil.run(image.getPath(), personToEdit.getEmail().hashCode()));
-        } catch (IOException ioe) {
+        } catch (Exception e) {
             image.setPath("");
             return new CommandResult(generateFailureMessage());
         }
