@@ -17,13 +17,13 @@ import org.junit.Test;
 
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
-import seedu.address.commons.events.ui.ButtonSelectionPressedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 
 public class BrowserPanelTest extends GuiUnitTest {
     private PersonPanelSelectionChangedEvent selectionChangedEventStub;
-    private ButtonSelectionPressedEvent mapsButtonPressEventStub;
-    private ButtonSelectionPressedEvent searchButtonPressEventStub;
+    private WebsiteSelectionRequestEvent mapsSelectionEventStub;
+    private WebsiteSelectionRequestEvent searchSelectionEventStub;
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
@@ -31,8 +31,8 @@ public class BrowserPanelTest extends GuiUnitTest {
     @Before
     public void setUp() {
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
-        mapsButtonPressEventStub = new ButtonSelectionPressedEvent("mapsButton");
-        searchButtonPressEventStub = new ButtonSelectionPressedEvent("searchButton");
+        mapsSelectionEventStub = new WebsiteSelectionRequestEvent("mapsView");
+        searchSelectionEventStub = new WebsiteSelectionRequestEvent("searchView");
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);
@@ -59,14 +59,14 @@ public class BrowserPanelTest extends GuiUnitTest {
     public void buttonPressDisplay() throws Exception {
         postNow(selectionChangedEventStub);
         // associated maps page of a person
-        postNow(mapsButtonPressEventStub);
+        postNow(mapsSelectionEventStub);
         String expectedPersonMapsUrl = "/maps/search/";
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertTrue(browserPanelHandle.getLoadedUrl().toString().contains(expectedPersonMapsUrl));
 
         // associated search page of a person
-        postNow(searchButtonPressEventStub);
+        postNow(searchSelectionEventStub);
         URL expectedPersonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
                 + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
