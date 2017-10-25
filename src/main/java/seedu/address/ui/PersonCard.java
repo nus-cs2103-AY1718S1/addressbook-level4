@@ -70,14 +70,7 @@ public class PersonCard extends UiPart<Region> {
         bindListeners(person);
         picture = new ImageView();
         initImage();
-        System.out.println("Creating person card");
-        if (person.getHighlightStatus()) {
-            cardPane.setStyle("-fx-border-style: solid inside;" +
-                    "-fx-border-width: 2;" +
-                    "-fx-border-insets: 5;" +
-                    "-fx-border-radius: 5;" +
-                    "-fx-border-color: red;");
-        }
+        initHighlightStatus();
     }
 
     /**
@@ -109,6 +102,16 @@ public class PersonCard extends UiPart<Region> {
             cardPane.getChildren().add(picture);
         } catch (Exception e) {
             System.out.println("Image not found");
+        }
+    }
+
+    /**
+     * Initializes highlight border for highlighted persons
+     */
+    private void initHighlightStatus() {
+        if (person.getHighlightStatus()) {
+            cardPane.setStyle("-fx-border-style: solid inside; -fx-border-width: 2;"
+                + "-fx-border-insets: 5; -fx-border-radius: 5; -fx-border-color: red;");
         }
     }
 
