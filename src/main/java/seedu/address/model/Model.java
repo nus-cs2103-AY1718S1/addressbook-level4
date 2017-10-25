@@ -49,6 +49,11 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
+     * Updates the filter of the filtered person list to filter out duplicate persons.
+     */
+    void updateDuplicatePersonList();
+
+    /**
      * Sets and updates the tag colors of a person
      */
     void setTagColor(boolean toSet, String tag, String color);
