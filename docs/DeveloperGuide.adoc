@@ -522,17 +522,17 @@ SortCommand and SortCommandParser operates.
 // tag::Setting relationship[]
 === Setting relationship between two persons
 
-When viewing the persons list, user finds out if that specific person as my relationship with any other person. The 
-user is also able to set relationships between 2 persons if they are related to one another. Each person is able to 
-have multiple relationships. 
+When viewing the persons list, user finds out if that specific person as my relationship with any other person. The
+user is also able to set relationships between 2 persons if they are related to one another. Each person is able to
+have multiple relationships.
 
 This feature is achieved by first creating the Relationship and UniqueRelList class that handles the relationship
- name and the list of relationship of each person. Next, creating the command to add/edit/delete relationship between 2 
- persons. 
- 
+ name and the list of relationship of each person. Next, creating the command to add/edit/delete relationship between 2
+ persons.
+
 This will be done using the command `set [INDEX] [INDEX] [RELATIONSHIP]`.
 
-It will set the relationship for INDEX 1 
+It will set the relationship for INDEX 1
 and INDEX 2. Thus the command that executes this will perform twice.
 
 [NOTE]

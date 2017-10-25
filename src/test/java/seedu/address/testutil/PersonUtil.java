@@ -45,7 +45,7 @@ public class PersonUtil {
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         person.getRelation().stream().forEach(
-        s -> sb.append(PREFIX_RELATIONSHIP + s.relType + " ")
+            s -> sb.append(PREFIX_RELATIONSHIP + s.relType + " ")
         );
         return sb.toString();
     }
