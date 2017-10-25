@@ -73,7 +73,7 @@ public class ContactTsvReader {
                     Website website = ParserUtil.parseWebsite(checkEmptyAndReturn(retrieveColumnField(columns, 4)))
                             .get();
                     Set<Tag> tagList = ParserUtil.parseTags(new ArrayList<String>(
-                            Arrays.asList(retrieveColumnField(columns, 4)
+                            Arrays.asList(retrieveColumnField(columns, 5)
                                     .replaceAll("^[,\"\\s]+", "")
                                     .replace("\"", "")
                                     .split("[,\\s]+"))));
