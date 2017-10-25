@@ -21,7 +21,6 @@ public class AppointCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "appoint";
     public static final String MESSAGE_APPOINT_SUCCESS = "New appointment added: %1$s";
-    public static final String MESSAGE_ARGUMENTS = "Method takes two arguments";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add an appointment to a person to the address book "
             + "by the index number in the last person listing."
@@ -53,7 +52,7 @@ public class AppointCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getAppointment(),
+                personToEdit.getAddress(), appointment,
                 personToEdit.getGroups(), personToEdit.getTags());
 
         try {
@@ -82,6 +81,7 @@ public class AppointCommand extends UndoableCommand {
 
         // state check
         AppointCommand e = (AppointCommand) other;
-        return getAppointment().equals(e.getAppointment());
+        return index.equals(e.index)
+            && appointment.equals(e.appointment);
     }
 }

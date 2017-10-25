@@ -31,10 +31,7 @@ public class AppointCommandParser implements Parser<AppointCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AppointCommand.MESSAGE_USAGE));
         }
-        try {
-            return new AppointCommand(index, new Appointment(appointmentDetails));
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
+        return new AppointCommand(index, new Appointment(appointmentDetails));
+       
     }
 }

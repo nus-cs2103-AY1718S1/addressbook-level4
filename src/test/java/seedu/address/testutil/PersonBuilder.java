@@ -25,7 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
-    public static final String DEFAULT_APPOINTMENTS = "01/01/2020 00:00 60";
+    public static final String DEFAULT_APPOINTMENTS = "01/01/20 00:00 60";
     private Person person;
 
     public PersonBuilder() {
@@ -128,11 +128,7 @@ public class PersonBuilder {
      * Sets the {@code Appointment} of the {@code Person} that we are building.
      */
     public PersonBuilder withAppointment(String appointment) {
-        try {
-            this.person.setAppointment(new Appointment(appointment));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("appointment is expected to be unique.");
-        }
+        this.person.setAppointment(new Appointment(appointment));
         return this;
     }
 

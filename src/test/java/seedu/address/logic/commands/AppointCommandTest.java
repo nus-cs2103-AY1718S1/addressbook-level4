@@ -15,7 +15,6 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -34,8 +33,8 @@ public class AppointCommandTest {
     @Test
     public void execute_addAppointment_success() throws Exception {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withAppointment(VALID_APPOINTMENT).build();
-        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, new Appointment(VALID_APPOINTMENT));
+                .withAppointment("Some appointment").build();
+        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getAppointment().value);
         String expectedMessage = String.format(AppointCommand.MESSAGE_APPOINT_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -48,7 +47,7 @@ public class AppointCommandTest {
     public void  execute_removeAppointment_success() throws Exception {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withAppointment("").build();
-        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, new Appointment(""));
+        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, "");
 
         String expectedMessage = String.format(AppointCommand.MESSAGE_APPOINT_SUCCESS, editedPerson);
 
@@ -64,7 +63,7 @@ public class AppointCommandTest {
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(personInFilteredList).withAppointment(VALID_APPOINTMENT).build();
-        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, new Appointment(VALID_APPOINTMENT));
+        AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getAppointment().value);
 
         String expectedMessage = String.format(AppointCommand.MESSAGE_APPOINT_SUCCESS, editedPerson);
 
@@ -77,13 +76,13 @@ public class AppointCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        AppointCommand appointCommand = prepareCommand(outOfBoundIndex, new Appointment(VALID_APPOINTMENT));
+        AppointCommand appointCommand = prepareCommand(outOfBoundIndex, VALID_APPOINTMENT);
 
         assertCommandFailure(appointCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
-    public void equals() throws IllegalValueException {
+    public void equals() {
         final AppointCommand standardCommand = new AppointCommand(INDEX_FIRST_PERSON,
                                                                     new Appointment(APPOINTMENT_DESC));
 
@@ -109,8 +108,8 @@ public class AppointCommandTest {
         assertFalse(standardCommand.equals(new AppointCommand(INDEX_FIRST_PERSON, new Appointment("random desc"))));
     }
 
-    private AppointCommand prepareCommand(Index index, Appointment appointment) {
-        AppointCommand appointCommand = new AppointCommand(index, appointment);
+    private AppointCommand prepareCommand(Index index, String appointment) {
+        AppointCommand appointCommand = new AppointCommand(index, new Appointment(appointment));
         appointCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return appointCommand;
     }

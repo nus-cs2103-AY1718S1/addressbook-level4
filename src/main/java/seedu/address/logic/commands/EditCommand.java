@@ -102,12 +102,7 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Appointment updatedAppointment = null;
-        try {
-            updatedAppointment = new Appointment("");
-        } catch (IllegalValueException ive) {
-            ive.printStackTrace();
-        }
+        Appointment updatedAppointment = new Appointment("01/01/20 00:00 60");
         Set<Group> updatedGroups = editPersonDescriptor.getGroups().orElse(personToEdit.getGroups());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
