@@ -43,10 +43,11 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deletePerson(personToDelete);
+            LoggingCommand loggingCommand = new LoggingCommand();
+            loggingCommand.keepLog(personToDelete.toString(), "Delete");
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
-
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 
