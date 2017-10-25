@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_TASK_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTasks.ASSIGNMENT;
-import static seedu.address.testutil.TypicalTasks.QUIZ;
+import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
 import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
-import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
+import static seedu.address.testutil.TypicalTasks.QUIZ;
 import static seedu.address.testutil.TypicalTasks.SUBMISSION;
 
 import java.util.Arrays;

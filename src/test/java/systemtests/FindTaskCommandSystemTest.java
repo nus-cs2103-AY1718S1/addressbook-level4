@@ -2,11 +2,11 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_TASK_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalTasks.ASSIGNMENT;
+import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
+import static seedu.address.testutil.TypicalTasks.GYM;
+import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
 import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
 import static seedu.address.testutil.TypicalTasks.QUIZ;
-import static seedu.address.testutil.TypicalTasks.GYM;
-import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
-import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
 
 import org.junit.Test;
 
