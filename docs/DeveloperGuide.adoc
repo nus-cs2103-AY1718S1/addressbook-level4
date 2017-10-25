@@ -421,17 +421,17 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 // tag::calendar[]
 === Calendar mechanism
 
-The calendar mechanism is facilitated by the `DatePickerSkin` skin instance which capture the pop-up content from the `DatePicker` control in `JavaFX`. It allows the user to have a calendar view of all contacts' `Birthday` and tasks' `Deadline`.
+The calendar mechanism is facilitated by the `DatePickerSkin` skin instance which capture the pop-up content from the `DatePicker` control in `JavaFX`. It allows the user to have a calendar view of all contacts' `Birthday`  and tasks' `Deadline`.
 
-Suppose the address book is modified (e.g. `add`, `edit`, `addtask`, `deletetask`).
+Suppose the address book is modified (e.g. using `add`, `edit`, `addtask`, `deletetask`).
 
-After the modification of the address book i.e. saving of data to the `addressbook.xml` file, `ObservableList` of `Person` and `Task` being stored in the address book are passed into the `CalendarPanel` Ui.
+After the modification of the address book i.e. saving of data to the `addressbook.xml` file, `ObservableList` of `Person` and `Task` classes stored in the address book are passed into the `CalendarPanel` Ui.
 
-Next, `getDayCellFactory` is being evoked, which will format the `DateCell` of the `DatePicker`. The formatting is done with `Birthday` and `Deadline` as conditions and, colour and tooltip of `DateCell` as variable to change.
+Next, `getDayCellFactory` will format the `DateCell` of the `DatePicker`. The formatting is done with `Birthday` and `Deadline` as conditions and colour and tooltip of `DateCell` as variables to be change by the formatter.
 
 [NOTE] Implementation of finding related person/task when selecting of coloured `DateCell` is still ongoing.
 
-The followings are example of colour and tooltip of the calendar:
+The following are examples of colour and tooltip of the calendar:
 
 image::CalendarDeadlineTooltip.png[width="150", height"100"]
 image::CalendarBirthdayTooltip.png[width="150", height"100"]
@@ -439,11 +439,11 @@ image::CalendarBirthdayTooltip.png[width="150", height"100"]
 ==== Design Considerations
 **Aspect:** Implementation of Calendar +
 **Alternative 1 (current choice):** Use `DatePickerSkin` to get the calendar look and function. +
-**Pros:** Lesser coding needed as the template, `DatePicker`, is already available. Thus, more time can be spent on other functions related to the calendar. +
+**Pros:** Less coding needed as the template, `DatePicker`, is already available. Thus, more time can be spent on other functions related to the calendar. +
 **Cons:** Overall look is fixed. +
 **Alternative 2:** Design a calendar using `JavaFX` +
 **Pros:** Fully customizable. +
-**Cons:** Much effort required to ensure is bug-free. +
+**Cons:** Much effort required to ensure it is bug free. +
 
 ---
 
@@ -452,8 +452,8 @@ image::CalendarBirthdayTooltip.png[width="150", height"100"]
 **Pros:** Able to retrieve updated data from `UniquePersonList` and `UniqueTaskList` that are already available. +
 **Cons:** Increase coupling with `Person` and `Task`. +
 **Alternative 2:** Create a separate `UniqueMarkDateList` that stored required dates with relevant info (e.g. Person's name and Task's description) +
-**Pros:** Reduces coupling as the data will be stored during initialising of address book and adding/deleting of person/task. +
-**Cons:** We must ensure that the data stored is bind with the individual person and task, such that editing of such person/task will be reflected.
+**Pros:** Reduces coupling as the data will be stored during initialisation of address book and addition/deletion of person/task. +
+**Cons:** We must ensure that the data stored is bound to the individual person and task, such that editing of such person/task will be reflected.
 // end::calendar[]
 
 // tag::undoredo[]
