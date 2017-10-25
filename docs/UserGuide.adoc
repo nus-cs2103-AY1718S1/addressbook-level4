@@ -105,6 +105,18 @@ Examples:
 image::add_person1.png[width="400"]
 image::add_person2.png[width="400"]
 
+=== Highlighting by tag : `highlight`
+
+Highlights all persons with specified tag
+Format: `highlight `tag``
+
+[TIP]
+Specifying a tag which does not exist on any person clears the current highlighted persons
+
+Examples:
+* `highlight colleague`
+* `highlight owes money`
+* `highlight nonExistentTag` - Clears current highlighting
 
 === Listing all persons : `list`
 
