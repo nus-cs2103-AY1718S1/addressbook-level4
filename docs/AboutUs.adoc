@@ -17,7 +17,7 @@ image::tpq95.png[width="150", height="150", align="left"]
 {empty}[http://github.com/tpq95[github]] [<<johndoe#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: UI + Scheduling and Tracking 
+Responsibilities: UI + Scheduling and Tracking
 
 '''
 
