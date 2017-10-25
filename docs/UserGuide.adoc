@@ -61,6 +61,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+=== Cool features
+
+==== Routes Planning
+
+using google map functions to plan the routes to contacts' address +
+Usage: click the certain person, then enter your current position in starting point
+
+
 === Viewing help : `help`
 
 Format: `help`
@@ -94,6 +102,10 @@ Examples:
 
 Shows a list of all persons in the address book. +
 Format: `list`
+
+=== Sorting tasks by end date : `taskbyend`
+
+Sorts the list of tasks by their end date
 
 === Editing a person : `edit`
 
@@ -357,7 +369,6 @@ There is no need to save manually.
 === Auto-focusing on input bar at the start of the application
 === Setting a task to be recurring
 === Seeing tasks in certain range of time
-=== Listing tasks by date
 === Listing tasks by priority
 === Listing tasks by tag
 === Viewing one task details with the relevant person in the addressbook
