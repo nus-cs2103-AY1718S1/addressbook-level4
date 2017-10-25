@@ -85,8 +85,8 @@ public class BrowserPanelTest extends GuiUnitTest {
         // associated the route from entered location to selected person's address
         postNow(findRouteEventStub);
         URL expectedPersonUrl = new URL(GOOGLE_MAP_DIRECTION_URL_PREFIX
-                + ALICE.getAddress().toString().replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX
-                + startLocation.replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX);
+                + startLocation.replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX
+                + ALICE.getAddress().toString().replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
