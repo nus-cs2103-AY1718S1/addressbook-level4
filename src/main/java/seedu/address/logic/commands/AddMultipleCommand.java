@@ -50,10 +50,10 @@ public class AddMultipleCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_PERSON = "The persons list contains person(s) that already exists in the address book.";
     public static final String MESSAGE_INVALID_FILE = "Unable to open file '%1$s'";
     public static final String MESSAGE_ERROR_FILE = "Error reading file '%1$s'";
-    
+
     private ArrayList<Person> toAdd;
     private ArrayList<ReadOnlyPerson> readOnlyPeople;
-    
+
     /**
      * Creates an AddCommand to add the specified {@code ReadOnlyPerson}
      */
@@ -86,7 +86,7 @@ public class AddMultipleCommand extends UndoableCommand {
             } catch(PersonNotFoundException pnfe) {
                 throw new CommandException(MESSAGE_DUPLICATE_PERSON);
             }
-            
+
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

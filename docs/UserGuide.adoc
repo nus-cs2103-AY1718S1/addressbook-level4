@@ -105,7 +105,7 @@ n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 r/pretty
 Exports the all contacts to a `.txt` file in a specified location. +
 Format: `export [FILETYPE] [PATH]` +
 
-Example: 
+Example:
 
 * `export .txt C:/New Folder`
 
@@ -141,7 +141,7 @@ Finds persons whose contain any of the given keywords. +
 Format: `find PREFIX_PERSON_ATTRIBUTE/KEYWORD [MORE_KEYWORDS]... [MORE_PARAMETERS]...`
 
 ****
-* The search is a `OR` search. 
+* The search is a `OR` search.
 e.g. finding `n/alex r/friends` will display all persons that name contain `alex` along with all persons that have `friends` tag
 * The `OR` rule applies to all other individual attribute except `tags`.
 (i.e. persons matching at least one keyword will be returned except for `tags` field.)
@@ -226,7 +226,7 @@ Example:
 
 * `list` +
 `comment 2 c/Likes to play computer games.` +
-Selects the 2nd person in the address book and adds the above comment. 
+Selects the 2nd person in the address book and adds the above comment.
 
 === Making Appointment for a person : `appoint`
 
@@ -243,7 +243,7 @@ Example:
 
 * `list` +
 `appoint 2 ap/20/10/2017 14:45` +
-Selects the 2nd person in the address book and assigns the above appointment slot. 
+Selects the 2nd person in the address book and assigns the above appointment slot.
 
 === Login using Gmail or Yahoo Account: `email_login`
 
@@ -255,7 +255,7 @@ Format: `email_login "[EMAIL]" "[PASSWORD]"`
 * `"[PASSWORD]"` is the passwor. Example: `"testpass"`
 ****
 
-Example: 
+Example:
 ****
 * `email_login "cs2103testacc@gmail.com" "testpass"`
 ****
