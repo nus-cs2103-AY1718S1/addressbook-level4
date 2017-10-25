@@ -10,6 +10,9 @@ import seedu.address.logic.commands.AppointCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appoint;
 
+/**
+ * Parser class for the Appoint feature
+ */
 public class AppointCommandParser implements Parser<AppointCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AppointCommand
@@ -29,7 +32,7 @@ public class AppointCommandParser implements Parser<AppointCommand> {
         }
 
         String appoint = argMultimap.getValue(PREFIX_APPOINT).orElse("");
-
         return new AppointCommand(index, new Appoint(appoint));
+
     }
 }

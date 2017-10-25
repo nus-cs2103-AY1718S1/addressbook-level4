@@ -10,6 +10,9 @@ import seedu.address.logic.commands.CommentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Comment;
 
+/**
+ * Parser class for the Comment feature
+ */
 public class CommentCommandParser implements Parser<CommentCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the CommentCommand
