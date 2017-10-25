@@ -165,9 +165,9 @@ Edits the website of the 2nd person to be https://www.yahoo.com/ and change the 
 * `edit 1 pic/C:\pictures\clown.png +
 Edits the picture of the 1st person to the picture specified in the path i.e. clown.png
 
-=== Locating persons by name: `find` / `f`
+=== Locating persons: `find` / `f`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons who matches the given attributes. +
 
 > ##Version 1.3 (Current)## +
 
@@ -181,17 +181,17 @@ Finds persons whose names contain any of the given keywords. +
 
   Shorthand: `f [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [w/WEBSITE] [t/TAG]...`
 
-* There are 2 types of searches. One based on the input and prefix and the other only on Keywords.
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
+`Bo Yang`
 
 [big green]#Examples#:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 * `find n/John p/96654253`
 Returns a contact named "John" with phone number "96654253".
