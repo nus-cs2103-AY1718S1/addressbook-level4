@@ -25,8 +25,8 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-    public static final String GOOGLE_MAP_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps/place/";
-    public static final String GOOGLE_MAP_SEARCH_URL_SUFFIX = "";
+    public static final String GOOGLE_MAP_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps/dir//";
+    public static final String GOOGLE_MAP_SEARCH_URL_SUFFIX = "/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -75,14 +75,17 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handleMeetingPanelSelectionChangedEvent(MeetingPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadMeetingPage(event.getNewSelection().meeting);
+    }
+
+    @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
 
-    @Subscribe
-    private void handleMeetingPanelSelectionChangedEvent(MeetingPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadMeetingPage(event.getNewSelection().meeting);
-    }
+
+
 }

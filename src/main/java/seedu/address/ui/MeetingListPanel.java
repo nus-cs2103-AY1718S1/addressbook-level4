@@ -33,9 +33,9 @@ public class MeetingListPanel extends UiPart<Region> {
     }
 
     private void setConnections(ObservableList<ReadOnlyMeeting> meetingList) {
-        ObservableList<MeetingCard> mappedList = EasyBind.map(
+        ObservableList<MeetingCard> mappedMeetingList = EasyBind.map(
                 meetingList, (meeting) -> new MeetingCard(meeting, meetingList.indexOf(meeting) + 1));
-        meetingListView.setItems(mappedList);
+        meetingListView.setItems(mappedMeetingList);
         meetingListView.setCellFactory(listView -> new MeetingListPanel.MeetingListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
@@ -44,14 +44,14 @@ public class MeetingListPanel extends UiPart<Region> {
         meetingListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in meeting list panel changed to : '" + newValue + "'");
                         raise(new MeetingPanelSelectionChangedEvent(newValue));
                     }
                 });
     }
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code MeetingCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
