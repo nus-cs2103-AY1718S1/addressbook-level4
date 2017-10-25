@@ -361,14 +361,14 @@ image::RemarkModelDiagram.png[width="800"]
 **Pros:** There is more flexibility and remarks do not have to be stated upon addition of Person to addressbook. +
 **Cons:** More difficult to implement as new remark command and tests need to be created +
 **Alternative 2:** Add in remarks together with other Person details such as address, phone, email, etc +
-**Pros:** Easy to implement(implement spacing to create a new command class, just modify existing add command) +
+**Pros:** Easy to implement (implement spacing to create a new command class, just modify existing add command) +
 **Cons:** The user will have to key in huge amount of information before adding into the addressbook. +
 
 ---
 
 **Aspect:** Implement remark as distinct from tag +
 **Alternative 1 (current choice):** Create a new seperate remark command +
-**Pros:** Able to provide a cleaner user interface and experience.Also reduces complications in modifying existing working tag system. +
+**Pros:** Able to provide a cleaner user interface and experience. Also reduces complications in modifying existing working tag system. +
 **Cons:** More work has to be done in testing and creating a new command. +
 **Alternative 2:** update the tag to accept sentences for remarks +
 **Pros:** Easy to implement as we do not need to add a new command. +
