@@ -38,7 +38,7 @@ public class UserPrefs {
         return addressBookFilePath;
     }
 
-    public String getAddressBookFilePath(){
+    public String getAddressBookFilePath() {
 
         return addressBookFilePath;
     }

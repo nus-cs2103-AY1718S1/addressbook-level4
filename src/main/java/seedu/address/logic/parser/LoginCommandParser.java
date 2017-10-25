@@ -1,19 +1,19 @@
 package seedu.address.logic.parser;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+
+import java.util.stream.Stream;
+
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.*;
-import seedu.address.model.tag.Tag;
 
-import java.util.Set;
-import java.util.stream.Stream;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
+/**
+ *
+ */
 public class LoginCommandParser implements Parser<LoginCommand> {
 
     /**
