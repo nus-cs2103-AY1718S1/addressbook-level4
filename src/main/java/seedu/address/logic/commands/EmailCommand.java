@@ -36,4 +36,6 @@ public class EmailCommand extends Command {
         emailClient.sendMail();
         return new CommandResult(MESSAGE_SUCCESS);
     }
+    
+    
 }

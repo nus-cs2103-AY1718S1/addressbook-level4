@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.io.IOException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -99,7 +100,7 @@ public class LogicManagerTest {
             CommandResult result = logic.execute(inputCommand);
             assertEquals(expectedException, null);
             assertEquals(expectedMessage, result.feedbackToUser);
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | ParseException | IOException e) {
             assertEquals(expectedException, e.getClass());
             assertEquals(expectedMessage, e.getMessage());
         }
@@ -117,7 +118,7 @@ public class LogicManagerTest {
             String expectedMessage = String.format(
                     HistoryCommand.MESSAGE_SUCCESS, String.join("\n", expectedCommands));
             assertEquals(expectedMessage, result.feedbackToUser);
-        } catch (ParseException | CommandException e) {
+        } catch (ParseException | CommandException | IOException e) {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }
