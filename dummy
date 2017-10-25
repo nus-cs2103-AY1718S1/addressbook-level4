@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<userperson>
+    <name>Dummy</name>
+    <phone>11111111</phone>
+    <emailList>
+        <value>dummy@dummy.com</value>
+    </emailList>
+    <address>Dummy</address>
+</userperson>

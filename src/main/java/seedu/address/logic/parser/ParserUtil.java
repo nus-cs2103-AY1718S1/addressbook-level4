@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,6 +35,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -74,9 +77,13 @@ public class ParserUtil {
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
+    public static ArrayList<Email> parseEmail(Collection<String> email) throws IllegalValueException {
         requireNonNull(email);
-        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+        final ArrayList<Email> temp = new ArrayList<>();
+        for (String e : email) {
+            temp.add(new Email(e));
+        }
+        return temp;
     }
 
     /**
@@ -89,5 +96,26 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static String parseWebname(String webname) throws IllegalValueException {
+        requireNonNull(webname);
+        return webname.trim();
+    }
+
+    /**
+     * Parses {@code Collection<String> webLinks} into a {@code Set<weblink>}.
+     */
+    public static Set<WebLink> parseWebLink(Collection<String> webLinks) throws IllegalValueException {
+        requireNonNull(webLinks);
+        final Set<WebLink> webLinkSet = new HashSet<>();
+        for (String webLinkName : webLinks) {
+            webLinkSet.add(new WebLink(webLinkName));
+        }
+        return webLinkSet;
     }
 }

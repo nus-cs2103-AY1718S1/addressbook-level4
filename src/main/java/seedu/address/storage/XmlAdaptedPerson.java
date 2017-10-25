@@ -14,6 +14,8 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,12 +28,17 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String phone;
     @XmlElement(required = true)
-    private String email;
+    private ArrayList<Email> emailList;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String remark;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
+    @XmlElement
+    private List<XmlAdaptedWebLink> webLink = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -48,11 +55,19 @@ public class XmlAdaptedPerson {
     public XmlAdaptedPerson(ReadOnlyPerson source) {
         name = source.getName().fullName;
         phone = source.getPhone().value;
-        email = source.getEmail().value;
+        emailList = new ArrayList<>();
+        for (Email email : source.getEmail()) {
+            emailList.add(email);
+        }
         address = source.getAddress().value;
+        remark = source.getRemark().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
+        }
+        webLink = new ArrayList<>();
+        for (WebLink webLink : source.getWebLinks()) {
+            this.webLink.add(new XmlAdaptedWebLink(webLink));
         }
     }
 
@@ -66,11 +81,17 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        final List<WebLink> webLinkInputs = new ArrayList<>();
+        for (XmlAdaptedWebLink webLink: webLink) {
+            webLinkInputs.add(webLink.toModelType());
+        }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
-        final Email email = new Email(this.email);
+        final ArrayList<Email> email = new ArrayList<>(this.emailList);
         final Address address = new Address(this.address);
+        final Remark remark = new Remark(this.remark);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        final Set<WebLink> webLinks = new HashSet<>(webLinkInputs);
+        return new Person(name, phone, email, address, remark, tags, webLinks);
     }
 }

@@ -3,10 +3,12 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UserPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
+import seedu.address.model.tag.Tag;
 /**
  * The API of the Model component.
  */
@@ -36,13 +38,27 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+
+    void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    void sortFilteredPersonList();
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /** Returns the UserPerson */
+    UserPerson getUserPerson();
+
+    /**
+     * Updates the UserPerson with an editedPerson
+     * @param editedPerson
+     */
+    void updateUserPerson(ReadOnlyPerson editedPerson);
 
 }

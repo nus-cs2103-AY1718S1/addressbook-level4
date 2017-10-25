@@ -2,7 +2,9 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getSortedTypicalPersons;
+import static seedu.address.testutil.TypicalPersons.getUnsortedTypicalPersons;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +20,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.weblink.WebLink;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -41,7 +45,7 @@ public class AddressBookTest {
 
     @Test
     public void resetData_withValidReadOnlyAddressBook_replacesData() {
-        AddressBook newData = getTypicalAddressBook();
+        AddressBook newData = getSortedTypicalAddressBook();
         addressBook.resetData(newData);
         assertEquals(newData, addressBook);
     }
@@ -51,10 +55,24 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<WebLink> newWebLinks = new ArrayList<>(ALICE.getWebLinks());
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newWebLinks);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
+    }
+
+    @Test
+    public void sortPersonList_modifyList_success() {
+        try {
+            AddressBook newData = new AddressBook();
+            newData.setPersons(getSortedTypicalPersons());
+            addressBook.setPersons(getUnsortedTypicalPersons());
+            addressBook.sortPersons();
+            assertEquals(addressBook, newData);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("person is expected to be unique.");
+        }
     }
 
     @Test
@@ -75,10 +93,13 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<WebLink> webLinks = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags,
+                        Collection<? extends WebLink> webLinks) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.webLinks.setAll(webLinks);
         }
 
         @Override

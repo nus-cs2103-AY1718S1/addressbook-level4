@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F11-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -54,7 +54,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person: `add` or `a`
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
@@ -65,17 +65,29 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal w/google.com`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` or `l`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::sort[]
+=== Listing all persons in order: `sort`
+
+Shows a list of all persons in the address book by the indicated format. Currently only supports name. +
++ Available FILTERTYPES: name
+Format: `list FILTERTYPE`
+
+Examples:
+
+* 'sort name'
+// end::sort[]
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG] [w/WEBLINK]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -91,6 +103,24 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Delete tag form all persons: 'tagDelete'
+
+Deletes a tag inputted by the user from all existing person in the address book. +
+Format: `tagDelete [tag name]`
+
+****
+* the matching of tag is case sensitive.
+* Tags that matches the tag inputted by the user wll be deleted.
+* only the tag set attached to each person will be searched.
+****
+
+Examples:
+
+* `tagDelete friends` +
+the tag friends will be deleted from any person in the addressbook that has this tag.
+* `tagDelete noSuchTag` +
+Nothing will happen if no such tag is present in any person in the address book
 
 === Locating persons by name: `find`
 
@@ -111,6 +141,28 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+// tag::filtercommand[]
+=== Locating persons by tags: `filter`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `filter KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `FrIendS`
+* The order of the keywords does not matter. e.g. `Friends owesmoney` will match `owesmoney friends`
+* Only the tags are searched.
+* Only full tags will be matched e.g. `money` will not match `owesmoney`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends owesmoney` will return `owesmoney`, `friends`
+****
+
+Examples:
+
+* `filter friends` +
+Returns `john` with tags `[friends][owesmoney]` and `John Doe` with tags `[others][friends]`
+* `filter friends owesmoney others` +
+Returns any person having tags `friends`, `owesmoney`, or `others`
+// end::filtercommand[]
 
 === Deleting a person : `delete`
 
@@ -212,6 +264,38 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::remark[]
+=== Adding Remark to a person : `remark`
+
+Adds a remark to a person. +
+Format: 'remark INDEX [r/REMARK]'
+
+Examples:
+
+* `list` +
+`remark 1 r/Eats a lot` +
+Adds a 'remark' to the 1st person in the list. +
+
+A new remark added to the same person will overwrite the previous remark.
+// end::remark[]
+
+// tag::updateUserPerson[]
+=== Updating User Profile: `update`
+
+Edits the User Profile contact card similar to edit command, but does not take in any index parameter. +
+Only the name, email, address and phone number of the User Person can be updated. +
+The user profile is stored in data/userProfile.xml by default. +
+
+Format: 'update [n/Name] [p/Phone] [e/Email] [a/Address]'
+
+Examples:
+
+* `update n/Drake p/93236353` +
+Updates the name and phone number of the User Person, saved to userProfile.xml. +
+
+Any new information added will overwrite previous data.
+// end::updateUserPerson[]
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -222,9 +306,35 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+// tag::viewAddress[]
+=== Viewing address in Google Maps : `web maps`
+
+Changes the internal browser to the maps view of the address of a selected contact.
+Format `web facebook||instagram||linkedin||personal||maps`
+
+[NOTE]
+====
+Contact must be selected before selecting the buttons.
+
+====
+// end::viewAddress[]
+
+// tag::viewSocialMedia[]
+=== Viewing Social Media Links : `web`
+
+Changes the internal browser to the maps view of the address of a selected contact.
+Format `web facebook||instagram||linkedin||personal`
+
+[NOTE]
+====
+Contact must be selected before selecting the buttons.
+
+====
+// end::viewAddress[]
+
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Address book data and user profile data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 == FAQ
@@ -234,11 +344,13 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG] [w/WEBLINK]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague w/google.com`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *tagDelete* : `tagDelete TAG` +
+e.g. `tagDelete friend`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -249,4 +361,24 @@ e.g. `find James Jake`
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
+* *Update User* : `update`
 * *Redo* : `redo`
+* *Web* : `web`
+
+// tag::commandaliases[]
+=== Alternative Command Aliases
+
+* *Add* `add` or `a`
+* *Clear* : `clear` or `c`
+* *Delete* : `delete` or `d`
+* *Edit* : `edit` or `e`
+* *Find* : `find` or `f`
+* *List* : `list` or `l`
+* *Help* : `help` or `h`
+* *Select* : `select` or `s`
+* *History* : `history` or `his`
+* *Undo* : `undo` or `u`
+* *Redo* : `redo` or `r`
+* *Web* : `web` or `w`
+
+// end::commandaliases[]

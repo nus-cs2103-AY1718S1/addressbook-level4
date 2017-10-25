@@ -1,0 +1,94 @@
+= Phua Han Siang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Filter Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=filtercommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows for a user to search for contacts through the matching of tags as opposed to by name.
+
+==== Implementation
+
+---
+The implementation is similar to the `find` command.
+
+---
+
+=== Enhancement Added: Command Aliases
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=commandaliases]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This allows a user to use short form commands rather than the actual full command name.
+
+=== Enhancement Added:  View social media links of contact
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=websiteselectionevent]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Viewing of Address
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=viewAddress]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=websitebuttonbar]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This allows a user view the Social Links and Address of a contact directly within the application.
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])

@@ -1,0 +1,76 @@
+= Joshua Ng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Remark Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+include::../UserGuide.adoc[tag=sort]
+
+include::../UserGuide.adoc[tag=updateUserPerson]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+==== Sort Command
+
+Sorting is important to the viewability of lists as it helps one to find the relevant information more easily as
+opposed to scanning through the entire list for their desired information. The current sort command implementation
+only supports sorting by name, but further enhancements will allow it to sort in ascending and descending orders
+by name, email, address, phone numbers, etc.
+
+==== UserPerson/UserProfile
+The UserProfile is an object that contains the UserPerson details. It can later be extended to include additional data.
+A GUI will allow the user to view their current User Person details, and allow editing of the User Person information.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+The remark command allows additional information to be displayed on a person's card.
+
+=== Enhancement Proposed: Add command `sort`
+
+The sort command would allow the user to display their list of contacts in an order that they prefer. Some users may want to
+view their contacts in order by First Name, Last Name, Email Address, Address or simply by the date they added the contact.
+
+=== Enhancement Proposed: User Profile/User Person
+
+The User Profile will contain the user's contact card, which sets up for a later feature where contact cards can be shared.
+The user would then be able to share their contact instead of requiring others to key in the add command. This could also
+be extended to implementation of multiple users of one address book app. Each user profile would contain their own address
+book and user contact card. A GUI will allow ease of user profile editing as well as viewing of the user profile.
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
