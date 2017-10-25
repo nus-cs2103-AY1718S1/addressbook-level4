@@ -5,16 +5,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import com.sun.org.apache.regexp.internal.RE;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
@@ -49,7 +45,7 @@ public class AddMultipleCommandTest {
         Person validPerson2 = new PersonBuilder().withName("Bob").build();
         validPersonArrayList.add(validPerson1);
         validPersonArrayList.add(validPerson2);
-        
+
         CommandResult commandResult = getAddMultipleCommandForPerson(validPersonArrayList, modelStub).execute();
 
         StringBuilder successMessage = new StringBuilder();
@@ -57,7 +53,7 @@ public class AddMultipleCommandTest {
             successMessage.append(System.lineSeparator());
             successMessage.append(personToAdd);
         }
-        
+
         assertEquals(String.format(AddMultipleCommand.MESSAGE_SUCCESS, successMessage), commandResult.feedbackToUser);
         assertEquals(validPersonArrayList, modelStub.personsAdded);
     }
@@ -81,17 +77,17 @@ public class AddMultipleCommandTest {
     public void equals() {
         ArrayList<ReadOnlyPerson> personArrayList1 = new ArrayList<>();
         ArrayList<ReadOnlyPerson> personArrayList2 = new ArrayList<>();
-        
+
         ReadOnlyPerson alice = new PersonBuilder().withName("Alice").build();
         ReadOnlyPerson bob = new PersonBuilder().withName("Bob").build();
         ReadOnlyPerson mary = new PersonBuilder().withName("Mary").build();
         ReadOnlyPerson jane = new PersonBuilder().withName("Jane").build();
-        
+
         personArrayList1.add(alice);
         personArrayList1.add(bob);
         personArrayList2.add(mary);
         personArrayList2.add(jane);
-        
+
         AddMultipleCommand addPersonArrayList1 = new AddMultipleCommand(personArrayList1);
         AddMultipleCommand addPersonArrayList2 = new AddMultipleCommand(personArrayList2);
 
@@ -117,7 +113,7 @@ public class AddMultipleCommandTest {
      */
     private AddMultipleCommand getAddMultipleCommandForPerson(ArrayList<ReadOnlyPerson> personList, Model model) {
         AddMultipleCommand command = new AddMultipleCommand(personList);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
         return command;
     }
 
@@ -167,7 +163,7 @@ public class AddMultipleCommandTest {
         public void deleteTag(Tag tag) {
             fail("This method should not be called.");
         }
-        
+
         @Override
         public void updateFilteredListToShowAll() {
             fail("This method should not be called.");

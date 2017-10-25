@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+
+
 /**
  * Represents a Person's appoint in the address book.
  * Guarantees: immutable; is always valid
@@ -9,7 +11,7 @@ import static java.util.Objects.requireNonNull;
 public class Appoint {
 
     public static final String MESSAGE_APPOINT_CONSTRAINTS =
-            "Person appoints can take any values, can even be blank";
+            "Person appointments should be recorded as DD/MM/YYYY TT:TT, but can be left blank";
 
     public final String value;
 

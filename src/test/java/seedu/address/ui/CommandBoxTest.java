@@ -31,7 +31,7 @@ public class CommandBoxTest extends GuiUnitTest {
     public void setUp() {
         Model model = new ModelManager();
         Email emailManager = new EmailManager();
-        Logic logic = new LogicManager(model, emailManager);
+        Logic logic = new LogicManager(model, emailManager, "./src/test/test.xml");
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),

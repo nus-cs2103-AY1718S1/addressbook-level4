@@ -61,10 +61,6 @@ public class MainApp extends Application {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
-        //Ui testUiObject = null;
-        //assert testUiObject != null : "WARNING: Assertions have been enabled";
-        assert false : "WARNING: Assertions have been enabled";
-
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
@@ -78,7 +74,7 @@ public class MainApp extends Application {
 
         email = new EmailManager();
 
-        logic = new LogicManager(model, email);
+        logic = new LogicManager(model, email, userPrefs.getAddressBookFilePath());
 
         ui = new UiManager(logic, config, userPrefs);
 

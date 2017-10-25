@@ -16,7 +16,7 @@ public class EmailSendCommandTest {
     @Test
     public void notLoggedIn() throws CommandException {
         command = new EmailSendCommand(new String[] {"cs2103testacc@gmail.com"}, "Title", "Body");
-        command.setData(null, null, null, emailManager);
+        command.setData(null, null, null, emailManager, null);
 
         CommandResult result = command.execute();
         assertEquals("No email logged in", result.feedbackToUser);
@@ -29,7 +29,7 @@ public class EmailSendCommandTest {
         emailManager.login("cs2103testacc@gmail.com", "testpass");
 
         command = new EmailSendCommand(new String[] {"cs2103testacc;adffd"}, "Title", "Body");
-        command.setData(null, null, null, emailManager);
+        command.setData(null, null, null, emailManager, null);
 
         CommandResult result = command.execute();
         assertEquals("One or more of the given emails is not valid", result.feedbackToUser);

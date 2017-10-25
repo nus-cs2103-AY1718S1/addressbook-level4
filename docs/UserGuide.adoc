@@ -78,16 +78,16 @@ Format: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123,
 // tag::multiple[]
 === Adding multiple persons: `multiple`
 
-Adds multiple persons to the address book with inputs from a `.txt` file stored in the default data folder +
-Default data folder: `./data` +
-Format: `multiple FILE_NAME.txt`
+Adds multiple persons to the address book from a given file path of a `.txt` file. +
+Default avatar folder: `./images/avatars` +
+Format: `multiple FILE_PATH`
 
 Examples:
 
-* `multiple personsToAdd.txt`
-* `multiple newStudentsToAdd.txt` 
+* `multiple ./data/personsToAdd.txt`
+* `multiple ./data/newStudentsToAdd.txt`
 
-Person format in `.txt` file: `n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Person format in `.txt` file: `n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/AVATAR_FILE_PATH [t/TAG]...`
 
 [TIP]
 The format in the `.txt` file is the same as `add` command except without the `add`
@@ -95,9 +95,9 @@ The format in the `.txt` file is the same as `add` command except without the `a
 Example of `.txt` file:
 
 ****
-n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 +
-n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal +
-n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 t/pretty
+n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/john_doe.png +
+n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 r/criminal +
+n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 r/pretty
 ****
 // end::multiple[]
 
@@ -105,7 +105,7 @@ n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 t/pretty
 Exports the all contacts to a `.txt` file in a specified location. +
 Format: `export [FILETYPE] [PATH]` +
 
-Example: 
+Example:
 
 * `export .txt C:/New Folder`
 
@@ -141,7 +141,7 @@ Finds persons whose contain any of the given keywords. +
 Format: `find PREFIX_PERSON_ATTRIBUTE/KEYWORD [MORE_KEYWORDS]... [MORE_PARAMETERS]...`
 
 ****
-* The search is a `OR` search. 
+* The search is a `OR` search.
 e.g. finding `n/alex r/friends` will display all persons that name contain `alex` along with all persons that have `friends` tag
 * The `OR` rule applies to all other individual attribute except `tags`.
 (i.e. persons matching at least one keyword will be returned except for `tags` field.)
@@ -226,7 +226,7 @@ Example:
 
 * `list` +
 `comment 2 c/Likes to play computer games.` +
-Selects the 2nd person in the address book and adds the above comment. 
+Selects the 2nd person in the address book and adds the above comment.
 
 === Making Appointment for a person : `appoint`
 
@@ -243,7 +243,7 @@ Example:
 
 * `list` +
 `appoint 2 ap/20/10/2017 14:45` +
-Selects the 2nd person in the address book and assigns the above appointment slot. 
+Selects the 2nd person in the address book and assigns the above appointment slot.
 
 === Login using Gmail or Yahoo Account: `email_login`
 
@@ -255,7 +255,7 @@ Format: `email_login "[EMAIL]" "[PASSWORD]"`
 * `"[PASSWORD]"` is the passwor. Example: `"testpass"`
 ****
 
-Example: 
+Example:
 ****
 * `email_login "cs2103testacc@gmail.com" "testpass"`
 ****
@@ -339,6 +339,18 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::merge[]
+=== Merging given file to default storage file : `merge`
+
+Merges the given `.xml` file to the default storage `.xml` file specified in `preferences.json`. +
+Format: `merge NEW_FILE_PATH`
+
+Examples:
+
+* `merge ./data/newFile.xml`
+* `merge ./data/otherClass.xml`
+
+// end::merge[]
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -399,3 +411,4 @@ e.g. `email_send "firstemail@gmail.com;secondemail@yahoo.com" "Test title" "Test
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Merge* : `merge`

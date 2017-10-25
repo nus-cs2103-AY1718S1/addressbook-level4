@@ -7,8 +7,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import com.sun.org.apache.xpath.internal.compiler.Keywords;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -81,9 +79,12 @@ public class ParserUtil {
     /**
      * Parses a {@code Optional<String> avatar_image_path} into an {@code Optional<Avatar>} if {@code avatar_image_path} is present.
      */
-    public static Optional<Avatar> parseAvatar(Optional<String> avatar_image_path) throws IllegalValueException {
+    public static Optional<Avatar> parseAvatar(
+            Optional<String> avatar_image_path) throws IllegalValueException {
         // Return default Avatar image if empty
-        return avatar_image_path.isPresent() ? Optional.of(new Avatar(Avatar.getDirectoryPath(avatar_image_path.get()))) : Optional.of(new Avatar());
+        return avatar_image_path.isPresent() ? Optional.of(
+                new Avatar(Avatar.getDirectoryPath(
+                        avatar_image_path.get()))) : Optional.of(new Avatar());
     }
 
     /**

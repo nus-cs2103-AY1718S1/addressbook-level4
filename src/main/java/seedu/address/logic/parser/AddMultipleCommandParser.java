@@ -7,32 +7,26 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINT;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Stream;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.commands.AddMultipleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appoint;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.Comment;
-import seedu.address.model.person.Appoint;
 import seedu.address.model.tag.Tag;
-import sun.net.www.ParseUtil;
 
 /**
  * Parses input arguments and creates a new AddMultipleCommand object
@@ -46,24 +40,24 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddMultipleCommand parse(String args) throws ParseException {
-        String fileName = args.trim();
-        if (fileName.isEmpty()) {
+        String filePath = args.trim();
+        if (filePath.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMultipleCommand.MESSAGE_USAGE));
         }
 
         ArrayList<ReadOnlyPerson> personsList = new ArrayList<>();
-        File fileToRead = new File(AddMultipleCommand.DEFAULT_FOLDER_PATH, fileName);
+        File fileToRead = new File(filePath);
         String data;
 
         if (!FileUtil.isFileExists(fileToRead)) {
-            throw new ParseException(String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, fileName));
+            throw new ParseException(String.format(AddMultipleCommand.MESSAGE_INVALID_FILE, filePath));
         }
 
         try {
             data = FileUtil.readFromFile(fileToRead);
         } catch (IOException ie) {
-            throw new ParseException(String.format(AddMultipleCommand.MESSAGE_ERROR_FILE, fileName));
+            throw new ParseException(String.format(AddMultipleCommand.MESSAGE_ERROR_FILE, filePath));
         }
 
         String lines[] = data.split(System.lineSeparator());

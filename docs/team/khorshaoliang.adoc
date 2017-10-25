@@ -44,6 +44,24 @@ include::../UserGuide.adoc[tag=find]
 
 Allowing users to find persons based on tags will allow users to know the relationship with their contact.
 
+=== Enhancement Added: Merge given XML file to default storage XML file
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=merge]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Main tutors with many assistant tutors is able to merge the different address book of my assistant tutors
+so as to have all the student contacts.
+
 == Project: GoPost!
 
 GoPost! is an exciting platform that provide users a one-stop portal for all events needs. The web application offers a spectrum of features and utility. Users will be able to create events, create a registration forms, manage their events schedules, and many more.

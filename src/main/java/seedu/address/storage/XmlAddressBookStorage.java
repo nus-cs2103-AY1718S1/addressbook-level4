@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -19,6 +20,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 public class XmlAddressBookStorage implements AddressBookStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
+
+    public static final String DEFAULT_MERGE_FILE_PATH = "./data/mergeAddressBook.xml";
 
     private String filePath;
 
@@ -77,6 +80,29 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         //saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
+    }
+
+    @Override
+    public void mergeAddressBook(String newFilePath) throws DataConversionException, IOException {
+        mergeAddressBook(newFilePath, filePath);
+    }
+
+    /**
+     * Similar to {@link #mergeAddressBook(String)}
+     * @param defaultFilePath location of the data. Cannot be null
+     * @param newFilePath location of the data. Cannot be null
+     */
+    public void mergeAddressBook(String newFilePath, String defaultFilePath) throws DataConversionException, IOException {
+        requireNonNull(defaultFilePath);
+        requireNonNull(newFilePath);
+
+        File defaultFile = new File(defaultFilePath);
+        File newFile = new File(newFilePath);
+
+        XmlSerializableAddressBook defaultFileData = XmlFileStorage.loadDataFromSaveFile(defaultFile);
+        XmlSerializableAddressBook newFileData = XmlFileStorage.loadDataFromSaveFile(newFile);
+
+        XmlFileStorage.mergeDataToFile(defaultFileData, newFileData);
     }
 
 }
