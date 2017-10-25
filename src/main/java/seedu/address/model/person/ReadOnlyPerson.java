@@ -53,8 +53,6 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
-        builder.append(" Groups: ");
-        getGroups().forEach(builder::append);
         return builder.toString();
     }
 

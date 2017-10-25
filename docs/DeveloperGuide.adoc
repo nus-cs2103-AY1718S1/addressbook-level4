@@ -351,7 +351,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 * Conceptually different. Groups are long-term, standalone constructs, while Tags are individual Person's attributes
 * Groups have attributes (number of members)
 * Groups can be listed together with their members
-* Adding and removal from a Group can be done in batches (multiple Persons at a time)
 
 Big picture. Note that AddressBook further updates the Person's references to the groups.
 `filtered` denotes the Person extracted by applying the index filtering.
