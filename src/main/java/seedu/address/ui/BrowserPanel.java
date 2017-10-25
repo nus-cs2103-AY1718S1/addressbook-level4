@@ -56,14 +56,7 @@ public class BrowserPanel extends UiPart<Region> {
      * @param person the person whose location is to be shown on the map
      */
     public void loadLocationPage(ReadOnlyPerson person) {
-        int endIndex = person.getAddress().toString().indexOf(",");
-        if (endIndex == -1) {
-            endIndex = person.getAddress().toString().length();
-        }
-        String location = person.getAddress().toString().substring(0, endIndex);
-
-
-        loadPage(GOOGLE_MAP_SEARCH_URL_PREFIX + location.replaceAll(" ", "+")
+        loadPage(GOOGLE_MAP_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
                 + GOOGLE_MAP_SEARCH_URL_SUFFIX);
     }
 
