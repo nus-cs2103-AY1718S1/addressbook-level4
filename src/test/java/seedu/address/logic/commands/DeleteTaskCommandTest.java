@@ -32,12 +32,12 @@ public class DeleteTaskCommandTest {
         ReadOnlyTask taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
         DeleteTaskCommand deleteTaskCommand = prepareCommand(INDEX_FIRST_TASK);
 
-        //deleteTaskCommand.executeUndoableCommand();
+
         String expectedMessage = String.format(DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getTaskBook(), new UserPrefs());
-        //System.out.println(expectedModel);
-        //expectedModel.deleteTask(taskToDelete);
+
+        expectedModel.deleteTask(taskToDelete);
 
         assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
     }
