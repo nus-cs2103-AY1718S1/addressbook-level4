@@ -1,20 +1,8 @@
 package seedu.address.model;
 
-import static java.util.Objects.requireNonNull;
-
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.logging.Logger;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -30,6 +18,17 @@ import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
+
 /**
  * Represents the in-memory model of the address book data.
  * All changes to any model should be synchronized.
@@ -39,7 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyLesson> filteredLessons;
-    private final HashSet<BookedSlot> bookedList;
+    private final ArrayList<BookedSlot> bookedList;
     private ReadOnlyLesson currentViewingLesson;
     private String currentViewingAttribute;
 
@@ -57,7 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
         Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
         ListingUnit.setCurrentPredicate(predicate);
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
-        bookedList = new HashSet<BookedSlot>();
+        bookedList = new ArrayList<BookedSlot>();
         initializeBookedSlot();
         currentViewingAttribute = "default";
 
@@ -107,7 +106,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -155,10 +156,14 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void bookingSlot(BookedSlot target) throws DuplicateBookedSlotException {
-        if (!bookedList.contains(target)) {
-            bookedList.add(target);
-        } else {
-            throw new DuplicateBookedSlotException();
+
+        for (int i = 0; i < bookedList.size(); i++) {
+            if (bookedList.get(i).equals(target)) {
+                bookedList.add(target);
+                break;
+            } else if (i == bookedList.size() - 1) {
+                throw new DuplicateBookedSlotException();
+            }
         }
     }
 
