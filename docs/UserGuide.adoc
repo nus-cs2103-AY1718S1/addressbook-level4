@@ -101,8 +101,8 @@ Shorthand: `l`
 === Editing a person : `edit` `Since v1.0`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
-Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
+Shorthand: `e INDEX [n/NAME] [p/ student/(STUDENT_NUMBER) parent/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -114,12 +114,12 @@ Shorthand: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/T
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com c/309428` +
-Edits the phone number, email address and postal code of the 1st person to be `91234567`, `johndoe@example.com` and `309428` respectively.
+* `edit 1 p/ parent/91234567 e/johndoe@example.com c/309428` +
+Edits the parent phone number, email address and postal code of the 1st person to be `91234567`, `johndoe@example.com` and `309428` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-* `e 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `e 1 p/ student/91234567 parent/91242271 e/johndoe@example.com` +
+Edits the student and parent phone number, and email address of the 1st person to be `91234567`, `91242271` and `johndoe@example.com` respectively.
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
@@ -242,6 +242,32 @@ Sorts the list in alphabetical order.
 `st` +
 Sorts the list in alphabetical order.
 
+=== Adding/Deleting a remark to a person : `remark` `Since v1.2`
+
+Adds or removes a remark from the specified person in the address book +
+Format: `remark Index [rm/REMARK]` +
+Shorthand: `rm Index [rm/REMARK]`
+
+****
+* Adds or deletes a remark at the specific`INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be positive integer* 1, 2, 3, ...
+* Addition of remarks on a person already with remarks will be overwritten.
+* Person with no remarks will display `(add a new remark)`.
+****
+
+Examples:
+
+* `list` +
+`remark 2 rm/This is a remark` +
+Overwrites/adds the 1st person remark.
+* `find betsy` +
+`remark 1 rm/Betsy is a female` +
+Overwrites/adds the 1st person in the results of `find` command.
+* `list` +
+`remark 2 rm/` +
+removes remark from the 2nd person in the address book.
+
 === Listing entered commands : `history` `Since v1.0`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -335,7 +361,7 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 [width="100%",cols="10%,<10%,<80%",options="header",]
 |=======================================================================
 |Command |ShortHand | Example
-| Add | `a` +| `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
+| Add | `a` +| `a n/NAME student/STUDENT_NUMBER parent/PARENT_NUMBER e/EMAIL a/ADDRESS c/POSTALCODE [t/TAG]...` +
 | Clear | `c` + | `c` +
 | Delete | `d`  | `d 3` +
 | Edit | `e` + | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/POSTALCODE] [t/TAG]...` +
