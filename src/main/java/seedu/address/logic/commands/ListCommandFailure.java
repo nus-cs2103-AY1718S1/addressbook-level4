@@ -10,7 +10,7 @@ public class ListCommandFailure extends Command{
 
     public static final String MESSAGE_FAILURE = "Invalid input detected. Valid list variations: \n"
             + COMMAND_WORD + " \n"
-            + COMMAND_WORD + " [TAGS] \n"
+            + COMMAND_WORD + " tag [TAG/s] \n"
             + COMMAND_WORD + " asc \n"
             + COMMAND_WORD + " ascending \n";
 

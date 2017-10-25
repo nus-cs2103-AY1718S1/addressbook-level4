@@ -128,14 +128,25 @@ public class AddressBookParser {
     }
 
     private Command listEvaluator(String arguments) throws ParseException{
-        switch (arguments.trim().split(" ")[0]) {
+        String[] argSplit = arguments.trim().split(" ");
+        String firstArg = argSplit[0];
+        int firstArgLength = firstArg.length();
+        Command returnThisCommand;
+        switch (firstArg) {
             case "":
-                return new ListCommand();
+                returnThisCommand = new ListCommand();
+                break;
             case "tag":
-                return new ListByTagCommandParser().parse(arguments.substring(3));
+                returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength));
+                break;
+            case "asc":
+            case "ascending":
+                returnThisCommand = (argSplit.length == 1) ? new ListAscendingName() : new ListCommandFailure();
+                break;
             default:
-                return new ListCommandFailure();
+                returnThisCommand = new ListCommandFailure();
         }
+        return returnThisCommand;
     }
 
 }
