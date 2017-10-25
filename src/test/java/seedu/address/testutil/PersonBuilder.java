@@ -123,4 +123,16 @@ public class PersonBuilder {
         return this.person;
     }
 
+    /**
+     *  Sets the {@code ExpiryDate} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withExpiryDate(String dateString) {
+        try {
+            this.person.setExpiryDate(new ExpiryDate(dateString));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("date is invalid (nonexistent date or incorrect format.");
+        }
+        return this;
+    }
+
 }
