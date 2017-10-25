@@ -25,18 +25,18 @@ import seedu.address.model.person.exceptions.DuplicateEventException;
  */
 public class TypicalEvents {
 
-    public static final ReadOnlyEvent EVENT1 = new EventBuilder().withEventName("HHN 6001")
+    public static final ReadOnlyEvent EVENT1 = new EventBuilder().withName("HHN 6001")
             .withDateTime("22022015 08:30")
             .withVenue("123, Sentosa, #08-111").build();
-    public static final ReadOnlyEvent EVENT2 = new EventBuilder().withEventName("ZoukOut 6001")
+    public static final ReadOnlyEvent EVENT2 = new EventBuilder().withName("ZoukOut 6001")
             .withDateTime("25122017 10:30")
             .withVenue("123, Clarke Quay #01-111").build();
 
     // Manually added
-    public static final ReadOnlyEvent EVENTM1 = new EventBuilder().withEventName("Volleyball Tour 17")
+    public static final ReadOnlyEvent EVENTM1 = new EventBuilder().withName("Volleyball Tour 17")
             .withDateTime("25122017 08:30")
             .withVenue("OCBC ARENA Hall 3, #01-111").build();
-    public static final ReadOnlyEvent EVENTM2 = new EventBuilder().withEventName("Meeting with Jason")
+    public static final ReadOnlyEvent EVENTM2 = new EventBuilder().withName("Meeting with Jason")
             .withDateTime("25112016 02:30")
             .withVenue("123, Sheraton Towers , #06-111").build();
 

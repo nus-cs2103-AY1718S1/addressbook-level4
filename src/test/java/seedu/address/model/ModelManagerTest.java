@@ -78,10 +78,11 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
         ObservableList<ReadOnlyPerson> persons = modelManager.getAddressBook().getPersonList();
         int originalPersonListSize = persons.size();
-        modelManager.addPerson(TypicalPersons.A1234B);
+        modelManager.addPerson(TypicalPersons.HOON);
         int newPersonListSize = modelManager.getAddressBook().getPersonList().size();
         assertEquals(1, newPersonListSize - originalPersonListSize);
     }
+
     @Test
     public void sortEventList_successfullySortEvent() throws Exception {
         AddressBook addressBook = getTypicalAddressBook();

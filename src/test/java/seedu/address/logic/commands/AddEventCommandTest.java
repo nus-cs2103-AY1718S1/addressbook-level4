@@ -61,8 +61,8 @@ public class AddEventCommandTest {
 
     @Test
     public void equals() {
-        Event event1 = new EventBuilder().withEventName("Nelsons birthday").build();
-        Event event2 = new EventBuilder().withEventName("Mellys birthday").build();
+        Event event1 = new EventBuilder().withName("Nelsons birthday").build();
+        Event event2 = new EventBuilder().withName("Mellys birthday").build();
         AddEventCommand addEvent1Command = new AddEventCommand(event1);
         AddEventCommand addEvent2Command = new AddEventCommand(event2);
 
