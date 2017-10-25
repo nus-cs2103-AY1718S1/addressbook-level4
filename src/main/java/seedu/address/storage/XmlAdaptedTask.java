@@ -25,10 +25,14 @@ public class XmlAdaptedTask {
     private String startDateTime;
     @XmlElement(required = true)
     private String endDateTime;
+    @XmlElement(required = true)
+    private Integer id;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement(required = true)
     private Boolean complete;
+    @XmlElement
+    private List<Integer> peopleIndices = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -48,10 +52,12 @@ public class XmlAdaptedTask {
         startDateTime = source.getStartDateTime();
         endDateTime = source.getEndDateTime();
         tagged = new ArrayList<>();
+        id =source.getId();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
         complete = source.getComplete();
+        peopleIndices = source.getPeopleIndices();
     }
 
     /**
@@ -70,6 +76,8 @@ public class XmlAdaptedTask {
         final String endDateTime = this.endDateTime;
         final Set<Tag> tags = new HashSet<>(personTags);
         final Boolean complete = this.complete;
-        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete);
+        final List<Integer> peopleIndices= this.peopleIndices;
+        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, peopleIndices);
     }
+
 }

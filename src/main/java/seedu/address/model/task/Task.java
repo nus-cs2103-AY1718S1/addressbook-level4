@@ -2,7 +2,10 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -16,24 +19,20 @@ import seedu.address.model.util.SampleDataUtil;
  * This is a task class with only a name
  */
 public class Task implements ReadOnlyTask {
-    private static Integer indexTask;
 
     private ObjectProperty<String> taskName;
     private ObjectProperty<String> taskDescription;
     private ObjectProperty<String> startDateTime;
     private ObjectProperty<String> endDateTime;
-    private ObjectProperty<Integer> taskIndex;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Boolean> complete;
+    private ObjectProperty<Integer> id;
+    private ObjectProperty<ArrayList<Integer>> peopleIndices;
 
     /**
      * Default constructor may not be used
      */
     public Task () {
-        if (indexTask == null) {
-            indexTask = 1;
-        }
-        this.taskIndex = new SimpleObjectProperty<>(indexTask);
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
         this.startDateTime = new SimpleObjectProperty<>("");
         this.endDateTime = new SimpleObjectProperty<>("");
@@ -116,6 +115,21 @@ public class Task implements ReadOnlyTask {
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
         this.complete = new SimpleObjectProperty<>(false);
+        this.id = new SimpleObjectProperty<>(this.hashCode());
+        this.peopleIndices = new SimpleObjectProperty<>();
+        peopleIndices.set(new ArrayList<>());
+    }
+
+    public Task (String name, String description, String startDateTime, String endDateTime,
+                 Set<Tag> tags, Boolean complete, List<Integer> peopleIndices) {
+        this(tags);
+        this.taskName = new SimpleObjectProperty<>(name);
+        this.taskDescription = new SimpleObjectProperty<>(description);
+        this.startDateTime = new SimpleObjectProperty<>(startDateTime);
+        this.endDateTime = new SimpleObjectProperty<>(endDateTime);
+        this.complete = new SimpleObjectProperty<>(false);
+        this.id = new SimpleObjectProperty<>(this.hashCode());
+        this.peopleIndices = new SimpleObjectProperty<>(new ArrayList<>(peopleIndices));
     }
 
     /**
@@ -125,14 +139,6 @@ public class Task implements ReadOnlyTask {
     public Task (ReadOnlyTask task) {
         this(task.getName(), task.getDescription(), task.getStartDateTime(),
                 task.getEndDateTime(), task.getTags(), task.getComplete());
-    }
-
-    /**
-     * get index from this task
-     * @return index
-     */
-    public int getIndex () {
-        return taskIndex.get();
     }
 
     /**
@@ -165,6 +171,16 @@ public class Task implements ReadOnlyTask {
 
     public Boolean getComplete () {
         return complete.get();
+    }
+
+    @Override
+    public ObjectProperty<Integer> idProperty() {
+        return id;
+    }
+
+    @Override
+    public Integer getId() {
+        return id.get();
     }
 
     public ObjectProperty<String> nameProperty() {
@@ -215,6 +231,14 @@ public class Task implements ReadOnlyTask {
         this.complete.set(requireNonNull(true));
     }
 
+    public ObjectProperty<ArrayList<Integer>> peopleIndicesProperty() {
+        return peopleIndices;
+    }
+
+    public ArrayList<Integer> getPeopleIndices() { return peopleIndices.get();}
+
+    public void setRemark(ArrayList<Integer> peopleIndices) {this.peopleIndices.set(requireNonNull(peopleIndices));
+    }
     /**
      * Set a new tag set along with the new task construction
      * This method should not be usd if the
