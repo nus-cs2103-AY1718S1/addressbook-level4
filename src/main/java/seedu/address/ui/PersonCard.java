@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -24,6 +25,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+    public final Index index;
 
     @FXML
     private HBox cardPane;
@@ -43,6 +45,7 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
+        this.index = Index.fromOneBased(displayedIndex);
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);

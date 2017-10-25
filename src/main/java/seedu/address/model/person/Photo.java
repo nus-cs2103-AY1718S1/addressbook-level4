@@ -13,7 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Photo {
     public static final String MESSAGE_PHOTO_CONSTRAINTS =
             "Please enter the correct file path. Photos can only be in JPG " +
-                    "format, and cannot contain empty spaces in the filename.";
+                    "format.";
     public static final String PHOTOURL_VALIDATION_REGEX =
             "[\\w\\/\\-\\_\\.\\h]+\\.jpg";
     public final String photoURL;
