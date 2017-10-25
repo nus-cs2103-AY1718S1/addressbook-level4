@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ParticipantList;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -141,7 +142,7 @@ public class EventList implements ReadOnlyEventList {
      *
      * @throws EventNotFoundException if the {@code key} is not in this {@code EventList}.
      */
-    public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
+    public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException, DeleteOnCascadeException {
         if (events.remove(key)) {
             return true;
         } else {

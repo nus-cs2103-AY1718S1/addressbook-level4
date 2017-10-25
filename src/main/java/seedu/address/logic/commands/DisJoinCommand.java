@@ -11,9 +11,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.PersonHaveParticipateException;
 import seedu.address.model.event.exceptions.PersonNotParticipateException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.HaveParticipateEventException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 
 /**
@@ -71,7 +73,15 @@ public class DisJoinCommand extends UndoableCommand {
 
     @Override
     protected void undo() {
-
+        try {
+            model.joinEvent(personToRemove, eventToRemove);
+        } catch (PersonHaveParticipateException pnpe) {
+            throw new AssertionError("Undo is to revert a stage; "
+                    + "it should not fail");
+        } catch (HaveParticipateEventException hpee) {
+            throw new AssertionError("Undo is to revert a stage; "
+                    + "it should not fail now");
+        }
     }
 
     @Override

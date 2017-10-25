@@ -283,7 +283,7 @@ The 2nd person in the address book will be involved in the 1st event in the even
 This command only displays a successful message. You cannot see explicit change in the panel. +
 You will see the following after typing above commands: +
 
-image::dummy_pic.png[width='790']
+image::UG_join.png[width='790']
 _Figure 3.8 join result_
 
 === Disconnecting a person to an event : `disjoin`
@@ -296,7 +296,8 @@ Format : `disjoin p/INDEX_P e/INDEX_E` +
 * This person *must be already involved in this event*.
 ****
 
-Example:
+Example: +
+Assuming that you have typed `join p/2 e/1` before this example.
 
 * `list` +
 `listE` +
@@ -306,57 +307,57 @@ The 2nd person in the address book will not be involved in the 1st event in the 
 This command only displays a successful message. You cannot see explicit change in the panel. +
 You will see the following after typing above commands: +
 
-image::dummy_pic.png[width='790']
+image::UG_disjoin.png[width='790']
 _Figure 3.9 disjoin result_
 
 === Selecting
-==== Selecting all persons who join an event : `select`
+==== Selecting all persons who join an event : `showP`
 
 You can use it to view all persons who join a certain event. +
-Format: `select e/INDEX_E`
+Format: `showP EVENT_INDEX`
 
 ****
-* Shows all persons who join the event at the specified `INDEX_E`.
+* Shows all persons who join the event at the specified `EVENT_INDEX`.
 * The index refers to the index number shown in the most recent event listing.
 * The index *must be a positive integer* `1, 2, 3, ...`.
-* Make sure you type the prefix `e/`.
 ****
 
-Example:
+Example: +
+Assuming that you have typed `join p/2 e/1` before this example.
 
 * `listE` +
-`select e/2` +
-Shows all persons who are involved in the 2nd event of event list.
+`showP 1` +
+Shows all persons who are involved in the 1st event of event list.
 
 You will see the following after typing above commands: +
 
-image::dummy_pic.png[width='790']
+image::UG_showPerson.png[width='790']
 _Figure 3.10.1 select persons result_
 
 ==== Selecting all events which a person joins : `selectE`
 
 You can use it to view all events which a certain person joins. +
-Format: `selectE p/INDEX_P`
+Format: `selectE PERSON_INDEX`
 
 ****
-* Shows all events which the person at the specified `INDEX_P` joins.
+* Shows all events which the person at the specified `PERSON_INDEX` joins.
 * The index refers to the index number shown in the most recent person listing.
 * The index *must be a positive integer* `1, 2, 3, ...`.
-* Make sure you type the prefix `p/`.
 ****
 
-Examples:
+Examples: +
+Assuming that you have typed `join p/2 e/1` before this example.
 
 * `list` +
-`selectE p/2` +
+`selectE 2` +
 Shows all events which the 2nd person in the address book joins.
 * `find Betsy` +
-`delete 1` +
+`selectE 1` +
 Shows all events which the 1st person in the results of the `find` command joins.
 
-You will see the following after typing `list` and `selectE p/2`: +
+You will see the following after typing `list` and `selectE 2`: +
 
-image::dummy_pic.png[width='790']
+image::UG_selectEvent.png[width='790']
 _Figure 3.10.2 select events result_
 
 === Listing entered commands : `history`

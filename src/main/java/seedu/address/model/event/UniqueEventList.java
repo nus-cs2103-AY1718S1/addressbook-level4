@@ -12,6 +12,7 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.PersonHaveParticipateException;
@@ -97,8 +98,12 @@ public class UniqueEventList implements Iterable<Event> {
      *
      * @throws EventNotFoundException if no such event could be found in the list.
      */
-    public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
+    public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException, DeleteOnCascadeException {
         requireNonNull(toRemove);
+        if (!toRemove.getParticipants().isEmpty()) {
+            throw new DeleteOnCascadeException();
+        }
+
         final boolean eventFoundAndDeleted = internalList.remove(toRemove);
         if (!eventFoundAndDeleted) {
             throw new EventNotFoundException();

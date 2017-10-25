@@ -14,6 +14,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.EventStorageChangedEvent;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
@@ -83,7 +84,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    public synchronized void deletePerson(ReadOnlyPerson target)
+            throws PersonNotFoundException, DeleteOnCascadeException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
@@ -153,7 +155,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+    public synchronized void deleteEvent(ReadOnlyEvent target)
+            throws EventNotFoundException, DeleteOnCascadeException {
         eventList.removeEvent(target);
         indicateEventListChanged();
     }

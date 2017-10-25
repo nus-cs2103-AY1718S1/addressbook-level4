@@ -1,12 +1,10 @@
 package seedu.address.logic.commands;
 
-import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.event.EventName;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.PersonJoinsEventsPredicate;
 
@@ -43,15 +41,9 @@ public class ShowParticipantsCommand extends Command {
 
         eventToShow = lastShownList.get(targetIndex.getZeroBased());
 
-        EventName name = eventToShow.getEventName();
+        String name = eventToShow.getEventName().fullEventName;
 
-        String stringName = name.toString();
-
-        String trimmedArgs = stringName.trim();
-
-        String[] nameKeywords = trimmedArgs.split("\\s+");
-
-        PersonJoinsEventsPredicate predicate = new PersonJoinsEventsPredicate(Arrays.asList(nameKeywords));
+        PersonJoinsEventsPredicate predicate = new PersonJoinsEventsPredicate(name);
 
         model.updateFilteredPersonList(predicate);
 

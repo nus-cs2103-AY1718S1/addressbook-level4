@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
@@ -38,7 +39,7 @@ public interface Model {
     ReadOnlyEventList getEventList();
 
     /** Deletes the given person. */
-    void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException, DeleteOnCascadeException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -76,7 +77,7 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /** Deletes the given event. */
-    void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
+    void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException, DeleteOnCascadeException;
 
     /** Adds the given event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;

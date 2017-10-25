@@ -1,18 +1,16 @@
 package seedu.address.model.person;
 
-import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.ReadOnlyEvent;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Participation} matches the event given.
  */
 public class PersonJoinsEventsPredicate implements Predicate<ReadOnlyPerson> {
-    private final List<String> keywords;
+    private final String keywords;
 
-    public PersonJoinsEventsPredicate(List<String> keywords) {
+    public PersonJoinsEventsPredicate(String keywords) {
         this.keywords = keywords;
     }
 
@@ -22,12 +20,17 @@ public class PersonJoinsEventsPredicate implements Predicate<ReadOnlyPerson> {
         if (!person.getParticipation().isEmpty()) {
             for (ReadOnlyEvent event: person.getParticipation()) {
                 if (!isSelected) {
-                    isSelected = keywords.stream().allMatch(keyword ->
-                            StringUtil.containsWordIgnoreCase(event.getEventName().fullEventName, keyword));
+                    isSelected = keywords.equals(event.getEventName().fullEventName);
                 }
             }
         }
         return isSelected;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PersonJoinsEventsPredicate // instanceof handles nulls
+                && this.keywords.equals(((PersonJoinsEventsPredicate) other).keywords)); // state check
+    }
 }

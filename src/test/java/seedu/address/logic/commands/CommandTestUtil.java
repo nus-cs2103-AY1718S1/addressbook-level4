@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.event.EventNameContainsKeywordsPredicate;
@@ -167,6 +168,8 @@ public class CommandTestUtil {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        } catch (DeleteOnCascadeException doce) {
+            throw new AssertionError("Person in filtered list must exist in model.", doce);
         }
     }
 
@@ -179,6 +182,8 @@ public class CommandTestUtil {
             model.deleteEvent(firstEvent);
         } catch (EventNotFoundException pnfe) {
             throw new AssertionError("Event in filtered list must exist in model.", pnfe);
+        } catch (DeleteOnCascadeException doce) {
+            throw new AssertionError("Person in filtered list must exist in model.", doce);
         }
     }
 
