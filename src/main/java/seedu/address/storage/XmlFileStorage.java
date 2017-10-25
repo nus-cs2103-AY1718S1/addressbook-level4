@@ -53,7 +53,7 @@ public class XmlFileStorage {
         ObservableList<ReadOnlyPerson> newFilePersonList = newFileData.getPersonList();
 
         AddressBook mergedAddressBook = new AddressBook();
-        
+
         for (ReadOnlyPerson defaultDataPerson: defaultFilePersonList) {
             try {
                 mergedAddressBook.addPerson(new Person(defaultDataPerson));
@@ -62,7 +62,7 @@ public class XmlFileStorage {
                 assert false : "Unexpected exception " + dpe.getMessage();
             }
         }
-        
+
         for (ReadOnlyPerson newDataPerson: newFilePersonList) {
             boolean isSamePerson = false;
             for (ReadOnlyPerson defaultDataPerson: defaultFilePersonList) {
@@ -79,10 +79,10 @@ public class XmlFileStorage {
                 }
             }
         }
-        
+
         File mergeFile = new File(DEFAULT_MERGE_FILE_PATH);
         FileUtil.createIfMissing(mergeFile);
-        
+
         try {
             XmlUtil.saveDataToFile(mergeFile, new XmlSerializableAddressBook(mergedAddressBook));
         } catch (FileNotFoundException fnfe) {

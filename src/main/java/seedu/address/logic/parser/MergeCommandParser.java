@@ -21,7 +21,7 @@ public class MergeCommandParser implements Parser<MergeCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, MergeCommand.MESSAGE_USAGE));
         }
-        
+
         return new MergeCommand(trimmedArgs);
     }
 

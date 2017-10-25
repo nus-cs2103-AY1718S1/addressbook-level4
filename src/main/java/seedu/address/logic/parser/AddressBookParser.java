@@ -95,7 +95,7 @@ public class AddressBookParser {
 
         case MergeCommand.COMMAND_WORD:
             return new MergeCommandParser().parse(arguments);
-            
+
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();

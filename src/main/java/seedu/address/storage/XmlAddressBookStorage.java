@@ -22,7 +22,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     public static final String DEFAULT_MERGE_FILE_PATH = "./data/mergeAddressBook.xml";
-    
+
     private String filePath;
 
     public XmlAddressBookStorage(String filePath) {
@@ -90,7 +90,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     /**
      * Similar to {@link #mergeAddressBook(String)}
      * @param defaultFilePath location of the data. Cannot be null
-     * @param newFilePath location of the data. Cannot be null               
+     * @param newFilePath location of the data. Cannot be null
      */
     public void mergeAddressBook(String newFilePath, String defaultFilePath) throws DataConversionException, IOException {
         requireNonNull(defaultFilePath);
@@ -98,10 +98,10 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
         File defaultFile = new File(defaultFilePath);
         File newFile = new File(newFilePath);
-        
+
         XmlSerializableAddressBook defaultFileData = XmlFileStorage.loadDataFromSaveFile(defaultFile);
         XmlSerializableAddressBook newFileData = XmlFileStorage.loadDataFromSaveFile(newFile);
-        
+
         XmlFileStorage.mergeDataToFile(defaultFileData, newFileData);
     }
 

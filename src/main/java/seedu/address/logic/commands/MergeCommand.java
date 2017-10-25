@@ -16,7 +16,7 @@ import seedu.address.storage.AddressBookStorage;
 public class MergeCommand extends Command {
 
     public static final String COMMAND_WORD = "merge";
-    
+
     public static String MESSAGE_USAGE = COMMAND_WORD + ": merge the file given with the default storage file\n"
             + "Parameters: "
             + "XML_FILE_PATH\n"
@@ -24,13 +24,13 @@ public class MergeCommand extends Command {
     public static final String MESSAGE_SUCCESS = "File merged successfully.";
     public static final String MESSAGE_FILE_NOT_FOUND = "File not found.";
     public static final String MESSAGE_DATA_CONVERSION_ERROR = "Unable to convert file data.";
-    
+
     private final String newFilePath;
-    
+
     public MergeCommand(String newFilePath) {
         this.newFilePath = newFilePath;
     }
-    
+
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(addressBookStorage);
@@ -43,7 +43,7 @@ public class MergeCommand extends Command {
         } catch (IOException ex) {
             throw new CommandException(ex.getMessage());
         }
-        
+
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

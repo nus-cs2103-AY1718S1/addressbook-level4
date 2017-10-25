@@ -21,7 +21,7 @@ public class MergeCommandParserTest {
         // no leading and trailing whitespaces
         MergeCommand expectedMergeCommand = new MergeCommand("./some/data/path/file.xml");
         // leading and trailing whitespaces is not part of user input, but to accommodate for tokenizer
-        assertParseSuccess(parser, "  \n    \t  ./some/data/path/file.xml   \n  \t", 
+        assertParseSuccess(parser, "  \n    \t  ./some/data/path/file.xml   \n  \t",
                 expectedMergeCommand);
     }
 

@@ -343,7 +343,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Merging given file to default storage file : `merge`
 
 Merges the given `.xml` file to the default storage `.xml` file specified in `preferences.json`. +
-Format: `merge NEW_FILE_PATH` 
+Format: `merge NEW_FILE_PATH`
 
 Examples:
 
