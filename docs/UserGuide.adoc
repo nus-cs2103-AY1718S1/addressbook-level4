@@ -179,7 +179,7 @@ Alias example:
 
 * `f Ben`
 
-===== Locating persons by name: `findregex` (Since v1.2)
+==== Locating persons by name: `findregex` (Since v1.2)
 
 Finds persons whose names match the regex given. Note that only the name is searched.  +
 Format: `findregex REGEX` +
@@ -193,16 +193,11 @@ Returns `Jon` and `John`, but not `John Doe`.
 * `findregex Joh?n` +
 Returns `Jon` and `John`, as well as `John Doe` and `Jane John`.
 
-==== Locating persons by tags: `findtag` (Since v1.2)
-
-Finds persons who has a tag matching any of the search tags. +
-Format: `findtag TAG`
-
 Alias example:
 
 * `fr Do?`
 
-===== Locating persons by tags: `findtag` (Since v1.2)
+==== Locating persons by tags: `findtag` (Since v1.2)
 
 Finds persons who has has a tag matching any of the search tags. +
 Format: `findtag TAG` +
@@ -316,7 +311,7 @@ This command takes no arguments.
 
 === Advanced Commands
 
-These are the more advanced commands. Functionality here is useful for the user, but is not essential to the use.
+These are advanced commands available in PIMP that might be useful for the user.
 
 ==== Adding/Removing tag/s to existing contact : `tags` (Since v1.2)
 
@@ -515,9 +510,9 @@ Alias example:
 
 * `r 1`
 
-==== Exporting all entries : `export`
+==== Exporting all entries : `export` (Coming in v2.0)
 
-Exports all entries in the address book into the given format and stores it at the given location. (Coming in v2.0) +
+Exports all entries in the address book into the given format and stores it at the given location. +
 Format: `export FORMAT LOCATION`
 
 ****
