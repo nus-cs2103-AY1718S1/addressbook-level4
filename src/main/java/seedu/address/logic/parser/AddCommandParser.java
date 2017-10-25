@@ -32,6 +32,19 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
+        /**
+         * Allows certain fields entered to be blank.
+         * Shows a '-' for fields not entered.
+         */
+        if (!args.contains("a/")) {
+            args = args + " a/ -";
+        }
+        if (!args.contains("e/")) {
+            args = args + " e/ -";
+        }
+        if (!args.contains("p/")) {
+            args = args + " p/ -";
+        }
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
@@ -63,4 +76,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    private static boolean isPrefixPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
+        return argumentMultimap.getValue(prefix) != null;
+    }
 }
