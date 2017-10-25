@@ -140,6 +140,11 @@ public class AddCommandTest {
         public void sortBy(String sortCriteria) throws AlreadySortedException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateHighlightStatus(String highlightTag) {
+            fail("This method should not be called.");
+        }
     }
 
     /**
