@@ -6,6 +6,9 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -36,7 +39,7 @@
     </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="270.0" prefWidth="270.0" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
@@ -44,11 +47,26 @@
       <StackPane fx:id="personListPanelPlaceholder" minWidth="-Infinity" prefWidth="260.0" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefWidth="340">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-    </StackPane>
+    <TabPane fx:id="infoDisplayPlaceHolder" prefHeight="200.0" prefWidth="340.0" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab fx:id="contactDetailsPlaceHolder" text="Contact Details">
+          <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="340.0" />
+          </content>
+        </Tab>
+        <Tab text="Browser">
+          <content>
+            <StackPane fx:id="browserPlaceholder" prefWidth="340">
+              <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+              </padding>
+            </StackPane>
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
+
+    
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
