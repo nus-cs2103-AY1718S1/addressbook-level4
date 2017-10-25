@@ -27,7 +27,7 @@ public class Phone {
         if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
-        this.value = formatPhone(trimmedPhone);
+        this.value = trimmedPhone;
     }
 
     /**
@@ -39,7 +39,7 @@ public class Phone {
 
     @Override
     public String toString() {
-        return value;
+        return formatPhone(value);
     }
 
     @Override
@@ -53,7 +53,6 @@ public class Phone {
     public int hashCode() {
         return value.hashCode();
     }
-
 
     /**
      * Format given phone number into typical mobile format
