@@ -24,6 +24,7 @@ public class TagTextField extends UiPart<Region> {
 
     @FXML
     private TextArea tagTextArea;
+    private Set<Tag> tagSet;
 
     public TagTextField() {
         super(FXML);
@@ -37,12 +38,19 @@ public class TagTextField extends UiPart<Region> {
     public void setTagTextArea(String text) {
         tagTextArea.setText(text);
     }
+    public void setTagSet(Set<Tag> t) {
+        tagSet = t;
+    }
+    public Set<Tag> getTagSet() {
+        return tagSet;
+    }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         StringBuilder currTags = new StringBuilder();
-        Set<Tag> tagSet = event.getNewSelection().person.getTags();
+        tagSet = event.getNewSelection().person.getTags();
+        setTagSet(event.getNewSelection().person.getTags());
         for (Tag t : tagSet) {
             if (currTags.length() != 0) {
                 currTags.append(",");
