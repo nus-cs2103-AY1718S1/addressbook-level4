@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="62.0" prefWidth="346.0" styleClass="label-header">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="positionLabel" layoutX="14.0" layoutY="68.0" prefHeight="28.0" prefWidth="318.0">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="companyLabel" layoutX="14.0" layoutY="90.0" prefHeight="28.0" prefWidth="318.0">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <FlowPane id="tags" fx:id="tagsPane" layoutX="14.0" layoutY="119.0" prefHeight="40.0" prefWidth="318.0" />
+      <Label layoutX="385.0" layoutY="170.0" text="Email: " AnchorPane.leftAnchor="385.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="phoneLabel" layoutX="65.0" layoutY="170.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="emailLabel" layoutX="428.0" layoutY="170.0" AnchorPane.leftAnchor="428.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="200.0" text="Address: " AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="addressLabel" layoutX="76.0" layoutY="200.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="12.0" layoutY="230.0" text="Priority: " AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="priorityLabel" layoutX="70.0" layoutY="230.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="170.0" text="Phone: " AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="383.0" layoutY="200.0" text="Status: " AnchorPane.leftAnchor="383.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="statusLabel" layoutX="432.0" layoutY="200.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="259.0" text="Notes:" AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="noteLabel" alignment="TOP_LEFT" layoutX="61.0" layoutY="259.0" prefHeight="20.0" prefWidth="667.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="278.0" prefHeight="62.0" prefWidth="131.0" styleClass="label-header" text="Events" AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="8.0" layoutY="331.0" prefHeight="62.0" prefWidth="232.0" styleClass="label-header" text="Connections" AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="150.0" layoutX="636.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
+      <Line endX="500.0" layoutX="115.0" layoutY="285.0" startX="-100.0" stroke="#d0d0d0" />
+      <Line endX="500.0" layoutX="115.0" layoutY="336.0" startX="-100.0" stroke="#d0d0d0" />
+      <Rectangle fx:id="defaultScreen" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="379.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="634.0" />
+   </children>
+</AnchorPane>

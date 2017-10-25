@@ -9,11 +9,16 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.Priority;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Status;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +34,16 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String company;
+    @XmlElement(required = true)
+    private String position;
+    @XmlElement(required = true)
+    private String status;
+    @XmlElement(required = true)
+    private String priority;
+    @XmlElement(required = true)
+    private String note;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -51,6 +66,11 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        company = source.getCompany().value;
+        position = source.getPosition().value;
+        status = source.getStatus().value;
+        priority = source.getPriority().value;
+        note = source.getNote().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -71,7 +91,27 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        Company company = new Company("NIL"); //to handle legacy versions where these optional fields were not stored
+        if (this.company != null) {
+            company = new Company(this.company);
+        }
+        Position position = new Position("NIL"); //to handle legacy versions where these optional fields were not stored
+        if (this.position != null) {
+            position = new Position(this.position);
+        }
+        Status status = new Status("NIL"); //to handle legacy versions where these optional fields were not stored
+        if (this.status != null) {
+            status = new Status(this.status);
+        }
+        Priority priority = new Priority("L"); //to handle legacy versions where these optional fields were not stored
+        if (this.priority != null) {
+            priority = new Priority(this.priority);
+        }
+        Note note = new Note("NIL"); //to handle legacy versions where these optional fields were not stored
+        if (this.note != null) {
+            note = new Note(this.note);
+        }
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, company, position, status, priority, note, tags);
     }
 }
