@@ -310,8 +310,7 @@ You will see the following after typing above commands: +
 image::UG_disjoin.png[width='790']
 _Figure 3.9 disjoin result_
 
-=== Selecting
-==== Selecting all persons who join an event : `showP`
+=== Selecting all persons who join an event : `showP`
 
 You can use it to view all persons who join a certain event. +
 Format: `showP EVENT_INDEX`
@@ -334,7 +333,7 @@ You will see the following after typing above commands: +
 image::UG_showPerson.png[width='790']
 _Figure 3.10.1 select persons result_
 
-==== Selecting all events which a person joins : `selectE`
+=== Selecting all events which a person joins : `selectE`
 
 You can use it to view all events which a certain person joins. +
 Format: `selectE PERSON_INDEX`
@@ -539,8 +538,8 @@ e.g. `join p/3 e/1`
 * *Selecting every event a person has joined* : `selectE p/INDEX` +
 e.g. `selectE p/1`
 
-* *Selecting every person in an event* : `select e/INDEX` +
-e.g.`select e/2`
+* *Showing every participants in an event* : `showP EVENT_INDEX` +
+e.g.`showP 2`
 
 * *Sort* : `sort`
 
