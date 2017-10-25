@@ -40,8 +40,8 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
-                && other.getAddress().equals(this.getLink())
-                && other.getFavouriteStatus().equals(this.getFavouriteStatus()));
+                && other.getFavouriteStatus().equals(this.getFavouriteStatus())
+                && other.getLink().equals(this.getLink()));
     }
 
     /**

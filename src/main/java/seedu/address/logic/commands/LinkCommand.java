@@ -56,12 +56,12 @@ public class LinkCommand extends UndoableCommand {
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        /**
+
         if (!(link.value.startsWith(PossibleLinks.POSSIBLE_LINK_1)
                 || link.value.startsWith(PossibleLinks.POSSIBLE_LINK_2)) && !link.value.isEmpty()) {
             throw new CommandException(Messages.MESSAGE_INVALID_LINK_FORMAT);
         }
-        **/
+
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getFavouriteStatus(),
