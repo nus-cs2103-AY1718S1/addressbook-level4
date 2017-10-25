@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ButtonSelectionPressedEvent;
+import seedu.address.commons.events.ui.WebsiteSelectionRequestEvent;
 
 /**
  * The Button Bar above the browser of the App.
@@ -40,11 +40,11 @@ public class WebsiteButtonBar extends UiPart<Region> {
     private void setEventHandlerForButtonClick() {
         mapsButton.setOnMouseClicked(e -> {
             logger.info("maps button clicked");
-            raise(new ButtonSelectionPressedEvent(mapsButton.getId()));
+            raise(new WebsiteSelectionRequestEvent("mapsView"));
         });
         searchButton.setOnMouseClicked(e -> {
             logger.info("Search button clicked");
-            raise(new ButtonSelectionPressedEvent(searchButton.getId()));
+            raise(new WebsiteSelectionRequestEvent("searchView"));
         });
     }
 

@@ -19,6 +19,7 @@ public class PersonCard extends UiPart<Region> {
     private static final String FXML = "PersonListCard.fxml";
     private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black" };
     private static HashMap<String, String> tagColors = new HashMap<>();
+    private static HashMap<String, String> webLinkColors = new HashMap<>();
     private static Random random = new Random();
 
     /**
@@ -55,8 +56,20 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initWebLinkColors();
         initWebLinks(person);
         bindListeners(person);
+    }
+
+    /**
+     * Initialises the colors of the allowed social sites.
+     */
+    private void initWebLinkColors() {
+        webLinkColors.put("facebook", "#3b5998");
+        webLinkColors.put("twitter", "#00aced");
+        webLinkColors.put("linkedin", "#0077b5");
+        webLinkColors.put("instagram", "#8a3ab9");
+        webLinkColors.put("others", "grey");
     }
 
     private static String getColorForTag(String tagValue) {
@@ -64,6 +77,10 @@ public class PersonCard extends UiPart<Region> {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
         return tagColors.get(tagValue);
+    }
+
+    private static String getColorForWeblinks(String webLinkTag) {
+        return webLinkColors.get(webLinkTag);
     }
 
     /**
@@ -104,8 +121,8 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initWebLinks(ReadOnlyPerson person) {
         person.getWebLinks().forEach(webLink -> {
-            Label webLinkLabel = new Label(webLink.webLinkInput);
-            webLinkLabel.setStyle("-fx-background-color: grey");
+            Label webLinkLabel = new Label(webLink.webLinkTag);
+            webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
             webLinks.getChildren().add(webLinkLabel);
         });
     }

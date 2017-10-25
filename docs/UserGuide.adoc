@@ -310,15 +310,28 @@ Exits the program. +
 Format: `exit`
 
 // tag::viewAddress[]
-=== Viewing address in Google Maps : `coming in v1.3`
+=== Viewing address in Google Maps : `web maps`
 
 Changes the internal browser to the maps view of the address of a selected contact.
+Format `web facebook||instagram||linkedin||personal||maps`
 
 [NOTE]
 ====
 Contact must be selected before selecting the buttons.
 
-A CLI command will be implemented `coming in v1.3`
+====
+// end::viewAddress[]
+
+// tag::viewSocialMedia[]
+=== Viewing Social Media Links : `web`
+
+Changes the internal browser to the maps view of the address of a selected contact.
+Format `web facebook||instagram||linkedin||personal`
+
+[NOTE]
+====
+Contact must be selected before selecting the buttons.
+
 ====
 // end::viewAddress[]
 
@@ -351,7 +364,9 @@ e.g. `find James Jake`
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
+* *Update User* : `update`
 * *Redo* : `redo`
+* *Web* : `web`
 
 // tag::commandaliases[]
 === Alternative Command Aliases
@@ -367,5 +382,6 @@ e.g.`select 2`
 * *History* : `history` or `his`
 * *Undo* : `undo` or `u`
 * *Redo* : `redo` or `r`
+* *Web* : `web` or `w`
 
 // end::commandaliases[]
