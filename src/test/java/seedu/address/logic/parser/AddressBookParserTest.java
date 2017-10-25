@@ -118,12 +118,6 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_tab() throws Exception {
-        TabCommand command = (TabCommand) parser.parseCommand(TabCommand.COMMAND_WORD);
-        assertTrue(command instanceof TabCommand);
-    }
-
-    @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORD) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
