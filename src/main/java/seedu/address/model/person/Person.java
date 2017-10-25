@@ -51,8 +51,7 @@ public class Person implements ReadOnlyPerson {
             this.status = new SimpleObjectProperty<>(new Status("NIL"));
             this.priority = new SimpleObjectProperty<>(new Priority("L"));
             this.note = new SimpleObjectProperty<>(new Note("NIL"));
-            this.photo = new SimpleObjectProperty<>(new Photo("src/main/resources/images/default.jpg"));
-
+            this.photo = new SimpleObjectProperty<>(new Photo("src/main/resources/images/default.jpg"));;
         } catch (Exception e) {
             e.printStackTrace();
         }
