@@ -34,7 +34,7 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String remark;
     @XmlElement(required = true)
-    private String expiryDateString;
+    private String expiryDate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -57,7 +57,7 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         tagged = new ArrayList<>();
-        expiryDateString = source.getExpiryDate().toString();
+        expiryDate = source.getExpiryDate().toString();
         remark = source.getRemark().remark;
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -79,7 +79,7 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
-        final ExpiryDate expiryDate = new ExpiryDate(this.expiryDateString);
+        final ExpiryDate expiryDate = new ExpiryDate(this.expiryDate);
         final Remark remark = new Remark(this.remark);
         return new Person(name, phone, email, address, tags, expiryDate, remark);
     }
