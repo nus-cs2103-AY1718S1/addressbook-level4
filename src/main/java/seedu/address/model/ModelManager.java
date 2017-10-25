@@ -80,12 +80,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void deleteGroup(Group target) throws GroupNotFoundException {
+        addressBook.removeGroup(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public synchronized void addGroup(Group group) throws DuplicateGroupException {
         addressBook.addGroup(group);
     }
 
     @Override
-    public synchronized boolean groupExists(Group group) throws GroupNotFoundException {
+    public synchronized boolean groupExists(Group group) {
         return addressBook.groupExists(group);
     }
 
@@ -151,6 +157,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
 
         requireNonNull(event.getNewSelection().group.groupName);
+
         GroupContainsKeywordsPredicate predicate = new GroupContainsKeywordsPredicate(event.getNewSelection()
                 .group.groupName);
         updateFilteredPersonList(predicate);

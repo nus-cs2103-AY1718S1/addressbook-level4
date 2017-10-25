@@ -38,7 +38,7 @@ public interface ReadOnlyPerson {
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
                 && other.getRemark().equals(this.getRemark())
-                && other.getGroup().equals(this.getGroup());
+                && other.getGroup().groupName.equals(this.getGroup().groupName);
     }
 
     /**
@@ -56,8 +56,7 @@ public interface ReadOnlyPerson {
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         builder.append(" Remarks: ")
-                .append(getRemark())
-                .append(getGroup());
+                .append(getRemark());
         return builder.toString();
     }
 

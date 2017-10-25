@@ -5,6 +5,7 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -24,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_REMARK = "";
+    public static final String DEFAULT_GROUP = "none";
 
     private Person person;
 
@@ -35,8 +37,9 @@ public class PersonBuilder {
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
+            Group defaultGroup = new Group(DEFAULT_GROUP);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultTags, defaultRemark);
+                    defaultTags, defaultRemark, defaultGroup);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -105,6 +108,13 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
+        return this;
+    }
+    /**
+     * Sets the {@code Group} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withGroup (Group group) {
+        this.person.setGroup(group);
         return this;
     }
 

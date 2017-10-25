@@ -21,6 +21,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Group;
+import seedu.address.model.person.GroupContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicateGroupException;
@@ -105,7 +106,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean groupExists(Group group) throws GroupNotFoundException {
+        public boolean groupExists(Group group) {
             fail ("This method should not be called.");
             return false;
         }
@@ -113,6 +114,11 @@ public class AddCommandTest {
         @Override
         public void addGroup(Group group) throws DuplicateGroupException {
             fail ("This method should not be called.");
+        }
+
+        @Override
+        public void deleteGroup(Group target) throws GroupNotFoundException {
+            fail ("this method should not be called.");
         }
 
         @Override
@@ -151,6 +157,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredPersonList(GroupContainsKeywordsPredicate predicate) {
             fail("This method should not be called.");
         }
     }

@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import com.sun.xml.internal.xsom.impl.WildcardImpl;
-
 /**
  * Class for group feature
  * A group is a field in the person object used to filter UI display

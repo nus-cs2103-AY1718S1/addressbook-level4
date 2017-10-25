@@ -1,11 +1,13 @@
 package seedu.address.ui;
 
-import javafx.scene.layout.Region;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 import seedu.address.model.person.Group;
 
+/**
+ * An UI component that displays the group name
+ */
 public class GroupCard extends UiPart<Region> {
 
     private static final String FXML = "GroupListCard.fxml";
@@ -15,7 +17,7 @@ public class GroupCard extends UiPart<Region> {
     @FXML
     private Label name;
 
-    public GroupCard (Group group){
+    public GroupCard (Group group) {
         super(FXML);
         this.group = group;
         name.setText(group.getGroupName());

@@ -31,10 +31,15 @@ public interface Model {
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /** Checks if unique group already exists */
-    boolean groupExists(Group group) throws GroupNotFoundException;
+    boolean groupExists(Group group);
 
     /** Adds group if one doesn't already exist */
     void addGroup(Group group) throws DuplicateGroupException;
+
+    /**
+     * Deletes the group indicated by target
+     */
+    void deleteGroup(Group target) throws GroupNotFoundException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

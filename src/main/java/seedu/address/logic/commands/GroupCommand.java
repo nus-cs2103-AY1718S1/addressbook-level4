@@ -26,8 +26,7 @@ public class GroupCommand extends UndoableCommand {
             + COMMAND_WORD + " Vietnam Grant Ali Joey";
     public static final String MESSAGE_PARAMETERS = "[group name] [person names ...]";
     public static final String MESSAGE_SUCCESS = "Group command executed";
-
-
+    public static final String MESSAGE_FAILURE = "Group command failed.";
 
     private final List<String> args;
 
@@ -42,28 +41,13 @@ public class GroupCommand extends UndoableCommand {
         try {
             if (!model.groupExists (group)) {
                 model.addGroup (group);
+            } else {
+                model.deleteGroup(group);
             }
+            editPersonGroups(args, group);
+            return new CommandResult (MESSAGE_SUCCESS);
 
-            // Iterate through our list of people, if we find a name in our group list then edit the person to be in the
-            // group
-            try {
-                for (int i = 1; i < args.size(); i++) {
-                    for (Iterator<ReadOnlyPerson> it = model.getFilteredPersonList().iterator(); it.hasNext(); ) {
-
-                        ReadOnlyPerson p = it.next();
-                        if (p.getName().fullName.toLowerCase().contains(args.get(i).toLowerCase())) {
-                            ReadOnlyPerson newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
-                                    p.getAddress(), p.getTags(), p.getRemark(), group);
-                            model.updatePerson(p, newPerson);
-                            break;
-                        }
-                    }
-                }
-                return new CommandResult (MESSAGE_SUCCESS);
-            } catch (DuplicatePersonException | PersonNotFoundException e) {
-                throw new CommandException(e.getMessage());
-            }
-        } catch (GroupNotFoundException | DuplicateGroupException e) {
+        } catch (DuplicateGroupException | GroupNotFoundException e) {
             throw new CommandException(e.getMessage());
         }
     }
@@ -73,5 +57,28 @@ public class GroupCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof GroupCommand // instanceof handles nulls
                 && args.equals(((GroupCommand) other).args));
+    }
+
+    /**
+     * Iterates through the person list from the model and updates them to add the group
+     * @param args persons to add group to
+     * @param group to add to person
+     */
+    private void editPersonGroups (List<String> args, Group group) throws CommandException {
+        for (int i = 1; i < args.size(); i++) {
+            for (Iterator<ReadOnlyPerson> it = model.getFilteredPersonList().iterator(); it.hasNext(); ) {
+                ReadOnlyPerson p = it.next();
+                if (p.getName().fullName.toLowerCase().contains(args.get(i).toLowerCase())) {
+                    ReadOnlyPerson newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
+                            p.getAddress(), p.getTags(), p.getRemark(), group);
+                    try {
+                        model.updatePerson(p, newPerson);
+                    } catch (DuplicatePersonException | PersonNotFoundException e) {
+                        throw new CommandException(MESSAGE_FAILURE);
+                    }
+                    break;
+                }
+            }
+        }
     }
 }

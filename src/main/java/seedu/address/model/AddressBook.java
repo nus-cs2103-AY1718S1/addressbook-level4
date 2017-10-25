@@ -17,6 +17,7 @@ import seedu.address.model.person.UniqueGroupList;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicateGroupException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.GroupNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -208,6 +209,19 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new PersonNotFoundException();
         }
     }
+
+    /**
+     * Removes {@code group} from this {@code AddressBook}.
+     * @throws GroupNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeGroup(Group target) throws GroupNotFoundException {
+        if (groups.remove(target)) {
+            return true;
+        } else {
+            throw new GroupNotFoundException();
+        }
+    }
+
 
     //// tag-level operations
 

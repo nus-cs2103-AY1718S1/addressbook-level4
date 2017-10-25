@@ -116,7 +116,9 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<Group> groupProperty() { return group; }
+    public ObjectProperty<Group> groupProperty() {
+        return group;
+    }
 
     @Override
     public Address getAddress() {
@@ -149,6 +151,15 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Group getGroup() {
         return group.get();
+    }
+
+    /**
+     * For setting the value of the group ObjectProperty
+     * @param group
+     */
+
+    public void setGroup(Group group) {
+        this.group.set(group);
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {

@@ -11,8 +11,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Group;
+
+/**
+ * A UI Component to display group cards
+ */
 
 public class GroupListPanel extends UiPart<Region> {
 

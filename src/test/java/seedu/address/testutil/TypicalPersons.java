@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -24,39 +25,47 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  */
 public class TypicalPersons {
 
+
     public static final ReadOnlyPerson ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, HOON, IDA, AMY, BOB;
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final Group DEFAULT_GROUP = new Group("none");
 
     static {
         ALICE = new PersonBuilder().withName("Alice Pauline")
                 .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
                 .withPhone("85355255")
-                .withTags("friends").build();
+                .withTags("friends").withGroup(DEFAULT_GROUP).build();
         BENSON = new PersonBuilder().withName("Benson Meier").withAddress("311, Clementi Ave 2, #02-25")
                 .withEmail("johnd@example.com").withPhone("98765432")
-                .withTags("owesMoney", "friends").build();
+                .withTags("owesMoney", "friends").withGroup(DEFAULT_GROUP).build();
         CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-                .withEmail("heinz@example.com").withAddress("wall street").build();
+                .withEmail("heinz@example.com").withAddress("wall street")
+                .withGroup(DEFAULT_GROUP).build();
         DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-                .withEmail("cornelia@example.com").withAddress("10th street").build();
+                .withEmail("cornelia@example.com").withAddress("10th street")
+                .withGroup(DEFAULT_GROUP).build();
         ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-                .withEmail("werner@example.com").withAddress("michegan ave").build();
+                .withEmail("werner@example.com").withAddress("michegan ave")
+                .withGroup(DEFAULT_GROUP).build();
         FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-                .withEmail("lydia@example.com").withAddress("little tokyo").build();
+                .withEmail("lydia@example.com").withAddress("little tokyo")
+                .withGroup(DEFAULT_GROUP).build();
         GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-                .withEmail("anna@example.com").withAddress("4th street").withRemark("Likes to code").build();
+                .withEmail("anna@example.com").withAddress("4th street").withRemark("Likes to code")
+                .withGroup(DEFAULT_GROUP).build();
 
         // Manually added
         HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-                .withEmail("stefan@example.com").withAddress("little india").build();
+                .withEmail("stefan@example.com").withAddress("little india").withGroup(DEFAULT_GROUP).build();
         IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-                .withEmail("hans@example.com").withAddress("chicago ave").build();
+                .withEmail("hans@example.com").withAddress("chicago ave").withGroup(DEFAULT_GROUP).build();
 
         // Manually added - Person's details found in {@code CommandTestUtil}
         AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).withGroup(DEFAULT_GROUP).build();
         BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+                .withGroup(DEFAULT_GROUP).build();
     }
 
     private TypicalPersons() {} // prevents instantiation
