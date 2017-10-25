@@ -15,6 +15,10 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
+    private static final int DEFAULT_SMALL_FONT_SIZE = 13;
+    private static final int DEFAULT_BIG_FONT_SIZE = 16;
+    private static int fontSizeChange = 0;
+
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -52,6 +56,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        refreshFontSizes();
     }
 
     /**
@@ -92,5 +97,35 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * Changes the font size of all text inside this class by the amount of {@code change}.
+     * Note that existing cards will not have its font size changed. Call {@code refreshFontSizes}
+     * on existing cards to update their fonts.
+     */
+    public static void changeFontSize(int change) {
+        fontSizeChange += change;
+    }
+
+    /**
+     * Resets the font size of all text inside this class into its defaults.
+     * Note that existing cards will not have its font size changed. Call {@code refreshFontSizes}
+     * on existing cards to update their fonts.
+     */
+    public static void resetFontSize() {
+        fontSizeChange = 0;
+    }
+
+    /**
+     * Updates the font size of this card.
+     */
+    public void refreshFontSizes() {
+        name.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
+        id.setStyle("-fx-font-size: " + (DEFAULT_BIG_FONT_SIZE + fontSizeChange));
+        phone.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
+        address.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
+        email.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
+        remark.setStyle("-fx-font-size: " + (DEFAULT_SMALL_FONT_SIZE + fontSizeChange));
     }
 }

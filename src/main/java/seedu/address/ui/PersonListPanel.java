@@ -61,6 +61,28 @@ public class PersonListPanel extends UiPart<Region> {
         });
     }
 
+    /**
+     * Resets the font sizes of this class.
+     */
+    public void resetFontSize() {
+        PersonCard.resetFontSize();
+        for (PersonCard pc : personListView.getItems()) {
+            pc.refreshFontSizes();
+        }
+        personListView.refresh();
+    }
+
+    /**
+     * Changes the font sizes of this class by {@code change}.
+     */
+    public void changeFontSize(int change) {
+        PersonCard.changeFontSize(change);
+        for (PersonCard pc : personListView.getItems()) {
+            pc.refreshFontSizes();
+        }
+        personListView.refresh();
+    }
+
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

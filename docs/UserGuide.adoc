@@ -302,7 +302,7 @@ View a list of persons with birthdays in the current month +
 Format: `birthday` +
 Alias: `bd`
 
-==== Increasing/decreasing font size : `size`
+==== Increasing/decreasing font size : `size` (Since v1.3)
 
 Increases the font size by the number given, in pts. +
 Format: `size [AMOUNT]`
