@@ -41,14 +41,14 @@ public interface ReadOnlyPerson {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Phone: ")
-                .append(getPhone())
-                .append(" Email: ")
-                .append(getEmail())
-                .append(" Address: ")
-                .append(getAddress())
-                .append(" Tags: ");
+        builder.append(getName() + "\n")
+                .append("Phone: ")
+                .append(getPhone() + "\n")
+                .append("Email: ")
+                .append(getEmail() + "\n")
+                .append("Address: ")
+                .append(getAddress() + "\n")
+                .append("Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
