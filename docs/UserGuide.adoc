@@ -40,6 +40,10 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
+The current user interface of PIMP.
+
+image::personcard.png[width="450"]
+A breakdown of the different information that a contact contains. 
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
