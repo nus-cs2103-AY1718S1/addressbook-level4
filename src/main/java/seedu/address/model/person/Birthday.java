@@ -2,11 +2,11 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's birthday in the address book.
@@ -32,6 +32,9 @@ public class Birthday {
         this.value = trimmedBirthday;
     }
 
+    /**
+     * Returns true if the given String is a valid date. If the input date format is invalid, an exception is thrown.
+     */
     public static boolean isValidBirthday(String date) throws IllegalValueException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         try {
