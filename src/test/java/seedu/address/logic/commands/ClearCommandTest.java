@@ -32,7 +32,6 @@ public class ClearCommandTest {
     private ClearCommand prepareCommand(Model model) {
         ClearCommand command = new ClearCommand();
         GraphWrapper graphWrapper = new GraphWrapper();
-        graphWrapper.buildGraph(model);
         command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return command;
     }

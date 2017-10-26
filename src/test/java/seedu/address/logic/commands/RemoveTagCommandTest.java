@@ -73,7 +73,6 @@ public class RemoveTagCommandTest {
      * Returns a {@code RemoveTagCommand} with the parameter {@code index}.
      */
     private RemoveTagCommand prepareCommand(String tagToBeRemoved) {
-        graphWrapper.buildGraph(model);
         RemoveTagCommand removeTagCommand = new RemoveTagCommand(tagToBeRemoved);
         removeTagCommand.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return removeTagCommand;

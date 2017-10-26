@@ -179,7 +179,6 @@ public class EditCommandTest {
      * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
      */
     private EditCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
-        graphWrapper.buildGraph(model);
         EditCommand editCommand = new EditCommand(index, descriptor);
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return editCommand;

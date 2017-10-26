@@ -50,7 +50,6 @@ public class AddCommandIntegrationTest {
      */
     private AddCommand prepareCommand(Person person, Model model) {
         GraphWrapper graphWrapper = new GraphWrapper();
-        graphWrapper.buildGraph(model);
         AddCommand command = new AddCommand(person);
         command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return command;

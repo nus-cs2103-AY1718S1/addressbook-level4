@@ -28,7 +28,6 @@ public class ListCommandTest {
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         graphWrapper = new GraphWrapper();
-        graphWrapper.buildGraph(model);
 
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 

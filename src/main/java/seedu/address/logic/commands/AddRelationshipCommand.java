@@ -28,7 +28,7 @@ public class AddRelationshipCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 2 directed";
 
     public static final String MESSAGE_ADD_RELATIONSHIP_SUCCESS = "Added a %3$s relationship between : %1$s and %2$s";
-    public static final String MESSAGE_DUPLICATED_RELATIONSHIP = "This relationship already exists"
+    public static final String MESSAGE_DUPLICATED_RELATIONSHIP = "This relationship already exists "
             + "in the address book.";
 
     private final Index indexFromPerson;
@@ -51,7 +51,6 @@ public class AddRelationshipCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.addRelationship(indexFromPerson, indexToPerson, direction);
-            graphWrapper.buildGraph(model);
         } catch (IllegalValueException ive) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (DuplicateRelationshipException dre) {

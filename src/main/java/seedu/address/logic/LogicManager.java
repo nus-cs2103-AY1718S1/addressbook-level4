@@ -48,6 +48,7 @@ public class LogicManager extends ComponentManager implements Logic {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack, graphWrapper);
             CommandResult result = command.execute();
+            graphWrapper.buildGraph(model);
             undoRedoStack.push(command);
             return result;
         } finally {

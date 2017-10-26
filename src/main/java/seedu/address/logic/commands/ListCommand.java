@@ -16,7 +16,6 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        graphWrapper.buildGraph(model);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

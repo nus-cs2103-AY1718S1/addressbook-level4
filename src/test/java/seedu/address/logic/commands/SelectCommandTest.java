@@ -41,7 +41,6 @@ public class SelectCommandTest {
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         graphWrapper = new GraphWrapper();
-        graphWrapper.buildGraph(model);
     }
 
     @Test

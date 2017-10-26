@@ -31,7 +31,6 @@ public class RedoCommandTest {
 
     @Before
     public void setUp() {
-        graphWrapper.buildGraph(model);
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, graphWrapper);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK, graphWrapper);
     }

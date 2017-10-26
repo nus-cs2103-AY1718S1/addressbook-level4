@@ -53,7 +53,6 @@ public class UndoableCommandTest {
         DummyCommand(Model model) {
             this.model = model;
             this.graphWrapper = new GraphWrapper();
-            graphWrapper.buildGraph(model);
         }
 
         @Override

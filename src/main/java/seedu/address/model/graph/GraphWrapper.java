@@ -18,10 +18,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
 
-
-
-
-
 /**
  * This class is a wrapper class of SingleGraph class in GraphStream
  * It is used when creating a new SingleGraph when changes happen in the lastShownList
@@ -79,7 +75,7 @@ public class GraphWrapper {
     }
 
     /**
-     * fix the format of edge ID
+     * standardize the format of edge ID
      */
     private String computeEdgeId(ReadOnlyPerson person1, ReadOnlyPerson person2) {
         return  Integer.toString(filteredPersons.indexOf(person1)) + "_"

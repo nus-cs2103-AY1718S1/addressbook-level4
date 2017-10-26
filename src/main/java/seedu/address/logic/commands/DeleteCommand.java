@@ -43,7 +43,6 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deletePerson(personToDelete);
-            graphWrapper.buildGraph(model);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }

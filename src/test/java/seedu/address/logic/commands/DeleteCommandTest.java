@@ -106,7 +106,6 @@ public class DeleteCommandTest {
      */
     private DeleteCommand prepareCommand(Index index) {
         DeleteCommand deleteCommand = new DeleteCommand(index);
-        graphWrapper.buildGraph(model);
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
         return deleteCommand;
     }
