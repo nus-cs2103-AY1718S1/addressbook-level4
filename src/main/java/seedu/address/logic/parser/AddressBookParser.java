@@ -87,9 +87,9 @@ public class AddressBookParser {
         case FindByEmailCommand.COMMAND_ALIAS:
             return new FindByEmailCommandParser().parse(arguments);
 
-            case FindByPhoneCommand.COMMAND_WORD:
-            case FindByPhoneCommand.COMMAND_ALIAS:
-                return new FindByPhoneCommandParser().parse(arguments);
+        case FindByPhoneCommand.COMMAND_WORD:
+        case FindByPhoneCommand.COMMAND_ALIAS:
+            return new FindByPhoneCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
