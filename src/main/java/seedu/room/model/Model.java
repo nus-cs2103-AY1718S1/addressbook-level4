@@ -55,4 +55,8 @@ public interface Model {
      * @throws TagNotFoundException if no specified tag exists
      */
     void updateHighlightStatus(String highlightTag);
+
+    /** Swaps two residents' rooms */
+    void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException;
+
 }

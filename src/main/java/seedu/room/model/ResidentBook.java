@@ -193,6 +193,16 @@ public class ResidentBook implements ReadOnlyResidentBook {
         }
     }
 
+    ////
+    /**
+     * Swaps the rooms between two residents.
+     * @throws PersonNotFoundException if the persons specified are not found in the list.
+     */
+    public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2)
+        throws PersonNotFoundException {
+        persons.swapRooms(person1, person2);
+    }
+
     //// util methods
 
     @Override
