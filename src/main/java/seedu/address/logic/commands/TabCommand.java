@@ -38,7 +38,7 @@ public class TabCommand extends Command {
         }
 
         EventsCenter.getInstance().post(new JumpToTabRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SELECT_TAB_SUCCESS, targetIndex.getZeroBased()));
+        return new CommandResult(String.format(MESSAGE_SELECT_TAB_SUCCESS, targetIndex.getOneBased()));
 }
     @Override
     public boolean equals(Object other) {
