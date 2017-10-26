@@ -112,6 +112,19 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Remarking a person: `add`
+
+Remarks a person to the address book +
+Format: `remark INDEX r/[REMARK]`
+
+Examples:
+
+* `remark 1 r/Likes to drink coffee`
+Edits the remark for the first person to Likes to drink coffee.
+* `remark 1 r/`
+Removes the remark for the first person.
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/jogging`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
