@@ -9,7 +9,7 @@ import static java.util.Objects.requireNonNull;
 public class Country {
 
     public static final String DEFAULT_COUNTRY_CODE = "";
-    public static final String DEFAULT_COUNTRY = "";
+    public static final String DEFAULT_COUNTRY = "Country Unavailable";
     public final String value;
 
     /**

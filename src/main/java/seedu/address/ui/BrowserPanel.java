@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -76,5 +77,18 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    /**
+     * Opens the Calendar window.
+     */
+    private void loadCalendar() {
+        loadPage("https://www.timeanddate.com/calendar/");
+    }
+
+    @Subscribe
+    private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadCalendar();
     }
 }
