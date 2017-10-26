@@ -241,6 +241,23 @@ Example:
 * `removeTag friend` +
 Removes the tag `friend` from all the persons in the address book.
 
+=== Setting a tag colour: `colourtag`
+
+Sets a colour of a tag to a new colour. +
+Format: `colourtag TAG COLOUR`
+
+****
+* Sets the colour of tag `TAG` to `COLOUR`.
+* `TAG` *must be alphanumeric* `a-z, A-Z, 0-9`
+* `COLOUR` *must be a CSS colour code*.
+* Changes will only take effect on next program start.
+****
+
+Example:
+
+* `colourtag friend red` +
+Sets the colour of the tag `friend` to red on next program start.
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
