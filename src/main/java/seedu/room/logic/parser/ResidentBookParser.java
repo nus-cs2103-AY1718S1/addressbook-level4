@@ -21,6 +21,7 @@ import seedu.room.logic.commands.HistoryCommand;
 import seedu.room.logic.commands.ImportCommand;
 import seedu.room.logic.commands.ListCommand;
 import seedu.room.logic.commands.RedoCommand;
+import seedu.room.logic.commands.RemoveTagCommand;
 import seedu.room.logic.commands.SelectCommand;
 import seedu.room.logic.commands.SortCommand;
 import seedu.room.logic.commands.SwaproomCommand;
@@ -58,7 +59,6 @@ public class ResidentBookParser {
         final String arguments = matcher.group("arguments");
 
         switch (commandWord) {
-
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
@@ -66,6 +66,10 @@ public class ResidentBookParser {
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
+
+        case RemoveTagCommand.COMMAND_WORD:
+        case RemoveTagCommand.COMMAND_ALIAS:
+            return new RemoveTagParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:

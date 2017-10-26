@@ -37,7 +37,7 @@ public class CommandTestUtil {
     public static final String VALID_TIMESTAMP_AMY = "0";
     public static final String VALID_TIMESTAMP_BOB = "0";
     public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TAG_FRIEND = "friends";
     public static final String DEFAULT_NOT_SET = "Not Set";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -62,6 +62,7 @@ public class CommandTestUtil {
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ROOM_DESC = " " + PREFIX_ROOM; // empty string not allowed for rooms
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_TAG = "testing"; // 'testing' does not exist inside the address book
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import seedu.room.commons.core.ComponentManager;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.model.ResidentBookChangedEvent;
@@ -69,12 +70,16 @@ public class ModelManager extends ComponentManager implements Model {
         return residentBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateResidentBookChanged() {
         raise(new ResidentBookChangedEvent(residentBook));
     }
 
-    /** delete temporary persons on start up of the app */
+    /**
+     * delete temporary persons on start up of the app
+     */
     public synchronized void deleteTemporary(ResidentBook residentBook) throws PersonNotFoundException {
         UniquePersonList personsList = residentBook.getUniquePersonList();
         Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
@@ -153,6 +158,11 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    @Override
+    public void removeTag(Tag t) throws TagNotFoundException {
+        residentBook.removeTag(t);
+    }
+
     /**
      * Updates the highlight status of a person if tag matches input tag
      */
@@ -164,7 +174,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Sorting Person List =============================================================
 
-    /** Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria */
+    /**
+     * Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria
+     */
     public void sortBy(String sortCriteria) throws AlreadySortedException {
         residentBook.sortBy(sortCriteria);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
@@ -174,6 +186,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Swaps the rooms between two residents.
+     *
      * @throws PersonNotFoundException if the persons specified are not found in the list.
      */
     @Override

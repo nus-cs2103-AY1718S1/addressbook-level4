@@ -505,6 +505,21 @@ public int compareTo(Object otherPerson) {
 The main things to note in this method is that the value "Not Set" will always be sorted away to the bottom of the list.
 Also, by default, the list is sorted by name.
 
+=== RemoveTag Command
+
+The RemoveTag command is implemented for fast removal of a tag from all entries in the address book. It is implemented by updating the tag list of entries.
+
+The following shows the implementation method, where user will specify the tagName:
+[source,java]
+----
+public RemoveTagCommand(String tagName) {
+        this.tagName = tagName;
+}
+----
+
+[NOTE]
+If the tagName is invalid, there will be no exception raised or handled as a removal of invalid tagName essentially does not change the address book.
+=======
 === Delete persons by tag
 
 This command is implemented to enable the deletion of persons who have a particular tag.

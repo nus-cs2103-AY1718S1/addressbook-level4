@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
@@ -28,7 +29,6 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 import seedu.room.testutil.PersonBuilder;
-
 
 public class AddCommandTest {
 
@@ -141,6 +141,11 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeTag(Tag tag) {
             fail("This method should not be called.");
         }
 

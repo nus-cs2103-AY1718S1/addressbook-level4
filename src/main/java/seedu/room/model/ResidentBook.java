@@ -1,9 +1,11 @@
 package seedu.room.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.room.logic.commands.RemoveTagCommand.MESSAGE_REMOVE_TAG_NOT_EXIST;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -22,7 +24,6 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 import seedu.room.model.tag.UniqueTagList;
-
 
 /**
  * Wraps all data at the room-book level
@@ -103,9 +104,8 @@ public class ResidentBook implements ReadOnlyResidentBook {
      * {@code ResidentBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
+     *                                  another existing person in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      * @see #syncMasterTagListWith(Person)
      */
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
@@ -122,8 +122,8 @@ public class ResidentBook implements ReadOnlyResidentBook {
 
     /**
      * Ensures that every tag in this person:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
+     * - exists in the master list {@link #tags}
+     * - points to a Tag object in the master list
      */
     private void syncMasterTagListWith(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
@@ -142,9 +142,10 @@ public class ResidentBook implements ReadOnlyResidentBook {
 
     /**
      * Ensures that every tag in these persons:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Person)
+     * - exists in the master list {@link #tags}
+     * - points to a Tag object in the master list
+     *
+     * @see #syncMasterTagListWith(Person)
      */
     private void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
@@ -173,7 +174,27 @@ public class ResidentBook implements ReadOnlyResidentBook {
     }
 
     /**
-     * Updates highlight status of person with specified tag
+     * Removes {@code tag} from this {@code AddressBook}.
+     */
+    public void removeTag(Tag t) throws TagNotFoundException {
+        boolean isExist = false;
+        Iterator<Tag> itr = tags.iterator();  // list is a Set<String>!
+        while (itr.hasNext()) {
+            if (itr.next().equals(t)) {
+                isExist = true;
+                itr.remove();
+            }
+        }
+
+        if (!isExist) {
+            throw new TagNotFoundException(MESSAGE_REMOVE_TAG_NOT_EXIST);
+        }
+
+    }
+
+
+    //// sort address book
+    /** Updates highlight status of person with specified tag
      */
     public void updateHighlight(String highlightTag) {
         try {
@@ -189,6 +210,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
     //// sort resident book
     /**
      * Sorts the UniquePersonList, persons.
+     *
      * @throws AlreadySortedException if the list is already sorted by given criteria.
      */
     public void sortBy(String sortCriteria) throws AlreadySortedException {
@@ -214,7 +236,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
