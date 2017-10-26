@@ -198,6 +198,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(p -> {
             if (!p.getLifeInsuranceIds().isEmpty()) {
                 //for every insurance id get the insurance object from lifeInsuranceMap
+                p.clearLifeInsurances();
                 p.getLifeInsuranceIds().forEach(id -> {
                     String idString = id.toString();
                     LifeInsurance lf = lifeInsuranceMap.get(idString);
@@ -234,7 +235,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public Map<String, ReadOnlyInsurance> getLifeInsuranceMap() {
         final Map<String, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
-            .collect(Collectors.<Map.Entry<String,LifeInsurance>,String,ReadOnlyInsurance>toMap(i -> i.getKey(), i -> i.getValue()));
+            .collect(Collectors.<Map.Entry<String,LifeInsurance>,String,ReadOnlyInsurance>toMap((i -> i.getKey()), (i -> i.getValue())));
         return lifeInsurances;
     }
 

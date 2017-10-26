@@ -85,7 +85,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     @Override
     public Map<String, ReadOnlyInsurance> getLifeInsuranceMap() {
         final Map<String, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
-            .collect(Collectors.<Map.Entry<String,XmlAdaptedLifeInsurance>,String,ReadOnlyInsurance>toMap(i -> i.getKey(), i -> {
+            .collect(Collectors.<Map.Entry<String,XmlAdaptedLifeInsurance>,String,ReadOnlyInsurance>toMap((i -> i.getKey()), (i -> {
                 try {
                     return i.getValue().toModelType();
                 } catch (IllegalValueException e) {
@@ -93,7 +93,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
                     //TODO: better error handling
                     return null;
                 }
-            }));
+            })));
         return lifeInsurances;
     }
 

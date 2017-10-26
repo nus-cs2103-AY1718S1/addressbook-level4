@@ -192,6 +192,10 @@ public class Person implements ReadOnlyPerson {
         this.lifeInsurances.get().add(lifeInsurance);
     }
 
+    public void clearLifeInsurances() {
+        this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
+    }
+
     @Override
     public ObjectProperty<UniqueLifeInsuranceList> lifeInsuranceProperty() {
         return this.lifeInsurances;
