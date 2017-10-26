@@ -413,3 +413,37 @@ e.g.`copy 1 2` [Coming in v2.0]
 * *Redo* : `redo`
 * *Calendar* : `calendar`
 
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Commands Words |Commands Alias |Format|Example
+|`Add` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`Clear` |user |add a new person |
+
+|`Delete` |user |delete a person |remove entries that I no longer need
+
+|`Edit` |user |delete multiple persons at once  |avoid going through the hassle of removing one at each time
+
+|`Find` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`List` |user |select multiple person |perform the same command to multiple contacts at once
+
+|`Help` | h |update my contact |update changes to my contact's details
+
+|`Locate` |user |store multiple information of the same kind for a contact |accommodate contacts with multiple addresses, e-mail addresses or phone numbers
+
+|`Schedule` |user |get suggestions on the tags I have used |be consistent with the tags I use
+
+|`Copy` |user |see a sorted list of my contacts |save time and energy on my end
+
+|`History` |user |use shortcut to any command | find someone in my contact list easier
+
+|`Undo` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
+
+|`Redo` |user |rename any field |update my relationship with contact
+
+|`Calendar` |user |check the usage of commands easily |save time and energy on my end
+
+|=======================================================================
+
