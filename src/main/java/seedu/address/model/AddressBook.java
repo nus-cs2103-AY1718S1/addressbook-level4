@@ -74,12 +74,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
 
+    /**
+     * Returns the maximum internal index in the unique person list
+     */
+    public int getMaxInternalIndex() {
+        return persons.getMaxInternalIndex();
+    }
+
     //// person-level operations
 
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Also checks whether the new max index in PersonList is updated.
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */

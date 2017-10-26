@@ -32,25 +32,29 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final UniqueMeetingList meetingList;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final UserPrefs userPrefs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyMeetingList meetingList,
+                        UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, meetingList, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + ", meeting list: " + meetingList
+                + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.meetingList = new UniqueMeetingList(meetingList);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.userPrefs = userPrefs;
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UniqueMeetingList(), new UserPrefs());
     }
 
     @Override
@@ -62,6 +66,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public UniqueMeetingList getMeetingList() {
+        return meetingList;
     }
 
     /** Raises an event to indicate the model has changed */
@@ -146,10 +155,9 @@ public class ModelManager extends ComponentManager implements Model {
             ReadOnlyPerson searchedPerson = filteredPersons.get(i);
             SearchData updatedSearchData = searchedPerson.getSearchData();
             updatedSearchData.incrementSearchCount();
-            Person modifiedPerson = new Person(searchedPerson.getName(), searchedPerson.getPhone(),
-                    searchedPerson.getEmail(), searchedPerson.getAddress(), searchedPerson.getTags(),
-                    updatedSearchData);
-
+            Person modifiedPerson = new Person(searchedPerson.getInternalId(), searchedPerson.getName(),
+                    searchedPerson.getPhone(), searchedPerson.getEmail(), searchedPerson.getAddress(),
+                    searchedPerson.getTags(), updatedSearchData);
             try {
                 updatePerson(searchedPerson, modifiedPerson);
             } catch (DuplicatePersonException dpe) {

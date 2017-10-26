@@ -11,6 +11,7 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
+    private String meetingListFilePath = "data/meetinglist.xml";
     private String addressBookName = "MyAddressBook";
     private String style = "dark";
 
@@ -36,6 +37,14 @@ public class UserPrefs {
 
     public void setAddressBookFilePath(String addressBookFilePath) {
         this.addressBookFilePath = addressBookFilePath;
+    }
+
+    public String getMeetingListFilePath() {
+        return meetingListFilePath;
+    }
+
+    public void setMeetingListFilePath(String meetingListFilePath) {
+        this.meetingListFilePath = meetingListFilePath;
     }
 
     public String getAddressBookName() {
@@ -66,6 +75,7 @@ public class UserPrefs {
         UserPrefs o = (UserPrefs) other;
 
         return Objects.equals(guiSettings, o.guiSettings)
+                && Objects.equals(meetingListFilePath, o.meetingListFilePath)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
                 && Objects.equals(addressBookName, o.addressBookName)
                 && Objects.equals(style, o.style);
@@ -73,14 +83,15 @@ public class UserPrefs {
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, style);
+        return Objects.hash(guiSettings, meetingListFilePath, addressBookFilePath, addressBookName, style);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
-        sb.append("\nLocal data file location : " + addressBookFilePath);
+        sb.append("\nLocal meeting list file location : " + meetingListFilePath);
+        sb.append("\nLocal address book file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
         sb.append("\nBackground Colour : " + style);
         return sb.toString();
