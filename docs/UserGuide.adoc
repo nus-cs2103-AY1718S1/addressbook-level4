@@ -101,8 +101,8 @@ You can add appointment or none at all.
 
 *Examples:*
 
-* `a n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/O+`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/AB d/2018/01/01 00:00 t/criminal`
+image::addexample.png[width="500"]
+    Figure 3: Add Command Usage Diagram
 
 [NOTE]
 You can only use the following twelve inputs for BLOODTYPE. +
@@ -121,9 +121,10 @@ You can use `list` to show a list of all persons in the address book. +
 * *Listing persons by tag* +
 MedNus can list selected contacts with specific tag(s). +
 *Format:* `list TAG1 TAG2...` +
- +
-*Example:* `list colleagues friends` +
-This shows you all contacts with the tag `colleagues`, `friends` or both.
+
+image::listexample.png[width="500"]
+    Figure 4: List Command Usage Diagram
+
 
 === Listing persons by blood type : `bloodtype` [Since v1.2]
 
@@ -132,10 +133,8 @@ You can use `bloodtype` to show a list of people with that specific blood type. 
 *Shorthand Format:* `bt BLOODTYPE`
 
 *Examples:* +
-`bloodtype A` +
-List people with blood type A. +
-`bt ab+` +
-List people with  blood type AB+. +
+image::btexample.png[width="500"]
+    Figure 5: Bloodtype Command Usage Diagram
 
 [NOTE]
 BLOODTYPE is case insensitive.
@@ -160,10 +159,8 @@ You can edit the information of a person you have added in the address book. +
 
 *Examples:*
 
-* `e 1 p/91234567 e/johndoe@example.com` +
-The phone number and email address of the 1st person are changed to `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-The name of the 2nd person is changed to `Betsy Crower` and all existing tags are removed.
+image::editexample.png[width="500"]
+    Figure 6: Edit Command Usage Diagram
 
 [WARNING]
 At least one of the optional fields must be provided. +
