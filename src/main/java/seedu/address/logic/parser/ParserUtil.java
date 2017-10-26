@@ -107,6 +107,9 @@ public class ParserUtil {
      * @throws IllegalValueException
      */
     public static Optional<Integer> parseInteger(Optional<String> integerString) throws IllegalValueException {
+        if (!integerString.isPresent()) {
+            return Optional.empty();
+        }
         String string = integerString.get();
         string = string.trim();
         if (!StringUtil.isNonZeroUnsignedInteger(string)) {

@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -44,15 +45,16 @@ public class AddTaskCommandParser {
             String startDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME)).get();
             String endDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get();
 
-            Integer priority = ParserUtil.parseInteger(argMultimap.getValue(PREFIX_PRIORITY)).orElse(null);
+            Optional<Integer> priority = ParserUtil.parseInteger(argMultimap.getValue(PREFIX_PRIORITY));
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Boolean complete = false;
             ReadOnlyTask task = new Task(name, description, startDateTime, endDateTime, tagList, complete);
 
             // Renew the task object with the priority parameter specially set if given
-            if (priority != null) {
-                task = new Task(name, description, startDateTime, endDateTime, tagList, complete, priority);
+            if (priority.isPresent()) {
+                Integer priorityValue = priority.get();
+                task = new Task(name, description, startDateTime, endDateTime, tagList, complete, priorityValue);
             }
 
             return new AddTaskCommand(task);

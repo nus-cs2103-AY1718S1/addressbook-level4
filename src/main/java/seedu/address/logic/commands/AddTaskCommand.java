@@ -27,13 +27,14 @@ public class AddTaskCommand extends UndoableCommand {
             + PREFIX_DESCRIPTION + "Description "
             + PREFIX_START_DATE_TIME + "START TIME "
             + PREFIX_END_DATE_TIME + "END TIME "
-            + PREFIX_PRIORITY + "3 "
+            + PREFIX_PRIORITY + "INTEGER[1~5] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "picnic "
             + PREFIX_DESCRIPTION + "have fun at Botanic Garden "
             + PREFIX_START_DATE_TIME + "26/11/2017 12:00pm "
             + PREFIX_END_DATE_TIME + "26/11/2017 15:00pm "
+            + PREFIX_PRIORITY + "3 "
             + PREFIX_TAG + "friends ";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
