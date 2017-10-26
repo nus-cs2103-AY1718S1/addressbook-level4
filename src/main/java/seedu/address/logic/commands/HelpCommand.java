@@ -62,6 +62,13 @@ public class HelpCommand extends Command {
             commandResult = DeleteCommand.MESSAGE_USAGE;
             break;
 
+        case CalendarCommand.COMMAND_ALIAS:
+            //Fallthrough
+
+        case CalendarCommand.COMMAND_WORD:
+            commandResult = CalendarCommand.MESSAGE_USAGE;
+            break;
+
         case EditCommand.COMMAND_ALIAS:
             //Fallthrough
 
