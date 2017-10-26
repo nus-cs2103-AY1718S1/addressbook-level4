@@ -9,6 +9,9 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.parser.ArgumentMultimap;
+import seedu.address.logic.parser.ArgumentTokenizer;
+import seedu.address.logic.parser.Prefix;
 
 
 /**
@@ -67,6 +70,13 @@ public class Autocompleter {
                 raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
                 return EMPTY_STRING;
 
+            case ADD:
+                //System.out.println(possibleAutocompleteResults.get(0));
+                if (possibleAutocompleteResults.isEmpty()) {
+                    return textInCommandBox;
+                }
+                return textInCommandBox.trim() + " " +possibleAutocompleteResults.get(0);
+
             case MULTIPLE_COMMAND:
                 displayMultipleResults(possibleAutocompleteResults);
                 return possibleAutocompleteResults.get(cycleIndex());
@@ -96,6 +106,7 @@ public class Autocompleter {
         switch (commandWord) {
             case AddCommand.COMMAND_WORD:
                 state = AutocompleteState.ADD;
+                autocompleteAddCommand(commandBoxText);
                 break;
 
             case EditCommand.COMMAND_WORD:
@@ -145,6 +156,23 @@ public class Autocompleter {
             resultIndex = 0;
             break;
         }
+    }
+
+    private void autocompleteAddCommand(String commandBoxText) {
+        Prefix[] prefixes = AutocompleteState.getPrefixes(state);
+        ArrayList<String> nextPrefix = new ArrayList<>();
+        if (prefixes.length == 0) {
+            return;
+        }
+        ArgumentMultimap argMap = ArgumentTokenizer.tokenize(commandBoxText, prefixes);
+        for (Prefix p : prefixes) {
+            if (!argMap.getValue(p).isPresent()) {
+                nextPrefix.add(p.toString());
+                //System.out.println(p.toString());
+                break;
+            }
+        }
+        possibleAutocompleteResults = nextPrefix;
     }
 
     /**
