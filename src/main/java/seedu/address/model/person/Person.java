@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -21,7 +22,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
-import seedu.address.model.insurance.UniqueLifeInsuranceIdList;
 import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -58,6 +58,7 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.lifeInsuranceIds = new SimpleObjectProperty<>(lifeInsuranceIds);
+        this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
     }
 
     /**
@@ -72,6 +73,8 @@ public class Person implements ReadOnlyPerson {
         this.dob = new SimpleObjectProperty<>(dob);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
+        this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
     }
 
     /**
@@ -80,17 +83,21 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
-        /*
-        if (source.getLifeInsurance() != null) {
-            this.lifeInsurance = source.getLifeInsurance();
+        if(source.getLifeInsuranceIds() != null) {
+            this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
-        */
+        if(source.getLifeInsurances() != null) {
+            this.lifeInsurances = new SimpleObjectProperty<>(source.getLifeInsurances());
+        }
     }
 
     public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
-        //this.lifeInsurance = lifeInsurance;
+        if(source.getLifeInsuranceIds() != null) {
+            this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
+        }
+        addLifeInsurances(lifeInsurance);
     }
 
     public void setName(Name name) {
@@ -181,9 +188,18 @@ public class Person implements ReadOnlyPerson {
         return this.lifeInsuranceIds.get();
     }
 
+    public void addLifeInsurances(ReadOnlyInsurance lifeInsurance) {
+        this.lifeInsurances.get().add(lifeInsurance);
+    }
+
     @Override
     public ObjectProperty<UniqueLifeInsuranceList> lifeInsuranceProperty() {
         return this.lifeInsurances;
+    }
+
+    @Override
+    public UniqueLifeInsuranceList getLifeInsurances() {
+        return this.lifeInsurances.get();
     }
 
     /**
@@ -206,16 +222,6 @@ public class Person implements ReadOnlyPerson {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
-    /*
-    public void setLifeInsurance(LifeInsurance lifeInsurance) {
-        this.lifeInsurance = lifeInsurance;
-    }
-
-    @Override
-    public  getLifeInsuranceIds() {
-        return lifeInsurance;
-    }
-    */
 
     public String getDetailByPrefix(Prefix prefix) {
         if (prefix.equals(PREFIX_NAME)) {

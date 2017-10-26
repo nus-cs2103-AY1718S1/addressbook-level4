@@ -40,11 +40,8 @@ public class UniqueLifeInsuranceList implements Iterable<LifeInsurance> {
      *
      * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
      */
-    public void add(ReadOnlyInsurance toAdd) throws DuplicatePersonException {
+    public void add(ReadOnlyInsurance toAdd) {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicatePersonException();
-        }
         internalList.add(new LifeInsurance(toAdd));
     }
 
