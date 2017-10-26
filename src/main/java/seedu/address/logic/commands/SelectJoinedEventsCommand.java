@@ -39,7 +39,7 @@ public class SelectJoinedEventsCommand extends Command {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            for(ReadOnlyEvent event: lastShownList.get(targetIndex.getZeroBased()).getParticipation()) {
+            for (ReadOnlyEvent event: lastShownList.get(targetIndex.getZeroBased()).getParticipation()) {
                 temp += (event.getEventName()) + "[-]";
             }
         }
