@@ -364,6 +364,41 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Find person(s) using different details
+
+The `finds` command is an improved version from `find` command. It allows user to search using other details such as phone number, email or tag instead of just name.
+
+The user can use this command with only ONE of the following prefixes
+
+* `n/` : To search by name(s)
+* `p/` : To search by phone number(s)
+* `e/` : To search by email(s)
+* `t/` : To search by tag(s)
+
+==== Design Considerations
+
+It is implemented to search with one type of detail only so that the returned results will be relevant to that type of detail used only. i.e. if a user search for a person with phone number then only the phone numbers of the returned contacts are relevant, and other details are irrelevant to the input phone number during the search.
+
+Alternative considered is to allow user input multiple details in each search. It may help to narrow down and shorten the list of contacts that will be returned, but it is not useful as user may only recall some details of a person only and thus not implemented . For example:
+
+*Scenario one*
+
+* `Contact 1` : Name `John Tan` and phone number `12345678`
+* `Contact 2` : Name `John Doe` and phone number `12349875`
+* `Contact 3` : Name `Amy Chan` and phone number `98765432`
+* User wants to find `John Tan` but do not recall surname and key in `John` only
+* User cannot recall the number and key in a random number `43567823`
+* There will be no results returned in this scenario as input phone number does not match the phone numbers in `Contact 1` and `Contact 2` that contains `John`
+
+*Scenario two*
+
+* `Contact 1` : Name `John Tan` and phone number `12345678`
+* User wants to find `John Tan` and key in `John Tan`
+* User cannot recall the number and key in a random number `43567823`
+* There will be no results returned in this scenario as input phone number does not match the phone number in the `Contact 1` although the name matches exactly.
+
+From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise this `finds` command is practically not useful as no results will be returned.
+
 == Documentation
 
 We use asciidoc for writing documentation.

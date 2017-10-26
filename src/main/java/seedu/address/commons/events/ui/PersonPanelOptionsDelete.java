@@ -11,7 +11,7 @@ public class PersonPanelOptionsDelete extends BaseEvent {
     public final int targetIndex;
 
     public PersonPanelOptionsDelete(Index targetIndex) {
-        this.targetIndex = targetIndex.getZeroBased();
+        this.targetIndex = targetIndex.getOneBased();
     }
 
     @Override
