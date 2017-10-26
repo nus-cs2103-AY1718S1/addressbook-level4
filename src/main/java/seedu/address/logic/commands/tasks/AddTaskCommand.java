@@ -19,7 +19,7 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
  */
 public class AddTaskCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addtask";
+    public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the address book. "
             + "Parameters: "

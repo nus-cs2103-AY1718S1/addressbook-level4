@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -33,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueTaskList tasks;
+    private final CommandMode commandMode;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -45,6 +47,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         tasks = new UniqueTaskList();
+        commandMode = new CommandMode();
     }
 
     public AddressBook() {}
@@ -286,6 +289,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new TaskNotFoundException();
         }
+    }
+
+    public void changeCommandMode(String mode) throws IllegalValueException {
+        commandMode.setCommandMode(mode);
+    }
+
+    public String getCommandMode() {
+        return commandMode.toString();
     }
 
     //// util methods
