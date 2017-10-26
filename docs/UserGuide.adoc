@@ -33,9 +33,9 @@ A summary of all commands can be found at the end of the guide.
 
 ==  Key Features +
 
-=== Contact Manager
+=== Address Book
 
-The contact manager allows you to add, delete, tag, detag, list, find, select and edit contacts.
+The address book allows you to add, delete, tag, detag, list, find, select and edit contacts.
 
 It offers the following parameters:
 
