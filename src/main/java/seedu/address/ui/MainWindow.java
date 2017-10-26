@@ -83,6 +83,8 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        String original = getClass().getResource("/view/DarkTheme.css").toExternalForm();
+        scene.getStylesheets().add(original);
         this.scene2 = scene;
         primaryStage.setScene(scene);
 
@@ -231,6 +233,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ChangeThemeRequestEvent());
     }
     public void setTheme(String themeUrl) {
+        scene2.getStylesheets().clear();
         scene2.getStylesheets().add(themeUrl);
         primaryStage.setScene(scene2);
     }
