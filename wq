@@ -1,3 +1,4 @@
+
 [33mcommit c5c06bd682137f801ceaad32e1e1cfa2416332a3[m
 Merge: 3e1cef7 82f647a
 Author: Raisa Kabir <raisa.kabir201@gmail.com>
@@ -91,7 +92,7 @@ Author: tby1994 <31119218+tby1994@users.noreply.github.com>
 Date:   Sat Oct 21 13:52:29 2017 +0800
 
     Merge pull request #68 from eryao95/Remove_task_feature
-    
+
     Remove task feature
 
 [33mcommit 593753422fc6d28e7988bedc59843f991031ca91[m
@@ -144,7 +145,7 @@ Author: eryao95 <31096282+eryao95@users.noreply.github.com>
 Date:   Sat Oct 21 12:02:01 2017 +0800
 
     Merge pull request #66 from tby1994/TaskManager
-    
+
     Task manager (Included basic Gui test files for future system tests)
 
 [33mcommit c37909983c3dfb6c113bbe90829e48370a00d6d8[m
@@ -1958,13 +1959,13 @@ Date:   Thu Sep 21 20:45:02 2017 +0800
 
     [#672] DeveloperGuide: Update instructions on setting up (#691)
     
-    HelpWindowTest fails if the processResources task isn’t executed by
+    HelpWindowTest fails if the processResources task isn?t executed by
     Gradle before the test runs.
     
-    This isn’t documented in the DeveloperGuide, which may cause confusion
+    This isn?t documented in the DeveloperGuide, which may cause confusion
     to future developers if they encounter this issue.
     
-    Let’s update the setting up instructions in DeveloperGuide to reflect
+    Let?s update the setting up instructions in DeveloperGuide to reflect
     this issue.
 
 [33mcommit 2e608f0badfae4d030f22ed72d7836d1d34afa13[m
@@ -2064,13 +2065,13 @@ Date:   Wed Sep 20 22:35:59 2017 +0800
     leaks between tests as the state of the static objects are preserved
     across tests.
     
-    EventsCenter isn’t cleared after each GuiUnitTest is executed, as such
-    it stores a reference to its’ subscribers, which causes these objects
+    EventsCenter isn?t cleared after each GuiUnitTest is executed, as such
+    it stores a reference to its? subscribers, which causes these objects
     to not be removed by Garbage Collection after the test is done
     executing. This causes AddCommandTest to fail when run locally on
     IntelliJ together with other tests.
     
-    Let’s update GuiUnitTest to clears subscribers from EventsCenter after
+    Let?s update GuiUnitTest to clears subscribers from EventsCenter after
     each test.
     
     Credits of debugging this issue goes to @pyokagan.
@@ -2153,7 +2154,7 @@ Date:   Tue Sep 19 23:22:25 2017 +0800
     if tests are ignored. This forces developers to have to manually
     verify each Travis build to ensure that no tests are ignored.
     
-    Let’s replace Assume with Assert.
+    Let?s replace Assume with Assert.
 
 [33mcommit 26ed50f9b44b666c577eebfa4eb1c8009afcb20a[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -2168,7 +2169,7 @@ Date:   Tue Sep 19 22:01:28 2017 +0800
     if tests are ignored. This forces developers to have to manually
     verify each Travis build to ensure that no tests are ignored.
     
-    Let’s replace Assume with Assert.
+    Let?s replace Assume with Assert.
 
 [33mcommit 726daedb1e40c818a67ab1e8017229a9f55c5793[m
 Merge: 9d0d80c baaaffe
@@ -2198,7 +2199,7 @@ Date:   Tue Sep 19 21:41:01 2017 +0800
     
     Asserts should not be used in test cases as they can be disabled.
     
-    Let’s replace assert statements with junit.Assert
+    Let?s replace assert statements with junit.Assert
 
 [33mcommit baaaffebdf1500b657b10120dfd7e8772522a812[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -2226,7 +2227,7 @@ Date:   Tue Sep 19 11:13:40 2017 +0800
     
     Asserts should not be used in test cases as they can be disabled.
     
-    Let’s replace assert statements with junit.Assert
+    Let?s replace assert statements with junit.Assert
 
 [33mcommit 705f37c3b954aca71277cbad7e883b242539eb0e[m
 Author: Zhi Yuan <yongzhiyuan@u.nus.edu>
@@ -2237,7 +2238,7 @@ Date:   Tue Sep 19 13:08:08 2017 +0800
     The command `gradle nonGuiTests` is expected to execute only non GUI
     tests. However, it is currently executing GUI tests as well.
     
-    Let’s update this task to exclude the execution of GUI tests.
+    Let?s update this task to exclude the execution of GUI tests.
 
 [33mcommit f44a524b29127d154a6858f036b535f2bf62dd9d[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -2248,11 +2249,11 @@ Date:   Wed Sep 13 20:42:31 2017 +0800
     We use assert to show that a precondition is met before executing a
     test.
     
-    Asserts should not be used in test cases as JUnit’s Assume class
+    Asserts should not be used in test cases as JUnit?s Assume class
     provides the same functionality, and it conveys the message that a
     particular condition needs to be met before the test is executed.
     
-    Let’s replace assert statements with Assume.
+    Let?s replace assert statements with Assume.
 
 [33mcommit 4334a642340a8b11fb2c8bb10f75abdeb6f73e70[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -2266,7 +2267,7 @@ Date:   Wed Sep 13 20:38:16 2017 +0800
     It is unnecessary for these tests to know the exact command to execute
     to set up the tests.
     
-    Let’s extract the execution of these commands to AddressBookSystemTest
+    Let?s extract the execution of these commands to AddressBookSystemTest
     to provide a layer of abstraction for these system tests.
 
 [33mcommit 11f1e7c2c842faa5bd547cea6f911bb473750abc[m
@@ -2277,11 +2278,11 @@ Date:   Fri Sep 8 15:40:35 2017 +0800
     
     All test classes call getTestApp()#getModel() to retrieve the model.
     
-    This is unnecessarily long. Also, it’s unnecessary for these test
+    This is unnecessarily long. Also, it?s unnecessary for these test
     classes to be aware of what a TestApp is.
     
-    Let’s replace getTestApp() with getModel(), which retrieves the
-    testApp’s model directly.
+    Let?s replace getTestApp() with getModel(), which retrieves the
+    testApp?s model directly.
 
 [33mcommit 44b7dcda16e7022f6d7ef3c417b635b24d91a786[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -2295,7 +2296,7 @@ Date:   Fri Sep 8 13:56:35 2017 +0800
     This method call is unnecessary as the integer value is automatically
     converted to a String.
     
-    Let’s remove the call to String#valueOf(int).
+    Let?s remove the call to String#valueOf(int).
 
 [33mcommit e57cdf5677ed4d473d33161607924ebe903377e3[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -2308,7 +2309,7 @@ Date:   Fri Sep 8 13:52:09 2017 +0800
     Without segmenting the tests, it is harder for future readers to know
     what we are testing.
     
-    Let’s segment the test cases to improve readability of the test cases.
+    Let?s segment the test cases to improve readability of the test cases.
 
 [33mcommit 48abf5a3d160c77f529803d1825ed8b514848f6e[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -2528,14 +2529,14 @@ Date:   Fri Sep 1 15:03:35 2017 +0800
     
     This is a potential cause of bugs.
     
-    Let’s update this method to return
+    Let?s update this method to return
     UnmodifiableObservableList<ReadOnlyPerson> instead.
 
 [33mcommit 3b27d4102a9e69eecb2380ac1a5bb88e7aa723df[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
 Date:   Fri Sep 1 15:01:01 2017 +0800
 
-    DeleteCommand and SelectCommand: Don’t use UnmodifiableObservableList
+    DeleteCommand and SelectCommand: Don?t use UnmodifiableObservableList
     
     executeUndoableCommand() and execute() in DeleteCommand and
     SelectCommand respectively call Model#getFilteredPersonList() and
@@ -2546,7 +2547,7 @@ Date:   Fri Sep 1 15:01:01 2017 +0800
     updated to return another type of List, these Commands will need to have
     their code updated as well.
     
-    Let’s update the variable to be of type List instead.
+    Let?s update the variable to be of type List instead.
 
 [33mcommit 8915a7d7db28baba7629548ac6b5b92a583fe995[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -2564,7 +2565,7 @@ Date:   Mon Sep 4 10:47:45 2017 +0800
     
     This violates the DRY principle.
     
-    Let’s refactor the repeated code out into a new overload test
+    Let?s refactor the repeated code out into a new overload test
     verification method.
 
 [33mcommit 030f8621cfc60f541bac4d324a2e9311cca64d57[m
@@ -2579,7 +2580,7 @@ Date:   Mon Sep 4 16:43:44 2017 +0800
     storing, since some of the test cases use the expectedModel object
     that is constructed few test cases before itself.
     
-    Let’s replace the use of expectedModel with other more meaningful
+    Let?s replace the use of expectedModel with other more meaningful
     variables.
 
 [33mcommit dbaeba1680f1cb0df7a2fa14bb0773a9d2ca9ae8[m
@@ -2594,7 +2595,7 @@ Date:   Mon Sep 4 19:55:21 2017 +0800
     expected address book as the parameter when constructing the
     ModelManager object.
     
-    Let’s update the creation of ModelManager objects by calling
+    Let?s update the creation of ModelManager objects by calling
     getTestApp()#getModel() instead. This method returns a defensive copy
     of the current model.
 
@@ -2854,9 +2855,9 @@ Date:   Sun Aug 27 21:39:42 2017 +0800
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
 Date:   Thu Aug 24 09:22:37 2017 +0800
 
-    AddressBookSystemTest: Update application’s clock on command execution
+    AddressBookSystemTest: Update application?s clock on command execution
     
-    Test classes have to update the application’s clock after each command
+    Test classes have to update the application?s clock after each command
     has been executed. In DeleteCommandSystemTest, the update is called in
     both assertCommandSuccess(...) and assertCommandFailure(...).
     
@@ -2865,7 +2866,7 @@ Date:   Thu Aug 24 09:22:37 2017 +0800
     implementations of assertCommandSuccess(...) and
     assertCommandFailure(...).
     
-    Let’s update executeCommand(String) to update the application’s clock
+    Let?s update executeCommand(String) to update the application?s clock
     immediately before a command is executed so that test classes do not
     have to update it.
 
@@ -2898,10 +2899,10 @@ Date:   Wed Aug 23 09:49:52 2017 +0800
     
     This causes code repetition when other test classes are implemented.
     
-    Let’s shift this method call to executeCommand(String), so that this
+    Let?s shift this method call to executeCommand(String), so that this
     method only returns after the browser has loaded.
     
-    Also, let’s enhance the concurrency check so that
+    Also, let?s enhance the concurrency check so that
     WebViewUtil#waitUntilBrowserLoaded(BrowserPanelHandle) does not have to
     manually reset the boolean concurrency variable.
 
@@ -2913,11 +2914,11 @@ Date:   Tue Aug 22 15:38:02 2017 +0800
     
     This method returns a defensive copy of the model.
     
-    This isn’t an exact copy of the model as the ModelManager’s constructor
+    This isn?t an exact copy of the model as the ModelManager?s constructor
     initialises the FilteredList to show all persons, even though the
-    original model’s FilteredList may not be showing all persons.
+    original model?s FilteredList may not be showing all persons.
     
-    As there is no way to make a defensive copy of the model, let’s return
+    As there is no way to make a defensive copy of the model, let?s return
     the original model instead.
 
 [33mcommit 2a1100736769dcb0b9edd95ba3d28a1df152fe44[m
@@ -3002,7 +3003,7 @@ Date:   Tue Aug 15 11:41:00 2017 +0800
     assertApplicationStartingStateIsCorrect() to better reflect what it is
     doing.
     
-    Let’s update the method name and the header comments accordingly.
+    Let?s update the method name and the header comments accordingly.
 
 [33mcommit 89fcc52287583aa8f8fdb6948cfc6c6a05bd4fb3[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3016,7 +3017,7 @@ Date:   Sun Aug 20 16:23:42 2017 +0800
     This test verification passes even though the incorrect card may be
     selected.
     
-    Let’s teach assertSelectedCardChange() to accept a new parameter Index
+    Let?s teach assertSelectedCardChange() to accept a new parameter Index
     expectedSelectedCardIndex, so that this method is able to verify
     that the correct card has been selected.
 
@@ -3039,14 +3040,14 @@ Date:   Wed Aug 16 10:59:03 2017 +0800
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
 Date:   Fri Aug 18 09:26:30 2017 +0800
 
-    AddressBookSystemTest: Add CommandBox’s style verification
+    AddressBookSystemTest: Add CommandBox?s style verification
     
     CommandBox's style is not verified in tests.
     
     This check should be included to ensure thoroughness of the test
     verification.
     
-    Let’s add methods to verify that the CommandBox's style is as expected.
+    Let?s add methods to verify that the CommandBox's style is as expected.
 
 [33mcommit 752be46b083f08a7b147ad4a9e05059154fb1c4c[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3147,10 +3148,10 @@ Date:   Thu Aug 10 17:31:57 2017 +0800
     
     This causes these methods to be ambiguous concerning what exactly is
     being tested. For example, the header comments of
-    assertCommandSuccess(...) only tells us that “the GUI components display
-    what we expected”, which is ambiguous.
+    assertCommandSuccess(...) only tells us that ?the GUI components display
+    what we expected?, which is ambiguous.
     
-    Let’s shift the test verification methods from AppStateAsserts to
+    Let?s shift the test verification methods from AppStateAsserts to
     DeleteCommandSystemTest and custom tailor it to suit the DeleteCommand,
     so that we do not have to pass in as many boolean flags to these
     methods, and so that developers can easily see what is being tested.
@@ -3205,10 +3206,10 @@ Date:   Sat Aug 12 10:44:32 2017 +0800
     Setting a new value to be displayed in ResultDisplay must run on the
     JavaFX thread.
     
-    The current implementation doesn’t ensure that it runs on the JavaFX
+    The current implementation doesn?t ensure that it runs on the JavaFX
     thread.
     
-    Let’s update it to ensure that it runs on the JavaFX thread.
+    Let?s update it to ensure that it runs on the JavaFX thread.
 
 [33mcommit e771b11af6b33858c937e84123c86762d3810c3c[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3219,10 +3220,10 @@ Date:   Thu Aug 10 17:37:05 2017 +0800
     setSyncStatus(String) and setSaveLocation(String) must run on the
     JavaFX thread.
     
-    The current implementation doesn’t ensure that these methods run on the
+    The current implementation doesn?t ensure that these methods run on the
     JavaFX thread.
     
-    Let’s update them to ensure that they run on the JavaFX thread.
+    Let?s update them to ensure that they run on the JavaFX thread.
 
 [33mcommit a951b97f02d9b827c52d1047fb93c3e534051215[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3232,10 +3233,10 @@ Date:   Thu Aug 10 17:34:25 2017 +0800
     
     loadPage(String) must run on the JavaFX thread.
     
-    The current implementation doesn’t ensure that this method runs on the
+    The current implementation doesn?t ensure that this method runs on the
     JavaFX thread.
     
-    Let’s update the method to ensure that this method runs on the JavaFX
+    Let?s update the method to ensure that this method runs on the JavaFX
     thread.
 
 [33mcommit f01c17dbb281044c6c3bebc26152cb25ad4869da[m
@@ -3274,8 +3275,8 @@ Date:   Sat Aug 12 11:06:10 2017 +0800
     There is no need to have 2 ways to notify other classes that the WebView
     has been successfully loaded; having 1 way of doing so is sufficient.
     
-    Let’s remove the posting of WebViewLoadedEvent in BrowserPanelHandle
-    and let’s remove WebViewLoadedEvent too.
+    Let?s remove the posting of WebViewLoadedEvent in BrowserPanelHandle
+    and let?s remove WebViewLoadedEvent too.
 
 [33mcommit c10a72a792ba791eb6898c69f4cce4584ea60488[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3283,17 +3284,17 @@ Date:   Tue Aug 8 09:41:57 2017 +0800
 
     AppStateAsserts: Resolve browser loading race condition
     
-    BrowserPanel’s WebView takes time to be loaded.
+    BrowserPanel?s WebView takes time to be loaded.
     
-    This causes a race condition as the verification of the browser’s
+    This causes a race condition as the verification of the browser?s
     URL may happen before the browser was successfully loaded, therefore
     causing the test to fail.
     
-    Let’s add a boolean variable isWebViewLoaded to BrowserPanelHandle.
+    Let?s add a boolean variable isWebViewLoaded to BrowserPanelHandle.
     This variable will be updated to true when a new web page is loaded.
     If AppStateAsserts is expecting a new web page to be loaded, it will
     wait until isWebViewLoaded equals true before verifying that the
-    browser’s URL is changed.
+    browser?s URL is changed.
 
 [33mcommit 7ac8f04b547d08a9687642124866a5b5b24f1e64[m
 Merge: b755b2b 6075317
@@ -3312,7 +3313,7 @@ Date:   Thu Aug 10 19:03:29 2017 +0800
     updateFilteredPersonList(Predicate<ReadOnlyPerson>) to cause it to
     display all persons.
     
-    Let’s remove updateFilteredListToShowAll().
+    Let?s remove updateFilteredListToShowAll().
     
     Even though we can pass in a null pointer to display all persons as
     this is the way that FilteredList is implemented, however we chose to
@@ -3338,7 +3339,7 @@ Date:   Sat Aug 5 16:24:29 2017 +0800
     updateFilteredPersonList(Predicate<ReadOnlyPerson>) to cause it to
     display all persons.
     
-    Let’s remove updateFilteredListToShowAll().
+    Let?s remove updateFilteredListToShowAll().
     
     Even though we can pass in a null pointer to display all persons as
     this is the way that FilteredList is implemented, however we chose to
@@ -3379,14 +3380,14 @@ Date:   Tue Aug 8 15:04:26 2017 +0800
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
 Date:   Mon Aug 7 20:13:01 2017 +0800
 
-    TypicalPersons: Update getTypicalPersons()’s return type
+    TypicalPersons: Update getTypicalPersons()?s return type
     
     getTypicalPersons() return an array of ReadOnlyPerson.
     
     Some callers require the values to be stored in a List instead of an
     array. As such, they have to manually convert it to a List.
     
-    Let’s teach TypicalPersons to return a List<ReadOnlyPerson> instead.
+    Let?s teach TypicalPersons to return a List<ReadOnlyPerson> instead.
 
 [33mcommit d53434c2fe10adc73bb0ac2bd7ee0065eda9925f[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3399,7 +3400,7 @@ Date:   Sat Aug 5 16:55:45 2017 +0800
     This violates Single Responsibility Principle as TypicalPersons should
     only contain constants and helper methods pertaining to Person objects.
     
-    Let’s add TypicalIndex and move the Index constants to this new class.
+    Let?s add TypicalIndex and move the Index constants to this new class.
 
 [33mcommit 49cc710c3122ea00b61b0bcf9604a8ac9075c562[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3412,7 +3413,7 @@ Date:   Sat Aug 5 16:52:40 2017 +0800
     This is unnecessary as AddressBook performs a defensive copy when
     calling addPerson(ReadOnlyPerson).
     
-    Let’s remove the defensive copy in getTypicalAddressBook().
+    Let?s remove the defensive copy in getTypicalAddressBook().
 
 [33mcommit b1eab19871123c8df33e5436dae0d0b9ad2a543a[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3435,7 +3436,7 @@ Date:   Sat Aug 5 16:31:13 2017 +0800
     No callers require the appending functionality, and they can call
     getTypicalAddressBook() instead.
     
-    Let’s remove loadAddressBookWithSampleData(AddressBook).
+    Let?s remove loadAddressBookWithSampleData(AddressBook).
 
 [33mcommit ecdd485a6efa74886e540f7b6e6acdbee30e32a1[m
 Merge: a60d16b 895430f
@@ -3450,7 +3451,7 @@ Date:   Tue Aug 8 10:21:04 2017 +0800
     We do not need to retrieve the person in the list to be updated, to
     update the list accordingly.
     
-    Let’s simplify the logic by setting the updated Person object in place
+    Let?s simplify the logic by setting the updated Person object in place
     of the person to be updated.
 
 [33mcommit 895430f4c9434c980cf6ed148e0ad36e37c5c5c2[m
@@ -3461,7 +3462,7 @@ Date:   Sat Aug 5 17:07:29 2017 +0800
     
     This method is now unused after the previous commit.
     
-    Let’s remove it.
+    Let?s remove it.
 
 [33mcommit db3eeaba34c043c5465a07f94962ecb6ecd181e4[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3488,7 +3489,7 @@ Date:   Sat Aug 5 17:06:32 2017 +0800
     We do not need to retrieve the person in the list to be updated, to
     update the list accordingly.
     
-    Let’s simplify the logic by setting the updated Person object in place
+    Let?s simplify the logic by setting the updated Person object in place
     of the person to be updated.
 
 [33mcommit f357f1a7af8deca20aad8e26ed77c63a2b106991[m
@@ -3537,7 +3538,7 @@ Date:   Sat Aug 5 18:29:18 2017 +0800
     is selected. As such, we do not need to account for the case when no
     cards are selected.
     
-    Let’s update the return type of getHandleToSelectedCard() to
+    Let?s update the return type of getHandleToSelectedCard() to
     PersonCardHandle.
 
 [33mcommit 928eeef74a8fea097d9c2822f08e34d666fdfb6b[m
@@ -3552,8 +3553,8 @@ Date:   Sat Aug 5 18:24:03 2017 +0800
     This is not as intuitive as creating a method that returns true if a
     card is selected.
     
-    Let’s add isAnyCardSelected() which returns true if a card is selected,
-    and let’s update callers to call this method instead.
+    Let?s add isAnyCardSelected() which returns true if a card is selected,
+    and let?s update callers to call this method instead.
 
 [33mcommit 910b15a57605b6ec69d208d1c9c592914489eb89[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3579,7 +3580,7 @@ Date:   Sat Aug 5 18:08:24 2017 +0800
     There is no need for it to concern itself with helper methods used by
     the test classes (a violation of Single Responsibility Principle).
     
-    Let’s move raise(BaseEvent) to EventsUtil instead.
+    Let?s move raise(BaseEvent) to EventsUtil instead.
 
 [33mcommit 81fc057bcc9b895956d3999a845dfa601944f0eb[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3593,7 +3594,7 @@ Date:   Sat Aug 5 17:58:31 2017 +0800
     There is no need for it to concern itself with test verification methods
     (a violation of Single Responsibility Principle).
     
-    Let’s move assertResultMessage(String) to GuiTestAssert instead.
+    Let?s move assertResultMessage(String) to GuiTestAssert instead.
 
 [33mcommit 1619f955c2b13cb9f3399e301d9c809f881e90a7[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3607,7 +3608,7 @@ Date:   Sat Aug 5 17:49:29 2017 +0800
     There is no need for it to concern itself with test verification methods
     (a violation of Single Responsibility Principle).
     
-    Let’s move assertListSize(int) to GuiTestAssert instead.
+    Let?s move assertListSize(int) to GuiTestAssert instead.
 
 [33mcommit c3ed55ac23aa095f0a4176daaf9949d3a7c302b6[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3620,7 +3621,7 @@ Date:   Sat Aug 5 17:44:35 2017 +0800
     There is no need for these constants to be public as no other classes
     are using them.
     
-    Let’s update the visibility modifiers of these constants to be private.
+    Let?s update the visibility modifiers of these constants to be private.
 
 [33mcommit e38f155068e730ce2690c33b8a7e45d9f8209870[m
 Merge: e2b5e35 78aaac4
@@ -3656,15 +3657,15 @@ Date:   Fri Aug 4 13:07:50 2017 +0800
 
     BrowserPanelHandle: Post WebViewLoadedEvent when WebView is done loading
     
-    There is no way to determine whether the BrowserPanel’s WebView is done
+    There is no way to determine whether the BrowserPanel?s WebView is done
     loading.
     
     This may lead to scenarios whereby BrowserPanelTest tries to verify
     the expectedUrl before the WebView is done loading, which causes the
     test to fail.
     
-    Let’s teach BrowserPanelHandle to post WebViewLoadedEvent when the
-    BrowserPanel’s WebView is done loading, so that BrowserPanelTest can
+    Let?s teach BrowserPanelHandle to post WebViewLoadedEvent when the
+    BrowserPanel?s WebView is done loading, so that BrowserPanelTest can
     catch the event and do the test verification afterwards.
 
 [33mcommit 0a2533dc038d37a98eaac2b9eebbc948f37b604f[m
@@ -3680,7 +3681,7 @@ Date:   Fri Aug 4 12:25:11 2017 +0800
     be done, thus if we do the test verification after the URL is morphed,
     the test will fail.
     
-    Let’s update the string constants to be equal to the morphed URL.
+    Let?s update the string constants to be equal to the morphed URL.
 
 [33mcommit 587fe5296d66ea237c10ccf842ef7021144d5691[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3693,7 +3694,7 @@ Date:   Fri Aug 4 11:38:54 2017 +0800
     This implies that there may be a possible state leak between tests if
     TypicalPersons#TYPICAL_PERSONS is updated.
     
-    Let’s update this constant to become TypicalPersons#getTypicalPersons()
+    Let?s update this constant to become TypicalPersons#getTypicalPersons()
     instead which returns a new array every time this method is called.
 
 [33mcommit f6c7ee9c68900dacbeccd5a8b393519ea22dd313[m
@@ -3709,7 +3710,7 @@ Date:   Sat Aug 5 10:40:33 2017 +0800
     context of EventsCollectorRule to ensure that EventsCollector objects
     are properly torn down after they are initialised.
     
-    Let’s refactor EventsCollector by nesting it in EventsCollectorRule.
+    Let?s refactor EventsCollector by nesting it in EventsCollectorRule.
 
 [33mcommit 9615a54d6bc5178bafa7d151d1268d14c8ab0181[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -3724,7 +3725,7 @@ Date:   Fri Aug 4 11:28:32 2017 +0800
     as EventsCenter is a static class, and the EventsCollector object
     registers itself to the EventsCenter to receive events.
     
-    Let’s update tests to use EventsCollectorRule which properly tears down
+    Let?s update tests to use EventsCollectorRule which properly tears down
     the EventsCollector object, thus preventing state leak between tests.
 
 [33mcommit 62de04adea4d5dcd2d065923156ca02b5a24a9a4[m
@@ -3740,7 +3741,7 @@ Date:   Sat Aug 5 10:33:58 2017 +0800
     as EventsCenter is a static class, and the EventsCollector object
     registers itself to the EventsCenter to receive events.
     
-    Let’s add EventsCollectorRule which properly tears down the
+    Let?s add EventsCollectorRule which properly tears down the
     EventsCollector object, thus preventing state leak between tests.
 
 [33mcommit c9eeff4cda88ff513d3e56763640bd15d0622db9[m
@@ -3756,7 +3757,7 @@ Date:   Fri Aug 4 10:48:50 2017 +0800
     AddressBookGuiTest may subscribe to EventsCenter in the last test case,
     but it will not be cleared, thereby causing a state leak.
     
-    Let’s shift this method call to the method annotated by @After instead.
+    Let?s shift this method call to the method annotated by @After instead.
 
 [33mcommit 816f07f953e8855556176cc0b6f9ca8a13a7b0f7[m
 Merge: 2084731 454a421
@@ -4208,9 +4209,9 @@ Date:   Mon Jul 17 16:40:43 2017 +0800
     
     LogicManager passes the user input to AddressBookParser for parsing.
     
-    AddressBookParser does not know how to parse “undo” and “redo”.
+    AddressBookParser does not know how to parse ?undo? and ?redo?.
     
-    To finish implementing the undo and redo features, let’s teach
+    To finish implementing the undo and redo features, let?s teach
     AddressBookParser to parse UndoCommand and RedoCommand.
 
 [33mcommit 19715700d917f66c9b037ed23888138247cbe22f[m
@@ -4231,7 +4232,7 @@ Date:   Fri Jul 7 16:38:41 2017 +0800
     as a parameter as well. This removes the need to parse the user input
     again, making it easier to implement the undo and redo commands.
     
-    Let’s change setData(Model, CommandHistory) to
+    Let?s change setData(Model, CommandHistory) to
     setData(Model, CommandHistory, UndoRedoStack).
 
 [33mcommit 81ea6b54680a81a96f1472608d71f989add0ffd4[m
@@ -4242,7 +4243,7 @@ Date:   Fri Jul 7 16:32:15 2017 +0800
     
     LogicManager is in charge of managing the execution of the user input.
     
-    Let’s add UndoRedoStack as a field in LogicManager, so that it can
+    Let?s add UndoRedoStack as a field in LogicManager, so that it can
     manage the adding of user input into the stack.
 
 [33mcommit b77644134e519c27db2aeb393b3cd73460b340f0[m
@@ -4257,7 +4258,7 @@ Date:   Thu Jul 13 15:46:48 2017 +0800
     This implies that we are unable to undo and redo previously executed
     commands.
     
-    As part of implementing the undo and redo features, let’s add
+    As part of implementing the undo and redo features, let?s add
     UndoRedoStack to store previously executed commands.
 
 [33mcommit 6ab4a04a0beabd3e1e5aea114ffbdce4759e1c16[m
@@ -4270,7 +4271,7 @@ Date:   Thu May 4 11:53:53 2017 +0800
     
     This disallows us from identifying which commands can be reversed.
     
-    Let’s create UndoableCommand and update the relevant commands to
+    Let?s create UndoableCommand and update the relevant commands to
     extend it.
     
     Also, we implemented the Template Pattern for UndoableCommand#execute()
@@ -4333,7 +4334,7 @@ Date:   Thu Jul 20 11:10:05 2017 +0800
     
     Other classes are unable to call this method.
     
-    As part of preparing to remove getCard(int) in future commits, let’s
+    As part of preparing to remove getCard(int) in future commits, let?s
     update getPersonCardHandle(int) access modifier to public.
 
 [33mcommit 08c681acf239d3fe4b47b2f4f9c6ef62695ca891[m
@@ -4394,7 +4395,7 @@ Date:   Thu Jul 20 13:10:55 2017 +0800
     Without a private constructor, other classes may accidentally create
     instances of TypicalPersons.
     
-    Let’s add a private constructor to prevent other classes from creating
+    Let?s add a private constructor to prevent other classes from creating
     instances of TypicalPersons.
 
 [33mcommit 1b97737703af291734edfb0af2f1b307aad6eb39[m
@@ -4407,7 +4408,7 @@ Date:   Wed Jul 19 11:23:56 2017 +0800
     
     This method is simple enough and can be converted to a static field.
     
-    Let’s remove getTypicalPersons() and convert it to be a static field.
+    Let?s remove getTypicalPersons() and convert it to be a static field.
 
 [33mcommit f9c27cf45b32ebb5bb2dcfb2cc04516dcc0e5360[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -4423,7 +4424,7 @@ Date:   Wed Jul 19 11:14:27 2017 +0800
     accessing the Person objects.
     
     Let's make all methods and fields in TypicalPersons to be static. Also,
-    to prevent state leaks between tests, let’s change these methods and
+    to prevent state leaks between tests, let?s change these methods and
     fields to return ReadOnlyPerson instead of Person, as ReadOnlyPerson
     cannot be modified.
 
@@ -4451,7 +4452,7 @@ Date:   Thu Jul 20 08:16:41 2017 +0800
     
     This violates the DRY principle.
     
-    Let’s move it into CommandTestUtil.
+    Let?s move it into CommandTestUtil.
 
 [33mcommit 43ebcaf21d56b7fbcaacd9b1c83115c3bf8f8146[m
 Merge: a0b042f e068ad1
@@ -4482,7 +4483,7 @@ Date:   Mon Jul 17 11:15:01 2017 +0800
     
     This makes TestUtil a class with low cohesion.
     
-    Let’s create a new class Assert and move assertThrows(...) into it.
+    Let?s create a new class Assert and move assertThrows(...) into it.
 
 [33mcommit 8e89baa73572ebe03ef336ba52eda33cdbb962e3[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -4495,7 +4496,7 @@ Date:   Mon Jul 17 10:06:09 2017 +0800
     
     This makes the @param and @return tags useless.
     
-    Let’s remove these tags and update the header comments to make it more
+    Let?s remove these tags and update the header comments to make it more
     descriptive.
 
 [33mcommit 286991add3fe9026070a692c6e98ca50814263d3[m
@@ -4509,7 +4510,7 @@ Date:   Mon Jul 17 09:06:30 2017 +0800
     
     This unnecessarily exposes it to other classes.
     
-    Let’s change its access modifier to private.
+    Let?s change its access modifier to private.
 
 [33mcommit 4fd44ae9c6b9535dade808b8ff80478ad09bd088[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -4519,9 +4520,9 @@ Date:   Mon Jul 17 08:58:27 2017 +0800
     
     createDataFileWithData(T, String) is only used by TestApp.
     
-    It’s unnecessary to place this method in TestUtil.
+    It?s unnecessary to place this method in TestUtil.
     
-    Let’s extract it to be a private method in TestApp.
+    Let?s extract it to be a private method in TestApp.
 
 [33mcommit b4a85a2092c808a392041332ab4da3dd2d0d5140[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -4550,9 +4551,9 @@ Date:   Mon Jul 17 08:23:28 2017 +0800
     
     These conversions make the code unnecessarily verbose.
     
-    Let’s teach AddCommandTest to use an ArrayList<Person> instead of
+    Let?s teach AddCommandTest to use an ArrayList<Person> instead of
     Person[]. This results in addPersonsToList(Person[], Person...) to be
-    unused, let’s remove it.
+    unused, let?s remove it.
 
 [33mcommit 38d9783502e452754791edd8d06a03388663df11[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -4567,9 +4568,9 @@ Date:   Mon Jul 17 08:16:46 2017 +0800
     
     These conversions make the code unnecessarily verbose.
     
-    Let’s teach DeleteCommandTest to use an ArrayList<Person> instead of
+    Let?s teach DeleteCommandTest to use an ArrayList<Person> instead of
     Person[]. This results in removePersonsFromList(Person[], Index) to be
-    unused, let’s remove it.
+    unused, let?s remove it.
 
 [33mcommit f60bfca366e5edefbd3338d1d08c6ccda60c21fc[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -4586,8 +4587,8 @@ Date:   Mon Jul 17 07:46:42 2017 +0800
     objects for purposes of testing, thus this portion of code in TestUtil
     is duplicate code as well.
     
-    Let’s simplify XmlUtilTest to use a PersonBuilder to create a Person
-    object. This causes generateSamplePersonData to be unused, let’s remove
+    Let?s simplify XmlUtilTest to use a PersonBuilder to create a Person
+    object. This causes generateSamplePersonData to be unused, let?s remove
     it.
 
 [33mcommit da8d7d41ff02ba6b2d3e5405460291db1b70d458[m
@@ -4598,10 +4599,10 @@ Date:   Mon Jul 17 07:18:56 2017 +0800
     
     asList(T[]) converts an array into a List.
     
-    This method is unnecessary as there’s a method in Java library
+    This method is unnecessary as there?s a method in Java library
     Arrays.asList(T[]) which achieves the same effect.
     
-    Let’s update callers to call Arrays.asList(T[]) instead and remove
+    Let?s update callers to call Arrays.asList(T[]) instead and remove
     asList(T[]).
 
 [33mcommit d532bbcbd55c287d472853cd60ff2091c123cd85[m
@@ -4612,7 +4613,7 @@ Date:   Mon Jul 17 07:16:14 2017 +0800
     
     These methods are unused.
     
-    Let’s remove them.
+    Let?s remove them.
 
 [33mcommit a0b042faf7dcde247eccf9bd547e98002bf7e720[m
 Merge: 466a0a1 0f8c7e3
@@ -4881,11 +4882,11 @@ Date:   Fri Jul 14 09:42:40 2017 +0800
     PersonListPanelHandle however, still has methods that return
     ReadOnlyPerson instead of PersonCards.
     
-    Let’s update these methods accordingly.
+    Let?s update these methods accordingly.
     
     Also, as a result of changing these methods, SelectCommandTest will
     be verifying the equality of the PersonCards instead of the
-    ReadOnlyPersons. Let’s implement equals(Object) for PersonCard.
+    ReadOnlyPersons. Let?s implement equals(Object) for PersonCard.
 
 [33mcommit 6f8c65369437191e86cb3484308dc39a48e47dd8[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -4901,7 +4902,7 @@ Date:   Wed Jul 12 12:35:44 2017 +0800
     This method call is no longer needed as PersonCard is now observing
     the Person object that it is displaying.
     
-    Let’s remove the method call along with its comments.
+    Let?s remove the method call along with its comments.
 
 [33mcommit 75cbfa3804ff365646e903514282d9313da4300e[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -4915,7 +4916,7 @@ Date:   Wed Jul 12 12:35:16 2017 +0800
     particular person, however there is no corresponding PersonCard
     containing the person.
     
-    Since Person is now observable, let’s update ListView<ReadOnlyPerson>
+    Since Person is now observable, let?s update ListView<ReadOnlyPerson>
     to ListView<PersonCard>, with each PersonCard observing the Person
     that the card is displaying.
 
@@ -4931,7 +4932,7 @@ Date:   Thu Jul 13 10:43:08 2017 +0800
     in the ModelManager. Also, we have to ensure that the ObservableList
     is updated whenever the FilteredList is updated.
     
-    Let’s import EasyBind which abstracts the implementation, allowing
+    Let?s import EasyBind which abstracts the implementation, allowing
     us to bind view and model with less work.
 
 [33mcommit b1c5e49fad734f8b07c87178c3b3108fc6c8ee50[m
@@ -4944,7 +4945,7 @@ Date:   Wed Jul 12 12:35:32 2017 +0800
     
     This makes Person unobservable.
     
-    Let’s replace Person’s fields to use ObjectProperty, and let’s teach
+    Let?s replace Person?s fields to use ObjectProperty, and let?s teach
     ReadOnlyPerson to return the ObjectProperty fields.
 
 [33mcommit 84d6516fb88cceba44c55050d8cbd2a905f53374[m
@@ -5073,7 +5074,7 @@ Date:   Thu Jul 6 09:12:19 2017 +0800
     Following the DRY principle, we should extract these helper methods into
     a common class.
     
-    Let’s create a CommandParserTestUtil, which is a utility class that
+    Let?s create a CommandParserTestUtil, which is a utility class that
     has these helper methods for verifying the success of
     XCommandParserTests.
 
@@ -5088,7 +5089,7 @@ Date:   Thu Jul 6 08:43:06 2017 +0800
     
     This makes the code look unstructured.
     
-    Let’s add Parser as an interface, with the XCommandParsers
+    Let?s add Parser as an interface, with the XCommandParsers
     implementing it.
 
 [33mcommit 054aa63ad898cd5e37267f6dff49c3cf6751b36a[m
@@ -5102,7 +5103,7 @@ Date:   Fri Jul 7 08:48:13 2017 +0800
     It should have a more specific name: AddressBookParser as it is doing
     a specific task.
     
-    Let’s rename Parser to a more specific name.
+    Let?s rename Parser to a more specific name.
 
 [33mcommit 24c4da0578cbde77f409b5bb36b8903e90615dc9[m
 Merge: 56e874d 5b3b6c0
@@ -5204,7 +5205,7 @@ Date:   Thu Jul 13 08:12:48 2017 +0800
     This makes the code unnecessarily long as there is a try-catch
     block, where the catch block does not do anything significant.
     
-    Let’s replace these methods with UniqueTagList#setTags(Set<Tag>).
+    Let?s replace these methods with UniqueTagList#setTags(Set<Tag>).
     Person#setTags(Set<Tag>) will not need to construct a UniqueTagList,
     and AddressBook#resetData(ReadOnlyAddressBook) will not need to
     catch the DuplicateTagException as there are no duplicate tags in a
@@ -5392,7 +5393,7 @@ Date:   Wed Jul 5 14:18:11 2017 +0800
     As both methods are called multiple times in the class, we should
     static import them to make the code look shorter.
     
-    Let’s static import these 2 methods.
+    Let?s static import these 2 methods.
 
 [33mcommit 09cc03796fd832cab610ca3678bb499c740fe483[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -5406,7 +5407,7 @@ Date:   Wed Jul 5 14:18:03 2017 +0800
     As both methods are called multiple times in the class, we should
     static import them to make the code look shorter.
     
-    Let’s static import these 2 methods.
+    Let?s static import these 2 methods.
 
 [33mcommit 59fa74867986e3a2889d7ec761b1e92475f5d46e[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -5420,7 +5421,7 @@ Date:   Wed Jul 5 14:24:39 2017 +0800
     As CommandTestUtil has a similar method, ListCommandTest should use
     it instead.
     
-    Let’s remove ListCommandTest#assertCommandSuccess(...) and teach
+    Let?s remove ListCommandTest#assertCommandSuccess(...) and teach
     ListCommand to use CommandTestUtil#assertCommandSuccess(...) instead.
 
 [33mcommit aa8aeaf02f795944936f63ddcf0b1b18f07e6082[m
@@ -5435,7 +5436,7 @@ Date:   Wed Jul 5 14:15:33 2017 +0800
     As CommandTestUtil has a similar method, ClearCommandTest should use
     it instead.
     
-    Let’s remove ClearCommandTest#assertCommandSuccess(...) and teach
+    Let?s remove ClearCommandTest#assertCommandSuccess(...) and teach
     ClearCommand to use CommandTestUtil#assertCommandSuccess(...) instead.
 
 [33mcommit 9c6d89080e6671aee5e151659b473730eacc1616[m
@@ -5540,7 +5541,7 @@ Date:   Wed Jul 5 14:05:42 2017 +0800
     There is no need for these classes to be separate as they both have the
     same responsibilities.
     
-    Let’s merge these classes.
+    Let?s merge these classes.
 
 [33mcommit 0ea22876167526b4058942a368fa0c8d080c5033[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -5550,7 +5551,7 @@ Date:   Wed Jul 5 09:12:41 2017 +0800
     
     This method is now unused.
     
-    Let’s remove it.
+    Let?s remove it.
 
 [33mcommit ffe36a8c0e6abda38149f8b013bddd7c8b18b324[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -5583,7 +5584,7 @@ Date:   Wed Jul 5 08:56:29 2017 +0800
     This makes the construction of UniqueTagList unnecessary as no
     other properties of UniqueTagList are required here.
     
-    Let’s teach UniqueTagList#setTags(UniqueTagList) to take in Set
+    Let?s teach UniqueTagList#setTags(UniqueTagList) to take in Set
     instead, to avoid the unnecessary construction of UniqueTagList.
 
 [33mcommit 3e71299fdd455bdd42ba4768bcc26fbddbd82cfc[m
@@ -5595,7 +5596,7 @@ Date:   Fri Jul 7 08:23:05 2017 +0800
     UniqueTagList(String...), UniqueTagList(Tag...),
     UniqueTagList(Collection<Tag>), UniqueTagList(UniqueTagList) are unused.
     
-    Let’s remove them.
+    Let?s remove them.
 
 [33mcommit 89539897229b581a5a575a0f53a4b47c96976e2f[m
 Author: Tan Wang Leng <tanwangleng@outlook.com>
@@ -5643,7 +5644,7 @@ Date:   Wed Jul 5 09:09:06 2017 +0800
     to see what he has typed most recently, just like how Google Chrome
     History works.
     
-    Let’s update HistoryCommand to return previous commands in reverse
+    Let?s update HistoryCommand to return previous commands in reverse
     chronological order.
 
 [33mcommit 152302ea562807f782fb865528776093592e326a[m
@@ -5657,7 +5658,7 @@ Date:   Wed Jul 5 09:02:14 2017 +0800
     This number is outdated, as we have recently released version 1.4 of the
     app.
     
-    Let’s update the version to reflect the new version of the recent
+    Let?s update the version to reflect the new version of the recent
     release.
 
 [33mcommit 05b883ebfd21e2c3cd8d209ead3dc19852f9c5d2[m
@@ -5753,7 +5754,7 @@ Date:   Tue Jul 4 11:37:15 2017 +0800
     
     A future test will need this method (see next commit).
     
-    Let’s change the visibility modifier to public.
+    Let?s change the visibility modifier to public.
 
 [33mcommit b404fa406bb23173f7ce9abb1cc016d35aeab33c[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -5770,7 +5771,7 @@ Date:   Tue Jul 4 09:44:35 2017 +0800
     commandBox_handleKeyPress() no longer needs to create a local GuiRobot
     as the class already has a GuiRobot.
     
-    Let’s remove the creation of the local GuiRobot in
+    Let?s remove the creation of the local GuiRobot in
     commandBox_handleKeyPress().
 
 [33mcommit 5856b94e0c851d40fd0de5cb28593d400a96fd80[m
@@ -5797,13 +5798,13 @@ Date:   Thu Jun 29 14:17:10 2017 +0800
     Teach Logic component to return the user input history
     
     CommandBox has no way to access the user input history in Logic as
-    CommandHistory’s visibility modifier is private.
+    CommandHistory?s visibility modifier is private.
     
     This makes it impossible for CommandBox to retrieve what the user
     has input previously.
     
     As a step towards allowing up and down buttons to get the previous and
-    next input respectively, let’s teach the Logic component to return
+    next input respectively, let?s teach the Logic component to return
     the user input history in CommandHistory.
 
 [33mcommit 175017ddff5c23826d3d5cac9fe2fb1a92b1e8d1[m
@@ -5812,7 +5813,7 @@ Date:   Wed Jun 21 14:12:11 2017 +0800
 
     Add ListElementPointer
     
-    The native ListIterator’s cursor does not point to an element.
+    The native ListIterator?s cursor does not point to an element.
     Rather, it points in between elements. As a result, alternating
     calls of ListIterator#next() and ListIterator#previous() return
     the same element.
@@ -5822,7 +5823,7 @@ Date:   Wed Jun 21 14:12:11 2017 +0800
     input respectively.
     
     As a step towards allowing up and down buttons to get previous and
-    next input respectively, let’s create ListElementPointer.
+    next input respectively, let?s create ListElementPointer.
     ListElementPointer has an index that works as a pointer to an element
     in the list. This allows us to iterate through the list while
     providing better code clarity.
@@ -5835,11 +5836,11 @@ Date:   Wed Jun 21 14:12:11 2017 +0800
     of PeekingIterator [1]), in which we use peekNext() and peekPrevious()
     to get the next and previous elements accordingly. One of the ways
     is to override the next() and previous() methods such that they do
-    not return anything. However, this would violate the Iterator’s
+    not return anything. However, this would violate the Iterator?s
     semantics. Another way is to not override both methods, and simply
     ignore the return values i.e we only access the next and previous
     elements by using peekNext() and peekPrevious() respectively.
-    However, this isn’t intuitive to future developers who may wonder
+    However, this isn?t intuitive to future developers who may wonder
     why we are ignoring the return values.
     
     [1]: http://google.github.io/guava/releases/21.0/api/docs/com/google/common/collect/PeekingIterator.html
@@ -5848,24 +5849,24 @@ Date:   Wed Jun 21 14:12:11 2017 +0800
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
 Date:   Mon Jun 19 16:01:41 2017 +0800
 
-    Update BrowserPanel#loadPersonPage(…) visibility modifier to private
+    Update BrowserPanel#loadPersonPage(?) visibility modifier to private
     
     This method is no longer called by classes other than itself.
     
-    Let’s update its visibility modifier to private.
+    Let?s update its visibility modifier to private.
 
 [33mcommit d725516f91920b256dcb7966b8b78ff37bb770f0[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
 Date:   Fri Jun 16 14:15:17 2017 +0800
 
-    Move UiManager#handlePersonPanelSelectionChangedEvent(…) to BrowserPanel
+    Move UiManager#handlePersonPanelSelectionChangedEvent(?) to BrowserPanel
     
     UiManager catches PersonPanelSelectionChangedEvent.
     
     PersonPanelSelectionChangedEvent is handled by BrowserPanel, so it
     should be caught by BrowserPanel instead.
     
-    Let’s move this method to BrowserPanel.
+    Let?s move this method to BrowserPanel.
 
 [33mcommit 15cf4b14b80b91fc6d2259105cd88411849dbc33[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -5875,33 +5876,33 @@ Date:   Mon Jun 19 16:01:31 2017 +0800
     
     This method is no longer called by classes other than itself.
     
-    Let’s update its visibility modifier to private.
+    Let?s update its visibility modifier to private.
 
 [33mcommit 481e58e9256c2ca5411d85e17d75c023d6316781[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
 Date:   Fri Jun 16 14:11:29 2017 +0800
 
-    Move UiManager#handleJumpToListRequestEvent(…) to PersonListPanel
+    Move UiManager#handleJumpToListRequestEvent(?) to PersonListPanel
     
     UiManager catches JumpToListRequestEvent.
     
     JumpToListRequestEvent is handled by PersonListPanel, so it should be
     caught by PersonListPanel instead.
     
-    Let’s move this method to PersonListPanel.
+    Let?s move this method to PersonListPanel.
 
 [33mcommit 2a4b7aa165fc368eb95ddc87e3e374530cf26902[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
 Date:   Fri Jun 16 14:09:44 2017 +0800
 
-    Move UiManager#handleShowHelpEvent(…) to MainWindow
+    Move UiManager#handleShowHelpEvent(?) to MainWindow
     
     UiManager catches ShowHelpRequestEvent.
     
     ShowHelpRequestEvent is handled by MainWindow, so it should be caught
     by MainWindow instead.
     
-    Let’s move this method to MainWindow.
+    Let?s move this method to MainWindow.
 
 [33mcommit 89889b9a0bb1c75b945d41466adc4bec50f9a72e[m
 Merge: 5a70b77 1b6aa20
@@ -5929,7 +5930,7 @@ Date:   Wed Jun 28 13:17:11 2017 +0800
     This method is no longer called when a command is successfully
     executed. Instead, it is called whenever the text field is edited.
     
-    Let’s update the name of this method to reflect this behaviour.
+    Let?s update the name of this method to reflect this behaviour.
 
 [33mcommit c2c9a65d4e18575e68146563654cd6a10815efae[m
 Author: Tan Wang Leng <tanwangleng@outlook.com>
@@ -6054,7 +6055,7 @@ Date:   Mon Jul 3 07:46:27 2017 +0800
     worsened after #491 is merged, whereby CommandHistory only allows
     elements to be prepended to it, which takes O(n) time per insertion
     using an ArrayList. On the other hand, using a LinkedList takes a
-    constant θ(1) time to append or prepend an element.
+    constant ?(1) time to append or prepend an element.
     
     Let's change the implementation of userInputHistory to use LinkedList
     instead.
@@ -6313,7 +6314,7 @@ Date:   Thu Jun 29 08:30:49 2017 +0800
     GuiRobot does not access the window. Thus, there is no point assigning
     the window to guiRobot.
     
-    Let’s remove these calls.
+    Let?s remove these calls.
 
 [33mcommit 681369a13fd875c41b378e3f5163d888cfba60e6[m
 Merge: 2c98147 398be6d
@@ -7050,7 +7051,7 @@ Date:   Tue Jun 20 09:42:57 2017 +0800
     This is unnecessary as JUnit instantiates the class for each test,
     thus resetting instance variables after each test.
     
-    Let’s initialise these object variables during declaration instead.
+    Let?s initialise these object variables during declaration instead.
 
 [33mcommit 2a932f5be144dde36aad1c1e9100a2b222769034[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -7062,7 +7063,7 @@ Date:   Mon Jun 19 15:59:04 2017 +0800
     
     This is unnecessary as we can verify the history in each test.
     
-    Let’s remove LogicManagerTest#execute_verifyHistory_success() and test
+    Let?s remove LogicManagerTest#execute_verifyHistory_success() and test
     for the history in each individual test.
 
 [33mcommit 81fc7600593f69143b957f67cb04995d7d71f4ef[m
@@ -7086,7 +7087,7 @@ Date:   Tue Jun 20 08:42:19 2017 +0800
     The current test method name does not reflect the equivalence class
     being tested.
     
-    Let’s update the test method name accordingly, and rename the local
+    Let?s update the test method name accordingly, and rename the local
     variable inside the test method to reflect the update.
 
 [33mcommit 06a592eca49d0d181355753c7f97c6595537aef4[m
@@ -7104,7 +7105,7 @@ Date:   Wed Jun 14 10:02:48 2017 +0800
     LogicManagerTest has 2 tests testing for the same code path (verifying
     that ParseException is thrown).
     
-    This is unnecessary. Let’s remove it.
+    This is unnecessary. Let?s remove it.
 
 [33mcommit 82b33c2dbf1367e310794d5c36391ea91e2cc625[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -7114,7 +7115,7 @@ Date:   Wed Jun 14 09:56:06 2017 +0800
     
     Specifying the generic type name is unnecessary.
     
-    Let’s replace it with a wildcard instead.
+    Let?s replace it with a wildcard instead.
 
 [33mcommit e05d7e14797fd4fd004c742980134aee08a5d901[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -7127,7 +7128,7 @@ Date:   Wed Jun 14 09:48:10 2017 +0800
     Since the system tests cover Storage, it is unnecessary for
     LogicManagerTest to include Storage.
     
-    Let’s remove the Storage component from LogicManagerTest, so that
+    Let?s remove the Storage component from LogicManagerTest, so that
     LogicManagerTest is an integration test for Logic and Model only.
 
 [33mcommit 920e3f5b48fe93b0767d63e08c340bc2c6b5b651[m
@@ -7151,7 +7152,7 @@ Date:   Wed Jun 14 09:21:34 2017 +0800
     
     These tests have already been covered in *CommandIntegrationTest.
     
-    Let’s remove them.
+    Let?s remove them.
 
 [33mcommit d511d69e7f4ee1a07d83c8a6d0d0d1f53eeb391d[m
 Author: Tan Wang Leng <tanwangleng@outlook.com>
@@ -7311,14 +7312,14 @@ Date:   Wed Jun 21 09:17:13 2017 +0800
 Author: Zhi Yuan <yongzhiyuan@u.nus.edu>
 Date:   Wed Jun 21 08:06:48 2017 +0800
 
-    [#480] Change EditPersonDescriptor’s parameters to be non-Optional (#482)
+    [#480] Change EditPersonDescriptor?s parameters to be non-Optional (#482)
     
-    EditPersonDescriptor’s parameters are of type Optional.
+    EditPersonDescriptor?s parameters are of type Optional.
     
     Optional should not be used as parameters. The intended use case is
     for return types to indicate that there is no result.
     
-    Let’s update EditPersonDescriptor’s parameters to be non-Optional.
+    Let?s update EditPersonDescriptor?s parameters to be non-Optional.
 
 [33mcommit b7663dbf33e89d4adccdc5fcf2e7303c7f562867[m
 Author: Tan Wang Leng <tanwangleng@outlook.com>
@@ -7524,7 +7525,7 @@ Date:   Mon Jun 5 09:45:10 2017 +0800
     ought to contain all necessary helper methods required to construct
     an EditPersonDescriptor object.
     
-    Let’s move this method over to EditPersonDescriptorBuilder.
+    Let?s move this method over to EditPersonDescriptorBuilder.
 
 [33mcommit 8d2ccd94e022622f950a5d5bca83b07b4f2ec3cd[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -7538,7 +7539,7 @@ Date:   Mon Jun 5 09:31:44 2017 +0800
     This can be simplified by checking for equality of the entire Model
     directly using ModelManager#equals().
     
-    Let’s update EditCommandTest accordingly.
+    Let?s update EditCommandTest accordingly.
 
 [33mcommit c7710969266fa3887aff311d4bc05f93b5701f30[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -7552,7 +7553,7 @@ Date:   Wed May 3 12:12:24 2017 +0800
     As we can also copy the details of a person with ReadOnlyPerson, the
     constructor is unnecessarily restrictive.
     
-    Let’s change it to take in a ReadOnlyPerson instead.
+    Let?s change it to take in a ReadOnlyPerson instead.
 
 [33mcommit 9db18c3ec4b2df042e036616e8bce2d2fb3dd7d5[m
 Author: Zhi Yuan <yongzhiyuan@u.nus.edu>
@@ -7636,7 +7637,7 @@ Date:   Wed Jun 7 12:49:51 2017 +0800
     
     Model is a facade and should not expose its internal representation.
     
-    Let’s update Model#updatePerson(int, ReadOnlyPerson) to
+    Let?s update Model#updatePerson(int, ReadOnlyPerson) to
     Model#updatePerson(ReadOnlyPerson, ReadOnlyPerson).
 
 [33mcommit 857090e443120e18c45deb59c15089c64cce11d5[m
@@ -7648,7 +7649,7 @@ Date:   Wed Jun 7 12:48:50 2017 +0800
     The creation of Index class in #447 makes IndexUtil#oneToZeroIndex(int)
     obsolete.
     
-    Let’s standardise the codebase to use Index instead.
+    Let?s standardise the codebase to use Index instead.
 
 [33mcommit 3de3b34bcf05aa4a9a656b238be22d7de6d78279[m
 Author: Tan Wang Leng <tanwangleng@outlook.com>
@@ -7677,7 +7678,7 @@ Date:   Mon Jun 5 08:26:25 2017 +0800
     previously. In addition, users have to type out the whole command again
     should they make a small typo in their commands previously.
     
-    Let’s implement the History functionality to allow the user to access
+    Let?s implement the History functionality to allow the user to access
     previously entered commands in the GUI.
 
 [33mcommit ae5481905f5c735dd9f927474b75ff1bca7739c5[m
@@ -7705,7 +7706,7 @@ Date:   Wed May 24 10:41:03 2017 +0800
     should they make a small typo in their commands entered into the
     system.
     
-    Let’s teach Parser to parse HistoryCommand to allow the user to see
+    Let?s teach Parser to parse HistoryCommand to allow the user to see
     what he has entered previously.
 
 [33mcommit c184e7351763bbd049b55d9a5b58c635d3f976c7[m
@@ -7721,7 +7722,7 @@ Date:   Wed May 24 10:40:54 2017 +0800
     should they make a small typo in their commands entered into the
     system.
     
-    As a step towards implementing history functionality, let’s create
+    As a step towards implementing history functionality, let?s create
     the class HistoryCommand.
 
 [33mcommit 6ddeccc82b19d3c61ab68b6dc8249ed5aa4d86ac[m
@@ -7737,7 +7738,7 @@ Date:   Thu May 4 09:02:56 2017 +0800
     should they make a small typo in their commands entered into the
     system.
     
-    As a step towards implementing history functionality, let’s create
+    As a step towards implementing history functionality, let?s create
     the class CommandHistory.
 
 [33mcommit 5ccd6d185c69c6af44f01b45eab992d90a4358f3[m
@@ -7879,7 +7880,7 @@ Date:   Fri Jun 2 08:13:34 2017 +0800
     When the input is a number higher than Integer.MAX_VALUE,
     the method fails with an exception instead of returning false.
     
-    Let’s teach StringUtil#isUnsignedInteger(String) to return false if
+    Let?s teach StringUtil#isUnsignedInteger(String) to return false if
     the input number is higher than Integer.MAX_VALUE.
 
 [33mcommit f6fe1a019300e879cb62af993a0c12d61cb28f87[m
@@ -7898,7 +7899,7 @@ Date:   Fri May 26 16:55:19 2017 +0800
     EditCommandTest only contain tests for EditCommand. There is no need
     for these helper methods to take in Command which is more general.
     
-    Let’s do the replacement.
+    Let?s do the replacement.
 
 [33mcommit 6685551ab60859ab8d824bceae904a44791d7442[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -7909,7 +7910,7 @@ Date:   Fri May 26 16:54:25 2017 +0800
     These line breaks are unnecessary as they are located on the last
     line of code.
     
-    Let’s remove them.
+    Let?s remove them.
 
 [33mcommit 8087b5dc3806533c4258a7622d16018d30ac4f65[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -7922,7 +7923,7 @@ Date:   Fri May 26 16:53:57 2017 +0800
     methods as default values will be assigned when calling the default
     constructor.
     
-    Let’s make this code more compact.
+    Let?s make this code more compact.
 
 [33mcommit 701cb3b9a8fb6b5a7cc5a0c4850b4b27399999d9[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -7937,7 +7938,7 @@ Date:   Mon May 22 08:47:38 2017 +0800
     This causes unnecessary coupling with Parser in EditCommandTest as
     constructing EditCommand does not require Parser.
     
-    Let’s improve EditCommandTest by constructing EditCommand using its
+    Let?s improve EditCommandTest by constructing EditCommand using its
     constructor instead.
 
 [33mcommit f3eb596fe316f5508c63cede160be2b74931f73c[m
@@ -7950,7 +7951,7 @@ Date:   Thu May 4 10:15:47 2017 +0800
     is no need to specifically make the distinction between EditCommandTest
     and EditCommandIntegrationTest.
     
-    Let’s merge them into EditCommandTest.
+    Let?s merge them into EditCommandTest.
 
 [33mcommit 2f5b10f106c34d815c23f7d029920f166ffd4c51[m
 Merge: 3e929d6 288a958
@@ -7970,7 +7971,7 @@ Date:   Thu Jun 1 19:33:15 2017 +0800
         - Replace the asserts for public APIs with checkNotNull() and
           checkArgument(), which throws an appropriate exception when
           validation fails.
-        - Enhance CollectionUtil#isAnyNull(…) to do the same operation as
+        - Enhance CollectionUtil#isAnyNull(?) to do the same operation as
           Objects#requireNonNull(T), and also able to take in multiple
           parameters.
 
@@ -8015,7 +8016,7 @@ Date:   Wed May 31 09:59:21 2017 +0800
     This can be simplified by checking for equality of the entire Model
     directly using ModelManager#equals().
     
-    Let’s update the tests accordingly.
+    Let?s update the tests accordingly.
 
 [33mcommit ec9802858a993112faf0810e9e242a658d3f5d4b[m
 Author: Zhi Yuan Yong <yongzhiyuan@u.nus.edu>
@@ -8029,11 +8030,11 @@ Date:   Fri May 19 12:30:45 2017 +0800
 
     Update CollectionUtil#isAnyNull(Object...) to throw NPE
     
-    Java’s native Objects#requireNonNull(T) can only take in an Object.
+    Java?s native Objects#requireNonNull(T) can only take in an Object.
     Calling the native method requires multiple calls in cases where certain
     methods require multiple parameters to be non-null.
     
-    Let’s update CollectionUtil#isAnyNull(…) to do the same operation as
+    Let?s update CollectionUtil#isAnyNull(?) to do the same operation as
     Objects#requireNonNull(T), and also able to take in multiple parameters.
 
 [33mcommit 96cb99eb0f68adc8e50d1060a2e5b72a3a7d0d37[m
@@ -8302,8 +8303,8 @@ Date:   Fri May 19 13:44:57 2017 +0800
     [#406] Teach Parser to enforce spaces between arguments (#409)
     
     Our parser does not enforce a space between consecutive arguments.
-    For example: “add ABC a/ValidAddressp/61356436e/abc@email.com
-    t/someTag” is able to create a correct person.
+    For example: ?add ABC a/ValidAddressp/61356436e/abc@email.com
+    t/someTag? is able to create a correct person.
     
     This is undesirable because,
     1. it makes the command harder to read (prefixes are harder to detect
@@ -8313,7 +8314,7 @@ Date:   Fri May 19 13:44:57 2017 +0800
     would be ambiguous because we do not know whether the user meant
     sp/ or p/.
     
-    Let’s teach Parser to enforce spaces between fields.
+    Let?s teach Parser to enforce spaces between fields.
 
 [33mcommit 8045c62c5c2e17e9b6d22b85f5d5a6e5a12361a0[m
 Author: Zhi Yuan <yongzhiyuan@u.nus.edu>
@@ -8325,7 +8326,7 @@ Date:   Fri May 19 13:37:43 2017 +0800
     addressBook. This makes the equals comparison always returning true
     because both lists are pointing to the same list.
     
-    Let’s make expectedFilteredList to be backed by the expectedAddressBook
+    Let?s make expectedFilteredList to be backed by the expectedAddressBook
     instead.
 
 [33mcommit 9e158dd1e06328b723edeeded077f15019ac39d0[m
@@ -8581,7 +8582,7 @@ Date:   Fri May 12 09:02:04 2017 +0800
     default values, except for the name. However, the same can be achieved
     using PersonBuilder. This makes the method redundant.
     
-    Let’s change the creation of these Person objects to use PersonBuilder
+    Let?s change the creation of these Person objects to use PersonBuilder
     instead.
 
 [33mcommit ad6d5bd714fd1d059a7f9523c53dde2cc23951e5[m
@@ -8690,7 +8691,7 @@ Date:   Thu May 4 13:53:13 2017 +0800
     such as 911 and 999) but the regex used to validate phone numbers
     accepts numbers shorter than 3 digits.
     
-    Let’s change the regex to reject numbers shorter than 3 digits.
+    Let?s change the regex to reject numbers shorter than 3 digits.
 
 [33mcommit dc9fe96a38a2b5f9bb5bb4c05c3ff1db47b1effd[m
 Author: Eugene Peh <eugenepeh@users.noreply.github.com>
@@ -8829,7 +8830,7 @@ Date:   Fri Apr 7 22:10:28 2017 +0800
     
     In cases where there are consecutive capital letters due to word
     boundaries around single-lettered words, such as in
-    “canIHasReview”, we can make use of the allowedAbbreviations property to
+    ?canIHasReview?, we can make use of the allowedAbbreviations property to
     whitelist them. We are not relaxing the allowedAbbreviationLength to >1
     as single-lettered words are uncommon in identifier names, and
     whitelisting any legitimate cases is a suitable solution.
