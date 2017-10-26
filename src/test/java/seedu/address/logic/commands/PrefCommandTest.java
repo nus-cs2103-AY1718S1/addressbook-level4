@@ -13,13 +13,14 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code PrefCommand}.
  */
 public class PrefCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
 
     @Test
     public void equals() {
@@ -62,7 +63,8 @@ public class PrefCommandTest {
         String key = "AddressBookName";
         String expectedOutput = model.getUserPrefs().getAddressBookName();
         PrefCommand command = prepareCommand(key, "");
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UniqueMeetingList(),
+                new UserPrefs());
         assertCommandSuccess(command, model, expectedOutput, expectedModel);
     }
 
@@ -76,7 +78,7 @@ public class PrefCommandTest {
 
         UserPrefs prefs = new UserPrefs();
         prefs.setAddressBookName(newValue);
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), prefs);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UniqueMeetingList(), prefs);
         assertCommandSuccess(command, model, expectedOutput, expectedModel);
     }
 

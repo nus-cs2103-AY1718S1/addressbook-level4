@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import java.util.function.Predicate;
@@ -31,25 +32,29 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final UniqueMeetingList meetingList;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final UserPrefs userPrefs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyMeetingList meetingList,
+                        UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(addressBook, meetingList, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with address book: " + addressBook + ", meeting list: " + meetingList
+                + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.meetingList = new UniqueMeetingList(meetingList);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         this.userPrefs = userPrefs;
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new UniqueMeetingList(), new UserPrefs());
     }
 
     @Override
@@ -61,6 +66,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    @Override
+    public UniqueMeetingList getMeetingList() {
+        return meetingList;
     }
 
     /** Raises an event to indicate the model has changed */
@@ -75,18 +85,27 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
+        boolean isTagRemoved;
+        boolean hasOneOrMoreDeletion = false;
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
 
-            //creates a new person without the given tag
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            //creates a new person without each of the tags
             Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = newPerson.getTags();
-            newTags.remove(tag);
+            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+
+            for (Tag tag : tags) {
+                isTagRemoved = newTags.remove(tag);
+                if (isTagRemoved) {
+                    hasOneOrMoreDeletion = isTagRemoved;
+                }
+            }
             newPerson.setTags(newTags);
 
             addressBook.updatePerson(oldPerson, newPerson);
         }
+        return hasOneOrMoreDeletion;
     }
 
     @Override
@@ -136,10 +155,9 @@ public class ModelManager extends ComponentManager implements Model {
             ReadOnlyPerson searchedPerson = filteredPersons.get(i);
             SearchData updatedSearchData = searchedPerson.getSearchData();
             updatedSearchData.incrementSearchCount();
-            Person modifiedPerson = new Person(searchedPerson.getName(), searchedPerson.getPhone(),
-                    searchedPerson.getEmail(), searchedPerson.getAddress(), searchedPerson.getTags(),
-                    updatedSearchData);
-
+            Person modifiedPerson = new Person(searchedPerson.getInternalId(), searchedPerson.getName(),
+                    searchedPerson.getPhone(), searchedPerson.getEmail(), searchedPerson.getAddress(),
+                    searchedPerson.getTags(), updatedSearchData);
             try {
                 updatePerson(searchedPerson, modifiedPerson);
             } catch (DuplicatePersonException dpe) {
@@ -153,12 +171,22 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Sort addressBook methods =============================================================
 
     /***
-     * Sorts persons in Addressbook by searchCount
+     * Sorts persons in address book by searchCount
      * @author Sri-vatsa
      */
     @Override
     public void sortPersonListBySearchCount() {
         addressBook.sortBySearchCount();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    /***
+     * Sorts persons in Address book alphabetically
+     */
+    @Override
+    public void sortPersonListLexicographically() {
+        addressBook.sortLexicographically();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }

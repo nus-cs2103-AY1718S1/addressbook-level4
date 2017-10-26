@@ -75,9 +75,9 @@ public class PersonCard extends UiPart<Region> {
                         + " -fx-font-size: 15px;"
                         + " -fx-text-fill: black");
             } else {
-                tagLabel.setStyle("-fx-background-color: lightgreen;"
+                tagLabel.setStyle("-fx-background-color: snow;"
                         + " -fx-font-size: 15px;"
-                        + " -fx-text-fill: red");
+                        + " -fx-text-fill: black");
             }
             tags.getChildren().add(tagLabel);
         });
