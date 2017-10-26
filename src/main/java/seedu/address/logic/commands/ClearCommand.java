@@ -3,13 +3,13 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.ListingUnit.MODULE;
 
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
-
-import java.util.function.Predicate;
 
 
 /**

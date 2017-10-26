@@ -5,9 +5,9 @@ import java.util.function.Predicate;
 import seedu.address.model.module.ReadOnlyLesson;
 
 /**
- * Tests that if a {@code ReadOnlyLesson} if in the favourite list.
+ * Tests that if a {@code ReadOnlyLesson} if in the marked list.
  */
-public class FavouriteListPredicate implements Predicate<ReadOnlyLesson> {
+public class MarkedListPredicate implements Predicate<ReadOnlyLesson> {
 
     @Override
     public boolean test(ReadOnlyLesson lesson) {
@@ -17,7 +17,7 @@ public class FavouriteListPredicate implements Predicate<ReadOnlyLesson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FavouriteListPredicate); // instanceof handles nulls
+                || (other instanceof MarkedListPredicate); // instanceof handles nulls
     }
 
 }

@@ -1,7 +1,14 @@
 package seedu.address.logic.commands;
 
-import javafx.collections.ObservableList;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.model.ListingUnit.LESSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
+
 import org.junit.Test;
+
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
@@ -15,12 +22,6 @@ import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
-
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.model.ListingUnit.LESSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
-import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 public class UnmarkCommandTest {
 
@@ -99,6 +100,9 @@ public class UnmarkCommandTest {
         return unmarkCommand;
     }
 
+    /**
+     * Prepare a model of all lessons inside being marked.
+     */
     private Model prepareModel() throws DuplicateLessonException {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();

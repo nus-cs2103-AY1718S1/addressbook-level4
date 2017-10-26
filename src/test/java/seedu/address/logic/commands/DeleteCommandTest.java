@@ -23,7 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.predicates.FavouriteListPredicate;
+import seedu.address.model.module.predicates.MarkedListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
@@ -53,14 +53,14 @@ public class DeleteCommandTest {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
         model.bookmarkLesson(lessonToDelete);
-        model.updateFilteredLessonList(new FavouriteListPredicate());
+        model.updateFilteredLessonList(new MarkedListPredicate());
 
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.updateFilteredLessonList(new FavouriteListPredicate());
+        expectedModel.updateFilteredLessonList(new MarkedListPredicate());
         expectedModel.deleteLesson(lessonToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -88,7 +88,7 @@ public class DeleteCommandTest {
     @Test
     public void execute_invalidIndexMarkedList_throwsCommandException() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
-        model.updateFilteredLessonList(new FavouriteListPredicate());
+        model.updateFilteredLessonList(new MarkedListPredicate());
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredLessonList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 

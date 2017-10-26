@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
-import seedu.address.model.module.predicates.FavouriteListPredicate;
+import seedu.address.model.module.predicates.MarkedListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
@@ -45,7 +45,7 @@ public class ListCommandTest {
     @Test
     public void execute_list_marked() throws DuplicateLessonException {
 
-        expectedModel.updateFilteredLessonList(new FavouriteListPredicate());
+        expectedModel.updateFilteredLessonList(new MarkedListPredicate());
         assertCommandSuccess(listMarkedCommand, model, String.format(ListCommand.MESSAGE_SUCCESS,
                 ListCommand.MARKED_LIST_KEYWORD), expectedModel);
     }
