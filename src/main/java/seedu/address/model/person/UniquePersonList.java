@@ -9,7 +9,9 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -89,13 +91,18 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
-    public void removeByTag(Tag tag) {
+    public void removeByTag(Tag tag) throws CommandException {
         Iterator<Person> itr = this.iterator();
+        int numRemoved = 0;
         while (itr.hasNext()) {
             Person p = itr.next();
             if (p.getTags().contains(tag)) {
                 itr.remove();
+                numRemoved++;
             }
+        }
+        if (numRemoved == 0) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TAG_FOUND);
         }
     }
 
