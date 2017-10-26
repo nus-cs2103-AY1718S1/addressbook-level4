@@ -5,6 +5,8 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.function.Predicate;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ListingUnit;
@@ -40,6 +42,7 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.handleListingUnit();
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
         model.updateBookedSlotSet();
     }
 

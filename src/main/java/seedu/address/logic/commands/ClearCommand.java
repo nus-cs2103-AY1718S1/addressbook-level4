@@ -1,8 +1,16 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.ListingUnit.MODULE;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.AddressBook;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
+
+import java.util.function.Predicate;
+
 
 /**
  * Clears the address book.
@@ -18,6 +26,11 @@ public class ClearCommand extends UndoableCommand {
         requireNonNull(model);
         model.unbookAllSlot();
         model.resetData(new AddressBook());
+        Predicate predicate = new UniqueModuleCodePredicate(model.getUniqueCodeSet());
+        ListingUnit.setCurrentListingUnit(MODULE);
+        ListingUnit.setCurrentPredicate(predicate);
+        model.updateFilteredLessonList(predicate);
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
