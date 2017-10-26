@@ -4,6 +4,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.FindLessonRequestEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 
@@ -37,8 +38,14 @@ public class FindCommand extends Command {
         switch (ListingUnit.getCurrentListingUnit()) {
         case LOCATION:
             this.predicate = new LocationContainsKeywordsPredicate(keywords);
+            break;
+        case LESSON:
+            this.predicate = new LessonContainsKeywordsPredicate(keywords,model.getCurrentViewingLesson()
+            ,model.getCurrentViewingAttribute());
+            break;
         default:
             this.predicate = new ModuleContainsKeywordsPredicate(keywords);
+            break;
         }
         model.updateFilteredLessonList(predicate);
         EventsCenter.getInstance().post(new FindLessonRequestEvent());
