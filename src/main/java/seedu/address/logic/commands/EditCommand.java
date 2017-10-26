@@ -212,7 +212,6 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
-
         public void setGroup(Group group) {
             this.group = group;
         }
@@ -227,7 +226,6 @@ public class EditCommand extends UndoableCommand {
 
         public void setImage(Image image) {
             this.image = image;
-
         }
 
         @Override
