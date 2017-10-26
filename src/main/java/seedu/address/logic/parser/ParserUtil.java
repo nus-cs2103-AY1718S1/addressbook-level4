@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -29,6 +30,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_SORT = "Invalid Sorting type.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -41,6 +43,30 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Index[]} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static Index[] parseDeleteIndex(String oneBasedIndex) throws IllegalValueException {
+        String[] parts = oneBasedIndex.split(",");
+        String[] trimmedIndex = new String[parts.length];
+        int[] trimmedIntIndex = new int[parts.length];
+
+        for (int i = 0; i < parts.length; i++) {
+            trimmedIndex[i] = parts[i].trim();
+            if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex[i])) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+        }
+
+        for (int i = 0; i < trimmedIndex.length; i++) {
+            trimmedIntIndex[i] = Integer.parseInt(trimmedIndex[i]);
+        }
+
+        return Index.arrayFromOneBased(trimmedIntIndex);
     }
 
     /**
@@ -59,6 +85,15 @@ public class ParserUtil {
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
     /**
@@ -89,5 +124,29 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a String and checks for validity. Leading and trailing whitespaces will be removed
+     * @throws IllegalValueException if specified string is invalid (not 1 of 3 options)
+     */
+    public static String parseSortType(String sortType) throws IllegalValueException {
+        String trimmedSortType = sortType.trim();
+        switch (trimmedSortType) {
+        case "name":
+        case "phone":
+        case "email":
+            return trimmedSortType;
+        default:
+            throw new IllegalValueException(MESSAGE_INVALID_SORT);
+        }
+    }
+
+    /**
+     * Parses a String argument for tag. Leading and trailing whitespaces will be removed
+     */
+    public static String parseTag(String tag) {
+        String trimmedTag = tag.trim();
+        return trimmedTag;
     }
 }
