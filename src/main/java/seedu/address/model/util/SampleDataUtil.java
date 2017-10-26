@@ -34,7 +34,7 @@ public class SampleDataUtil {
                         new FormClass("6E1"), new Grades("50.0"), new PostalCode("654321"),
                         new Remark("Woman"), getTagSet("colleagues", "friends")),
                 new Person(new Name("Charlotte Oliveiro"), new Phone("student/97272031 parent/97979797 "),
-                        new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),     
+                        new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
                         new FormClass("6E1"), new Grades("185.0"), new PostalCode("987654"),
                         new Remark("Awesome mate"), getTagSet("neighbours")),
                 new Person(new Name("David Li"), new Phone("student/97272031 parent/97979797 "),
