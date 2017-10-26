@@ -1,8 +1,10 @@
 package seedu.address.model;
 
+import java.io.IOException;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -51,5 +53,7 @@ public interface Model {
 
     /** Deletes all the given tag {@code tag}. */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+    
+    void mergeAddressBook(String newFilePath) throws DataConversionException, IOException;
 
 }

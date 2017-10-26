@@ -113,7 +113,7 @@ public class AddMultipleCommandTest {
      */
     private AddMultipleCommand getAddMultipleCommandForPerson(ArrayList<ReadOnlyPerson> personList, Model model) {
         AddMultipleCommand command = new AddMultipleCommand(personList);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return command;
     }
 
@@ -166,6 +166,11 @@ public class AddMultipleCommandTest {
 
         @Override
         public void updateFilteredListToShowAll() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void mergeAddressBook(String newFilePath) {
             fail("This method should not be called.");
         }
 

@@ -34,8 +34,7 @@ public class HistoryCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager,
-                        AddressBookStorage addressBookStorage) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager) {
         requireNonNull(history);
         this.history = history;
     }

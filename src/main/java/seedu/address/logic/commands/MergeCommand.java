@@ -36,9 +36,9 @@ public class MergeCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand () throws CommandException {
-        requireNonNull(addressBookStorage);
+        requireNonNull(model);
         try {
-            addressBookStorage.mergeAddressBook(newFilePath);
+            model.mergeAddressBook(newFilePath);
         } catch (FileNotFoundException fne) {
             throw new CommandException(MESSAGE_FILE_NOT_FOUND);
         } catch (DataConversionException dce) {
@@ -51,10 +51,8 @@ public class MergeCommand extends UndoableCommand {
     }
 
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Email emailManager,
-                        AddressBookStorage addressBookStorage) {
+    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack, Email emailManager) {
         this.model = model;
-        this.addressBookStorage = addressBookStorage;
     }
 
     @Override

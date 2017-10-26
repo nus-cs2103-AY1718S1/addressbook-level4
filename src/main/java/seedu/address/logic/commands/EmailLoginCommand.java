@@ -43,8 +43,7 @@ public class EmailLoginCommand extends Command {
      * Overridden as access to email manager is needed
      */
     @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager,
-                        AddressBookStorage addressBookStorage) {
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager) {
         this.emailManager = emailManager;
     }
 }

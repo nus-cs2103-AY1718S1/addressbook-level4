@@ -33,7 +33,7 @@ public class MergeCommandTest {
 
     private Model model = new ModelManager();
     private Email emailManager = new EmailManager();
-    private Logic logic = new LogicManager(model, emailManager, TEST_DEFAULT_FILE_PATH);
+    private Logic logic = new LogicManager(model, emailManager);
 
     @Test
     public void equals() {

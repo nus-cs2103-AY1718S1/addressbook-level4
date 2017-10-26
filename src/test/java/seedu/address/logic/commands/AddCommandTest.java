@@ -89,7 +89,7 @@ public class AddCommandTest {
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), null, null);
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return command;
     }
 
@@ -142,6 +142,11 @@ public class AddCommandTest {
 
         @Override
         public void deleteTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void mergeAddressBook(String newFilePath) {
             fail("This method should not be called.");
         }
     }

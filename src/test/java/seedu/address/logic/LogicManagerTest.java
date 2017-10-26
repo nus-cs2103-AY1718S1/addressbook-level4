@@ -26,7 +26,7 @@ public class LogicManagerTest {
 
     private Model model = new ModelManager();
     private Email emailManager = new EmailManager();
-    private Logic logic = new LogicManager(model, emailManager, "./src/test/data/XmlAddressBookStorageTest/TestAddressBook.xml");
+    private Logic logic = new LogicManager(model, emailManager);
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
