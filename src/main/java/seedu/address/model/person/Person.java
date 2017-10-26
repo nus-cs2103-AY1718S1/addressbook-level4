@@ -31,8 +31,8 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
 
-    public Person(Name name, Phone phone, Birthday birthday, Email email, 
-                  Address address, Remark remark,Set<Tag> tags) {
+    public Person(Name name, Phone phone, Birthday birthday, Email email,
+                  Address address, Remark remark, Set<Tag> tags) {
         requireAllNonNull(name, phone, birthday, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -120,8 +120,8 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Birthday getBirthday() {
-        return birthday.get();
+    public Birthday getBirthday() { return birthday.get(); }
+
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
