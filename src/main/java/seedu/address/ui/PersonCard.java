@@ -82,14 +82,16 @@ public class PersonCard extends UiPart<Region> {
      * @return the color associated to the tagName
      */
     private static String obtainTagColors(String tagName) {
-        if (!currentTagColors.containsKey(tagName) && availableColorsLeft.size() > 0) {
-            Random rand = new Random();
-            int randIndex = rand.nextInt(availableColorsLeft.size());
+        if (!currentTagColors.containsKey(tagName)) {
+            if (availableColorsLeft.size() != 0) {
+                Random rand = new Random();
+                int randIndex = rand.nextInt(availableColorsLeft.size());
 
-            currentTagColors.put(tagName, availableColorsLeft.get(randIndex));
-            availableColorsLeft.remove(randIndex);
-        } else {
-            currentTagColors.put(tagName, "GRAY");
+                currentTagColors.put(tagName, availableColorsLeft.get(randIndex));
+                availableColorsLeft.remove(randIndex);
+            } else {
+                currentTagColors.put(tagName, "GRAY");
+            }
         }
         return currentTagColors.get(tagName);
     }
