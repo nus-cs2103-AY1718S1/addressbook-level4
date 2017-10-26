@@ -51,16 +51,6 @@ public class Autocompleter {
      * @return autocomplete text
      */
     public String autocomplete() {
-        /*
-        String[] commandBoxTextArray = commandBoxText.trim().split("\\s+");
-        String autocompleteText = commandBoxText;
-        if (commandBoxText.equals(EMPTY_STRING)) {
-            raise(new NewResultAvailableEvent(PROMPT_USER_TO_USE_HELP_MESSAGE, false));
-        } else if (commandBoxTextArray.length == 1) {
-            autocompleteText = autocompleteCommandWord(commandBoxTextArray[0]);
-        }
-        return autocompleteText;
-        */
         switch (state) {
             case COMMAND:
                 clearResultsWindow();
