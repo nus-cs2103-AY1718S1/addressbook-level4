@@ -31,10 +31,10 @@ public class Avatar {
 
     public Avatar(String avatarFilePath) throws IllegalValueException {
         this.avatarFilePath = avatarFilePath;
-        if(validFile(this.avatarFilePath)) {
+        try {
             Image imgObj = new Image(this.avatarFilePath);
             this.avatarImage = new SimpleObjectProperty<Image>(imgObj);
-        } else {
+        } catch(NullPointerException e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
     }
@@ -47,8 +47,12 @@ public class Avatar {
          return avatarImage;
     }
 
-    public boolean validFile(String avatarFilePath) {
-        File f = new File(MainApp.class.getResource(avatarFilePath).getFile());
-        return f.exists() && f.canRead();
+    public static boolean validFile(String avatarFilePath) throws NullPointerException {
+        try {
+            File f = new File(MainApp.class.getResource(avatarFilePath).getFile());
+            return f.exists() && f.canRead();
+        } catch (NullPointerException e) {
+            throw(e);
+        }
     }
 }
