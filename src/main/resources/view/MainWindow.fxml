@@ -14,7 +14,6 @@
     <stylesheets>
         <URL value="@Extensions.css" />
     </stylesheets>
-
     <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
