@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalTasks.QUIZ;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -22,6 +23,12 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void find() {
+
+        /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
+
+        /*change the current command mode to task manager*/
+        executeCommand(ChangeModeCommand.COMMAND_WORD + " tm");
+
         /* Case: find multiple tasks in address book, command with leading spaces and trailing spaces
          * -> 2 tasks found
          */
@@ -40,7 +47,7 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertSelectedTaskCardUnchanged();
 
         /* Case: mixed case command word -> 2 tasks found */
-        command = "FiNdTaSk Finish";
+        command = "FiNd Finish";
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 
