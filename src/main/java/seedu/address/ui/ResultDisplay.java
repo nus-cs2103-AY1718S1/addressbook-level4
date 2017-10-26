@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -9,7 +10,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.Commands;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
@@ -20,19 +23,44 @@ public class ResultDisplay extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(ResultDisplay.class);
     private static final String FXML = "ResultDisplay.fxml";
+    private static final HashMap<String, String> allCommandUsages = Commands.getAllCommandUsages();
 
     private final StringProperty displayed = new SimpleStringProperty("");
-    private final StringProperty infoDisplayed = new SimpleStringProperty("");
+
+    private String lastFoundCommand = "";
+    private TextField linkedCommandInput;
 
     @FXML
     private TextArea resultDisplay;
+
+    @FXML
     private TextArea infoDisplay;
 
     public ResultDisplay() {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
         resultDisplay.setWrapText(true);
+        infoDisplay.setWrapText(true);
         registerAsAnEventHandler(this);
+    }
+
+    void setLinkedInput(CommandBox commandBox) {
+        linkedCommandInput = commandBox.getCommandTextField();
+        linkedCommandInput.textProperty().addListener((observable, oldValue, newValue) ->
+            updateInfoDisplay(oldValue, newValue));
+    }
+
+    private void updateInfoDisplay(String oldInput, String newInput) {
+        if (lastFoundCommand.isEmpty()
+            || (newInput.length() < oldInput.length() && !newInput.contains(lastFoundCommand))
+            || newInput.equals("clearhistory")) {
+            infoDisplay.setText("");
+            lastFoundCommand = "";
+            if (allCommandUsages.containsKey(newInput)) {
+                infoDisplay.setText("How to use:\n" + allCommandUsages.get(newInput));
+                lastFoundCommand = newInput;
+            }
+        }
     }
 
     @Subscribe
