@@ -39,7 +39,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
-        this.primaryhone = new SimpleObjectProperty<>(phone);
+        this.primaryPhone = new SimpleObjectProperty<>(phone);
         this.uniquePhoneList = new SimpleObjectProperty<>(new UniquePhoneList());
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
