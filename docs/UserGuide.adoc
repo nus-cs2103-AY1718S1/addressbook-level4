@@ -170,8 +170,28 @@ Examples:
 
 * `findByEmail bob@gmail.com` +
 Returns Bob whose email matches the searched email.
-* `findByAddress bob@gmail.com grant@mail.com` +
+* `findByEmail bob@gmail.com grant@mail.com` +
 Returns any person having email addresses of `bob@gmail.com` or `grant@mail.com`
+
+=== Locating persons by tags: `findByTags`
+
+Finds persons whose addresses contain any of the given keywords. +
+Format: `findByTag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case sensitive. e.g `friends` will not match `Friends`
+* The order of the keywords does not matter.
+* Only the tags are searched.
+* Only full words will be matched e.g. `friend` will not match `friendly`
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
+****
+
+Examples:
+
+* `findByTag friend' +
+Returns Persons with the tag 'friend'.
+* `findByTag owesMoney friend` +
+Returns any person having tags of `owesMoney` or `friend`
 
 === Deleting a person : `delete`
 

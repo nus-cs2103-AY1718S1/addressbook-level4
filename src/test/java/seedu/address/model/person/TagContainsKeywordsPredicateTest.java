@@ -43,7 +43,7 @@ public class TagContainsKeywordsPredicateTest {
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
         TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(
-                Collections.singletonList("alice@example.com"));
+                Collections.singletonList("friends"));
         assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
 
         // Only one matching keyword
