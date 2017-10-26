@@ -107,7 +107,7 @@ public class PersonPanel extends UiPart<Region> {
                 fileChooser.getExtensionFilters().addAll(extFilterJpg);
 
                 //Show open file dialog
-                File file = fileChooser.showOpenDialog(( (Node) t.getTarget())
+                File file = fileChooser.showOpenDialog(((Node) t.getTarget())
                         .getScene().getWindow());
 
                 try {
