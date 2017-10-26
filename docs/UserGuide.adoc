@@ -159,7 +159,7 @@ You can edit the information of a person you have added in the address book. +
 
 *Examples:*
 
-image::editexample.png[width="500"]
+image::editexample.png[width="700"]
     Figure 6: Edit Command Usage Diagram
 
 [WARNING]
@@ -397,7 +397,7 @@ You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
 image::exitUI.png[width="500"]
-    Figure 3: Methods to access `exit` command
+    Figure 7: Methods to access `exit` command
 
 === Displaying Appointments : [Coming in v2.0]
 ****
