@@ -37,7 +37,7 @@ public class NextMeetingCommand extends Command {
         sb.delete(sb.length() - 2, sb.length());
         sb.append('\n');
 
-        return new CommandResult("Next upcoming meeting: " + sb.toString() + nextMeeting.toString());
+        return new CommandResult(sb.toString() + nextMeeting.toString());
     }
 }
 
