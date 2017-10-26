@@ -8,18 +8,18 @@ import org.junit.Test;
 public class PhotoTest {
 
     @Test
-    public void isValidPhotoURL() {
-        // invalid photoURL
-        assertFalse(Photo.isValidPhotoURL("")); // empty string
-        assertFalse(Photo.isValidPhotoURL(" ")); // spaces only
-        assertFalse(Photo.isValidPhotoURL("image/photo")); // no file extension
-        assertFalse(Photo.isValidPhotoURL(".jpg")); // no file name
-        assertFalse(Photo.isValidPhotoURL("photo.")); // empty extension
-        assertFalse(Photo.isValidPhotoURL("photo.png")); // wrong extension
+    public void isValidPhotoUrl() {
+        // invalid photoUrl
+        assertFalse(Photo.isValidPhotoUrl("")); // empty string
+        assertFalse(Photo.isValidPhotoUrl(" ")); // spaces only
+        assertFalse(Photo.isValidPhotoUrl("image/photo")); // no file extension
+        assertFalse(Photo.isValidPhotoUrl(".jpg")); // no file name
+        assertFalse(Photo.isValidPhotoUrl("photo.")); // empty extension
+        assertFalse(Photo.isValidPhotoUrl("photo.png")); // wrong extension
 
-        // valid photoURL
-        assertTrue(Photo.isValidPhotoURL("src/main/resources/images/John.jpg" +
+        // valid photoUrl
+        assertTrue(Photo.isValidPhotoUrl("src/main/resources/images/John.jpg" +
                 ".jpg")); // valid long file path
-        assertTrue(Photo.isValidPhotoURL("John.jpg")); // valid short file path
+        assertTrue(Photo.isValidPhotoUrl("John.jpg")); // valid short file path
     }
 }

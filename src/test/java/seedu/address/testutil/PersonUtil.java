@@ -42,7 +42,7 @@ public class PersonUtil {
         sb.append(PREFIX_STATUS + person.getStatus().value + " ");
         sb.append(PREFIX_PRIORITY + person.getPriority().value + " ");
         sb.append(PREFIX_NOTE + person.getNote().value + " ");
-        sb.append(PREFIX_PHOTO + person.getPhoto().photoURL + " ");
+        sb.append(PREFIX_PHOTO + person.getPhoto().photoUrl + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );

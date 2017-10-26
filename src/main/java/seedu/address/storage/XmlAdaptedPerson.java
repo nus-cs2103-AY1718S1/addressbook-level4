@@ -77,7 +77,7 @@ public class XmlAdaptedPerson {
         status = source.getStatus().value;
         priority = source.getPriority().value;
         note = source.getNote().value;
-        photo = source.getPhoto().photoURL;
+        photo = source.getPhoto().photoUrl;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));

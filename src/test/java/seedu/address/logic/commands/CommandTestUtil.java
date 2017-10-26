@@ -143,7 +143,7 @@ public class CommandTestUtil {
                 .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
                 .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
                 .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
-                (VALID_TAG_FRIEND).build().withRelation(VALID_REL_SIBLINGS).build();
+                (VALID_TAG_FRIEND).withRelation(VALID_REL_SIBLINGS).build();
 
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
