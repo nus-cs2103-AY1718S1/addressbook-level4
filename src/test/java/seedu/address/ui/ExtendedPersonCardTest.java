@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
 import java.util.stream.Collectors;
@@ -16,24 +15,19 @@ import org.junit.Test;
 
 import guitests.guihandles.ExtendedPersonCardHandle;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
 
 public class ExtendedPersonCardTest extends GuiUnitTest {
-
-    private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
-            FXCollections.observableList(getTypicalPersons());
     private ExtendedPersonCard extendedPersonCard;
     private ExtendedPersonCardHandle extendedPersonCardHandle;
 
     @Before
     public void setUp() {
         try {
-            guiRobot.interact(() -> extendedPersonCard = new ExtendedPersonCard(TYPICAL_PERSONS));
+            guiRobot.interact(() -> extendedPersonCard = new ExtendedPersonCard());
             uiPartRule.setUiPart(extendedPersonCard);
             extendedPersonCardHandle = new ExtendedPersonCardHandle(extendedPersonCard.getRoot());
         } catch (NullPointerException e) {
