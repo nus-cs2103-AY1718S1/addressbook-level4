@@ -90,7 +90,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "mobilize.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
