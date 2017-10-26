@@ -18,7 +18,7 @@ public class Email {
     /**
      * The default Email constructor when email is not specified by the user
      */
-    public Email(){
+    public Email() {
         value = "<Unspecified email>";
     }
 
