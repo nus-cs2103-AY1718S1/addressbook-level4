@@ -42,6 +42,8 @@ public class GroupCommand extends UndoableCommand {
             if (!model.groupExists (group)) {
                 model.addGroup (group);
                 editPersonGroups(args, group);
+            } else if (args.size() > 1) {
+                editPersonGroups(args, group);
             } else {
                 model.deleteGroup(group);
             }

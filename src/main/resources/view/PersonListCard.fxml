@@ -11,7 +11,8 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<HBox id="cardPane" fx:id="cardPane" prefHeight="131.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">  <GridPane HBox.hgrow="ALWAYS">
+<HBox id="cardPane" fx:id="cardPane" prefHeight="131.0" prefWidth="354.0" xmlns:fx="http://javafx.com/fxml/1">
+  <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
     </columnConstraints>
