@@ -75,8 +75,8 @@ public class AddAppointmentCommand extends Command {
         ReadOnlyPerson personToAddAppointment = lastShownList.get(index.getZeroBased());
 
         Appointment appointment;
-        
-        if (date == null && index != null) {
+        requireNonNull(index);
+        if (date == null) {
             appointment = new Appointment(personToAddAppointment.getName().toString());
         } else {
             appointment = new Appointment(personToAddAppointment.getName().toString(), date);
@@ -111,7 +111,6 @@ public class AddAppointmentCommand extends Command {
     private boolean isDateValid() {
         requireNonNull(date);
         Calendar calendar = Calendar.getInstance();
-        return !date.getTime().before(calendar.getTime());
     }
 
     public Index getIndex() {
