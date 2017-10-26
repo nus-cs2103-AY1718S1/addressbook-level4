@@ -18,8 +18,12 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListAscendingNameCommand;
 import seedu.address.logic.commands.ListByBloodtypeCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListDescendingNameCommand;
+import seedu.address.logic.commands.ListFailureCommand;
+import seedu.address.logic.commands.ListReverseCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -88,7 +92,7 @@ public class AddressBookParser {
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
-            return ("".equals(arguments)) ? new ListCommand() : new ListByTagCommandParser().parse(arguments);
+            return listEvaluator(arguments);
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
@@ -126,6 +130,43 @@ public class AddressBookParser {
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+    }
+
+    /**
+     * Returns the correct list feature based on word after list
+     *
+     * @param arguments full user input arguments
+     * @return the command based on arguments provided
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    private Command listEvaluator(String arguments) throws ParseException {
+        String[] argSplit = arguments.trim().split(" ");
+        String firstArg = argSplit[0];
+        int firstArgLength = firstArg.length();
+        Command returnThisCommand;
+        switch (firstArg) {
+        case "":
+            returnThisCommand = new ListCommand();
+            break;
+        case "tag":
+            returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength));
+            break;
+        case "asc":
+        case "ascending":
+            returnThisCommand = (argSplit.length == 1) ? new ListAscendingNameCommand() : new ListFailureCommand();
+            break;
+        case "dsc":
+        case "descending":
+            returnThisCommand = (argSplit.length == 1) ? new ListDescendingNameCommand() : new ListFailureCommand();
+            break;
+        case "rev":
+        case "reverse":
+            returnThisCommand = (argSplit.length == 1) ? new ListReverseCommand() : new ListFailureCommand();
+            break;
+        default:
+            returnThisCommand = new ListFailureCommand();
+        }
+        return returnThisCommand;
     }
 
 }

@@ -163,6 +163,24 @@ public class AddCommandTest {
             fail("This method should not be called");
             return null;
         }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> listNameAscending() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> listNameDescending() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> listNameReversed() {
+            fail("This method should not be called");
+            return null;
+        }
     }
 
     /**

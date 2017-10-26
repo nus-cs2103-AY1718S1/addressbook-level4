@@ -61,7 +61,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -101,6 +103,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
      * @param tag all persons containing this tag will be deleted
      */
     public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
@@ -110,6 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
      * @param tags all persons containing this tag will be deleted
      */
     @Override
@@ -121,7 +125,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Adds appointment for a contact in address book
-     *
      */
     @Override
     public void addAppointment(Appointment appointment) throws PersonNotFoundException {
@@ -139,6 +142,35 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByAppointment();
 
 
+        return FXCollections.unmodifiableObservableList(list);
+    }
+
+    /**
+     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
+     * in increasing chronological order
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> listNameAscending() {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByNameAscending();
+        return FXCollections.unmodifiableObservableList(list);
+    }
+
+    /**
+     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
+     * in decreasing chronological order
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> listNameDescending() {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByNameDescending();
+        return FXCollections.unmodifiableObservableList(list);
+    }
+
+    /**
+     * @return an unmodifiable view of the list of ReadOnlyPerson that is reversed
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> listNameReversed() {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListReversed();
         return FXCollections.unmodifiableObservableList(list);
     }
 

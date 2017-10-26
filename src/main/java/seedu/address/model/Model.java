@@ -72,4 +72,19 @@ public interface Model {
      * Returns a list of ReadOnlyPerson that is ordered chronologically in terms of appointment time
      */
     ObservableList<ReadOnlyPerson> listAppointment();
+
+    /**
+     * Returns a list of ReadOnlyPerson that is ordered in terms of name in ascending order
+     */
+    ObservableList<ReadOnlyPerson> listNameAscending();
+
+    /**
+     * Returns a list of ReadOnlyPerson that is ordered in terms of name in descending order
+     */
+    ObservableList<ReadOnlyPerson> listNameDescending();
+
+    /**
+     * Reverses displayed list
+     */
+    ObservableList<ReadOnlyPerson> listNameReversed();
 }

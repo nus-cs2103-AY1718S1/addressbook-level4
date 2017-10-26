@@ -59,7 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  You can refer to the link:#features[Features] section below for details of each command. +
+.  You can refer to the features section below for details of each command. +
 
 <<<
 
@@ -111,19 +111,37 @@ Both capital letters and small letters are can be entered.
 
 <<<
 
-=== Listing persons - All / By tag : `list`
+=== List
+
+You have a variety of ways to list your contacts. +
+Click <<MedNus Features, here>> for a tabulated version of all available listing options. +
 
 * *Listing all persons* +
 You can use `list` to show a list of all persons in the address book. +
 *Format:* `list` +
 *Shorthand Format:* `l`
 
+* *Reverse a List* +
+You can use `list reverse` to reverse the displayed list. +
+*Format:* `list reverse` +
+*Shorthand Format:* `l rev`
+
 * *Listing persons by tag* +
 MedNus can list selected contacts with specific tag(s). +
-*Format:* `list TAG1 TAG2...` +
+*Format:* `list tag TAG1 TAG2...` +
  +
-*Example:* `list colleagues friends` +
+*Example:* `list tag colleagues friends` +
 This shows you all contacts with the tag `colleagues`, `friends` or both.
+
+* *Listing contacts by name (Ascending)* +
+You can use `list ascending` to show a list of contacts sorted by name in ascending order. +
+*Format:* `list ascending` +
+*Shorthand Format:* `l asc`
+
+* *Listing contacts by name (Descending)* +
+You can use `list descending` to show a list of contacts sorted by name in descending order. +
+*Format:* `list descending` +
+*Shorthand Format:* `l dsc`
 
 === Listing persons by blood type : `bloodtype` [Since v1.2]
 
@@ -481,6 +499,22 @@ You do not need to save data manually.
 |*Find Shorthand* |Finds a contact based on keyword |`f KEYWORD [MORE_KEYWORDS]` |`f James Jake`
 
 |*List* |Lists all existing contacts |`list` |`list`
+
+|*List* |Reverses a list |`list reverse` |`list reverse`
+
+|*List* |Lists contacts with specific tag |`list tag TAG/s` |`list tag colleagues`
+
+|*List* |Lists contacts by name in ascending order |`list asc` |`list asc`
+
+|*List* |Lists contacts by name in descending order |`list dsc` |`list dsc`
+
+|*List Shorthand* |Lists all existing contacts |`l` |`l`
+
+|*List Shorthand* |Reverses a list |`l rev` |`l rev`
+
+|*List Shorthand* |Lists contacts by name in ascending order |`l asc` |`l asc`
+
+|*List Shorthand* |Lists contacts by name in descending order |`l dsc` |`l dsc`
 
 |*Help* |Shows you the user guide |`help` |`help`
 
