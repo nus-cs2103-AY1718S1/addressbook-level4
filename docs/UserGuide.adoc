@@ -136,7 +136,8 @@ You can use `bloodtype` to show a list of people with that specific blood type. 
 *Format:* `bloodtype BLOODTYPE` +
 *Shorthand Format:* `bt BLOODTYPE`
 
-*Example:* +
+*Example:* 
+
 image::btexample.png[width="500"]
     Figure 5: Bloodtype Command Usage Diagram
 
