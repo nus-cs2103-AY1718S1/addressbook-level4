@@ -23,7 +23,8 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
-    private boolean isLoggedIn = false;
+    private boolean isLoggedInUsername = false;
+    private boolean isLoggedInPassword = false;
 
     public LogicManager(Model model) {
         this.model = model;
@@ -36,13 +37,28 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         CommandResult result;
-        if (!isLoggedIn) {
-            if (isCorrectPassword(commandText)) {
-                result = new CommandResult("Login successful! Welcome to H.M.U v1.2");
+
+        if (!isLoggedInUsername) {
+            if (isCorrectUsername(commandText)) {
+                result = new CommandResult("Please enter your password");
+                return result;
             } else {
-                result = new CommandResult("Invalid Credentials! Please try again.");
+                result = new CommandResult("Username does not exist. Please try again!");
+                return result;
             }
-        } else {
+        }
+
+        if (!isLoggedInPassword) {
+                if (isCorrectPassword(commandText)) {
+                    result = new CommandResult("Log in successful! Welcome to H.M.U v1.3!");
+                    return result;
+                } else {
+                    result = new CommandResult("Invalid Credentials. Please try again!");
+                    return result;
+                }
+        }
+
+         else {
 
             logger.info("----------------[USER COMMAND][" + commandText + "]");
             try {
@@ -55,21 +71,36 @@ public class LogicManager extends ComponentManager implements Logic {
                 history.add(commandText);
             }
         }
-        return result;
     }
 
     /**
      *
      * @param commandText
-     * isLoggedIn = true if password is valid
-     * isLoggedIn = false if password is invalid
+     * isLoggedInPassword = true if password is valid
+     * isLoggedInPassword = false if password is invalid
      */
     private boolean isCorrectPassword(String commandText) {
         if (model.getUserPrefs().checkPassword(commandText)) {
-            isLoggedIn = true;
+            isLoggedInPassword = true;
             return true;
         } else {
-            isLoggedIn = false;
+            isLoggedInPassword = false;
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param commandText
+     * isLoggedInUsername = true if username is valid
+     * isLoggedInUsername = false if username is invalid
+     */
+    private boolean isCorrectUsername(String commandText) {
+        if (model.getUserPrefs().checkUsername(commandText)) {
+            isLoggedInUsername = true;
+            return true;
+        } else {
+            isLoggedInUsername = false;
             return false;
         }
     }
