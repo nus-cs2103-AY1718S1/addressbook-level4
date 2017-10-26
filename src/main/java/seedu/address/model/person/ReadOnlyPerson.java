@@ -22,6 +22,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<ExpiryDate> expiryDateProperty();
+    ExpiryDate getExpiryDate();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
     Group getGroup();
@@ -36,6 +38,7 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
+                && other.getExpiryDate().equals(this.getExpiryDate())
                 && other.getRemark().equals(this.getRemark());
     }
 
@@ -53,7 +56,9 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
-        builder.append(" Remarks: ")
+        builder.append(" Expiry Date: ")
+                .append(getExpiryDate())
+                .append(" Remarks: ")
                 .append(getRemark());
         return builder.toString();
     }

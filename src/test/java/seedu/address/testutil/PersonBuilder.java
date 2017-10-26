@@ -5,6 +5,7 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -23,6 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_EXPIRY_DATE = "";
     public static final String DEFAULT_REMARK = "";
 
     private Person person;
@@ -34,9 +36,10 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+            ExpiryDate defaultExpiryDate = new ExpiryDate(DEFAULT_EXPIRY_DATE);
             Remark defaultRemark = new Remark(DEFAULT_REMARK);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultTags, defaultRemark);
+                    defaultTags, defaultExpiryDate, defaultRemark);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -118,6 +121,18 @@ public class PersonBuilder {
 
     public Person build() {
         return this.person;
+    }
+
+    /**
+     *  Sets the {@code ExpiryDate} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withExpiryDate(String dateString) {
+        try {
+            this.person.setExpiryDate(new ExpiryDate(dateString));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("date is invalid (nonexistent date or incorrect format.");
+        }
+        return this;
     }
 
 }
