@@ -1,10 +1,10 @@
 package seedu.address.model.module.predicates;
 
-import seedu.address.model.module.ReadOnlyLesson;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+
+import seedu.address.model.module.ReadOnlyLesson;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
