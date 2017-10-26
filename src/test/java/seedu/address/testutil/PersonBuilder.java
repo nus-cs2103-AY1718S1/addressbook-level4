@@ -45,7 +45,7 @@ public class PersonBuilder {
             Group defaultGroup = new Group(DEFAULT_GROUP);
             Image defaultImage = new Image(DEFAULT_IMAGE);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultTags, defaultExpiryDate, defaultRemark, defaultGroup defaultImage);
+                    defaultTags, defaultExpiryDate, defaultRemark, defaultGroup, defaultImage);
 
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
