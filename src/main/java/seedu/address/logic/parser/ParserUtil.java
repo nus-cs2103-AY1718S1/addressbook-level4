@@ -117,17 +117,21 @@ public class ParserUtil {
         requireNonNull(webLinks);
         final Set<WebLink> webLinkSet = new HashSet<>();
         for (String webLinkName : webLinks) {
-            if(checkRepeatedWebLinkInCategory(webLinkSet, webLinkName )) {
+            if (checkRepeatedWebLinkInCategory(webLinkSet, webLinkName )) {
                 webLinkSet.add(new WebLink(webLinkName));
-            }else{
-                throw new IllegalValueException("Only one link per category: facebook ,instagram, twitter or linkedin.");
-                //TODO: how to ensure that nopersonexist expection is thrown first beofore this illegal value exception?
+            } else {
+                throw new IllegalValueException("Only one link per category: facebook ," +
+                        "instagram, twitter or linkedin.");
             }
         }
         return webLinkSet;
     }
 
-    public static boolean checkRepeatedWebLinkInCategory (Set<WebLink> webLinkSet, String inputWebLink) throws IllegalValueException {
+    /**
+     * Checks whether webLinkSet to be passed contains weblinks from the same category. 
+     */
+    public static boolean checkRepeatedWebLinkInCategory (Set<WebLink> webLinkSet, String inputWebLink)
+            throws IllegalValueException {
         boolean duplicateCheck = TRUE;
         if (webLinkSet.isEmpty()) {
             return duplicateCheck;
