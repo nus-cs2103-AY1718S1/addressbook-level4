@@ -4,9 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.List;
+
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Represents a command which can be undone and redone.
@@ -48,6 +51,18 @@ public abstract class UndoableCommand extends Command {
                     + "it should not fail now");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    /**
+     * Creates a string representing the list of person of concern.
+     */
+    public static void appendPersonList(StringBuilder sb, List<ReadOnlyPerson> persons) {
+        for (int i = 0; i < persons.size(); i++) {
+            sb.append(i + 1);
+            sb.append(". ");
+            sb.append(persons.get(i));
+            sb.append("\n");
+        }
     }
 
     @Override

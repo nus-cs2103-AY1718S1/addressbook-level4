@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -13,6 +14,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.group.DuplicateGroupException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -77,6 +80,30 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void createGroup(String groupName, List<ReadOnlyPerson> personToGroup)
+            throws DuplicateGroupException {
+        addressBook.addGroup(groupName, personToGroup);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson) {
+        requireNonNull(personToEdit);
+
+        addressBook.checkPersonInGroupList(personToEdit, editedPerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteGroup(Group grpToDelete) {
+        requireNonNull(grpToDelete);
+
+        addressBook.removeGroup(grpToDelete);
         indicateAddressBookChanged();
     }
 

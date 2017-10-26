@@ -431,6 +431,35 @@ private Model initModelWithBackup(Storage storage, UserPrefs userPrefs) {
 
 Back up file is kept up-to-date by updating itself when an AddressBookChangedEvent is raised.
 
+=== Grouping
+
+The grouping function is created to allow user to better organise his contacts.
+This is achieved by introducing `UniqueGroupList` into the `addressbook`, which is a list of `Group` objects.
+
+`Group` objects are extensions of `UniquePersonList`, and contain all information of `Person` objects seperately
+from `UniquePersonList` in `addressbook` as a result of current implementation of `UniquePersonList`, which does
+not return direct reference to `Person` objects of interest.
+
+As `Person` in a `Group` and the corresponding `Person` in the `addressbook` are seperately kept, synchronization
+is done to all operations that cause a change in existing `Person` to propagate the changes down to `Group`.
+
+Code snippet demonstrating propagation of change using EditCommand as an example:
+[source,java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+    ...
+    try {
+        model.updatePerson(personToEdit, editedPerson);
+        model.propagateToGroup(personToEdit, editedPerson);
+    } catch (DuplicatePersonException dpe) {
+        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+    } catch (PersonNotFoundException pnfe) {
+        throw new AssertionError("The target person cannot be missing");
+    }
+    ....
+}
+----
+
 === Favorite
 
 The Favorite function is created for frequent users who have have certain "close contacts" and
@@ -516,11 +545,11 @@ Edit a person, Add a person or Favorite a person.
 
 A birthday detail is implemented under the Person class as Birthday. Users will add the birthday in along with the add command.
 
-==== Description
+=== Description
 
 Format: b/[dd/mm/yyyy]
 
-==== Full solution
+=== Full solution
 
 See this http://github.com/NgSuli/main[PR] for the full solution.
 

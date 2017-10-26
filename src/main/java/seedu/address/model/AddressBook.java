@@ -10,6 +10,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.group.DuplicateGroupException;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -26,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueGroupList groups;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        groups = new UniqueGroupList();
     }
 
     public AddressBook() {}
@@ -55,6 +60,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setGroups(List<? extends Group> groups) throws DuplicateGroupException {
+        this.groups.setGroups(groups);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -66,8 +75,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setGroups(newData.getGroupList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateGroupException e) {
+            assert false : "AddressBooks should not have duplicate groups";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -80,7 +92,6 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the person to point to those in {@link #tags}.
-     *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
@@ -90,6 +101,25 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(newPerson);
+    }
+
+    /**
+     * Creates and adds the group into groups
+     * @param groupName name of the group
+     * @param personToGroup person in the group
+     * @throws DuplicateGroupException
+     */
+    public void addGroup(String groupName, List<ReadOnlyPerson> personToGroup)
+            throws DuplicateGroupException {
+        Group newGroup = new Group(groupName);
+        personToGroup.forEach(person -> {
+            try {
+                newGroup.add(person);
+            } catch (DuplicatePersonException e) {
+                throw new AssertionError("Shouldn't exist duplicate person");
+            }
+        });
+        groups.add(newGroup);
     }
 
     /**
@@ -200,6 +230,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Group> getGroupList() {
+        return groups.asObservableList();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
@@ -211,5 +246,42 @@ public class AddressBook implements ReadOnlyAddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
+    }
+
+    /**
+     * Deletes or updates the group, if the group contains personToEdit
+     * @param personToEdit original person to be updated
+     * @param editedPerson the person to update to. If null, it is a deletion
+     */
+    public void checkPersonInGroupList(ReadOnlyPerson personToEdit, Person editedPerson) {
+        // special condition for deletion of person
+        if (editedPerson == null) {
+            this.groups.forEach(group -> {
+                if (group.contains(personToEdit)) {
+                    try {
+                        group.remove(personToEdit);
+                    } catch (PersonNotFoundException pnfe) {
+                        throw new AssertionError("The target person cannot be missing");
+                    }
+                }
+            });
+        } else {
+            this.groups.forEach(group -> {
+                if (group.contains(personToEdit)) {
+                    try {
+                        group.setPerson(personToEdit, editedPerson);
+                    } catch (DuplicatePersonException dpe) {
+                        throw new AssertionError("Shouldn't have duplicate person if"
+                                + " update person is successful");
+                    } catch (PersonNotFoundException pnfe) {
+                        throw new AssertionError("The target person cannot be missing");
+                    }
+                }
+            });
+        }
+    }
+
+    public void removeGroup(Group grpToDelete) {
+        groups.removeGroup(grpToDelete);
     }
 }

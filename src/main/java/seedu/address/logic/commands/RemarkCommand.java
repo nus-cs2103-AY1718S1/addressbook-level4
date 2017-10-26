@@ -58,6 +58,7 @@ public class RemarkCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToRemark, remarkedPerson);
+            model.propagateToGroup(personToRemark, remarkedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
