@@ -335,6 +335,12 @@ Contact must be selected before selecting the buttons.
 ====
 // end::viewAddress[]
 
+// tag::changeTheme[]
+=== Changing Theme
+
+Allows the user to switch between dark and light themes.
+// end::changeTheme[]
+
 === Saving the data
 
 Address book data and user profile data are saved in the hard disk automatically after any command that changes the data. +
