@@ -145,6 +145,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredPersonList() {
+            updateFilteredPersonList();
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
@@ -167,11 +172,6 @@ public class AddCommandTest {
 
         @Override
         public void sortPersonListLexicographically() {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredPersonList() {
             fail("This method should not be called.");
         }
     }
