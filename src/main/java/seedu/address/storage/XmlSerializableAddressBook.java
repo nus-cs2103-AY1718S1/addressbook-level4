@@ -16,6 +16,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -30,6 +31,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedTag> tags;
     @XmlElement
     private List<XmlAdaptedAliasToken> aliasTokens;
+    @XmlElement
+    private List<XmlAdaptedTask> tasks;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -39,6 +42,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
         aliasTokens = new ArrayList<>();
+        tasks = new ArrayList<>();
     }
 
     /**
@@ -50,6 +54,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         aliasTokens.addAll(src.getAliasTokenList().stream().map(XmlAdaptedAliasToken::new)
                 .collect(Collectors.toList()));
+        tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
     }
 
     @Override
@@ -93,5 +98,20 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(aliasTokens);
+    }
+
+    @Override
+    public ObservableList<ReadOnlyTask> getTaskList() {
+        final ObservableList<ReadOnlyTask> tasks = this.tasks.stream().map(t -> {
+            try {
+                return t.toModelType();
+            } catch (IllegalValueException e) {
+                logger.warning("Failed to convert XmlAdaptedTask to Task or"
+                        + "add it to TaskList: ");
+                e.printStackTrace();
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(tasks);
     }
 }
