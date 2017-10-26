@@ -26,19 +26,21 @@ public class SortCommandParser implements Parser<SortCommand> {
      */
     public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
+
+        this.parameter = "invalid";
+
+        if (args.equals("")) {
+            args = " n/";
+        }
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
         if (argMultimap.size() > 2) {
-            throw new ParseException(String.format(SortCommand.SORT_MULTIPLE_INPUT,
-                    SortCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(SortCommand.SORT_MULTIPLE_INPUT, SortCommand.MESSAGE_USAGE));
         }
 
-        if (argMultimap.size() == 1) {
-            this.parameter = PREFIX_NAME.getPrefix();
-        }
-
-        if (!argMultimap.getPreamble().equals("")) {
+        if (argMultimap.size() == 0) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
@@ -46,6 +48,10 @@ public class SortCommandParser implements Parser<SortCommand> {
         argMultimap.getValue(PREFIX_PHONE).ifPresent(updateParam(PREFIX_PHONE));
         argMultimap.getValue(PREFIX_EMAIL).ifPresent(updateParam(PREFIX_EMAIL));
         argMultimap.getValue(PREFIX_ADDRESS).ifPresent(updateParam(PREFIX_ADDRESS));
+
+        if (parameter.equals("invalid")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
 
         return new SortCommand (parameter);
     }
