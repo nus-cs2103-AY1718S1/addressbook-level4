@@ -24,7 +24,7 @@ public class MainWindowHandle extends StageHandle {
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
         browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
-        personDetailsPanel = new PersonDetailsPanelHandle((getChildNode(PersonDetailsPanelHandle.GRIDPANE_ID)));
+        personDetailsPanel = new PersonDetailsPanelHandle((getChildNode(PersonDetailsPanelHandle.VBOX_ID)));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
