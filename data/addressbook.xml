@@ -8,12 +8,6 @@
         <dob>27 07 1986</dob>
         <lifeInsuranceId>067e6162-3b6f-4ae2-a171-2470b63dff00</lifeInsuranceId>
     </persons>
-    <lifeInsurances>
-        <owner>Alex Yeoh</owner>
-        <insured>Bernice Yu</insured>
-        <beneficiary>Charlotte Oliveiro</beneficiary>
-        <premium>100</premium>
-    </lifeInsurances>
     <lifeInsuranceMap>
         <entry>
             <key>067e6162-3b6f-4ae2-a171-2470b63dff00</key>
@@ -22,6 +16,9 @@
                 <insured>Bernice Yu</insured>
                 <beneficiary>Charlotte Oliveiro</beneficiary>
                 <premium>100</premium>
+                <contractPath>contract.pdf</contractPath>
+                <signingDate>2017/11/1</signingDate>
+                <expiryDate>2018/11/1</expiryDate>
             </value>
         </entry>
     </lifeInsuranceMap>
