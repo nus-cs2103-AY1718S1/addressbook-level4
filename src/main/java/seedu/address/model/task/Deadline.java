@@ -4,9 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
 
-import seedu.address.logic.parser.Suffix;
-
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.Suffix;
 
 /**
  * Represents the deadline of a task in the application.

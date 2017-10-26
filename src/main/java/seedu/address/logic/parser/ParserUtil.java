@@ -1,13 +1,13 @@
 package seedu.address.logic.parser;
 
+import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
+import org.ocpsoft.prettytime.nlp.parse.DateGroup;
+
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_MONTHLY;
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_WEEKLY;
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
-
-import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
-import org.ocpsoft.prettytime.nlp.parse.DateGroup;
 
 import java.util.Collection;
 import java.util.Date;
@@ -15,12 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import seedu.address.model.tag.Tag;
-import seedu.address.model.task.Deadline;
-import seedu.address.model.task.Description;
-import seedu.address.model.task.StartDate;
-import seedu.address.model.task.TaskDates;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -30,6 +24,11 @@ import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.StartDate;
+import seedu.address.model.task.TaskDates;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -155,8 +154,8 @@ public class ParserUtil {
         if (dateGroup.isEmpty()) {
             throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
         }
-        List<Date> dates = dateGroup.get(dateGroup.size()-1).getDates();
-        return dates.get(dates.size()-1);
+        List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
+        return dates.get(dates.size() - 1);
     }
 
     /**
