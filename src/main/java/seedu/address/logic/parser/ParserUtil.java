@@ -57,7 +57,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
-     *
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
@@ -77,7 +76,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
-     *
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
@@ -97,7 +95,6 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
-     *
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {

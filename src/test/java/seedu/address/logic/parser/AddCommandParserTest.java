@@ -26,9 +26,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_UNSPECIFIED_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_UNSPECIFIED_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_UNSPECIFIED_PHONE_AMY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -85,26 +82,26 @@ public class AddCommandParserTest {
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
 
         // unspecified phone prefix
-        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_UNSPECIFIED_PHONE_AMY)
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withUnspecifiedPhone()
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
 
         // unspecified email prefix
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_UNSPECIFIED_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags().build();
+                .withUnspecifiedEmail().withAddress(VALID_ADDRESS_AMY).withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
 
         //unspecified address prefix
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withEmail(VALID_EMAIL_AMY).withAddress(VALID_UNSPECIFIED_ADDRESS_AMY).withTags().build();
+                .withEmail(VALID_EMAIL_AMY).withUnspecifiedAddress().withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY, new AddCommand(expectedPerson));
 
         //unspecified phone, email and address prefix
-        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_UNSPECIFIED_PHONE_AMY)
-                .withEmail(VALID_UNSPECIFIED_EMAIL_AMY).withAddress(VALID_UNSPECIFIED_ADDRESS_AMY).withTags().build();
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withUnspecifiedPhone()
+                .withUnspecifiedEmail().withUnspecifiedAddress().withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY, new AddCommand(expectedPerson));
     }
 

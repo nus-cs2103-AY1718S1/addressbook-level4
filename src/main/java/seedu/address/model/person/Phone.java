@@ -31,7 +31,7 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        if (!isValidPhone(trimmedPhone) && !trimmedPhone.equals("<Unspecified phone number>")) {
+        if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
         this.value = trimmedPhone;
