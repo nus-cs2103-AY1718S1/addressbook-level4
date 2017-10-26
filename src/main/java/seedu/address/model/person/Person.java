@@ -69,7 +69,6 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), 
                 source.getTags(), source.getExpiryDate(), source.getRemark(), source.getImage());
-                source.getTags(), source.getExpiryDate(), source.getRemark());
     }
 
     public void setName(Name name) {
