@@ -51,7 +51,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 ====
-*Command Helper*  `Since v1.2`
+*Command Helper*
 
 * When you start typing in the command line, a helper box appears to show you the list of commands available.
 * e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
@@ -79,12 +79,13 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
+`From V1.3`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the address book in alphabetical order. +
 Format: `list`
 
 
-=== Listing all persons, sorted by search frequency : `listByMostSearched` `Since v1.2`
+=== Listing all persons, sorted by search frequency : `listByMostSearched`
 
 Shows a list of all persons in the address book, sorted by descending order of search frequency +
 Format: `listByMostSearched`
@@ -153,6 +154,25 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+=== Deleting tags : `deleteTag`
+`From V1.3`
+
+Deletes the specified tags from everyone in address book. +
+Format: `deleteTag TAG1 TAG2 ...`
+
+****
+* Deletes all tags specified `TAG1 TAG2 ...`.
+* If a particular is not used in address book, user is notified that no tag is deleted.
+****
+
+Examples:
+
+* `deleteTag friends` +
+Deletes the tag `friends` from everyone in the address book.
+
+* `deleteTag friends colleagues` +
+Deletes tags `friends` and `colleagues` from everyone in the address book.
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -182,6 +202,13 @@ Format: `history`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+// tag::nextmeeting[]
+
+=== Listing next upcoming meeting : `nextMeeting` `Since v1.3`
+
+Displays information about the next upcoming meeting. +
+Format: `nextMeeting`
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -238,7 +265,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Editing user preference : `pref` `Since v1.2`
+=== Editing user preference : `pref`
 
 Edits the user preference. +
 Format: `pref KEY [NEW_VALUE]` +
@@ -248,12 +275,30 @@ If  `NEW_VALUE` is blank, the current preference will be displayed. +
 See <<#pref-list, Appendix>> for the list of editable preferences.
 ====
 
+Typing this command will bring up the settings panel at the side of the application. `Since v1.3`
+
 Examples:
 
 * `pref AddressBookName` +
 Displays the current value for `AddressBookName`
 * `pref AddressBookName MyBook` +
 Changes `AddressBookName` to `MyBook`
+
+=== Editing display screen : `choose` `Since v1.3`
+
+Chooses what to display on the main screen. +
+Format: `choose [NEW_VALUE]` +
+[NOTE]
+====
+See <<#pref-list, Appendix>> for the list of editable display preferences
+====
+
+Typing this command will bring up the settings panel at the side of the application. `Since v1.3`
+
+Examples:
+
+* `choose linkedin` +
+Displays the linkedin page of the current selected user on the display screen.
 
 === Exiting the program : `exit`
 
@@ -279,6 +324,9 @@ Can also use shortcut 'a'
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 Can also use shortcut 'd'
+* *Delete Tag* : `deleteTag TAG1 TAG2 ...` +
+e.g. `delete friends`
+Can also use shortcut 'dt'
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 Can also use shortcut 'e'
@@ -295,13 +343,15 @@ e.g.`select 2`
 Can also use shortcut 's'
 * *History* : `history`
 Can also use shortcut 'h'
+* *Next Meeting* : `nextMeeting`
+Can also use shortcut `nm`
 * *Undo* : `undo`
 Can also use shortcut 'u'
 * *Redo* : `redo`
 Can also use shortcut 'r'
 * *Preference* : `pref KEY [NEW_VALUE]`
 Can also use shortcut 'p'
-
+* *Display Mode* : `choose [NEW_VALUE]`
 == Features coming in v2.0
 
 * *Enhanced tag* - see more in-depth details of a tag
@@ -318,3 +368,5 @@ Can also use shortcut 'p'
 [#pref-list]
 * `AddressBookName`
 * `AddressBookFilePath` : indicates where the address book is stored in local storage
+* `Display Modes: linkedin, facebook, meetings`
+* `Theme`: Customizes the appearance of the application. Possible values are `Light`, `Blue` and `Dark`

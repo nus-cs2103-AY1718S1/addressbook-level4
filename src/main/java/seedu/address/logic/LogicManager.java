@@ -9,10 +9,12 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChooseCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -20,6 +22,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListByMostSearchedCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NextMeetingCommand;
 import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -73,6 +76,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 AddCommand.COMMAND_WORD,
                 ClearCommand.COMMAND_WORD,
                 DeleteCommand.COMMAND_WORD,
+                DeleteTagCommand.COMMAND_WORD,
                 EditCommand.COMMAND_WORD,
                 ExitCommand.COMMAND_WORD,
                 FindCommand.COMMAND_WORD,
@@ -83,7 +87,9 @@ public class LogicManager extends ComponentManager implements Logic {
                 RedoCommand.COMMAND_WORD,
                 SelectCommand.COMMAND_WORD,
                 UndoCommand.COMMAND_WORD,
-                PrefCommand.COMMAND_WORD
+                PrefCommand.COMMAND_WORD,
+                ChooseCommand.COMMAND_WORD,
+                NextMeetingCommand.COMMAND_WORD
         );
         return FXCollections.observableList(commandList);
     }
@@ -94,6 +100,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 AddCommand.MESSAGE_TEMPLATE,
                 ClearCommand.MESSAGE_TEMPLATE,
                 DeleteCommand.MESSAGE_TEMPLATE,
+                DeleteTagCommand.MESSAGE_TEMPLATE,
                 EditCommand.MESSAGE_TEMPLATE,
                 ExitCommand.MESSAGE_TEMPLATE,
                 FindCommand.MESSAGE_TEMPLATE,
@@ -104,7 +111,9 @@ public class LogicManager extends ComponentManager implements Logic {
                 RedoCommand.MESSAGE_TEMPLATE,
                 SelectCommand.MESSAGE_TEMPLATE,
                 UndoCommand.MESSAGE_TEMPLATE,
-                PrefCommand.MESSAGE_TEMPLATE
+                PrefCommand.MESSAGE_TEMPLATE,
+                ChooseCommand.MESSAGE_TEMPLATE,
+                NextMeetingCommand.MESSAGE_TEMPLATE
         );
         return templateList;
     }

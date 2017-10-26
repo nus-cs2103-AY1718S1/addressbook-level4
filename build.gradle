@@ -20,12 +20,6 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
-    apply plugin: 'application'
-
-    mainClassName = 'Quickstart'
-    sourceCompatibility = 1.7
-    targetCompatibility = 1.7
-    version = '1.0'
 
 
     sourceCompatibility = JavaVersion.VERSION_1_8

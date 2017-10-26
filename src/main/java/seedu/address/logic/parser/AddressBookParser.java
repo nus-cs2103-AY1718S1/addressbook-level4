@@ -10,6 +10,8 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.ChooseCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -17,6 +19,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListByMostSearchedCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NextMeetingCommand;
 import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -66,6 +69,11 @@ public class AddressBookParser {
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
+        case DeleteTagCommand.COMMAND_WORD:
+        case DeleteTagCommand.COMMAND_ALIAS:
+            return new DeleteTagCommandParser().parse(arguments);
+
+
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
@@ -94,6 +102,13 @@ public class AddressBookParser {
         case PrefCommand.COMMAND_WORD:
         case PrefCommand.COMMAND_ALIAS:
             return new PrefCommandParser().parse(arguments);
+
+        case ChooseCommand.COMMAND_WORD:
+            return new ChooseCommandParser().parse(arguments);
+
+        case NextMeetingCommand.COMMAND_WORD:
+        case NextMeetingCommand.COMMAND_ALIAS:
+            return new NextMeetingCommand();
 
         case UndoCommand.COMMAND_WORD:
         case UndoCommand.COMMAND_ALIAS:
