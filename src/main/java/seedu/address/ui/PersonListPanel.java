@@ -46,7 +46,8 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        logger.info("Selection in person list panel changed "
+                                + "to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
                         raise(new HideCalendarEvent());
                     }

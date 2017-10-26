@@ -11,8 +11,12 @@ public class Photo {
     public static final String MESSAGE_PHOTO_CONSTRAINTS =
             "Please ensure you enter the correct file path (either absolute "
                     + "or relative). Photos can be in either jpg, jpeg or png format.";
+
+    //PhotoUrl can either start with a '/' or '\' (for absolute path), or '.'
+    // or English characters (for relative path)
     public static final String PHOTOURL_VALIDATION_REGEX =
-            "[\\w\\/\\-\\_\\.\\h\\\\]+\\.(jpg|png|jpeg)";
+            "[\\.\\\\\\/\\w].*\\.(jpg|png|jpeg)";
+
     public final String photoUrl;
 
     /**
