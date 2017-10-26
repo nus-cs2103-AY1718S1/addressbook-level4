@@ -1,12 +1,13 @@
 package seedu.address.model.schedule;
 
-import seedu.address.model.schedule.exceptions.NotValidTimeException;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddScheduleCommand;
 
 public class Day {
 
     private final Integer day;
 
-    public Day(String dayToAdd) {
+    public Day(String dayToAdd) throws IllegalValueException {
         if(dayToAdd.equals("Monday")){
             day = 1;
         } else if(dayToAdd.equals("Tuesday")){
@@ -22,15 +23,22 @@ public class Day {
         } else if(dayToAdd.equals("Sunday")){
             day = 7;
         } else {
-            day = -1;
+            throw new IllegalValueException("Not a proper day");
         }
     }
 
     public boolean isValid(){
-        return (day != -1);
+        return day >= 1 && day <= 7;
     }
 
     public Integer getDay() {
         return day;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Day) // instanceof handles nulls
+                && (this.day == ((Day) other).day); // state check
     }
 }
