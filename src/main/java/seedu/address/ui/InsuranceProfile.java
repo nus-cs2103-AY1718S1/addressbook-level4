@@ -2,27 +2,19 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.beans.binding.Bindings;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Profile Panel of the App.
  */
 public class InsuranceProfile extends UiPart<Region> {
 
-    public static final String DEFAULT_MESSAGE = "Insurance profile";
     private static final String FXML = "InsuranceProfile.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());

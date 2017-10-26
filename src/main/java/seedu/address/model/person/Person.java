@@ -83,10 +83,10 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
-        if(source.getLifeInsuranceIds() != null) {
+        if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
-        if(source.getLifeInsurances() != null) {
+        if (source.getLifeInsurances() != null) {
             this.lifeInsurances = new SimpleObjectProperty<>(source.getLifeInsurances());
         }
     }
@@ -94,7 +94,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
-        if(source.getLifeInsuranceIds() != null) {
+        if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
         addLifeInsurances(lifeInsurance);
@@ -219,9 +219,7 @@ public class Person implements ReadOnlyPerson {
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
-    public void setTags(Set<Tag> replacement) {
-        tags.set(new UniqueTagList(replacement));
-    }
+    public void setTags(Set<Tag> replacement) { tags.set(new UniqueTagList(replacement)); }
 
     public String getDetailByPrefix(Prefix prefix) {
         if (prefix.equals(PREFIX_NAME)) {

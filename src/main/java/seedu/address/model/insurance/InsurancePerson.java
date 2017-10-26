@@ -2,11 +2,14 @@ package seedu.address.model.insurance;
 
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * Represents a person and his/her name in an insurance in LISA.
+ */
 public class InsurancePerson {
 
     //TODO: Change from String to Name
-    String name;
-    ReadOnlyPerson person;
+    private String name;
+    private ReadOnlyPerson person;
 
     public InsurancePerson(String name) {
         this.name = name;

@@ -9,8 +9,6 @@ import java.util.UUID;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.insurance.LifeInsurance;
-import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
@@ -36,9 +34,9 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String dob;
 
-    @XmlElement(name="tagged")
+    @XmlElement(name = "tagged")
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
-    @XmlElement(name="lifeInsuranceId")
+    @XmlElement(name = "lifeInsuranceId")
     private List<String> lifeInsuranceIds = new ArrayList<>();
 
     /**

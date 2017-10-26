@@ -23,8 +23,11 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class LifeInsurance implements ReadOnlyInsurance {
 
+    /**
+     * Represents the three person roles inside a insurance in LISA.
+     */
+    private enum LinkedRole { OWNER, INSURED, BENEFICIARY }
     private ObjectProperty<UUID> id;
-    private enum LinkedRole {OWNER, INSURED, BENEFICIARY}
     private EnumMap<LinkedRole, String> roleToPersonMap;
     private ObjectProperty<ReadOnlyPerson> owner;
     private ObjectProperty<ReadOnlyPerson> insured;
@@ -70,7 +73,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     public LifeInsurance(ReadOnlyInsurance source) {
         this(source.getOwner(), source.getInsured(), source.getBeneficiary(), source.getPremium(),
                 source.getContractPath(), source.getSigningDate(), source.getExpiryDate());
-        if(source.getRoleToPersonMap() != null) {
+        if (source.getRoleToPersonMap() != null) {
             this.roleToPersonMap = source.getRoleToPersonMap();
         }
     }
@@ -84,15 +87,20 @@ public class LifeInsurance implements ReadOnlyInsurance {
         String name = person.getName().fullName;
         Iterator it = source.getRoleToPersonMap().entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            if(pair.getValue().equals(name)) {
-                switch (pair.getKey().toString()){
+            Map.Entry pair = (Map.Entry) it.next();
+            if (pair.getValue().equals(name)) {
+                switch (pair.getKey().toString()) {
                     case "OWNER":
-                        this.owner = new SimpleObjectProperty<>(person);
+                    this.owner = new SimpleObjectProperty<>(person);
+                    break;
                     case "INSURED":
-                        this.insured = new SimpleObjectProperty<>(person);
+                    this.insured = new SimpleObjectProperty<>(person);
+                    break;
                     case "BENEFICIARY":
-                        this.beneficiary = new SimpleObjectProperty<>(person);
+                    this.beneficiary = new SimpleObjectProperty<>(person);
+                    break;
+                    default:
+                    assert(false);
                 }
             }
         }

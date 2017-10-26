@@ -48,10 +48,10 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         lifeInsuranceMap = src.getLifeInsuranceMap().entrySet().stream()
-                .collect(Collectors.toMap(
-                        e -> e.getKey(),
-                        e -> new XmlAdaptedLifeInsurance(e.getValue())
-                ));
+            .collect(Collectors.toMap(
+                e -> e.getKey(),
+                e -> new XmlAdaptedLifeInsurance(e.getValue())
+            ));
     }
 
     @Override
@@ -85,18 +85,18 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     @Override
     public Map<String, ReadOnlyInsurance> getLifeInsuranceMap() {
         final Map<String, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
-                .collect(Collectors.<Map.Entry<String,XmlAdaptedLifeInsurance>,String,ReadOnlyInsurance>toMap(
-                        i -> i.getKey(),
-                        i -> {
-                            try {
-                                return i.getValue().toModelType();
-                            } catch (IllegalValueException e) {
-                                e.printStackTrace();
-                                //TODO: better error handling
-                                return null;
-                            }
-                        }
-                ));
+            .collect(Collectors.<Map.Entry<String,XmlAdaptedLifeInsurance>,String,ReadOnlyInsurance>toMap(
+                i -> i.getKey(),
+                i -> {
+                    try {
+                        return i.getValue().toModelType();
+                    } catch (IllegalValueException e) {
+                        e.printStackTrace();
+                        //TODO: better error handling
+                        return null;
+                    }
+                }
+            ));
         return lifeInsurances;
     }
 

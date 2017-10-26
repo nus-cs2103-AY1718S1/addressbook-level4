@@ -4,21 +4,12 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-import com.google.common.eventbus.Subscribe;
-
-import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonNameClickedEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -28,7 +19,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class InsuranceListPanel extends UiPart<Region> {
 
     private static final String FXML = "InsuranceListPanel.fxml";
-    public static final String INSURANCE_LIST_PANEL_ID = "#insuranceListPanel";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML

@@ -8,15 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
-import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -24,7 +20,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.storage.XmlAdaptedLifeInsurance;
 
 /**
  * Wraps all data at the address-book level
