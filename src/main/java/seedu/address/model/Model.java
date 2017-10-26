@@ -70,5 +70,8 @@ public interface Model {
      * Updates the filter of the filtered person list to filter by the given group predicate
      */
     void updateFilteredPersonList(GroupContainsKeywordsPredicate predicate);
+  
+    void updateFilteredListToShowAll();
+
 
 }

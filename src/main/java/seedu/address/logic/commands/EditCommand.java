@@ -19,6 +19,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Group;
+import seedu.address.model.person.Image;
+import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -110,11 +112,14 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        ExpiryDate updatedExpiryDate = personToEdit.getExpiryDate();
         Remark updatedRemark = personToEdit.getRemark();
         Group updatedGroup = editPersonDescriptor.getGroup().orElse(personToEdit.getGroup());
-
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedRemark,
-                updatedGroup);
+      
+        Image updatedImage = personToEdit.getImage();
+      
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedTags, updatedExpiryDate, updatedRemark, updatedGroup, updatedImage);
     }
 
     @Override
@@ -144,6 +149,8 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Image image;
+        private ExpiryDate expiryDate;
         private Set<Tag> tags;
         private Group group;
 
@@ -156,6 +163,8 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.tags = toCopy.tags;
             this.group = toCopy.group;
+            this.image = toCopy.image;
+            this.expiryDate = toCopy.expiryDate;
         }
 
         /**
@@ -205,12 +214,21 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
+
         public void setGroup(Group group) {
             this.group = group;
         }
 
         public Optional<Group> getGroup() {
             return Optional.ofNullable(group);
+
+        public Optional<Image> getImage() {
+            return Optional.ofNullable(image);
+        }
+
+        public void setImage(Image image) {
+            this.image = image;
+
         }
 
         @Override

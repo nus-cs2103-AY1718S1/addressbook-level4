@@ -1,3 +1,4 @@
+
 .gitignore
 test.txt
 build/
@@ -23,3 +24,4 @@ classes/
 /bin/
 src/main/resources/docs/
 out/
+images/
