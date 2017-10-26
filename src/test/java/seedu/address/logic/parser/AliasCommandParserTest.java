@@ -12,7 +12,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.alias.AliasCommand;
+import seedu.address.logic.parser.alias.AliasCommandParser;
 import seedu.address.model.alias.AliasToken;
 import seedu.address.model.alias.Keyword;
 import seedu.address.model.alias.Representation;

@@ -1,6 +1,9 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.person;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_NOT_HIDDEN;
+
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 
 /**
  * Lists all persons in the address book to the user.

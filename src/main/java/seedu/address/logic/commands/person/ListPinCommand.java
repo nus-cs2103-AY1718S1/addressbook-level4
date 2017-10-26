@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.person;
 
 import seedu.address.model.person.PersonIsPinnedPredicate;
 

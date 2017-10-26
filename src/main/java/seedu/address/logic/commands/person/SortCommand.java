@@ -1,5 +1,8 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.person;
 
+
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.UndoableCommand;
 
 /**
  * Lists all persons in the address book to the user.
