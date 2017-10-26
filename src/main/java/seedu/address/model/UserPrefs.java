@@ -113,6 +113,15 @@ public class UserPrefs {
         }
     }
 
+    public boolean changeUsername(String oldUsername, String newUsername, String password) {
+        if (checkPassword(password) && checkUsername(oldUsername)) {
+            username = newUsername;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      *
      * @param input
