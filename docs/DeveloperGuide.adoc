@@ -472,6 +472,8 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
  in future versions of the Ark application. +
 ** **Cons:** More difficult to implement and integrate into a command line interface.
 
+//tag::deleteTag[]
+
 === Delete Tag mechanism
 
 The delete tag mechanism is facilitated by a `deleteTag` method within the `ModelManager`. It supports the deletion
@@ -495,6 +497,8 @@ Tag to delete them. +
 ** **Pros:** Computationally quicker to just find the tag and remove the tag from every parcel in the list of tags +
 ** **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
 and has to be updated whenever we edit other parcel details as well.
+
+//end::deleteTag[]
 
 tag::backup[]
 
@@ -658,7 +662,7 @@ Also creates coupling between the `Autocompleter` and `CommandBox`. +
 ** **Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
 ** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +=== Tab autocomplete mechanism
 
-start::trackingNumber[]
+tag::trackingNumber[]
 
 === TrackingNumber Field
 
@@ -704,6 +708,15 @@ delivered by. +
 
 These states have different colours codes to allow users to differentiate the `Status` values more easily.
 
+//tag::deliveryDate[]
+=== Delivery Date field
+
+`Delivery Date` is used to indicate the delivery date that the parcel must be delivered by.
+The dates are only accepted if they are valid. The parcel list is maintained in sorted order by comparing
+their delivery dates, with the earliest on top.
+
+//end::deliveryDate[]
+
 ==== Design Considerations
 
 ** `Implementation of Status`**
@@ -717,6 +730,40 @@ These states have different colours codes to allow users to differentiate the `S
 describe the same status of the parcel.
 
 end::status[]
+
+//tag::sortedList[]
+
+=== Maintain sorted mechanism
+image::AddParcelSdForLOgic.png[width="300"]
+_Figure 4.9.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
+
+The list of parcels in Ark is maintained to be always in sorted order according to delivery dates,
+with the earliest being on the top. This is so that the user will be able to look at the more
+pertinent deliveries. +
+
+The list is sorted whenever a parcel is added, edited or if a redo command is made. This is
+because these commands are the ones that might possibly cause the new parcel to be placed
+in the wrong position. +
+
+To maintain the selected element despite sorting however, we require a way to track which parcel
+is selected. Static variables to track which card has been selected has been added to the Model
+class. The Model class now has the following methods: `select`, `unselect`, `getPrevIndex`,
+`hasSelected` and `forceSelect`. Whenever we select an item, we will use `select` to indicate that
+we have selected a parcel card and we will then re-select that particular card after we have sorted. +
+
+==== Design Considerations
+
+**Aspect:** Implementation of `maintainSorted` +
+**Alternative 1 (current choice):** Constant sort the list of parcels whenever there is a change that
+potentially could disrupt the order of the list. +
+**Pros:** Intuitive and guarantees that list is sorted in the right order +
+**Cons:** Many commands have to be changed +
+**Alternative 2:** Insert the new / edited parcel to fit into the sorted list. +
+**Pros:** Use less computation as the list of parcels is already sorted. +
+**Cons:** More difficult to implement as we'll need to implement our own sorting algorithm as opposed to
+just using the built in sorting methods. +
+
+//tag::sortedList[]
 
 == Documentation
 

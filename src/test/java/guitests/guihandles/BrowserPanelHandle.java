@@ -52,7 +52,13 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
      * {@code rememberUrl()} call.
      */
     public boolean isUrlChanged() {
-        return !lastRememberedUrl.equals(getLoadedUrl());
+        String googleUrl = "https://www.google.com.sg/maps/search/";
+        if (lastRememberedUrl.toString().substring(0, 38).equals(googleUrl)) {
+            return !lastRememberedUrl.toString().substring(0, 44)
+                    .equals(getLoadedUrl().toString().substring(0, 44));
+        } else {
+            return !lastRememberedUrl.equals(getLoadedUrl());
+        }
     }
 
     /**

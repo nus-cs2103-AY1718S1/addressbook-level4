@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -109,6 +110,16 @@ public class AddCommandTest {
      */
     private class ModelStubAcceptingParcelAdded extends ModelStub {
         final ArrayList<Parcel> parcelsAdded = new ArrayList<>();
+
+        @Override
+        public boolean hasSelected() {
+            return false;
+        }
+
+        @Override
+        public void maintainSorted() {
+            Collections.sort(parcelsAdded);
+        }
 
         @Override
         public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {

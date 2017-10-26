@@ -33,7 +33,6 @@ public class DeliveryDate {
     public final String value;
     public final Date date;
 
-
     /**
      * Validates given delivery date.
      *
@@ -70,6 +69,7 @@ public class DeliveryDate {
         }
 
         throw new ParseException(inputDate, 0);
+
     }
 
     /**

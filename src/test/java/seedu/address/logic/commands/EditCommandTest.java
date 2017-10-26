@@ -16,7 +16,10 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
+import org.junit.Rule;
 import org.junit.Test;
+
+import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -37,7 +40,16 @@ import seedu.address.testutil.ParcelBuilder;
  */
 public class EditCommandTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void constructor_nullParcel_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new EditCommand(null, null);
+    }
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -49,6 +61,7 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateParcel(model.getFilteredParcelList().get(0), editedParcel);
+        expectedModel.maintainSorted();
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -72,6 +85,7 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateParcel(lastParcel, editedParcel);
+        expectedModel.maintainSorted();
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -84,6 +98,7 @@ public class EditCommandTest {
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.maintainSorted();
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
@@ -101,6 +116,7 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateParcel(model.getFilteredParcelList().get(0), editedParcel);
+        expectedModel.maintainSorted();
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }

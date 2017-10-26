@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
@@ -76,6 +77,47 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate);
+
+    /**
+     * Method to sort the lists of addresses by delivery date with the earliest date in front
+     */
+    void maintainSorted();
+
+    /**
+     * Method to check if there is a parcel selected.
+     */
+    boolean hasSelected();
+
+    /**
+     * Method to toggle whether or not a parcel has been selected
+     */
+    void select();
+
+    /**
+     * Method to toggle whether or not a parcel has been selected
+     */
+    void unselect();
+
+    /**
+     * Method to set the prevIndex attribute to the specified target.
+     */
+    void setPrevIndex(Index target);
+
+    /**
+     * Method to retrieve Index of last selected Parcel Card.
+     */
+    Index getPrevIndex();
+
+    /**
+     * Method to force the model to select a card without using the select command.
+     */
+    void forceSelect(Index target);
+
+    /**
+     * Method to reselect a parcel card if there is a card selected.
+     */
+    void reselect(ReadOnlyParcel parcel);
+
 }
 
 
