@@ -32,6 +32,7 @@ import seedu.address.logic.commands.person.RemarkCommand;
 import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.commands.person.SortCommand;
 import seedu.address.logic.commands.person.UnpinCommand;
+import seedu.address.logic.commands.task.AddTaskCommand;
 import seedu.address.logic.parser.alias.AliasCommandParser;
 import seedu.address.logic.parser.alias.UnaliasCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -45,6 +46,7 @@ import seedu.address.logic.parser.person.RemarkCommandParser;
 import seedu.address.logic.parser.person.SelectCommandParser;
 import seedu.address.logic.parser.person.SortCommandParser;
 import seedu.address.logic.parser.person.UnpinCommandParser;
+import seedu.address.logic.parser.task.AddTaskCommandParser;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 
 
@@ -150,6 +152,9 @@ public class AddressBookParser {
 
         case UnaliasCommand.COMMAND_WORD:
             return new UnaliasCommandParser().parse(checkedArguments);
+
+        case AddTaskCommand.COMMAND_WORD:
+            return new AddTaskCommandParser().parse(checkedArguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
