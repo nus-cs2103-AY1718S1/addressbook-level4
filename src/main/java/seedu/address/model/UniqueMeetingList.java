@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -103,6 +104,27 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
         internalList.add(toAdd);
 
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Sorts the meeting by date. For retrieving earliest meeting in the list
+     */
+    public void sortByDate() {
+        Collections.sort(internalList);
+    }
+
+    /**
+     * Returns the meeting with earliest date in the internal list
+     * Currently not checking if it is happening in the future
+     */
+    @Override
+    public Meeting getUpcomingMeeting() {
+        this.sortByDate();
+        return internalList.get(0);
+    }
+
+    public ObservableList<Meeting> getInternalList() {
+        return internalList;
     }
 
     @Override
