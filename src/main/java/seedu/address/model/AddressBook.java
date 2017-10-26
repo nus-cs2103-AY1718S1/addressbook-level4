@@ -8,8 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.person.Person;
@@ -19,6 +24,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.storage.XmlAdaptedLifeInsurance;
 
 /**
  * Wraps all data at the address-book level
@@ -28,7 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
-    private final UniqueLifeInsuranceList lifeInsurances;
+    private HashMap<String, LifeInsurance>lifeInsuranceMap;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -40,7 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
-        lifeInsurances = new UniqueLifeInsuranceList();
+        lifeInsuranceMap = new HashMap<>();
     }
 
     public AddressBook() {}
@@ -63,8 +69,25 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    public void setLifeInsurancess(List<? extends ReadOnlyInsurance> insurances) throws DuplicatePersonException {
-        this.lifeInsurances.setLifeInsurances(insurances);
+    public void setLifeInsurances(Map<String, ? extends ReadOnlyInsurance> insurances) {
+        this.lifeInsuranceMap = (HashMap<String, LifeInsurance>) insurances;
+    }
+
+    public void syncLifeInsurance() {
+        //Get the list of insurance ids of a person and filter out the ones that are empty
+        persons.forEach(p -> {
+            if (!p.getLifeInsuranceIds().isEmpty()) {
+                //for every insurance id get the insurance object from lifeInsuranceMap
+                p.getLifeInsuranceIds().forEach( id -> {
+                    String idString = id.toString();
+                    ReadOnlyInsurance lf = lifeInsuranceMap.get(idString);
+                    LifeInsurance newLifeInsurance = new LifeInsurance(lf, p);
+                    lifeInsuranceMap.replace(idString, newLifeInsurance);
+                    p.addLifeInsurances(newLifeInsurance);
+                });
+            }
+        });
+
     }
 
     /**
@@ -80,6 +103,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+
+        setLifeInsurances(newData.getLifeInsuranceMap());
+        syncLifeInsurance();
     }
 
     //// person-level operations
@@ -164,6 +190,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Ensures that every insurance in this person:
+     *  - exists in the master map {@link #lifeInsuranceMap
+     *  - points to a LifeInsurance object in the master list
+     */
+    private void syncMasterLifeInsuranceMapWith(ReadOnlyPerson person) {
+
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -189,8 +224,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<ReadOnlyInsurance> getLifeInsuranceList() {
-        return lifeInsurances.asObservableList();
+    public Map<String, ReadOnlyInsurance> getLifeInsuranceMap() {
+        final Map<String, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
+                .collect(Collectors.<Map.Entry<String,LifeInsurance>,String,ReadOnlyInsurance>toMap(
+                        i -> i.getKey(),
+                        i -> i.getValue()
+                ));
+        return lifeInsurances;
     }
 
     @Override

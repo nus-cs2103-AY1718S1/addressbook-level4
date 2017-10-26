@@ -1,5 +1,7 @@
 package seedu.address.model;
 
+import java.util.Map;
+
 import javafx.collections.ObservableList;
 
 import seedu.address.model.insurance.ReadOnlyInsurance;
@@ -24,9 +26,9 @@ public interface ReadOnlyAddressBook {
     ObservableList<Tag> getTagList();
 
     /**
-     * Returns an unmodifiable view of the life insurances list.
-     * This list will not contain any duplicate insurances.
+     * Returns an unmodifiable view of the life insurances map.
+     * This map will not contain any duplicate insurances.
      */
-    ObservableList<ReadOnlyInsurance> getLifeInsuranceList();
+    Map<String, ReadOnlyInsurance> getLifeInsuranceMap();
 
 }
