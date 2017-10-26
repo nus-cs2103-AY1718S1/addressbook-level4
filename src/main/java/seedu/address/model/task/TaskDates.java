@@ -10,11 +10,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a date for a task which can be formatted.
  */
 public abstract class TaskDates {
-    
+
     public static final String DATE_FORMAT_PATTERN = "EEE, MMM d, ''yy";
 
     public static final String MESSAGE_DATE_CONSTRAINTS = "Date is invalid";
-    
+
     /**
      * Formats the last date of a given Date into a String.
      */

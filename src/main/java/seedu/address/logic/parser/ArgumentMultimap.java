@@ -55,7 +55,7 @@ public class ArgumentMultimap {
         }
         return new ArrayList<>(argMultimap.get(prefix));
     }
-    
+
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */

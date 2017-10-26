@@ -15,7 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  *    in the above example.<br>
  */
 public class ArgumentTokenizer {
-    
+
     private static final String QUOTE_REGEX = "\"";
 
     /**
@@ -30,7 +30,7 @@ public class ArgumentTokenizer {
         List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
         return extractArguments(argsString, positions);
     }
-    
+
     private static String extractUnquotedArgsString(String argsString) {
         if (argsString.indexOf(QUOTE_REGEX) == argsString.lastIndexOf(QUOTE_REGEX)) {
             return argsString;

@@ -16,7 +16,7 @@ public class DescriptionTest {
         assertFalse(Description.isValidDescription("/do this/")); //string beginning with symbols
         assertFalse(Description.isValidDescription("do this/")); //string ending in symbol
         assertFalse(Description.isValidDescription("do'/\"this")); //string containing any symbol
-        
+
         //valid description
         assertTrue(Description.isValidDescription("Self evaluation for CS2103T"));
         assertTrue(Description.isValidDescription("a")); //only 1 char

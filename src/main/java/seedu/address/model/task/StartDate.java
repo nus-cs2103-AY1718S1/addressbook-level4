@@ -15,7 +15,7 @@ public class StartDate extends TaskDates {
 
     public final String date;
     public final Suffix recurInterval;
-    
+
     public StartDate() {
         this.date = "";
         this.recurInterval = SUFFIX_NO_RECUR_INTERVAL;

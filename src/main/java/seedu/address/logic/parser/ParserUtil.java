@@ -42,7 +42,7 @@ import seedu.address.model.task.TaskDates;
  * {@code Optional} return value inside {@code ParserUtil} methods.
  */
 public class ParserUtil {
-    
+
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
@@ -144,7 +144,7 @@ public class ParserUtil {
         return date.isPresent() ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())),
                 parseRecurInterval(date.get()))) : Optional.empty();
     }
-    
+
     public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {
         List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
         if (dateGroup.isEmpty()) {
@@ -153,7 +153,7 @@ public class ParserUtil {
         List<Date> dates = dateGroup.get(dateGroup.size()-1).getDates();
         return dates.get(dates.size()-1);
     }
-    
+
     public static Suffix parseRecurInterval(String dateString) {
         return (dateString.contains(SUFFIX_RECURRING_DATE_WEEKLY.toString()) ? SUFFIX_RECURRING_DATE_WEEKLY :
                 (dateString.contains(SUFFIX_RECURRING_DATE_MONTHLY.toString())) ? SUFFIX_RECURRING_DATE_MONTHLY :

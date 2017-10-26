@@ -34,7 +34,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
      */
     public AddTaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_TO, PREFIX_DEADLINE_ON,
                         PREFIX_DEADLINE_BY, PREFIX_TAG);
@@ -49,14 +49,14 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
                     .orElse(new StartDate());
             Deadline deadline = ParserUtil.parseDeadline(argMultimap.getValue(PREFIX_DEADLINE_TO, PREFIX_DEADLINE_BY,
                     PREFIX_DEADLINE_ON)).orElse(new Deadline());
-            
+
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             if (!TaskDates.isStartDateBeforeDeadline(startDate, deadline)) {
                 throw new IllegalValueException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         AddTaskCommand.MESSAGE_USAGE));
             }
-            
+
             ReadOnlyTask task = new Task(description, startDate, deadline, tagList);
 
             return new AddTaskCommand(task);

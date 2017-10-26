@@ -10,13 +10,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents the deadline of a task in the application.
- * Guarantees: immutable, is valid as declared in 
+ * Guarantees: immutable, is valid as declared in
  */
 public class Deadline extends TaskDates {
 
     public final String date;
     public final Suffix recurInterval;
-    
+
     public Deadline() {
         this.date = "";
         this.recurInterval = SUFFIX_NO_RECUR_INTERVAL;

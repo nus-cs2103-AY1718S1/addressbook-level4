@@ -78,7 +78,7 @@ public class CommandTestUtil {
     public static final String VALID_DEADLINE_PAPER = "Wed, Oct 25, '17";
     public static final String VALID_TAG_URGENT = "urgent";
     public static final String VALID_TAG_GROUP = "projectGroup";
-    
+
     public static final String INVALID_DESCRIPTION = " " + "///??::!!";
     public static final String INVALID_DATE_FORMAT = "12.02.2012";
 

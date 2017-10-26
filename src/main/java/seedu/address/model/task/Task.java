@@ -105,7 +105,7 @@ public class Task implements ReadOnlyTask {
     public void setTags(Set<Tag> replacement) {
         taskTags.set(new UniqueTagList(replacement));
     }
-    
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
