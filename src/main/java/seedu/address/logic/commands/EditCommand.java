@@ -147,6 +147,7 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Image image;
+        private ExpiryDate expiryDate;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -158,6 +159,7 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.tags = toCopy.tags;
             this.image = toCopy.image;
+            this.expiryDate = toCopy.expiryDate;
         }
 
         /**
