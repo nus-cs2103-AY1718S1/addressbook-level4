@@ -6,6 +6,7 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 
 import java.util.List;
@@ -40,8 +41,12 @@ public class FindCommand extends Command {
             this.predicate = new LocationContainsKeywordsPredicate(keywords);
             break;
         case LESSON:
-            this.predicate = new LessonContainsKeywordsPredicate(keywords,model.getCurrentViewingLesson()
-            ,model.getCurrentViewingAttribute());
+            if (model.getCurrentViewingAttribute().equals("marked")) {
+                this.predicate = new MarkedLessonContainsKeywordsPredicate(keywords);
+                break;
+            }
+            this.predicate = new LessonContainsKeywordsPredicate(keywords, model.getCurrentViewingLesson()
+                    , model.getCurrentViewingAttribute());
             break;
         default:
             this.predicate = new ModuleContainsKeywordsPredicate(keywords);
