@@ -10,6 +10,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.phone.Phone;
+import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -93,6 +94,19 @@ public class PersonBuilder {
         }
         return this;
     }
+
+    /**
+     * UniquePhoneList
+     */
+    public PersonBuilder withPhoneList(String phone) {
+        try {
+            this.person.setPhoneList(new UniquePhoneList(new Phone(phone)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("phone is expected to be unique.");
+        }
+        return this;
+    }
+
 
     /**
      * Sets the {@code Email} of the {@code Person} that we are building.
