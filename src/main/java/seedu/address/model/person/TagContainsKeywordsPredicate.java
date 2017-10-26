@@ -19,13 +19,12 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-            Set<Tag> tagSet = person.getTags();
-            Set<String> tagNameSet = new HashSet<String>();
-            for (Tag t : tagSet) {
-                tagNameSet.add(t.tagName);
-            }
-            return keywords.stream()
-                .anyMatch(keyword -> (tagNameSet.contains(keyword)));
+        Set<Tag> tagSet = person.getTags();
+        Set<String> tagNameSet = new HashSet<String>();
+        for (Tag t : tagSet) {
+            tagNameSet.add(t.tagName);
+        }
+        return keywords.stream().anyMatch(keyword -> (tagNameSet.contains(keyword)));
     }
 
     @Override

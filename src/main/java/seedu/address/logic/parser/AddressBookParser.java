@@ -92,7 +92,7 @@ public class AddressBookParser {
         case FindByPhoneCommand.COMMAND_ALIAS:
             return new FindByPhoneCommandParser().parse(arguments);
 
-          case FindByTagCommand.COMMAND_WORD:
+        case FindByTagCommand.COMMAND_WORD:
         case FindByTagCommand.COMMAND_ALIAS:
             return new FindByTagCommandParser().parse(arguments);
 
