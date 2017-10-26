@@ -27,15 +27,15 @@ public class SampleDataUtil {
             return new Person[]{
                 new Person(new Name("Alex Yeoh"), new Phone("student/97272031 parent/97979797 "),
                         new Email("alexyeoh@example.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
-                        new FormClass("6E1"), new Grades("123.0"), new PostalCode("123456"),
+                        new FormClass("6E1"), new Grades("90.0"), new PostalCode("123456"),
                         new Remark("I am a man"), getTagSet("friends")),
                 new Person(new Name("Bernice Yu"), new Phone("student/97272031 parent/97979797 "),
                         new Email("berniceyu@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                        new FormClass("6E1"), new Grades("123.0"), new PostalCode("654321"),
+                        new FormClass("6E1"), new Grades("50.0"), new PostalCode("654321"),
                         new Remark("Woman"), getTagSet("colleagues", "friends")),
                 new Person(new Name("Charlotte Oliveiro"), new Phone("student/97272031 parent/97979797 "),
                         new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                        new FormClass("6E1"), new Grades("886.0"), new PostalCode("987654"),
+                        new FormClass("6E1"), new Grades("185.0"), new PostalCode("987654"),
                         new Remark("Awesome mate"), getTagSet("neighbours")),
                 new Person(new Name("David Li"), new Phone("student/97272031 parent/97979797 "),
                         new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
@@ -78,5 +78,4 @@ public class SampleDataUtil {
 
         return tags;
     }
-
 }

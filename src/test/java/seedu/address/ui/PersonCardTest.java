@@ -17,6 +17,16 @@ public class PersonCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
+        // check if the attributes of a person is binded in the card
+        Person personWithRightAttributes = new PersonBuilder().withFormClass("6E1").withName("Alice Pauline")
+                .withPhone("student: 97272031 parent: 97979797").build();
+        PersonCard personCard = new PersonCard(personWithRightAttributes, 1);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithRightAttributes, 1);
+    }
+
+    @Test
+    public void displayPerson() {
         // no tags
         Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
         PersonCard personCard = new PersonCard(personWithNoTags, 1);
@@ -32,9 +42,12 @@ public class PersonCardTest extends GuiUnitTest {
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
             personWithTags.setName(ALICE.getName());
-            personWithTags.setAddress(ALICE.getAddress());
-            personWithTags.setEmail(ALICE.getEmail());
             personWithTags.setPhone(ALICE.getPhone());
+            personWithTags.setAddress(ALICE.getAddress());
+            personWithTags.setFormClass(ALICE.getFormClass());
+            personWithTags.setGrades(ALICE.getGrades());
+            personWithTags.setEmail(ALICE.getEmail());
+            personWithTags.setPostalCode(ALICE.getPostalCode());
             personWithTags.setRemark(ALICE.getRemark());
             personWithTags.setTags(ALICE.getTags());
         });
