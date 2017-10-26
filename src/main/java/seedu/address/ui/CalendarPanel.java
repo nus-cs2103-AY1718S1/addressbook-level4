@@ -161,16 +161,16 @@ public class CalendarPanel extends UiPart<Region> {
                         }
                         for (ReadOnlyTask task: taskList) {
                             String finalTaskDate = "";
+                            String taskDate = "";
                             try {
-                                String taskDate = "";
-                                try {
-                                    Date deadline = ParserUtil.parseDate(task.getDeadline().date);
-                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                    taskDate = dateFormat.format(deadline);
-                                } catch (IllegalValueException e) {
-                                    e.printStackTrace();
-                                }
-                                finalTaskDate = taskDate;
+                                Date deadline = ParserUtil.parseDate(task.getDeadline().date);
+                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                taskDate = dateFormat.format(deadline);
+                            } catch (IllegalValueException e) {
+                                e.printStackTrace();
+                            }
+                            finalTaskDate = taskDate;
+                            try {
                                 //ensure that Deadline/Startdate is valid, after computer is invented
                                 assert LocalDate.parse(finalTaskDate, format).getYear()
                                         >= (LocalDate.now().getYear() - 100);
@@ -178,9 +178,11 @@ public class CalendarPanel extends UiPart<Region> {
                                     if ((bCount == 0) && (dCount == 0)) {
                                         dCount++;
                                         s.append(dCount + " Deadline");
+                                        colour = new StringBuilder("-fx-background-color: #ff444d;");
                                     } else if ((bCount > 0) && (dCount == 0)) {
                                         dCount++;
                                         s.append(" + " + dCount + " Deadline");
+                                        colour = new StringBuilder("-fx-background-color: #feff31;");
                                     } else if (dCount > 0) {
                                         dCount++;
                                         int endIndex = s.indexOf(" Deadline");
@@ -188,11 +190,6 @@ public class CalendarPanel extends UiPart<Region> {
                                         if (dCount == 2) {
                                             s.append("s");
                                         }
-                                    }
-
-                                    if (bCount == 0) {
-                                        colour = new StringBuilder("-fx-background-color: #ff444d;");
-                                    } else if (bCount > 0) {
                                         colour = new StringBuilder("-fx-background-color: #feff31;");
                                     }
                                 }
