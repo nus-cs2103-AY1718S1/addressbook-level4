@@ -182,6 +182,9 @@ public class AddressBook implements ReadOnlyAddressBook {
             }
         }
 
+        if (toRemove.isEmpty()) {
+            throw new PersonNotFoundException();
+        }
         for (Person person : toRemove) {
             removePerson(person);
             removeUnusedTags(person.getTags());
