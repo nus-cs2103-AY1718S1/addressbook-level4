@@ -1,6 +1,15 @@
 package seedu.address.ui;
 
+import java.time.LocalDate;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -13,14 +22,9 @@ import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 
-import java.time.LocalDate;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
+/**
+ * An UI component that displays a clickable-Calendar.
+ */
 public class CalendarView extends UiPart<Region> {
     private static final String FXML = "CalendarView.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -39,6 +43,10 @@ public class CalendarView extends UiPart<Region> {
 
     }
 
+    /**
+     * Initialise the calendar and highlight dates with Event.
+     * @param eventList
+     */
     private void initCalendar(ObservableList<Event> eventList) {
         box.getChildren().clear();
         datePicker = new DatePicker(LocalDate.now());
@@ -77,6 +85,9 @@ public class CalendarView extends UiPart<Region> {
         box.getChildren().add(pop);
     }
 
+    /**
+     * Add listener to register users mouse click.
+     */
     private void initListener() {
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("data: " + newValue.toString());
