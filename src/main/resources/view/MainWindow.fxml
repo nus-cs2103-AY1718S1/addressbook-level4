@@ -7,11 +7,14 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <StackPane prefHeight="400.0" prefWidth="1249.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -74,14 +77,62 @@
             <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
          </children>
       </VBox>
-      <StackPane>
+      <GridPane fx:id="helpOverlay" blendMode="SRC_ATOP" gridLinesVisible="true" opacity="0.67" prefWidth="1043.0" style="-fx-background-color: white;" visible="false">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="619.0" minWidth="10.0" prefWidth="165.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1097.0" minWidth="10.0" prefWidth="1084.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="94.0" minHeight="0.0" prefHeight="43.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="181.0" minHeight="10.0" prefHeight="111.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="142.0" minHeight="10.0" prefHeight="131.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <ImageView fx:id="helpOverlay" disable="true" fitHeight="403.0" fitWidth="1250.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../../../../docs/images/Architecture.png" />
-               </image>
-            </ImageView>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="Add" textFill="#8b71f2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="148.0" text="Delete" textFill="#8b71f2" GridPane.rowIndex="2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="List" textFill="#8b71f2" GridPane.rowIndex="3">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="Command" textFill="#8b71f2">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="1409.0" text="Usage" textFill="#8b71f2" GridPane.columnIndex="1">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TextField alignment="CENTER" editable="false" text="add n/NAME p/PHONE a/ADDRESS e/EMAIL [t/tag]" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField alignment="CENTER" editable="false" text="delete INDEX" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField alignment="CENTER" editable="false" text="list" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
          </children>
-      </StackPane>
+         <StackPane.margin>
+            <Insets left="10.0" right="10.0" top="85.0" />
+         </StackPane.margin>
+      </GridPane>
    </children>
 </StackPane>
