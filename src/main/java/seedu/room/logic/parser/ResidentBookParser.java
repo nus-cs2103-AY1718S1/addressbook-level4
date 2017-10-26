@@ -6,7 +6,6 @@ import static seedu.room.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.room.logic.commands.RemoveTagCommand;
 import seedu.room.logic.commands.AddCommand;
 import seedu.room.logic.commands.BackupCommand;
 import seedu.room.logic.commands.ClearCommand;
@@ -22,6 +21,7 @@ import seedu.room.logic.commands.HistoryCommand;
 import seedu.room.logic.commands.ImportCommand;
 import seedu.room.logic.commands.ListCommand;
 import seedu.room.logic.commands.RedoCommand;
+import seedu.room.logic.commands.RemoveTagCommand;
 import seedu.room.logic.commands.SelectCommand;
 import seedu.room.logic.commands.SortCommand;
 import seedu.room.logic.commands.SwaproomCommand;

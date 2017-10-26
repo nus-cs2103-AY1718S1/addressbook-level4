@@ -2,6 +2,7 @@ package seedu.room.logic.parser;
 
 import static seedu.room.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.room.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+
 import static seedu.room.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.room.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
