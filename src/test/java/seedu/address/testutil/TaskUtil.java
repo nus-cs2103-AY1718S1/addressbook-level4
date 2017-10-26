@@ -28,7 +28,7 @@ public class TaskUtil {
         sb.append(PREFIX_STARTDATE + task.getStartDate().date.toString() + " ");
         sb.append(PREFIX_DEADLINE_TO + task.getDeadline().date.toString() + " ");
         task.getTags().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
+            s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
         return sb.toString();
     }

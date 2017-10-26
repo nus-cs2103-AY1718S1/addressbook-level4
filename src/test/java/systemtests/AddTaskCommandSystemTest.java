@@ -18,10 +18,10 @@ import static seedu.address.testutil.TypicalTasks.INTERNSHIP;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;

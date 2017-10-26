@@ -1,7 +1,5 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.tasks.AddTaskCommand;
-
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_INTERNSHIP;
@@ -29,6 +27,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.TaskBuilder;
@@ -95,7 +94,8 @@ public class AddTaskCommandParserTest {
                 new AddTaskCommand(expectedTask));
 
         // no start date and deadline
-        expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withStartDate("").withDeadline("")
+        expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withStartDate("")
+                .withDeadline("")
                 .withTags(VALID_TAG_URGENT).build();
         assertParseSuccess(parser, VALID_DESCRIPTION_INTERNSHIP + TAG_DESC_URGENT,
                 new AddTaskCommand(expectedTask));
@@ -107,7 +107,8 @@ public class AddTaskCommandParserTest {
                 new AddTaskCommand(expectedTask));
 
         // no optional field
-        expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withStartDate("").withDeadline("")
+        expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withStartDate("")
+                .withDeadline("")
                 .withTags().build();
         assertParseSuccess(parser, VALID_DESCRIPTION_INTERNSHIP, new AddTaskCommand(expectedTask));
 
