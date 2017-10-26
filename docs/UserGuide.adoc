@@ -69,7 +69,7 @@ Examples:
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the address book in sorted ascending alphabetical order. +
 Format: `list`
 
 === Editing a person : `edit`
@@ -326,6 +326,14 @@ Reinitializing of myBook will display the previous choice of theme.
 
 Contacts in user myBook app that has `Important` or `important` tag will always appear at the top of the list. +
 User using versions before v1.2 should add a new person with `important` tag first to enjoy this feature.
+
+=== Since v1.3
+
+==== Sorted Contacts 
+
+All persons displayed will be sorted in ascending alphabetical order based on their name
+Using `List` command will always display all persons in sorted ascedning alphabetical order
+Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons
 
 === Coming soon in v2.0
 
