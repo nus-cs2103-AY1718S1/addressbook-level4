@@ -10,6 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Address {
 
+    public static final Address UNSPECIFIED = new Address();
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
             "Person addresses can take any values, and it should not be blank";
 
@@ -24,7 +25,7 @@ public class Address {
     /**
      * The default Address constructor when address is not specified by the user
      */
-    public Address() {
+    private Address() {
         value = "<Unspecified address>";
     }
 

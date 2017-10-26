@@ -10,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Phone {
 
-
+    public static final Phone UNSPECIFED = new Phone();
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers can only contain numbers, and should be at least 3 digits long";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
@@ -19,7 +19,7 @@ public class Phone {
     /**
      * The default Phone constructor when phone is not specified by the user
      */
-    public Phone() {
+    private Phone() {
         value = "<Unspecified phone number>";
     }
 

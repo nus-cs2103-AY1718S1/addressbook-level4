@@ -85,7 +85,7 @@ public class PersonBuilder {
      * Sets the default address when address is not specified by the user
      */
     public PersonBuilder withUnspecifiedAddress() {
-        this.person.setAddress(new Address());
+        this.person.setAddress(Address.UNSPECIFIED);
 
         return this;
     }
@@ -106,7 +106,7 @@ public class PersonBuilder {
      * Sets the default phone when phone is not specified by the user
      */
     public PersonBuilder withUnspecifiedPhone() {
-        this.person.setPhone(new Phone());
+        this.person.setPhone(Phone.UNSPECIFED);
 
         return this;
     }
@@ -127,7 +127,7 @@ public class PersonBuilder {
      * Sets the default email when email is not specified by the user
      */
     public PersonBuilder withUnspecifiedEmail() {
-        this.person.setEmail(new Email());
+        this.person.setEmail(Email.UNSPECIFIED);
 
         return this;
     }

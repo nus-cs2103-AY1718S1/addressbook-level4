@@ -29,9 +29,6 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
-    private static final Phone unspecifiedPhone = new Phone();
-    private static final Address unspecifiedAddress = new Address();
-    private static final Email unspecifiedEmail = new Email();
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -71,7 +68,7 @@ public class ParserUtil {
      */
     public static Optional<Phone> parseAddPhone(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(unspecifiedPhone);
+        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(Phone.UNSPECIFED);
     }
 
     /**
@@ -90,7 +87,7 @@ public class ParserUtil {
      */
     public static Optional<Address> parseAddAddress(Optional<String> address) throws IllegalValueException {
         requireNonNull(address);
-        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.of(unspecifiedAddress);
+        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.of(Address.UNSPECIFIED);
     }
 
     /**
@@ -109,7 +106,7 @@ public class ParserUtil {
      */
     public static Optional<Email> parseAddEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
-        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.of(unspecifiedEmail);
+        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.of(Email.UNSPECIFIED);
     }
 
     /**
