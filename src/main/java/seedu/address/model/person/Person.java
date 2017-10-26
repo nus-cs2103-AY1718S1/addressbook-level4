@@ -39,7 +39,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
-        this.primaryPhone = new SimpleObjectProperty<>(phone);
+        this.primaryhone = new SimpleObjectProperty<>(phone);
         this.uniquePhoneList = new SimpleObjectProperty<>(new UniquePhoneList());
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
@@ -102,7 +102,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
                   Set<Tag> tags, Set<CustomField> customFields) {
         requireAllNonNull(name, phone, email, address, tags, customFields);
         this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
+        this.primaryPhone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.photo = new SimpleObjectProperty<>(photo);
