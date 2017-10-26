@@ -16,7 +16,7 @@ import seedu.address.storage.AddressBookStorage;
 /**
  * Merge the file given with the default storage file
  */
-public class MergeCommand extends Command {
+public class MergeCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "merge";
 
@@ -35,7 +35,7 @@ public class MergeCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand () throws CommandException {
         requireNonNull(addressBookStorage);
         try {
             addressBookStorage.mergeAddressBook(newFilePath);
