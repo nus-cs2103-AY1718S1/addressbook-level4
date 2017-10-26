@@ -78,7 +78,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
             this.insured = new SimpleObjectProperty<>(source.getInsured());
         }
         if (source.beneficiaryProperty() != null) {
-            this.beneficiary= new SimpleObjectProperty<>(source.getBeneficiary());
+            this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
         }
         this.premium = new SimpleDoubleProperty(source.getPremium());
         this.contractPath = new SimpleStringProperty(source.getContractPath());
@@ -89,14 +89,9 @@ public class LifeInsurance implements ReadOnlyInsurance {
         }
     }
 
-    public LifeInsurance(ReadOnlyInsurance source, Person person) {
-        this.premium = new SimpleDoubleProperty(source.getPremium());
-        this.contractPath = new SimpleStringProperty(source.getContractPath());
-        this.signingDate = new SimpleStringProperty(source.getSigningDate());
-        this.expiryDate = new SimpleStringProperty(source.getExpiryDate());
-        this.roleToPersonMap = source.getRoleToPersonMap();
+    public void setInsurancePerson(Person person) {
         String name = person.getName().fullName;
-        Iterator it = source.getRoleToPersonMap().entrySet().iterator();
+        Iterator it = this.roleToPersonMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             if (pair.getValue().equals(name)) {

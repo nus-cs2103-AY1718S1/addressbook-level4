@@ -83,7 +83,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
 
         setLifeInsurances(newData.getLifeInsuranceMap());
-        syncMasterLifeInsuranceMapWith();
+        syncMasterLifeInsuranceMapWithPersonList();
+        syncMasterPersonListwithLifeInsurance();
     }
 
     //// person-level operations
@@ -173,20 +174,28 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  - exists in the master map {@link #lifeInsuranceMap
      *  - points to a LifeInsurance object in the master list
      */
-    public void syncMasterLifeInsuranceMapWith() {
+    public void syncMasterLifeInsuranceMapWithPersonList() {
         //Get the list of insurance ids of a person and filter out the ones that are empty
         persons.forEach(p -> {
             if (!p.getLifeInsuranceIds().isEmpty()) {
                 //for every insurance id get the insurance object from lifeInsuranceMap
-                p.getLifeInsuranceIds().forEach( id -> {
+                p.getLifeInsuranceIds().forEach(id -> {
                     String idString = id.toString();
-                    ReadOnlyInsurance lf = lifeInsuranceMap.get(idString);
-                    LifeInsurance newLifeInsurance = new LifeInsurance(lf, p);
-                    lifeInsuranceMap.replace(idString, newLifeInsurance);
-                    p.addLifeInsurances(newLifeInsurance);
+                    LifeInsurance lf = lifeInsuranceMap.get(idString);
+                    lf.setInsurancePerson(p);
+                    p.addLifeInsurances(lf);
                 });
             }
         });
+    }
+
+    /**
+     * Ensures that every person in LISA:
+     *  - exists in the unique person list{@link #persons
+     *  - points to a LifeInsurance object in the master list
+     */
+    public void syncMasterPersonListwithLifeInsurance() {
+
     }
 
     //// tag-level operations
@@ -217,8 +226,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public Map<String, ReadOnlyInsurance> getLifeInsuranceMap() {
         final Map<String, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
             .collect(Collectors.<Map.Entry<String,LifeInsurance>,String,ReadOnlyInsurance>toMap(
-                i -> i.getKey(),
-                i -> i.getValue()
+                i -> i.getKey(), i -> i.getValue()
             ));
         return lifeInsurances;
     }
