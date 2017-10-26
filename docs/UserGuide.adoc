@@ -637,6 +637,8 @@ e.g. `addtask assignment due from tomorrow to thursday`
 * *Clear Contacts* : `clear contacts`
 * *Delete Contacts* : `delete INDEX` +
 e.g. `delete 3`
+* *Delete Tags from Multiple Contacts* `detag [INDEX]... [t/TAG]` +
+e.g. `detag 1, 2, 3 t/friends`
 * *Delete Tasks* `deletetask INDEX` +
 e.g. `deletetask 3`
 * *Edit Contacts* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +

@@ -1,6 +1,10 @@
 package seedu.address.model.task;
 
+import java.util.Set;
+
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * A read-only immutable interface for a Task in the application.
@@ -14,6 +18,8 @@ public interface ReadOnlyTask {
     StartDate getStartDate();
     ObjectProperty<Deadline> deadlineProperty();
     Deadline getDeadline();
+    ObjectProperty<UniqueTagList> tagProperty();
+    Set<Tag> getTags();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -31,11 +37,17 @@ public interface ReadOnlyTask {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getDescription())
-                .append(" From: ")
-                .append(getStartDate())
-                .append(" To: ")
-                .append(getDeadline());
+        builder.append(getDescription());
+        if (!getStartDate().isEmpty()) {
+            builder.append(" From: ").append(getStartDate());
+        }
+        if (!getDeadline().isEmpty()) {
+            builder.append(" To: ").append(getDeadline());
+        }
+        if (!getTags().isEmpty()) {
+            builder.append(" Tags: ");
+            getTags().forEach(builder::append);
+        }
         return builder.toString();
     }
 }

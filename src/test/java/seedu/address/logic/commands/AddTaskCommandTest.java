@@ -18,82 +18,84 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.persons.AddCommand;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TaskBuilder;
 
-public class AddCommandTest {
+public class AddTaskCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullTask_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddCommand(null);
+        new AddTaskCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_taskAcceptedByModel_addSuccessful() throws Exception {
+        AddTaskCommandTest.ModelStubAcceptingTaskAdded modelStub = new AddTaskCommandTest.ModelStubAcceptingTaskAdded();
+        Task validTask = new TaskBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddTaskCommandForTask(validTask, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddTaskCommand.MESSAGE_SUCCESS, validTask), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validTask), modelStub.tasksAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateTask_throwsCommandException() throws Exception {
+        AddTaskCommandTest.ModelStub modelStub = new AddTaskCommandTest.ModelStubThrowingDuplicateTaskException();
+        Task validTask = new TaskBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddTaskCommand.MESSAGE_DUPLICATE_TASK);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddTaskCommandForTask(validTask, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        Task assignment = new TaskBuilder().withDescription("Complete assignment").build();
+        Task project = new TaskBuilder().withDescription("Project due").build();
+        AddTaskCommand addAssignmentCommand = new AddTaskCommand(assignment);
+        AddTaskCommand addProjectCommand = new AddTaskCommand(project);
 
         // same object -> returns true
-        assertTrue(addAliceCommand.equals(addAliceCommand));
+        assertTrue(addAssignmentCommand.equals(addAssignmentCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
-        assertTrue(addAliceCommand.equals(addAliceCommandCopy));
+        AddTaskCommand addAssignmentCommandCopy = new AddTaskCommand(assignment);
+        assertTrue(addAssignmentCommand.equals(addAssignmentCommandCopy));
 
         // different types -> returns false
-        assertFalse(addAliceCommand.equals(1));
+        assertFalse(addAssignmentCommand.equals(1));
 
         // null -> returns false
-        assertFalse(addAliceCommand.equals(null));
+        assertFalse(addAssignmentCommand.equals(null));
 
-        // different person -> returns false
-        assertFalse(addAliceCommand.equals(addBobCommand));
+        // different task -> returns false
+        assertFalse(addAssignmentCommand.equals(addProjectCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddTaskCommand with the details of the given task.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddTaskCommand getAddTaskCommandForTask(Task task, Model model) {
+        AddTaskCommand command = new AddTaskCommand(task);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -130,14 +132,15 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteTag(ReadOnlyPerson person, Tag oldTag)
-            throws PersonNotFoundException, DuplicatePersonException {
-            fail("This method should not be called.");
+        public void deleteTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
+                DuplicatePersonException, TagNotFoundException {
+            fail("This method must not be called.");
         }
 
         @Override
-        public void attachTag(ReadOnlyPerson person, Tag tag)
-                throws PersonNotFoundException, DuplicatePersonException {
+        /** Add tag of given person */
+        public void attachTag(ReadOnlyPerson person, Tag tag) throws PersonNotFoundException,
+                DuplicatePersonException, UniqueTagList.DuplicateTagException {
             fail("This method should not be called.");
         }
 
@@ -194,10 +197,10 @@ public class AddCommandTest {
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubThrowingDuplicateTaskException extends AddTaskCommandTest.ModelStub {
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addTask(ReadOnlyTask task) throws DuplicateTaskException {
+            throw new DuplicateTaskException();
         }
 
         @Override
@@ -207,14 +210,14 @@ public class AddCommandTest {
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accepts the task being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingTaskAdded extends AddTaskCommandTest.ModelStub {
+        final ArrayList<Task> tasksAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
+        public void addTask(ReadOnlyTask task) throws DuplicateTaskException {
+            tasksAdded.add(new Task(task));
         }
 
         @Override

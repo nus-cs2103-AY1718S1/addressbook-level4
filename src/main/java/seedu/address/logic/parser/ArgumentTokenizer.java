@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class ArgumentTokenizer {
 
+    private static final String QUOTE_REGEX = "\"";
+
     /**
      * Tokenizes an arguments string and returns an {@code ArgumentMultimap} object that maps prefixes to their
      * respective argument values. Only the given prefixes will be recognized in the arguments string.
@@ -24,6 +26,19 @@ public class ArgumentTokenizer {
     public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
         List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
         return extractArguments(argsString, positions);
+    }
+
+    /**
+     * Returns the part of the argsString that is unquoted.
+     * @param argsString argument string.
+     * @return unquoted argument string.
+     */
+    private static String extractUnquotedArgsString(String argsString) {
+        if (argsString.indexOf(QUOTE_REGEX) == argsString.lastIndexOf(QUOTE_REGEX)) {
+            return argsString;
+        }
+        String[] unquotedArgsString = argsString.split(QUOTE_REGEX);
+        return (unquotedArgsString.length == 2) ? "" : unquotedArgsString[2];
     }
 
     /**
@@ -72,9 +87,11 @@ public class ArgumentTokenizer {
      * {@code fromIndex} = 0, this method returns 5.
      */
     private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
+        String unquotedArgsString = extractUnquotedArgsString(argsString);
+        int lengthOfQuotedString = argsString.length() - unquotedArgsString.length();
+        int prefixIndex = unquotedArgsString.indexOf(" " + prefix, fromIndex);
         return prefixIndex == -1 ? -1
-                : prefixIndex + 1; // +1 as offset for whitespace
+                : prefixIndex + 1 + lengthOfQuotedString; // +1 as offset for whitespace
     }
 
     /**
@@ -86,7 +103,8 @@ public class ArgumentTokenizer {
      * @param prefixPositions Zero-based positions of all prefixes in {@code argsString}
      * @return                ArgumentMultimap object that maps prefixes to their arguments
      */
-    private static ArgumentMultimap extractArguments(String argsString, List<PrefixPosition> prefixPositions) {
+    private static ArgumentMultimap extractArguments(String argsString,
+                                                     List<PrefixPosition> prefixPositions) {
 
         // Sort by start position
         prefixPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());

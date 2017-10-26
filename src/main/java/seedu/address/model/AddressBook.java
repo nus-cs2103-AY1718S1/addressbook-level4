@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -33,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueTaskList tasks;
+    private final CommandMode commandMode;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -45,6 +47,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         tasks = new UniqueTaskList();
+        commandMode = new CommandMode();
     }
 
     public AddressBook() {}
@@ -101,9 +104,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
         syncMasterTagListWith(newPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         persons.add(newPerson);
     }
 
@@ -123,9 +123,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person editedPerson = new Person(editedReadOnlyPerson);
         syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         persons.setPerson(target, editedPerson);
     }
 
@@ -157,6 +154,36 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     private void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
+    }
+
+    /**
+     * Ensures that every tag in this task:
+     *  - exists in the master list {@link #tags}
+     *  - points to a Tag object in the master list
+     */
+    private void syncMasterTagListWith(Task task) {
+        final UniqueTagList taskTags = new UniqueTagList(task.getTags());
+        tags.mergeFrom(taskTags);
+
+        // Create map with values = tag object references in the master list
+        // used for checking task tag references
+        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
+        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+
+        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
+        final Set<Tag> correctTagReferences = new HashSet<>();
+        taskTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        task.setTags(correctTagReferences);
+    }
+
+    /**
+     * Ensures that every tag in these tasks:
+     *  - exists in the master list {@link #tags}
+     *  - points to a Tag object in the master list
+     *  @see #syncMasterTagListWith(Person)
+     */
+    private void syncMasterTagListWith(UniqueTaskList tasks) {
+        tasks.forEach(this::syncMasterTagListWith);
     }
 
     /**
@@ -229,10 +256,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addTask(ReadOnlyTask t) throws DuplicateTaskException {
         Task newTask = new Task(t);
-        //syncMasterTagListWith(newPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        syncMasterTagListWith(newTask);
         tasks.add(newTask);
     }
 
@@ -251,10 +275,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyTask);
 
         Task editedTask = new Task(editedReadOnlyTask);
-        //syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        syncMasterTagListWith(editedTask);
         tasks.setTask(target, editedTask);
     }
 
@@ -268,6 +289,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         } else {
             throw new TaskNotFoundException();
         }
+    }
+
+    public void changeCommandMode(String mode) throws IllegalValueException {
+        commandMode.setCommandMode(mode);
+    }
+
+    public String getCommandMode() {
+        return commandMode.toString();
     }
 
     //// util methods

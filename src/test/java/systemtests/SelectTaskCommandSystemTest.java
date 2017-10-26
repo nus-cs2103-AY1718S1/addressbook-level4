@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalTasks.getTypicalTasks;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -19,6 +20,10 @@ import seedu.address.model.Model;
 public class SelectTaskCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void select() {
+
+        /*change the current command mode to task manager*/
+        executeCommand(ChangeModeCommand.COMMAND_WORD + " tm");
+
         /* Case: select the first card in the task list, command with leading spaces and trailing spaces
          * -> selected
          */
@@ -31,7 +36,7 @@ public class SelectTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, personCount);
 
         /* Case: mixed case command word -> selected */
-        assertCommandSuccess("SeLeCtTaSk 1", INDEX_FIRST_TASK);
+        assertCommandSuccess("SeLeCt 1", INDEX_FIRST_TASK);
 
         /* Case: undo previous selection -> rejected */
         command = UndoCommand.COMMAND_WORD;
@@ -108,7 +113,7 @@ public class SelectTaskCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
             MESSAGE_SELECT_TASK_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getTaskListPanel().getSelectedCardIndex();
+        int preExecutionSelectedCardIndex = getTaskListPanel().getSelectedTaskCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);

@@ -136,6 +136,7 @@ public abstract class AddressBookSystemTest {
      * Displays all tasks in the address book.
      */
     protected void showAllTasks() {
+        executeCommand(ListCommand.COMMAND_WORD);
         executeCommand(ListTasksCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getTaskList().size() == getModel().getFilteredTaskList().size();
     }
@@ -169,7 +170,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void selectTask(Index index) {
         executeCommand(SelectTaskCommand.COMMAND_WORD + " " + index.getOneBased());
-        assert getTaskListPanel().getSelectedCardIndex() == index.getZeroBased();
+        assert getTaskListPanel().getSelectedTaskCardIndex() == index.getZeroBased();
     }
 
     /**
@@ -254,7 +255,7 @@ public abstract class AddressBookSystemTest {
      * @see TaskListPanelHandle#isSelectedTaskCardChanged()
      */
     protected void assertSelectedTaskCardChanged(Index expectedSelectedTaskCardIndex) {
-        assertEquals(expectedSelectedTaskCardIndex.getZeroBased(), getTaskListPanel().getSelectedCardIndex());
+        assertEquals(expectedSelectedTaskCardIndex.getZeroBased(), getTaskListPanel().getSelectedTaskCardIndex());
     }
 
     /**
@@ -308,6 +309,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
+            assertTaskListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE),
                     getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());

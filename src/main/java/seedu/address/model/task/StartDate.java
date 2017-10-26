@@ -2,28 +2,38 @@ package seedu.address.model.task;
 
 import static java.util.Objects.requireNonNull;
 
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
+
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.Suffix;
 
 /**
  * Represents the Starting Date of a given task in the application.
- * Guarantees: immutable; is valid as declared in {@link TaskDates#isDateValid(String)}
+ * Guarantees: immutable; is valid as declared in
  */
 public class StartDate extends TaskDates {
 
     public final String date;
+    public final Suffix recurInterval;
+
+    public StartDate() {
+        this.date = "";
+        this.recurInterval = SUFFIX_NO_RECUR_INTERVAL;
+    }
 
     /**
      * Validates given starting date.
      *
      * @throws IllegalValueException if given date string is invalid.
      */
-    public StartDate(String date) throws IllegalValueException {
+    public StartDate(String date, Suffix recurInterval) throws IllegalValueException {
         requireNonNull(date);
-        String trimmedDate = date.trim();
-        if (!trimmedDate.isEmpty() && !TaskDates.isDateValid(trimmedDate)) {
-            throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
-        }
-        this.date = trimmedDate;
+        this.date = date.trim();
+        this.recurInterval = recurInterval;
+    }
+
+    public boolean isEmpty() {
+        return date.isEmpty();
     }
 
     @Override
