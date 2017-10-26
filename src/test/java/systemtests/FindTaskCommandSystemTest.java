@@ -6,6 +6,7 @@ import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
 import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
 import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
+import static seedu.address.testutil.TypicalTasks.QUIZ;
 
 import org.junit.Test;
 
@@ -48,10 +49,36 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         /* Case: mixed case command word -> 2 tasks found */
         command = "FiNd Finish";
         assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
 
         /* Case: find task where task list is not displaying the task we are finding -> 1 task found */
         command = FindTaskCommand.COMMAND_WORD + " Gym";
         ModelHelper.setFilteredTaskList(expectedModel, GYM);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        /* Case: find task with deadline in address book, 1 keyword -> 1 task found */
+        command = FindTaskCommand.COMMAND_WORD + " 01-11-2017";
+        ModelHelper.setFilteredTaskList(expectedModel, QUIZ);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        // TODO: 26/10/17 Find out why 26-10-2017 01-11-2017 gives 3 tasks listed
+        /* Case: find multiple tasks in address book, 2 keywords -> 2 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 20-11-2017 01-11-2017";
+        ModelHelper.setFilteredTaskList(expectedModel, BUY_TICKETS, QUIZ);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        /* Case: find multiple tasks in address book, 2 keywords with 1 repeat -> 2 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 20-11-2017 01-11-2017 20-11-2017";
+        ModelHelper.setFilteredTaskList(expectedModel, BUY_TICKETS, QUIZ);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        /* Case: find multiple tasks in address book, 2 keywords of different type -> 2 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 01-11-2017 gym";
+        ModelHelper.setFilteredTaskList(expectedModel, QUIZ, GYM);
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 
@@ -124,8 +151,20 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 
-        /* Case: find deadline of task in address book -> 0 tasks found */
-        command = FindTaskCommand.COMMAND_WORD + " " + ASSIGNMENT.getDeadline().date;
+        /* Case: find deadline of task in address book, keyword is substring of deadline -> 0 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 20-10";
+        ModelHelper.setFilteredTaskList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        /* Case: find task in address book, keyword is in wrong format -> 0 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 20102017";
+        ModelHelper.setFilteredTaskList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedTaskCardUnchanged();
+
+        /* Case: find task not in address book -> 0 tasks found */
+        command = FindTaskCommand.COMMAND_WORD + " 01-13-1111";
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 

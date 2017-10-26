@@ -13,9 +13,10 @@ public class FindTaskCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all tasks whose descriptions contain any of "
-        + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+        + "the specified keywords (case-insensitive)\n"
+        + "          or tasks that have deadline (dd-MM-yyyy) and displays them as a list with index numbers.\n"
         + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-        + "Example: " + COMMAND_WORD + " Finish CS2103";
+        + "Example: " + COMMAND_WORD + " Finish CS2103 movie 20-12-2012";
 
     private final TaskContainsKeywordsPredicate predicate;
 
