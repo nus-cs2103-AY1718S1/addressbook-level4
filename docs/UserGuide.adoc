@@ -394,14 +394,13 @@ To transfer my data to another Computer,iInstall the app in the other computer a
 [width="59%",cols="5%,<3%,<50%,<40%",options="header",]
 |=======================================================================
 |Commands Words |Commands Alias |Format|Example
-|`Add` | `a`  |'add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
+|`Add` | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 
 |`Edit` | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
 |`Find` |`f` |`find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`find n/James Jake`
-rough the entire list
 
-|`Help` | `h` | `help COMMAND WORD ` | `help add`
+|`Help` | `h` | `help COMMAND WORD` | `help add`
 
 |`Locate` |`lc` |`locate INDEX` | `locate 2`
 
