@@ -124,7 +124,7 @@ Support for other delivery companies will come in future patches.
 [NOTE]
 If not included in the add command, the default value of both the phone and email field is `NIL`.
 
-tag::import[]
+//tag::import[]
 
 === Import multiple parcels stored in an xml storage file: `import`
 
@@ -142,7 +142,7 @@ File names should be alphanumeric i.e. `addressBook12.xml`, `12.xml`
 Non alphanumeric file names will not be accepted. i.e. `$addressbook#!@,xml`
 ====
 
-end::import[]
+//end::import[]
 
 === Listing all parcels : `list`
 
@@ -220,7 +220,7 @@ Deletes the 2nd parcel in the Ark.
 `delete 1` +
 Deletes the 1st parcel in the results of the `find` command.
 
-tag::deleteTag[]
+//tag::deleteTag[]
 === Deleting a tag : `deleteTag`
 
 Deletes the specified tag from all parcels in Ark. +
@@ -235,7 +235,7 @@ Examples:
 
 * `deleteTag urgent`
 Deletes the tag "urgent" from each parcel in the address book.
-end::deleteTag[]
+//end::deleteTag[]
 
 === Selecting a parcel : `select`
 
@@ -337,7 +337,7 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-tag::trackingNumber[]
+//tag::trackingNumber[]
 
 === Tracking Number Recognition
 
@@ -351,9 +351,9 @@ Presently, the `Tracking Number` Field only has support for Registered Article t
 You can read more about their Registered Article tracking number
  link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here].
 
-end::trackingNumber[]
+//end::trackingNumber[]
 
-tag::postalCode[]
+//tag::postalCode[]
 
 === Postal Code Recognition
 
@@ -366,9 +366,9 @@ code exists even though it might meet the criteria above. The team is working on
  in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
  the correct postal code.
 
-end::postalCode[]
+//end::postalCode[]
 
-tag::status[]
+//tag::status[]
 
 === Status field
 
@@ -382,7 +382,7 @@ delivered by. +
 
 These states have different colours codes to allow you to differentiate the `Status` values more easily.
 
-end::status[]
+//end::status[]
 
 === Google Maps Browser
 
@@ -391,6 +391,7 @@ of the delivery addresses of each parcel. This feature will be automatically use
 into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
 browser section of the main window.
 
+//tag::autocomplete[]
 === Autocomplete
 
 Ark comes with tab autocompletion which is able to complete a command for you
@@ -408,13 +409,14 @@ image::TabAutocompleteMultipleExample.PNG[width="400"]
 Examples:
 
 * `a` + kbd:[Tab] (auto-completes with `add` in the command line input)
+//end::autocomplete[]
 
 === Saving the data
 
 Ark data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-tag::backup[]
+//tag::backup[]
 
 === Backing up the data
 
@@ -424,7 +426,7 @@ The backup file is appended with `-backup.xml` and is stored in the same folder 
 The data from the backup file has to be loaded manually by copying the contents of the backup file into your main
  storage file. i.e. `./data/` folder
 
-end::backup[]
+//end::backup[]
 
 //tag::deliveryDate[]
 === Delivery Date Recognition
