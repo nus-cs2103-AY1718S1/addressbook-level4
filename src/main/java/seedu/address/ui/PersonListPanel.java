@@ -13,6 +13,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.BrowserPanelFindRouteEvent;
+import seedu.address.commons.events.ui.BrowserPanelShowLocationEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -65,6 +67,26 @@ public class PersonListPanel extends UiPart<Region> {
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handleBrowserPanelShowLocationEvent(BrowserPanelShowLocationEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        for (int i = 0; i < personListView.getItems().size(); i++) {
+            if (personListView.getItems().get(i).person.equals(event.getNewSelection())) {
+                personListView.scrollTo(i);
+            }
+        }
+    }
+
+    @Subscribe
+    private  void handleBrowserPanelFindRouteEvent(BrowserPanelFindRouteEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        for (int i = 0; i < personListView.getItems().size(); i++) {
+            if (personListView.getItems().get(i).person.equals(event.getSelectedPerson())) {
+                personListView.scrollTo(i);
+            }
+        }
     }
 
     /**

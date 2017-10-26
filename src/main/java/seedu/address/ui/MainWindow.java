@@ -41,11 +41,15 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private PersonDetailsPanel personDetailsPanel;
     private PersonListPanel personListPanel;
     private EventListPanel eventListPanel;
     private Config config;
     private UserPrefs prefs;
     private CalendarView calendarView;
+
+    @FXML
+    private StackPane contactDetailsPlaceholder;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -73,7 +77,6 @@ public class MainWindow extends UiPart<Region> {
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
-
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
@@ -135,6 +138,10 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        personDetailsPanel = new PersonDetailsPanel(logic.getFilteredPersonList());
+        contactDetailsPlaceholder.getChildren().add(personDetailsPanel.getRoot());
+
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
