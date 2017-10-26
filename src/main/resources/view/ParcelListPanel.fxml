@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="240.0" prefWidth="1543.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <TabPane fx:id="tabPanePlaceholder" tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane">
+   <TabPane fx:id="tabPanePlaceholder" styleClass="tab-pane" tabClosingPolicy="UNAVAILABLE">
      <tabs>
        <Tab text="All Parcels">
             <content>
-              <ListView fx:id="allParcelListView" />
+              <ListView fx:id="allUncompletedParcelListView" />
             </content>
          </Tab>
-       <Tab text="Completed Parcels" styleClass="tab-header-area">
+       <Tab styleClass="tab-header-area" text="Completed Parcels">
             <content>
-               <ListView fx:id="completedParcelListView" prefHeight="200.0" prefWidth="200.0" />
+               <ListView fx:id="allCompletedParcelListView" prefHeight="200.0" prefWidth="200.0" />
             </content>
          </Tab>
      </tabs>
