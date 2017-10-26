@@ -124,6 +124,35 @@ public class TaskBook implements ReadOnlyTaskBook {
     }
 
     /**
+     * Updates the given task with the new priority value provided.
+     * @param target , the target task to be updated
+     * @param value , the value to be updated for the task's new priority
+     * @throws TaskNotFoundException
+     * @throws DuplicateTaskException
+     */
+    public void updateTaskPriority(ReadOnlyTask target, Integer value)
+            throws TaskNotFoundException, DuplicateTaskException {
+
+        // Preliminary checking
+        if (value < 0 || value > 5) {
+            return;
+        }
+
+        Task updatedTask = new Task(
+                target.getName(),
+                target.getDescription(),
+                target.getStartDateTime(),
+                target.getEndDateTime(),
+                target.getTags(),
+                target.getComplete(),
+                value);
+        syncMasterTagListWith(updatedTask);
+        tasks.setTask(target, updatedTask);
+
+    }
+
+
+    /**
      * Ensures that every tag in this task:
      *  - exists in the master list {@link #tags}
      *  - points to a Tag object in the master list

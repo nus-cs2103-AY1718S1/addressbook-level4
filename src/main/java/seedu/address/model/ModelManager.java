@@ -128,6 +128,15 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateTaskPriority(ReadOnlyTask task, Integer value)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireAllNonNull(task, value);
+
+        taskBook.updateTaskPriority(task, value);
+
+    }
+
+    @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
             ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
