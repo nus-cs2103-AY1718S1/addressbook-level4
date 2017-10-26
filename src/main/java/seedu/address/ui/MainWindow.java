@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -38,6 +39,7 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private String currentTheme;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
@@ -71,6 +73,7 @@ public class MainWindow extends UiPart<Region> {
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        this.currentTheme = prefs.getGuiSettings().getWindowTheme();
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -79,7 +82,6 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
-
         setAccelerators();
         registerAsAnEventHandler(this);
     }
@@ -127,7 +129,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel(logic.getFilteredPersonList(), prefs.getGuiSettings().getWindowTheme());
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -142,10 +144,25 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        this.setTheme(this.currentTheme);
     }
 
     void hide() {
         primaryStage.hide();
+    }
+
+    /**
+     * Sets the current theme based on given css.
+     *
+     * @param themeUrl e.g. {@code "/darktheme/DarkTheme.css"}
+     */
+    private void setTheme(String themeUrl) {
+        this.getPrimaryStage().getScene().getStylesheets().clear();
+        this.getPrimaryStage().getScene().getStylesheets().add(MainApp.class
+                .getResource("/view/" + themeUrl).toExternalForm());
+        this.currentTheme = themeUrl;
+        browserPanel.loadDefaultPage(themeUrl);
     }
 
     private void setTitle(String appTitle) {
@@ -183,7 +200,42 @@ public class MainWindow extends UiPart<Region> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), currentTheme);
+    }
+
+    @FXML
+    public void handleThemeBootstrap3() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_BOOTSTRAP3);
+    }
+
+    @FXML
+    public void handleThemeDark() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_DARKTHEME);
+    }
+
+    @FXML
+    public void handleThemeCaspian() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_CASPIAN);
+    }
+
+    @FXML
+    public void handleThemeModena() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA);
+    }
+
+    @FXML
+    public void handleThemeModenaBoW() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_BLACKONWHITE);
+    }
+
+    @FXML
+    public void handleThemeModenaWoB() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_WHITEONBLACK);
+    }
+
+    @FXML
+    public void handleThemeModenaYoB() {
+        setTheme(THEME_FILE_FOLDER + THEME_CSS_MODENA_YELLOWONBLACK);
     }
 
     /**

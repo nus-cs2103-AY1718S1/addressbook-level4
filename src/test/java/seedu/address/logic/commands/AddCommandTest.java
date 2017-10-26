@@ -139,6 +139,12 @@ public class AddCommandTest {
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException { }
+
+        @Override
+        public void sortAllPersons () throws DuplicatePersonException { }
     }
 
     /**
@@ -153,6 +159,11 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public void sortImportantTag () throws PersonNotFoundException, DuplicatePersonException {
+            throw new DuplicatePersonException();
         }
     }
 

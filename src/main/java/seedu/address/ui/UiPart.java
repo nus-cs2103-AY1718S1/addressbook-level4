@@ -21,6 +21,21 @@ public abstract class UiPart<T> {
 
     /** Resource folder where FXML files are stored. */
     public static final String FXML_FILE_FOLDER = "/view/";
+    /**
+     * Resource folder where Theme files are stored.
+     */
+    public static final String THEME_FILE_FOLDER = "themes";
+
+    /**
+     * Individual theme files url
+     */
+    public static final String THEME_CSS_DARKTHEME = "/darktheme/DarkTheme.css";
+    public static final String THEME_CSS_BOOTSTRAP3 = "/bootstrap3/bootstrap3.css";
+    public static final String THEME_CSS_CASPIAN = "/caspian/caspian.css";
+    public static final String THEME_CSS_MODENA = "/modena/modena.css";
+    public static final String THEME_CSS_MODENA_BLACKONWHITE = "/modena/blackOnWhite.css";
+    public static final String THEME_CSS_MODENA_WHITEONBLACK = "/modena/whiteOnBlack.css";
+    public static final String THEME_CSS_MODENA_YELLOWONBLACK = "/modena/yellowOnBlack.css";
 
     private FXMLLoader fxmlLoader;
 

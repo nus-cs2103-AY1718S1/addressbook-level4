@@ -5,9 +5,15 @@ import java.util.HashMap;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DisplayGmapEvent;
+import seedu.address.commons.events.ui.PersonPanelOptionsDelete;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -28,6 +34,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+    private final int displayedIndex;
 
     @FXML
     private HBox cardPane;
@@ -43,10 +50,13 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private MenuButton optionsButton;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
+        this.displayedIndex = displayedIndex;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
@@ -78,6 +88,27 @@ public class PersonCard extends UiPart<Region> {
 
         return tagColors.get(tagValue);
     }
+
+    /**
+     * Menu list option: Delete
+     * Raises PersonPanelOptionsDelete, handled by UIManager
+     * Handle Delete user
+     */
+    @FXML
+    public void handleDelete() throws CommandException, ParseException {
+        raise(new PersonPanelOptionsDelete(Index.fromOneBased(this.displayedIndex)));
+    }
+
+    /**
+     * Menu list option: GoogleMap
+     * Raises DisplayGmapEvent, handled by BrowserPanel
+     * Display google map on main viewport
+     */
+    @FXML
+    public void handleGoogleMap() {
+        raise(new DisplayGmapEvent(Index.fromOneBased(this.displayedIndex)));
+    }
+
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties

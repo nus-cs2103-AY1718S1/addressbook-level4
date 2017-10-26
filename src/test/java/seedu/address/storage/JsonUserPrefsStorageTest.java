@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
+import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.UserPrefs;
@@ -81,7 +82,7 @@ public class JsonUserPrefsStorageTest {
 
     private UserPrefs getTypicalUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setGuiSettings(1000, 500, 300, 100);
+        userPrefs.setGuiSettings(1000, 500, 300, 100, GuiSettings.DEFAULT_THEME);
         userPrefs.setAddressBookFilePath("addressbook.xml");
         userPrefs.setAddressBookName("TypicalAddressBookName");
         return userPrefs;
@@ -115,7 +116,7 @@ public class JsonUserPrefsStorageTest {
     public void saveUserPrefs_allInOrder_success() throws DataConversionException, IOException {
 
         UserPrefs original = new UserPrefs();
-        original.setGuiSettings(1200, 200, 0, 2);
+        original.setGuiSettings(1200, 200, 0, 2, GuiSettings.DEFAULT_THEME);
 
         String pefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.json";
         JsonUserPrefsStorage jsonUserPrefsStorage = new JsonUserPrefsStorage(pefsFilePath);
@@ -126,7 +127,7 @@ public class JsonUserPrefsStorageTest {
         assertEquals(original, readBack);
 
         //Try saving when the file exists
-        original.setGuiSettings(5, 5, 5, 5);
+        original.setGuiSettings(5, 5, 5, 5, GuiSettings.DEFAULT_THEME);
         jsonUserPrefsStorage.saveUserPrefs(original);
         readBack = jsonUserPrefsStorage.readUserPrefs().get();
         assertEquals(original, readBack);

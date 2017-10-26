@@ -8,15 +8,26 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
-    <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
   </stylesheets>
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
+        <MenuItem mnemonicParsing="false" text="Import Addressbook (TDB)"/>
+        <MenuItem mnemonicParsing="false" text="Export Addressbook (TDB)"/>
+        <Menu text="Themes">
+            <MenuItem text="Bootstrap3" onAction="#handleThemeBootstrap3" userData="0"/>
+            <MenuItem text="Dark" onAction="#handleThemeDark" userData="1"/>
+            <MenuItem text="Caspian" onAction="#handleThemeCaspian" userData="2"/>
+            <Menu text="Modena">
+                <MenuItem text="Default" onAction="#handleThemeModena" userData="3"/>
+                <MenuItem text="Black On White" onAction="#handleThemeModenaBoW" userData="4"/>
+                <MenuItem text="White On Black" onAction="#handleThemeModenaWoB" userData="5"/>
+                <MenuItem text="Yellow On Black" onAction="#handleThemeModenaYoB" userData="6"/>
+            </Menu>
+        </Menu>
       <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
     </Menu>
     <Menu mnemonicParsing="false" text="Help">
