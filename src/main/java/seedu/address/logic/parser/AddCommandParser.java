@@ -53,7 +53,6 @@ public class AddCommandParser implements Parser<AddCommand> {
             Image image = new Image("");
 
             ReadOnlyPerson person = new Person(name, phone, email, address, tagList, expiryDate, remark, image);
-            ReadOnlyPerson person = new Person(name, phone, email, address, tagList, expiryDate, remark);
           
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
