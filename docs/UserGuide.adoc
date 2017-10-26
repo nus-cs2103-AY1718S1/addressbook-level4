@@ -49,10 +49,10 @@ Pressing kbd:[&tab;] will attempt to autocomplete current command. Turns text re
 Each person can now be assigned a group. The group is used to sort people into specific tours for the tourguide. Since v1.2
 
 === Addressbook Groups:
-The address book stores all user created groups and allows the user to add people into existing groups. Coming v1.3
+The address book stores all user created groups and allows the user to add people into existing groups. Since v1.3
 
 === Group Filter: `filter`
-Ability to filter the UI display to only display selected groups. Coming v1.4
+Ability to filter the UI display to only display selected groups. Bar across the top of the UI displays the current groups. Since v1.3
 
 
 

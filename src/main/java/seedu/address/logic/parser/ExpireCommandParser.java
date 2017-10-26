@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ExpireCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.ExpiryDate;
 
 /**
  * Parses arguments of expire command
@@ -28,7 +29,8 @@ public class ExpireCommandParser implements Parser<ExpireCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
             String dateString = argMultimap.getValue(PREFIX_EXPIRE).orElse("");
-            return new ExpireCommand(index, dateString);
+            ExpiryDate date = new ExpiryDate(dateString);
+            return new ExpireCommand(index, date);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExpireCommand.MESSAGE_USAGE));
         }

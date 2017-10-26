@@ -14,15 +14,23 @@
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
   </stylesheets>
-
-  <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-    <Menu mnemonicParsing="false" text="File">
-      <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-    </Menu>
-    <Menu mnemonicParsing="false" text="Help">
-      <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-    </Menu>
-  </MenuBar>
+  <SplitPane VBox.vgrow="ALWAYS" id="menuDivider" fx:id="menuDivider" dividerPositions="0.5"
+             styleClass="pane-with-border">
+    <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+      <Menu mnemonicParsing="false" text="File">
+        <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+      </Menu>
+      <Menu mnemonicParsing="false" text="Help">
+        <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+      </Menu>
+    </MenuBar>
+    <VBox fx:id="groupList" SplitPane.resizableWithParent="false" prefWidth="700" minWidth="700" maxWidth="700">
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+      <StackPane fx:id="groupListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+    </VBox>
+  </SplitPane>
 
   <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
     <padding>

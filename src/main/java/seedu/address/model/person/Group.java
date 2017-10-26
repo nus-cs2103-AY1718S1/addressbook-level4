@@ -7,27 +7,24 @@ package seedu.address.model.person;
  */
 public class Group {
 
-    private String groupName;
-    private String groupComment;
+    public final String groupName;
 
-    public Group (String groupName, String groupComment) {
+    public Group (Group group) {
+        this.groupName = group.getGroupName();
+    }
+
+    public Group (String groupName) {
         this.groupName = groupName;
-        this.groupComment = groupComment;
     }
 
     public String getGroupName () {
         return groupName;
     }
 
-    public String getgroupComment () {
-        return groupComment;
-    }
-
-    public void setGroupName (String groupName) {
-        this.groupName = groupName;
-    }
-
-    public void setgroupComment (String groupComment) {
-        this.groupComment = groupComment;
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof Group
+                && this.groupName.equals(((Group) other).groupName));
     }
 }
