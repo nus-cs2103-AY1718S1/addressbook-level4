@@ -20,30 +20,48 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
+    private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private boolean pinned;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Birthday birthday, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, phone, birthday, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        pinned = checkPinTag(tags);
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getBirthday(), source.getEmail(), source.getAddress(),
                 source.getTags());
+    }
+
+    /**
+     * Checks whether person in pinned in addressbook
+     * @param tags
+     * @return true if Pinned is one of the tags, false if not
+     */
+    private boolean checkPinTag(Set<Tag> tags) {
+        for (Tag tag: tags) {
+            if ("Pinned".equals(tag.tagName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setName(Name name) {
@@ -72,6 +90,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Phone getPhone() {
         return phone.get();
+    }
+
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
     }
 
     public void setEmail(Email email) {
@@ -115,6 +147,11 @@ public class Person implements ReadOnlyPerson {
         return tags;
     }
 
+    @Override
+    public boolean isPinned() {
+        return pinned;
+    }
+
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
@@ -132,7 +169,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, birthday, email, address, tags);
     }
 
     @Override

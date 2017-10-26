@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Circles - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -186,7 +186,7 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagramupdated.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -344,6 +344,52 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+=== Enhanced Find Command
+
+The enhanced `find` command now allows searches for a Person's Name, Phone Number, Email, Address and Tags. It uses the
+`PersonContainsKeywordsPredicate` to search for the keywords in the address book. It also allows users to search for a person even when they search with an incomplete name (e.g: `find lex` will return Alex).
+
+To search whether a person contains the specific keywords, `PersonContainsKeywordsPredicate` will run 2 boolean methods:
+
+. First, it will call `getSearchText` from the `ReadOnlyPerson` class, which will return a String, and searches the String for the requested keyword. +
+. Second, it will get the Person's name by using `getName` method from `ReadOnlyPerson`, and check if the name contains the requested keyword by using `contains(CharSequence keyword)`.
+
+The `getSearchText` method inside the `ReadOnlyPerson` class will convert all the Name, Phone Number, Email, Address and Tags into a String, that can be used to search for the person.
+
+==== Design Considerations
+*Aspect:* Search conditions for `Person` +
+*Alternative 1 (current choice):* Search CharSequence in person's name, and full word in all other fields +
+*Pros:* By checking CharSequence only in name, and not on others, usage such as `find a` will not just show everyone that has `a` in their contact information. +
+*Cons:* Typing partial email, phone number, address and tag will not show the any result. +
+
+*Alternative 2:* Search CharSequence for all fields inside a `Person`. +
+*Pros:* Partial search words will show results for any fields in contact information +
+*Cons:* Usage such as `find a` will search for everything that contains `a` in a person's contact information, which is not useful for the user.
+
+=== Sort
+
+The `sort` command now allows for the list of contacts to be sorted via phone number, name, or email in lexicographic order.
+It uses the `sorted()` method included in `ObservableList.java`, with comparators defined by the developer.
+
+. To begin a sort, `SortCommand` will call `model.sort()` with a String parameter. This parameter defines how the list will be sorted,
+and can be one of 3 options, "name", "phone" or "email".
+
+. Next, a comparator will be chosen and passed into the `sorted()` method based on the parameter passed from the `Command`.
+
+. A sorted list will be returned and displayed.
+
+==== Design Considerations
+*Aspect:* Order of sort +
+*Alternative 1 (current choice):* `ObservableList` 's `sorted()` method +
+*Pros:* Easy to implement, relatively modular +
+*Cons:* Dependant on Java API, future changes to the method could affect the implementation
+
+*Alternative 2:* Override methods with own implementations +
+*Pros:* Less dependant on provided resources, more flexible with product's requirements +
+*Cons:* Resource-intensive
+
+<<<
 
 === Logging
 
@@ -729,9 +775,70 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |be prompted before clearing my addressbook | do not clear my addressbook accidentally
+
+|`* * *` |user |share contacts on other platforms (e.g WhatsApp/Telegram) |pass contact information to my friends
+
+|`* * *` |user |save contacts as another file format| use my contacts on other platforms
+
+|`* * *` |user |pin/set favourite contacts| choose the people I contact frequently
+
+|`* * *` |user |find contacts in non case-sensitive mode| refer and search for my friends easily
+
+|`* * *` |user |leave some fields blank| still add the contact into addressbook despite not knowing
+                their full contact information
+
+|`* * *` |user |sort contacts by email| see the emails of my contacts in alphabetical order to search contacts easily
+
+|`* * *` |user |sort contacts by name| view all my contacts in an alphabetical order to search for contacts easily
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |list all contacts in specific [tags]| view all contacts in specific categories easily
+
+|`* *` |user |color code categories| differentiate the tags easily
+
+|`* *` |user |link URL for FaceBook for my contacts| see what they are doing on social media
+
+|`* *` |user |link URL for Instagram for my contacts| see what they are doing on social media
+
+|`* *` |user |link URL for Twitter for my contacts| see what they are doing on social media
+
+|`* *` |user |view the last 5 added contacts| know who I added recently
+
+|`* *` |user |prompted before deleting a contact| do not delete contacts by accident
+
+|`* *` |user |use the new Mailto: command| write emails quickly
+
+|`* *` |user |prompted before exit| not exit accidentally
+
+|`* *` |user |sort contacts into specific categories| have an easier reference
+
+|`* *` |user |input birthdays for my contacts| remember their birthdays
+
+|`* *` |user |reminded for upcoming birthdays| not forget their birthdays
+
+|`* *` |user |sort contacts by phone number| refer to their phone numbers easily
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user |show address on google maps| do not have to open another application separately
+
+|`*` |user |save addressbook under different names |differentiate separate addressbooks
+
+|`*` |user |import/export addressbook master file |access the address books from different devices
+
+|`*` |user |find contacts through phone number| track unknown phone numbers to callers
+
+|`*` |user |find contacts through email| known the sender of email whose address is not saved
+
+|`*` |user |view contacts with photo display| differentiate contacts with the same name
+
+|`*` |user |view date and time in addressbook | check them without exiting the application
+
+|`*` |user |link URL for LinkedIn for my contacts| connect with contacts for business purposes
+
+|`*` |user |change color scheme, so that graphic user interface can be customised to my liking
 |=======================================================================
 
 {More to be added}
@@ -748,7 +855,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
+3.  User requests to delete a specific person or multiple people in the list
 4.  AddressBook deletes the person
 +
 Use case ends.
@@ -767,6 +874,56 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Sorting
+
+1. Input 'sort <type>', replace <type> with fields (mentioned in step 2) to sort by
+* a. 'name' to sort alphabetically by name
+* b. 'email' to sort alphabetically by email handle
+* c. 'phone' to sort by phone number
+2. AddressBook displays sorted list of persons according to specified field
+
+Use case ends.
+
+[discrete]
+=== Use case: Pin
+
+1. User finds a specific person
+2. AddressBook displays the person's details
+3. User selects 'pin' option
+4. AddressBook will now display chosen person at top of list
+
+Use case ends.
+
+[discrete]
+=== Use case: Listing by [tag]
+
+1. User inputs 'list [tag]' where [tag] is any user-specified tag
+2. AddressBook filters out all persons without [tag]
+3. AddressBook shows a list of all persons with [tag]
+
+Use case ends.
+
+[discrete]
+=== Use case: Exporting AddressBook data
+
+1. User inputs 'export'
+2. AddressBook prompts User to select a location on terminal to save the data file
+3. User selects location
+4. A data file is generated in User-specified location
+
+Use case ends.
+
+[discrete]
+=== Use case: Importing AddressBook data
+
+1. User inputs 'import [location]', where [location] is the location of the data file
+* example: C:/User/Documents/myAddressBook
+2. AddressBook prompts for user confirmation (overwriting data)
+3. AddressBook overwrites current data with new imported data
+
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,11 +932,32 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work in 32 and 64 bits environment.
+.  Should come with automated unit tests.
+.  Should be user-friendly for people who have no prior experience in using an addressbook.
+.  Should be able to redirect user to third-party browsers when links are clicked.
+.  Should be a stand-alone program.
 
 {More to be added}
 
 [appendix]
 == Glossary
+
+[[cli]]
+CLI
+
+....
+A command line interface (CLI) is a user interface in which the user responds to visual prompt by typing commands on a
+specified line, and solely relies on textual input and output
+....
+
+[[gui]]
+GUI
+
+....
+A graphical user interface (GUI) is a human-computer interface that allows users to interact with the computer
+visually, by windows, icons and buttons, to make the program easy to use
+....
 
 [[mainstream-os]]
 Mainstream OS
@@ -795,19 +973,26 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[ui]]
+UI
+
+....
+A user interface (UI) is a platform which a user interacts with an application
+....
+
 [appendix]
 == Product Survey
 
-*Product Name*
+*Circles*
 
-Author: ...
+Authors: Eldon Ng, Emil Koh, Mavis Toh
 
 Pros:
 
-* ...
-* ...
+* Helps user get used to the CLI environment and constraints while providing a comfortable UI
+* Stores and organises contacts to help user keep track of his/her social networks
 
 Cons:
 
-* ...
-* ...
+* purely CLI interface, usage has a learning curve
+* aesthetics still a work in progress
