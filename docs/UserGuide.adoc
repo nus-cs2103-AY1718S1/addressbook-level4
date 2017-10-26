@@ -88,6 +88,19 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 m/Kranji`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 m/Tanah Merah t/criminal`
 
+=== Adding a person: `addSchedule`
+
+Adds a busy time span to a person to the address book +
+Format: `addSchedule index d/BUSY_DAY st/START_TIME et/END_TIME
+
+[TIP]
+A person can have any number of busy time spans as long as the start time is no earlier than 0600 and the end time is no later than 2330. (including 0)
+
+Examples:
+
+* `addSchedule 2 d/Monday st/0800 et/1030
+* `addSchedule 4 d/Friday st/1300 et/1500
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
