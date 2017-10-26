@@ -329,7 +329,7 @@ User using versions before v1.2 should add a new person with `important` tag fir
 
 === Since v1.3
 
-==== Sorted Contacts 
+==== Sorted Contacts
 
 All persons displayed will be sorted in ascending alphabetical order based on their name. +
 Using `List` command will always display all persons in sorted ascedning alphabetical order. +
