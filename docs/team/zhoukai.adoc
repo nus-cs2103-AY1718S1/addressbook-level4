@@ -8,7 +8,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Allow multiple entry for email, theme change setting
+=== Enhancement Added: theme change setting
 
 ==== External behavior
 
@@ -23,20 +23,26 @@ include::../UserGuide.adoc[tag=changeTheme]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+A simple modification for aesthetic purpose
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=changeTheme]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Allow user to classify different contacts in the same group. 
+=== Enhancement Added: Allow multiple emails in one contact
+
+==== Justification
+
+Many people have multiple emails for different purposes and the addressbook should allow multiple entries under the same field.
+
+=== Enhancement Proposed: Allow user to classify different contacts in the same group.
 
 {Explain similar to the Undo/Redo feature above.}
 

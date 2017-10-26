@@ -336,9 +336,9 @@ Contact must be selected before selecting the buttons.
 // end::viewAddress[]
 
 // tag::changeTheme[]
-=== Changing Theme 
+=== Changing Theme
 
-Allows the user to switch between dark and light themes. 
+Allows the user to switch between dark and light themes.
 // end::changeTheme[]
 
 === Saving the data
