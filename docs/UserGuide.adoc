@@ -12,13 +12,43 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T15-B2/main
 
+{empty} +
+
+image::contag_logo_ugdg.png[align="center"]
+
+{empty} +
 
 By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
 
 
-Welcome to the ConTag's Developer Guide! Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
+== Introduction
 
-== Quick Start
+=== Welcome to ConTag!
+
+Contag is specially designed for heavy business user or frequent traveller.
+
+
+=== Authors and Contributors
+The intial version of the user guide was written by Team SE-EDU. The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.    
+
+=== The ConTag Help System
+
+Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book. You can also get help on specific menu items by keying in `help` in the command line of Contag or pressing the `F1` key. 
+ 
+=== Features and Capabilities Overview
+The following list is a  overview of some of the features and capabilities which ConTag offers you:
+
+* Saving all the attributes of a person's contact in the address book for easier manageability
+
+* Locating the address of your contact via the integrated google map
+
+* Creating a new schedule or activity with a contact 
+
+* Sending email to multiply emails simultaneously 
+
+
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -257,7 +287,7 @@ Outputs the 1st person's email address in console: `johndoe@example.com`
 * `copy 1 4 5` +
 Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
 
-=== Opening calendar : `calendar` [Since v1.2]
+=== Opening calendar : `calendar` [Since v1.3]
 
 Alias: `cl`
 
