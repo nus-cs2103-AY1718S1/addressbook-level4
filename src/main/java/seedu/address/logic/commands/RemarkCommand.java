@@ -58,18 +58,14 @@ public class RemarkCommand extends UndoableCommand {
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
-        ReadOnlyPerson initialPerson = lastShownList.get(index.getZeroBased());
-        ReadOnlyPerson newPerson = new Person(initialPerson.getName(), initialPerson.getPhone(),
-                initialPerson.getEmail(), initialPerson.getAddress(), initialPerson.getTags(),
-                remark, initialPerson.getImage());
       
         try {
             ExpiryDate expiryDate = new ExpiryDate("");
 
             ReadOnlyPerson initialPerson = lastShownList.get(index.getZeroBased());
             ReadOnlyPerson newPerson = new Person(initialPerson.getName(), initialPerson.getPhone(),
-                    initialPerson.getEmail(), initialPerson.getAddress(), initialPerson.getTags(), expiryDate, remark);
+                    initialPerson.getEmail(), initialPerson.getAddress(), initialPerson.getTags(),
+                    expiryDate, remark, initialPerson.getImage());
 
             try {
                 model.updatePerson(initialPerson, newPerson);
