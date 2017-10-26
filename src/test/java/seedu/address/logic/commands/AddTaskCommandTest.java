@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -178,6 +179,11 @@ public class AddTaskCommandTest {
 
         @Override
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void changeCommandMode(String mode) throws IllegalValueException {
             fail("This method should not be called");
         }
 
