@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +12,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.MemberList;
+import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -21,7 +26,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 
-
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
@@ -30,24 +34,28 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueEventList events;
 
-    /*
+    /**
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
      */
+
+
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        events = new UniqueEventList();
     }
 
     public AddressBook() {
     }
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons, Tags and Events in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -64,6 +72,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setEvents(List<? extends Event> events) throws DuplicateEventException {
+        this.events.setEvents(events);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -77,6 +89,15 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+
+
+        try {
+            setEvents(newData.getEventList());
+        } catch (DuplicateEventException e) {
+            assert false : "AddressBooks should not have duplicate events";
+        }
+        syncMasterEventListWith(persons);
+        syncMasterEventListMembers(events);
     }
 
     //// person-level operations
@@ -91,6 +112,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
         syncMasterTagListWith(newPerson);
+
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -116,10 +138,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person editedPerson = new Person(editedReadOnlyPerson);
         syncMasterTagListWith(editedPerson);
+        syncMasterEventListWith(editedPerson);
+
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+        syncMasterEventListMembers(new UniqueEventList(editedPerson.getEvents()));
+
     }
 
     /**
@@ -172,11 +198,80 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    //// event-level operations
+
+    /**
+     * Ensures that every event in this person:
+     * - exists in the master list {@link #events}
+     * - points to a Event object in the master list
+     */
+    private void syncMasterEventListWith(Person person) {
+        final UniqueEventList personEvents = new UniqueEventList(person.getEvents());
+        events.mergeFrom(personEvents);
+
+        // Create map with values = event object references in the master list
+        // used for checking person event references
+        final Map<Event, Event> masterEventObjects = new HashMap<>();
+        events.forEach(event -> masterEventObjects.put(event, event));
+
+        // Rebuild the list of person event to point to the relevant events in the master event list.
+        final Set<Event> correctEventReferences = new HashSet<>();
+        personEvents.forEach(event -> correctEventReferences.add(masterEventObjects.get(event)));
+        person.setEvents(correctEventReferences);
+    }
+
+    /**
+     * Ensures that every event in these persons:
+     * - exists in the master list {@link #events}
+     * - points to an Event object in the master list
+     *
+     * @see #syncMasterEventListWith(Person)
+     */
+    private void syncMasterEventListWith(UniquePersonList persons) {
+        persons.forEach(this::syncMasterEventListWith);
+    }
+
+    //// event-person sync
+
+    /**
+     * Ensures that every member in this event:
+     * - points to a person object in the master list
+     */
+    private void syncMasterEventListMembers(Event event) {
+
+        // Create map with values = person object references in the master list
+        // used for checking member references
+        final Map<Person, Person> masterPersonObjects = new HashMap<>();
+        this.persons.forEach(person -> masterPersonObjects.put(person, person));
+
+        ArrayList<ReadOnlyPerson> eventMembers = new ArrayList<>();
+        this.persons.asObservableList().stream().filter(readOnlyPerson ->
+                readOnlyPerson.getEvents().contains(event)).forEach(eventMembers::add);
+
+
+        // Rebuild the list of member to point to the relevant person in the master person list.
+        final Set<Person> correctPersonReferences = new HashSet<>();
+        eventMembers.forEach(person -> correctPersonReferences.add(masterPersonObjects.get(person)));
+        event.setMemberList(new MemberList(
+                new ArrayList<>(correctPersonReferences)));
+    }
+
+    /**
+     * Ensures that every member in these events:
+     * - points to a person object in the master list
+     *
+     * @see #syncMasterEventListMembers(Event)
+     */
+    private void syncMasterEventListMembers(UniqueEventList events) {
+        events.forEach(this::syncMasterEventListMembers);
+    }
+
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags, "
+                + events.asObservableList().size() + " events";
         // TODO: refine later
     }
 
@@ -188,6 +283,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Event> getEventList() {
+        return events.asObservableList();
     }
 
     @Override

@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.UniqueEventList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,19 +26,23 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<DateAdded> dateAdded;
+    private ObjectProperty<UniqueEventList> events;
 
     /**
+     * /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, DateAdded dateAdded) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Event> events,
+                  DateAdded dateAdded) {
         requireAllNonNull(name, phone, email, address, tags, dateAdded);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.dateAdded = new SimpleObjectProperty<>(dateAdded);
-        // protect internal tags from changes in the arg list
+        // protect internal tags & events from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.events = new SimpleObjectProperty<>(new UniqueEventList(events));
     }
 
     /**
@@ -44,7 +50,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags(), source.getDateAdded());
+                source.getTags(), source.getEvents(), source.getDateAdded());
     }
 
     public void setName(Name name) {
@@ -128,6 +134,26 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    /**
+     * Returns an immutable event set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Event> getEvents() {
+        return Collections.unmodifiableSet(events.get().toSet());
+    }
+
+    public ObjectProperty<UniqueEventList> eventProperty() {
+        return events;
+    }
+
+    /**
+     * Replaces this person's events with the events in the argument events set.
+     */
+    public void setEvents(Set<Event> replacement) {
+        events.set(new UniqueEventList(replacement));
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -138,7 +164,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, dateAdded);
+        return Objects.hash(name, phone, email, address, tags, events, dateAdded);
     }
 
     @Override

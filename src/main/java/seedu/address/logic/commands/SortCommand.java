@@ -40,6 +40,7 @@ public class SortCommand extends UndoableCommand {
     private final String sortType;
     private final Boolean isDescending;
 
+    //Default setting, not final as subjected to change
     private String sortTypeReadable = "name";
     private String sortOrderReadable = "ascending";
 
@@ -59,7 +60,6 @@ public class SortCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
         Comparator<ReadOnlyPerson> sortType = getComparator(this.sortType);
         try {
             model.sortPerson(sortType, isDescending);

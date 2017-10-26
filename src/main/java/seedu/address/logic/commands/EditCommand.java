@@ -16,6 +16,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
@@ -57,7 +58,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -104,8 +105,10 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         DateAdded updatedDateAdded = editPersonDescriptor.getDateAdded().orElse(personToEdit.getDateAdded());
+        Set<Event> updatedEvent = personToEdit.getEvents();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedDateAdded);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedEvent,
+                updatedDateAdded);
     }
 
     @Override
@@ -138,7 +141,8 @@ public class EditCommand extends UndoableCommand {
         private Set<Tag> tags;
         private DateAdded dateAdded;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
