@@ -242,6 +242,18 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + TRACKING_NUMBER_DESC_BOB + DELIVERY_DATE_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
+        /*
+         * Case: selects first card in the parcel list, add a parcel -> added, card selection
+         * remains unchanged
+         */
+        executeCommand(SelectCommand.COMMAND_WORD + " 1");
+        selectParcel(INDEX_FIRST_PARCEL);
+        assert getParcelListPanel().isAnyCardSelected();
+        assertCommandSuccess(CARL);
+
+        /* Case: add a parcel, missing tags -> added */
+        assertCommandSuccess(HOON);
+
         /* Case: add a parcel with all fields but using delivery date with fullstops
            -> added with delivery date with hyphens */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
@@ -264,18 +276,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
-
-        /*
-         * Case: selects first card in the parcel list, add a parcel -> added, card selection
-         * remains unchanged
-         */
-        executeCommand(SelectCommand.COMMAND_WORD + " 1");
-        selectParcel(INDEX_FIRST_PARCEL);
-        assert getParcelListPanel().isAnyCardSelected();
-        assertCommandSuccess(CARL);
-
-        /* Case: add a parcel, missing tags -> added */
-        assertCommandSuccess(HOON);
 
         /* Case: missing tracking number -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
