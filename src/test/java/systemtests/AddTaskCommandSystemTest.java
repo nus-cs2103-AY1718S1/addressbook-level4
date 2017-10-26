@@ -13,15 +13,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INT
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
-import static seedu.address.testutil.TypicalTasks.BUY_PRESENTS;
 import static seedu.address.testutil.TypicalTasks.GRAD_SCHOOL;
-import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.INTERNSHIP;
-import static seedu.address.testutil.TypicalTasks.SUBMISSION;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
