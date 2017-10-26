@@ -17,32 +17,48 @@ public class ModelHelper {
     private static final Predicate<ReadOnlyTask> PREDICATE_MATCHING_NO_TASKS = unused -> false;
 
     /**
-     * Updates {@code model}'s filtered person list to display only {@code toDisplay}.
+     * Updates {@code model}'s filtered list to display only {@code personsToDisplay}.
      */
-    public static void setFilteredList(Model model, List<ReadOnlyPerson> toDisplay) {
-        Optional<Predicate<ReadOnlyPerson>> predicate =
-                toDisplay.stream().map(ModelHelper::getPredicateMatching).reduce(Predicate::or);
-        model.updateFilteredPersonList(predicate.orElse(PREDICATE_MATCHING_NO_PERSONS));
+    public static void setFilteredPersonsList(Model model, List<ReadOnlyPerson> personsToDisplay) {
+        Optional<Predicate<ReadOnlyPerson>> predicatePersons =
+                personsToDisplay.stream().map(ModelHelper::getPredicatePersonMatching).reduce(Predicate::or);
+        model.updateFilteredPersonList(predicatePersons.orElse(PREDICATE_MATCHING_NO_PERSONS));
     }
 
     /**
-     * @see ModelHelper#setFilteredList(Model, List)
+     * @see ModelHelper#setFilteredPersonsList(Model, List)
      */
-    public static void setFilteredList(Model model, ReadOnlyPerson... toDisplay) {
-        setFilteredList(model, Arrays.asList(toDisplay));
+    public static void setFilteredPersonsList(Model model, ReadOnlyPerson... personsToDisplay) {
+        setFilteredPersonsList(model, Arrays.asList(personsToDisplay));
     }
 
     /**
-     * Update {@code model}'s filtered task list to display only {@code toDisplay}.
+     * Updates {@code model}'s filtered list to display only {@code tasksToDisplay}.
      */
-    public static void setFilteredTaskList(Model model, List<ReadOnlyTask> toDisplay) {
+    public static void setFilteredTasksList(Model model, List<ReadOnlyTask> tasksToDisplay) {
+        Optional<Predicate<ReadOnlyTask>> predicateTasks =
+                tasksToDisplay.stream().map(ModelHelper::getPredicateTaskMatching).reduce(Predicate::or);
+        model.updateFilteredTaskList(predicateTasks.orElse(PREDICATE_MATCHING_NO_TASKS));
+    }
+
+    /**
+     * @see ModelHelper#setFilteredPersonsList(Model, List)
+     */
+    public static void setFilteredTasksList(Model model, ReadOnlyTask... tasksToDisplay) {
+        setFilteredTasksList(model, Arrays.asList(tasksToDisplay));
+    }
+
+    /**
+     * Update {@code model}'s filtered task list to display only {@code tasksToDisplay}.
+     */
+    public static void setFilteredTaskList(Model model, List<ReadOnlyTask> tasksToDisplay) {
         Optional<Predicate<ReadOnlyTask>> predicate =
-            toDisplay.stream().map(ModelHelper::getTaskPredicateMatching).reduce(Predicate::or);
+            tasksToDisplay.stream().map(ModelHelper::getPredicateTaskMatching).reduce(Predicate::or);
         model.updateFilteredTaskList(predicate.orElse(PREDICATE_MATCHING_NO_TASKS));
     }
 
     /**
-     * @see ModelHelper#setFilteredList(Model, List)
+     * @see ModelHelper#setFilteredTaskList(Model, List)
      */
     public static void setFilteredTaskList(Model model, ReadOnlyTask... toDisplay) {
         setFilteredTaskList(model, Arrays.asList(toDisplay));
@@ -51,14 +67,14 @@ public class ModelHelper {
     /**
      * Returns a predicate that evaluates to true if this {@code ReadOnlyPerson} equals to {@code other}.
      */
-    private static Predicate<ReadOnlyPerson> getPredicateMatching(ReadOnlyPerson other) {
+    private static Predicate<ReadOnlyPerson> getPredicatePersonMatching(ReadOnlyPerson other) {
         return person -> person.equals(other);
     }
 
     /**
      * Returns a predicate that evaluates to true if this {@code ReadOnlyTask} equals to {@code other}.
      */
-    private static Predicate<ReadOnlyTask> getTaskPredicateMatching(ReadOnlyTask other) {
+    private static Predicate<ReadOnlyTask> getPredicateTaskMatching(ReadOnlyTask other) {
         return task -> task.equals(other);
     }
 }

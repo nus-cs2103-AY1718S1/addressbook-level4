@@ -69,7 +69,7 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
      * in the correct order.
      */
     public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, ReadOnlyTask... tasks) {
@@ -79,18 +79,27 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that the list in {@code TaskListPanelHandle} displays the details of {@code tasks} correctly and
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
      * in the correct order.
      */
     public static void assertTaskListMatching(TaskListPanelHandle taskListPanelHandle, List<ReadOnlyTask> tasks) {
         assertTaskListMatching(taskListPanelHandle, tasks.toArray(new ReadOnlyTask[0]));
     }
+
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
      */
     public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
         int numberOfPeople = personListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
+    }
+
+    /**
+     * Asserts the size of the list in {@code taskListPanelHandle} equals to {@code size}.
+     */
+    public static void assertTaskListSize(TaskListPanelHandle taskListPanelHandle, int size) {
+        int numberOfTasks = taskListPanelHandle.getListSize();
+        assertEquals(size, numberOfTasks);
     }
 
     /**

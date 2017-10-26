@@ -37,7 +37,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     /**
      * Returns the index of the selected card.
      */
-    public int getSelectedCardIndex() {
+    public int getSelectedTaskCardIndex() {
         return getRootNode().getSelectionModel().getSelectedIndex();
     }
 
@@ -57,7 +57,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
     /**
      * Navigates the listview to display and select the task.
      */
-    public void navigateToCard(ReadOnlyTask task) {
+    public void navigateToTask(ReadOnlyTask task) {
         List<TaskCard> cards = getRootNode().getItems();
         Optional<TaskCard> matchingCard = cards.stream().filter(card -> card.task.equals(task)).findFirst();
 
@@ -84,9 +84,9 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
      */
     public TaskCardHandle getTaskCardHandle(ReadOnlyTask task) {
         Optional<TaskCardHandle> handle = getRootNode().getItems().stream()
-            .filter(card -> card.task.equals(task))
-            .map(card -> new TaskCardHandle(card.getRoot()))
-            .findFirst();
+                .filter(card -> card.task.equals(task))
+                .map(card -> new TaskCardHandle(card.getRoot()))
+                .findFirst();
         return handle.orElseThrow(() -> new IllegalArgumentException("Task does not exist."));
     }
 
@@ -121,7 +121,7 @@ public class TaskListPanelHandle extends NodeHandle<ListView<TaskCard>> {
             return lastRememberedSelectedTaskCard.isPresent();
         } else {
             return !lastRememberedSelectedTaskCard.isPresent()
-                || !lastRememberedSelectedTaskCard.get().equals(selectedItems.get(0));
+                    || !lastRememberedSelectedTaskCard.get().equals(selectedItems.get(0));
         }
     }
 
