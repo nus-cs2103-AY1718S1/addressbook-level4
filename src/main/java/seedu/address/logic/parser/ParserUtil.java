@@ -187,7 +187,6 @@ public class ParserUtil {
     }
 
     //@@author a0107442n
-  
     /**
      * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
