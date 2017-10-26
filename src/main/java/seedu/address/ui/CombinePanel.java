@@ -108,20 +108,20 @@ public class CombinePanel extends UiPart<Region> {
      * Generate time slot header
      */
 
-    public void generateTimeslotHeader(){
+    public void generateTimeslotHeader() {
         String text;
         int k = 8;
-        for(int i = 1; i < COL+1 ;i++) {
+        for (int i = 1; i < COL + 1; i++) {
 
-            if(k < 10){
+            if (k < 10) {
                 text = "0" + k;
-            }else {
+            } else {
                 text = Integer.toString(k);
             }
             text += "00";
             Label header = new Label(text);
             timetableGrid.setHalignment(header, HPos.CENTER);
-            timetableGrid.add(header,i,0);
+            timetableGrid.add(header, i, 0);
             k++;
         }
     }
@@ -130,13 +130,13 @@ public class CombinePanel extends UiPart<Region> {
      * Generate week day row header
      */
 
-    public void generateWeekDay(){
-        for(int i = 1; i < ROW; i++) {
+    public void generateWeekDay() {
+        for (int i = 1; i < ROW; i++) {
             String dayOfWeek = DayOfWeek.of(i).toString();
             Label label = new Label(dayOfWeek);
             timetableGrid.setValignment(label, VPos.CENTER);
             timetableGrid.setHalignment(label, HPos.CENTER);
-            timetableGrid.add(label,0,i);
+            timetableGrid.add(label, 0, i);
         }
     }
 
@@ -194,7 +194,7 @@ public class CombinePanel extends UiPart<Region> {
                     lbl.setEditable(false);
                     lbl.setId(LESSON_NODE_ID);
                     timetableGrid.setGridLinesVisible(true);
-                    timetableGrid.add(lbl, j+1, i+1, endHourSpan, 1);
+                    timetableGrid.add(lbl, j + 1, i + 1, endHourSpan, 1);
                     if (count > 1) {
                         lbl.setStyle("-fx-control-inner-background: red");
                     }
