@@ -43,7 +43,6 @@ public interface ReadOnlyPerson {
                 && other.getExpiryDate().equals(this.getExpiryDate())
                 && other.getRemark().equals(this.getRemark())
                 && other.getImage().equals(this.getImage());
-                && other.getRemark().equals(this.getRemark());
     }
 
     /**
