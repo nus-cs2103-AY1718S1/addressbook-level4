@@ -58,8 +58,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
-    public void setTags(Set<Tag> tags, boolean isOn, String tagString, String color) {
-        this.tags.setTags(tags, isOn, tagString, color);
+    public void setTags(Set<Tag> tags, String tagString, String color) {
+        this.tags.setTags(tags, tagString, color);
     }
 
     public void setTags(Set<Tag> tags) {

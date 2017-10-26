@@ -90,9 +90,9 @@ public class ModelManager extends ComponentManager implements Model {
      * Updates UI by refreshing personListPanel
      */
     @Override
-    public synchronized void setTagColor(boolean isOn, String tagString, String color) {
+    public synchronized void setTagColor(String tagString, String color) {
         Set<Tag> tag = new HashSet<>(addressBook.getTagList());
-        addressBook.setTags(tag, isOn, tagString, color);
+        addressBook.setTags(tag, tagString, color);
         indicateAddressBookChanged();
     }
 

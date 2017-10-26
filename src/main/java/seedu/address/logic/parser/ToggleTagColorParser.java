@@ -21,25 +21,27 @@ public class ToggleTagColorParser implements Parser<ToggleTagColorCommand> {
 
     @Override
     public ToggleTagColorCommand parse(String userInput) throws ParseException {
-        boolean isOn;
+
         String cleanUserInput;
         cleanUserInput = userInput.trim();
         String[] args = cleanUserInput.split("\\s+");
         try {
-            switch (args[0]) {
-            case RANDOM_KEY_WORD:
-                isOn = true;
-                break;
-            case OFF_KEY_WORD:
-                isOn = false;
-                break;
-            default:
-                return new ToggleTagColorCommand(true, args[0], args[1]);
+            if (args.length == 1) {
+                switch (args[0]) {
+                case RANDOM_KEY_WORD:
+                    return new ToggleTagColorCommand(RANDOM_KEY_WORD, null);
+                case OFF_KEY_WORD:
+                    return new ToggleTagColorCommand(OFF_KEY_WORD, null);
+                default:
+                    throw new ParseException(MESSAGE_INVALID_COMMAND);
+                }
+            } else if (args.length == 2) {
+                return new ToggleTagColorCommand(args[0], args[1]);
             }
-            return new ToggleTagColorCommand(isOn, "", "");
         } catch (ArrayIndexOutOfBoundsException exp) {
             throw new ParseException(MESSAGE_INVALID_COMMAND);
         }
+        throw new ParseException(MESSAGE_INVALID_COMMAND);
     }
 
     /**

@@ -19,9 +19,9 @@ public class ToggleTagColorParserTest {
 
         ToggleTagColorParser parser = new ToggleTagColorParser();
 
-        ToggleTagColorCommand expectedRandom = new ToggleTagColorCommand(true, "", "");
-        ToggleTagColorCommand expectedOff = new ToggleTagColorCommand(false, "", "");
-        ToggleTagColorCommand expectedDefault = new ToggleTagColorCommand(true, "Test", "Test2");
+        ToggleTagColorCommand expectedRandom = new ToggleTagColorCommand("random", null);
+        ToggleTagColorCommand expectedOff = new ToggleTagColorCommand("off", null);
+        ToggleTagColorCommand expectedDefault = new ToggleTagColorCommand("Test", "Test2");
 
 
         // Random keyword produces ToggleTagColorCommand(true, "", "")
