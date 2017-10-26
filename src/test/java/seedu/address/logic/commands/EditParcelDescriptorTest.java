@@ -8,9 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
 
 import org.junit.Test;
 
@@ -37,13 +35,8 @@ public class EditParcelDescriptorTest {
         // different values -> returns false
         assertFalse(DESC_AMY.equals(DESC_BOB));
 
-        // different tracking number -> returns false
-        EditParcelDescriptor editedAmy = new EditParcelDescriptorBuilder(DESC_AMY)
-                .withTrackingNumber(VALID_TRACKING_NUMBER_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
-
         // different name -> returns false
-        editedAmy = new EditParcelDescriptorBuilder(DESC_AMY).withName(VALID_NAME_BOB).build();
+        EditParcelDescriptor editedAmy = new EditParcelDescriptorBuilder(DESC_AMY).withName(VALID_NAME_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different phone -> returns false
@@ -56,10 +49,6 @@ public class EditParcelDescriptorTest {
 
         // different address -> returns false
         editedAmy = new EditParcelDescriptorBuilder(DESC_AMY).withAddress(VALID_ADDRESS_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
-
-        // different status -> returns false
-        editedAmy = new EditParcelDescriptorBuilder(DESC_AMY).withStatus(VALID_STATUS_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different tags -> returns false

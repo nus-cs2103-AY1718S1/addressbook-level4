@@ -4,8 +4,8 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.POSTAL_CODE_LENGTH;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -182,18 +182,16 @@ public abstract class AddressBookSystemTest {
      * @see ParcelListPanelHandle#isSelectedParcelCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardLocation = getParcelListPanel().getHandleToSelectedCard().getAddress();
+        String selectedCardName = getParcelListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(GOOGLE_MAP_URL_PREFIX
-                    + selectedCardLocation.substring(selectedCardLocation.length() - POSTAL_CODE_LENGTH));
+            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX);
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
+        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
 
-        int correctUrlLength = GOOGLE_MAP_URL_PREFIX.length() + POSTAL_CODE_LENGTH;
-        String actualParcelUrl = getBrowserPanel().getLoadedUrl().toString().substring(0, correctUrlLength);
-        assertEquals(expectedUrl.toString(), actualParcelUrl);
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getParcelListPanel().getSelectedCardIndex());
     }
 

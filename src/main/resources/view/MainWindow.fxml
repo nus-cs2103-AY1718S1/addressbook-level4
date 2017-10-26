@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefWidth="690.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -24,32 +24,32 @@
     </Menu>
   </MenuBar>
 
-  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+  <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
     <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
+      <Insets top="5" right="10" bottom="5" left="10" />
     </padding>
   </StackPane>
 
-  <StackPane fx:id="resultDisplayPlaceholder" styleClass="pane-with-border">
+  <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
+      minHeight="100" prefHeight="100" maxHeight="100">
     <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
+      <Insets top="5" right="10" bottom="5" left="10" />
     </padding>
   </StackPane>
-  <SplitPane fx:id="splitPanePlaceholder" dividerPositions="0.5" orientation="VERTICAL">
-    <items>
 
-      <StackPane fx:id="browserPlaceholder">
-        <padding>
-          <Insets bottom="10" left="10" right="10" top="10" />
-        </padding>
-      </StackPane>
-      <VBox fx:id="parcelList">
-        <padding>
-          <Insets bottom="10" left="10" right="10" top="10" />
-        </padding>
-        <StackPane fx:id="parcelListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-      </VBox>
-    </items>
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+    <VBox fx:id="parcelList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+      <StackPane fx:id="parcelListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+    </VBox>
+
+    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+    </StackPane>
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

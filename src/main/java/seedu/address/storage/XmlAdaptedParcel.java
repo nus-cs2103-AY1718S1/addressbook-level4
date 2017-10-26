@@ -9,13 +9,11 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.DeliveryDate;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 
@@ -34,10 +32,6 @@ public class XmlAdaptedParcel {
     private String email;
     @XmlElement(required = true)
     private String address;
-    @XmlElement(required = true)
-    private String deliveryDate;
-    @XmlElement(required = true)
-    private String status;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -51,6 +45,7 @@ public class XmlAdaptedParcel {
 
     /**
      * Converts a given Parcel into this class for JAXB use.
+     *
      * @param source future changes to this will not affect the created XmlAdaptedParcel
      */
     public XmlAdaptedParcel(ReadOnlyParcel source) {
@@ -59,8 +54,6 @@ public class XmlAdaptedParcel {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().toString();
-        deliveryDate = source.getDeliveryDate().toString();
-        status = source.getStatus().toString();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -69,6 +62,7 @@ public class XmlAdaptedParcel {
 
     /**
      * Converts this jaxb-friendly adapted parcel object into the model's Parcel object.
+     *
      * @throws IllegalValueException if there were any data constraints violated in the adapted parcel
      */
     public Parcel toModelType() throws IllegalValueException {
@@ -81,9 +75,7 @@ public class XmlAdaptedParcel {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
-        final DeliveryDate deliveryDate = new DeliveryDate(this.deliveryDate);
-        final Status status = Status.getInstance(this.status);
         final Set<Tag> tags = new HashSet<>(parcelTags);
-        return new Parcel(trackingNumber, name, phone, email, address, deliveryDate, status, tags);
+        return new Parcel(trackingNumber, name, phone, email, address, tags);
     }
 }

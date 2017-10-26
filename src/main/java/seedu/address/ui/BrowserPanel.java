@@ -21,8 +21,8 @@ import seedu.address.model.parcel.ReadOnlyParcel;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com.sg/maps/search/";
-    public static final int POSTAL_CODE_LENGTH = 6;
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -41,8 +41,9 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadParcelLocationPage(ReadOnlyParcel parcel) {
-        loadPage(GOOGLE_MAP_URL_PREFIX + parcel.getAddress().postalCode.value.substring(1));
+    private void loadParcelPage(ReadOnlyParcel parcel) {
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + parcel.getName().fullName.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
     public void loadPage(String url) {
@@ -67,6 +68,6 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleParcelPanelSelectionChangedEvent(ParcelPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadParcelLocationPage(event.getNewSelection().parcel);
+        loadParcelPage(event.getNewSelection().parcel);
     }
 }

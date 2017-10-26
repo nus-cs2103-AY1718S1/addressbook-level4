@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
@@ -60,12 +59,11 @@ public class EditCommandTest {
 
         ParcelBuilder parcelInList = new ParcelBuilder(lastParcel);
         Parcel editedParcel = parcelInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
-                .withStatus(VALID_STATUS_BOB).build();
+                .withTags(VALID_TAG_HUSBAND).withTrackingNumber(VALID_TRACKING_NUMBER_BOB).build();
 
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
-                .withStatus(VALID_STATUS_BOB).build();
+                .build();
         EditCommand editCommand = prepareCommand(indexLastParcel, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);

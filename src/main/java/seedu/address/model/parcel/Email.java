@@ -12,7 +12,6 @@ public class Email {
 
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
             "Parcel emails should be 2 alphanumeric/period strings separated by '@'";
-    public static final String EMAIL_DEFAULT_VALUE = "NIL";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
 
     public final String value;
@@ -32,19 +31,10 @@ public class Email {
     }
 
     /**
-     * Creates a default email class if the user does not provide any
-     * @throws IllegalValueException
-     */
-    public Email() throws IllegalValueException {
-        this(EMAIL_DEFAULT_VALUE);
-    }
-
-    /**
      * Returns if a given string is a valid parcel email address.
      */
     public static boolean isValidEmail(String test) {
-        return test.matches(EMAIL_VALIDATION_REGEX)
-                || test.equals(EMAIL_DEFAULT_VALUE);
+        return test.matches(EMAIL_VALIDATION_REGEX);
     }
 
     @Override

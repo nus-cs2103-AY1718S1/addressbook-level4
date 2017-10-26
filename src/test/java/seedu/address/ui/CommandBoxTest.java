@@ -148,27 +148,14 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
     @Test
-    public void tabAutoCompleteTest_withOneMatchingCommand() {
-        // text in text filed is in lowercase
+    public void tabAutoCompleteTest_withMatchingCommand() {
         guiRobot.push(KeyCode.L);
         assertInputHistory(KeyCode.TAB, COMMAND_THAT_SUCCEEDS);
         guiRobot.push(KeyCode.ENTER);
 
         // text in text filed is in uppercase
-        guiRobot.push(new KeyCodeCombination(KeyCode.L, KeyCombination.SHIFT_DOWN));
-        assertInputHistory(KeyCode.TAB, COMMAND_THAT_SUCCEEDS);
-        guiRobot.push(KeyCode.ENTER);
-
-        // text in text filed is in mix of uppercase and lowercase
-        guiRobot.push(new KeyCodeCombination(KeyCode.E, KeyCombination.SHIFT_DOWN));
-        guiRobot.push(KeyCode.D);
-        assertInputHistory(KeyCode.TAB, "edit");
-    }
-
-    @Test
-    public void tabAutoCompleteTest_withMultipleMatchingCommands() {
-        guiRobot.push(KeyCode.E);
-        assertInputHistory(KeyCode.TAB, "e");
+        guiRobot.push(new KeyCodeCombination(KeyCode.A, KeyCombination.SHIFT_DOWN));
+        assertInputHistory(KeyCode.TAB, "add");
     }
 
     /**

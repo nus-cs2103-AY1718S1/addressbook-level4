@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-T16-B1/main/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T16-B1/main
 
-By: `Team T16-B1`      Since: `Sept 2017`      Licence: `MIT`
+By: `Team T16-B1`      Since: `Oct 2017`      Licence: `MIT`
 
 == Introduction
 Unable to keep track of all your deliveries?
@@ -52,47 +52,22 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all parcels and expands the parcel list section in the main window.
+* *`list`* : lists all parcels.
 * **`clear`**` : clears the list of parcels.
 * **`delete`**`3` : deletes the 3rd parcel shown in the current list.
 * *`exit`* : exits the app.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== Layout
-What you see in the picture below is an example of what the main window
-of the Ark application looks like. +
-
-image::Ark_Main_Window.png[width="790"]
-
-The main window is separated into 8 sections from the top to bottom:
-
-. Red - Menu Bar
-. Blue - Command Box
-. Green - Results Box
-. Yellow - Browser
-. Purple - Divider (divides the Browser from the Parcel List)
-. White - Parcel Card
-. Orange - Parcel List
-. Pink - Status Bar
-
-The Browser and Parcel List sections sizes can be changed by commands
-or by dragging the Divider part up or down to either increase or decrease either
-section's sizes.
-
 == Features
 
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add #/TRACKING_NUMBER`,
- `TRACKING_NUMBER` is a parameter which can be used as `add #/RR000000000SG`.
-* Items in square brackets are optional e.g `#/TRACKING_NUMBER [t/TAG]` can be used as `#/RR000000000SG t/fragile` or as
- `#/RR000000000SG`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
- (i.e. 0 times), `t/fragile`, `t/keepDry t/frozen` etc.
-* Parameters can be in any order e.g. if the command specifies `#/TRACKING_NUMBER p/PHONE_NUMBER`,
- `p/PHONE_NUMBER #/TRACKING_NUMBER` is also acceptable.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add #/PARCEL_ID`, `PARCEL_ID` is a parameter which can be used as `add i/1110201700000001`.
+* Items in square brackets are optional e.g `i/PARCEL_ID [t/TAG]` can be used as `#/1110201700000001 t/fragile` or as `#/1110201700000001`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/fragile`, `t/keepDry t/frozen` etc.
+* Parameters can be in any order e.g. if the command specifies `#/PARCEL_ID p/PHONE_NUMBER`, `p/PHONE_NUMBER #/PARCEL_ID` is also acceptable.
 ====
 
 === Viewing help : `help`
@@ -102,68 +77,28 @@ Format: `help`
 === Adding a parcel: `add`
 
 Adds a parcel to Ark +
-Format: `add #/TRACKING_ID n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE [s/STATUS] [t/TAG]...`
+Format: `add #/TRACKING_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A parcel can have any number of tags (including 0)
-A parcel can only have one of four `STATUS` input. i.e. `PENDING`, `DELIVERING`, `COMPLETED` and `OVERDUE`.
-If there is no `STATUS` input, it defaults to `PENDING`
 
 Examples:
 
-* `add #/RR000000000SG n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001
- s/DELIVERING`
-* `add #/RR000000000SG n/Betsy Crowe t/friend d/02-02-2002 e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567
- t/fragile`
-
-[NOTE]
-Parcel Tracking numbers presently support only tracking numbers for registered articles managed by SingPost. These
-numbers include two `R`s followed by nine digits and ending with `SG`. +
-Support for other delivery companies will come in future patches.
-
-[NOTE]
-If not included in the add command, the default value of both the phone and email field is `NIL`.
-
-tag::import[]
-
-=== Import multiple parcels stored in an xml storage file: `import`
-
-Imports the parcels in an Ark storage `.xml` file stored in `/data/import/` folder to Ark +
-Format: `import FILE_NAME`
-
-Examples:
-
-* `import addressBook.xml`
-* `import addressBook123661.xml`
-
-[WARNING]
-====
-File names should be alphanumeric i.e. `addressBook12.xml`, `12.xml`
-Non alphanumeric file names will not be accepted. i.e. `$addressbook#!@,xml`
-====
-
-end::import[]
+* `add #/11111111111 n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121`
+* `add #/11111112222 n/Betsy Crowe t/friend e/betsycrowe@example.com a/22 Crowe road S123123 p/1234567 t/fragile`
 
 === Listing all parcels : `list`
 
-Shows a list of all parcels in Ark and expands the Parcel List section in the main window.
-The Parcel List section is scrollable and shows you all the information of a parcel.
-You can see an example in the two pictures below. +
-
-image::Ark_Parcel_List.png[width="790"]
-image::Ark_Parcel_List_2.png[width="790"]
-
+Shows a list of all parcels in Ark. +
 Format: `list`
 
 === Editing a parcel : `edit`
 
 Edits an existing parcel in Ark. +
-Format: `edit INDEX [#/TRACKING_NUMBER] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DELIVERY_DATE] [s/STATUS]
-[t/TAG]...`
+Format: `edit INDEX [#/PARCEL_ID] [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the parcel at the specified `INDEX`. The index refers to the index number shown in the last parcel listing.
- The index *must be a positive integer* 1, 2, 3, ...
+* Edits the parcel at the specified `INDEX`. The index refers to the index number shown in the last parcel listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the parcel will be removed i.e adding of tags is not cumulative.
@@ -176,8 +111,6 @@ Examples:
 Edits the phone number and email address of the 1st parcel to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the recipient's name of the 2nd parcel to be `Betsy Crower` and clears all existing tags.
-* `edit 1 d/03-03-2003` +
-Edits the delivery date of the 1st parcel to be 03-03-2003.
 
 === Locating parcels by name: `find`
 
@@ -189,8 +122,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the recipients's name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
- `Bo Yang`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
@@ -220,29 +152,9 @@ Deletes the 2nd parcel in the Ark.
 `delete 1` +
 Deletes the 1st parcel in the results of the `find` command.
 
-=== Deleting a tag : `deleteTag`
-
-Deletes the specified tag from all parcels in Ark. +
-Format: `deleteTag TAG`
-
-****
-* The tag to delete is case sensitive.
-* The tag to delete must actually be tagged to a parcel.
-****
-
-Examples:
-
-* `deleteTag urgent`
-Deletes the tag "urgent" from each parcel in the address book.
-
 === Selecting a parcel : `select`
 
-Selects the parcel identified by the index number used in the last parcel listing
-and expands the Browser section in the main window. The Browser section will then show a google map search
-of the selected parcel's delivery address (postal code). You can see an example in the picture below. +
-
-image::Ark_Browser.png[width="790"]
-
+Selects the parcel identified by the index number used in the last parcel listing. +
 Format: `select INDEX`
 
 [TIP]
@@ -258,7 +170,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd parcel in the Ark. Expands browser section.
+Selects the 2nd parcel in the Ark.
 * `find Betsy` +
 `select 1` +
 Selects the 1st parcel in the results of the `find` command.
@@ -335,110 +247,44 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-tag::trackingNumber[]
-
-=== Tracking Number Recognition
-
-Parcels have tracking numbers for delivery vendors to keep track of the parcels that they send out on a daily basis.
-This feature is important because a single person can have many parcels belonging to him. Tracking numbers are used
-to differentiate between the different parcels that are going to be delivered to the same person. Tracking numbers also
-serve as a better way of narrowing down and pinpointing parcels of interest since these numbers are more unique
-
-[NOTE]
-Presently, the `Tracking Number` Field only has support for Registered Article tracking numbers belonging to SingPost.
-You can read more about their Registered Article tracking number
- link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here].
-
-end::trackingNumber[]
-
-tag::postalCode[]
-
-=== Postal Code Recognition
-
-Ark can store the postal address of locations in Singapore. It only accepts values of `s` or `S` followed by 6 digits.
-The postal code of a parcel is used to query Google Maps when the `select` command is executed.
-
-[NOTE]
-Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
-code exists even though it might meet the criteria above. The team is working on producing a database of postal codes
- in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
- the correct postal code.
-
-end::postalCode[]
-
-tag::status[]
-
-=== Status field
-
-`Status` is used to indicate the current stage of delivery that a parcel is at. It has 4 possible states:
-
-* `PENDING` - This means that the parcel has not been delivered and has not passed the date it is supposed to be
-delivered by. +
-* `DELIVERING` - This means that the parcel is currently working being delivered to its destination address.
-* `COMPLETED` - This indicates that the parcel has been successfully delivered to its destination.
-* `OVERDUE` - This state indicates that the parcel has not been delivered and has passed its due date.
-
-These states have different colours codes to allow you to differentiate the `Status` values more easily.
-
-end::status[]
-
-=== Google Maps Browser
-
-Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
-of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
-into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
-browser section of the main window.
-
 === Autocomplete
 
 Ark comes with tab autocompletion which is able to complete a command for you
 without requiring you to type out the command fully. +
-To make use of this feature, simply key in the first few characters of the command you with to enter and press the
- kbd:[Tab] key.
-Ark will then fill in the rest of the command for you in the command box.
+To make use of this feature, simply key in the first few characters of the command you with to enter and press the kbd:[Tab] key.
+Ark will then fill in the rest of the command for you.
 Then press kbd:[Enter] key to enter the command.
-
-There is more than one possibility for the autocompletion, Ark will display the possible options to you as shown in the
- below.
-
-image::TabAutocompleteMultipleExample.PNG[width="400"]
 
 Examples:
 
-* `a` + kbd:[Tab] (auto-completes with `add` in the command line input)
+* `e` + kbd:[Tab] (auto-completes with `exit` in the command line input)
 
 === Saving the data
 
 Ark data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-tag::backup[]
-
 === Backing up the data
 
 Ark data are backed up in the hard disk automatically at the start of every session of the program. +
 There is no need to back up the data manually. +
 The backup file is appended with `-backup.xml` and is stored in the same folder as the main storage file. +
-The data from the backup file has to be loaded manually by copying the contents of the backup file into your main
- storage file. i.e. `./data/` folder
-
-end::backup[]
+The data from the backup file has to be loaded manually by copying the contents of the backup file into your main storage file.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
- data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
 
-* *Add* `add #/TRACKING_NUMBER n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERY_DATE [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 d/12-12-2012 t/friend t/colleague`
+* *Add* `add #/PARCEL_ID n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [#/TRACKING_NUMBER] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DELIVERY_DATE] [t/TAG]...` +
-e.g. `edit 2 #/RR000000000SG n/James Lee e/jameslee@example.com`
+* *Edit* : `edit INDEX [#/PARCEL_ID] [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+e.g. `edit 2 #/1111111111111 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
@@ -449,58 +295,35 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
-== Patch Notes
+== Features Since v1.2
 
-=== Features added in v1.0
-In version v1.0, users will be able to: +
-
-{{More to be added}}
-
-=== Features added v1.1
-In version v1.1, users will be able to: +
-
-* have their data backed up automatically when Ark is launched.
-
-{{More to be added}}
-
-=== Features added in v1.2
-In version v1.2, users will be able to: +
-
-* Work with parcels instead of persons.
-* Add and edit the tracking numbers of parcels.
-
-{{More to be added}}
-
-=== Features added in v1.3
-In version v1.3, users will be able to: +
-
-* Add one of four possible Status to parcels. i.e. `PENDING`, `DELIVERING`, `COMPLETED` and `OVERDUE`.
-* Import parcels stored in an Ark storage file in xml format into Ark.
-
-{{More to be added}}
+* Please add in features here
 
 == Features Coming in v2.0
 
 In `Ark v2.0`, the delivery vendor will be able to do the following: +
 
+* Add a new `Parcel`
+* Delete a `Parcel`
 * Filter `Parcel` by tags
+* Automatically search for the delivery address of the selected `Parcel` in Google Maps on click.
 * Know the shortest path from one address to a delivery address.
 * Find the shortest path from the current location to a delivery address.
-* Find customer's `Parcel` by `TRACKING_NUMBER`
-* Find customer's `TRACKING_NUMBER`
+* Find customer's `Parcel` by `PARCEL_ID`
+* Find customer's `PARCEL_ID`
 * Sort by delivery `deadlines` for the parcel
-* Sort by `TRACKING_NUMBER`
+* Sort by `PARCEL_ID`
 * Sort by customer's `NAME`
 * Sort by customer's `PHONE`
 * Sort by customer's `ADDRESS`
+* Track status of `Parcel` (i.e. Shipping, Processing, Being Delivered)
 * Update status of `Parcel`
 * Color code `ParcelCard` based on impending deadlines.
-* Generate the optimal route for the day's deliveries, based on shortest time, shortest distance travelled or most
+* Generate the optimal route for the day's deliveries, based on shortest time, shortest distance travelled or most parcels delivered.
 * Archive completed deliveries
- parcels delivered.
+* Autocomplete input commands.
 * Add multiple parcels by importing a XML file
 * Store the sender's and receiver's details (i.e. `Name`, `Phone`, `Email Address`, `Address`)
-* Autocomplete input commands.
 * Be informed of overdue parcels.
 * Be informed of parcels that can be delivered at a specific location.
 * Assign levels of importance to deliveries.
