@@ -35,8 +35,8 @@ public class ToggleTagCommandTest {
     @Test
     public void equals() {
 
-        ToggleTagColorCommand testCommand = new ToggleTagColorCommand(true, "", "");
-        ToggleTagColorCommand testCommandTwo = new ToggleTagColorCommand(true, "", "");
+        ToggleTagColorCommand testCommand = new ToggleTagColorCommand("", "");
+        ToggleTagColorCommand testCommandTwo = new ToggleTagColorCommand("", "");
         //Test to ensure command is strictly a RemarkCommand
         assertFalse(testCommand.equals(new AddCommand(CARL)));
         assertFalse(testCommand.equals(new ClearCommand()));
@@ -56,41 +56,34 @@ public class ToggleTagCommandTest {
         assertFalse(testCommand == null);
         assertFalse(testCommandTwo == null);
 
-        //Test to check different booleans returns false
-        assertFalse(testCommand.equals(new ToggleTagColorCommand(false, "", "")));
-        assertFalse(testCommandTwo.equals(new ToggleTagColorCommand(false, "", "")));
-
         //Test to check different tag string returns false
-        assertFalse(testCommand.equals(new ToggleTagColorCommand(true, "aaa", "")));
-        assertFalse(testCommandTwo.equals(new ToggleTagColorCommand(true, "abc", "")));
+        assertFalse(testCommand.equals(new ToggleTagColorCommand("aaa", "")));
+        assertFalse(testCommandTwo.equals(new ToggleTagColorCommand("abc", "")));
 
-        //Test to check different color string returns false
-        assertFalse(testCommand.equals(new ToggleTagColorCommand(true, "", "aaa")));
-        assertFalse(testCommandTwo.equals(new ToggleTagColorCommand(true, "", "abc")));
     }
 
     @Test
     public void checkCommandResult() throws CommandException {
 
         //Check if the result message is correct when there is no tags found
-        ToggleTagColorCommand command = new ToggleTagColorCommand(true, "nosuchtag", "blue");
+        ToggleTagColorCommand command = new ToggleTagColorCommand("nosuchtag", "blue");
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         assertTrue(command.execute().feedbackToUser.equals("No such tag"));
 
         resetAddressBook();
 
         //When tag can be found in addressBook
-        command = new ToggleTagColorCommand(true, "friends", "blue");
+        command = new ToggleTagColorCommand("friends", "blue");
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         assertFalse(command.execute().feedbackToUser.equals("No such tag"));
-        assertTrue(command.execute().feedbackToUser.equals("friends tagColor set to blue"));
+        assertTrue(command.execute().feedbackToUser.equals("friends tag color set to blue"));
 
         resetAddressBook();
 
         //Check if friends tags are set to color
-        command = new ToggleTagColorCommand(true, "friends", "blue");
+        command = new ToggleTagColorCommand("friends", "blue");
         command.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertTrue(command.execute().feedbackToUser.equals("friends tagColor set to blue"));
+        assertTrue(command.execute().feedbackToUser.equals("friends tag color set to blue"));
         for (Tag tag : model.getAddressBook().getTagList()) {
             if ("friends".equals(tag.tagName)) {
                 assertTrue(tag.getTagColor().equals("blue"));
@@ -99,26 +92,26 @@ public class ToggleTagCommandTest {
         }
 
         //Check if color tag will off properly
-        command = new ToggleTagColorCommand(false, "", "");
+        command = new ToggleTagColorCommand("off", null);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         CommandResult commandResult = command.execute();
         for (Tag tag : model.getAddressBook().getTagList()) {
             assertTrue(tag.getTagColor().equals("grey"));
             assertFalse(tag.getTagColor().equals("blue"));
         }
-        assertTrue("tagColor set to off".equals(commandResult.feedbackToUser));
+        assertTrue("tag color set to off".equals(commandResult.feedbackToUser));
 
         //Check if color will set to random
-        command = new ToggleTagColorCommand(true, "", "");
+        command = new ToggleTagColorCommand("random", null);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         commandResult = command.execute();
-        assertTrue("tagColor set to random".equals(commandResult.feedbackToUser));
+        assertTrue("tag color set to random".equals(commandResult.feedbackToUser));
     }
 
     @Test
     public void checkNotNull() throws CommandException {
 
-        ToggleTagColorCommand command = new ToggleTagColorCommand(true, "nosuchtag", "blue");
+        ToggleTagColorCommand command = new ToggleTagColorCommand("nosuchtag", "blue");
         command.setData(model, new CommandHistory(), new UndoRedoStack());
 
         assertNotNull(command.execute());

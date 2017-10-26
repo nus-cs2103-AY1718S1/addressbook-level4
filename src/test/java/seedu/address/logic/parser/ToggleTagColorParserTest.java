@@ -19,9 +19,9 @@ public class ToggleTagColorParserTest {
 
         ToggleTagColorParser parser = new ToggleTagColorParser();
 
-        ToggleTagColorCommand expectedRandom = new ToggleTagColorCommand(true, "", "");
-        ToggleTagColorCommand expectedOff = new ToggleTagColorCommand(false, "", "");
-        ToggleTagColorCommand expectedDefault = new ToggleTagColorCommand(true, "Test", "Test2");
+        ToggleTagColorCommand expectedRandom = new ToggleTagColorCommand("random", null);
+        ToggleTagColorCommand expectedOff = new ToggleTagColorCommand("off", null);
+        ToggleTagColorCommand expectedDefault = new ToggleTagColorCommand("Test", "Test2");
 
 
         // Random keyword produces ToggleTagColorCommand(true, "", "")
@@ -33,9 +33,15 @@ public class ToggleTagColorParserTest {
         // Default case produces ToggleTagColorCommand (true, "args[0]", "args[1]")
         assertTrue(parser.parse("Test Test2").equals(expectedDefault));
 
-        // Throw ArrayIndexOutOfBoundsException
+        // Throw Parse error
         thrown.expect(ParseException.class);
-
         parser.parse("Test");
+    }
+
+    @Test
+    public void parseMoreThanTwoWords() throws Exception {
+        ToggleTagColorParser parser = new ToggleTagColorParser();
+        thrown.expect(ParseException.class);
+        parser.parse("This is longer than what is accepted");
     }
 }

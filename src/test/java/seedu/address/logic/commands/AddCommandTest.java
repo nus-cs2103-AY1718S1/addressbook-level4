@@ -133,6 +133,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateDuplicatePersonList() {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
@@ -144,7 +149,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void setTagColor(boolean isOn, String tag, String color) {
+        public void setTagColor(String tag, String color) {
             fail("This method should not be called");
         }
 
@@ -155,6 +160,24 @@ public class AddCommandTest {
 
         @Override
         public ObservableList<ReadOnlyPerson> listAppointment() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> listNameAscending() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> listNameDescending() {
+            fail("This method should not be called");
+            return null;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> listNameReversed() {
             fail("This method should not be called");
             return null;
         }

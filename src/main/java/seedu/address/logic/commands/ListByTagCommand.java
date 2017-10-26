@@ -8,12 +8,14 @@ import seedu.address.model.person.TagContainsKeywordsPredicate;
  */
 public class ListByTagCommand extends Command {
 
-    public static final String COMMAND_WORD = "list";
+    public static final String COMMAND_WORD = "list tag";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " colleague ";
+
+    public static final String MESSAGE_SUCCESS = "Listed all persons with specified tags";
 
     private final TagContainsKeywordsPredicate predicate;
 
@@ -24,7 +26,7 @@ public class ListByTagCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override
