@@ -24,7 +24,6 @@ public class RemoveTagParserTest {
     public void parse_missingParts_failure() {
         // no tagName specified
         assertParseFailure(parser, MESSAGE_EMPTY_TAG_INPUT, MESSAGE_INVALID_FORMAT);
-
     }
 
     @Test
