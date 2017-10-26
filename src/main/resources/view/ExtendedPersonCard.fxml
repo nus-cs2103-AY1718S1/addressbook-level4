@@ -111,9 +111,10 @@
             <RowConstraints />
         </rowConstraints>
     </GridPane>
+    <GridPane minWidth="600">
    <AnchorPane prefHeight="200.0" prefWidth="200.0">
       <children>
-         <LineChart fx:id="lineChart" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0">
+         <LineChart fx:id="lineChart" layoutY="10.0" maxHeight="1.5" maxWidth="1.5" minHeight="500" minWidth="700" prefHeight="600" prefWidth="800.0">
            <xAxis>
              <CategoryAxis minHeight="400.0" minWidth="400.0" side="BOTTOM" fx:id="xNameAxis" />
            </xAxis>
@@ -122,4 +123,5 @@
            </yAxis>
          </LineChart>
       </children></AnchorPane>
+    </GridPane>
 </HBox>
