@@ -57,7 +57,7 @@ public interface Model {
      * Sort current person list based on an attribute input by the user
      */
     void sortBy(int attribute);
-    
+
     /**
      * Creates a group in the addressbook
      * @param groupName of the group to be created
