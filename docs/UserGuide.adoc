@@ -360,3 +360,4 @@ Can also use shortcut 'p'
 * `AddressBookName`
 * `AddressBookFilePath` : indicates where the address book is stored in local storage
 * `Display Modes: linkedin, facebook, meetings`
+* `Theme`: Customizes the appearance of the application. Possible values are `Light`, `Blue` and `Dark`
