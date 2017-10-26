@@ -151,7 +151,7 @@ You can use `bloodtype` to show a list of people with that specific blood type. 
 *Example:* 
 
 image::btexample.png[width="500"]
-    Figure 5: Bloodtype Command Usage Diagram
+    Figure 4: Bloodtype Command Usage Diagram
 
 [NOTE]
 BLOODTYPE is case insensitive.
@@ -187,7 +187,7 @@ You can edit the information of a person you have added in the address book. +
 *Example:*
 
 image::editexample.png[width="700"]
-    Figure 6: Edit Command Usage Diagram
+    Figure 5: Edit Command Usage Diagram
 
 [WARNING]
 At least one of the optional fields must be provided. +
@@ -224,7 +224,7 @@ You can find people whose names contain any of the given keywords. +
 *Example:*
 
 image::findexample.png[width="500"]
-    Figure 7: Find Command Usage Diagram
+    Figure 6: Find Command Usage Diagram
 
 === Deleting a person : `delete`
 
@@ -235,7 +235,7 @@ You can delete a specific person from the address book at a specified `INDEX`. +
 *Example:*
 
 image::deleteexample.png[width="700"]
-    Figure 8: Delete Command Usage Diagram
+    Figure 7: Delete Command Usage Diagram
 
 [WARNING]
 The index *must be a positive integer* `1, 2, 3, ...`
@@ -254,7 +254,7 @@ Shorthand Format: `s INDEX`
 *Example:*
 
 image::selectexample.png[width="700"]
-    Figure 9: Select Command Usage Diagram
+    Figure 8: Select Command Usage Diagram
 
 [WARNING]
 The index *must be a positive integer* `1, 2, 3, ...`
@@ -285,7 +285,7 @@ Undoable commands: those commands that modify the address book's content (`add`,
 *Example:*
 
 image::undoexample.png[width="700"]
-    Figure 10: Undo Command Usage Diagram
+    Figure 9: Undo Command Usage Diagram
 
 === Redoing the previously undone command : `redo`
 
@@ -296,7 +296,7 @@ You can reverse the most recent `undo` command. +
 *Example:*
 
 image::redoexample.png[width="700"]
-    Figure 12: Redo Command Usage Diagram
+    Figure 10: Redo Command Usage Diagram
 
 === Clearing all entries : `clear`
 
@@ -336,7 +336,7 @@ However, please include at least the hour and a day that can be specified.
 *Example:*
 
 image::aptexample.png[width="500"]
-    Figure 13: Appointment Command Usage Diagram
+    Figure 11: Appointment Command Usage Diagram
 
 You can sort list by appointment dates. +
 *Format:* `appointment` +
@@ -360,7 +360,7 @@ Removing a Remark: You can remove a remark by typing 'r/' without specifying any
 *Examples:*
 
 image::remarkexample.png[width="700"]
-    Figure 14: Remark Command Usage Diagram
+    Figure 12: Remark Command Usage Diagram
 
 [WARNING]
 Existing remarks of the person will be removed
@@ -391,7 +391,7 @@ You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
 image::exitUI.png[width="500"]
-    Figure 15: Methods to access `exit` command
+    Figure 13: Methods to access `exit` command
 
 === Displaying Appointments : [Coming in v2.0]
 ****
