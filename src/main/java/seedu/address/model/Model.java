@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -134,13 +135,13 @@ public interface Model {
     /**
      * Marks the given task as completed
      */
-    void markTask(ReadOnlyTask target)
+    void markTasks(List<ReadOnlyTask> targets)
             throws TaskNotFoundException, DuplicateTaskException;
 
     /**
      * Unmarks the given task as completed
      */
-    void unmarkTask(ReadOnlyTask target)
+    void unmarkTasks(List<ReadOnlyTask> targets)
             throws TaskNotFoundException, DuplicateTaskException;
 
     /**

@@ -289,12 +289,25 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Replaces the given task {@code target} in the list with {@code updatedTask}..
+     *
+     * @throws DuplicateTaskException if updating the task's details causes the person to be equivalent to
+     *                                another existing task in the list.
+     * @throws TaskNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask updatedTask)
+            throws TaskNotFoundException, DuplicateTaskException {
+        requireNonNull(updatedTask);
+        tasks.setTask(target, updatedTask);
+    }
+
+    /**
      * Marks a task as complete
      *
      * @throws TaskNotFoundException  if no such task exists
      * @throws DuplicateTaskException if equivalent task is already marked
      */
-    public void markTasks(ReadOnlyTask toMark)
+    public void markTask(ReadOnlyTask toMark)
             throws TaskNotFoundException, DuplicateTaskException {
         tasks.setCompletion(toMark);
     }
@@ -305,7 +318,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws TaskNotFoundException  if no such task exists
      * @throws DuplicateTaskException if equivalent task is already unmarked
      */
-    public void unmarkTasks(ReadOnlyTask toUnmark)
+    public void unmarkTask(ReadOnlyTask toUnmark)
             throws TaskNotFoundException, DuplicateTaskException {
         tasks.setIncompletion(toUnmark);
     }
