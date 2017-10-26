@@ -1544,6 +1544,7 @@ Use case ends.
 .  Should be usable to a novice who has never used such type of application before
 .  Should startup within 7 seconds
 .  Background color should be appropriate to not discomfort users' eyes.
+
 {More to be added}
 
 [appendix]
