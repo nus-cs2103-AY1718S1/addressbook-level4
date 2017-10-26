@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteByIndexCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -24,11 +24,12 @@ public class DeleteCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
-        assertParseSuccess(parser, "1", new DeleteCommand(Arrays.asList(INDEX_FIRST_PERSON)));
+        assertParseSuccess(parser, "1", new DeleteByIndexCommand(Arrays.asList(INDEX_FIRST_PERSON)));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByIndexCommand.MESSAGE_USAGE));
     }
 }
