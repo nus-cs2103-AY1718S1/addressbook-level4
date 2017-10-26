@@ -35,6 +35,7 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void add() throws Exception {
 
+        /* Case: change the current command mode to task manager -> success */
         Model expectedModel = getModel();
         String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
         String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
