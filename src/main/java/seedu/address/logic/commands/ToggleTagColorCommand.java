@@ -14,18 +14,16 @@ public class ToggleTagColorCommand extends Command {
 
     public static final String COMMAND_WORD = "tagcolor";
     public static final String COMMAND_ALIAS = "tc";
-    public static final String MESSAGE_SUCCESS = "tagColor set to ";
+    public static final String MESSAGE_SUCCESS = "tag color set to ";
     public static final String NO_SUCH_TAG_MESSAGE = "No such tag";
 
     private final Logger logger = LogsCenter.getLogger(ToggleTagColorCommand.class);
 
-    private boolean toSet;
     private String tag;
     private String color;
     private String message;
 
-    public ToggleTagColorCommand(boolean toSet, String tag, String color) {
-        this.toSet = toSet;
+    public ToggleTagColorCommand(String tag, String color) {
         this.tag = tag;
         this.color = color;
     }
@@ -37,15 +35,16 @@ public class ToggleTagColorCommand extends Command {
      */
     @Override
     public CommandResult execute() throws CommandException {
-        model.setTagColor(toSet, tag, color);
+
+        model.setTagColor(tag, color);
         model.resetData(model.getAddressBook());
-        logger.fine(MESSAGE_SUCCESS + (toSet ? "random" : "off"));
-        if (!"".equals(tag) && !(containsTag(model.getAddressBook().getTagList(), tag))) {
+
+        if (color == null) {
+            message = String.format("%s%s", MESSAGE_SUCCESS, "random".equals(tag) ? "random" : "off");
+        } else if (!(containsTag(model.getAddressBook().getTagList(), tag))) {
             message = NO_SUCH_TAG_MESSAGE;
-        } else if (tagCustomized(tag, color)) {
-            message = tag + " " + MESSAGE_SUCCESS + color;
         } else {
-            message = String.format("%s%s", MESSAGE_SUCCESS, toSet ? "random" : "off");
+            message = tag + " " + MESSAGE_SUCCESS + color;
         }
         return new CommandResult(message);
     }
@@ -59,16 +58,7 @@ public class ToggleTagColorCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ToggleTagColorCommand // instanceof handles nulls
-                && this.tag.equals(((ToggleTagColorCommand) other).tag))
-                && this.color.equals(((ToggleTagColorCommand) other).color)
-                && (this.toSet == (((ToggleTagColorCommand) other).toSet)); // state check
-    }
-
-    /**
-     * Returns true if user specified a tag string and color
-     */
-    private boolean tagCustomized(String tag, String color) {
-        return !"".equals(tag) && !"".equals(color);
+                && this.tag.equals(((ToggleTagColorCommand) other).tag)); // state check
     }
 
     /**

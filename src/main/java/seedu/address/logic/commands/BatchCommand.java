@@ -35,7 +35,7 @@ public class BatchCommand extends UndoableCommand {
         try {
             model.deletePersonsByTags(tagsToDelete);
         } catch (PersonNotFoundException e) {
-            assert false : "The target person cannot be missing";
+            throw new CommandException("The target person cannot be missing");
         }
 
         return new CommandResult(String.format(MESSAGE_BATCH_DELETE_SUCCESS, tagsToDelete));

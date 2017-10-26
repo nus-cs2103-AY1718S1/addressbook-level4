@@ -51,15 +51,23 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Replaces the Tags in this list with those in the argument tag list.
      */
-    public void setTags(Set<Tag> tags, boolean isOn, String tagString, String color) {
+    public void setTags(Set<Tag> tags, String tagString, String color) {
 
         requireAllNonNull(tags);
 
-        if (isOn) {
+        // If color is null, it means either tag color random or tag color off
+        // Else it means color is specified, and addressBook should assign a color to a tag
+
+        if (color == null) {
+            if ("random".equals(tagString)) {
+                setRandomColor(tags);
+            } else if ("off".equals(tagString)) {
+                setOffColor(tags);
+            }
+        } else {
             setColor(tags, tagString, color);
-        } else if (!isOn) {
-            setOffColor(tags);
         }
+
         assert CollectionUtil.elementsAreUnique(internalList);
         internalList.setAll(tags);
     }
@@ -76,14 +84,10 @@ public class UniqueTagList implements Iterable<Tag> {
     }
 
     private void setColor(Set<Tag> tags, String tagString, String color) {
-        if (hasAssigned(tagString, color)) {
-            for (Tag tag : tags) {
-                if (tag.tagName.equals(tagString)) {
-                    tag.setColor(color);
-                }
+        for (Tag tag : tags) {
+            if (tag.tagName.equals(tagString)) {
+                tag.setColor(color);
             }
-        } else {
-            setRandomColor(tags);
         }
     }
 
@@ -91,9 +95,6 @@ public class UniqueTagList implements Iterable<Tag> {
         for (Tag tag : tags) {
             tag.setRandomColor();
         }
-    }
-    private boolean hasAssigned(String tagString, String color) {
-        return !"".equals(tagString) && !"".equals(color);
     }
 
     /**
