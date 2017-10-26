@@ -71,7 +71,7 @@ public class Autocompleter {
                 displayMultipleResults(possibleAutocompleteResults);
                 return possibleAutocompleteResults.get(cycleIndex());
         }
-        return EMPTY_STRING;
+        return textInCommandBox;
     }
 
     /**
@@ -79,7 +79,7 @@ public class Autocompleter {
      * @param commandBoxText from CommandBox
      */
     public void updateState(String commandBoxText) {
-
+        textInCommandBox = commandBoxText;
         if (commandBoxText.equals(EMPTY_STRING)) {
             state = AutocompleteState.EMPTY;
             return;
