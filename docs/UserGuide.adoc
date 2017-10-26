@@ -10,7 +10,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B2/main/master
 
 
 By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
