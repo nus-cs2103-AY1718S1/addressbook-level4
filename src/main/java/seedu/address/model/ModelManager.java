@@ -16,6 +16,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.logic.commands.exceptions.AlreadySortedException;
+import seedu.address.logic.commands.exceptions.TagDoesNotExistException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -67,12 +68,16 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
-    /** delete temporary persons on start up of the app */
+    /**
+     * delete temporary persons on start up of the app
+     */
     public synchronized void deleteTemporary(AddressBook addressBook) throws PersonNotFoundException {
         UniquePersonList personsList = addressBook.getUniquePersonList();
         Iterator<Person> itr = personsList.iterator(); //iterator to iterate through the persons list
@@ -111,7 +116,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeTag(Tag t) {
+    public void removeTag(Tag t) throws TagDoesNotExistException {
         addressBook.removeTag(t);
     }
 
@@ -152,7 +157,10 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     //=========== Sorting Person List =============================================================
-    /** Sorts the Address Book by name, phone, address or phone depending on the sortCriteria */
+
+    /**
+     * Sorts the Address Book by name, phone, address or phone depending on the sortCriteria
+     */
     public void sortBy(String sortCriteria) throws AlreadySortedException {
         addressBook.sortBy(sortCriteria);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

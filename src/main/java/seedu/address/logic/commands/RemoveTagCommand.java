@@ -9,6 +9,7 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.TagDoesNotExistException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -29,7 +30,8 @@ public class RemoveTagCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " colleagues";
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag.";
-    public static final String MESSAGE_REMOVE_TAG_ERROR = "Error removing Tag.";
+    public static final String MESSAGE_REMOVE_TAG_NOT_EXIST = "Tag does not exist in this address book.";
+    public static final String MESSAGE_REMOVE_TAG_ERROR = "Error removing tag.";
 
     private String tagName;
 
@@ -44,13 +46,16 @@ public class RemoveTagCommand extends UndoableCommand {
         try {
             for (int i = 0; i < lastShownList.size(); i++) {
                 if (lastShownList.get(i).getTags().contains(new Tag(tagName))) {
+
                     updateTagList(lastShownList, i);
                 }
             }
-
             model.removeTag(new Tag(tagName));
+
         } catch (IllegalValueException e) {
-            e.printStackTrace();
+            throw new CommandException(MESSAGE_REMOVE_TAG_ERROR);
+        } catch (TagDoesNotExistException e) {
+            throw new CommandException(MESSAGE_REMOVE_TAG_NOT_EXIST);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS));

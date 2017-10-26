@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.AlreadySortedException;
+import seedu.address.logic.commands.exceptions.TagDoesNotExistException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -63,7 +64,7 @@ public interface Model {
     /**
      * Remove all tags from Address Book
      */
-    void removeTag(Tag tag);
+    void removeTag(Tag tag) throws TagDoesNotExistException;
 
     /**
      * Sorts the Address Book by name, phone, address or phone depending on the sortCriteria

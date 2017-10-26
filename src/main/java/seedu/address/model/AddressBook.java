@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.RemoveTagCommand.MESSAGE_REMOVE_TAG_NOT_EXIST;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.exceptions.AlreadySortedException;
+import seedu.address.logic.commands.exceptions.TagDoesNotExistException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -35,8 +37,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
-     */
-    {
+     */ {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
     }
@@ -169,12 +170,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes {@code tag} from this {@code AddressBook}.
      */
-    public void removeTag(Tag t) {
+    public void removeTag(Tag t) throws TagDoesNotExistException {
+        boolean isExist = false;
         Iterator<Tag> itr = tags.iterator();  // list is a Set<String>!
         while (itr.hasNext()) {
             if (itr.next().equals(t)) {
+                isExist = true;
                 itr.remove();
             }
+        }
+
+        if (!isExist) {
+            throw new TagDoesNotExistException(MESSAGE_REMOVE_TAG_NOT_EXIST);
         }
 
     }
