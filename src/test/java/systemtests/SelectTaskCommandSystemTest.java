@@ -108,7 +108,7 @@ public class SelectTaskCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
             MESSAGE_SELECT_TASK_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getTaskListPanel().getSelectedCardIndex();
+        int preExecutionSelectedCardIndex = getTaskListPanel().getSelectedTaskCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
