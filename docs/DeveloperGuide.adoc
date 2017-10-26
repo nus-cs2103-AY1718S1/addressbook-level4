@@ -365,7 +365,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 
-// tag::undoredo[]
 === Temporary Contact mechanism
 
 Temporary contacts is implemented using the java LocalDateTime class to keep track of the time that the temporary contact
@@ -472,7 +471,39 @@ public int compareTo(Object otherPerson) {
 The main things to note in this method is that the value "Not Set" will always be sorted away to the bottom of the list.
 Also, by default, the list is sorted by name.
 
+=== Delete persons by tag
 
+This command is implemented to enable the deletion of persons who have a particular tag.
+The motivation for implementing such a command is so that hostel/hotel administrators can mass delete a certain
+group of residents without going through the trouble of deleting them one by one.
+
+Only one argument is supplied with this command, a String `tag`.
+
+Deletion of persons by multiple tag remains a viable enhancement to this command, but it is not implemented due to the
+following consideration:
+
+* To enable a clean workflow, hostel/hotel administrators might prefer deleting one group of people at a time. +
+* Ambiguity is introduced into this command. The user may not know if by supplying multiple tags, the application will
+delete persons who have all the tags supplied, or delete all persons who has any of the tags supplied.
+
+
+The function to actually delete the persons who have the `TAG` supplied is done in the UniquePersonList class.
+The code belows shows it's execution. First we define an iterator to iterate through all the persons in the list of persons. +
+The condition `if (p.getTags().contains(tag)` checks if each person has the `TAG` supplied.
+If it does, we remove the person from the list.
+
+[source, java]
+---
+public void removeByTag(Tag tag) {
+    Iterator<Person> itr = this.iterator();
+    while (itr.hasNext()) {
+        Person p = itr.next();
+        if (p.getTags().contains(tag)) {
+            itr.remove();
+        }
+    }
+}
+---
 
 == Documentation
 

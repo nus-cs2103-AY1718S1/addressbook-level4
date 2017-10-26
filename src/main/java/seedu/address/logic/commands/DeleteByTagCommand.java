@@ -29,11 +29,6 @@ public class DeleteByTagCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-
-//        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-
         try {
             model.deleteByTag(toRemove);
         } catch (IllegalValueException e ) {
