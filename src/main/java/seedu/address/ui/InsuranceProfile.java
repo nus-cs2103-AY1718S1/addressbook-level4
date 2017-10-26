@@ -2,38 +2,27 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.beans.binding.Bindings;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 
 /**
  * The Profile Panel of the App.
  */
 public class InsuranceProfile extends UiPart<Region> {
 
-    public static final String DEFAULT_MESSAGE = "Insurance profile";
     private static final String FXML = "InsuranceProfile.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private ReadOnlyPerson person;
+    private ReadOnlyInsurance insurance;
 
     @FXML
-    private ScrollPane scrollPane;
-    @FXML
-    private AnchorPane insuranceProfile;
-    @FXML
-    private Label name;
+    private Label index;
     @FXML
     private Label owner;
     @FXML
@@ -49,81 +38,31 @@ public class InsuranceProfile extends UiPart<Region> {
     @FXML
     private Label expiryDate;
 
-    public InsuranceProfile() {
+    public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
         super(FXML);
-        scrollPane.setFitToWidth(true);
-        insuranceProfile.prefWidthProperty().bind(scrollPane.widthProperty());
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
-
-        owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(person.getLifeInsurance().getOwner())));
-        insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(person.getLifeInsurance().getInsured())));
+        this.insurance = insurance;
+        index.setText(displayIndex + ". ");
+        owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
+        insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
         beneficiary.setOnMouseClicked(e ->
-                raise(new PersonNameClickedEvent(person.getLifeInsurance().getBeneficiary())));
+                raise(new PersonNameClickedEvent(insurance.getBeneficiary())));
 
-        loadDefaultPage();
+        bindListeners(insurance);
         registerAsAnEventHandler(this);
     }
 
     /**
-     * Updates selected person
-     * @param person
+     * Binds the individual UI elements to observe their respective {@code ReadOnlyInsurance} properties
+     * so that they will be notified of any changes.
+     * @param insurance
      */
-    private void loadPersonPage(ReadOnlyPerson person) {
-        this.person = person;
-        bindListeners(person);
-    }
-
-    /**
-     * Load default page with empty fields and default message
-     */
-    private void loadDefaultPage() {
-        name.setText(DEFAULT_MESSAGE);
-        owner.setText("");
-        insured.setText("");
-        beneficiary.setText("");
-        premium.setText("");
-        contractPath.setText("");
-        signingDate.setText("");
-        expiryDate.setText("");
-    }
-
-    /**
-     * To be called everytime a new person is selected and bind all information for real-time update
-     * @param person
-     */
-    private void bindListeners(ReadOnlyPerson person) {
-        if (person.getLifeInsurance() == null) {
-            owner.textProperty().unbind();
-            insured.textProperty().unbind();
-            beneficiary.textProperty().unbind();
-            premium.textProperty().unbind();
-            contractPath.textProperty().unbind();
-            signingDate.textProperty().unbind();
-            expiryDate.textProperty().unbind();
-
-            owner.setText("");
-            insured.setText("");
-            beneficiary.setText("");
-            premium.setText("");
-            contractPath.setText("");
-            signingDate.setText("");
-            expiryDate.setText("");
-        } else {
-            owner.textProperty().bind(Bindings.convert(person.getLifeInsurance().getOwner().nameProperty()));
-            insured.textProperty().bind(Bindings.convert(person.getLifeInsurance().getInsured().nameProperty()));
-            beneficiary.textProperty().bind(Bindings.convert(person.getLifeInsurance()
-                    .getBeneficiary().nameProperty()));
-            premium.textProperty().bind(Bindings.convert(person.getLifeInsurance().premiumProperty()));
-            contractPath.textProperty().bind(Bindings.convert(person.getLifeInsurance().contractPathProperty()));
-            signingDate.textProperty().bind(Bindings.convert(person.getLifeInsurance().signingDateProperty()));
-            expiryDate.textProperty().bind(Bindings.convert(person.getLifeInsurance().expiryDateProperty()));
-        }
-    }
-
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+    private void bindListeners(ReadOnlyInsurance insurance) {
+        owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
+        insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
+        beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
+        premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
+        contractPath.textProperty().bind(Bindings.convert(insurance.contractPathProperty()));
+        signingDate.textProperty().bind(Bindings.convert(insurance.signingDateProperty()));
+        expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateProperty()));
     }
 }

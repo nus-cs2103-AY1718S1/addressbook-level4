@@ -17,7 +17,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.guihandles.CommandBoxHandle;
-import guitests.guihandles.InsuranceProfileHandle;
+import guitests.guihandles.InsuranceListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -81,8 +81,8 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public InsuranceProfileHandle getInsuranceProfileHandle() {
-        return mainWindowHandle.getInsurancePanelHandle();
+    public InsuranceListPanelHandle getInsuranceListPanelHandle() {
+        return mainWindowHandle.getInsuranceListPanelHandle();
     }
 
     public ProfilePanelHandle getProfilePanelHandle() {

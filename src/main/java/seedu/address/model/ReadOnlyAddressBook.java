@@ -1,6 +1,10 @@
 package seedu.address.model;
 
+import java.util.Map;
+
 import javafx.collections.ObservableList;
+
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -20,5 +24,11 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate tags.
      */
     ObservableList<Tag> getTagList();
+
+    /**
+     * Returns an unmodifiable view of the life insurances map.
+     * This map will not contain any duplicate insurances.
+     */
+    Map<String, ReadOnlyInsurance> getLifeInsuranceMap();
 
 }

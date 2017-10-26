@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
  */
 public class InsuranceProfileHandle extends NodeHandle<Node> {
 
-    public static final String INSURANCE_ID = "#insuranceProfile";
     private static final String OWNER_FIELD_ID = "#owner";
     private static final String INSURED_FIELD_ID = "#insured";
     private static final String BENEFICIARY_FIELD_ID = "#beneficiary";
@@ -45,5 +44,4 @@ public class InsuranceProfileHandle extends NodeHandle<Node> {
     public String getPremium() {
         return premiumLabel.getText();
     }
-
 }
