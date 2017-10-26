@@ -472,6 +472,8 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
  in future versions of the Ark application. +
 ** **Cons:** More difficult to implement and integrate into a command line interface.
 
+//tag::deleteTag[]
+
 === Delete Tag mechanism
 
 The delete tag mechanism is facilitated by a `deleteTag` method within the `ModelManager`. It supports the deletion
@@ -496,7 +498,9 @@ Tag to delete them. +
 ** **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
 and has to be updated whenever we edit other parcel details as well.
 
-tag::backup[]
+//end::deleteTag[]
+
+//tag::backup[]
 
 === Backup Mechanism
 
@@ -511,7 +515,7 @@ stores the backup in the same directory as the main `AddressBook` storage file. 
 the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e. If the main `AddressBook` storage file
  is named as `addressbook.xml`, the backup storage file will be saved as `addressbook.xml-backup.xml`.
 
-end::backup[]
+//end::backup[]
 
 ==== Design Considerations
 
@@ -547,7 +551,8 @@ other. +
 the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
 provides a workable copy of the data of Ark.
 
-tag::import[]
+//tag::import[]
+
 === Import Mechanism
 
 To use this command, type `import (FILE_NAME)` into the `CommandBox`.
@@ -615,7 +620,10 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 ** **Pros:** Allows user to name his files following any conventions and be successfully imported into Ark. +
 ** **Cons:** Makes Ark vulnerable to simple directory traversal attack where user can access files outside the
 `data/import/` directory. +
-end::import[]
+
+//end::import[]
+
+//tag::autocomplete[]
 
 === Tab autocomplete mechanism
 
@@ -658,7 +666,9 @@ Also creates coupling between the `Autocompleter` and `CommandBox`. +
 ** **Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
 ** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +=== Tab autocomplete mechanism
 
-start::trackingNumber[]
+//end::autocomplete[]
+
+//tag::trackingNumber[]
 
 === TrackingNumber Field
 
@@ -672,9 +682,9 @@ Presently, the `Tracking Number` Field only has support for Registered Article t
 You can read more about their Registered Article tracking number
  link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here].
 
-end::trackingNumber[]
+//end::trackingNumber[]
 
-tag::postalCode[]
+//tag::postalCode[]
 
 === PostalCode Field
 
@@ -688,9 +698,9 @@ code exists even though it might meet the criteria above. The team is working on
  in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
  the correct postal code.
 
-end::postalCode[]
+//end::postalCode[]
 
-tag::status[]
+//tag::status[]
 
 === Status field
 
@@ -716,7 +726,51 @@ These states have different colours codes to allow users to differentiate the `S
 ** **Cons:** It becomes more difficult to import data files since different users may use different terminologies to
 describe the same status of the parcel.
 
-end::status[]
+//end::status[]
+
+//tag::deliveryDate[]
+=== Delivery Date field
+
+`Delivery Date` is used to indicate the delivery date that the parcel must be delivered by.
+The dates are only accepted if they are valid. The parcel list is maintained in sorted order by comparing
+their delivery dates, with the earliest on top.
+
+//end::deliveryDate[]
+
+
+//tag::sortedList[]
+
+=== Maintain sorted mechanism
+image::AddParcelSdForLOgic.png[width="300"]
+_Figure 4.9.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
+
+The list of parcels in Ark is maintained to be always in sorted order according to delivery dates,
+with the earliest being on the top. This is so that the user will be able to look at the more
+pertinent deliveries. +
+
+The list is sorted whenever a parcel is added, edited or if a redo command is made. This is
+because these commands are the ones that might possibly cause the new parcel to be placed
+in the wrong position. +
+
+To maintain the selected element despite sorting however, we require a way to track which parcel
+is selected. Static variables to track which card has been selected has been added to the Model
+class. The Model class now has the following methods: `select`, `unselect`, `getPrevIndex`,
+`hasSelected` and `forceSelect`. Whenever we select an item, we will use `select` to indicate that
+we have selected a parcel card and we will then re-select that particular card after we have sorted. +
+
+==== Design Considerations
+
+**Aspect:** Implementation of `maintainSorted` +
+**Alternative 1 (current choice):** Constant sort the list of parcels whenever there is a change that
+potentially could disrupt the order of the list. +
+**Pros:** Intuitive and guarantees that list is sorted in the right order +
+**Cons:** Many commands have to be changed +
+**Alternative 2:** Insert the new / edited parcel to fit into the sorted list. +
+**Pros:** Use less computation as the list of parcels is already sorted. +
+**Cons:** More difficult to implement as we'll need to implement our own sorting algorithm as opposed to
+just using the built in sorting methods. +
+
+//tag::sortedList[]
 
 == Documentation
 
@@ -927,7 +981,7 @@ information from other sources
 *MSS*
 
 1.  User requests to list parcels
-2.  AddressBook shows a list of parcels
+2.  AddressBook shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
 3.  User requests to delete a specific parcel in the list
 4.  AddressBook deletes the parcel
 +
@@ -1028,7 +1082,7 @@ Use case ends
 *MSS*
 
 1.  User requests to list parcels
-2.  AddressBook shows a list of parcels
+2.  AddressBook shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
 3.  User requests to upload image of a specific parcel in the list
 4.  AddressBook prompts for location of image
 5.  User inputs file path

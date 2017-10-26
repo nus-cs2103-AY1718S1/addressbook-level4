@@ -2,6 +2,13 @@ package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -13,9 +20,16 @@ public class DeliveryDate {
 
     public static final String MESSAGE_DELIVERY_DATE_CONSTRAINTS =
             "Delivery dates should be in the format dd-mm-yyyy";
-    public static final String DATE_VALIDATION_REGEX =
-            "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$";
+    public static final String DATE_VALIDATION_REGEX = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)"
+           + "(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?"
+           + ":1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?["
+           + "1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+    public static final List<String> VALID_STRING_FORMATS = Arrays.asList(
+            "dd-MM-yyyy", "d-MM-yyyy", "d-M-yyyy", "dd-M-yyyy",
+            "dd/MM/yyyy", "d/MM/yyyy", "d/M/yyyy", "dd/M/yyyy",
+            "dd.MM.yyyy", "d.MM.yyyy", "d.M.yyyy", "dd/M.yyyy");
     public final String value;
+    public final Date date;
 
     /**
      * Validates given delivery date.
@@ -25,10 +39,35 @@ public class DeliveryDate {
     public DeliveryDate(String deliveryDate) throws IllegalValueException {
         requireNonNull(deliveryDate);
         String trimmedDate = deliveryDate.trim();
-        if (!isValidDate(trimmedDate)) {
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+
+        if (isValidDate(trimmedDate)) {
+            try {
+                this.date = formatDate(trimmedDate);
+                this.value = df.format(this.date);
+            } catch (ParseException e) {
+                throw new IllegalValueException(MESSAGE_DELIVERY_DATE_CONSTRAINTS);
+            }
+        } else {
             throw new IllegalValueException(MESSAGE_DELIVERY_DATE_CONSTRAINTS);
         }
-        this.value = trimmedDate;
+
+    }
+
+    /**
+     * Formats the input date according to the list VALID_STRING_FORMATS and returns it.
+     */
+    private static Date formatDate(String inputDate) throws ParseException {
+        for (String formatString : VALID_STRING_FORMATS) {
+            try {
+                return new SimpleDateFormat(formatString).parse(inputDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        throw new ParseException(inputDate, 0);
+
     }
 
     /**
@@ -36,6 +75,10 @@ public class DeliveryDate {
      */
     public static boolean isValidDate(String test) {
         return test.matches(DATE_VALIDATION_REGEX);
+    }
+
+    private Date getDate() {
+        return this.date;
     }
 
     @Override
@@ -55,4 +98,7 @@ public class DeliveryDate {
         return value.hashCode();
     }
 
+    public int compareTo(DeliveryDate deliveryDate) {
+        return this.date.compareTo(deliveryDate.getDate());
+    }
 }

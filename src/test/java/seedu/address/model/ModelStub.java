@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
@@ -62,6 +63,48 @@ public class ModelStub implements Model {
 
     @Override
     public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void maintainSorted() {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public boolean hasSelected() {
+        fail("This method should not be called.");
+        return false;
+    }
+
+    @Override
+    public void select() {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void unselect() {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void setPrevIndex(Index target) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public Index getPrevIndex() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public void forceSelect(Index target) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void reselect(ReadOnlyParcel parcel) {
         fail("This method should not be called.");
     }
 }

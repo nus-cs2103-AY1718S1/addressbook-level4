@@ -14,8 +14,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
@@ -30,6 +33,8 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static boolean selected = false;
+    private static Index prevIndex = Index.fromZeroBased(0);
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyParcel> filteredParcels;
@@ -152,6 +157,67 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
         requireNonNull(predicate);
         filteredParcels.setPredicate(predicate);
+    }
+
+    @Override
+    public void maintainSorted() {
+        addressBook.sort();
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public boolean hasSelected() {
+        return selected;
+    }
+
+    @Override
+    public void select() {
+        selected = true;
+    }
+
+    @Override
+    public void unselect() {
+        selected = false;
+    }
+
+    @Override
+    public void forceSelect(Index target) {
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(target));
+    }
+
+    @Override
+    public void reselect(ReadOnlyParcel parcel) {
+        // With sorting, we lose our selected card. As such we have to reselect the
+        // parcel that was previously selected. This leads to the need to have some way of
+        // keeping track of which card had been previously selected. Hence the prevIndex
+        // attribute in the ModelManager class and also it's corresponding to get and set it.
+        // We first get the identity of the previously selected parcel.
+        ReadOnlyParcel previous = getAddressBook()
+                .getParcelList()
+                .get(getPrevIndex().getZeroBased());
+        // if the previous parcel belongs after the editedParcel, we just reselect the parcel
+        // at the previous index because all the parcels get pushed down.
+        if (previous.compareTo(parcel) > 0) {
+            forceSelect(getPrevIndex());
+        } else {
+            // otherwise the parcel toAdd belongs before the previously selected parcel
+            // so we select the parcel with the next index.
+            forceSelect(Index.fromZeroBased(findIndex(previous)));
+        }
+    }
+
+    private int findIndex(ReadOnlyParcel target) {
+        return getAddressBook().getParcelList().indexOf(target);
+    }
+
+    @Override
+    public void setPrevIndex(Index newIndex) {
+        prevIndex = newIndex;
+    }
+
+    @Override
+    public Index getPrevIndex() {
+        return prevIndex;
     }
 
     @Override

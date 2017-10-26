@@ -22,7 +22,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com.sg/maps/search/";
-    public static final int POSTAL_CODE_LENGTH = 6;
+    public static final int QUERY_POSTAL_CODE_LENGTH = 16;
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -42,7 +42,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     private void loadParcelLocationPage(ReadOnlyParcel parcel) {
-        loadPage(GOOGLE_MAP_URL_PREFIX + parcel.getAddress().postalCode.value.substring(1));
+        loadPage(GOOGLE_MAP_URL_PREFIX + getMapQueryStringFromPostalString(parcel.getAddress().postalCode.toString()));
     }
 
     public void loadPage(String url) {
@@ -68,5 +68,12 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleParcelPanelSelectionChangedEvent(ParcelPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadParcelLocationPage(event.getNewSelection().parcel);
+    }
+
+    public static String getMapQueryStringFromPostalString(String postalCode) {
+        int firstDigitIndex = 1;
+        int lastDigitIndex = 7;
+
+        return "Singapore+" + postalCode.substring(firstDigitIndex, lastDigitIndex);
     }
 }
