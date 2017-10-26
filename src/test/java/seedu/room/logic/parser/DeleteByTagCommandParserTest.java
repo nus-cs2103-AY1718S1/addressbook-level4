@@ -21,7 +21,8 @@ public class DeleteByTagCommandParserTest {
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "friends forever", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByTagCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "friends forever", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteByTagCommand.MESSAGE_USAGE));
     }
 
 }
