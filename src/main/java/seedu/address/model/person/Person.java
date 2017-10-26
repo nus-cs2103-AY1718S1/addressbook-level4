@@ -12,6 +12,7 @@ import java.util.Set;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.relationship.UniqueRelationshipList;
 
 import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
@@ -162,6 +163,12 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         ArrayList<Relationship> oppoRelationships = re.oppositeRelationships();
         for (Relationship oppoRe: oppoRelationships) {
             removeRelationship(oppoRe);
+        }
+
+        if (!re.isUndirected()) {
+            Relationship directlyOppoRelationship = new Relationship(re.getToPerson(), re.getFromPerson(),
+                    RelationshipDirection.DIRECTED);
+            removeRelationship(directlyOppoRelationship);
         }
         reList.add(re);
 
