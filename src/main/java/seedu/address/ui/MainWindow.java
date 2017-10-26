@@ -18,7 +18,6 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -41,7 +40,7 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel = new BrowserPanel();
+    private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
@@ -135,6 +134,12 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+
+
+
+
+
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -205,6 +210,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleCalendar() {
+        //browserPanel.loadCalendar();
         browserPanel.loadPage("https://www.timeanddate.com/calendar/");
     }
 
@@ -233,12 +239,6 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
-    }
-
-    @Subscribe
-    private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleCalendar();
     }
 }
 

@@ -26,7 +26,7 @@ public class TypicalPersons {
 
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111, Singapore 409999").withEmail("alice@example.com")
-            .withPhone("85355255")
+            .withPhone("86355255")
             .withTags("teachers").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25, Singapore 807777")

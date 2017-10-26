@@ -25,6 +25,7 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
+    private ObjectProperty<Country> country;
     private ObjectProperty<UniqueEmailList> emails;
     private ObjectProperty<Address> address;
     private ObjectProperty<UniqueScheduleList> schedules;
@@ -34,10 +35,12 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Set<Email> emails, Address address, Set<Schedule> schedules, Set<Tag> tags) {
-        requireAllNonNull(name, phone, emails, address, schedules, tags);
+    public Person(Name name, Phone phone, Country country, Set<Email> emails, Address address, Set<Schedule> schedules,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, country, emails, address, schedules, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.country = new SimpleObjectProperty<>(country);
         this.emails = new SimpleObjectProperty<>(new UniqueEmailList(emails));
         this.address = new SimpleObjectProperty<>(address);
         this.schedules = new SimpleObjectProperty<>(new UniqueScheduleList(schedules));
@@ -49,7 +52,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmails(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getCountry(), source.getEmails(), source.getAddress(),
                 source.getSchedules(), source.getTags());
     }
 
@@ -81,9 +84,23 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
+    public void setCountry(Country country) {
+        this.country.set(requireNonNull(country));
+    }
+
+    @Override
+    public ObjectProperty<Country> countryProperty() {
+        return country;
+    }
+
+    @Override
+    public Country getCountry() {
+        return country.get();
+    }
+
     /**
-     * Replaces this person's emails with the emails in the argument tag set.
-     */
+    * Replaces this person's emails with the emails in the argument tag set.
+    */
     public void setEmails(Set<Email> replacement) {
         emails.set(new UniqueEmailList(replacement));
     }

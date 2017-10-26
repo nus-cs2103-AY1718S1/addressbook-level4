@@ -13,14 +13,14 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Browser Panel of the App.
  */
-public class BrowserPanel extends UiPart<
-        Region> {
+public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com/maps/search/?api=1&query=";
@@ -77,5 +77,18 @@ public class BrowserPanel extends UiPart<
     private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    /**
+     * Opens the Calendar window.
+     */
+    private void loadCalendar() {
+        loadPage("https://www.timeanddate.com/calendar/");
+    }
+
+    @Subscribe
+    private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadCalendar();
     }
 }

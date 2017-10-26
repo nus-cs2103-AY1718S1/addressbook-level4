@@ -21,6 +21,8 @@ public interface ReadOnlyPerson {
     Name getName();
     ObjectProperty<Phone> phoneProperty();
     Phone getPhone();
+    ObjectProperty<Country> countryProperty();
+    Country getCountry();
     ObjectProperty<UniqueEmailList> emailProperty();
     Set<Email> getEmails();
     ObjectProperty<Address> addressProperty();
@@ -38,6 +40,7 @@ public interface ReadOnlyPerson {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
+                && other.getCountry().equals(this.getCountry())
                 && other.getEmails().equals(this.getEmails())
                 && other.getAddress().equals(this.getAddress()));
     }
@@ -51,6 +54,8 @@ public interface ReadOnlyPerson {
         builder.append(getName())
                 .append(" Phone: ")
                 .append(getPhone())
+                .append(" Country Code: ")
+                .append(getCountry())
                 .append(" Emails: ");
         for (Email email: getEmails()) {
             builder.append(email).append("; ");

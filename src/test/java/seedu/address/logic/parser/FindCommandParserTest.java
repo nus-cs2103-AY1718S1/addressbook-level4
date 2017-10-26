@@ -95,7 +95,6 @@ public class FindCommandParserTest {
         assertParseFailure(parser, "find i/ string", MESSAGE_INVALID_FORMAT);
     }
 
-
     @Test
     public void checkValidPhoneNumbers() {
         String[] testPhoneNumbersValid = new String[]{"9898", "98874577"};
