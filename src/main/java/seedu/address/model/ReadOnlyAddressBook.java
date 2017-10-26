@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -20,6 +21,13 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate tags.
      */
     ObservableList<Tag> getTagList();
+
+    /**
+     * Returns an unmodifiable view of a person by the given internal index
+     * @param i internal index of the person
+     *
+     */
+    ReadOnlyPerson getPersonByInternalIndex(int i) throws PersonNotFoundException;
 
     /**
      * Returns the maximum index of persons in the address book.

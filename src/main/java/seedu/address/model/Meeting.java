@@ -14,7 +14,7 @@ import seedu.address.model.person.InternalId;
  * Represents a Meeting
  * Guarantees: immutable; meeting time is in the future
  */
-public class Meeting {
+public class Meeting implements Comparable<Meeting> {
 
     //public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
     //public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
@@ -91,10 +91,13 @@ public class Meeting {
      * Format state as text for viewing.
      */
     public String toString() {
-        return "Date: " + dateTime.format(DATE_FORMATTER) + '\n'
-                + "Time: " + dateTime.format(TIME_FORMATTER) + '\n'
+        return "Date: " + dateTime.format(DATE_FORMATTER) + "  Time: " + dateTime.format(TIME_FORMATTER) + '\n'
                 + "Location: " + location + '\n'
                 + "Notes: " + notes;
     }
 
+    @Override
+    public int compareTo(Meeting other) {
+        return dateTime.compareTo(other.dateTime);
+    }
 }

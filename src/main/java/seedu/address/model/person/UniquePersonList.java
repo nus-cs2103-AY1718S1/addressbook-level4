@@ -109,6 +109,15 @@ public class UniquePersonList implements Iterable<Person> {
         return maxInternalIndex;
     }
 
+    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
+        for (Person p : internalList) {
+            if (p.getInternalId().getId() == index) {
+                return p;
+            }
+        }
+        throw new PersonNotFoundException();
+    }
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

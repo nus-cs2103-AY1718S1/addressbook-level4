@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -69,6 +70,21 @@ public class XmlSerializableAddressBook extends XmlSerializableData implements R
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(tags);
+    }
+
+    @Override
+    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
+        try {
+            for (XmlAdaptedPerson p : persons) {
+                if (p.getInternalId() == index) {
+                    return p.toModelType();
+                }
+            }
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+            return null;
+        }
+        throw new PersonNotFoundException();
     }
 
     @Override

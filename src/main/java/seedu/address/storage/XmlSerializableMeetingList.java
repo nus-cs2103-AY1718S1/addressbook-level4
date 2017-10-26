@@ -51,4 +51,13 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(meetings);
     }
+
+    /**
+     * Should not be reached since the list should be immutable and cannot be sorted
+     * @return
+     */
+    @Override
+    public Meeting getUpcomingMeeting() {
+        return null;
+    }
 }
