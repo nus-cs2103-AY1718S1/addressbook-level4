@@ -505,9 +505,9 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 
 === Multiple phone numbers supported
 (launched in V1.3)
- 
+
  ====Description
- 
+
 Since our target audience are the NUS students, which include a large proportion of international students, our addressBook will support the users to add multiple phone numbers.
 =======
 === More than one instance for each field
@@ -528,7 +528,7 @@ Primary phone number and additional numbers are stored separately.
 Primary number is saved directly as an object in Person while additional numbers are save in a list.
 
 UniquePhoneList is a list of Phone object. It can be empty if the person does not have additional numbers.
- 
+
 Primary phone number must not be null.
 
 ==== Logic
@@ -536,7 +536,7 @@ PhoneCommand is created to add/remove additional phone numbers. It can also be u
 
 PhoneCommand is called by using command word "updatePhone", then the command word is followed by 3 parameters: Index, String, String(optional).
 The 3 parameters represents the index of the person in the AddressBook, action to be taken (add/remove/showAllPhones) and a value respectively.
- 
+
 For add, we will add the phone to the uniquePhoneList and check for duplicate. Example call of add is illustrated as below.
 image::add.png[width="200"]
 
