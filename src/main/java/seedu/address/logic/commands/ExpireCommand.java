@@ -62,7 +62,7 @@ public class ExpireCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getTags(), date, personToEdit.getRemark());
+                personToEdit.getAddress(), personToEdit.getTags(), date, personToEdit.getRemark(), personToEdit.getImage());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
