@@ -178,11 +178,9 @@ public class CalendarPanel extends UiPart<Region> {
                                     if ((bCount == 0) && (dCount == 0)) {
                                         dCount++;
                                         s.append(dCount + " Deadline");
-                                        colour = new StringBuilder("-fx-background-color: #ff444d;");
                                     } else if ((bCount > 0) && (dCount == 0)) {
                                         dCount++;
                                         s.append(" + " + dCount + " Deadline");
-                                        colour = new StringBuilder("-fx-background-color: #feff31;");
                                     } else if (dCount > 0) {
                                         dCount++;
                                         int endIndex = s.indexOf(" Deadline");
@@ -190,7 +188,11 @@ public class CalendarPanel extends UiPart<Region> {
                                         if (dCount == 2) {
                                             s.append("s");
                                         }
-                                        colour = new StringBuilder("-fx-background-color: #feff31;");
+                                        if (bCount == 0) {
+                                            colour = new StringBuilder("-fx-background-color: #ff444d;");
+                                        } else {
+                                            colour = new StringBuilder("-fx-background-color: #feff31;");
+                                        }
                                     }
                                 }
                             } catch (DateTimeParseException exc) {
