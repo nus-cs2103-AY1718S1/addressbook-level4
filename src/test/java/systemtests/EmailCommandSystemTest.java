@@ -28,13 +28,6 @@ public class EmailCommandSystemTest extends AddressBookSystemTest {
         String command = "     " + EmailCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
         String expectedResultMessage = MESSAGE_SUCCESS;
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
-        /* Case: filtered person list, delete index within bounds of address book but out of bounds of person list
-         * -> rejected
-         */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getPersonList().size();
-        command = EmailCommand.COMMAND_WORD + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
