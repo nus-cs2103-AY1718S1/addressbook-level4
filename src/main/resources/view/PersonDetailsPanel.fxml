@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="personDetailsBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: white;">
+         <children>
+            <Label fx:id="nameLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="Person Name" textAlignment="CENTER" underline="true">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" top="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="phoneLabel" text="Phone Number">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="emailLabel" text="Email">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="addressLabel" text="Address">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</StackPane>
