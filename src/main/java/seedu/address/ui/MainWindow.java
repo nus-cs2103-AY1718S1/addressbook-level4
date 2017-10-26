@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
-//import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -219,15 +219,20 @@ public class MainWindow extends UiPart<Region> {
      * Allows for theme changes
      */
     @FXML
-    private void handleTheme() {
+    private void handleDarkTheme() {
+        String themeUrl = getClass().getResource("/view/DarkTheme.css").toExternalForm();
+        setTheme(themeUrl);
+        raise(new ChangeThemeRequestEvent());
+    }
+    @FXML
+    private void handleLightTheme() {
         String themeUrl = getClass().getResource("/view/LightTheme.css").toExternalForm();
         setTheme(themeUrl);
-        //raise(new ChangeThemeRequestEvent());
+        raise(new ChangeThemeRequestEvent());
     }
-    private void setTheme(String themeUrl) {
+    public void setTheme(String themeUrl) {
         scene2.getStylesheets().add(themeUrl);
         primaryStage.setScene(scene2);
-        primaryStage.show();
     }
 
     public PersonListPanel getPersonListPanel() {
