@@ -78,14 +78,14 @@ public class FindTaskCommandTest {
     @Test
     public void executeMultipleDeadlinesMultipleTasksFound() {
         String expectedMessage = String.format(MESSAGE_TASK_LISTED_OVERVIEW, 2);
-        FindTaskCommand command = prepareCommand("28-10-2017 01-11-2017");
+        FindTaskCommand command = prepareCommand("01-11-2017 20-11-2017");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(QUIZ, BUY_TICKETS));
     }
 
     @Test
     public void executeMultipleKeywordTypeMultipleTasksFound() {
         String expectedMessage = String.format(MESSAGE_TASK_LISTED_OVERVIEW, 3);
-        FindTaskCommand command = prepareCommand("code 28-10-2017 30-11-2017");
+        FindTaskCommand command = prepareCommand("code 01-11-2017 18-11-2017");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ASSIGNMENT, QUIZ, SUBMISSION));
     }
 

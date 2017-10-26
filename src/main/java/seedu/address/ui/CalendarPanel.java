@@ -1,9 +1,12 @@
 package seedu.address.ui;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.MonthDay;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import com.sun.javafx.scene.control.skin.DatePickerContent;
@@ -20,10 +23,12 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.persons.FindCommand;
 import seedu.address.logic.commands.tasks.FindTaskCommand;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.task.ReadOnlyTask;
@@ -155,11 +160,21 @@ public class CalendarPanel extends UiPart<Region> {
                             }
                         }
                         for (ReadOnlyTask task: taskList) {
+                            String finalTaskDate = "";
                             try {
+                                String taskDate = "";
+                                try {
+                                    Date deadline = ParserUtil.parseDate(task.getDeadline().date);
+                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                    taskDate = dateFormat.format(deadline);
+                                } catch (IllegalValueException e) {
+                                    e.printStackTrace();
+                                }
+                                finalTaskDate = taskDate;
                                 //ensure that Deadline/Startdate is valid, after computer is invented
-                                assert LocalDate.parse(task.getDeadline().toString(), format).getYear()
+                                assert LocalDate.parse(finalTaskDate, format).getYear()
                                         >= (LocalDate.now().getYear() - 100);
-                                if (item.equals(LocalDate.parse(task.getDeadline().toString(), format))) {
+                                if (item.equals(LocalDate.parse(finalTaskDate, format))) {
                                     if ((bCount == 0) && (dCount == 0)) {
                                         dCount++;
                                         s.append(dCount + " Deadline");
@@ -182,7 +197,7 @@ public class CalendarPanel extends UiPart<Region> {
                                     }
                                 }
                             } catch (DateTimeParseException exc) {
-                                logger.warning("Not parsable: " + task.getDeadline().toString());
+                                logger.warning("Not parsable: " + finalTaskDate);
                                 throw exc;
                             }
                         }

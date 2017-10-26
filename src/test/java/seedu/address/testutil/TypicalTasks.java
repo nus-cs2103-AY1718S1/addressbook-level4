@@ -26,32 +26,23 @@ public class TypicalTasks {
             .withStartDate("Wed, Oct 25, '17")
             .withDeadline("Wed, Nov 1, '17").build();
     public static final ReadOnlyTask GYM = new TaskBuilder().withDescription("Start going to the gym")
-            .withStartDate("20-05-2017")
-            .withDeadline("23-10-2017").build();
+            .withStartDate("Fri, Nov 3, '17")
+            .withDeadline("").withTags(VALID_TAG_URGENT).build();
     public static final ReadOnlyTask BUY_TICKETS = new TaskBuilder()
             .withDescription("Get tickets two weeks before flight")
-            .withStartDate("11-11-2017")
-            .withDeadline("01-11-2017").build();
-    public static final ReadOnlyTask SUBMISSION = new TaskBuilder().withDescription("Self evaluation submission due")
-            .withStartDate("08-08-2017")
-            .withDeadline("30-11-2017").build();
-    public static final ReadOnlyTask PERSONAL_PROJECT = new TaskBuilder().withDescription("Finish art piece")
-            .withStartDate("01-01-2017")
-            .withDeadline("12-12-2017").build();
-    /*=======
-            .withStartDate("Fri, Nov 3, '17").withDeadline("").withTags(VALID_TAG_URGENT).build();
-    public static final ReadOnlyTask BUY_TICKETS = new TaskBuilder()
-            .withDescription("Get tickets two weeks before flight")
+            .withStartDate("")
             .withDeadline("Fri, Nov 20, '17").build();
     public static final ReadOnlyTask SUBMISSION = new TaskBuilder().withDescription("Self evaluation submission due")
-            .withStartDate("").withDeadline("Sat, Nov 18, '17").build();
+            .withStartDate("")
+            .withDeadline("Sat, Nov 18, '17").build();
     public static final ReadOnlyTask PERSONAL_PROJECT = new TaskBuilder().withDescription("Finish art piece").build();
     public static final ReadOnlyTask GROCERY = new TaskBuilder().withDescription("Go grocery shopping")
+            .withStartDate("")
             .withDeadline("Thu, Mar 8, '18").build();
     public static final ReadOnlyTask MEETUP = new TaskBuilder().withDescription("Meet friends")
+            .withStartDate("")
             .withDeadline("Tue, Dec 12, '17").build();
-    >>>>>>> master*/
-
+    // TODO: 26/10/17 Ensure that StartDate is empty string instead of null, if not test case will be wrong
     // Manually added
     public static final ReadOnlyTask SCHOOL = new TaskBuilder().withDescription("Semester two starts")
             .withStartDate("Fri, Jan 12, '18").build();

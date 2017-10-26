@@ -58,25 +58,26 @@ public class FindTaskCommandSystemTest extends AddressBookSystemTest {
         assertSelectedTaskCardUnchanged();
 
         /* Case: find task with deadline in address book, 1 keyword -> 1 task found */
-        command = FindTaskCommand.COMMAND_WORD + " 28-10-2017";
+        command = FindTaskCommand.COMMAND_WORD + " 01-11-2017";
         ModelHelper.setFilteredTaskList(expectedModel, QUIZ);
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 
+        // TODO: 26/10/17 Find out why 26-10-2017 01-11-2017 gives 3 tasks listed
         /* Case: find multiple tasks in address book, 2 keywords -> 2 tasks found */
-        command = FindTaskCommand.COMMAND_WORD + " 20-10-2017 28-10-2017";
-        ModelHelper.setFilteredTaskList(expectedModel, ASSIGNMENT, QUIZ);
+        command = FindTaskCommand.COMMAND_WORD + " 20-11-2017 01-11-2017";
+        ModelHelper.setFilteredTaskList(expectedModel, BUY_TICKETS, QUIZ);
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 
         /* Case: find multiple tasks in address book, 2 keywords with 1 repeat -> 2 tasks found */
-        command = FindTaskCommand.COMMAND_WORD + " 20-10-2017 28-10-2017 20-10-2017";
-        ModelHelper.setFilteredTaskList(expectedModel, ASSIGNMENT, QUIZ);
+        command = FindTaskCommand.COMMAND_WORD + " 20-11-2017 01-11-2017 20-11-2017";
+        ModelHelper.setFilteredTaskList(expectedModel, BUY_TICKETS, QUIZ);
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
 
         /* Case: find multiple tasks in address book, 2 keywords of different type -> 2 tasks found */
-        command = FindTaskCommand.COMMAND_WORD + " 28-10-2017 gym";
+        command = FindTaskCommand.COMMAND_WORD + " 01-11-2017 gym";
         ModelHelper.setFilteredTaskList(expectedModel, QUIZ, GYM);
         assertCommandSuccess(command, expectedModel);
         assertSelectedTaskCardUnchanged();
