@@ -79,8 +79,8 @@
       </VBox>
       <GridPane fx:id="helpOverlay" blendMode="SRC_ATOP" gridLinesVisible="true" opacity="0.9" prefWidth="1043.0" style="-fx-background-color: white;" visible="false">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="619.0" minWidth="10.0" prefWidth="165.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1097.0" minWidth="10.0" prefWidth="1084.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="619.0" minWidth="0.0" prefWidth="149.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1229.0" minWidth="10.0" prefWidth="1080.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints maxHeight="94.0" minHeight="0.0" prefHeight="43.0" vgrow="SOMETIMES" />
@@ -89,22 +89,22 @@
           <RowConstraints maxHeight="142.0" minHeight="10.0" prefHeight="131.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="Add" textFill="#8b71f2" GridPane.rowIndex="1">
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="Add" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="1">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="45.0" prefWidth="148.0" text="Delete" textFill="#8b71f2" GridPane.rowIndex="2">
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="148.0" text="Delete" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="2">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="List" textFill="#8b71f2" GridPane.rowIndex="3">
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="List" textAlignment="CENTER" textFill="#8b71f2" GridPane.rowIndex="3">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="Command" textFill="#8b71f2">
+            <Label alignment="CENTER" prefHeight="45.0" prefWidth="228.0" text="Command" textAlignment="CENTER" textFill="#8b71f2">
                <font>
                   <Font size="30.0" />
                </font>
@@ -114,7 +114,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField alignment="CENTER" editable="false" text="add n/NAME p/PHONE a/ADDRESS e/EMAIL [t/tag]" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField alignment="CENTER" editable="false" text="add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/tag]" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
