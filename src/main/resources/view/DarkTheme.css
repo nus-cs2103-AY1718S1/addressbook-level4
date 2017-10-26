@@ -371,7 +371,7 @@
 }
 
 #commandTextField {
-    -fx-background-color: derive(#d4cbb3, 20%);
+    -fx-background-color: derive(#A9A9A9, 20%);
     -fx-background-insets: 0;
     -fx-border-color: derive(#d4cbb3, 20%);
     -fx-border-insets: 0;
@@ -379,7 +379,7 @@
     -fx-font-family: monospace;
     -fx-font-weight: bolder;
     -fx-font-size: 13pt;
-    -fx-text-fill: #6B4A40;
+    -fx-text-fill: white;
 }
 
 #commandTextFieldKeyword {
@@ -454,4 +454,25 @@
     -fx-control-inner-background: #6B4A40;
     -fx-text-fill: derive(#d4cbb3, 50%);
     -fx-text-alignment: center;
+}
+
+
+#stickyNote {
+    -fx-background-color: transparent;
+    -fx-padding:5px 5px 5px;
+    -fx-font:20px 'Gloria Hallelujah', cursive;
+    -fx-line-height:1.5;
+}
+
+#stickyNote .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#stickyNote  .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+#stickyNote  .scroll-pane .content{
+    -fx-background-color: transparent;
 }

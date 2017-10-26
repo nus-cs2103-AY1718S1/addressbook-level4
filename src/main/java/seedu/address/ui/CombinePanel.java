@@ -59,6 +59,10 @@ public class CombinePanel extends UiPart<Region> {
     private GridPane timetableGrid;
     @FXML
     private HBox timeHeader;
+    @FXML
+    private HBox noteBox;
+    @FXML
+    private GridPane noteGrid;
 
     public CombinePanel(Logic logic) {
         super(FXML);
@@ -73,6 +77,9 @@ public class CombinePanel extends UiPart<Region> {
         browser.setVisible(false);
         registerAsAnEventHandler(this);
 
+        noteBox.setVisible(true);
+        stickyNotesInit();
+
     }
 
 
@@ -83,12 +90,15 @@ public class CombinePanel extends UiPart<Region> {
         if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LESSON)) {
             timeBox.setVisible(true);
             browser.setVisible(false);
+            noteBox.setVisible(false);
         } else if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)) {
             timeBox.setVisible(false);
             browser.setVisible(true);
+            noteBox.setVisible(false);
         } else {
             timeBox.setVisible(false);
             browser.setVisible(false);
+            noteBox.setVisible(true);
         }
     }
 
@@ -204,8 +214,6 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 
-
-
     private int getWeekDay(String text) {
         text = text.toUpperCase();
         switch (text) {
@@ -284,6 +292,36 @@ public class CombinePanel extends UiPart<Region> {
         }
     }
 
+
+    /***************** Sticky Note *****************/
+
+    private static final String STICKY_NOTE = "stickyNote";
+
+    public void stickyNotesInit(){
+        //noteGrid.setGridLinesVisible(true);
+        noteGrid.setHgap(20); //horizontal gap in pixels => that's what you are asking for
+        noteGrid.setVgap(20); //vertical gap in pixels
+
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+
+                int x = 120 + (int)(Math.random() * 255);
+                int y = 120 + (int)(Math.random() * 255);
+                int z = 120 + (int)(Math.random() * 255);
+
+                StackPane stackPane = new StackPane();
+                stackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z +", 0.5);" +
+                        "-fx-effect: dropshadow(gaussian, red, " + 20 + ", 0, 0, 0);" +
+                        "-fx-background-insets: " + 10 + ";");
+                TextArea ta = new TextArea("HELLO WORLD HELLO WORLD HELLO WORLD HELLO WORLD HELLO WORLD");
+                ta.setWrapText(true);
+                ta.setEditable(false);
+                ta.setId(STICKY_NOTE);
+                stackPane.getChildren().add(ta);
+                noteGrid.add(stackPane,j,i);
+            }
+        }
+    }
 }
 
 /**

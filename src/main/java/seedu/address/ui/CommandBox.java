@@ -12,8 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.controlsfx.control.textfield.TextFields;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
@@ -28,7 +26,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-
+import org.controlsfx.control.textfield.TextFields;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.ColorKeywordEvent;
@@ -393,8 +391,8 @@ public class CommandBox extends UiPart<Region> {
         // tagLabel.setStyle("-fx-background-color:yellow;\n"
         // + "-fx-text-fill: red; ");
 
-        tagLabel.setStyle("-fx-text-fill: #b06901");
-
+        tagLabel.setStyle("-fx-text-fill: yellow");
+        tagLabel.setOpacity(0.7);
         tagLabel.setVisible(true);
         tagLabel.toFront();
     }
