@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-F10-B2/main
 
-By: `F10-B2`      Since: `Sep 2017`      Licence: `MIT`
+By: `CS2103-F10-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
