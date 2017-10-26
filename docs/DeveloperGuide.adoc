@@ -346,6 +346,26 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::meetings[]
+=== Meetings
+
+The mechanism and data structure of meetings are similar to that of the address book. The local storage is located at
+`data/meetinglist.xml` by default. For each meeting, the date, time location and participants are recorded. The participants
+must be from the address book.
+
+[NOTE]
+The meeting functionality is not fully implemented yet. There is currently no command to add or edit meetings.
+
+==== Design Considerations
+
+**Aspect:** Local storage of the meeting list +
+**Alternative 1 (current choice):** Use XML and separate from the address book storage+
+**Pros:** Follows the single responsibility principle and simplifies both the address book and meeting list data structre +
+**Cons:** Potentially duplicate code, violates the DRY principle +
+**Alternative 2:** Use XML together in the address book storage +
+**Pros:** Less extra components needed, some information shared between the two parts can be accessed more conveniently +
+**Cons:** The data structure of `addressbook.xml` would become too complicated
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
