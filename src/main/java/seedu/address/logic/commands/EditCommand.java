@@ -114,10 +114,8 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         ExpiryDate updatedExpiryDate = personToEdit.getExpiryDate();
         Remark updatedRemark = personToEdit.getRemark();
-        Group updatedGroup = editPersonDescriptor.getGroup().orElse(personToEdit.getGroup());
-      
-        Image updatedImage = personToEdit.getImage();
-      
+        Group updatedGroup = editPersonDescriptor.getGroup().orElse(personToEdit.getGroup()); 
+        Image updatedImage = personToEdit.getImage(); 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
                 updatedTags, updatedExpiryDate, updatedRemark, updatedGroup, updatedImage);
     }
@@ -214,11 +212,10 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
-
         public void setGroup(Group group) {
             this.group = group;
         }
-
+        
         public Optional<Group> getGroup() {
             return Optional.ofNullable(group);
         }
@@ -226,7 +223,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Image> getImage() {
             return Optional.ofNullable(image);
         }
-
+        
         public void setImage(Image image) {
             this.image = image;
         }
