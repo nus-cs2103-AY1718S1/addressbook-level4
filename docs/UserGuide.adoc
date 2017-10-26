@@ -65,7 +65,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* Wildcard symbol `*` is allowed in parameters for `find` and `filter` which matches any non-space string.
+* Wildcard symbol `*` and `?` are allowed in parameters for `find` and `filter` where `*` matches any non-space string and `?` matches any non-space unit-length symbol.
 ====
 
 === Viewing help : `help`

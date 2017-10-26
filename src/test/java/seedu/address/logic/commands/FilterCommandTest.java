@@ -83,7 +83,14 @@ public class FilterCommandTest {
     }
 
     @Test
-    public void execute_wildcardKeywords_onePersonFound() {
+    public void execute_wildcardKeywords_aliceFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FilterCommand command = prepareCommand("fami??");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE));
+    }
+
+    @Test
+    public void execute_wildcardKeywords_bensonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         FilterCommand command = prepareCommand("o*");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));

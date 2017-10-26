@@ -69,7 +69,7 @@ public class FindCommandTest {
     @Test
     public void execute_wildcardKeywords_onePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FindCommand command = prepareCommand("b*n");
+        FindCommand command = prepareCommand("b?nson");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
     }
 
