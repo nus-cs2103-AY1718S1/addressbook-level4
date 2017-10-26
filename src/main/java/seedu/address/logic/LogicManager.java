@@ -11,9 +11,11 @@ import seedu.address.commons.events.model.AliasTokenChangedEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.alias.AliasCommandParser;
+import seedu.address.logic.parser.alias.UnaliasCommandParser;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.logic.parser.person.DeleteCommandParser;
 import seedu.address.logic.parser.person.EditCommandParser;
 import seedu.address.logic.parser.person.FindCommandParser;
@@ -22,9 +24,7 @@ import seedu.address.logic.parser.person.PinCommandParser;
 import seedu.address.logic.parser.person.RemarkCommandParser;
 import seedu.address.logic.parser.person.SelectCommandParser;
 import seedu.address.logic.parser.person.SortCommandParser;
-import seedu.address.logic.parser.alias.UnaliasCommandParser;
 import seedu.address.logic.parser.person.UnpinCommandParser;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -82,6 +82,7 @@ public class LogicManager extends ComponentManager implements Logic {
         addressBookParser.registerCommandParser(new SelectCommandParser());
         addressBookParser.registerCommandParser(new PinCommandParser());
         addressBookParser.registerCommandParser(new UnpinCommandParser());
+        addressBookParser.registerCommandParser(new AddCommandParser());
     }
 
     /**
