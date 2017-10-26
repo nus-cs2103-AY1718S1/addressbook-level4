@@ -39,7 +39,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NOTE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHOTO_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHOTO_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_AMY;
@@ -234,8 +233,8 @@ public class EditCommandParserTest {
                 + TAG_DESC_FRIEND + PHONE_DESC_AMY + ADDRESS_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
                 + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND + COMPANY_DESC_BOB
                 + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY + NOTE_DESC_BOB + COMPANY_DESC_BOB
-                + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY +
-                NOTE_DESC_BOB + PHOTO_DESC_AMY + PHOTO_DESC_BOB + REL_DESC_COLLEAGUE;
+                + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY
+                + NOTE_DESC_BOB + PHOTO_DESC_AMY + PHOTO_DESC_BOB + REL_DESC_COLLEAGUE;
 
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)

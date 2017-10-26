@@ -157,10 +157,10 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withPhoto(String note) {
         try {
             ParserUtil.parsePhoto(Optional.of(note)).ifPresent
-                    (descriptor::setPhoto);
+                (descriptor::setPhoto);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("Photo is expected to be " +
-                    "unique.");
+            throw new IllegalArgumentException("Photo is expected to be "
+                    + "unique.");
         }
         return this;
     }

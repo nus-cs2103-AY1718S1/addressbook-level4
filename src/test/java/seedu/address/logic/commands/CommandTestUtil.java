@@ -85,10 +85,8 @@ public class CommandTestUtil {
     public static final String PRIORITY_DESC_BOB = " " + PREFIX_PRIORITY + VALID_PRIORITY_BOB;
     public static final String NOTE_DESC_AMY = " " + PREFIX_NOTE + VALID_NOTE_AMY;
     public static final String NOTE_DESC_BOB = " " + PREFIX_NOTE + VALID_NOTE_BOB;
-    public static final String PHOTO_DESC_AMY = " " + PREFIX_PHOTO +
-            VALID_PHOTO_AMY;
-    public static final String PHOTO_DESC_BOB = " " + PREFIX_PHOTO +
-            VALID_PHOTO_BOB;
+    public static final String PHOTO_DESC_AMY = " " + PREFIX_PHOTO + VALID_PHOTO_AMY;
+    public static final String PHOTO_DESC_BOB = " " + PREFIX_PHOTO + VALID_PHOTO_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String REL_DESC_SIBLINGS = " " + PREFIX_RELATIONSHIP + VALID_REL_SIBLINGS;
@@ -150,7 +148,8 @@ public class CommandTestUtil {
                 .withCompany(VALID_COMPANY_BOB).withPosition(VALID_POSITION_BOB)
                 .withStatus(VALID_STATUS_BOB).withPriority(VALID_PRIORITY_BOB)
                 .withNote(VALID_NOTE_BOB).withPhoto(VALID_PHOTO_BOB).withTags
-                (VALID_TAG_FRIEND).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withRelation(VALID_REL_SIBLINGS).build();
+                (VALID_TAG_FRIEND).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+                .withRelation(VALID_REL_SIBLINGS).build();
 
         DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM)
                 .withTimeslot(VALID_TIMESLOT_MIDTERM)

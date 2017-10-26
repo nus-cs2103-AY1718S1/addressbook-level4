@@ -205,9 +205,9 @@ public class PersonBuilder {
     /**
      * Sets the {@code Photo} of the {@code Person} that we are building.
      */
-    public PersonBuilder withPhoto(String photoURL) {
+    public PersonBuilder withPhoto(String photoUrl) {
         try {
-            this.person.setPhoto(new Photo(photoURL));
+            this.person.setPhoto(new Photo(photoUrl));
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         }

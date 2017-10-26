@@ -18,8 +18,8 @@ public class PhotoTest {
         assertFalse(Photo.isValidPhotoUrl("photo.png")); // wrong extension
 
         // valid photoUrl
-        assertTrue(Photo.isValidPhotoUrl("src/main/resources/images/John.jpg" +
-                ".jpg")); // valid long file path
+        assertTrue(Photo.isValidPhotoUrl("src/main/resources/images/John.jpg"
+                + ".jpg")); // valid long file path
         assertTrue(Photo.isValidPhotoUrl("John.jpg")); // valid short file path
     }
 }
