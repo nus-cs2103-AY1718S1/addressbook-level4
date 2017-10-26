@@ -24,7 +24,8 @@
         <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
       </Menu>
     </MenuBar>
-    <VBox fx:id="groupList" SplitPane.resizableWithParent="false" prefWidth="700" minWidth="700" maxWidth="700">
+    <VBox fx:id="groupList" SplitPane.resizableWithParent="false" prefWidth="700" minWidth="700" maxWidth="700"
+          maxHeight="55" minHeight="55">
       <padding>
         <Insets top="10" right="10" bottom="10" left="10" />
       </padding>
@@ -46,7 +47,7 @@
   </StackPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+    <VBox fx:id="personList" minWidth="400" prefWidth="400" SplitPane.resizableWithParent="false">
       <padding>
         <Insets top="10" right="10" bottom="10" left="10" />
       </padding>
