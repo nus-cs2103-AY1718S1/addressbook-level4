@@ -49,17 +49,14 @@ public class LogicManager extends ComponentManager implements Logic {
         }
 
         if (!isLoggedInPassword) {
-                if (isCorrectPassword(commandText)) {
-                    result = new CommandResult("Log in successful! Welcome to H.M.U v1.3!");
-                    return result;
-                } else {
+            if (isCorrectPassword(commandText)) {
+                result = new CommandResult("Log in successful! Welcome to H.M.U v1.3!");
+                return result;
+            } else {
                     result = new CommandResult("Invalid Credentials. Please try again!");
                     return result;
-                }
-        }
-
-         else {
-
+            }
+        }   else {
             logger.info("----------------[USER COMMAND][" + commandText + "]");
             try {
                 Command command = addressBookParser.parseCommand(commandText);
