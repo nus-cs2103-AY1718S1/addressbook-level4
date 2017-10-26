@@ -9,14 +9,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Schedule {
 
 
-    public static final String MESSAGE_PHONE_CONSTRAINTS =
+    public static final String MESSAGE_SCHEDULE_CONSTRAINTS =
             "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public TreeSet<Integer> schedule;
+    public TreeSet<Integer> busyTime;
 
     /**
      * Validates given phone number.
@@ -25,24 +24,22 @@ public class Schedule {
      */
 
     public Schedule() {
-        schedule = new TreeSet<Integer>();
+        busyTime = new TreeSet<Integer>();
     }
-    public Schedule(TreeSet<Integer> schedule) throws IllegalValueException {
-        requireNonNull(schedule);
-        this.schedule = schedule;
+    public Schedule(TreeSet<Integer> busyTime) throws IllegalValueException {
+        requireNonNull(busyTime);
+        this.busyTime = busyTime;
     }
 
-    /**
-     * Returns true if a given string is a valid person phone number.
-     */
-    /*public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
+    public void addTime(Integer startTime){
+        if(!busyTime.contains(startTime)){
+            busyTime.add(startTime);
+        }
     }
-     */
 
     @Override
     public String toString() {
-        return schedule.toString();
+        return busyTime.toString();
     }
 
     /*
@@ -56,7 +53,7 @@ public class Schedule {
 
     @Override
     public int hashCode() {
-        return schedule.hashCode();
+        return busyTime.hashCode();
     }
 
 }
