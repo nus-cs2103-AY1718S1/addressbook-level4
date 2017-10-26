@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
@@ -25,7 +26,9 @@ import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
+import seedu.room.model.tag.Tag;
 import seedu.room.testutil.PersonBuilder;
+
 
 public class AddCommandTest {
 
@@ -117,6 +120,11 @@ public class AddCommandTest {
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
+            fail("this method should not be called.");
         }
 
         @Override

@@ -10,6 +10,7 @@ import seedu.room.logic.commands.AddCommand;
 import seedu.room.logic.commands.BackupCommand;
 import seedu.room.logic.commands.ClearCommand;
 import seedu.room.logic.commands.Command;
+import seedu.room.logic.commands.DeleteByTagCommand;
 import seedu.room.logic.commands.DeleteCommand;
 import seedu.room.logic.commands.EditCommand;
 import seedu.room.logic.commands.ExitCommand;
@@ -26,6 +27,7 @@ import seedu.room.logic.commands.SwaproomCommand;
 import seedu.room.logic.commands.UndoCommand;
 
 import seedu.room.logic.parser.exceptions.ParseException;
+
 
 /**
  * Parses user input.
@@ -72,6 +74,11 @@ public class ResidentBookParser {
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
+
+        case DeleteByTagCommand.COMMAND_WORD:
+        case DeleteByTagCommand.COMMAND_ALIAS:
+            return new DeleteByTagCommandParser().parse(arguments);
+
 
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:

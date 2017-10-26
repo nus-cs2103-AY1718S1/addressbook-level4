@@ -10,8 +10,10 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
+import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
@@ -20,6 +22,7 @@ import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
 import seedu.room.model.tag.UniqueTagList;
+
 
 /**
  * Wraps all data at the room-book level
@@ -157,6 +160,10 @@ public class ResidentBook implements ReadOnlyResidentBook {
         } else {
             throw new PersonNotFoundException();
         }
+    }
+
+    public void removeByTag(Tag tag) throws IllegalValueException, CommandException {
+        persons.removeByTag(tag);
     }
 
     //// tag-level operations

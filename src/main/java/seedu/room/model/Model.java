@@ -3,11 +3,15 @@ package seedu.room.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
+import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
+import seedu.room.model.tag.Tag;
+
 
 /**
  * The API of the Model component.
@@ -27,6 +31,9 @@ public interface Model {
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Delete all persons with the given tag */
+    void deleteByTag(Tag tag) throws IllegalValueException, CommandException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -54,7 +61,7 @@ public interface Model {
      * Updates the highlight status of persons with the specified tag
      * @throws TagNotFoundException if no specified tag exists
      */
-    void updateHighlightStatus(String highlightTag);
+    void updateHighlightStatus(String highlightTag) throws TagNotFoundException;
 
     /** Swaps two residents' rooms */
     void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException;

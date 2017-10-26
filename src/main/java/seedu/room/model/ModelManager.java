@@ -14,13 +14,17 @@ import javafx.collections.transformation.FilteredList;
 import seedu.room.commons.core.ComponentManager;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.model.ResidentBookChangedEvent;
+import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
+import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.UniquePersonList;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
+import seedu.room.model.tag.Tag;
+
 
 /**
  * Represents the in-memory model of the resident book data.
@@ -96,6 +100,12 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         residentBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateResidentBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteByTag(Tag tag) throws IllegalValueException, CommandException {
+        residentBook.removeByTag(tag);
         indicateResidentBookChanged();
     }
 

@@ -10,11 +10,15 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import seedu.room.commons.core.Messages;
 import seedu.room.commons.util.CollectionUtil;
+import seedu.room.logic.commands.exceptions.CommandException;
 import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
 import seedu.room.model.tag.Tag;
+
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -106,6 +110,26 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    /**
+     * Removes the persons who have the tag supplied
+     *
+     * @throws CommandException if no one has this tag
+     */
+    public void removeByTag(Tag tag) throws CommandException {
+        Iterator<Person> itr = this.iterator();
+        int numRemoved = 0;
+        while (itr.hasNext()) {
+            Person p = itr.next();
+            if (p.getTags().contains(tag)) {
+                itr.remove();
+                numRemoved++;
+            }
+        }
+        if (numRemoved == 0) {
+            throw new CommandException(Messages.MESSAGE_INVALID_TAG_FOUND);
+        }
+    }
+
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
@@ -117,6 +141,10 @@ public class UniquePersonList implements Iterable<Person> {
         }
         setPersons(replacement);
         sortBy(currentlySortedBy);
+    }
+
+    public ObservableList<Person> getInternalList() {
+        return internalList;
     }
 
     /**
