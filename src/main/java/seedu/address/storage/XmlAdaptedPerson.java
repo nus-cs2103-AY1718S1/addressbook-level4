@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.InternalId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -22,6 +23,8 @@ import seedu.address.model.tag.Tag;
  */
 public class XmlAdaptedPerson {
 
+    @XmlElement(required = true)
+    private int internalId;
     @XmlElement(required = true)
     private String searchCount;
     @XmlElement(required = true)
@@ -49,6 +52,7 @@ public class XmlAdaptedPerson {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
+        internalId = source.getInternalId().getId();
         searchCount = source.getSearchData().getSearchCount();
         name = source.getName().fullName;
         phone = source.getPhone().value;
@@ -70,12 +74,21 @@ public class XmlAdaptedPerson {
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
+        final InternalId internalId = new InternalId(this.internalId);
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Set<Tag> tags = new HashSet<>(personTags);
         final SearchData searchCount = new SearchData(this.searchCount);
-        return new Person(name, phone, email, address, tags, searchCount);
+        return new Person(internalId, name, phone, email, address, tags, searchCount);
+    }
+
+    /**
+     * Returns the internal id of the person as read from the xml file
+     * This is needed for address book initialization
+     */
+    public int getInternalId() {
+        return internalId;
     }
 }

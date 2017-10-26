@@ -18,7 +18,7 @@ import seedu.address.model.tag.Tag;
  * An Immutable AddressBook that is serializable to XML format
  */
 @XmlRootElement(name = "addressbook")
-public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
+public class XmlSerializableAddressBook extends XmlSerializableData implements ReadOnlyAddressBook {
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
@@ -71,4 +71,14 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    @Override
+    public int getMaxInternalIndex() {
+        int maxIndex = 0;
+        for (XmlAdaptedPerson p : persons) {
+            if (p.getInternalId() > maxIndex) {
+                maxIndex = p.getInternalId();
+            }
+        }
+        return maxIndex;
+    }
 }

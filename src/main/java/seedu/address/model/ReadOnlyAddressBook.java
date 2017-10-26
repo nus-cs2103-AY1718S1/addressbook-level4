@@ -21,4 +21,10 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    /**
+     * Returns the maximum index of persons in the address book.
+     * @return
+     */
+    int getMaxInternalIndex();
+
 }

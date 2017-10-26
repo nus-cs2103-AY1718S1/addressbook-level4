@@ -27,6 +27,7 @@ public class UniquePersonList implements Iterable<Person> {
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
+    private int maxInternalIndex = 0;
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.
@@ -47,6 +48,9 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(new Person(toAdd));
+        if (toAdd.getInternalId().getId() > this.maxInternalIndex) {
+            this.maxInternalIndex = toAdd.getInternalId().getId();
+        }
     }
 
     /**
@@ -59,8 +63,8 @@ public class UniquePersonList implements Iterable<Person> {
             throws DuplicatePersonException, PersonNotFoundException {
         requireNonNull(editedPerson);
 
-        int index = internalList.indexOf(target);
-        if (index == -1) {
+        int displayedIndex = internalList.indexOf(target);
+        if (displayedIndex == -1) {
             throw new PersonNotFoundException();
         }
 
@@ -68,7 +72,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
 
-        internalList.set(index, new Person(editedPerson));
+        internalList.set(displayedIndex, new Person(editedPerson));
     }
 
     /**
@@ -87,6 +91,7 @@ public class UniquePersonList implements Iterable<Person> {
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
+        this.maxInternalIndex = replacement.getMaxInternalIndex();
     }
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
@@ -95,6 +100,13 @@ public class UniquePersonList implements Iterable<Person> {
             replacement.add(new Person(person));
         }
         setPersons(replacement);
+    }
+
+    /**
+     * Returns the maximum internal index among all persons in the address book
+     */
+    public int getMaxInternalIndex() {
+        return maxInternalIndex;
     }
 
     /**
@@ -121,22 +133,37 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
 
+    /**
+     * Updates the maximum internal index among all persons in the person list
+     * Currently not used; implemented previously for remove(), but it was unnecessary to update
+     * after each deletion
+     * @return the maximum internal index
+     */
+    private int updateMaxInternalIndex() {
+        int maxIndex = 0;
+        for (Person p : internalList) {
+            if (p.getInternalId().getId() > maxIndex) {
+                maxIndex = p.getInternalId().getId();
+            }
+        }
+        return maxIndex;
+    }
 
-
+    //sorting methods
 
     /***
      * sort addressbook persons by number of times they were searched for
      * @author Sri-vatsa
      */
     public void sortBySearchCount () {
-        internalList.sort(new ReadOnlyPersonComparator());
+        internalList.sort(new SearchCountComparator());
     }
 
     /**
      * Custom Comparator class to compare two ReadOnlyPerson Objects by their search Count
      * @author Sri-vatsa
      */
-    public class ReadOnlyPersonComparator implements Comparator<ReadOnlyPerson> {
+    public class SearchCountComparator implements Comparator<ReadOnlyPerson> {
 
         /**
          * @author Sri-vatsa
@@ -159,10 +186,39 @@ public class UniquePersonList implements Iterable<Person> {
             } else {
                 return 0;
             }
+        }
+    }
 
+    /***
+     * @author Sri-vatsa
+     * sort address book persons in alphabetical order
+     */
+    public void sortLexicographically () {
+        internalList.sort(new LexicographicComparator());
+    }
+
+    /**
+     * @author Sri-vatsa
+     * Custom Comparator class to compare two ReadOnlyPerson Objects lexicographically
+     */
+    public class LexicographicComparator implements Comparator<ReadOnlyPerson> {
+
+        /**
+         * @author Sri-vatsa
+         * Basis of comparison between ReadOnlyPerson
+         * Compares two persons lexicographically
+         *
+         * @param o1 is an instance of ReadOnlyPerson
+         * @param o2 is another instance of ReadOnlyPerson
+         * @return Result of Comparison
+         */
+        public int compare (ReadOnlyPerson o1, ReadOnlyPerson o2) {
+
+            String personAFullName = o1.getName().fullName;
+            String personBFullName = o2.getName().fullName;
+
+            return personAFullName.compareTo(personBFullName);
         }
 
     }
-
-
 }

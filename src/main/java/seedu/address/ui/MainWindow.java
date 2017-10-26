@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -58,6 +59,15 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private SplitPane settingsPane;
+
+    @FXML
+    private StackPane settingsSelectorPlaceholder;
+
+    @FXML
+    private StackPane themeSelectorPlaceholder;
 
     @FXML
     private VBox personListBox;
@@ -140,6 +150,9 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        SettingsSelector settingsSelector = new SettingsSelector();
+        settingsSelectorPlaceholder.getChildren().add(settingsSelector.getRoot());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -150,11 +163,11 @@ public class MainWindow extends UiPart<Region> {
                 logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        //Setting initial position of settings panel
+        settingsPane.setTranslateX(160);
 
-        //CommandBoxHelper commandBoxHelper = new CommandBoxHelper();
-        //commandBoxHelperPlaceholder.getChildren().add(commandBoxHelper.getRoot());
+        CommandBox commandBox = new CommandBox(logic, commandBoxHelperPlaceholder, settingsPane);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
     }
 
