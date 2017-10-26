@@ -51,6 +51,7 @@ public class AddRelationshipCommand extends UndoableCommand {
         try {
             model.addRelationship(indexFromPerson, indexToPerson, direction);
             graphWrapper.buildGraph(model);
+            graphWrapper.display();
         } catch (IllegalValueException ive) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }

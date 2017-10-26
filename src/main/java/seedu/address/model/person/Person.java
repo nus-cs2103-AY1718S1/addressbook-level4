@@ -158,11 +158,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
      */
     public boolean addRelationship(Relationship re) throws DuplicateRelationshipException {
         UniqueRelationshipList reList = relationships.get();
-        try {
-            reList.add(re);
-        } catch (DuplicateRelationshipException dre) {
-            throw new DuplicateRelationshipException();
-        }
+        reList.add(re);
 
         return true;
     }

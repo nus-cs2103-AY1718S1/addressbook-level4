@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +30,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_DIRECTION = "Direction must be directed or undirected.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -89,5 +91,19 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a String into a RelationshipDirection
+     */
+    public static RelationshipDirection parseDirection(String direction) throws IllegalValueException{
+        requireNonNull(direction);
+        if (direction.compareToIgnoreCase("directed") == 0) {
+            return RelationshipDirection.DIRECTED;
+        } else if (direction.compareToIgnoreCase("undirected") == 0)  {
+            return RelationshipDirection.UNDIRECTED;
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_DIRECTION);
+        }
     }
 }

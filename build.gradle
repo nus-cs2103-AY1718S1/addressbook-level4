@@ -66,6 +66,9 @@ allprojects {
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
         compile group: 'org.graphstream', name: 'gs-core', version: '1.3'
+        // https://mvnrepository.com/artifact/org.graphstream/gs-ui
+        compile group: 'org.graphstream', name: 'gs-ui', version: '1.3'
+
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"

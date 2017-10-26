@@ -23,6 +23,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.relationship.RelationshipDirection;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -109,8 +110,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction)
-            throws IllegalValueException {
+    public void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction) throws IllegalValueException {
         List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
 
         if (indexFromPerson.getZeroBased() >= lastShownList.size()
@@ -138,13 +138,15 @@ public class ModelManager extends ComponentManager implements Model {
             tPerson.addRelationship(relationshipForToPerson);
             this.updatePerson(fromPerson, fPerson);
             this.updatePerson(toPerson, tPerson);
+        } catch (DuplicateRelationshipException dre) {
+            throw new AssertionError("the relationship to add is a duplicate of an existing one.");
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("the person's relationship is unmodified. IMPOSSIBLE.");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
 
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     //=========== Filtered Person List Accessors =============================================================

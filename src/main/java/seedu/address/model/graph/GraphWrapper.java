@@ -79,6 +79,13 @@ public class GraphWrapper {
      * fix the format of edge ID
      */
     private String computeEdgeId(ReadOnlyPerson person1, ReadOnlyPerson person2) {
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("Person1: " + person1.toString());
+        System.out.println("Person2: " + person2.toString());
+        System.out.println(Integer.toString(filteredPersons.indexOf(person1)) + "_"
+                + Integer.toString(filteredPersons.indexOf(person2)));
+        System.out.println("------------------------------------------------------------------------");
+
         return  Integer.toString(filteredPersons.indexOf(person1)) + "_"
                 + Integer.toString(filteredPersons.indexOf(person2));
     }
@@ -94,18 +101,35 @@ public class GraphWrapper {
     private String checkForRedundantEdgeAndRemove(ReadOnlyPerson fromPerson, ReadOnlyPerson toPerson,
                                                 RelationshipDirection intendedDirectionOfRedundantEdge) {
         requireAllNonNull(fromPerson, toPerson, intendedDirectionOfRedundantEdge);
-        String redundantEdgeId = computeEdgeId(fromPerson, toPerson);
-        Edge redundantEdge = graph.getEdge(redundantEdgeId);
-        if (intendedDirectionOfRedundantEdge == RelationshipDirection.UNDIRECTED) {
-            if (redundantEdge != null && !redundantEdge.isDirected()) {
-                graph.removeEdge(redundantEdge);
+        String redundantEdgeId1 = computeEdgeId(fromPerson, toPerson);
+        String redundantEdgeId2 = computeEdgeId(toPerson, fromPerson);
+        Edge redundantEdge1 = graph.getEdge(redundantEdgeId1);
+        Edge redundantEdge2 = graph.getEdge(redundantEdgeId2);
+//        if (intendedDirectionOfRedundantEdge == RelationshipDirection.UNDIRECTED) {
+//            if (redundantEdge != null && !redundantEdge.isDirected()) {
+//                graph.removeEdge(redundantEdge);
+//            }
+//        } else {
+//            if (redundantEdge != null && redundantEdge.isDirected()) {
+//                graph.removeEdge(redundantEdge);
+//            }
+//        }
+        if (intendedDirectionOfRedundantEdge.isDirected()) {
+            if (redundantEdge1 != null) {
+                graph.removeEdge(redundantEdge1);
+            }
+            if (redundantEdge1 != null && !redundantEdge2.isDirected()) {
+                graph.removeEdge(redundantEdge2);
             }
         } else {
-            if (redundantEdge != null && redundantEdge.isDirected()) {
-                graph.removeEdge(redundantEdge);
+            if (redundantEdge1 != null) {
+                graph.removeEdge(redundantEdge1);
+            }
+            if (redundantEdge2 != null) {
+                graph.removeEdge(redundantEdge2);
             }
         }
-        return redundantEdgeId;
+        return redundantEdgeId1;
     }
 
     /**
@@ -161,7 +185,7 @@ public class GraphWrapper {
     }
 
     private void clear() {
-        this.graph = null;
+        graph.clear();
         this.model = null;
         this.filteredPersons = null;
     }
@@ -188,7 +212,6 @@ public class GraphWrapper {
         requireNonNull(model);
         this.clear();
         this.setData(model);
-        this.graph = new SingleGraph(graphId);
         this.initiateGraphNodes();
         this.initiateGraphEdges();
 
