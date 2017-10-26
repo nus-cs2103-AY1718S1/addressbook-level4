@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= cherBook v1.3 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,13 +10,26 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T16-B2/main/blob/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017 T16-B2`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+
+Welcome to cherBook, the Command Line made for teachers to monitor students' academic performance easily.
+cherBook's statistical analysis tools breaks down the students' grades and enables teachers to identify students in need of help.
+cherBook also provide teachers an easy way to contact their students' parents when required.
+
+This developer guide provides future contributors and maintainers of cherBook with the information necessary for understanding the source code and contributing to the repository.
+The relevant information include cherBook's software architecture, Component APIs, documentation and contributing guidelines.
 
 == Setting up
 
+Follow the instructions below to set up and configure cherBook source code on your computer.
+
 === Prerequisites
+
+Before you can start configuring, you need to have the following software installed:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -68,7 +81,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103AUG2017-T16-B2/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103AUG2017-T16-B2/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -216,7 +229,8 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 == Implementation
 
-This section describes some noteworthy details on how certain features are implemented.
+This section explains in detail how certain features of the cherBook are implemented.
+The relevant diagrams and code examples will be used to aid the understanding of the features' implementation.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -265,10 +279,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 3.1.1 : Stack Diagram of Initial Stack_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 3.1.2 : Stack Diagram of Commands Added_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,6 +294,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 3.1.3 : Stack Diagram of Undo Execution_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -285,6 +302,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 3.1.4 : Sequence Diagram of UndoRedo Feature_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,14 +312,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 3.1.5 : Stack Diagram when a new Command, Clear is Executed_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 3.1.6 : Stack Diagram when Undoable Command is Executed_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 3.1.7 : Activity Diagram of UndoRedoStack_
 
 ==== Design Considerations
 
@@ -370,6 +391,7 @@ The sort is case insensitive.
 The following sequence diagram shows how the sort operation works:
 
 image::SortSequenceDiagram.png[width="800"]
+_Figure 3.2.1 : Sequence Diagram of Sort Operation_
 
 When the user calls ‘sort’ or ‘st’ to sort the contacts in cherBook, the Model will take in an ArrayList named contactList from the Parser.
 
@@ -462,16 +484,18 @@ The regex ensures that the string for `displayed person card phone information` 
 correct format of `Student: (STUDENT_NUMBER) Parent: (PARENT_NUMBER)`, and that the
 phone numbers must be exactly 8 digits long.
 
-image::PhoneDisplay.png[width="800"]
+image::PhoneDisplay.png[width="400"]
+_Figure 3.3.1 : Valid Displayed Person Card Phone Information_
 
 If the string format for `displayed person card phone information` is valid, the
 phone contact information of the student and his/her parent will be displayed
-below the student's name in the person card as seen in the picture above.
+below the student's name in the person card as seen in the figure above.
 
 image::message_constraint.png[width="1100"]
+_Figure 3.3.2 : Message to prompt Users to Enter Correct Phone Format_
 
-If the string format for `displayed person card phone information` is invalid: an IllegalValueException
-is thrown. Prompting the user to enter the correct format as seen in the picture above.
+If the string format for `displayed person card phone information` is invalid, an IllegalValueException
+is thrown. The user will be prompted to follow the accepted format as seen in the figure above.
 [source,java]
 ----
 public Phone(String phone) throws IllegalValueException {
@@ -510,13 +534,15 @@ public Phone(String phone) throws IllegalValueException {
 === Add/Remove a remark mechanism
 The remark mechanism is facilitated by making changes to the Remark class in the model component. It enables the user to add or remove a single remark of the student.
 
-To avoid confusion and messy UI, only one remarks can be stored in any one person at a time
+To avoid confusion and an overly complicated UI, only one remark per person is stored.
 
-image::PersonCardDifference (Remark).PNG[width="600"]
+image::PersonCardDifference (Remark).PNG[width="350"]
+_Figure 3.4.1 : One Remark per Person Card_
 
 `Remark` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 3.4.2 : Inheritance Diagram for Commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -556,12 +582,16 @@ If user tries to add remark together with adding a new 'Person', it will display
 Below are examples of trying to change remark through:
 
 image::AddPersonInvalid(Remark).PNG[width="600"]
+_Figure 3.4.3 : Invalid Remark Input in Add Command_
 
-add command invalid
+When a user attempts to add a remark via the add command, he will be prompted by a message stating
+that adding of remarks in add command is not allowed.
 
 image::EditPersonInvalid (Remark).PNG[width="600"]
+_Figure 3.4.4 : Invalid Remark Input in Edit Command_
 
-edit command invalid
+When a user attempts to edit the remark via the edit command, he will be prompted by a message stating
+that changing of remarks in edit command is not allowed.
 
 [NOTE]
 Only one remark is saved at any one time, if user does 'Remark' on the same person, it will be overwritten.
@@ -653,6 +683,7 @@ The code with Predicates is also much more readable than using if-else blocks.
 The following sequence diagram shows how the FindTags operation works:
 
 image::FindtagsSequenceDiagramForLogic.png[width="800"]
+_Figure 3.5.1 : Sequence Diagram of FindTags Operation_
 
 ==== Alternatives considered.
 
@@ -686,23 +717,23 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 == Documentation
 
-We use asciidoc for writing documentation.
+In this section, we will be explaining how we edit and publish our documentation. We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+Asciidoc is chosen over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
 === Editing Documentation
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+You can look at <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
 === Publishing Documentation
 
-See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
+You can look at <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
 === Converting Documentation to PDF format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+https://www.google.com/chrome/browser/desktop/[Google Chrome] is used for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
 Here are the steps to convert the project documentation files to PDF format.
 
@@ -721,7 +752,7 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the third method. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ link:#JUnit[JUnit] test runner*
 
@@ -737,7 +768,7 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+The https://github.com/TestFX/TestFX[TestFX] library we use allows our GUI tests to be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. Thus, the developer can do other things on the Computer while the tests are running.
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
@@ -761,7 +792,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
-* Solution: Execute Gradle task `processResources`.
+* Solution: Execute Gradle task `processResources` by opening `cmd` in the `cherBook directory` and
+ inserting the line `gradlew processResources`.
 
 == Dev Ops
 
@@ -1378,6 +1410,8 @@ Use case ends.
 .  A user with sufficient proficiency in English to understand addressbook commands and instructions.
 .  Should be able to hold up to 100 tags per person.
 .  The system should respond within five seconds.
+.  The system should be able to store at least 1000 histories of a user.
+.  The system should be able to store at least 1000 contacts.
 
 {More to be added}
 
@@ -1438,14 +1472,41 @@ Travis_CI is a hosted, distributed continuous integration service used to build 
 
 *Product Name*
 
-Author: ...
+.*Address Book*, reviewed by Pleathora Kelly P.
+|===
+|Pros |Cons
 
-Pros:
+|Easy to store data of contacts
+|Need to enter data in manually
 
-* ...
-* ...
+|Can edit details of contacts easily using Command Line Interface(CLI)
+|No option for Graphical User Interface(GUI) editing
+|===
 
-Cons:
+.*LocationFinder Address Book*, reviewed by Matthew Ryan
+|===
+|Pros |Cons
 
-* ...
-* ...
+|Easy to use
+|
+
+|Interface design is clean and sleek
+|Cannot customise the design to my needs/favourite colour
+
+|Sort function is intuitive and fast - sorts my contacts in an instant
+|Does not allow automatic sorting once contacts are stored
+|===
+
+.*Number One Address Book*, reviewed by Jessabel Louis & Maryjane O. Brian
+|===
+|Pros |Cons
+
+|Colour of interface is great
+|Cannot personalise to fit my mood
+
+|Easy to manage a contact list
+|Does not allow adding in other fields that I need in the addressbook
+
+|Contact list on starter page is shown clearly - all contacts can be seen with the scroller
+|Details of person in contact list cannot be edited according to my needs
+|===
