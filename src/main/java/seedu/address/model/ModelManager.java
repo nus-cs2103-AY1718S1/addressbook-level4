@@ -129,7 +129,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-    
+
     public void updateFilteredListToShowAll() {
         filteredPersons.setPredicate(null);
 
