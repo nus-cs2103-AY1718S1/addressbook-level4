@@ -54,6 +54,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getMrt(), source.getTags() );
+        initiateSchedule();
     }
 
     public void setName(Name name) {
@@ -121,6 +122,7 @@ public class Person implements ReadOnlyPerson {
         return mrt;
     }
 
+    @Override
     public Mrt getMrt() {
         return mrt.get();
     }
