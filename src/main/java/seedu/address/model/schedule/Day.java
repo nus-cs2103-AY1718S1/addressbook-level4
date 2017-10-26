@@ -30,4 +30,7 @@ public class Day {
         return (day != -1);
     }
 
+    public Integer getDay() {
+        return day;
+    }
 }
