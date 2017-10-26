@@ -35,7 +35,7 @@ import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
-import seedu.address.storage.XmlMeetingsStorage;
+import seedu.address.storage.XmlMeetingListStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -66,7 +66,7 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        MeetingListStorage meetingListStorage = new XmlMeetingsStorage(userPrefs.getMeetingListFilePath());
+        MeetingListStorage meetingListStorage = new XmlMeetingListStorage(userPrefs.getMeetingListFilePath());
         storage = new StorageManager(addressBookStorage, meetingListStorage, userPrefsStorage);
 
         initLogging(config);

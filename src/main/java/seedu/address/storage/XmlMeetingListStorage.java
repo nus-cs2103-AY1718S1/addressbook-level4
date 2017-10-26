@@ -16,16 +16,16 @@ import seedu.address.model.ReadOnlyMeetingList;
 /**
  * A class to access Meeting data stored as an xml file on the hard disk.
  */
-public class XmlMeetingsStorage implements MeetingListStorage {
+public class XmlMeetingListStorage implements MeetingListStorage {
 
     // Creates a new folder for all backup data
     //private static final String BACKUP_FILE_PREFIX = "backup/";
-    private static final Logger logger = LogsCenter.getLogger(XmlMeetingsStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(XmlMeetingListStorage.class);
 
     private String filePath;
     //private String backupFilePath;
 
-    public XmlMeetingsStorage(String filePath) {
+    public XmlMeetingListStorage(String filePath) {
         this.filePath = filePath;
         //this.backupFilePath = BACKUP_FILE_PREFIX + filePath;
     }
