@@ -962,8 +962,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |debt collector |have a link:#whitelist[whitelist] |use that list for record keeping
 
-|`* * *` |debt collector |have link:#critical[critical] lists |quickly view which debtors I have to chase for repayment soon
-
 |`* * *` |debt collector |have a link:#blacklist[blacklist] |know who not to lend money to
 
 |`* * *` |debt collector |have a list of debtors whose debts are overdue |
@@ -1197,14 +1195,6 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
-
-[[critical]]
-Critical
-
-....
-Requiring immediate attention of debt collectors
-....
-
 
 [[whitelist]]
 Whitelist
