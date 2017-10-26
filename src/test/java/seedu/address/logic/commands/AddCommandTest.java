@@ -120,8 +120,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        public boolean deleteTag(Tag[] tags) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
+            return false;
         }
 
         @Override
@@ -154,6 +155,11 @@ public class AddCommandTest {
 
         @Override
         public void sortPersonListBySearchCount() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListLexicographically() {
             fail("This method should not be called.");
         }
     }

@@ -443,8 +443,39 @@ will again try to find and execute `set<PreferenceKey>` method.
 **Cons:** Data structure is more restricted; may need to write native code to parse JSON if a library cannot be found to convert JSON to hashmap +
 // end::preferences[]
 
-==== Command: `List By Most Searched`
+=== Command: `List`
+Sorts and the lists everyone in the address book in alphabetical order.
 
+==== Implementation
+
+When the `List` command is executed, `UniquePersonList` is sorted lexicographically. +
+[source,java]
+----
+public void sortLexicographically () {
+        internalList.sort(new LexicographicComparator());
+ }
+----
+The `LexicographicComparator` compares which person should come before another based on alphabet sequences.
+This updates the address book storage file. When model calls for `filteredPersons` list, all persons are read from +
+the address book storage and then displayed on `PersonListPanel` on the GUI.
+
+
+==== Design Considerations
+
+**Aspect:** Persistent sort +
+**Alternative 1(current choice):** Persistent sort (Sort persons, by modifying `addressbook.xml`) +
+**Pros:** Reduces need for repeated sorting +
+**Cons:** Unnecessary operations on storage `addressbook.xml` +
+**Alternative 2:** Non-persistent sort (Sort persons in a temporary list) +
+**Pros:** Reduce operations on storage file, `Addressbook.xml` +
+**Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
+
+---
+
+=== Command: `List By Most Searched`
+Sorts and the lists everyone in the address book based on decreasing number of searches.
+
+==== Implementation
 Each successful `Find` command execution with non-zero search results, activates an update of search count for everyone in search results.+
 [source,java]
 ----
@@ -471,7 +502,7 @@ When model calls for `filteredPersons` list, all persons are read from +
 the address book storage and then displayed on `PersonListPanel` on the GUI.
 
 
-=== Design Considerations
+==== Design Considerations
 
 **Aspect:** Implementation of storage for `SearchData` +
 **Alternative 1 (current choice):** Add `SearchData` as a class in `Person` +
@@ -492,6 +523,42 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 **Pros:** Reduce operations on storage file, `Addressbook.xml` +
 **Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
 
+
+---
+
+=== Command: `Delete Tag`
+
+`Delete Tag` lets users delete a particular tag from all users in the address book. +
+The feature also allows users to delete multiple tags at the same time.
+
+==== Implementation
+
+The specified arguments `TAG1 TAG2 ...` are parsed to generate an array of `String`.
+
+The generated string array is then used to generate an array of type `Tag`
+
+[source,java]
+----
+private Tag[] stringToTag (String[] tag);
+----
+
+Using this array of type `Tag` as parameter, the `deleteTag` method is executed as follows:
+
+image::deleteTagModelDiagram.png[width="200"]
+
+If `hasOneOrMoreDeletion` is true, user will be notified that tags are successfully deleted. +
+Otherwise, users will be notified that specified tags are not used in address book, and thus cannot be deleted.
+
+==== Design Considerations
+
+**Aspect:** implementation of `deleteTag` method in `modelManager`  +
+**Alternative 1 (current choice):** Iterate through every person & delete relevant tags +
+**Pros:** Increased storage efficiency +
+**Cons:** Unnecessary `remove` operations are carried out
+**Alternative 2:** Populate list of people with relevant tags & delete relevant tags +
+**Pros:** Fewer `remove` operations +
+**Cons:** [Space complexity (O(n)) is higher] More storage elements required to store temorary lists +
+**Cons:** More complex implementation
 
 ---
 
