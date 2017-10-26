@@ -286,6 +286,26 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Several phone command: `updatePhone`
+
+Adds or removes an additional number number in the addressBook. In addition, it can show all phones in the addressBook +
+Format: `updatePhone INDEX [ACTION] [VALUE](optional)`
+
+****
+* Add or remove an additional phone of the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Phone added must not cause any duplicates and phone removed should exist in the uniquePhoneList first.
+* Phone numbers will be added/removed/showed.
+****
+
+Examples:
+
+* `updatePhone 1 add 22222222` +
+add additional number of 22222222 to the first person in the list if it does not exist.
+* `updatePhone 1 remove 22222222` +
+remove the additional number 22222222 if it exist in the uniquePhoneList.
+* `updatePhone 1 showAllPhones`
+adressBook will print all the numbers person 1 has
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

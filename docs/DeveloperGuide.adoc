@@ -502,6 +502,14 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 **Pros:**   +
 **Cons:**
 
+
+=== Multiple phone numbers supported
+(launched in V1.3)
+
+ ====Description
+
+Since our target audience are the NUS students, which include a large proportion of international students, our addressBook will support the users to add multiple phone numbers.
+=======
 === More than one instance for each field
  (Coming in V1.3)
 
@@ -509,30 +517,42 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 
 Since our target audience are the NUS students, which include a large propotion of international students, our addressBook will support the users to add multiple phone numbers, emails addresses and home addresses.
 ==== Model
-UniquePhoneList, UniqueEmailList and UniqueAddressList Classes are created for each person to store the person's respective Fields.
 
-UniquePhoneList is a list of Phone object. It will contain at least one local phone number as the primary phone number, this phone number is recognized by the country code +65
-This primary phone number must not be null, and it will be at the front of the UniquePhoneList.
-While other additonal numbers are optional. Note that if the person has more than one local phone numbers, the one added first will be the primary number.
-Likewise for UniqueEmailList and UniqueAddressList. The primary email will be NUS webmail and the primary address will be the local address.
-Phone, Email and Address Classes are altered accordingly.
+UniquePhoneList Classes are created for each person to store the person's multiple phone numbers.
 
-A Phone object now has two field, country code ("+" + two digits integer) and the actual number.
-A Email object will be parsed in two parts, first part is the string before @ and the second part is after @, NUS webmail is recognized by the second part (.equals(u.nus.edu));
+A person has a primary phone number and a list of additional numbers.
+
+
+Primary phone number and additional numbers are stored separately.
+
+Primary number is saved directly as an object in Person while additional numbers are save in a list.
+
+UniquePhoneList is a list of Phone object. It can be empty if the person does not have additional numbers.
+
+Primary phone number must not be null.
+
+
 ==== Logic
-UpdatePhoneCommand, UpdateEmailCommand and UpdateAddressCommand will be created to add/remove these fields.
+PhoneCommand is created to add/remove additional phone numbers. It can also be used to show all numbers of a person.
 
-When a Update[sth]Command is created, it will be constructed with 3 parameters: Index, String, String.
-The 3 parameters represents the index of the person in the AddressBook, action to be taken (add/remove) and a value respectively.
+PhoneCommand is called by using command word "updatePhone", then the command word is followed by 3 parameters: Index, String, String(optional).
+The 3 parameters represents the index of the person in the AddressBook, action to be taken (add/remove/showAllPhones) and a value respectively.
 
-When action is add, we will create an object of the added instance and add it to the end of the Unique[sth]List.
-When action is remove, we first check if the value equals to the primary value in the Unique[sth]List, this will flag an "primary [field] cannot be removed" message, otherwise we will just remove the value from the Unique[sth]List.
-For example, command `updatePhone 1 add p/+8623333333` will add a phone number to the first person in the list of the addressBook.
+For add, we will add the phone to the uniquePhoneList and check for duplicate. Example call of add is illustrated as below.
+image::add.png[width="200"]
 
-command 'updatePhone 1 remove p/+6583060774' will first check whether p/+6583060774 is the primary phone number is the UniquePhoneList.
-If yes, error messge "Primary phone number p/+6583060774 cannot be removed."
-Else, p/+6583060774 will be removed from the UniquePhoneList.
-Likewise for UpdateEmail and UpdateAddress.
+
+For remove, we will loop through the uniquePhoneList and remove this phone and check for NoPhoneFoundException. The illustration is below.
+image::remove.png[width="200']
+
+For showAllPhones, if there is no additional numbers, only the primary number will be displayed. Illustration is below.
+image::showAllPhonesWithNoAdditionalPhones.png[width="200']
+
+If there are numbers in the uniquePhoneList, the all numbers will be displayed with an index in front of it. Illustration is below.
+image::showAllPhones.png[width="200']
+
+
+
 ==== Storage
 Xml file for newly created list will be created and the Xml for Person is updated for storing the information of the fields of every person.
 ==== Ui
