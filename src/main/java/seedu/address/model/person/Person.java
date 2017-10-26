@@ -24,6 +24,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<ExpiryDate> expiryDate;
     private ObjectProperty<Remark> remarks;
 
     private ObjectProperty<Group> group;
@@ -34,14 +35,16 @@ public class Person implements ReadOnlyPerson {
      */
 
     public Person(Name name, Phone phone, Email email, Address address,
-                  Set<Tag> tags, Remark remarks, Image image) {
-        requireAllNonNull(name, phone, email, address, tags, remarks, image);
+                  Set<Tag> tags, ExpiryDate expiryDate, Remark remarks, Image image) {
+        requireAllNonNull(name, phone, email, address, tags, expiryDate, remarks, image);
+      
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.expiryDate = new SimpleObjectProperty<>(expiryDate);
         this.remarks = new SimpleObjectProperty<>(remarks);
         this.image = new SimpleObjectProperty<>(image);
     }
@@ -64,8 +67,9 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags(), source.getRemark(), source.getImage());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), 
+                source.getTags(), source.getExpiryDate(), source.getRemark(), source.getImage());
+                source.getTags(), source.getExpiryDate(), source.getRemark());
     }
 
     public void setName(Name name) {
@@ -131,6 +135,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.get().toSet());
+    }
+
+    public void setExpiryDate(ExpiryDate date) {
+        this.expiryDate.set(date);
+    }
+
+    @Override
+    public ObjectProperty<ExpiryDate> expiryDateProperty() {
+        return expiryDate;
+    }
+
+    @Override
+    public ExpiryDate getExpiryDate() {
+        return expiryDate.get();
     }
 
     @Override

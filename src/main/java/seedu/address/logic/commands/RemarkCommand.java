@@ -8,7 +8,9 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
@@ -61,16 +63,27 @@ public class RemarkCommand extends UndoableCommand {
         ReadOnlyPerson newPerson = new Person(initialPerson.getName(), initialPerson.getPhone(),
                 initialPerson.getEmail(), initialPerson.getAddress(), initialPerson.getTags(),
                 remark, initialPerson.getImage());
-
+      
         try {
-            model.updatePerson(initialPerson, newPerson);
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException e) {
-            throw new CommandException("The target person is not found");
+            ExpiryDate expiryDate = new ExpiryDate("");
+
+            ReadOnlyPerson initialPerson = lastShownList.get(index.getZeroBased());
+            ReadOnlyPerson newPerson = new Person(initialPerson.getName(), initialPerson.getPhone(),
+                    initialPerson.getEmail(), initialPerson.getAddress(), initialPerson.getTags(), expiryDate, remark);
+
+            try {
+                model.updatePerson(initialPerson, newPerson);
+            } catch (DuplicatePersonException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException e) {
+                throw new CommandException("The target person is not found");
+            }
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(generateMessageSuccess(newPerson));
+        } catch (IllegalValueException ive) {
+            //TODO: replace with actual exception message
+            throw new CommandException("Problem with expiry date in remark command");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(generateMessageSuccess(newPerson));
     }
 
     @Override

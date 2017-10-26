@@ -5,6 +5,7 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <expiryDate isPrivate="false"></expiryDate>
         <remark isPrivate="false"></remark>
         <image></image>
     </persons>
@@ -13,6 +14,7 @@
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
+        <expiryDate isPrivate="false"></expiryDate>
         <remark isPrivate="false"></remark>
         <image></image>
     </persons>
@@ -21,6 +23,7 @@
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
+        <expiryDate isPrivate="false"></expiryDate>
         <remark isPrivate="false"></remark>
         <image></image>
     </persons>
@@ -29,6 +32,7 @@
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
+        <expiryDate isPrivate="false"></expiryDate>
         <remark isPrivate="false"></remark>
         <image></image>
     </persons>
@@ -37,6 +41,7 @@
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
+        <expiryDate isPrivate="false"></expiryDate>
         <remark isPrivate="false"></remark>
         <image></image>
     </persons>
@@ -45,6 +50,7 @@
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
+        <expiryDate isPrivate="false"></expiryDate>
         <remark isPrivate="false"></remark>
         <image></image>
     </persons>
@@ -53,6 +59,7 @@
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
+        <expiryDate isPrivate="false"></expiryDate>
         <remark isPrivate="false"></remark>
         <image></image>
     </persons>
@@ -61,6 +68,7 @@
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
+        <expiryDate isPrivate="false"></expiryDate>
         <remark isPrivate="false"></remark>
         <image></image>
     </persons>
@@ -69,6 +77,7 @@
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
+        <expiryDate isPrivate="false"></expiryDate>
         <remark isPrivate="false"></remark>
         <image></image>
     </persons>

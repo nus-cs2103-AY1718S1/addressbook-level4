@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ExpireCommand;
+import seedu.address.model.person.ExpiryDate;
 
 public class ExpireCommandParserTest {
 
@@ -22,13 +23,7 @@ public class ExpireCommandParserTest {
         // have date
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_EXPIRE.toString() + " " + dateString;
-        ExpireCommand expectCommand = new ExpireCommand(INDEX_FIRST_PERSON, dateString);
-
-        assertParseSuccess(parser, userInput, expectCommand);
-
-        // no date
-        userInput = targetIndex.getOneBased() + " " + PREFIX_EXPIRE.toString();
-        expectCommand = new ExpireCommand(INDEX_FIRST_PERSON, "");
+        ExpireCommand expectCommand = new ExpireCommand(INDEX_FIRST_PERSON, new ExpiryDate(dateString));
 
         assertParseSuccess(parser, userInput, expectCommand);
     }

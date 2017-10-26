@@ -31,13 +31,16 @@ public class ExpiryDate {
      * @throws IllegalValueException if given date string is invalid.
      */
     public ExpiryDate(String date) throws IllegalValueException {
-        if (date == "") {
+        if (date == null) {
+            this.value = null;
+            return;
+        } else if (date.isEmpty()) {
             this.value = null;
             return;
         } else if (!isValidExpiryDate(date)) {
             throw new IllegalValueException(MESSAGE_EXPIRY_DATE_CONSTRAINTS);
         }
-        // catches invalid month/day combination
+        // catches invalid month/day combination .NOT
         ParsePosition parsePos = new ParsePosition(0);
         this.value = DATE_FORMATTER.parse(date, parsePos);
 
@@ -56,13 +59,28 @@ public class ExpiryDate {
 
     @Override
     public String toString() {
-        return DATE_FORMATTER.format(value);
+        if (value == null) {
+            return "";
+        } else {
+            return DATE_FORMATTER.format(value);
+        }
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof ExpiryDate
-                && this.value.equals(((ExpiryDate) other).value));
+        if (other == this) { // same object
+            return true;
+        } else if (this.value == null) {
+            // to prevent NullPointerException from expiry date
+            if (((ExpiryDate) other).value == null) {
+                // both objects have null expiry date
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            // date must not be null
+            return this.value.equals(((ExpiryDate) other).value);
+        }
     }
 }

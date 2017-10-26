@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
+//import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -24,7 +25,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  */
 public class TypicalPersons {
 
-    public static final ReadOnlyPerson ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, HOON, IDA, AMY, BOB;
+    public static final ReadOnlyPerson ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, HARRY, HOON, IDA, AMY, BOB;
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     static {
@@ -45,6 +46,9 @@ public class TypicalPersons {
                 .withEmail("lydia@example.com").withAddress("little tokyo").build();
         GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
                 .withEmail("anna@example.com").withAddress("4th street").withRemark("Likes to code").build();
+        HARRY = new PersonBuilder().withName("Harry Potter").withPhone("83172436")
+                .withEmail("harry@example.com").withAddress("4 Privet Drive").withRemark("Is a wizard")
+                .withExpiryDate("2017-12-31").build();
 
         // Manually added
         HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")

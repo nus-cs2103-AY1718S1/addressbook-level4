@@ -42,6 +42,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
     @FXML
+    private Label expiryDate;
+    @FXML
     private Label remark;
     @FXML
     private ImageView pImage;
@@ -67,6 +69,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
+        expiryDate.textProperty().bind(Bindings.convert(person.expiryDateProperty()));
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         assignImage(person);
     }
