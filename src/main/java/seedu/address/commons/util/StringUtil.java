@@ -5,6 +5,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Helper functions for handling strings.
@@ -19,6 +21,11 @@ public class StringUtil {
      *       containsWordIgnoreCase("ABc def", "DEF") == true
      *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
      *       </pre>
+     *   Ignore case, but for birthday must be in dd-MM format
+     *   <br>examples:<pre>
+     *       containsWordIgnoreCase("09-12-1995", "09-12") == true
+     *       containsWordIgnoreCase("09-12-1995", "0912") == false //not in correct format
+     *       </pre>
      * @param sentence cannot be null
      * @param word cannot be null, cannot be empty, must be a single word
      */
@@ -30,11 +37,17 @@ public class StringUtil {
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
+        // Check if the keyword is in dd-MM format
+        Pattern p = Pattern.compile("\\d\\d-\\d\\d");
+        Matcher m = p.matcher(preppedWord);
+
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.equalsIgnoreCase(preppedWord)) {
+            if (m.find()) {
+                return wordInSentence.contains(preppedWord);
+            } else if (wordInSentence.equalsIgnoreCase(preppedWord)) {
                 return true;
             }
         }

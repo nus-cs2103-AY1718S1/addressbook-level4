@@ -6,9 +6,11 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_TASK_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalTasks.ASSIGNMENT;
+import static seedu.address.testutil.TypicalTasks.BUY_TICKETS;
 import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.PERSONAL_PROJECT;
 import static seedu.address.testutil.TypicalTasks.QUIZ;
+import static seedu.address.testutil.TypicalTasks.SUBMISSION;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -67,10 +69,24 @@ public class FindTaskCommandTest {
     }
 
     @Test
-    public void executeMultipleKeywordsMltipleTasksFound() {
+    public void executeMultipleKeywordsMultipleTasksFound() {
         String expectedMessage = String.format(MESSAGE_TASK_LISTED_OVERVIEW, 4);
         FindTaskCommand command = prepareCommand("Finish gym online");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(ASSIGNMENT, QUIZ, GYM, PERSONAL_PROJECT));
+    }
+
+    @Test
+    public void executeMultipleDeadlinesMultipleTasksFound() {
+        String expectedMessage = String.format(MESSAGE_TASK_LISTED_OVERVIEW, 2);
+        FindTaskCommand command = prepareCommand("01-11-2017 20-11-2017");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(QUIZ, BUY_TICKETS));
+    }
+
+    @Test
+    public void executeMultipleKeywordTypeMultipleTasksFound() {
+        String expectedMessage = String.format(MESSAGE_TASK_LISTED_OVERVIEW, 3);
+        FindTaskCommand command = prepareCommand("code 01-11-2017 18-11-2017");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ASSIGNMENT, QUIZ, SUBMISSION));
     }
 
     /**
