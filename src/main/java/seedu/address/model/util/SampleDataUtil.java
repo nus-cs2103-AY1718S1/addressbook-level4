@@ -1,6 +1,8 @@
 package seedu.address.model.util;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -55,6 +57,23 @@ public class SampleDataUtil {
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
         }
+    }
+
+    /**
+     * Returns a mapping of tags to colours.
+     */
+    public static Map<Tag, String> getSampleTagColours() {
+        HashMap<Tag, String> sampleTagColours = new HashMap<>();
+        try {
+            sampleTagColours.put(new Tag("friends"), "red");
+            sampleTagColours.put(new Tag("colleagues"), "green");
+            sampleTagColours.put(new Tag("family"), "yellow");
+            sampleTagColours.put(new Tag("neighbours"), "blue");
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+
+        return sampleTagColours;
     }
 
     /**
