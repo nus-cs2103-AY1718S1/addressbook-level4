@@ -65,8 +65,7 @@ allprojects {
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
-        compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
-       // compile group: 'org.ocpsoft.prettytime', name: 'prettytime-nlp', version: '3.2.4.Final'
+        compile group: 'org.ocpsoft.prettytime', name: 'prettytime-nlp', version: '3.2.4.Final'
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
@@ -76,7 +75,7 @@ allprojects {
         }
         testCompile "org.testfx:openjfx-monocle:$monocleVersion"
         testCompile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
-       // testCompile group: 'org.ocpsoft.prettytime', name: 'prettytime-nlp', version: '3.2.4.Final'
+        testCompile group: 'org.ocpsoft.prettytime', name: 'prettytime-nlp', version: '3.2.4.Final'
     }
 
     sourceSets {
