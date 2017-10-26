@@ -59,7 +59,6 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
-    
 
     /**
      * Returns the userPref which the model is initialized with
