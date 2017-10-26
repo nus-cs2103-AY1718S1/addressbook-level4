@@ -6,6 +6,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * API of the Logic component
@@ -30,6 +31,11 @@ public interface Logic {
      * Returns an unmodifiable view of the filtered list of AliasTokens
      */
     ObservableList<ReadOnlyAliasToken> getFilteredAliasTokenList();
+
+    /**
+     * Returns an unmodifiable view of filtered list of tasks
+     */
+    ObservableList<ReadOnlyTask> getFilteredTaskList();
 
     /**
      * Returns true if first token of user input is a valid command word

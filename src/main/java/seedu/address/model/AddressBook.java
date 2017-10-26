@@ -21,6 +21,10 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.UniqueTaskList;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -31,6 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueAliasTokenList aliasTokens;
+    private final UniqueTaskList tasks;
 
     /**
      * Creates a new AddressBook with all data
@@ -39,6 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons = new UniquePersonList();
         this.tags = new UniqueTagList();
         this.aliasTokens = new UniqueAliasTokenList();
+        this.tasks = new UniqueTaskList();
     }
 
     /**
@@ -63,6 +69,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.aliasTokens.setAliasTokens(aliasTokens);
     }
 
+    public void setTasks(List<? extends ReadOnlyTask> tasks) throws DuplicateTaskException {
+        this.tasks.setTasks(tasks);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -82,8 +92,16 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "AddressBook should not have duplicate aliases";
         }
 
+        try {
+            setTasks(newData.getTaskList());
+        } catch (DuplicateTaskException e) {
+            assert false : "AddressBook should not have duplicate tasks";
+        }
+
         syncMasterTagListWith(persons);
     }
+
+    // ================ Person-level operations ==============================
 
     /**
      * Sorts the list.
@@ -91,8 +109,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sortList(String toSort) {
         persons.sort(toSort);
     }
-
-    //// person-level operations
 
     /**
      * Adds a person to the address book.
@@ -214,13 +230,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// tag-level operations
+    // ================ Tag-level operations ==============================
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
-    //// alias-level operations
+    // ================ Alias-level operations ==============================
 
     /**
      * Adds an alias token
@@ -248,13 +264,72 @@ public class AddressBook implements ReadOnlyAddressBook {
         return aliasTokens.size();
     }
 
+    // ================ Task-level operations ==============================
 
-    //// util methods
+    /**
+     * Adds a task
+     *
+     * @throws DuplicateTaskException if an equivalent task already exists
+     */
+    public void addTask(ReadOnlyTask toAdd) throws DuplicateTaskException {
+        tasks.add(toAdd);
+    }
+
+    /**
+     * Removes a task
+     *
+     * @throws TaskNotFoundException if no such task exists
+     */
+    public boolean removeTask(ReadOnlyTask toRemove) throws TaskNotFoundException {
+        if (tasks.remove(toRemove)) {
+            return true;
+        } else {
+            throw new TaskNotFoundException();
+        }
+    }
+
+    /**
+     * Replaces the given task {@code target} in the list with {@code updatedTask}..
+     *
+     * @throws DuplicateTaskException if updating the task's details causes the person to be equivalent to
+     *                                another existing task in the list.
+     * @throws TaskNotFoundException  if {@code target} could not be found in the list.
+     */
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask updatedTask)
+            throws TaskNotFoundException, DuplicateTaskException {
+        requireNonNull(updatedTask);
+        tasks.setTask(target, updatedTask);
+    }
+
+    /**
+     * Marks a task as complete
+     *
+     * @throws TaskNotFoundException  if no such task exists
+     * @throws DuplicateTaskException if equivalent task is already marked
+     */
+    public void markTask(ReadOnlyTask toMark)
+            throws TaskNotFoundException, DuplicateTaskException {
+        tasks.setCompletion(toMark);
+    }
+
+    /**
+     * Marks a task as incomplete
+     *
+     * @throws TaskNotFoundException  if no such task exists
+     * @throws DuplicateTaskException if equivalent task is already unmarked
+     */
+    public void unmarkTask(ReadOnlyTask toUnmark)
+            throws TaskNotFoundException, DuplicateTaskException {
+        tasks.setIncompletion(toUnmark);
+    }
+
+    // ================ Utility methods ==============================
 
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags, "
-                + aliasTokens.asObservableList().size() + " aliases";
+                + aliasTokens.asObservableList().size() + " aliases" + tasks.asObservableLis().size()
+                + " tasks";
     }
 
     @Override
@@ -273,16 +348,23 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<ReadOnlyTask> getTaskList() {
+        return tasks.asObservableLis();
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.aliasTokens.equals(((AddressBook) other).aliasTokens)
+                && this.tasks.equals(((AddressBook) other).tasks));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, aliasTokens, tasks);
     }
 }

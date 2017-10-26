@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.person.SortCommand;
 
 public class SortMenuTest extends AddressBookGuiTest {
 

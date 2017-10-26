@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -16,6 +17,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.alias.AliasCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -27,6 +29,9 @@ import seedu.address.model.alias.exceptions.TokenKeywordNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.AliasTokenBuilder;
 
 /**
@@ -129,6 +134,11 @@ public class AliasCommandTest {
         }
 
         @Override
+        public void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void pinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -156,11 +166,6 @@ public class AliasCommandTest {
         }
 
         @Override
-        public void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void addAliasToken(ReadOnlyAliasToken target) throws DuplicateTokenKeywordException {
             fail("This method should not be called.");
         }
@@ -180,6 +185,45 @@ public class AliasCommandTest {
         public ObservableList<ReadOnlyAliasToken> getFilteredAliasTokenList() {
             fail("This method should not be called.");
             return null;
+        }
+
+        @Override
+        public void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addTask(ReadOnlyTask target) throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateTask(ReadOnlyTask target, ReadOnlyTask updatedTask)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void markTasks(List<ReadOnlyTask> targets)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unmarkTasks(List<ReadOnlyTask> targets)
+                throws TaskNotFoundException, DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+            fail("This method should not be called.");
         }
     }
 

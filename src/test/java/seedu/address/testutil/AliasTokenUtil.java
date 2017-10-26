@@ -3,7 +3,7 @@ package seedu.address.testutil;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS_KEYWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS_REPRESENTATION;
 
-import seedu.address.logic.commands.AliasCommand;
+import seedu.address.logic.commands.alias.AliasCommand;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 
 /**
