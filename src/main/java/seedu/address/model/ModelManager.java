@@ -98,6 +98,10 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    public void updateFilteredListToShowAll() {
+        filteredPersons.setPredicate(null);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

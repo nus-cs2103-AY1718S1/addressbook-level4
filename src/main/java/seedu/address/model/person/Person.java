@@ -28,14 +28,16 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Remark> remarks;
 
     private ObjectProperty<Group> group;
+    private ObjectProperty<Image> image;
 
     /**
      * Every field must be present and not null.
      */
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
-                  ExpiryDate expiryDate, Remark remarks) {
-        requireAllNonNull(name, phone, email, address, tags, remarks);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, ExpiryDate expiryDate, Remark remarks, Image image) {
+        requireAllNonNull(name, phone, email, address, tags, expiryDate, remarks, image);
+      
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -44,10 +46,12 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.expiryDate = new SimpleObjectProperty<>(expiryDate);
         this.remarks = new SimpleObjectProperty<>(remarks);
+        this.image = new SimpleObjectProperty<>(image);
     }
 
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Remark remarks, Group group) {
-        requireAllNonNull(name, phone, email, address, tags, remarks, group);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, Remark remarks, Group group, Image image) {
+        requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -56,14 +60,15 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.remarks = new SimpleObjectProperty<>(remarks);
         this.group = new SimpleObjectProperty<>(group);
+        this.image = new SimpleObjectProperty<>(image);
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags(), source.getExpiryDate(), source.getRemark());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), 
+                source.getTags(), source.getExpiryDate(), source.getRemark(), source.getImage());
     }
 
     public void setName(Name name) {
@@ -162,6 +167,21 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Group getGroup() {
         return group.get();
+    }
+
+    public void setImage(Image image) {
+        requireNonNull(image);
+        this.image.set(image);
+    }
+
+    @Override
+    public ObjectProperty<Image> imageProperty() {
+        return image;
+    }
+
+    @Override
+    public Image getImage() {
+        return image.get();
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {

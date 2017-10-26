@@ -1,4 +1,3 @@
-.gitignore
 build/
 .gradle/
 .checkstyle
@@ -20,3 +19,4 @@ classes/
 /bin/
 src/main/resources/docs/
 out/
+images/

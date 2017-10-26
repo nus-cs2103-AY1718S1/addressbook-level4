@@ -27,6 +27,8 @@ public interface ReadOnlyPerson {
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
     Group getGroup();
+    ObjectProperty<Image> imageProperty();
+    Image getImage();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -39,7 +41,8 @@ public interface ReadOnlyPerson {
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
                 && other.getExpiryDate().equals(this.getExpiryDate())
-                && other.getRemark().equals(this.getRemark());
+                && other.getRemark().equals(this.getRemark())
+                && other.getImage().equals(this.getImage());
     }
 
     /**

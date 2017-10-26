@@ -18,6 +18,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Image;
 import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -112,9 +113,10 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         ExpiryDate updatedExpiryDate = personToEdit.getExpiryDate();
         Remark updatedRemark = personToEdit.getRemark();
+        Image updatedImage = personToEdit.getImage();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
-                updatedExpiryDate, updatedRemark);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedTags, updatedExpiryDate, updatedRemark, updatedImage);
     }
 
     @Override
@@ -144,6 +146,8 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Image image;
+        private ExpiryDate expiryDate;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -154,6 +158,8 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            this.image = toCopy.image;
+            this.expiryDate = toCopy.expiryDate;
         }
 
         /**
@@ -201,6 +207,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        public Optional<Image> getImage() {
+            return Optional.ofNullable(image);
+        }
+
+        public void setImage(Image image) {
+            this.image = image;
         }
 
         @Override
