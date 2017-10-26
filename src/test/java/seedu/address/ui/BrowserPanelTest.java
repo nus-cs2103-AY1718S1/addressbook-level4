@@ -53,4 +53,11 @@ public class BrowserPanelTest extends GuiUnitTest {
         assertEquals(expectedParcelUrl.toString(), actualParcelUrl);
     }
 
+    @Test
+    public void getQueryStringTest() {
+        String inputPostalCode = "S123661";
+        String expectedQueryString = "Singapore+123661";
+        assertEquals(expectedQueryString, getMapQueryStringFromPostalString(inputPostalCode));
+    }
+
 }
