@@ -281,3 +281,4 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /*assertStatusBarUnchanged();*/
     }
 }
+
