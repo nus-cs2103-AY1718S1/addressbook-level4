@@ -3,8 +3,8 @@ package systemtests;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
-import static seedu.address.logic.commands.EmailCommand.MESSAGE_SUCCESS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+//import static seedu.address.logic.commands.EmailCommand.MESSAGE_SUCCESS;
+//import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
@@ -23,10 +23,11 @@ public class EmailCommandSystemTest extends AddressBookSystemTest {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
-//        Model expectedModel = getModel();
-//        String command = "     " + EmailCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
-//        String expectedResultMessage = MESSAGE_SUCCESS;
-//        assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        //        Model expectedModel = getModel();
+        //        String command = "     " + EmailCommand.COMMAND_WORD + "
+        // " + INDEX_FIRST_PERSON.getOneBased() + "       ";
+        //        String expectedResultMessage = MESSAGE_SUCCESS;
+        //assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
