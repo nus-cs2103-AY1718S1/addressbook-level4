@@ -114,6 +114,11 @@ public interface Model {
     void authenticateUser(Username username, Password password) throws UserNotFoundException, IllegalValueException;
 
     /**
+     * Logs user out
+     */
+    void logout();
+
+    /**
      * Updates the list shown in Person List Panel to the requested list.
      */
     void changeListTo(String listName);

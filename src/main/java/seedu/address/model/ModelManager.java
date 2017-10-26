@@ -254,6 +254,13 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    /**
+     * Logs user out
+     */
+    public void logout() {
+        raise(new LoginAppRequestEvent(false));
+    }
+
     public String getUsernameFromUserPref() {
         return userPrefs.getAdminUsername();
     }

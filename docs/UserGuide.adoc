@@ -84,6 +84,11 @@ Examples:
 * `login userAcc_123 pa$$_Word!@#&`
 * `login batMan_111 (Batcave.327+-)`
 
+=== Logging out of the address book application : `logout`
+
+Logs out of the address book. +
+Format: `logout`
+
 === Viewing help : `help`
 
 Format: `help`
@@ -439,9 +444,10 @@ To quickly revert address book data to the state of last use:
 
 == Command Summary
 
-* *Login* `login USERNAME PASSWORD` +
+* *Login* : `login USERNAME PASSWORD` +
 e.g. `login userAcc_123 pa$$_Word!@#&`
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT dl/DEADLINE[t/TAG]...` +
+* *Logout* : `logout`
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT dl/DEADLINE[t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 dl/11-03-2017 t/friend t/colleague`
 * *Clear* : `clear`
 * *Borrow* : `borrow INDEX AMOUNT` +
@@ -503,6 +509,7 @@ e.g. `sort debt`
 * `Payback` command (since v1.3)
 * `Repaid` command (since v1.3)
 * `Whitelist` command (since v1.3)
+* `Logout` command (since v1.3)
 
 == Features to be included by `V2.0`
 

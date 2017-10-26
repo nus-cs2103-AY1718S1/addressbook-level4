@@ -148,18 +148,20 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerPartsForStartUp() {
         Platform.runLater(() -> {
             startUpPanel = new StartUpPanel();
+            infoPanelPlaceholder.getChildren().clear();
             infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
 
             personListStartUpPanel = new PersonListStartUpPanel();
+            personListPanelPlaceholder.getChildren().clear();
             personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
 
             ResultDisplay resultDisplay = new ResultDisplay();
             resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
             CommandBox commandBox = new CommandBox(logic);
+            commandBoxPlaceholder.getChildren().clear();
             commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         });
-
     }
     //@@author
 

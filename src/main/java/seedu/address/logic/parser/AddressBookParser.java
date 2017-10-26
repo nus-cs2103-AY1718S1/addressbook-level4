@@ -22,6 +22,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.NearbyCommand;
 import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -128,6 +129,10 @@ public class AddressBookParser {
         case LoginCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new LoginCommandParser().parse(arguments);
+
+        case LogoutCommand.COMMAND_WORD:
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new LogoutCommand();
 
         case ExitCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
