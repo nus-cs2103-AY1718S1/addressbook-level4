@@ -26,8 +26,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
-import seedu.address.model.reminder.ReadOnlyReminder;
-import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagColorManager;
 
@@ -246,7 +244,6 @@ public class ModelManager extends ComponentManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons)
-                && filteredEvents.equals(other.filteredEvents)
-                && filteredReminders.equals(other.filteredReminders);
+                && filteredEvents.equals(other.filteredEvents);
     }
 }

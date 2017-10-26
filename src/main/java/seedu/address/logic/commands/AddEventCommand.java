@@ -5,16 +5,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
-import seedu.address.model.property.DateTime;
-import seedu.address.model.reminder.Reminder;
-import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 
 /**
  * Adds an event to the address book.

@@ -12,7 +12,6 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.reminder.ReadOnlyReminder;
-import seedu.address.model.reminder.exceptions.DuplicateReminderException;
 import seedu.address.model.tag.Tag;
 
 /**

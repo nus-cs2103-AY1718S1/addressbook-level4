@@ -3,7 +3,6 @@ package seedu.address.model;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.tag.Tag;
 
 /**
