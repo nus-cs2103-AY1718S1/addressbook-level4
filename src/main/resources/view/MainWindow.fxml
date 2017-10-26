@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@DarkTheme.css" />
         <URL value="@Extensions.css" />
@@ -39,18 +39,36 @@
                             <Insets bottom="5" left="10" right="10" top="5" />
                         </padding>
                     </StackPane>
-                    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+                    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5" VBox.vgrow="ALWAYS">
                         <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
                             <padding>
                                 <Insets bottom="10" left="10" right="10" top="10" />
                             </padding>
                             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                         </VBox>
-                        <StackPane fx:id="browserPlaceholder" prefWidth="340">
-                            <padding>
-                                <Insets bottom="10" left="10" right="10" top="10" />
-                            </padding>
+            
+                <TabPane fx:id="infoDisplayPlaceholder" prefHeight="200.0" prefWidth="340.0" tabClosingPolicy="UNAVAILABLE">
+                  <tabs>
+                    <Tab text="Contact Details">
+                      <content>
+                        <StackPane fx:id="contactDetailsPlaceholder" prefWidth="340">
+                          <padding>
+                            <Insets bottom="10" left="10" right="10" top="10" />
+                          </padding>
                         </StackPane>
+                      </content>
+                    </Tab>
+                    <Tab text="Browser">
+                      <content>
+                        <StackPane fx:id="browserPlaceholder" prefWidth="340">
+                          <padding>
+                            <Insets bottom="10" left="10" right="10" top="10" />
+                          </padding>
+                        </StackPane>
+                      </content>
+                    </Tab>
+                  </tabs>
+                </TabPane>
                     </SplitPane>
                 </children>
             </VBox>
@@ -62,49 +80,5 @@
          </SplitPane>
         </items>
     </SplitPane>
-
-  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
-    </padding>
-  </StackPane>
-
-  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
-    </padding>
-  </StackPane>
-
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="270.0" prefWidth="270.0" SplitPane.resizableWithParent="false">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-      <StackPane fx:id="personListPanelPlaceholder" minWidth="-Infinity" prefWidth="260.0" VBox.vgrow="ALWAYS" />
-    </VBox>
-
-    <TabPane fx:id="infoDisplayPlaceholder" prefHeight="200.0" prefWidth="340.0" tabClosingPolicy="UNAVAILABLE">
-      <tabs>
-        <Tab text="Contact Details">
-          <content>
-            <StackPane fx:id="contactDetailsPlaceholder" prefWidth="340">
-              <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-              </padding>
-            </StackPane>
-          </content>
-        </Tab>
-        <Tab text="Browser">
-          <content>
-            <StackPane fx:id="browserPlaceholder" prefWidth="340">
-              <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-              </padding>
-            </StackPane>
-          </content>
-        </Tab>
-      </tabs>
-    </TabPane>
-  </SplitPane>
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>
