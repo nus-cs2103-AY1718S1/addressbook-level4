@@ -2,8 +2,12 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.FindLessonRequestEvent;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
+import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -20,14 +24,22 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " LT25";
     public static final String MESSAGE_SUCCESS = "find command executed";
 
-    private final Predicate<ReadOnlyLesson> predicate;
+    private Predicate<ReadOnlyLesson> predicate;
+    private List<String> keywords;
 
-    public FindCommand(Predicate<ReadOnlyLesson> predicate) {
-        this.predicate = predicate;
+    public FindCommand(List<String> keywords) {
+        this.keywords = keywords;
     }
 
     @Override
     public CommandResult execute() {
+
+        switch (ListingUnit.getCurrentListingUnit()) {
+        case LOCATION:
+            this.predicate = new LocationContainsKeywordsPredicate(keywords);
+        default:
+            this.predicate = new ModuleContainsKeywordsPredicate(keywords);
+        }
         model.updateFilteredLessonList(predicate);
         EventsCenter.getInstance().post(new FindLessonRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);

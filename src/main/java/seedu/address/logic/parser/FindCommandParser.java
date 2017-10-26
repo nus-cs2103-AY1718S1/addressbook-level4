@@ -30,12 +30,8 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] keywords = trimmedArgs.split("\\s+");
 
-        switch (ListingUnit.getCurrentListingUnit()) {
-        case LOCATION:
-            return new FindCommand(new LocationContainsKeywordsPredicate(Arrays.asList(keywords)));
-        default:
-            return new FindCommand(new ModuleContainsKeywordsPredicate(Arrays.asList(keywords)));
-        }
+        return new FindCommand(Arrays.asList(keywords));
+
     }
 
 }
