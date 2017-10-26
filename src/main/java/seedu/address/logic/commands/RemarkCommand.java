@@ -58,7 +58,6 @@ public class RemarkCommand extends UndoableCommand {
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-      
         try {
             ExpiryDate expiryDate = new ExpiryDate("");
 

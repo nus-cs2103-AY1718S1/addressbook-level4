@@ -51,9 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             ExpiryDate expiryDate = new ExpiryDate("");
             Remark remark = new Remark("");
             Image image = new Image("");
-
             ReadOnlyPerson person = new Person(name, phone, email, address, tagList, expiryDate, remark, image);
-          
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
