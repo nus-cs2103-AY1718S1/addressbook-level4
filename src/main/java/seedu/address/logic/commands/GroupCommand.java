@@ -71,7 +71,7 @@ public class GroupCommand extends UndoableCommand {
                 ReadOnlyPerson p = it.next();
                 if (p.getName().fullName.toLowerCase().contains(args.get(i).toLowerCase())) {
                     ReadOnlyPerson newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
-                            p.getAddress(), p.getTags(), p.getRemark(), group);
+                            p.getAddress(), p.getTags(), p.getExpiryDate(), p.getRemark(), group, p.getImage());
                     try {
                         model.updatePerson(p, newPerson);
                     } catch (DuplicatePersonException | PersonNotFoundException e) {
