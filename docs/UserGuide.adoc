@@ -203,6 +203,13 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+// tag::nextmeeting[]
+
+=== Listing next upcoming meeting : `nextMeeting` `Since v1.3`
+
+Displays information about the next upcoming meeting. +
+Format: `nextMeeting`
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
@@ -336,6 +343,8 @@ e.g.`select 2`
 Can also use shortcut 's'
 * *History* : `history`
 Can also use shortcut 'h'
+* *Next Meeting* : `nextMeeting`
+Can also use shortcut `nm`
 * *Undo* : `undo`
 Can also use shortcut 'u'
 * *Redo* : `redo`
