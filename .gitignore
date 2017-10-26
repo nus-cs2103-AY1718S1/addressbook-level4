@@ -14,7 +14,10 @@ preferences.json
 .DS_Store
 ./screenshot*.png
 classes/
-/data/
 /bin/
 src/main/resources/docs/
 out/
+data/*
+!/data/import
+/data/import/*
+!/data/import/test*
