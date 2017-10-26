@@ -8,42 +8,77 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Exit
+=== Enhancement Added: deleteTagCommand
 
 ==== External behavior
 
 ---
-#Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
-
-#End of Extract#
+include::../UserGuide.adoc[tag=deleteTag]
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The deleteTag command is useful to have when dealing with large numbers of parcels.
 
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
 
-//include::../DeveloperGuide.adoc[tag=exit]
-
-#End of Extract#
+include::../DeveloperGuide.adoc[tag=deleteTag]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Added: Delivery Dates field
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=deliveryDate]
+
+---
+
+==== Justification
+
+The delivery dates field is important as the list of parcels are sorted by delivery date
+with the earliest at the top. This allows for the user to look at the more pertinent deliveries
+immediately on start up.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=deliveryDate]
+
+---
+
+=== Enhancement Added: Maintain Sorted Order Mechanism
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=sortedList]
+
+---
+
+==== Justification
+
+Having the list in sorted order allows the user to look at the more pertinent deliveries
+more easily.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=sortedList]
+
+---
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
 == Project: PowerPointLabs
 

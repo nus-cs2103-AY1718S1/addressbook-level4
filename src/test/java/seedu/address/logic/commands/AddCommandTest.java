@@ -3,27 +3,25 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Predicate;
+import java.util.Collections;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.ModelStub;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
-import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.testutil.ParcelBuilder;
 
 public class AddCommandTest {
@@ -93,49 +91,6 @@ public class AddCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
-                throws DuplicateParcelException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
-            fail("This method should not be called.");
-        }
-    }
-
-    /**
      * A Model stub that always throw a DuplicateParcelException when trying to add a parcel.
      */
     private class ModelStubThrowingDuplicateParcelException extends ModelStub {
@@ -155,6 +110,16 @@ public class AddCommandTest {
      */
     private class ModelStubAcceptingParcelAdded extends ModelStub {
         final ArrayList<Parcel> parcelsAdded = new ArrayList<>();
+
+        @Override
+        public boolean hasSelected() {
+            return false;
+        }
+
+        @Override
+        public void maintainSorted() {
+            Collections.sort(parcelsAdded);
+        }
 
         @Override
         public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {

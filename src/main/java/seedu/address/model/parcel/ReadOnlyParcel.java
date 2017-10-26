@@ -10,7 +10,7 @@ import seedu.address.model.tag.UniqueTagList;
  * A read-only immutable interface for a Parcel in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
-public interface ReadOnlyParcel {
+public interface ReadOnlyParcel extends Comparable {
 
     ObjectProperty<TrackingNumber> trackingNumberProperty();
     TrackingNumber getTrackingNumber();
@@ -22,6 +22,10 @@ public interface ReadOnlyParcel {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<DeliveryDate> deliveryDateProperty();
+    DeliveryDate getDeliveryDate();
+    ObjectProperty<Status> statusProperty();
+    Status getStatus();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -35,7 +39,9 @@ public interface ReadOnlyParcel {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress()))
+                && other.getDeliveryDate().equals(this.getDeliveryDate())
+                && other.getStatus().equals(this.getStatus());
     }
 
     /**
@@ -53,6 +59,10 @@ public interface ReadOnlyParcel {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Delivery Date: ")
+                .append(getDeliveryDate())
+                .append(" Status: ")
+                .append(getStatus())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

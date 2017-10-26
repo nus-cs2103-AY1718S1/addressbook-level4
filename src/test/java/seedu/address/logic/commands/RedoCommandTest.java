@@ -29,6 +29,7 @@ public class RedoCommandTest {
 
     @Before
     public void setUp() {
+        model.maintainSorted();
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
     }
@@ -40,6 +41,7 @@ public class RedoCommandTest {
         RedoCommand redoCommand = new RedoCommand();
         redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel.maintainSorted();
 
         // multiple commands in redoStack
         deleteFirstParcel(expectedModel);
