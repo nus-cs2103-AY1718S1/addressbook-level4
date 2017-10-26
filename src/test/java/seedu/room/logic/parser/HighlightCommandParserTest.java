@@ -14,6 +14,7 @@ public class HighlightCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         String emptyArg = "";
-        assertParseFailure(parser, emptyArg, String.format(MESSAGE_INVALID_COMMAND_FORMAT, HighlightCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, emptyArg,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, HighlightCommand.MESSAGE_USAGE));
     }
 }

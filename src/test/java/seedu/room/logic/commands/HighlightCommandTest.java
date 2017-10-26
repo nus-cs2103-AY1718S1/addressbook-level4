@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import seedu.room.commons.core.Messages;
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
@@ -48,10 +47,10 @@ public class HighlightCommandTest {
      * Non-existent Tag should throw TagNotFoundException
      */
     public void execute_invalidTag_throwsCommandException() throws Exception {
-        String NONEXISTENT_TAG = getNonExistentTag();
-        HighlightCommand highlightCommand = prepareCommand(NONEXISTENT_TAG);
+        String nonExistentTag = getNonExistentTag();
+        HighlightCommand highlightCommand = prepareCommand(nonExistentTag);
 
-        assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + NONEXISTENT_TAG);
+        assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + nonExistentTag);
     }
 
     /**
@@ -59,10 +58,10 @@ public class HighlightCommandTest {
      */
     @Test
     public void execute_noTag_throwsCommandException() {
-        String EMPTY_TAG = "";
-        HighlightCommand highlightCommand = prepareCommand(EMPTY_TAG);
+        String emptyTag = "";
+        HighlightCommand highlightCommand = prepareCommand(emptyTag);
 
-        assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + EMPTY_TAG);
+        assertCommandFailure(highlightCommand, model, HighlightCommand.MESSAGE_TAG_NOT_FOUND + emptyTag);
     }
 
     /**
@@ -85,10 +84,10 @@ public class HighlightCommandTest {
 
     @Test
     public void equals() {
-        String TEST_TAG = "test";
-        String OTHER_TEST_TAG = "other test";
-        HighlightCommand highlightCommandFirst = new HighlightCommand(TEST_TAG);
-        HighlightCommand highlightCommandSecond = new HighlightCommand(OTHER_TEST_TAG);
+        String testTag = "test";
+        String otherTestTag = "other test";
+        HighlightCommand highlightCommandFirst = new HighlightCommand(testTag);
+        HighlightCommand highlightCommandSecond = new HighlightCommand(otherTestTag);
 
         // same object -> returns true
         assertTrue(highlightCommandFirst.equals(highlightCommandFirst));
