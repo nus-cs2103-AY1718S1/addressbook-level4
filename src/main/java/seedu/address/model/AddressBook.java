@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
@@ -15,6 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -83,6 +85,11 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
+
+    public void addScheduleToPerson(Integer index, TreeSet<Integer> timeSpan) throws PersonNotFoundException {
+        persons.addSchedule(index, timeSpan);
+    }
+
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
         syncMasterTagListWith(newPerson);
