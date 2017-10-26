@@ -2,12 +2,17 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+//import java.util.ArrayList;
+//import java.util.Comparator;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+//import javafx.collections.FXCollections;
 
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
@@ -66,6 +71,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            persons.sortPersons();
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
@@ -90,6 +96,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(newPerson);
+        persons.sortPersons();
     }
 
     /**
@@ -172,6 +179,25 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
+        /*
+        ArrayList<ReadOnlyPerson> temp = new ArrayList<>();
+        ObservableList<ReadOnlyPerson> personList = persons.asObservableList();
+        for(ReadOnlyPerson person: personList){
+            temp.add(person);
+        }
+        ObservableList<ReadOnlyPerson> temp2 = FXCollections.observableArrayList(temp);
+        Comparator<ReadOnlyPerson> ALPHA_ORDER = new Comparator<ReadOnlyPerson>() {
+            public int compare(ReadOnlyPerson first, ReadOnlyPerson second) {
+                int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
+                if (x== 0) {
+                    x = (first.getName().fullName).compareTo(second.getName().fullName);
+                }
+                return x;
+            }
+        };
+        temp2.sort(ALPHA_ORDER);
+        return temp2;
+        */
         return persons.asObservableList();
     }
 
