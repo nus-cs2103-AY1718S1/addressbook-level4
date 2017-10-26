@@ -1,54 +1,108 @@
 = Martyn Wong - Project Portfolio
- ifdef::env-github,env-browser[:outfilesuffix: .adoc]
- :imagesDir: ../images
- :stylesDir: ../stylesheets
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
 
- -== Project: AddressBook - Level 4
- -AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
- -
- -*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
- -
- -=== Enhancement Added: Shortcut Command
- -
- -==== External behavior
- -
- ----
- -#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
- -
- -Users can type a shortcut command for 9 commands, where entering the first letter of the command also returns the same functionality:
- 1) Add
- 2) Delete
- 3) Edit
- 4) Find
- 5) History
- 6) List
- 7) Redo
- 8) Select
- 9) Undo
+== Project: OurAb
+OurAb is a CLI(Command Line Interface)-based desktop Address Book application written in Java, targeted at university students.
 
- e.g. entering "l" will also return a list of persons in the address book
- -
- -#End of Extract#
- -
- ----
- -
- -==== Justification
- -
- -To make it more convenient for experienced users
- -
- -==== Implementation
- -
- ----
- -#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
- -
- -image::shortcut-example.png[width="800"]
- -
- -#End of Extract#
- -
- ----
- -
- -=== Enhancement Proposed: Find Nearest Meeting Location
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
 
- -=== Other contributions
+=== Enhancement Added: Shortcut Command
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+
+Users can type a shortcut command for 9 commands, where entering the first letter of the command also returns the same functionality:
+1) Add
+2) Delete
+3) Edit
+4) Find
+5) History
+6) List
+7) Redo
+8) Select
+9) Undo
+
+e.g. entering "l" will also return a list of persons in the address book
+
+#End of Extract#
+
+----
+
+==== Justification
+
+To make it more convenient for experienced users
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+Majority of commands have an alias, which is shorter and can also execute the command
+
+image::shortcut-example.png[width="800"]
+
+#End of Extract#
+
+ ----
+
+=== Design Considerations
+
+**Aspect:** Shortcut implementation +
+**Alternative 1(current choice):** Use an alias, shortened form of the command +
+**Pros:** Intuitive and easier to remember +
+**Cons:** Might have overlapping aliases, requiring updates +
+**Alternative 2:** Use a index for shortcuts +
+**Pros:** Easier to map each command +
+**Cons:** Less intuitive, and harder to remember
+
+=== Enhancement Added: Search Command
+
+=== External Behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.4. Listing all persons, sorted by search frequency : listByMostSearched]]#
+
+* Users can search for contacts using the Search command and keywords. The search method will check all parameters of the user.
+
++
+image::search_command.png[width="790"]
++
+
+From this example, it can be understood that by searching Serangoon, we can see that it has listed all the people living in Serangoon, namely 'Bernice' and 'David'
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to have a more powerful search function, which will become more useful when the address book increases in size.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+The keywords are generated as list of strings, which is then checked against the details of the persons
+in address book.
+
+The details are returned as strings, by the ReadOnlyPerson method in the person model. The list of searched
+people is then continually updated, before it is finally returned to the user
+
+=== Design Considerations
+
+**Aspect:** implementation of `Search` command over `Find`  +
+**Pros:** More powerful search tool +
+**Cons:** Unnecessary results may be returned for larger address books
+
+---
+
+#End of Extract#
+
+=== Enhancement Proposed: Find Nearest Meeting Location
+
+=== Other contributions
 
 
