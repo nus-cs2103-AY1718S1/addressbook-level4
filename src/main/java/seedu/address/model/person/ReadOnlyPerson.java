@@ -42,7 +42,7 @@ public interface ReadOnlyPerson {
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
                 && other.getRemark().equals(this.getRemark())
-                && other.getGroup().groupName.equals(this.getGroup().groupName);
+                && other.getGroup().groupName.equals(this.getGroup().groupName)
                 && other.getExpiryDate().equals(this.getExpiryDate())
                 && other.getImage().equals(this.getImage());
     }
