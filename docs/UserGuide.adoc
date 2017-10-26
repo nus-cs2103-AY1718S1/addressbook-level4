@@ -33,8 +33,8 @@ The intial version of the user guide was written by Team SE-EDU. The current rel
 
 === The ConTag Help System
 
-Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book. You can also get help on specific menu items by keying in `help` in the command line of Contag or pressing the `F1` key. 
- 
+Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book. You can also get help on specific menu items by keying in `help` in the command line of Contag or pressing the `F1` key.
+
 === Features and Capabilities Overview
 The following list is a  overview of some of the features and capabilities which ConTag offers you:
 
@@ -42,9 +42,9 @@ The following list is a  overview of some of the features and capabilities which
 
 * Locating the address of your contact via the integrated google map
 
-* Creating a new schedule or activity with a contact 
+* Creating a new schedule or activity with a contact
 
-* Sending email to multiply emails simultaneously 
+* Sending email to multiply emails simultaneously
 
 
 
@@ -394,11 +394,11 @@ To transfer my data to another Computer,iInstall the app in the other computer a
 [width="59%",cols="5%,<3%,<50%,<40%",options="header",]
 |=======================================================================
 |Commands Words |Commands Alias |Format|Example
-|`Add` | `a`  |'add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend `
+|`Add` | `a`  |'add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 
-|`Clear` | `c`|'clear' |    |
+|`Clear` | `c`| `clear` |    |
 
-|`Delete` |`d`|`delete INDEX [OTHER INDICES]`|    | 
+|`Delete` |`d`|`delete INDEX [OTHER INDICES]`|    |
 
 |`Edit` | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com` |
 
@@ -420,8 +420,8 @@ rough the entire list
 |`Undo` |`u`| `undo` |   |
 
 |`Redo` |`r` |`redo` |  |
- 
-|`Calendar` |`cl` |`calendar' |  
+
+|`Calendar` |`cl` |`calendar' |
 
 |=======================================================================
 
