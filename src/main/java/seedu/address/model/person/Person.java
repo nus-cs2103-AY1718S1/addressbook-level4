@@ -183,7 +183,7 @@ public class Person implements ReadOnlyPerson {
     public void setGroup(Group group) {
         this.group.set(group);
     }
-    
+
     public void setImage(Image image) {
         requireNonNull(image);
         this.image.set(image);
