@@ -2,139 +2,74 @@ package seedu.address.model.module.predicates;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import seedu.address.model.module.ReadOnlyLesson;
-
-
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
  */
-public class LessonContainsKeywordsPredicate extends FindPredicate {
+public class LessonContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
     private final List<String> keywords;
-    private final List<String> oldKeywords;
-    private ArrayList<ReadOnlyLesson> filteredLesson;
-    private ReadOnlyLesson currentViewingLesson;
-    private ArrayList<String> inforList;
+    private ArrayList<ReadOnlyLesson> duplicateLessons = new ArrayList<>();
+    private ReadOnlyLesson lesson;
     private String attribute;
 
-    public LessonContainsKeywordsPredicate (List<String> keywords, List<String> oldKeyword,
-                                            ReadOnlyLesson lesson, String attribute) {
+    public LessonContainsKeywordsPredicate(List<String> keywords, ReadOnlyLesson targetLesson, String attribute) {
 
         this.keywords = keywords;
-        this.oldKeywords = oldKeyword;
-        this.currentViewingLesson = lesson;
-        filteredLesson = new ArrayList<ReadOnlyLesson>();
-        inforList = new ArrayList<>();
+        this.lesson = targetLesson;
         this.attribute = attribute;
-
-    }
-
-    /**
-     * This method initialize the infomation for list
-     * @param lesson
-     */
-    public void initializeInforList(ReadOnlyLesson lesson) {
-        inforList.add(lesson.getCode().fullCodeName);
-        inforList.add(lesson.getLocation().value);
-        inforList.add(lesson.getTimeSlot().value);
-        inforList.add(lesson.getGroup().value);
-        inforList.add(lesson.getClassType().value);
-    }
-
-    public List<String> getKeywords() {
-        return keywords;
-    }
-
-
-    /**
-     * This method filter old keywords
-     * @param lesson
-     */
-    void filterOldKeyWords(ReadOnlyLesson lesson) {
-
-        initializeInforList(lesson);
-        boolean valid = true;
-
-        for (int i = 0; i < oldKeywords.size(); i++) {
-
-            if (!inforList.contains(oldKeywords.get(i))) {
-                valid = false;
-                break;
-            }
-        }
-
-        if (valid) {
-            filteredLesson.add(lesson);
-        }
-
-
     }
 
     @Override
     public boolean test(ReadOnlyLesson lesson) {
 
-        /***
-         if (!oldKeywords.isEmpty()) {
+        int attribute = -1; // 1 is for module, 2 is for location
 
-         filterOldKeyWords(lesson);
+        if (lesson.getCode().fullCodeName.equals(this.lesson.getCode().fullCodeName)
+                && this.attribute.equals("module")) {
+            attribute = 1;
+        } else if (lesson.getLocation().value.equals(this.lesson.getLocation().value)
+                && this.attribute.equals("location")) {
+            attribute = 2;
+        } else {
 
+            return false; // not this lesson
+        }
 
-         for (int i = 0; i < keywords.size(); i++) {
-
-         switch (attribute) {
-         case "module":
-         if ((lesson.getCode().equals(currentViewingLesson.getCode())) && filteredLesson.contains(lesson)
-         && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-         || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-         || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-         || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
-
-         return true;
-
-         }
-         case "location":
-         if (lesson.getLocation().equals(currentViewingLesson.getLocation()) && filteredLesson.contains(lesson)
-         && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-         || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-         || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-         || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
-
-         return true;
-         }
-
-         }
-
-         }
-
-         } else {
-         ***/
         for (int i = 0; i < keywords.size(); i++) {
 
-            switch (attribute) {
-            case "module":
-                if ((lesson.getCode().equals(currentViewingLesson.getCode()))
-                        && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+            if (attribute == 1) { //search for attribute module code
+                if (lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
                         || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                        || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase())
-                        || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                        || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
-                    return true;
-                }
-                break;
-            case "location":
-                if (lesson.getLocation().equals(currentViewingLesson.getLocation())
-                        && (lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                        || lesson.getLocation().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                        || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                        || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())
-                        || lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase()))) {
+                        || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())) {
 
-                    return true;
+                    if (duplicateLessons.contains(lesson)) {
+
+                        return false;
+                    } else {
+
+                        duplicateLessons.add(lesson);
+                        return true;
+                    }
+
                 }
-                break;
-            default:
-                break;
+            } else if (attribute == 2) { //search for attribute location
+
+                if (lesson.getCode().fullCodeName.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getTimeSlot().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getClassType().value.toLowerCase().contains(keywords.get(i).toLowerCase())
+                        || lesson.getGroup().value.toLowerCase().contains(keywords.get(i).toLowerCase())) {
+
+                    if (duplicateLessons.contains(lesson)) {
+                        return false;
+                    } else {
+                        duplicateLessons.add(lesson);
+                        return true;
+                    }
+                }
             }
         }
 

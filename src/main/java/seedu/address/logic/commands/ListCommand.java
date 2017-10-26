@@ -23,7 +23,7 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": List all locations or all module codes and "
             + "displays them as a list with index numbers.\n"
-            + "Parameters: module/location/favouriteList\n"
+            + "Parameters: module/location/marked\n"
             + "Example: " + COMMAND_WORD + " module";
 
     public static final String MESSAGE_SUCCESS = "Listed %1$s(s)";
@@ -55,10 +55,12 @@ public class ListCommand extends Command {
             return executeListByAttribute(locationPredicate);
         } else if (parameter.equals(MARKED_LIST_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LESSON);
-            MarkedListPredicate favouriteListPredicate = new MarkedListPredicate();
-            ListingUnit.setCurrentPredicate(favouriteListPredicate);
+
+            MarkedListPredicate markedListPredicate = new MarkedListPredicate();
+            model.setViewingPanelAttribute("marked");
+            ListingUnit.setCurrentPredicate(markedListPredicate);
             EventsCenter.getInstance().post(new ViewedLessonEvent());
-            return executeListByAttribute(favouriteListPredicate);
+            return executeListByAttribute(markedListPredicate);
         } else {
             assert false : "There cannot be other parameters passed in";
             return null;

@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +14,10 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -71,16 +75,6 @@ public class CombinePanel extends UiPart<Region> {
 
     }
 
-    /**
-     * Initialize grid data.
-     */
-    private void initGridData() {
-        for (int i = 0; i < ROW; i++) {
-            for (int j = 0; j < COL; j++) {
-                gridData[i][j] = new GridData();
-            }
-        }
-    }
 
     @Subscribe
     private void handleViewedLessonEvent(ViewedLessonEvent event) {
@@ -98,6 +92,53 @@ public class CombinePanel extends UiPart<Region> {
         }
     }
 
+
+    /**
+     * Initialize grid data.
+     */
+    private void initGridData() {
+        for (int i = 0; i < ROW; i++) {
+            for (int j = 0; j < COL; j++) {
+                gridData[i][j] = new GridData();
+            }
+        }
+    }
+
+    /**
+     * Generate time slot header
+     */
+
+    public void generateTimeslotHeader() {
+        String text;
+        int k = 8;
+        for (int i = 1; i < COL + 1; i++) {
+
+            if (k < 10) {
+                text = "0" + k;
+            } else {
+                text = Integer.toString(k);
+            }
+            text += "00";
+            Label header = new Label(text);
+            timetableGrid.setHalignment(header, HPos.CENTER);
+            timetableGrid.add(header, i, 0);
+            k++;
+        }
+    }
+
+    /**
+     * Generate week day row header
+     */
+
+    public void generateWeekDay() {
+        for (int i = 1; i < ROW; i++) {
+            String dayOfWeek = DayOfWeek.of(i).toString();
+            Label label = new Label(dayOfWeek);
+            timetableGrid.setValignment(label, VPos.CENTER);
+            timetableGrid.setHalignment(label, HPos.CENTER);
+            timetableGrid.add(label, 0, i);
+        }
+    }
 
     /**
      * Generate timetable data
@@ -135,6 +176,9 @@ public class CombinePanel extends UiPart<Region> {
     public void generateTimeTableGrid() {
 
         generateTimeTableData();
+        generateTimeslotHeader();
+        generateWeekDay();
+
 
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COL; j++) {
@@ -150,9 +194,8 @@ public class CombinePanel extends UiPart<Region> {
                     lbl.setEditable(false);
                     lbl.setId(LESSON_NODE_ID);
                     timetableGrid.setGridLinesVisible(true);
-                    timetableGrid.add(lbl, j, i, endHourSpan, 1);
+                    timetableGrid.add(lbl, j + 1, i + 1, endHourSpan, 1);
                     if (count > 1) {
-                        System.out.println("HELO");
                         lbl.setStyle("-fx-control-inner-background: red");
                     }
                 }
