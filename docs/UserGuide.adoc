@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Circles - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,25 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T17 - B3`      Since: `Jun 2016`      Licence: `MIT`
+
+== About
+What’s the first thing you think about when you hear the words _“command line interface (CLI)”_?
+Do you think of environments like the picture below, and feel daunted by it?
+
+image::CLI.png[width="500"]
+_Figure 1: Command Line Interface_
+
+Rest assured, Circles is here to help. +
+Circles is a personal address book that stores and organises your contacts and their contact information,
+displaying them in a neat and organised fashion. +
+
+It’s only caveat is that you, the user, can only control it using a CLI. Circles helps you practise using a
+CLI in a more comfortable environment, and gets you used to using a single string of words to execute your commands by
+making the commands as intuitive as possible. +
+
+So now that you know what Circles can do for you, let’s dive into how to use Circles.
+
 
 == Quick Start
 
@@ -51,40 +69,55 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 === Viewing help : `help`
+New to Circles? Fret not, you can view  the Circles’ User Guide by using the Help Command: +
+Format: `help` +
 
-Format: `help`
+1. Enter ‘help’ into the command box or press the ‘F1’ key on your keyboard. +
+2. Add new window will pop-up, showing the user-guide. (As shown in Figure 2) +
+
 
 === Adding a person: `add`
+The most important feature for any user of an address book is to add the contacts. To add contacts: +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...`
+1. Enter `add n/NAME  p/PHONENUMBER e/EMAIL a/ADDRESS t/TAG` +
+_E.g: add n/John Doe p/81234567 e/johnd@gmail.com a/Blk 311, Clementi Ave 2,
+#02-25, t/friends t/owesMoney_
+
+2. The following message will appear if the add was successful. (As shown in Figure 3) +
+_E.g: New person added: John Doe Phone: 81234567
+Email: johnd@gmail.com Address: Blk 311, Clementi Ave 2, #02-25, Tags: [owesMoney][friends]_
 
 [TIP]
 A person can have any number of tags (including 0) +
-Format of birthdate must strictly follow `DD-MM-YY`
+The parameters for add command can be in any order. +
+Entering `n/NAME, p/PHONE’ or ‘p/PHONE, n/NAME` will work as well. +
+The tag parameter (t/TAG) can be left empty if there are no tags for the person +
+You cannot add the exact same person into the Circles.
 
 Examples:
 
-* `add n/John Doe p/98765432 b/02-03-1995 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
+To get a clear view of all the contacts available in your address book, you can simply use the List Command as shown in
+Fig 4 below: +
+Format: `list all` +
 
-Shows a list of all persons or all persons with a specified `tag` in the address book. +
-Format:
-
-* `list all` lists all persons in the address book
-* `list friends` lists all persons with the `[t/TAG] friends`
-
-=== Sorting the list of persons : `sort`
-
-Sorts by specified type and shows a list of persons in the address book. +
-Format: `sort [type]`
+1. Enter `list all` +
+2. The following message will appear if there are contacts in the address book. (As shown in Fig 4) +
+_E.g: Listed all persons_
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Suppose your new friend, John Doe, has changed his phone number, and you want to update his phone number accordingly. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+
+1. Enter `edit INDEX p/NEW_NUMBER` and Circles will update John Doe’s phone number, while the other information remains unchanged. +
+_E.g: In Figure 5, the INDEX of John Doe is 6, so you enter_ `edit 6 p/98765432`
+2. The following message will appear if the edit was successful. (As shown in Figure 5) +
+_E.g: Edited Person: John Doe Phone: 98765432 Email: johnd@gmail.com Address: Blk 311, Clementi Ave 2, #02-25 Tags: [owesMoney][friends]_
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -93,6 +126,12 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [t/TAG
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
+
+[TIP]
+The INDEX must be a positive integer greater than 0. +
+The tag parameter (t/TAG) can be left empty if there are no tags for the person +
+The parameters for edit command can be in any order. Entering `n/NAME, p/PHONE’ or ‘p/PHONE, n/NAME` will work as well. +
+You cannot add the exact same person into the Circles.
 
 Examples:
 
@@ -103,8 +142,14 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Locating persons by name: `find`
 
-Finds persons whose names, phone number, email, address and tags contain any of the given keywords. +
+Finding contact card by name is possible even with just their surnames.
+Suppose your boss is called Alex Yeoh, but you only remember him by his surname. +
+To search for his contact, simply do the following: +
+
 Format: `find KEYWORD [MORE_KEYWORDS]`
+
+1. Enter `find Yeoh` in the input field. Circles will filter out contact cards with text matching “Yeoh”.
+2. Contact cards with relevant matching text will be displayed (As shown in Figure 6)
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -120,30 +165,28 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
-* `find johndoe@gmail.com` +
-Returns any person with the email `johndoe@gmail.com`
-* `find johndoe` +
-Returns any person with the email username `johndoe`
-* `find gmail.com` +
-Returns any person with the email domain from `gmail.com`
-* `find Bukit` +
-Returns names of addresses containing `Bukit Batok` and `Bukit Timah`
-* `find street` +
-Returns any person having addresses with `street`
-* `find friends` +
-Returns any person with the tag `friends`
 
-=== Deleting a person /multiple people : `delete`
+=== Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX` for single deletion or +
-`delete INDEX, INDEX` for multiple deletions.
+Circles allow you to delete contacts so you can just have the relevant contacts in your address book.
+Deletion of contact can be in 2 formats, depending on how many contacts you are deleting. +
+
+[.underline]#For single deletion# +
+Format: `delete INDEX` +
+
+1. Enter `list` to view the index of the specific contact
+2. Enter `delete 1` to delete 1st person on the list. Results will be as shown in Figure 7 below.
+
+[.underline]#For multiple deletion# +
+Format: `delete INDEX, INDEX` +
+
+1. Enter `list` to view the index of the specific contacts.
+2. Enter `delete 1, 6` to delete the 1st and 6th persons on the list. More deletions can be added to the command. Results will be as shown in Figure 8 below.
 
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-* For multiple deletions, indexes stated must be in ascending order.
 ****
 
 Examples:
@@ -154,50 +197,16 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
-* `list` +
-`delete 1, 3, 5` +
-Deletes the 1st, 3rd and 5th persons in the address book.
-
-=== Pinning a person: `pin`
-
-Pins a person on top of the addressbook. +
-Format: `pin INDEX`
-
-****
-* A person can only be pinned if they are not pinned previously.
-* Pins the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`pin 2` +
-Pins the 2nd person to the top of the address book.
-
-=== Unpinning a person: `unpin`
-
-Unpins a person from the top of the addressbook. +
-Format: `unpin INDEX`
-
-****
-* A person can only be unpinned if they are pinned previously.
-* Unpins the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`unpin 1` +
-Unpins the 1st person from the top of the address book.
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+To view any contact’s information, the select command can allow you to choose a specific contact
+and look up the contact’s name on google browser. +
+Format: `select INDEX` +
+
+1. Enter `select` followed by the index number of the person you wish to select. +
+_E.g._ `select 1`
+2. Results will be shown in Figure 9 where the browser looks up for the contact’s name.
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -215,9 +224,12 @@ Selects the 2nd person in the address book.
 Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
+If you want to retrieve a certain action you did previously or to simply view the past commands executed in
+address book, Circles has a function to allow you to do so with just 1 command. +
+Format: `history` +
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+1. Enter `history`.
+2. A list of previously entered commands will be generated as shown in Figure 10.
 
 [NOTE]
 ====
@@ -225,15 +237,22 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Unlike conventional address books that require you to manually delete / edit your mistakes while using the programme,
+Circles allows you to undo the previous command. +
+
+For example, you have accidentally deleted an important contact card and would want to retrieve it back. +
+Format: `undo` +
+
+1. Enter `undo` to undo a previously entered command
+2. Contact card will be restored as shown in Figure 11.
+
 
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+_Do note that this function does not work  for Select, Find, List, Sort, Exit commands._
 ====
 
 Examples:
@@ -253,9 +272,13 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
+Now that you’ve retrieved a contact from the undo command, you realised that it was an incorrect contact
+card that you wanted to retrieve and would like to delete it again. Circles can help you to save the trouble by
+executing the `redo` function. +
+Format: `redo` +
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+1. Enter `redo` to redo a previously undone command
+2. Contact card will be deleted as shown in Figure 12.
 
 Examples:
 
@@ -275,14 +298,32 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Sorting your contacts : `sort`
+The first step to organizing your address book to make it search-friendly is to have your contacts sorted alphabetically.
+Circles can do the job for you as well! +
+Format: `sort` +
 
-Clears all entries from the address book. +
-Format: `clear`
+1. Enter `sort name` to sort contacts by name in alphabetical order.
+2. Circles will now have your contacts sorted by name and displayed as shown in Figure 13.
+
+[TIP]
+You can sort the address book by phone and email too! Just enter `sort phone` or
+`sort email` to sort address book by phone and email respectively
+
+=== Clearing all entries : `clear`
+When changing device used for Circles or to start a new address book, you might want to delete all contacts due to
+privacy concerns. Instead of manually deleting contacts using the `delete` command,
+Circles have a function to allow you to clear the whole address book. +
+
+Format: `clear` +
+
+1. Enter `clear` to clear all contacts.
+2. Address book will now be empty as shown in Figure 14.
 
 === Exiting the program : `exit`
 
-Exits the program. +
+Finally, when you have successfully finished using Circles and want to quit the program,
+simply enter `exit`, or go to `File > Exit` from the menu bar to exit the program. +
 Format: `exit`
 
 === Saving the data
@@ -293,23 +334,67 @@ There is no need to save manually.
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: _Install the app in the other computer and overwrite the empty data file it creates with the file that
+contains the data of your previous Address Book folder._
+
+*Q*: How much does it cost to install Circles? +
+*A*: _Circles is a free application with no installation fee and additional charges for features._ +
+
+*Q*: How much free space is needed for Circles? +
+*A*: _Installation of application will take about 50MB and depending on the amount of contacts saved.
+It is recommended to have at least 75MB free._ +
+
+*Q*: Does Circles work on both Windows OS and Mac OS? +
+*A*: _Circles can work on both Windows and Mac. For Windows OS, simply download `Circles.exe` .
+To install it in Mac OS, download the file_ `Circles.dmg`.
+
+== Troubleshooting
+
+Here are some of the error messages you may encounter when you run Circles. +
+
+[.underline]#*“Unknown Command”*# : You have entered an incorrect command.
+Here are some possible ways to fix this error: +
+Please do check for any spelling errors. +
+Enter `help` to look for all available commands in Circles.
+
+[.underline]#*“Invalid Command Format”*#: You have entered a correct command,
+but unfortunately, it seems that you have entered the parameters for the command wrongly.
+Here are some possible ways to fix this error: +
+Follow the parameters shown in the example from the error message. +
+Enter `help` to look at the instructions for command in Circles. +
+
+
+[.underline]#*“The person index provided is invalid”*#: You may have entered a negative index,
+or an index more than the number of persons in the displayed list. +
+Here are some possible ways to fix this error: +
+Look for the index that you are trying to use, and enter it accordingly.
+
+[.underline]#*“This person already exists in the address book”*#:
+You have already added the person in Circles. +
+Here are some possible ways to fix this error: +
+Enter `list` or `find NAME` to check if you have already added the person.
+
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER b/BIRTHDAY e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 b/02-03-1995 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete* : `delete INDEX` + or `delete INDEX, INDEX`
+e.g. `delete 3` or `delete 1, 5`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Sort* : `sort name` , `sort email` and `sort phone`
 * *List* : `list`
-* *Help* : `help`
+* *Help* : `help` or kbd:[F1]
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Exit* : `exit` or kbd:[F4]
+
+
+_Last updated on 27th October 2017_
