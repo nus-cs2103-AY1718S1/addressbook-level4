@@ -408,6 +408,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
+     * Retrieves the current selected person.
+     */
+    @Override
+    public ReadOnlyPerson getSelectedPerson() {
+        return selectedPerson;
+    }
+
+    /**
      * Retrieves the full list of persons in addressbook.
      */
     @Override

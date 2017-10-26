@@ -67,14 +67,39 @@ public class BorrowCommandTest {
         Debt debtAmount = new Debt(INVALID_DEBT_FIGURE);
     }
 
+    //@@author khooroko
+    @Test
+    public void execute_successfulBorrowing_withoutIndex() {
+        model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        ReadOnlyPerson personWhoBorrowed = model.getSelectedPerson();
+        String expectedMessage = String.format(BorrowCommand.MESSAGE_BORROW_SUCCESS,
+                personWhoBorrowed.getName().toString(), VALID_DEBT_FIGURE);
+        try {
+            Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+            expectedModel.addDebtToPerson(personWhoBorrowed, new Debt(VALID_DEBT_FIGURE));
+
+            BorrowCommand borrowCommand = new BorrowCommand(new Debt(VALID_DEBT_FIGURE));
+            borrowCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+
+            assertCommandSuccess(borrowCommand, model, expectedMessage, expectedModel);
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        } catch (PersonNotFoundException pnfe) {
+            pnfe.printStackTrace();
+        }
+    }
+
+    //@@author jelneo
     @Test
     public void equals() {
         try {
             BorrowCommand borrowFirstCommand = new BorrowCommand(INDEX_FIRST_PERSON, new Debt("50000"));
             BorrowCommand borrowSecondCommand = new BorrowCommand(INDEX_SECOND_PERSON, new Debt("20000"));
+            BorrowCommand borrowThirdCommand = new BorrowCommand(new Debt("20000"));
 
             // same object -> returns true
-            assertTrue(borrowFirstCommand.equals(borrowFirstCommand));
+            assertTrue(borrowThirdCommand.equals(borrowThirdCommand));
+            assertTrue(borrowThirdCommand.equals(borrowThirdCommand));
 
             // same values -> returns true
             BorrowCommand borrowFirstCommandCopy = new BorrowCommand(INDEX_FIRST_PERSON, new Debt("50000"));

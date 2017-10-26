@@ -25,12 +25,6 @@ public class BorrowCommandParserTest {
 
     @Test
     public void parse_missingParts_failure() {
-        // no index specified
-        assertParseFailure(parser, VALID_DEBT_FIGURE, MESSAGE_INVALID_FORMAT);
-
-        // no debt amount specified
-        assertParseFailure(parser, VALID_INDEX, MESSAGE_INVALID_FORMAT);
-
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
@@ -54,6 +48,10 @@ public class BorrowCommandParserTest {
             Debt amount = new Debt(VALID_DEBT_FIGURE);
             BorrowCommand expectedBorrowCommand = new BorrowCommand(index, amount);
             assertParseSuccess(parser, VALID_INDEX + " " + VALID_DEBT_FIGURE, expectedBorrowCommand);
+
+            amount = new Debt(VALID_DEBT_FIGURE);
+            expectedBorrowCommand = new BorrowCommand(amount);
+            assertParseSuccess(parser, VALID_DEBT_FIGURE, expectedBorrowCommand);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         }

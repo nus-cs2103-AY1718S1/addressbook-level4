@@ -147,6 +147,31 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author khooroko
+    @Test
+    public void execute_noIndexPersonSelected_success() throws Exception {
+        Person editedPerson = new PersonBuilder().build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        model.updateSelectedPerson(model.getFilteredPersonList().get(0));
+        EditCommand editCommand = prepareCommand(descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_noIndexNoSelection_failure() {
+        ReadOnlyPerson personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        EditCommand editCommand = prepareCommand(new EditPersonDescriptorBuilder(personInList).build());
+
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_NO_PERSON_SELECTED);
+    }
+
+    //@@author
     /**
      * Edit filtered list where index is larger than size of filtered list,
      * but smaller than size of address book
@@ -167,6 +192,7 @@ public class EditCommandTest {
     @Test
     public void equals() {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        final EditCommand indexlessCommand = new EditCommand(DESC_BOB);
 
         // same values -> returns true
         EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(DESC_AMY);
@@ -175,6 +201,7 @@ public class EditCommandTest {
 
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
+        assertTrue(indexlessCommand.equals(indexlessCommand));
 
         // null -> returns false
         assertFalse(standardCommand.equals(null));
@@ -194,6 +221,15 @@ public class EditCommandTest {
      */
     private EditCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
         EditCommand editCommand = new EditCommand(index, descriptor);
+        editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return editCommand;
+    }
+
+    /**
+     * Returns an {@code EditCommand} with parameter {@code descriptor}
+     */
+    private EditCommand prepareCommand(EditPersonDescriptor descriptor) {
+        EditCommand editCommand = new EditCommand(descriptor);
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
     }

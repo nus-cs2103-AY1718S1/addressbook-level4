@@ -144,7 +144,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* --------------------- Performing edit operation while a person card is selected -------------------------- */
 
         /* Case: selects first card in the person list, edit a person -> edited, card selection remains unchanged but
-         * browser url changes
+         * info panel changes
          */
         showAllPersons();
         index = INDEX_FIRST_PERSON;
@@ -153,7 +153,20 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + INTEREST_DESC_AMY
                 + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
-        // browser's url is updated to reflect the new person's name
+        // info panel is updated to reflect the new person's name
+        assertCommandSuccess(command, index, AMY, index);
+
+        /* Case: missing index -> edited */
+        command = EditCommand.COMMAND_WORD + " " + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + INTEREST_DESC_BOB
+                + DEADLINE_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        assertCommandSuccess(command, index, BOB, index);
+
+        /* Re-edit to previous state */
+        selectPerson(index);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + INTEREST_DESC_AMY
+                + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, index, AMY, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
@@ -170,10 +183,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         invalidIndex = getModel().getFilteredPersonList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
-        /* Case: missing index -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + NAME_DESC_BOB,
-                String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: missing all fields -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),

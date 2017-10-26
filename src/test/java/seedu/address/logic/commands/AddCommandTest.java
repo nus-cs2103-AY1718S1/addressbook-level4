@@ -165,6 +165,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyPerson getSelectedPerson() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getAllPersons() {
             fail("This method should not be called.");
             return null;
