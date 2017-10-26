@@ -1,9 +1,9 @@
 package seedu.address.ui;
 
-import java.awt.Label;
 import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -17,7 +17,19 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(PersonDetailsPanel.class);
 
     @FXML
-    private GridPane personDetailsGrid;
+    private GridPane personDetailsBox;
+
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private Label phoneLabel;
+
+    @FXML
+    private Label emailPanel;
+
+    @FXML
+    private Label addressPanel;
 
     public PersonDetailsPanel() {
         super(FXML);
