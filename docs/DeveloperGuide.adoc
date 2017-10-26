@@ -485,6 +485,64 @@ In UI, there's now a list view that in a split panel that shows the menu on the 
 **Pros:** Keeps the listener in the same class as the execute method +
 **Cons:** Clutters CommandBox by adding a listener to a class that doesn't have any
 
+
+=== Person Image
+
+A feature that allows the user to add an image to a person in the addressbook via the command line. A basic default image is used if a person does not have an image associated to them. The feature uses the command `image` followed by the index of the person to be selected and then the local URL of the image file.
+
+The command works as following:
+
+. Parse the args provided by the user to check the index and filepath for correctness and availability
+
+. Copy the image at the URL if available to a directory local to the application using the `Files` and `imageio` libraries and given a hashed file name.
+
+. Store the new local image URL into an `image` object.
+
+. Read the new URL using `ImageView` in the UI component which is then read by the `PersonListCard` FXML file to display the image.
+
+Hashed names are given using the hash code of each person's email address using the following code:
+----
+image.setPath(imageUtil.run(image.getPath(), personToEdit.getEmail().hashCode()))
+----
+Where the `imageUtil` class is a helper utility class that contains the code for interacting with image files
+
+A person image is set using the following class in the `PersonCard` class in the UI component.
+----
+private void assignImage(ReadOnlyPerson person) {
+    if (!person.getImage().getPath().equals("")) {
+        Image imageToSet = new Image("file:" + "images/" + person.getImage().getPath() + ".png",
+                100, 100, false, false);
+
+        centerImage();
+        pImage.setImage(imageToSet);
+    }
+}
+----
+
+The current implementation of this feature is based on https://github.com/nus-cs2103-AY1718S1/forum/issues/120/[this feature] for reasons explained in my https://github.com/CS2103AUG2017-T12-B4/main/issues/18[issue] about it.
+
+==== Design Considerations
+
+**Aspect:** Storage of each person's image +
+**Alternative 1 (current choice):** Copy the image to a local directory and point to that +
+**Pros:** Easier to implement as it the framework for implementing a command like this is well documented +
+**Cons:** Longer code that requires more testing +
+**Alternative 2:** Store the bytes of each image encoded using base64 +
+**Pros:** Shorter code and easier to move the addressbook database. +
+**Cons:** More complex code and a bloated addressbook file size that is easily corruptible.
+**Alternative 3:** Allow only images from the web to be added using their URL +
+**Pros:** No need to store the image locally so less space needed and an easier way to export/import the database. +
+**Cons:** Image is lost if there is no internet connection or if the image is taken down.
+
+**Aspect:** Naming of each file +
+**Alternative 1 (current choice):** Each image filename is using the hashcode of the email address of the person +
+**Pros:** Unique and simple to choose filename with a constant pattern +
+**Cons:** Harder for a human to read +
+**Alternative 2:** Each image is named after each person's names/other property +
+**Pros:** Readable by humans and easy to associate with a person in the addressbook +
+**Cons:** Causes conflicts when different contacts have the same properties (email addresses have to be unique)
+
+
 == Testing
 
 Tests can be found in the `./src/test/java` folder.
@@ -822,6 +880,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |add or delete a remark on a person |to store extra information about someone in the addressbook
 
 |`* * *`|user |assign multiple phone numbers and emails to the same person |store both personal and work contact numbers of a person
+
+|`* * *`|user |add an image for each person |recognise the person if other contact info are forgotten
+
+|`* * *`|user |edit preexisting person image |update or remove a person's image if needed
 
 |`* * *`|user | put persons into groups |manage different social circles
 
