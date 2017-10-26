@@ -384,8 +384,6 @@ Suppose the user has just executed the `deletetask` command using `deletetask 2`
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `DeleteTask` feature is being evoked and calls the `DeleteTaskCommandParser` to parse the index and validate that the index provided is not out of bounds and returns a new task object to call the `DeleteTaskCommand` class. The `LogicManager` then calls the `executeUndoableFunction()` in the `DeleteTaskCommand` class which creates and return a `CommandResult` object.
 
-// tag::undoredo[]
-
 === FindTask mechanism
 
 The FindTask mechanism is facilitated by the `FindTaskCommand` class which inherits from `Command` class. It allows the user to find tasks using descriptions. User can search using multiple descriptions too.
@@ -397,7 +395,7 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 [discrete]
 ==== Design Considerations
 **Aspect:** Implementation of FindTaskCommand +
-**Alternative 1 (current choice):** Use String Util.contansword() to find tasks. +
+**Alternative 1 (current choice):** Use String Util.containsword() to find tasks. +
 **Pros:** Easy to find matching descriptions among all the tasks accurately. +
 **Cons:** The keywords have to be exactly the save i.e friend is not the same as friends. +
 **Alternative 2:** Use string.contains() to find tasks. +
@@ -420,6 +418,45 @@ Suppose the user has just executed the `SelectTaskCommand` using `selecttask`.
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `SelectTaskCommand` feature is being evoked and calls the `SelectTaskCommandParser` to parse the string and check if the index is valid. After validation the `SelectTaskCommand` class is been called. The `LogicManager` then calls the `execute()` in the `SelectTaskCommand` class which calls `EventCenter` with the parameter of `JumpToTaskListRequestEvent` class to highlight selected task card in Ui at target index. Then `execute()` creates and return a `CommandResult` object.
 
+// tag::calendar[]
+=== Calendar mechanism
+
+The calendar mechanism is facilitated by the `DatePickerSkin` skin instance which capture the pop-up content from the `DatePicker` control in `JavaFX`. It allows the user to have a calendar view of all contacts' `Birthday`  and tasks' `Deadline`.
+
+Suppose the address book is modified (e.g. using `add`, `edit`, `addtask`, `deletetask`).
+
+After the modification of the address book i.e. saving of data to the `addressbook.xml` file, `ObservableList` of `Person` and `Task` classes stored in the address book are passed into the `CalendarPanel` Ui.
+
+Next, `getDayCellFactory` will format the `DateCell` of the `DatePicker`. The formatting is done with `Birthday` and `Deadline` as conditions and colour and tooltip of `DateCell` as variables to be change by the formatter.
+
+[NOTE] Implementation of finding related person/task when selecting of coloured `DateCell` is still ongoing.
+
+The following are examples of colour and tooltip of the calendar:
+
+image::CalendarDeadlineTooltip.png[width="150", height"100"]
+image::CalendarBirthdayTooltip.png[width="150", height"100"]
+
+==== Design Considerations
+**Aspect:** Implementation of Calendar +
+**Alternative 1 (current choice):** Use `DatePickerSkin` to get the calendar look and function. +
+**Pros:** Less coding needed as the template, `DatePicker`, is already available. Thus, more time can be spent on other functions related to the calendar. +
+**Cons:** Overall look is fixed. +
+**Alternative 2:** Design a calendar using `JavaFX` +
+**Pros:** Fully customizable. +
+**Cons:** Much effort required to ensure it is bug free. +
+
+---
+
+**Aspect:** Loading of data to Calendar +
+**Alternative 1 (current choice):** Use address book data that is passed to the `CalendarPanel` through `Model` +
+**Pros:** Able to retrieve updated data from `UniquePersonList` and `UniqueTaskList` that are already available. +
+**Cons:** Increase coupling with `Person` and `Task`. +
+**Alternative 2:** Create a separate `UniqueMarkDateList` that stores required dates with relevant information (e.g. Person's name and Task's description) +
+**Pros:** Reduces coupling as the data will be stored during initialisation of address book and addition/deletion of person/task. +
+**Cons:** We must ensure that the data stored is bound to the individual person and task, such that editing of such person/task will be reflected.
+// end::calendar[]
+
+// tag::undoredo[]
 === Undo/Redo mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -937,15 +974,11 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add birthday to person and be reminded when date is near |know the birthday and prepare in advance
 
-|`* * *` |user |find a person by address, birthday, phone, tags |locate details of persons when name is forgetten
+|`* * *` |user |find a person by address, birthday, phone, tags |locate details of persons when name is forgotten
 
-|`* * *` |user |add a new person leaving out any details other than name |add a person that I am not familar with
+|`* * *` |user |add a new person leaving out any details other than name |add a person that I am not familiar with
 
 |`* * *` |user |edit details of a person |change person's details without removing and adding the person again
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`* * *` |new user |see suggested commands as I type them |easily remember what to write without referring to the help sheet
 
@@ -957,19 +990,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |use case-insensitive commands |type or retype commands in a specific case
 
-|`* * *` |user |add contacts while leaving one or more fields blank, except for the name |save contacts without having to know every detail
-
-|`* * *` |user |search my contacts by name, number, tag or address |find people more easily
-
 |`* * *` |user |conduct the search quickly and efficiently |save time
+
+|`* * *` |user |tag multiple people using the same tag |save time
+
+|`* * *` |user |see my most frequently contacted people at the top of the list |contact them quickly
+
+|`* * *` |user with international contacts |see the local time of my contacts |keep from calling someone at odd hours
+
+|`* * *` |busy user |see an overview of my schedule, such as tasks and birthday |know what is coming up next at a glance
 
 |`* *` |advanced user |shorten commands |work efficiently
 
 |`* *` |user |send selected contacts to others |share them without others having to type it in
 
 |`* *` |user using a public computer |set a password to lock my stored data |be free of security related worries
-
-|`*` |user |see mutual contacts |find out who knows who
 
 |`* *` |user |merge multiple duplicate contacts simultaneously |save time and have a clean addressbook
 
@@ -985,15 +1020,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |store multiple phone numbers or emails for the same contact |avoid making duplicate contacts with slightly different information
 
-|`*` |user |have nicknames associated with each contact while searching |recognize them better
-
 |`* *` |OTG user |access addressbook on multiple platforms and synchronize my data |have my contacts close at hand from anywhere
 
-|`* * *` |user |tag multiple people using the same tag |save time
-
 |`* *` |user |use tags to send mass emails or texts to people |save time sending them individually
-
-|`* * *` |user |see my most frequently contacted people at the top of the list |contact them quickly
 
 |`* *` |user |add tasks |manage my schedule
 
@@ -1005,7 +1034,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |unsure user |add tasks with or without deadlines |manage my schedule without knowing every detail
 
-|`* * *` |user with international contacts |see the local time of my contacts |keep from calling someone at odd hours
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` |user |have nicknames associated with each contact while searching |recognize them better
+
+|`*` |user |see mutual contacts |find out who knows who
+
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
 [appendix]
