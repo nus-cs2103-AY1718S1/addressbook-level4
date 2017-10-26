@@ -391,37 +391,37 @@ To transfer my data to another Computer,iInstall the app in the other computer a
 
 == Command Summary
 
-[width="59%",cols="10%,<5%,<35%,<40%",options="header",]
+[width="59%",cols="5%,<3%,<50%,<40%",options="header",]
 |=======================================================================
 |Commands Words |Commands Alias |Format|Example
 |`Add` | `a`  |'add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend `
 
-|`Clear` | `c`|'clear' |
+|`Clear` | `c`|'clear' |    |
 
-|`Delete` |`d`|`delete INDEX [OTHER INDICES]`|
+|`Delete` |`d`|`delete INDEX [OTHER INDICES]`|    | 
 
-|`Edit` | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
+|`Edit` | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com` |
 
-|`Find` |`f` |`find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`find n/James Jake`
+|`Find` |`f` |`find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`find n/James Jake` |
 rough the entire list
 
-|`List` |`l` |`list`
+|`List` |`l` |`list` |   |
 
-|`Help` | `h` | `help COMMAND WORD ` | `help add`
+|`Help` | `h` | `help COMMAND WORD ` | `help add` |
 
-|`Locate` |`lc` |`locate INDEX` | `locate 2`
+|`Locate` |`lc` |`locate INDEX` | `locate 2` |
 
-|`Schedule` |`sc` |`schedule d/DATE act/ACTIVITY` | `schedule 1 d/25-12 act/Christmas dinner`
+|`Schedule` |`sc` |`schedule d/DATE act/ACTIVITY` | `schedule 1 d/25-12 act/Christmas dinner` |
 
-|`Copy` |`cp` |`copy INDEX [OTHER INDICES]`
+|`Copy` |`cp` |`copy INDEX [OTHER INDICES]`|    |
 
-|`History` |`his`|`history`
+|`History` |`his`|`history`|   |
 
-|`Undo` |`u`| `undo` |
+|`Undo` |`u`| `undo` |   |
 
-|`Redo` |`r` |`redo` |
-
-|`Calendar` |`cl` |`calendar' |
+|`Redo` |`r` |`redo` |  |
+ 
+|`Calendar` |`cl` |`calendar' |  
 
 |=======================================================================
 
