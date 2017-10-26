@@ -7,6 +7,7 @@ public enum AutocompleteState {
     COMMAND,
     EMPTY,
     MULTIPLE_COMMAND,
+    NO_RESULT,
     ADD,
     EDIT,
     FIND

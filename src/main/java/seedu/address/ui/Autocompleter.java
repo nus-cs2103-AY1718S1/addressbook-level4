@@ -133,7 +133,7 @@ public class Autocompleter {
         possibleAutocompleteResults = possibleResults;
         switch (possibleResults.size()) {
         case 0:
-            state = AutocompleteState.COMMAND;
+            state = AutocompleteState.NO_RESULT;
             break;
 
         case 1:
