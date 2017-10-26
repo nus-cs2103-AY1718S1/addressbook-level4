@@ -1,10 +1,15 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
+
 import java.util.List;
 import java.util.TreeSet;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -13,7 +18,7 @@ import seedu.address.model.schedule.Time;
 import seedu.address.model.schedule.Slot;
 
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Add a busy time span for a person identified using it's last displayed index from the address book.
  */
 public class AddScheduleCommand extends UndoableCommand {
 
@@ -25,26 +30,26 @@ public class AddScheduleCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer); Day(From Monday to Saturday); start time " +
             "(Should be expressed in standard 24 hours time, no more accurate than 30 minutes and no earlier " +
             "than 0600 and no later than 2330\n"
-            + "Example: " + COMMAND_WORD + " 1" + " Monday" + "0700" + "1430";
+            + "Example: " + COMMAND_WORD + " 1" +
+            PREFIX_DAY + "Monday" +
+            PREFIX_START_TIME + "0700" +
+            PREFIX_END_TIME + "1430";
 
-    public static final String MESSAGE_ADD_SCHEDULE_PERSON_SUCCESS = "Added Schedule: %1$s";
+    public static final String MESSAGE_ADD_SCHEDULE_PERSON_SUCCESS = "Schedule successfully added";
 
     private final Index targetIndex;
 
+    private Day day;
+    private Time startTime;
+    private Time EndTime;
     private TreeSet<Integer> TimeToAdd;
 
     public AddScheduleCommand(Index targetIndex, Day day, Time startTime, Time endTime)
-            throws Exception {
-        if(!day.isValid()){
-            throw new CommandException("Not a valid day!");
-        }
-        if(!startTime.isValid() || !endTime.isValid()){
-            throw new CommandException("Start or end time is not in the proper format!");
-        }
-        if(startTime.getTime() >= endTime.getTime()){
-            throw new CommandException("End time must be later than start Time!")
-        }
+            throws IllegalValueException {
         this.targetIndex = targetIndex;
+        this.day = day;
+        this.startTime = startTime;
+        this.EndTime = endTime;
         Slot slot = new Slot(day, startTime, endTime);
         TimeToAdd = slot.getBusyTime();
     }
@@ -70,4 +75,12 @@ public class AddScheduleCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_ADD_SCHEDULE_PERSON_SUCCESS, personToAddSchedule));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddScheduleCommand // instanceof handles nulls
+                && this.targetIndex.equals(((AddScheduleCommand) other).targetIndex)
+                && this.startTime.equals(((AddScheduleCommand) other).startTime)
+                && this.EndTime.equals(((AddScheduleCommand) other).EndTime)); // state check
+    }
 }
