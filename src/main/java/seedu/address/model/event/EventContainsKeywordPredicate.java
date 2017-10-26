@@ -3,10 +3,6 @@ package seedu.address.model.event;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.ReadOnlyPerson;
-
-
 /**
  * Tests that a {@code ReadOnlyEvent}'s {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
  */
@@ -21,14 +17,9 @@ public class EventContainsKeywordPredicate implements Predicate<ReadOnlyEvent> {
     public boolean test(ReadOnlyEvent event) {
         Boolean isSelected = false;
         if (!event.getParticipants().isEmpty()) {
-            for (ReadOnlyPerson person : event.getParticipants()) {
-                if (!isSelected) {
-                    isSelected = keywords.stream().anyMatch(keyword ->
-                            StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
-                }
-            }
+            isSelected = keywords.stream().anyMatch(keyword ->
+                    event.getEventName().fullEventName.equalsIgnoreCase(keyword));
         }
-
         return isSelected;
     }
 

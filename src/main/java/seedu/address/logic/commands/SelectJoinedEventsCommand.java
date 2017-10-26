@@ -7,6 +7,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.EventContainsKeywordPredicate;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -38,12 +39,14 @@ public class SelectJoinedEventsCommand extends Command {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            temp += (lastShownList.get(targetIndex.getZeroBased()).getName().fullName) + " ";
+            for (ReadOnlyEvent event: lastShownList.get(targetIndex.getZeroBased()).getParticipation()) {
+                temp += (event.getEventName()) + "[-]";
+            }
         }
 
-        String[] nameKeywords = (temp.trim()).split("\\s+");
+        String[] eventNameKeywords = (temp.trim()).split("\\[-]+");
 
-        EventContainsKeywordPredicate predicate = new EventContainsKeywordPredicate(Arrays.asList(nameKeywords));
+        EventContainsKeywordPredicate predicate = new EventContainsKeywordPredicate(Arrays.asList(eventNameKeywords));
         model.updateFilteredEventList(predicate);
         return new CommandResult(getMessageForEventListShownSummary(model.getFilteredEventList().size()));
     }
