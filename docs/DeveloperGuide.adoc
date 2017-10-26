@@ -497,7 +497,7 @@ public void sortBySearchCount () {
     internalList.sort(new ReadOnlyPersonComparator());
 }
 ----
-The `ReadOnlyPersonComparator` compares the search count between two Persons. This updates the address book storage file.+
+The `ReadOnlyPersonComparator` compares the search count between two Persons. This updates the address book storage file.
 When model calls for `filteredPersons` list, all persons are read from +
 the address book storage and then displayed on `PersonListPanel` on the GUI.
 
@@ -512,7 +512,6 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 **Pros:** Minimal changes to `Addressbook.xml` +
 **Cons:** Unnecessary repetition in storage; replication of `Person` details +
 
-
 ---
 
 **Aspect:** Persistent sort +
@@ -523,6 +522,49 @@ the address book storage and then displayed on `PersonListPanel` on the GUI.
 **Pros:** Reduce operations on storage file, `Addressbook.xml` +
 **Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
 
+---
+
+=== Choosing display mode
+
+This allows the user to select what they want displayed on the main screen. Since our application is targeted at university students to facillitate project meeting, who use a variety of social media
+platforms, the ability to select their preferred display is vital so they can view different social media platforms.
+
+==== Implementation
+
+The last selected display mode will be stored in `preferences.json` by default, which is set in `config.json` (coming in v1.4). The default mode of display will be set to `linkedin`.
+When a display mode is selected by the user via its command `choose`, an event is raised by the `ChooseCommand` object, via the following line :
+[source,java]
+----
+EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+----
+This event is then handled by the `SettingsSelector` object. It selects and highlights the user's selected display mode, and then raises another event :
+[source,java]
+----
+raise(new BrowserPanelSelectionChangedEvent(browserSelection));
+----
+Which is handled by the `BrowserPanel` object to display their selected display type.
+
+==== Command: `choose`
+The `choose` command allows users to select the display type they prefer. When the String found in the command box is detected to contain either `choose` or `pref`, both of which are
+commands related to settings, the settings panel is brought in via a translation timeline animation. When the `MainWindow` is originally initialized, the container for the settings panel
+is translated on the X axis outside of the application view, and is then brought into view via the animation. When the String in the command box does not contain `choose` or `pref`, the
+settings panel is then translated out of sight again.
+
+image::SettingsPaneInOut.png[width="700"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of choose command
+**Alternative:** Combine it with the pref command to come under a "mega" "settings" command.
+**Pros:** Lesser commands for the user to remember, higher code modularity, easier for future command implementations on settings.
+**Cons:** Harder to code and debug due to requirement to parse more arguments
+
+---
+
+**Aspect:** Animation of settings panel
+**Alternative:** Use transitions instead of timeline
+**Pros:** Transitions are easier to implement and understand
+**Cons:** KeyValue objects are fit into a keyframe which is then fit into the timeline, which fits more into the concept of java's OOP and allows for more code reusability when we want to, for example, animate bouncing
 
 ---
 

@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ChooseCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -85,7 +86,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 RedoCommand.COMMAND_WORD,
                 SelectCommand.COMMAND_WORD,
                 UndoCommand.COMMAND_WORD,
-                PrefCommand.COMMAND_WORD
+                PrefCommand.COMMAND_WORD,
+                ChooseCommand.COMMAND_WORD
         );
         return FXCollections.observableList(commandList);
     }
@@ -107,7 +109,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 RedoCommand.MESSAGE_TEMPLATE,
                 SelectCommand.MESSAGE_TEMPLATE,
                 UndoCommand.MESSAGE_TEMPLATE,
-                PrefCommand.MESSAGE_TEMPLATE
+                PrefCommand.MESSAGE_TEMPLATE,
+                ChooseCommand.MESSAGE_TEMPLATE
         );
         return templateList;
     }

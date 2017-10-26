@@ -268,12 +268,30 @@ If  `NEW_VALUE` is blank, the current preference will be displayed. +
 See <<#pref-list, Appendix>> for the list of editable preferences.
 ====
 
+Typing this command will bring up the settings panel at the side of the application. `Since v1.3`
+
 Examples:
 
 * `pref AddressBookName` +
 Displays the current value for `AddressBookName`
 * `pref AddressBookName MyBook` +
 Changes `AddressBookName` to `MyBook`
+
+=== Editing display screen : `choose` `Since v1.3`
+
+Chooses what to display on the main screen. +
+Format: `choose [NEW_VALUE]` +
+[NOTE]
+====
+See <<#pref-list, Appendix>> for the list of editable display preferences
+====
+
+Typing this command will bring up the settings panel at the side of the application. `Since v1.3`
+
+Examples:
+
+* `choose linkedin` +
+Displays the linkedin page of the current selected user on the display screen.
 
 === Exiting the program : `exit`
 
@@ -324,7 +342,7 @@ Can also use shortcut 'u'
 Can also use shortcut 'r'
 * *Preference* : `pref KEY [NEW_VALUE]`
 Can also use shortcut 'p'
-
+* *Display Mode* : `choose [NEW_VALUE]`
 == Features coming in v2.0
 
 * *Enhanced tag* - see more in-depth details of a tag
@@ -341,3 +359,4 @@ Can also use shortcut 'p'
 [#pref-list]
 * `AddressBookName`
 * `AddressBookFilePath` : indicates where the address book is stored in local storage
+* `Display Modes: linkedin, facebook, meetings`
