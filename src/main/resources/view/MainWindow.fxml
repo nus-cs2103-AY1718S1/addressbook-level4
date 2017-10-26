@@ -77,7 +77,7 @@
             <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
          </children>
       </VBox>
-      <GridPane fx:id="helpOverlay" blendMode="SRC_ATOP" gridLinesVisible="true" opacity="0.67" prefWidth="1043.0" style="-fx-background-color: white;" visible="false">
+      <GridPane fx:id="helpOverlay" blendMode="SRC_ATOP" gridLinesVisible="true" opacity="0.9" prefWidth="1043.0" style="-fx-background-color: white;" visible="false">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="619.0" minWidth="10.0" prefWidth="165.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1097.0" minWidth="10.0" prefWidth="1084.0" />
