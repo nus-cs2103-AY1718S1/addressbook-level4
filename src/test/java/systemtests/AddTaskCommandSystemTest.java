@@ -1,6 +1,7 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.ChangeModeCommand.MESSAGE_CHANGE_MODE_SUCCESS;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_GRAD_SCHOOL;
@@ -18,6 +19,7 @@ import static seedu.address.testutil.TypicalTasks.INTERNSHIP;
 
 import org.junit.Test;
 
+import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -32,7 +34,14 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void add() throws Exception {
+
+        Model expectedModel = getModel();
+        String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
+        String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "taskmanager");
+        assertCommandSuccess(commandMode, expectedModel, expectedResultMessage);
+
         Model model = getModel();
+
         /* Case: add a task without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added */
         ReadOnlyTask toAdd = INTERNSHIP;
@@ -42,7 +51,7 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: undo adding Internship to the list -> Internship deleted */
         command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
+        expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo adding Internship to the list -> Internship added again */
