@@ -251,7 +251,7 @@ Format: `finds n/[MORE_KEYWORDS] or p/[MORE_KEYWORDS] or e/[MORE_KEYWORDS] or t/
 ****
 * The search for name is case insensitive. e.g `hans` will match `Hans`
 * The search for tag is case sensitive. e.g `friends` will match `friends` but not `Friends`
-* The search for email is case sensitive. e.g `email@example.com will not match Email@example.com`
+* The search for email is case sensitive. e.g `email@example.com` will not match `Email@example.com`
 * The order of the keywords for name does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * The order of the keywords when searching a few tags does not matter. e.g. `[friends] [colleagues]` will match `[colleagues] [friends]`
 * Only can search using one type of details each time. e.g. `finds p/12345678` then `n/` and `t/` should not be included
@@ -312,15 +312,20 @@ Display google map the 1st person in the results of the `find` command.
 
 ==== `Google map` option
 
-This feature can be found under the new `options` menu
+This feature can be found under the new `options` menu. +
 Display the google map data into browser panel based on person's address.
 
 ==== Themes selection from `File` toolbar
 
 Allows user to select from a range of user interface themes +
-Function will be found from under the `File` section of menu toolbar.+
-Selected themes will be saved into user preference file upon exit of program.+
+Function will be found from under the `File` section of menu toolbar. +
+Selected themes will be saved into user preference file upon exit of program. +
 Reinitializing of myBook will display the previous choice of theme.
+
+==== `Important` or `important` tag
+
+Contacts in user myBook app that has `Important` or `important` tag will always appear at the top of the list. +
+User using versions before v1.2 should add a new person with `important` tag first to enjoy this feature.
 
 === Coming soon in v2.0
 
@@ -331,22 +336,23 @@ An option to export local addressbook data in xml format.
 
 ==== Close panels in UI from `Button`
 
-Allows user to open or close panels in UI when not needed +
-Functions will be found from the new `Button` feature
-
-==== List important contacts from `[important] tag`
-
-Person with [important] tag will always appear at the top of the list
+Allows user to open or close panels in UI when not needed. +
+Functions will be found from the new `Button` feature.
 
 ==== Deleting a group of persons from improved `delete command`
 
-Allows user to delete a group of people through name  or tags +
-Functions will be found from improved `delete` command
+Allows user to delete a group of people through name  or tags. +
+Functions will be found from improved `delete` command.
 
 ==== Display all tags from `new UI panel`
 
-All the tags in user myBook App will be displayed in a new UI panel +
-Functions wll be found from `new UI panel`
+All the tags in user myBook App will be displayed in a new UI panel. +
+Functions wll be found from `new UI panel`.
+
+==== Contact list arranged in alphabetical order from improved `list command`
+
+All contacts in the list will sorted in ascending alphabetical order.  +
+Functions wll be found from improved `list` command.
 
 == FAQ
 
@@ -366,7 +372,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `gmap 1`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *Find by names or phone numbers or tags* : `finds n/KEYWORD [MORE_KEYWORDS]` or `finds p/KEYWORD [MORE_KEYWORDS]` or `finds t/[KEYWORD] [MORE_KEYWORDS]` +
+* *Find by names or phone numbers or email or tags* : `finds n/KEYWORD [MORE_KEYWORDS]` or `finds p/KEYWORD [MORE_KEYWORDS]` or `finds e/KEYWORD [MORE_KEYWORDS]` or `finds t/[KEYWORD] [MORE_KEYWORDS]` +
 e.g. `finds n/James Jake`
 e.g  `finds p/98765432`
 e.g. `finds t/[Friends] [colleagues]`
