@@ -77,6 +77,7 @@ public class DeleteTagCommand extends Command {
                     originalPerson.getBirthday(), originalPerson.getRemark(), tagList);
             try {
                 model.updatePerson(originalPerson, newPerson);
+                model.propagateToGroup(originalPerson, newPerson);
             } catch (DuplicatePersonException dpe) {
                 throw new CommandException("duplicate person found in addressbook");
             } catch (PersonNotFoundException pnfe) {

@@ -1,8 +1,12 @@
 package seedu.address.model;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.group.DuplicateGroupException;
+import seedu.address.model.group.Group;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -49,4 +53,21 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Creates a group in the addressbook
+     * @param groupName of the group to be created
+     * @param personToGroup list of person to be included in the newly created group
+     */
+    void createGroup(String groupName, List<ReadOnlyPerson> personToGroup) throws DuplicateGroupException;
+
+    /**
+     * Propagates the edit to group list
+     */
+    void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson);
+
+    /**
+     * Deletes the group from group list
+     * @param grpToDelete
+     */
+    void deleteGroup(Group grpToDelete);
 }

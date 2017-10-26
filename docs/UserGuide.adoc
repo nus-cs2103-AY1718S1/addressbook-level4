@@ -132,7 +132,7 @@ Returns `john` and `John Doe`
 * `find t/cs2103` +
 Returns any person having tags `cs2103`
 
-=== Searching all persons whose name starts with a certain alphabet: 'listalp'
+=== Searching all persons whose name starts with a certain alphabet: `listalp`
 
 Finds persons whose names start with the given alphabet. +
 Format: 'listalp ALPHABET'
@@ -141,10 +141,34 @@ Format: 'listalp ALPHABET'
 * The search is case sensitive.
 ****
 
+=== Creating a group: `createGroup`
+
+Creates a group including a list of person from the address book. +
+Format: `createGroup GROUP_NAME INDEX [INDEX]...`
+
+****
+* Creates the group with group name `GROUP_NAME` including the list of people specified by `INDEX` s.
+* Group name cannot be empty.
+* Creating group with group name already existent in the addressbook will fail.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* There must be *at least one* index to successfully create the group.
+****
+
+Examples:
+
+* `createGroup SoSmart 1 3 5` +
+Creates the group of group name SoSmart with the 1st, 3rd and 5th person in the current view.
+* `createGroup SoSmart 1 3 5` +
+`createGroup SoSmart 2 4` +
+Operation fails because group `SoSmart` already exists in the address book.
+* `createGroup YouSmart?` +
+Operation fails because no `index` is provided.
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX [INDEX]`
+Format: `delete INDEX [INDEX]...`
 
 ****
 * Deletes the list of people at the specified `INDEX` s.
