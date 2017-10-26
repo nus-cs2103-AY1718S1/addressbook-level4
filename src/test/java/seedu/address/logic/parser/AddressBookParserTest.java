@@ -18,6 +18,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -27,15 +28,23 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
+import seedu.address.model.person.TagContainsKeywordsPredicate;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.ScheduleBuilder;
+import seedu.address.testutil.ScheduleUtil;
 
 public class AddressBookParserTest {
     @Rule
@@ -95,15 +104,62 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_find() throws Exception {
+    public void parseCommand_findName() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindCommand.COMMAND_WORD + " " + "n/" + keywords.stream().collect(Collectors.joining(" ")));
         FindCommand commandUsingAlias = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
+                FindCommand.COMMAND_ALIAS + " " + "n/" + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), commandUsingAlias);
     }
+
+    @Test
+    public void parseCommand_findEmail() throws Exception {
+        List<String> keywords = Arrays.asList("yahoo", "gmail", "google");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "e/" + keywords.stream().collect(Collectors.joining(" ")));
+        FindCommand commandUsingAlias = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_ALIAS + " " + "e/" + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new EmailContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new EmailContainsKeywordsPredicate(keywords)), commandUsingAlias);
+    }
+
+    @Test
+    public void parseCommand_findAddress() throws Exception {
+        List<String> keywords = Arrays.asList("123", "Bishan", "Ave", "6", "#08-111");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "a/123 Bishan Ave 6 #08-111");
+        FindCommand commandUsingAlias = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "a/123 Bishan Ave 6 #08-111");
+        assertEquals(new FindCommand(new AddressContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new AddressContainsKeywordsPredicate(keywords)), commandUsingAlias);
+    }
+
+    @Test
+    public void parseCommand_findPhone() throws Exception {
+        List<String> keywords = Arrays.asList("9898", "4554", "0145");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "p/98984554 0145");
+        FindCommand commandUsingAlias = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "p/98984554 0145");
+        assertEquals(new FindCommand(new PhoneContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new PhoneContainsKeywordsPredicate(keywords)), commandUsingAlias);
+    }
+
+
+    @Test
+    public void parseCommand_findTag() throws Exception {
+        List<String> keywords = Arrays.asList("friends", "teachers", "schoolmates");
+        FindCommand command = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + "t/ " + keywords.stream().collect(Collectors.joining(" ")));
+        FindCommand commandUsingAlias = (FindCommand) parser.parseCommand(
+                FindCommand.COMMAND_ALIAS + " " + "t/ " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(new TagContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new TagContainsKeywordsPredicate(keywords)), commandUsingAlias);
+    }
+
+
 
     @Test
     public void parseCommand_help() throws Exception {
@@ -145,14 +201,31 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_select() throws Exception {
-        SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        SelectCommand commandUsingAlias = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), commandUsingAlias);
+    public void parseCommand_schedule() throws Exception {
+        Schedule schedule = new ScheduleBuilder().build();
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleUtil.getScheduleCommand(
+                INDEX_FIRST_PERSON, schedule));
+        ScheduleCommand commandUsingAlias = (ScheduleCommand) parser.parseCommand(ScheduleUtil
+                .getScheduleCommandUsingAlias(INDEX_FIRST_PERSON, schedule));
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), command);
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), commandUsingAlias);
     }
+
+    @Test
+    public void parseCommand_select() throws Exception {
+        LocateCommand command = (LocateCommand) parser.parseCommand(
+                LocateCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        LocateCommand commandUsingAlias = (LocateCommand) parser.parseCommand(
+                LocateCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new LocateCommand(INDEX_FIRST_PERSON), command);
+        assertEquals(new LocateCommand(INDEX_FIRST_PERSON), commandUsingAlias);
+    }
+
+    @Test
+    public void parseCommand_calendar() throws Exception {
+        assertTrue(parser.parseCommand(CalendarCommand.COMMAND_WORD) instanceof CalendarCommand);
+    }
+
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

@@ -48,6 +48,11 @@ public class HelpCommandTest {
         assertEquals(EditCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
         assertEquals(EditCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
 
+        commandResultWord = getHelpCommand("copy").execute();
+        commandResultAlias = getHelpCommand("y").execute();
+        assertEquals(CopyCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(CopyCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
         commandResultWord = getHelpCommand("find").execute();
         commandResultAlias = getHelpCommand("f").execute();
         assertEquals(FindCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
@@ -58,10 +63,10 @@ public class HelpCommandTest {
         assertEquals(DeleteCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
         assertEquals(DeleteCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
 
-        commandResultWord = getHelpCommand("select").execute();
-        commandResultAlias = getHelpCommand("s").execute();
-        assertEquals(SelectCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
-        assertEquals(SelectCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+        commandResultWord = getHelpCommand("locate").execute();
+        commandResultAlias = getHelpCommand("lc").execute();
+        assertEquals(LocateCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(LocateCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
 
         commandResultWord = getHelpCommand("history").execute();
         commandResultAlias = getHelpCommand("his").execute();
@@ -87,6 +92,11 @@ public class HelpCommandTest {
         commandResultAlias = getHelpCommand("q").execute();
         assertEquals(ExitCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
         assertEquals(ExitCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
+
+        commandResultWord = getHelpCommand("schedule").execute();
+        commandResultAlias = getHelpCommand("sc").execute();
+        assertEquals(ScheduleCommand.MESSAGE_USAGE, commandResultWord.feedbackToUser);
+        assertEquals(ScheduleCommand.MESSAGE_USAGE, commandResultAlias.feedbackToUser);
     }
 
     @Test

@@ -15,6 +15,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -25,6 +27,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueScheduleList schedules;
     private final UniqueTagList tags;
 
     /*
@@ -36,13 +39,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        schedules = new UniqueScheduleList();
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons, Schedules and Tags in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -53,6 +58,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
+    }
+
+    public void setSchedules(Set<Schedule> schedules) {
+        this.schedules.setSchedules(schedules);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -70,6 +79,8 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
+        setSchedules(new HashSet<>(newData.getScheduleList()));
+        syncMasterScheduleListWith(persons);
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
@@ -78,13 +89,16 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * Checks the new person's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Checks the new person's schedules and updates {@link #schedules} with any new schedules found,
+     * and updates the Schedule objects in the person to point to those in {@link #schedules}
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
+        syncMasterScheduleListWith(newPerson);
         syncMasterTagListWith(newPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
@@ -97,9 +111,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
+     *                                  another existing person in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      * @see #syncMasterTagListWith(Person)
      */
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
@@ -107,6 +120,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
+        syncMasterScheduleListWith(editedPerson);
         syncMasterTagListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
@@ -115,9 +129,40 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Ensures that every schedule in this person:
+     * - exists in the master list {@link #schedules}
+     * - points to a Schedule object in the master list
+     */
+    private void syncMasterScheduleListWith(Person person) {
+        final UniqueScheduleList personSchedules = new UniqueScheduleList(person.getSchedules());
+        schedules.mergeFrom(personSchedules);
+
+        // Create map with values = schedule object references in the master list
+        // used for checking person schedule references
+        final Map<Schedule, Schedule> masterScheduleObjects = new HashMap<>();
+        personSchedules.forEach(schedule -> masterScheduleObjects.put(schedule, schedule));
+
+        // Rebuild the list of person schedules to point to the relevant tags in the master tag list.
+        final Set<Schedule> correctScheduleReferences = new HashSet<>();
+        personSchedules.forEach(schedule -> correctScheduleReferences.add(masterScheduleObjects.get(schedule)));
+        person.setSchedules(correctScheduleReferences);
+    }
+
+    /**
+     * Ensures that every schedule in these persons:
+     * - exists in the master list {@link #schedules}
+     * - points to a Schedule object in the master list
+     *
+     * @see #syncMasterScheduleListWith(Person)
+     */
+    private void syncMasterScheduleListWith(UniquePersonList persons) {
+        persons.forEach(this::syncMasterScheduleListWith);
+    }
+
+    /**
      * Ensures that every tag in this person:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
+     * - exists in the master list {@link #tags}
+     * - points to a Tag object in the master list
      */
     private void syncMasterTagListWith(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
@@ -136,9 +181,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Ensures that every tag in these persons:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Person)
+     * - exists in the master list {@link #tags}
+     * - points to a Tag object in the master list
+     *
+     * @see #syncMasterTagListWith(Person)
      */
     private void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
@@ -146,6 +192,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
+     *
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
@@ -166,13 +213,18 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Schedule> getScheduleList() {
+        return schedules.asObservableList();
     }
 
     @Override

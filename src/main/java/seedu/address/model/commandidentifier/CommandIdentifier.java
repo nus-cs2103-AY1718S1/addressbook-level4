@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CopyCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -16,8 +17,9 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 /**
@@ -29,6 +31,7 @@ public class CommandIdentifier {
             + "following (or their aliases):\n"
             + AddCommand.COMMAND_WORD + ", "
             + ClearCommand.COMMAND_WORD + ", "
+            + CopyCommand.COMMAND_WORD + ", "
             + DeleteCommand.COMMAND_WORD + ", "
             + EditCommand.COMMAND_WORD + ", "
             + ExitCommand.COMMAND_WORD + ", "
@@ -37,12 +40,14 @@ public class CommandIdentifier {
             + HistoryCommand.COMMAND_WORD + ", "
             + ListCommand.COMMAND_WORD + ", "
             + RedoCommand.COMMAND_WORD + ", "
-            + SelectCommand.COMMAND_WORD + ", "
+            + ScheduleCommand.COMMAND_WORD + ", "
+            + LocateCommand.COMMAND_WORD + ", "
             + UndoCommand.COMMAND_WORD;
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
             AddCommand.COMMAND_WORD, AddCommand.COMMAND_ALIAS,
             ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_ALIAS,
+            CopyCommand.COMMAND_WORD, CopyCommand.COMMAND_ALIAS,
             DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_ALIAS,
             EditCommand.COMMAND_WORD, EditCommand.COMMAND_ALIAS,
             ExitCommand.COMMAND_WORD, ExitCommand.COMMAND_ALIAS,
@@ -51,7 +56,8 @@ public class CommandIdentifier {
             HistoryCommand.COMMAND_WORD, HistoryCommand.COMMAND_ALIAS,
             ListCommand.COMMAND_WORD, ListCommand.COMMAND_ALIAS,
             RedoCommand.COMMAND_WORD, RedoCommand.COMMAND_ALIAS,
-            SelectCommand.COMMAND_WORD, SelectCommand.COMMAND_ALIAS,
+            ScheduleCommand.COMMAND_WORD, ScheduleCommand.COMMAND_ALIAS,
+            LocateCommand.COMMAND_WORD, LocateCommand.COMMAND_ALIAS,
             UndoCommand.COMMAND_WORD, UndoCommand.COMMAND_ALIAS);
 
     public final String value;

@@ -48,6 +48,13 @@ public class HelpCommand extends Command {
             commandResult = ClearCommand.MESSAGE_USAGE;
             break;
 
+        case CopyCommand.COMMAND_ALIAS:
+            //Fallthrough
+
+        case CopyCommand.COMMAND_WORD:
+            commandResult = CopyCommand.MESSAGE_USAGE;
+            break;
+
         case DeleteCommand.COMMAND_ALIAS:
             //Fallthrough
 
@@ -104,11 +111,18 @@ public class HelpCommand extends Command {
             commandResult = RedoCommand.MESSAGE_USAGE;
             break;
 
-        case SelectCommand.COMMAND_ALIAS:
+        case ScheduleCommand.COMMAND_ALIAS:
             //Fallthrough
 
-        case SelectCommand.COMMAND_WORD:
-            commandResult = SelectCommand.MESSAGE_USAGE;
+        case ScheduleCommand.COMMAND_WORD:
+            commandResult = ScheduleCommand.MESSAGE_USAGE;
+            break;
+
+        case LocateCommand.COMMAND_ALIAS:
+            //Fallthrough
+
+        case LocateCommand.COMMAND_WORD:
+            commandResult = LocateCommand.MESSAGE_USAGE;
             break;
 
         case UndoCommand.COMMAND_ALIAS:
