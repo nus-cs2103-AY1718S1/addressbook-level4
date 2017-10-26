@@ -128,7 +128,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(GroupContainsKeywordsPredicate predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
-
+    }
+    
     public void updateFilteredListToShowAll() {
         filteredPersons.setPredicate(null);
 
