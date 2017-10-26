@@ -171,8 +171,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateFilteredPersonList() { fail("This method should not be called.");
-
+        public void updateFilteredPersonList() {
+            fail("This method should not be called.");
         }
     }
 
