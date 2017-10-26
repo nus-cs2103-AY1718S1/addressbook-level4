@@ -12,7 +12,7 @@ import seedu.address.model.UniqueMeetingList;
  */
 public class TypicalMeetings {
 
-    public static final Meeting M1= new MeetingBuilder().build();
+    public static final Meeting M1 = new MeetingBuilder().build();
 
     private TypicalMeetings() {} // prevents instantiation
 
