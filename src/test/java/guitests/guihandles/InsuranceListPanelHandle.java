@@ -6,9 +6,10 @@ import javafx.scene.control.Label;
 /**
  * A handler for the {@code InsuranceProfile} of the UI.
  */
-public class InsuranceProfileHandle extends NodeHandle<Node> {
+public class InsuranceListPanelHandle extends NodeHandle<Node> {
 
-    public static final String INSURANCE_ID = "#insuranceProfile";
+    public static final String INSURANCE_LIST_VIEW_ID = "#insuranceListView";
+    /*
     private static final String OWNER_FIELD_ID = "#owner";
     private static final String INSURED_FIELD_ID = "#insured";
     private static final String BENEFICIARY_FIELD_ID = "#beneficiary";
@@ -20,7 +21,7 @@ public class InsuranceProfileHandle extends NodeHandle<Node> {
     private final Label beneficiaryLabel;
     private final Label premiumLabel;
 
-    public InsuranceProfileHandle(Node profilePanelNode) {
+    public InsuranceListPanelHandle(Node profilePanelNode) {
         super(profilePanelNode);
 
         this.ownerLabel = getChildNode(OWNER_FIELD_ID);
@@ -45,5 +46,9 @@ public class InsuranceProfileHandle extends NodeHandle<Node> {
     public String getPremium() {
         return premiumLabel.getText();
     }
+    */
 
+    public InsuranceListPanelHandle(Node profilePanelNode) {
+        super(profilePanelNode);
+    }
 }

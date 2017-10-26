@@ -17,7 +17,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.guihandles.CommandBoxHandle;
-import guitests.guihandles.InsuranceProfileHandle;
+import guitests.guihandles.InsuranceListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -32,6 +32,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.InsuranceListPanel;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -81,8 +82,8 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public InsuranceProfileHandle getInsuranceProfileHandle() {
-        return mainWindowHandle.getInsurancePanelHandle();
+    public InsuranceListPanelHandle getInsuranceListPanelHandle() {
+        return mainWindowHandle.getInsuranceListPanelHandle();
     }
 
     public ProfilePanelHandle getProfilePanelHandle() {
