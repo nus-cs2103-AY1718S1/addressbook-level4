@@ -153,14 +153,16 @@ Returns `john` and `John Doe` whose addresses contain the word 'stadium'.
 * `findByAddress stadium pier` +
 Returns any person having addresses containing `stadium` or `pier`
 
-=== Locating persons by phone: 'findByPhone'
+=== Locating persons by phone: `findByPhone`
 
-Finds persons whose addresses contain any of the given keywords.
-Format: findByPhone KEYWORKD [MORE_KEYWORDS]
+Finds persons whose phone contain any of the given keywords. +
+Format: `findByPhone KEYWORD [MORE_KEYWORDS]`
+
 
 Examples:
-* 'findByPhone 12345678'
-Returns 'john' and 'John Doe' whose phone is '12345678'.
+
+* `findByPhone 12345678` +
+Returns `john` and `John Doe` whose phone number is '12345678'.
 
 === Locating persons by email: `findByEmail`
 
