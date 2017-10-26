@@ -12,7 +12,7 @@ import seedu.address.logic.commands.RemoveTagCommand;
 
 public class RemoveTagParserTest {
 
-    private static String MESSAGE_EMPTY_TAG_INPUT = "";
+    private static final String MESSAGE_EMPTY_TAG_INPUT = "";
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE);
 

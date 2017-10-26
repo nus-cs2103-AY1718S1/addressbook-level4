@@ -34,7 +34,7 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_tagNameInvalid() throws Exception{
+    public void execute_tagNameInvalid() throws Exception {
         RemoveTagCommand removeTagCommand = prepareCommand(INVALID_TAG);
         String expectedMessage = RemoveTagCommand.MESSAGE_REMOVE_TAG_NOT_EXIST;
 
