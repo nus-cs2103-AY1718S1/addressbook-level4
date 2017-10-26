@@ -49,6 +49,22 @@ public class ModelHelper {
     }
 
     /**
+     * Update {@code model}'s filtered task list to display only {@code tasksToDisplay}.
+     */
+    public static void setFilteredTaskList(Model model, List<ReadOnlyTask> tasksToDisplay) {
+        Optional<Predicate<ReadOnlyTask>> predicate =
+            tasksToDisplay.stream().map(ModelHelper::getPredicateTaskMatching).reduce(Predicate::or);
+        model.updateFilteredTaskList(predicate.orElse(PREDICATE_MATCHING_NO_TASKS));
+    }
+
+    /**
+     * @see ModelHelper#setFilteredTaskList(Model, List)
+     */
+    public static void setFilteredTaskList(Model model, ReadOnlyTask... toDisplay) {
+        setFilteredTaskList(model, Arrays.asList(toDisplay));
+    }
+
+    /**
      * Returns a predicate that evaluates to true if this {@code ReadOnlyPerson} equals to {@code other}.
      */
     private static Predicate<ReadOnlyPerson> getPredicatePersonMatching(ReadOnlyPerson other) {

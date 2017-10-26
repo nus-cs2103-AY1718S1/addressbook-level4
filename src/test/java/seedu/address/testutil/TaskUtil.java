@@ -4,7 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_TO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.task.ReadOnlyTask;
 
 /**

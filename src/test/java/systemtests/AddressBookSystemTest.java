@@ -35,9 +35,12 @@ import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.persons.FindCommand;
+import seedu.address.logic.commands.persons.ListCommand;
+import seedu.address.logic.commands.persons.SelectCommand;
+import seedu.address.logic.commands.tasks.FindTaskCommand;
+import seedu.address.logic.commands.tasks.ListTasksCommand;
+import seedu.address.logic.commands.tasks.SelectTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
 
@@ -134,6 +137,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void showAllTasks() {
         executeCommand(ListCommand.COMMAND_WORD);
+        executeCommand(ListTasksCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getTaskList().size() == getModel().getFilteredTaskList().size();
     }
 
@@ -146,11 +150,27 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Displays all tasks with any parts of their description matching {@code keyword} (case-insensitive).
+     */
+    protected void showTasksWithDescription(String keyword) {
+        executeCommand(FindTaskCommand.COMMAND_WORD + " " + keyword);
+        assert getModel().getFilteredTaskList().size() < getModel().getAddressBook().getTaskList().size();
+    }
+
+    /**
      * Selects the person at {@code index} of the displayed list.
      */
     protected void selectPerson(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
         assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
+    }
+
+    /**
+     * Selects the task at {@code index} of the displayed list.
+     */
+    protected void selectTask(Index index) {
+        executeCommand(SelectTaskCommand.COMMAND_WORD + " " + index.getOneBased());
+        assert getTaskListPanel().getSelectedTaskCardIndex() == index.getZeroBased();
     }
 
     /**
@@ -223,6 +243,30 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Asserts that the previously selected card is now deselected
+     */
+    protected void assertSelectedTaskCardDeselected() {
+        assertFalse(getTaskListPanel().isAnyCardSelected());
+    }
+
+    /**
+     * Asserts that the task card selected is changed
+     * {@code expectedSelectedTaskCardIndex}, and only the card at {@code expectedSelectedTaskCardIndex} is selected.
+     * @see TaskListPanelHandle#isSelectedTaskCardChanged()
+     */
+    protected void assertSelectedTaskCardChanged(Index expectedSelectedTaskCardIndex) {
+        assertEquals(expectedSelectedTaskCardIndex.getZeroBased(), getTaskListPanel().getSelectedTaskCardIndex());
+    }
+
+    /**
+     * Asserts that the selected card in the task list panel remain unchanged.
+     * @see TaskListPanelHandle#isSelectedTaskCardChanged()
+     */
+    protected void assertSelectedTaskCardUnchanged() {
+        assertFalse(getTaskListPanel().isSelectedTaskCardChanged());
+    }
+
+    /**
      * Asserts that the command box's shows the default style.
      */
     protected void assertCommandBoxShowsDefaultStyle() {
@@ -266,7 +310,8 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertTaskListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE),
+                    getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
