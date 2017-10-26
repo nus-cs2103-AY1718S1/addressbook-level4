@@ -96,7 +96,7 @@ public class ParserUtil {
     /**
      * Parses a String into a RelationshipDirection
      */
-    public static RelationshipDirection parseDirection(String direction) throws IllegalValueException{
+    public static RelationshipDirection parseDirection(String direction) throws IllegalValueException {
         requireNonNull(direction);
         if (direction.compareToIgnoreCase("directed") == 0) {
             return RelationshipDirection.DIRECTED;

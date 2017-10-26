@@ -8,6 +8,7 @@ import java.util.Set;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
+import org.graphstream.ui.view.Viewer;
 
 import javafx.collections.ObservableList;
 
@@ -34,7 +35,7 @@ public class GraphWrapper {
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
 
-    private final String nodeAttributePersonName = "PersonName";
+    private final String nodeAttributeNodeLabel = "ui.label";
     private final String nodeAttributePerson = "Person";
 
     public GraphWrapper() {
@@ -54,9 +55,11 @@ public class GraphWrapper {
     private SingleGraph initiateGraphNodes() {
         try {
             for (ReadOnlyPerson person : filteredPersons) {
-                SingleNode node = graph.addNode(getNodeIdFromPerson(person));
-                node.addAttribute(nodeAttributePersonName, person.getName());
-                node.addAttribute(nodeAttributePerson, person);
+                String personIndexInFilteredPersons = getNodeIdFromPerson(person);
+                SingleNode node = graph.addNode(personIndexInFilteredPersons);
+                String personLabel = (Integer.parseInt(personIndexInFilteredPersons) + 1) + ". "
+                        + person.getName().toString();
+                node.addAttribute(nodeAttributeNodeLabel, personLabel);
             }
         } catch (IllegalValueException ive) {
             assert false : "it should not happen.";
@@ -79,13 +82,6 @@ public class GraphWrapper {
      * fix the format of edge ID
      */
     private String computeEdgeId(ReadOnlyPerson person1, ReadOnlyPerson person2) {
-        System.out.println("------------------------------------------------------------------------");
-        System.out.println("Person1: " + person1.toString());
-        System.out.println("Person2: " + person2.toString());
-        System.out.println(Integer.toString(filteredPersons.indexOf(person1)) + "_"
-                + Integer.toString(filteredPersons.indexOf(person2)));
-        System.out.println("------------------------------------------------------------------------");
-
         return  Integer.toString(filteredPersons.indexOf(person1)) + "_"
                 + Integer.toString(filteredPersons.indexOf(person2));
     }
@@ -105,20 +101,12 @@ public class GraphWrapper {
         String redundantEdgeId2 = computeEdgeId(toPerson, fromPerson);
         Edge redundantEdge1 = graph.getEdge(redundantEdgeId1);
         Edge redundantEdge2 = graph.getEdge(redundantEdgeId2);
-//        if (intendedDirectionOfRedundantEdge == RelationshipDirection.UNDIRECTED) {
-//            if (redundantEdge != null && !redundantEdge.isDirected()) {
-//                graph.removeEdge(redundantEdge);
-//            }
-//        } else {
-//            if (redundantEdge != null && redundantEdge.isDirected()) {
-//                graph.removeEdge(redundantEdge);
-//            }
-//        }
+
         if (intendedDirectionOfRedundantEdge.isDirected()) {
             if (redundantEdge1 != null) {
                 graph.removeEdge(redundantEdge1);
             }
-            if (redundantEdge1 != null && !redundantEdge2.isDirected()) {
+            if (redundantEdge2 != null && !redundantEdge2.isDirected()) {
                 graph.removeEdge(redundantEdge2);
             }
         } else {
@@ -218,7 +206,7 @@ public class GraphWrapper {
         return graph;
     }
 
-    public void display() {
-        this.graph.display();
+    public Viewer display() {
+        return this.graph.display();
     }
 }

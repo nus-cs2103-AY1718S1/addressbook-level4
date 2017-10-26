@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -158,6 +159,10 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
      */
     public boolean addRelationship(Relationship re) throws DuplicateRelationshipException {
         UniqueRelationshipList reList = relationships.get();
+        ArrayList<Relationship> oppoRelationships = re.oppositeRelationships();
+        for (Relationship oppoRe: oppoRelationships) {
+            removeRelationship(oppoRe);
+        }
         reList.add(re);
 
         return true;

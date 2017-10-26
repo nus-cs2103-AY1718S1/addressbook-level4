@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.relationship.RelationshipDirection;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
 /**
  * This class is to specify a command for adding relationship between two persons
@@ -51,12 +52,13 @@ public class AddRelationshipCommand extends UndoableCommand {
         try {
             model.addRelationship(indexFromPerson, indexToPerson, direction);
             graphWrapper.buildGraph(model);
-            graphWrapper.display();
         } catch (IllegalValueException ive) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } catch (DuplicateRelationshipException dre) {
+            throw new CommandException(MESSAGE_DUPLICATED_RELATIONSHIP);
         }
-        return new CommandResult(String.format(MESSAGE_ADD_RELATIONSHIP_SUCCESS, indexToPerson,
-                indexFromPerson, direction));
+        return new CommandResult(String.format(MESSAGE_ADD_RELATIONSHIP_SUCCESS, indexToPerson.toString(),
+                indexFromPerson.toString(), direction));
     }
 
     @Override

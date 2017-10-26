@@ -10,6 +10,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
 import seedu.address.model.relationship.RelationshipDirection;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
 /**
  * The API of the Model component.
@@ -41,7 +42,7 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
 
     void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction)
-        throws IllegalValueException;
+        throws IllegalValueException, DuplicateRelationshipException;
 
     /** Sorts the persons object alphanumerically by name. */
     void sortPersons();
