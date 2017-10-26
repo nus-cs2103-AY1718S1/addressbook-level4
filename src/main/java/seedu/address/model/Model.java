@@ -51,6 +51,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+    void updateFilteredPersonList();
 
     /**
      * Returns the userPref which the model is initialized with
@@ -76,6 +77,4 @@ public interface Model {
      * Sort everyone in addressbook lexicographically
      */
     void sortPersonListLexicographically();
-
-    void updateFilteredPersonList();
 }

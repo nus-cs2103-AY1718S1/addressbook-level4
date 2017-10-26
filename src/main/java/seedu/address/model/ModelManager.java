@@ -142,6 +142,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void updateFilteredPersonList() { }
+
+    @Override
     public UserPrefs getUserPrefs() {
         return this.userPrefs;
     }
@@ -189,11 +192,6 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortLexicographically();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
-    }
-
-    @Override
-    public void updateFilteredPersonList() {
-
     }
 
 
