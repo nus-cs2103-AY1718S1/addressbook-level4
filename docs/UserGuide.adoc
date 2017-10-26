@@ -55,18 +55,20 @@ This is applicable to email and weblinks as well.
 
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add` or `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL... a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL... a/ADDRESS [t/TAG] [w/WebLink]...`
 
 [TIP]
-A person can have any number of tags, email and weblink (including 0)
+A person can have any number of tags, email and weblinks (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com e/betsy@workemail.com a/Newgate Prison p/1234567 t/criminal w/google.com`
+// end::add[]
 
 === Listing all persons : `list` or `l`
 
@@ -105,7 +107,8 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Delete tag form all persons: 'tagDelete'
+// tag::tagDelete[]
+=== Delete tag form all persons: `tagDelete`
 
 Deletes a tag inputted by the user from all existing person in the address book. +
 Format: `tagDelete [tag name]`
@@ -122,6 +125,8 @@ Examples:
 the tag friends will be deleted from any person in the addressbook that has this tag.
 * `tagDelete noSuchTag` +
 Nothing will happen if no such tag is present in any person in the address book
+
+// end::tagDelete[]
 
 === Locating persons by name: `find`
 

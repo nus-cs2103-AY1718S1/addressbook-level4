@@ -184,6 +184,8 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
+// tag::model[]
+
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
@@ -198,6 +200,8 @@ The `Model`,
 * stores the UserPerson object that represents the user's own contact card.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
+// end::model[]
 
 === Storage component
 
