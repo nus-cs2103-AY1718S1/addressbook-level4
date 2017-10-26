@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
@@ -282,6 +283,7 @@ public class MainWindow extends UiPart<Region> {
         vBox.getStylesheets().remove("view/WhiteTheme.css");
         vBox.getStylesheets().remove("view/GreenTheme.css");
         vBox.getStylesheets().add("view/DarkTheme.css");
+        // this.scene.setFill(Color.BLUE);
     }
 
     /**

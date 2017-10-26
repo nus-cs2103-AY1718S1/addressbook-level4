@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.person.ReadOnlyPerson;
@@ -18,13 +19,13 @@ public class EmailCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Email opened!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + ": Emails the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    private int emailIndex;
-    public EmailCommand(String emailIndex) {
-        this.emailIndex = Integer.parseInt(emailIndex.trim());
+    private final Index emailIndex;
+    public EmailCommand(Index emailIndex) {
+        this.emailIndex = emailIndex;
     }
     public void openEmail() {}
     @Override
@@ -32,10 +33,10 @@ public class EmailCommand extends Command {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if ((emailIndex - 1) >= lastShownList.size()) {
+        if (emailIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        ReadOnlyPerson personToEmail = lastShownList.get(emailIndex - 1);
+        ReadOnlyPerson personToEmail = lastShownList.get(emailIndex.getZeroBased());
 
         OpenEmailClient emailClient = new OpenEmailClient(personToEmail.getEmail().toString());
         emailClient.sendMail();
