@@ -131,7 +131,7 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
 
-        personDetailsPanel = new PersonDetailsPanel();
+        personDetailsPanel = new PersonDetailsPanel(logic.getFilteredPersonList());
         contactDetailsPlaceholder.getChildren().add(personDetailsPanel.getRoot());
 
         browserPanel = new BrowserPanel();

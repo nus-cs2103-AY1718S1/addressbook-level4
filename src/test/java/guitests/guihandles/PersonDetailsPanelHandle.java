@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
  */
 public class PersonDetailsPanelHandle extends NodeHandle<Node> {
 
-    public static final String GRIDPANE_ID = "#personDetails";
+    public static final String VBOX_ID = "#personDetailsBox";
     public static final String NAME_ID = "#nameLabel";
     public static final String PHONE_ID = "#phoneLabel";
     public static final String EMAIL_ID = "#emailLabel";
@@ -23,7 +23,7 @@ public class PersonDetailsPanelHandle extends NodeHandle<Node> {
 
     public PersonDetailsPanelHandle(Node cardNode) {
         super(cardNode);
-        this.gridPane = getChildNode(GRIDPANE_ID);
+        this.gridPane = getChildNode(VBOX_ID);
         this.nameLb = getChildNode(NAME_ID);
         this.phoneLb = getChildNode(PHONE_ID);
         this.emailLb = getChildNode(EMAIL_ID);
