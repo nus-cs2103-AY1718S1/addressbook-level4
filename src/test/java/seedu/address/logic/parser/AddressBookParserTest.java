@@ -34,6 +34,7 @@ import seedu.address.logic.commands.RetrieveCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UntagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -147,6 +148,22 @@ public class AddressBookParserTest {
                 + INDEX_THIRD_PERSON.getOneBased() + " " + "friends");
         assertEquals(new TagCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON),
                 new Tag("friends")), command);
+    }
+
+    @Test
+    public void parseCommand_untag() throws Exception {
+        UntagCommand command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + ","
+                + INDEX_SECOND_PERSON.getOneBased() + ","
+                + INDEX_THIRD_PERSON.getOneBased() + " " + "friends");
+        assertEquals(new UntagCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON),
+                new Tag("friends")), command);
+
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -all " + "friends");
+        assertEquals(new UntagCommand(new Tag("friends")), command);
+
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -all");
+        assertEquals(new UntagCommand(), command);
     }
 
     @Test
