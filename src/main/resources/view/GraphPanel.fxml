@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="400.0" prefWidth="600.0">
+
+        <children>
+            <LineChart fx:id="graphPanel" layoutY="10.0" maxHeight="1.5" maxWidth="1.5" minHeight="500" minWidth="600" prefHeight="600" prefWidth="800.0">
+                <xAxis>
+                    <CategoryAxis minHeight="400.0" minWidth="400.0" side="BOTTOM" fx:id="xNameAxis" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="yGradeAxis" side="LEFT" tickLabelFill="#ffffff2e" />
+                </yAxis>
+            </LineChart>
+        </children>
+
+</AnchorPane>
