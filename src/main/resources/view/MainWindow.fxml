@@ -46,14 +46,23 @@
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
         </VBox>
-        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+        <SplitPane fx:id="rightViewSplitPane" dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
             <items>
-                <AnchorPane maxHeight="40.0" minHeight="40.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                    <StackPane fx:id="websiteButtonbarPlaceholder" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                <AnchorPane maxHeight="150.0" minHeight="150.0" minWidth="0.0" prefHeight="150.0" prefWidth="160.0">
+               <SplitPane dividerPositions="0.5" layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                  <items>
+                     <StackPane fx:id="detailedPersonCardPlaceholder">
                         <padding>
-                            <Insets bottom="10" left="10" right="10" top="10" />
+                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </padding>
-                    </StackPane>
+                     </StackPane>
+                          <StackPane fx:id="websiteButtonbarPlaceholder">
+                              <padding>
+                                  <Insets bottom="10" left="10" right="10" top="10" />
+                              </padding>
+                          </StackPane>
+                  </items>
+               </SplitPane>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                     <children>
@@ -70,23 +79,4 @@
     </SplitPane>
 
     <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
-   <MenuBar>
-     <menus>
-       <Menu mnemonicParsing="false" text="File">
-         <items>
-           <MenuItem mnemonicParsing="false" text="Close" />
-         </items>
-       </Menu>
-       <Menu mnemonicParsing="false" text="Edit">
-         <items>
-           <MenuItem mnemonicParsing="false" text="Delete" />
-         </items>
-       </Menu>
-       <Menu mnemonicParsing="false" text="Help">
-         <items>
-           <MenuItem mnemonicParsing="false" text="About" />
-         </items>
-       </Menu>
-     </menus>
-   </MenuBar>
 </VBox>

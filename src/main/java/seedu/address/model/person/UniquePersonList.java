@@ -1,6 +1,10 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.ARG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.ARG_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.ARG_NAME;
+import static seedu.address.logic.parser.CliSyntax.ARG_PHONE;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -98,19 +102,38 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Sorts the internal list by order of a comparator, which by default sorts by name.
+     * Sorts the internal list by order of a comparator, which by default is name.
      */
-    public void sortPersons() {
-        Comparator<ReadOnlyPerson> personComparator = new Comparator<ReadOnlyPerson>() {
+    public void sortPersons(String filterType) {
 
-            public int compare(ReadOnlyPerson person1, ReadOnlyPerson person2) {
+        Comparator<ReadOnlyPerson> personComparator = (ReadOnlyPerson person1, ReadOnlyPerson person2) -> {
 
-                String personName1 = person1.getName().toString();
-                String personName2 = person2.getName().toString();
-
-                return personName1.compareTo(personName2);
+            String arg1;
+            String arg2;
+            switch (filterType) {
+            case ARG_NAME:
+                arg1 = person1.getName().toString().toLowerCase();
+                arg2 = person2.getName().toString().toLowerCase();
+                break;
+            case ARG_PHONE:
+                arg1 = person1.getPhone().toString();
+                arg2 = person2.getPhone().toString();
+                break;
+            case ARG_EMAIL:
+                arg1 = person1.getEmail().toString();
+                arg2 = person2.getEmail().toString();
+                break;
+            case ARG_ADDRESS:
+                arg1 = person1.getAddress().toString();
+                arg2 = person2.getAddress().toString();
+                break;
+            default:
+                // TODO: Make default sort by date added
+                arg1 = person1.getName().toString();
+                arg2 = person2.getName().toString();
+                break;
             }
-
+            return arg1.compareTo(arg2);
         };
 
         FXCollections.sort(internalList, personComparator);

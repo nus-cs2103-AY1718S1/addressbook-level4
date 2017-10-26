@@ -1,7 +1,17 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.parser.CliSyntax.ARG_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.ARG_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.ARG_NAME;
+import static seedu.address.logic.parser.CliSyntax.ARG_PHONE;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
+import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getSortedTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.getSortedTypicalPersons;
 import static seedu.address.testutil.TypicalPersons.getUnsortedTypicalPersons;
@@ -63,12 +73,60 @@ public class AddressBookTest {
     }
 
     @Test
-    public void sortPersonList_modifyList_success() {
+    public void sortPersonListByName_modifyList_success() {
         try {
             AddressBook newData = new AddressBook();
             newData.setPersons(getSortedTypicalPersons());
             addressBook.setPersons(getUnsortedTypicalPersons());
-            addressBook.sortPersons();
+            addressBook.sortPersons(ARG_NAME);
+            assertEquals(addressBook, newData);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("person is expected to be unique.");
+        }
+    }
+
+    @Test
+    public void sortPersonListByPhone_modifyList_success() {
+        try {
+            List<ReadOnlyPerson> sortedPersons = Arrays.asList(new Person(ALICE),
+                    new Person(DANIEL), new Person(ELLE), new Person(FIONA), new Person(GEORGE),
+                    new Person(CARL), new Person(BENSON));
+            AddressBook newData = new AddressBook();
+            newData.setPersons(sortedPersons);
+            addressBook.setPersons(getUnsortedTypicalPersons());
+            addressBook.sortPersons(ARG_PHONE);
+            assertEquals(addressBook, newData);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("person is expected to be unique.");
+        }
+    }
+
+    @Test
+    public void sortPersonListByEmail_modifyList_success() {
+        try {
+            List<ReadOnlyPerson> sortedPersons = Arrays.asList(new Person(ALICE),
+                    new Person(GEORGE), new Person(DANIEL), new Person(CARL),
+                    new Person(BENSON), new Person(FIONA), new Person(ELLE));
+            AddressBook newData = new AddressBook();
+            newData.setPersons(sortedPersons);
+            addressBook.setPersons(getUnsortedTypicalPersons());
+            addressBook.sortPersons(ARG_EMAIL);
+            assertEquals(addressBook, newData);
+        } catch (DuplicatePersonException dpe) {
+            throw new IllegalArgumentException("person is expected to be unique.");
+        }
+    }
+
+    @Test
+    public void sortPersonListByAddress_modifyList_success() {
+        try {
+            List<ReadOnlyPerson> sortedPersons = Arrays.asList(new Person(DANIEL),
+                    new Person(ALICE), new Person(BENSON), new Person(GEORGE), new Person(FIONA),
+                    new Person(ELLE), new Person(CARL));
+            AddressBook newData = new AddressBook();
+            newData.setPersons(sortedPersons);
+            addressBook.setPersons(getUnsortedTypicalPersons());
+            addressBook.sortPersons(ARG_ADDRESS);
             assertEquals(addressBook, newData);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");

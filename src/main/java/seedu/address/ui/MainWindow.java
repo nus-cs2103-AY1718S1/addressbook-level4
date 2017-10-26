@@ -54,6 +54,9 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
+    private StackPane detailedPersonCardPlaceholder;
+
+    @FXML
     private MenuItem helpMenuItem;
 
     @FXML
@@ -146,6 +149,9 @@ public class MainWindow extends UiPart<Region> {
 
         WebsiteButtonBar websiteButtonBar = new WebsiteButtonBar();
         websiteButtonbarPlaceholder.getChildren().add(websiteButtonBar.getRoot());
+
+        DetailedPersonCard detailedPersonCard = new DetailedPersonCard();
+        detailedPersonCardPlaceholder.getChildren().add(detailedPersonCard.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
