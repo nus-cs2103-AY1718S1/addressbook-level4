@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.102">
+<StackPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="personDetails">
+      <GridPane fx:id="personDetailsGrid" alignment="CENTER" style="-fx-background-color: white;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -17,13 +16,8 @@
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <Label fx:id="nameLabel" alignment="BOTTOM_CENTER" textAlignment="CENTER" underline="true" />
-            <Label fx:id="phoneLabel" alignment="TOP_LEFT" GridPane.rowIndex="1" />
-            <Label fx:id="emailLabel" GridPane.rowIndex="1" />
-            <Label fx:id="addressLabel" alignment="BOTTOM_LEFT" GridPane.rowIndex="1" />
-         </children>
       </GridPane>
    </children>
 </StackPane>

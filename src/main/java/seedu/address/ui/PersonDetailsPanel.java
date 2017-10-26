@@ -1,9 +1,12 @@
 package seedu.address.ui;
 
 import java.awt.Label;
-import javax.swing.plaf.synth.Region;
+import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
 
 /**
  * The Contact Details Panel of the App.
@@ -11,19 +14,14 @@ import javafx.fxml.FXML;
 public class PersonDetailsPanel extends UiPart<Region> {
     private static final String FXML = "PersonDetailsPanel.fxml";
 
-    @FXML
-    private Label nameLable;
+    private final Logger logger = LogsCenter.getLogger(PersonDetailsPanel.class);
 
     @FXML
-    private Label phoneLabel;
-
-    @FXML
-    private Label emailLabel;
-
-    @FXML
-    private Label addressLabel;
+    private GridPane personDetailsGrid;
 
     public PersonDetailsPanel() {
         super(FXML);
+
+        //registerAsAnEventHandler(this);
     }
 }
