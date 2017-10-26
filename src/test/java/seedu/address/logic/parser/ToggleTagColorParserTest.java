@@ -35,6 +35,13 @@ public class ToggleTagColorParserTest {
 
         // Throw Parse error
         thrown.expect(ParseException.class);
-        parser.parse("tagcolor Test");
+        parser.parse("Test");
+    }
+
+    @Test
+    public void parseMoreThanTwoWords() throws Exception {
+        ToggleTagColorParser parser = new ToggleTagColorParser();
+        thrown.expect(ParseException.class);
+        parser.parse("This is longer than what is accepted");
     }
 }
