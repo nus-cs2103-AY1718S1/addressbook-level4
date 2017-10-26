@@ -122,8 +122,9 @@ public class ModelManager extends ComponentManager implements Model {
             throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
         addressBook.deletePersonFromGroup(targetGroup, toRemove);
         /** Update filtered list with predicate for current group members in group after removing a person */
-        updateFilteredPersonList(addressBook.getGroupList()
-                .get(targetGroup.getZeroBased()).getMembers()::contains);
+        ObservableList<ReadOnlyPerson> personList = addressBook.getGroupList()
+                .get(targetGroup.getZeroBased()).groupMembersProperty().get().asObservableList();
+        updateFilteredPersonList(getGroupMembersPredicate(personList));
         indicateAddressBookChanged();
 
     }
@@ -151,11 +152,16 @@ public class ModelManager extends ComponentManager implements Model {
 
     }
 
-
     @Override
     public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
         requireNonNull(predicate);
         filteredGroups.setPredicate(predicate);
+    }
+
+    /** Returns predicate that returns true if group member list contains a person */
+    /** Used to update FilteredPersonList whenever there is a need to display group members */
+    public Predicate<ReadOnlyPerson> getGroupMembersPredicate(ObservableList<ReadOnlyPerson> personList) {
+        return personList::contains;
     }
 
     /** Handle any GroupPanelSelectionChangedEvent raised and set predicate to show group members only */
@@ -164,7 +170,7 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<ReadOnlyPerson> personList = event.getNewSelection()
                 .group.groupMembersProperty().get().asObservableList();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        filteredPersons.setPredicate(personList::contains);
+        updateFilteredPersonList(getGroupMembersPredicate(personList));
     }
 
     @Override
