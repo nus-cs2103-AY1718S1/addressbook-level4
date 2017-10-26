@@ -10,6 +10,7 @@ import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+import static seedu.address.ui.testutil.GuiTestAssert.assertTaskListMatching;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,13 +30,17 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.TaskListPanelHandle;
 import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.persons.FindCommand;
+import seedu.address.logic.commands.persons.ListCommand;
+import seedu.address.logic.commands.persons.SelectCommand;
+import seedu.address.logic.commands.tasks.FindTaskCommand;
+import seedu.address.logic.commands.tasks.ListTasksCommand;
+import seedu.address.logic.commands.tasks.SelectTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.ui.CommandBox;
 
@@ -100,6 +105,10 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getResultDisplay();
     }
 
+    public TaskListPanelHandle getTaskListPanel() {
+        return mainWindowHandle.getTaskListPanel();
+    }
+
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
@@ -124,6 +133,15 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Displays all tasks in the address book.
+     */
+    protected void showAllTasks() {
+        executeCommand(ListCommand.COMMAND_WORD);
+        executeCommand(ListTasksCommand.COMMAND_WORD);
+        assert getModel().getAddressBook().getTaskList().size() == getModel().getFilteredTaskList().size();
+    }
+
+    /**
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
@@ -132,11 +150,27 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Displays all tasks with any parts of their description matching {@code keyword} (case-insensitive).
+     */
+    protected void showTasksWithDescription(String keyword) {
+        executeCommand(FindTaskCommand.COMMAND_WORD + " " + keyword);
+        assert getModel().getFilteredTaskList().size() < getModel().getAddressBook().getTaskList().size();
+    }
+
+    /**
      * Selects the person at {@code index} of the displayed list.
      */
     protected void selectPerson(Index index) {
         executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
         assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
+    }
+
+    /**
+     * Selects the task at {@code index} of the displayed list.
+     */
+    protected void selectTask(Index index) {
+        executeCommand(SelectTaskCommand.COMMAND_WORD + " " + index.getOneBased());
+        assert getTaskListPanel().getSelectedTaskCardIndex() == index.getZeroBased();
     }
 
     /**
@@ -151,6 +185,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+        assertTaskListMatching(getTaskListPanel(), expectedModel.getFilteredTaskList());
     }
 
     /**
@@ -163,6 +198,7 @@ public abstract class AddressBookSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
+        getTaskListPanel().rememberSelectedTaskCard();
     }
 
     /**
@@ -204,6 +240,30 @@ public abstract class AddressBookSystemTest {
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
+    }
+
+    /**
+     * Asserts that the previously selected card is now deselected
+     */
+    protected void assertSelectedTaskCardDeselected() {
+        assertFalse(getTaskListPanel().isAnyCardSelected());
+    }
+
+    /**
+     * Asserts that the task card selected is changed
+     * {@code expectedSelectedTaskCardIndex}, and only the card at {@code expectedSelectedTaskCardIndex} is selected.
+     * @see TaskListPanelHandle#isSelectedTaskCardChanged()
+     */
+    protected void assertSelectedTaskCardChanged(Index expectedSelectedTaskCardIndex) {
+        assertEquals(expectedSelectedTaskCardIndex.getZeroBased(), getTaskListPanel().getSelectedTaskCardIndex());
+    }
+
+    /**
+     * Asserts that the selected card in the task list panel remain unchanged.
+     * @see TaskListPanelHandle#isSelectedTaskCardChanged()
+     */
+    protected void assertSelectedTaskCardUnchanged() {
+        assertFalse(getTaskListPanel().isSelectedTaskCardChanged());
     }
 
     /**
@@ -249,7 +309,9 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertTaskListMatching(getTaskListPanel(), getModel().getFilteredTaskList());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE),
+                    getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

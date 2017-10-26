@@ -13,7 +13,7 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
 public class TypicalAddressBook {
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons amd tasks.
+     * Returns an {@code AddressBook} with all the typical persons and tasks.
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();

@@ -6,6 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRA
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,34 +20,47 @@ import seedu.address.model.task.ReadOnlyTask;
 public class TypicalTasks {
 
     public static final ReadOnlyTask ASSIGNMENT = new TaskBuilder().withDescription("Finish CS2103T code enhancement")
-            .withStartDate("17-10-2017")
-            .withDeadline("20-10-2017").build();
+            .withStartDate("Mon, Oct 23, '17")
+            .withDeadline("Thu, Oct 26, '17").build();
     public static final ReadOnlyTask QUIZ = new TaskBuilder().withDescription("Online quiz open")
-            .withStartDate("21-10-2017")
-            .withDeadline("28-10-2017").build();
+            .withStartDate("Wed, Oct 25, '17")
+            .withDeadline("Wed, Nov 1, '17").build();
     public static final ReadOnlyTask GYM = new TaskBuilder().withDescription("Start going to the gym")
-            .withStartDate("20-05-2017").build();
+            .withStartDate("Fri, Nov 3, '17")
+            .withDeadline("").withTags(VALID_TAG_URGENT).build();
     public static final ReadOnlyTask BUY_TICKETS = new TaskBuilder()
             .withDescription("Get tickets two weeks before flight")
-            .withDeadline("20-11-2017").build();
+            .withStartDate("")
+            .withDeadline("Fri, Nov 20, '17").build();
     public static final ReadOnlyTask SUBMISSION = new TaskBuilder().withDescription("Self evaluation submission due")
-            .withDeadline("30-11-2017").build();
+            .withStartDate("")
+            .withDeadline("Sat, Nov 18, '17").build();
     public static final ReadOnlyTask PERSONAL_PROJECT = new TaskBuilder().withDescription("Finish art piece").build();
-
+    public static final ReadOnlyTask GROCERY = new TaskBuilder().withDescription("Go grocery shopping")
+            .withStartDate("")
+            .withDeadline("Thu, Mar 8, '18").build();
+    public static final ReadOnlyTask MEETUP = new TaskBuilder().withDescription("Meet friends")
+            .withStartDate("")
+            .withDeadline("Tue, Dec 12, '17").build();
+    // TODO: 26/10/17 Ensure that StartDate is empty string instead of null, if not test case will be wrong
     // Manually added
     public static final ReadOnlyTask SCHOOL = new TaskBuilder().withDescription("Semester two starts")
-            .withStartDate("12-01-2018").build();
-    public static final ReadOnlyTask BUY_PRESENTS = new TaskBuilder().withDescription("Get gifts for family").build();
+            .withStartDate("Fri, Jan 12, '18").build();
+    public static final ReadOnlyTask BUY_PRESENTS = new TaskBuilder().withDescription("Get gifts for family")
+            .withStartDate("").withDeadline("").withTags(VALID_TAG_URGENT).build();
 
     // Manually added - Task's details found in {@code CommandTestUtil}
     public static final ReadOnlyTask INTERNSHIP = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
             .withStartDate(VALID_STARTDATE_INTERNSHIP)
             .withDeadline(VALID_DEADLINE_INTERNSHIP)
+            .withTags(VALID_TAG_URGENT)
             .build();
     public static final ReadOnlyTask GRAD_SCHOOL = new TaskBuilder().withDescription(VALID_DESCRIPTION_GRAD_SCHOOL)
             .withStartDate(VALID_STARTDATE_GRAD_SCHOOL)
-            .withDeadline(VALID_DEADLINE_GRAD_SCHOOL)
+            .withDeadline(VALID_DEADLINE_GRAD_SCHOOL).withTags(VALID_TAG_URGENT)
             .build();
+
+    public static final String KEYWORD_MATCHING_FINISH = "Finish"; // A keyword that matches Finish
 
     private TypicalTasks() {}
 

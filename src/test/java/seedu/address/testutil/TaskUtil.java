@@ -1,9 +1,10 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_TO;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.task.ReadOnlyTask;
 
 /**
@@ -24,8 +25,11 @@ public class TaskUtil {
     public static String getTaskDetails(ReadOnlyTask task) {
         StringBuilder sb = new StringBuilder();
         sb.append(task.getDescription().taskDescription + " ");
-        sb.append(PREFIX_START_DATE + task.getStartDate().date.toString() + " ");
-        sb.append(PREFIX_DEADLINE + task.getDeadline().date.toString() + " ");
+        sb.append(PREFIX_STARTDATE + task.getStartDate().date.toString() + " ");
+        sb.append(PREFIX_DEADLINE_TO + task.getDeadline().date.toString() + " ");
+        task.getTags().stream().forEach(
+            s -> sb.append(PREFIX_TAG + s.tagName + " ")
+        );
         return sb.toString();
     }
 }
