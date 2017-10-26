@@ -54,9 +54,29 @@ The address book stores all user created groups and allows the user to add peopl
 === Group Filter: `filter`
 Ability to filter the UI display to only display selected groups. Bar across the top of the UI displays the current groups. Since v1.3
 
+=== Person Image: `image`
+Set and show an image for a person in the addressbook. Uses the index of a person to select them and a URL to the image path. Since v1.3. +
+e.g. `image 1 /home/user/someexample.jpg`
 
+=== Facebook Integration
+Coming v2.0.
 
-== Features
+=== Linkedin Integration
+Coming v2.0.
+
+=== Condensed Help
+Open a condensed help screen by default in place of the Google brwoser integration. Coming v1.5?.
+
+=== Importing Database
+Import a working version of the database and the images associated to it from a directory specified. Coming v2.0.
+
+=== Exporting Database
+Export a working version of the database and the images associated to it to a directory specified. Coming v1.4/5?
+
+=== Admin Permissions
+Allow usage of dangerous commands such as clear, export and import. Coming v2.0.
+
+== V1.0 Features
 
 ====
 *Command Format*
@@ -240,28 +260,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Group feature
-
---TODO
-
-=== Facebook Integration
-
---TODO +
---v2.0
-
-=== Google Integration
-
---TODO
-
-=== LinkedIn Integration
-
---TODO +
---v2.0
-
-=== Database Importing
-
---TODO
-
 === Clearing all entries : `clear`
 
 *Admin:* Clears all entries from the address book. +
@@ -272,34 +270,19 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== Autocomplete commands
-
-Automatically completes the command you are typing +
-Format: type the start of the command wanted --TODO
-
-=== Command shortcuts
-
---TODO +
---Add to each feature?
-
-=== Admin permissions
-
---TODO +
---v2.0?
-
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-*Admin:* You can also export a backup of the data to any directory using --TODO
+*Admin:* Can export and import different databases - Coming v2.0.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-*Q*: Why do I need admin to access some of the features? +
+*Q*: Why do I need admin permissions to access some of the features? +
 *A*: This is in place to protect the content of the address book from misuse as well as adding another layer of protection from user error.
 
 == Command Summary
@@ -318,3 +301,5 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Image* : `image INDEX URL` +
+e.g. `image 1 /home/user/someimage.jpg`
