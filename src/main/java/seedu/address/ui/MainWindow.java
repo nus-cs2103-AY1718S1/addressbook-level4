@@ -18,9 +18,11 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+
 import seedu.address.model.UserPrefs;
 
 /**
@@ -45,6 +47,7 @@ public class MainWindow extends UiPart<Region> {
     private Config config;
     private UserPrefs prefs;
     private GroupListPanel groupListPanel;
+    private CommandBox commandBox;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -142,7 +145,7 @@ public class MainWindow extends UiPart<Region> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         groupListPanel = new GroupListPanel(logic.getGroupList());
@@ -227,5 +230,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        commandBox.handleCommandInputChanged("filter " + event.getNewSelection().group.groupName);
     }
 }

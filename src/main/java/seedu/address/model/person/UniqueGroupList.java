@@ -17,6 +17,7 @@ import seedu.address.model.person.exceptions.GroupNotFoundException;
 
 public class UniqueGroupList implements Iterable<Group> {
 
+    public static final Group DEFAULT_GROUP = new Group ("none");
     private final ObservableList<Group> groups = FXCollections.observableArrayList();
 
     /**
@@ -61,6 +62,9 @@ public class UniqueGroupList implements Iterable<Group> {
      */
     public boolean remove (Group target) throws GroupNotFoundException {
         requireNonNull(target);
+        if (target.equals(DEFAULT_GROUP)) {
+            return true;
+        }
         final boolean success = groups.remove(target);
         if (!success) {
             throw new GroupNotFoundException();

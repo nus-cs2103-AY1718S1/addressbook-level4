@@ -41,10 +41,11 @@ public class GroupCommand extends UndoableCommand {
         try {
             if (!model.groupExists (group)) {
                 model.addGroup (group);
+                editPersonGroups(args, group);
             } else {
                 model.deleteGroup(group);
             }
-            editPersonGroups(args, group);
+
             return new CommandResult (MESSAGE_SUCCESS);
 
         } catch (DuplicateGroupException | GroupNotFoundException e) {

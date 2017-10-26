@@ -6,15 +6,12 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.model.person.Group;
 import seedu.address.model.person.GroupContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -150,17 +147,4 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
-
-    @Subscribe
-    private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
-        requireNonNull(event.getNewSelection().group.groupName);
-
-        GroupContainsKeywordsPredicate predicate = new GroupContainsKeywordsPredicate(event.getNewSelection()
-                .group.groupName);
-        updateFilteredPersonList(predicate);
-    }
-
 }

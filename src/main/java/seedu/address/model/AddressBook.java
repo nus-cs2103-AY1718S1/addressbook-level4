@@ -154,7 +154,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             try {
                 groups.add(group);
             } catch (DuplicateGroupException e) {
-                e.printStackTrace();
+                //TODO: Fail case
             }
         }
     }
@@ -166,6 +166,24 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private void syncGroupListWith (UniqueGroupList groups) {
         groups.forEach(this::syncGroupListWith);
+    }
+
+    /**
+     * If a group is deleted, then remove it from any persons and replace with the default group
+     * @param group to be deleted
+     */
+    private void syncGroupWithPersonList (Group group) {
+        for (ReadOnlyPerson p: persons) {
+            if (p.getGroup().equals(group)) {
+                ReadOnlyPerson editedPerson = new Person (p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
+                        p.getTags(), p.getRemark(), groups.DEFAULT_GROUP);
+                try {
+                    updatePerson(p, editedPerson);
+                } catch (DuplicatePersonException | PersonNotFoundException e) {
+                    //TODO:Fail case
+                }
+            }
+        }
     }
 
     /**
@@ -216,6 +234,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removeGroup(Group target) throws GroupNotFoundException {
         if (groups.remove(target)) {
+            syncGroupWithPersonList(target);
             return true;
         } else {
             throw new GroupNotFoundException();

@@ -158,6 +158,30 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Takes a command transparently to the CLI
+     */
+    @FXML
+    public void handleCommandInputChanged(String command) {
+        logger.info("Trying to handle " + command + " transparently");
+        try {
+            CommandResult commandResult = logic.execute(command);
+            initHistory();
+            historySnapshot.next();
+            // process result of the command
+            commandTextField.setText("");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+
+        } catch (CommandException | ParseException e) {
+            initHistory();
+            // handle command failure
+            setStyleToIndicateCommandFailure();
+            logger.info("Invalid command: " + commandTextField.getText());
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+    }
+
+    /**
      * Initializes the history snapshot.
      */
     private void initHistory() {
@@ -186,5 +210,4 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
-
 }
