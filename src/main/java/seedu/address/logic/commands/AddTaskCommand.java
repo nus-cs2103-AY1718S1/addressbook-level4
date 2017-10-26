@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -26,12 +27,13 @@ public class AddTaskCommand extends UndoableCommand {
             + PREFIX_DESCRIPTION + "Description "
             + PREFIX_START_DATE_TIME + "START TIME "
             + PREFIX_END_DATE_TIME + "END TIME "
+            + PREFIX_PRIORITY + "3 "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "picnic "
             + PREFIX_DESCRIPTION + "have fun at Botanic Garden "
-            + PREFIX_START_DATE_TIME + "1/1/2099 12:00pm "
-            + PREFIX_END_DATE_TIME + "1/1/2099 15:00pm "
+            + PREFIX_START_DATE_TIME + "26/11/2017 12:00pm "
+            + PREFIX_END_DATE_TIME + "26/11/2017 15:00pm "
             + PREFIX_TAG + "friends ";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
