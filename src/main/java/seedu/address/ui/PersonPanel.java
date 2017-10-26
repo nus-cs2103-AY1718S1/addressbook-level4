@@ -27,6 +27,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -102,22 +103,26 @@ public class PersonPanel extends UiPart<Region> {
                 //Set extension filter
                 FileChooser.ExtensionFilter extFilterJpg = new FileChooser
                         .ExtensionFilter("JPG files (*.jpg)", "*.JPG");
-                //FileChooser.ExtensionFilter extFilterPNG = new FileChooser
-                // .ExtensionFilter ("PNG files (*.png)", "*.PNG");
-                fileChooser.getExtensionFilters().addAll(extFilterJpg);
+                FileChooser.ExtensionFilter extFilterJpeg = new FileChooser
+                        .ExtensionFilter("JPEG files (*.jpeg)", "*.JPEG");
+                FileChooser.ExtensionFilter extFilterPng = new FileChooser
+                        .ExtensionFilter ("PNG files (*.png)", "*.PNG");
+                fileChooser.getExtensionFilters().addAll(extFilterJpg,
+                        extFilterJpeg, extFilterPng);
 
                 //Show open file dialog
                 File file = fileChooser.showOpenDialog(((Node) t.getTarget())
                         .getScene().getWindow());
 
                 try {
-                    //EditCommand.EditPersonDescriptor descriptor = new
-                    //EditCommand.EditPersonDescriptor();
-                    //descriptor.setPhoto(person.getPhoto());
-                    //EditCommand command= new EditCommand(index, descriptor);
-                    BufferedImage bufferedImage = ImageIO.read(file);
-                    Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-                    photo.setImage(image);
+                    EditCommand.EditPersonDescriptor descriptor = new
+                    EditCommand.EditPersonDescriptor();
+                    descriptor.setPhoto(person.getPhoto());
+                    EditCommand command= new EditCommand(index, descriptor);
+                    //BufferedImage bufferedImage = ImageIO.read(file);
+                    //Image image = SwingFXUtils.toFXImage(bufferedImage,
+                    // null);
+                    //photo.setImage(image);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

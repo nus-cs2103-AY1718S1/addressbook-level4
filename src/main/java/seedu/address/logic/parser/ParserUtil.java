@@ -151,20 +151,22 @@ public class ParserUtil {
         String destFilePath = null;
         if (filePath.isPresent()) {
             originalFilePath = filePath.get();
-            int lastDelimiterPosition = originalFilePath.lastIndexOf("/");
+            String s = File.separator;
+            int lastDelimiterPosition = originalFilePath.lastIndexOf(s);
             String fileName = originalFilePath.substring
                     (lastDelimiterPosition + 1);
             if (lastDelimiterPosition == -1 || !fileName.matches
-                    ("[\\w\\/\\-\\_\\.\\h]+\\.jpg")) {
+                    ("[\\w\\/\\-\\_\\.\\h\\\\]+\\.(jpg|png|jpeg)")) {
                 throw new IllegalValueException(Photo.MESSAGE_PHOTO_CONSTRAINTS);
             } else {
                 try {
-                    destFilePath = "src/main/resources/images/" + fileName;
+                    destFilePath = "src" + s +"main" + s + "resources" + s
+                            + "images" + s + fileName;
                     File originalFile = new File(originalFilePath);
                     File destFile = new File(destFilePath);
                     FileUtil.copyFile(originalFile, destFile);
                 } catch (IOException e) {
-                    throw new RuntimeException("Invalid file path. "
+                    throw new IllegalValueException("Invalid file path. "
                             + "Please try again.");
                 }
             }
