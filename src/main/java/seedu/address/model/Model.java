@@ -54,6 +54,11 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
+     * Sort current person list based on an attribute input by the user
+     */
+    void sortBy(int attribute);
+
+    /**
      * Creates a group in the addressbook
      * @param groupName of the group to be created
      * @param personToGroup list of person to be included in the newly created group

@@ -138,6 +138,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortBy(int attribute) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }

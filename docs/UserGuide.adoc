@@ -239,6 +239,26 @@ Format: `edit INDEX [r/REMARK]`
 Delete one specific tag from all persons in the contact list. +
 Format: `deleteTag [KEYWORD]`
 
+=== Sort person list : `sort`
+
+Sort current person list by an attribute specified by the user. +
+Format: `sort [KEYWORD]`
+
+****
+* Sort the list by one of the four attributes:
+* name
+* phone
+* email
+* address
+****
+
+Examples:
+
+* `sort name` +
+Sort the person list by name.
+* `sort phone` +
+Sort the person list by phone.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
