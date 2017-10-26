@@ -58,20 +58,20 @@ Ability to filter the UI display to only display selected groups. Bar across the
 Set and show an image for a person in the addressbook. Uses the index of a person to select them and a URL to the image path. Since v1.3. +
 e.g. `image 1 /home/user/someexample.jpg`
 
+=== Exporting Database
+Export a working version of the database and the images associated to it to a directory specified. Coming v1.4
+
+=== Condensed Help
+Open a condensed help screen by default in place of the Google brwoser integration. Coming v1.5
+
+=== Importing Database
+Import a working version of the database and the images associated to it from a directory specified. Coming v2.0.
+
 === Facebook Integration
 Coming v2.0.
 
 === Linkedin Integration
 Coming v2.0.
-
-=== Condensed Help
-Open a condensed help screen by default in place of the Google brwoser integration. Coming v1.5?.
-
-=== Importing Database
-Import a working version of the database and the images associated to it from a directory specified. Coming v2.0.
-
-=== Exporting Database
-Export a working version of the database and the images associated to it to a directory specified. Coming v1.4/5?
 
 === Admin Permissions
 Allow usage of dangerous commands such as clear, export and import. Coming v2.0.
