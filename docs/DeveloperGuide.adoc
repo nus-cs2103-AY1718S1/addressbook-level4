@@ -106,8 +106,8 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializing the components in the correct sequence, and connects them up with each other.
+* At shut down: Shutting down the components and invokes cleanup method where necessary.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
@@ -156,7 +156,7 @@ The sections below give more details of each component.
 
 The following diagram shows the structure of the UI Component:
 
-image::UiClassDiagram.png[width="800"]
+image::UiComponentClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
@@ -198,14 +198,14 @@ When a `Command` is executed, the `Logic` Component does the following:
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
-image::DeletePersonSdForLogic.png[width="800"]
+image::LogicComponentSequenceDiagram.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 ==== Model component
 
 The following shows a diagram for the `Model` Component:
 
-image::ModelClassDiagram.png[width="800"]
+image::ModelComponentClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -221,7 +221,7 @@ The `Model` Component does the following:
 
 The following diagram represents the `Storage` Component:
 
-image::StorageClassDiagram.png[width="800"]
+image::StorageComponentClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
@@ -246,7 +246,7 @@ Addition of the birthday parameter is facilitated by the `AddCommand` class whic
 
 Suppose the user has just executed the `AddCommand` using `AddCommand` using the following:
 ----
-`add n/eryao p/96965340 e/lite0520@gmail.com a/blk 254, ang mo kio b/081295`
+`add n/eryao p/96965340 e/lite0520@gmail.com a/blk 254, ang mo kio b/08-12-1995`
 ----
 
 The `AddCommandParser` class will check for the validity of the parameter entered. Afterwards, the `LogicManager` invokes the method `AddCommand`, which creates a new person and update the storage.
@@ -258,7 +258,7 @@ If the birthday parameter is not specified, the `AddCommand` will give an invali
 ==== Design Considerations
 **Aspect:** Implementation of birthday feature in `AddCommand` +
 **Alternative 1 (current choice):** Make adding birthday optional +
-**Pros:** User can take note of contact's birthday more easily
+**Pros:** User can take note of contact's birthday more easily +
 **Cons:** User has to input an additional parameter
 
 // end::birthday[]
@@ -294,11 +294,36 @@ The current detag mechanism does not support multiple tag removal, i.e. remove 2
 
 === FindTag mechanism
 
-The FindTag mechanism is facilitated by the `FindTagCommand` class which inherits from `Command` class. It allows the user to find persons using tags. Users can search using multiple tags too.
+The FindTag mechanism is facilitated by the `FindCommand` class which inherits from `Command` class. It allows the user to find persons using tags. Users can search using multiple tags too.
 
-Suppose the user has just executed the `FindTagCommand` using `findtag friends`.
+Suppose the user has just executed the `FindCommand` using `find friends`.
 
-At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTagCommand` feature is being evoked and calls the `FindTagCommandParser` to parse the string and compare the tags. These are validated and formatted by the `TagContainsKeywordsPredicate` and returned as a `TagContainsKeywordsPredicate` object to be used to call the `FindTagCommand` class. The `LogicManager` then calls the `execute()` in the `FindTagCommand` class which creates and returns a `CommandResult` object.
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindCommand` feature is being evoked and calls the `FindCommandParser` to parse the string and compare the tags. These are validated and formatted by the `TagContainsKeywordsPredicate` and returned as a `TagContainsKeywordsPredicate` object to be used to call the `FindCommand` class. The `LogicManager` then calls the `execute()` in the `FindCommand` class which creates and returns a `CommandResult` object.
+
+Commands that are not undoable are implemented this way:
+[source,java]
+----
+public class FindCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... find logic ...
+    }
+}
+----
+FindCommand will call this class:
+[source,java]
+----
+public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+@Override
+    public boolean test(ReadOnlyPerson person) {
+        String tag = Arrays.toString(person.getTags().toArray())
+                .replaceAll("[\\[\\](),{}]", "");
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword)
+                || StringUtil.containsWordIgnoreCase(tag, keyword)
+                || StringUtil.containsWordIgnoreCase(person.getBirthday().value, keyword));
+    }
+----
 
 === Tag mechanism
 
@@ -380,9 +405,28 @@ Limits possibilities of adding new prefixes and making the format more flexible 
 
 The Delete Task mechanism is facilitated by the `DeleteTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the removal of a task at a specified index.
 
-Suppose the user has just executed the `deletetask` command using `deletetask 2`.
+Suppose the user has just executed the `delete` command using `delete 2`.
 
-At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `DeleteTask` feature is being evoked and calls the `DeleteTaskCommandParser` to parse the index and validate that the index provided is not out of bounds and returns a new task object to call the `DeleteTaskCommand` class. The `LogicManager` then calls the `executeUndoableFunction()` in the `DeleteTaskCommand` class which creates and return a `CommandResult` object.
+At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `Delete` feature is being evoked and calls the `DeleteTaskCommandParser` to parse the index and validate that the index provided is not out of bounds and returns a new task object to call the `DeleteTaskCommand` class. The `LogicManager` then calls the `executeUndoableFunction()` in the `DeleteTaskCommand` class which creates and return a `CommandResult` object.
+
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteTaskCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... deletetask logic ...
+    }
+}
+----
 
 === FindTask mechanism
 
@@ -436,6 +480,7 @@ The following are examples of colour and tooltip of the calendar:
 image::CalendarDeadlineTooltip.png[width="150", height"100"]
 image::CalendarBirthdayTooltip.png[width="150", height"100"]
 
+[discrete]
 ==== Design Considerations
 **Aspect:** Implementation of Calendar +
 **Alternative 1 (current choice):** Use `DatePickerSkin` to get the calendar look and function. +
