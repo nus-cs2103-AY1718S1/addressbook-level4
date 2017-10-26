@@ -1,5 +1,8 @@
 package seedu.address.model.insurance;
 
+import java.util.EnumMap;
+import java.util.UUID;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -10,6 +13,9 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public interface ReadOnlyInsurance {
 
+    ObjectProperty<UUID> idProperty();
+    String getId();
+    EnumMap getRoleToPersonMap();
     ObjectProperty<ReadOnlyPerson> ownerProperty();
     ReadOnlyPerson getOwner();
     ObjectProperty<ReadOnlyPerson> insuredProperty();

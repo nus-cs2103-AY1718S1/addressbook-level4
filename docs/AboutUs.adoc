@@ -38,4 +38,11 @@ image:githubicon.png[Github Icon, 40, 40, link="https://github.com/RSJunior37"] 
 Role: Developer +
 Responsibilities:
 
+=== Lim Pek Liang Arnol
+image::Arnol_Photo.jpg[width="150", align="left"]
+image:githubicon.png[Github Icon, 40, 40, link="https://github.com/arnollim"] image:portfolio.png[Portfolio Icon, 40, 40, link="team/arnollim.adoc"]
+
+Role: Developer +
+Responsibilities:
+
 '''

@@ -2,14 +2,22 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+//import java.util.ArrayList;
+//import java.util.Comparator;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+//import javafx.collections.FXCollections;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.insurance.LifeInsurance;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -26,6 +34,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private HashMap<String, LifeInsurance>lifeInsuranceMap;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +46,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        lifeInsuranceMap = new HashMap<>();
     }
 
     public AddressBook() {}
@@ -59,6 +69,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    public void setLifeInsurances(Map<String, ? extends ReadOnlyInsurance> insurances) {
+        this.lifeInsuranceMap = (HashMap<String, LifeInsurance>) insurances;
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -66,12 +80,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            persons.sortPersons();
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+
+        setLifeInsurances(newData.getLifeInsuranceMap());
+        syncMasterLifeInsuranceMapWithPersonList();
+        syncMasterPersonListWithLifeInsurance();
     }
 
     //// person-level operations
@@ -90,6 +109,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(newPerson);
+        persons.sortPersons();
     }
 
     /**
@@ -156,6 +176,45 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Ensures that every insurance in this person:
+     *  - exists in the master map {@link #lifeInsuranceMap}
+     *  - points to a LifeInsurance object in the master list
+     */
+    public void syncMasterLifeInsuranceMapWithPersonList() {
+        //Get the list of insurance ids of a person and filter out the ones that are empty
+        persons.forEach(p -> {
+            if (!p.getLifeInsuranceIds().isEmpty()) {
+                //for every insurance id get the insurance object from lifeInsuranceMap
+                p.getLifeInsuranceIds().forEach(id -> {
+                    String idString = id.toString();
+                    LifeInsurance lf = lifeInsuranceMap.get(idString);
+                    lf.setInsurancePerson(p);
+                });
+            }
+        });
+    }
+
+    /**
+     * Ensures that every person in LISA:
+     *  - exists in the unique person list{@link #persons}
+     *  - points to a LifeInsurance object in the master list
+     */
+    public void syncMasterPersonListWithLifeInsurance() {
+        //Get the list of insurance ids of a person and filter out the ones that are empty
+        persons.forEach(p -> {
+            if (!p.getLifeInsuranceIds().isEmpty()) {
+                //for every insurance id get the insurance object from lifeInsuranceMap
+                p.clearLifeInsurances();
+                p.getLifeInsuranceIds().forEach(id -> {
+                    String idString = id.toString();
+                    LifeInsurance lf = lifeInsuranceMap.get(idString);
+                    p.addLifeInsurances(lf);
+                });
+            }
+        });
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -172,12 +231,40 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
+        /*
+        ArrayList<ReadOnlyPerson> temp = new ArrayList<>();
+        ObservableList<ReadOnlyPerson> personList = persons.asObservableList();
+        for(ReadOnlyPerson person: personList){
+            temp.add(person);
+        }
+        ObservableList<ReadOnlyPerson> temp2 = FXCollections.observableArrayList(temp);
+        Comparator<ReadOnlyPerson> ALPHA_ORDER = new Comparator<ReadOnlyPerson>() {
+            public int compare(ReadOnlyPerson first, ReadOnlyPerson second) {
+                int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
+                if (x== 0) {
+                    x = (first.getName().fullName).compareTo(second.getName().fullName);
+                }
+                return x;
+            }
+        };
+        temp2.sort(ALPHA_ORDER);
+        return temp2;
+        */
         return persons.asObservableList();
     }
 
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public Map<String, ReadOnlyInsurance> getLifeInsuranceMap() {
+        final Map<String, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
+            .collect(Collectors.<Map.Entry<String, LifeInsurance>, String, ReadOnlyInsurance>toMap(
+                i -> i.getKey(), i -> i.getValue()
+            ));
+        return lifeInsurances;
     }
 
     @Override

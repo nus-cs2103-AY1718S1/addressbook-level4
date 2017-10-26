@@ -2,6 +2,7 @@ package systemtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
@@ -16,6 +17,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.InsuranceListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -79,7 +81,11 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public ProfilePanelHandle getProfilePanel() {
+    public InsuranceListPanelHandle getInsuranceListPanelHandle() {
+        return mainWindowHandle.getInsuranceListPanelHandle();
+    }
+
+    public ProfilePanelHandle getProfilePanelHandle() {
         return mainWindowHandle.getProfilePanelHandle();
     }
 
@@ -143,7 +149,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Calls {@code ProfilePanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code InsuranceProfileHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
@@ -154,26 +160,23 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected person.
+     * Asserts that the previously selected card is now deselected
      */
     protected void assertSelectedCardDeselected() {
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
+     * Asserts that the selected card is of correct index at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
-
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
+     * Asserts that the selected card in the person list panel remain unchanged.
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
@@ -225,6 +228,7 @@ public abstract class AddressBookSystemTest {
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+            assertNull(getProfilePanelHandle());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }

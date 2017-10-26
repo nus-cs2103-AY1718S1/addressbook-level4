@@ -24,7 +24,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_CONTRACT = new Prefix("c/");
     public static final Prefix PREFIX_SIGNING_DATE = new Prefix("sd/");
     public static final Prefix PREFIX_EXPIRY_DATE = new Prefix("ed/");
-
+    public static final Prefix PREFIX_GENDER = new Prefix("g/");
     public static final Set<Prefix> PREFIXES_PERSON = new HashSet<>(Arrays.asList(
-            PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB));
+            PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB, PREFIX_GENDER));
 }
