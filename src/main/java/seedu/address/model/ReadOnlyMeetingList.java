@@ -12,4 +12,10 @@ public interface ReadOnlyMeetingList {
      * This list will not contain any duplicate meetings.
      */
     ObservableList<Meeting> getMeetingList();
+
+    /**
+     * Returns the next upcoming meeting
+     * This is required for nextMeeting command
+     */
+    Meeting getUpcomingMeeting();
 }

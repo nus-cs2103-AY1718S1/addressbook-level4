@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -89,6 +90,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public ReadOnlyPerson getPersonByInternalIndex(int i) throws PersonNotFoundException {
+            return persons.get(0);
         }
 
         @Override

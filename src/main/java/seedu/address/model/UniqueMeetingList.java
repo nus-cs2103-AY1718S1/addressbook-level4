@@ -113,6 +113,20 @@ public class UniqueMeetingList implements Iterable<Meeting>, ReadOnlyMeetingList
         Collections.sort(internalList);
     }
 
+    /**
+     * Returns the meeting with earliest date in the internal list
+     * Currently not checking if it is happening in the future
+     */
+    @Override
+    public Meeting getUpcomingMeeting() {
+        this.sortByDate();
+        return internalList.get(0);
+    }
+
+    public ObservableList<Meeting> getInternalList() {
+        return internalList;
+    }
+
     @Override
     public Iterator<Meeting> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);

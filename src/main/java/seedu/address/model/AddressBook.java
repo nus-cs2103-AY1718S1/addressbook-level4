@@ -81,6 +81,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.getMaxInternalIndex();
     }
 
+    @Override
+    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
+        return persons.getPersonByInternalIndex(index);
+    }
     //// person-level operations
 
     /**
