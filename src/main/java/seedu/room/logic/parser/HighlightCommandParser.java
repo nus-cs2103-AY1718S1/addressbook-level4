@@ -18,7 +18,6 @@ public class HighlightCommandParser implements Parser<HighlightCommand> {
     public HighlightCommand parse(String args) throws ParseException {
         String highlightTag = args.trim();
         if (validTag(highlightTag)) {
-            System.out.println("Highlight tag: " + highlightTag);
             return new HighlightCommand(highlightTag);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HighlightCommand.MESSAGE_USAGE));
