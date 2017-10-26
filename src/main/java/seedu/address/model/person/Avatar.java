@@ -28,11 +28,11 @@ public class Avatar {
 
     public Avatar(String avatarFilePath) throws IllegalValueException {
         this.avatarFilePath = avatarFilePath;
-        if (validFile(this.avatarFilePath)) {
+        try {
             Image imgObj = new Image(this.avatarFilePath);
             this.avatarImage = new SimpleObjectProperty<Image>(imgObj);
-        } else {
-            this.avatarImage = new SimpleObjectProperty<Image>(new Image("/images/generic_avatar.png"));
+        } catch(NullPointerException e) {
+            throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
     }
 
@@ -53,12 +53,12 @@ public class Avatar {
      * @param avatarFilePath file path
      * @return true or false
      */
-    public boolean validFile(String avatarFilePath) {
+    public static boolean validFile(String avatarFilePath) throws NullPointerException {
         try {
             File f = new File(MainApp.class.getResource(avatarFilePath).getFile());
             return f.exists() && f.canRead();
         } catch (NullPointerException e) {
-            return false;
+            throw(e);
         }
     }
 }

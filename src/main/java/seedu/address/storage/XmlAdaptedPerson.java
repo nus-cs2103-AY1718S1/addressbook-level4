@@ -1,5 +1,10 @@
 package seedu.address.storage;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.*;
+import seedu.address.model.tag.Tag;
+
+import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -85,11 +90,12 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         final Avatar avatar;
-        if (this.avatar != null) {
+        if (Avatar.validFile(this.avatar)) {
             avatar = new Avatar(this.avatar);
         } else {
             avatar = new Avatar();
         }
+
         final Comment comment = new Comment(this.comment);
         final Appoint appoint = new Appoint(this.appoint);
         final Set<Tag> tags = new HashSet<>(personTags);
