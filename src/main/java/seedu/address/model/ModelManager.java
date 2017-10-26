@@ -145,7 +145,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
-    
+
     @Override
     public UserPrefs getUserPrefs() {
         return this.userPrefs;
