@@ -1,6 +1,6 @@
 package seedu.address.model.schedule;
 
-import seedu.address.model.schedule.exceptions.NotValidTimeException;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Time {
 
@@ -9,8 +9,11 @@ public class Time {
 
     private Integer time;
 
-    public Time(String time) throws NotValidTimeException {
+    public Time(String time) throws IllegalValueException {
         this.time = Integer.parseInt(time);
+        if(!isValid()){
+            throw new IllegalValueException("Not a proper time form");
+        }
     }
 
     public boolean isValid(){
@@ -23,5 +26,12 @@ public class Time {
 
     public Integer getTime() {
         return time;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Time) // instanceof handles nulls
+                && (this.time == ((Time) other).time); // state check
     }
 }
