@@ -12,6 +12,10 @@ public class DescriptionTest {
         //invalid description
         assertFalse(Description.isValidDescription("")); //empty string
         assertFalse(Description.isValidDescription(" ")); //string with only whitespace
+        assertFalse(Description.isValidDescription("???")); //string with only symbols
+        assertFalse(Description.isValidDescription("/do this/")); //string beginning with symbols
+        assertFalse(Description.isValidDescription("do this/")); //string ending in symbol
+        assertFalse(Description.isValidDescription("do'/\"this")); //string containing any symbol
 
         //valid description
         assertTrue(Description.isValidDescription("Self evaluation for CS2103T"));
