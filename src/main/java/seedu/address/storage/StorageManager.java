@@ -13,7 +13,6 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * Manages storage of AddressBook data in local storage.
@@ -89,7 +88,8 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
-    public void mergeAddressBook(String newFilePath, String defaultFilePath) throws DataConversionException, IOException {
+    public void mergeAddressBook(String newFilePath, String defaultFilePath) throws DataConversionException,
+            IOException {
         logger.fine("Attempting to merge data file: " + newFilePath);
         addressBookStorage.mergeAddressBook(newFilePath, defaultFilePath);
     }

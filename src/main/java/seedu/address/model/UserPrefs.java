@@ -1,8 +1,8 @@
 package seedu.address.model;
 
-import seedu.address.commons.core.GuiSettings;
-
 import java.util.Objects;
+
+import seedu.address.commons.core.GuiSettings;
 
 /**
  * Represents User's preferences.
@@ -46,9 +46,13 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    public String getCurrentUserTheme() { return currentUserTheme; }
+    public String getCurrentUserTheme() {
+        return currentUserTheme;
+    }
 
-    public void setCurrentUserTheme(String currentUserTheme) { this.currentUserTheme = currentUserTheme; }
+    public void setCurrentUserTheme(String currentUserTheme) {
+        this.currentUserTheme = currentUserTheme;
+    }
 
     @Override
     public boolean equals(Object other) {

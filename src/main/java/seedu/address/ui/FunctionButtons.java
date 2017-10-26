@@ -1,15 +1,22 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import seedu.address.email.Email;
+import javafx.stage.Stage;
 import seedu.address.logic.Logic;
 
+/**
+ * A panel for function button on the main window
+ */
 public class FunctionButtons extends UiPart<Region> {
     private static final String FXML = "FunctionButtons.fxml";
     private Logic logic;
+    private Stage stage;
+    private MainWindow mainWindow;
 
     @FXML
     private StackPane loginPane;
@@ -24,9 +31,11 @@ public class FunctionButtons extends UiPart<Region> {
     @FXML
     private Button checkButton;
 
-    public FunctionButtons(Logic logic) {
+    public FunctionButtons(Logic logic, Stage stage, MainWindow mainWindow) {
         super(FXML);
         this.logic = logic;
+        this.stage = stage;
+        this.mainWindow = mainWindow;
     }
 
     /**
@@ -34,8 +43,7 @@ public class FunctionButtons extends UiPart<Region> {
      */
     @FXML
     private void openEmailLoginWindow() {
-        loginButton.setDisable(true);
-        EmailLoginWindow emailLoginWindow = new EmailLoginWindow(loginButton, logic);
+        EmailLoginWindow emailLoginWindow = new EmailLoginWindow(logic, stage);
         emailLoginWindow.show();
     }
 
@@ -44,8 +52,30 @@ public class FunctionButtons extends UiPart<Region> {
      */
     @FXML
     private void openEmailSendWindow() {
-        sendButton.setDisable(true);
-        EmailSendWindow emailSendWindow = new EmailSendWindow(sendButton, logic);
+        ArrayList<PersonCard> tickedPersons = mainWindow.getPersonListPanel().getTickedPersons();
+        String recipients = new String();
+        ArrayList<PersonCard> cardWithOutEmail = new ArrayList<PersonCard>();
+        for (PersonCard card : tickedPersons) {
+            if (card.isTicked()) {
+                if (card.getEmail() != null) {
+                    recipients += card.getEmail() + ";";
+                } else {
+                    cardWithOutEmail.add(card);
+                }
+            }
+        }
+
+        String feedbackPersonsWithoutEmail = "";
+
+        if (cardWithOutEmail.size() != 0) {
+            feedbackPersonsWithoutEmail = "The following person(s) do not have emails or have private emails:\n";
+
+            for (PersonCard card : cardWithOutEmail) {
+                feedbackPersonsWithoutEmail += card.getName() + "\n";
+            }
+        }
+
+        EmailSendWindow emailSendWindow = new EmailSendWindow(logic, stage, recipients, feedbackPersonsWithoutEmail);
         emailSendWindow.show();
     }
 

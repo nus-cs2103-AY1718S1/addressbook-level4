@@ -4,15 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import sun.security.x509.AVA;
 
 /**
  * Represents a Person in the address book.
@@ -34,7 +33,8 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      * A default avatar image is stored
      */
-    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Appoint appoint, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Appoint appoint,
+                  Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -48,7 +48,8 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
 
-    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Appoint appoint, Avatar avatar, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Comment comment, Appoint appoint, Avatar avatar,
+                  Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -68,8 +69,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getComment(), source.getAppoint(), source.getAvatar(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getComment(),
+                source.getAppoint(), source.getAvatar(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -129,12 +130,18 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public ObjectProperty<Avatar> avatarProperty() { return avatar; }
+    public ObjectProperty<Avatar> avatarProperty() {
+        return avatar;
+    }
 
     @Override
-    public Avatar getAvatar() { return avatar.get(); }
+    public Avatar getAvatar() {
+        return avatar.get();
+    }
 
-    public void setAvatar(Avatar avatar) { this.avatar.set(requireNonNull(avatar)); }
+    public void setAvatar(Avatar avatar) {
+        this.avatar.set(requireNonNull(avatar));
+    }
 
     public void setComment(Comment comment) {
         this.comment.set(requireNonNull(comment));
@@ -191,7 +198,9 @@ public class Person implements ReadOnlyPerson {
         int numberOfKeywords = tagsList.size();
         for (Tag t : this.tags.get().toSet()) {
             boolean exist = tagsList.stream().anyMatch(tag -> t.tagName.equals(tag));
-            if (exist) { matchTagsCount++; }
+            if (exist) {
+                matchTagsCount++;
+            }
         }
 
         return matchTagsCount == numberOfKeywords;

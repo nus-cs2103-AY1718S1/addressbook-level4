@@ -23,10 +23,11 @@ public class BrowserPanelTest extends GuiUnitTest {
 
     private BrowserPanel browserPanel;
     private BrowserPanelHandle browserPanelHandle;
+    private PersonListPanel personListPanel;
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0, personListPanel));
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);

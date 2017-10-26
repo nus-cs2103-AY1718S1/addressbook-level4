@@ -1,16 +1,25 @@
 package seedu.address.email;
 
+import java.util.Hashtable;
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import seedu.address.email.exceptions.EmailSendFailedException;
 import seedu.address.email.exceptions.LoginFailedException;
 import seedu.address.email.exceptions.NotAnEmailException;
 
-import javax.mail.*;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Hashtable;
-import java.util.Properties;
-
+/**
+ * The main EmailManager of the application
+ */
 public class EmailManager implements Email {
     public static final String MESSAGE_LOGIN_FAILED = "It could be one of the following reasons: \n"
             + "1. Your Internet connection is not working\n"
@@ -19,16 +28,16 @@ public class EmailManager implements Email {
     private String currentEmail;
     private String currentEmailProvider;
     private Authenticator currentAuthenticator;
-    private Properties properties_SMTP;
-    private Properties properties_IMAP;
+    private Properties propertiesSmtp;
+    private Properties propertiesImap;
     private Hashtable<String, String> hostHashTable;
 
     public EmailManager() {
         currentEmail = null;
         currentEmailProvider = null;
         currentAuthenticator = null;
-        properties_SMTP = new Properties();
-        properties_IMAP = System.getProperties();
+        propertiesSmtp = new Properties();
+        propertiesImap = System.getProperties();
 
         initHostHashTable();
     }
@@ -45,7 +54,7 @@ public class EmailManager implements Email {
             }
         };
 
-        Session session = Session.getInstance(properties_SMTP, newAuthenticator);
+        Session session = Session.getInstance(propertiesSmtp, newAuthenticator);
 
         try {
             Transport transport = session.getTransport("smtp");
@@ -66,7 +75,8 @@ public class EmailManager implements Email {
     }
 
     @Override
-    public void sendEmail(String[] recipients, String subject, String body) throws NotAnEmailException, EmailSendFailedException {
+    public void sendEmail(String[] recipients, String subject, String body) throws NotAnEmailException,
+                                                                                    EmailSendFailedException {
         //Parse email string into internet addresses
         InternetAddress[] recipientsAddresses = new InternetAddress[recipients.length];
         for (int i = 0; i < recipients.length; i++) {
@@ -79,7 +89,7 @@ public class EmailManager implements Email {
 
         //Create a new MIME message
         try {
-            Session session = Session.getInstance(properties_SMTP, this.currentAuthenticator);
+            Session session = Session.getInstance(propertiesSmtp, this.currentAuthenticator);
 
             Message emailMessage = new MimeMessage(session);
             emailMessage.setFrom(new InternetAddress(currentEmail));
@@ -107,28 +117,33 @@ public class EmailManager implements Email {
         return (currentAuthenticator != null);
     }
 
+    /**
+     * Initiate the host address hash table based on the given email
+     * @param email given email string
+     * @throws LoginFailedException
+     */
     private void init(String email) throws LoginFailedException {
         String domain = (((email.split("@"))[1]).split("\\."))[0];
 
         switch (domain) {
-            case "gmail":
-                this.currentEmailProvider = "gmail";
-                this.properties_IMAP.setProperty("mail.store.protocol", "imaps");
-                this.properties_SMTP.put("mail.smtp.auth", "true");
-                this.properties_SMTP.put("mail.smtp.starttls.enable", "true");
-                this.properties_SMTP.put("mail.smtp.host", "smtp.gmail.com");
-                this.properties_SMTP.put("mail.smtp.port", "587");
-                break;
-            case "yahoo":
-                this.currentEmailProvider = "yahoo";
-                this.properties_IMAP.setProperty("mail.store.protocol", "imaps");
-                this.properties_SMTP.put("mail.smtp.auth", "true");
-                this.properties_SMTP.put("mail.smtp.starttls.enable", "true");
-                this.properties_SMTP.put("mail.smtp.host", "smtp.yahoo.com");
-                this.properties_SMTP.put("mail.smtp.port", "465");
-                break;
-            default:
-                throw new LoginFailedException("The email domain is not supported");
+        case "gmail":
+            this.currentEmailProvider = "gmail";
+            this.propertiesImap.setProperty("mail.store.protocol", "imaps");
+            this.propertiesSmtp.put("mail.smtp.auth", "true");
+            this.propertiesSmtp.put("mail.smtp.starttls.enable", "true");
+            this.propertiesSmtp.put("mail.smtp.host", "smtp.gmail.com");
+            this.propertiesSmtp.put("mail.smtp.port", "587");
+            break;
+        case "yahoo":
+            this.currentEmailProvider = "yahoo";
+            this.propertiesImap.setProperty("mail.store.protocol", "imaps");
+            this.propertiesSmtp.put("mail.smtp.auth", "true");
+            this.propertiesSmtp.put("mail.smtp.starttls.enable", "true");
+            this.propertiesSmtp.put("mail.smtp.host", "smtp.yahoo.com");
+            this.propertiesSmtp.put("mail.smtp.port", "465");
+            break;
+        default:
+            throw new LoginFailedException("The email domain is not supported");
         }
     }
 

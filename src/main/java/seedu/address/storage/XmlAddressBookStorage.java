@@ -12,16 +12,14 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
  */
 public class XmlAddressBookStorage implements AddressBookStorage {
+    public static final String DEFAULT_MERGE_FILE_PATH = "./data/mergeAddressBook.xml";
 
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
-
-    public static final String DEFAULT_MERGE_FILE_PATH = "./data/mergeAddressBook.xml";
 
     private String filePath;
 
@@ -92,7 +90,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * @param defaultFilePath location of the data. Cannot be null
      * @param newFilePath location of the data. Cannot be null
      */
-    public void mergeAddressBook(String newFilePath, String defaultFilePath) throws DataConversionException, IOException {
+    public void mergeAddressBook(String newFilePath, String defaultFilePath) throws DataConversionException,
+            IOException {
         requireNonNull(defaultFilePath);
         requireNonNull(newFilePath);
 

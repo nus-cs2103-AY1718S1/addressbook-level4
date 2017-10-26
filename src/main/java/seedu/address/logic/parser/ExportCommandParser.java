@@ -1,16 +1,16 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.ExportCommand;
-import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.io.File;
-import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import seedu.address.logic.commands.ExportCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new ExportCommand object
+ */
 public class ExportCommandParser implements Parser<ExportCommand> {
 
     /**
@@ -23,26 +23,27 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     public ExportCommand parse(String args) throws ParseException {
         String[] arguments = args.split(" ");
 
-        if (arguments.length < 3) throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+        if (arguments.length < 3) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+        }
 
         switch (arguments[1]) {
-            case ".txt":
-                //need to check whether windows or posix
-                //for now just do windows
+        case ".txt":
+            //need to check whether windows or posix
+            //for now just do windows
 
-                char[] tmp = args.toCharArray();
-                if (tmp[tmp.length - 1] == '/') {
-                    args = new String(tmp, 6, args.length() - 7);
-                } else args = new String(tmp, 6, args.length() - 6);
+            char[] tmp = args.toCharArray();
+            if (tmp[tmp.length - 1] == '/') {
+                args = new String(tmp, 6, args.length() - 7);
+            } else {
+                args = new String(tmp, 6, args.length() - 6);
+            }
 
-                Path exportPath = Paths.get(args);
-                return new ExportCommand(".txt", args);
+            Path exportPath = Paths.get(args);
+            return new ExportCommand(".txt", args);
 
-
-            default:
-                throw new ParseException(
-                        ExportCommand.MESSAGE_FILE_TYPE_NOT_SUPPORTED
-                );
+        default:
+            throw new ParseException(ExportCommand.MESSAGE_FILE_TYPE_NOT_SUPPORTED);
         }
     }
 }

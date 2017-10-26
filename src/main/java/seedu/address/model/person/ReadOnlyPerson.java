@@ -1,12 +1,11 @@
 package seedu.address.model.person;
 
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import sun.security.x509.AVA;
 
 /**
  * A read-only immutable interface for a Person in the addressbook.

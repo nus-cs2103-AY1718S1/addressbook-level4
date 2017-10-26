@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
-import javafx.application.Platform;
-import javafx.event.EventHandler;
+import java.util.logging.Logger;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,26 +10,23 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.email.Email;
-import seedu.address.email.exceptions.LoginFailedException;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.UserPrefs;
 
-import java.util.logging.Logger;
-
+/**
+ * Pop up window for email login
+ */
 public class EmailLoginWindow extends UiPart<Region> {
-    private final Logger logger = LogsCenter.getLogger(EmailLoginWindow.class);
     private static final String FXML = "EmailLoginWindow.fxml";
 
+    private final Logger logger = LogsCenter.getLogger(EmailLoginWindow.class);
     private Stage primaryStage;
-    private Button loginButton;
     private Logic logic;
 
     @FXML
@@ -50,13 +47,14 @@ public class EmailLoginWindow extends UiPart<Region> {
     @FXML
     private Label feedbackLabel;
 
-    public EmailLoginWindow(Button loginButton, Logic logic) {
+    public EmailLoginWindow(Logic logic, Stage parentStage) {
         super(FXML);
 
         this.primaryStage = new Stage();
         Scene scene = new Scene(getRoot());
         this.primaryStage.setScene(scene);
-        this.loginButton = loginButton;
+        this.primaryStage.initOwner(parentStage);
+        this.primaryStage.initModality(Modality.WINDOW_MODAL);
         this.logic = logic;
 
         setOnCloseEvent();
@@ -88,12 +86,7 @@ public class EmailLoginWindow extends UiPart<Region> {
      * Enable the login / logout button when this window closes
      */
     public void setOnCloseEvent() {
-        primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                loginButton.setDisable(false);
-            }
-        });
+
     }
 
     /**

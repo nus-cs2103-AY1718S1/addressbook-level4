@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -25,6 +26,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+    private PersonListPanel personListPanel;
 
     @FXML
     private HBox cardPane;
@@ -46,10 +48,13 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private ImageView avatar;
+    @FXML
+    private CheckBox checkBox;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public PersonCard(ReadOnlyPerson person, int displayedIndex, PersonListPanel personListPanel) {
         super(FXML);
         this.person = person;
+        this.personListPanel = personListPanel;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
@@ -95,5 +100,29 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * actions when checkbox is clicked: this person is added to tickedPersons in personListPanel
+     */
+    @FXML
+    private void onCheckBoxClicked() {
+        if (checkBox.isSelected()) {
+            personListPanel.getTickedPersons().add(this);
+        } else {
+            personListPanel.getTickedPersons().remove(this);
+        }
+    }
+
+    public String getEmail() {
+        return email.getText();
+    }
+
+    public boolean isTicked() {
+        return checkBox.isSelected();
+    }
+
+    public String getName() {
+        return name.getText();
     }
 }
