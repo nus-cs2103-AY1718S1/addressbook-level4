@@ -56,7 +56,7 @@ public interface Model {
     /**
      * Sets and updates the tag colors of a person
      */
-    void setTagColor(boolean toSet, String tag, String color);
+    void setTagColor(String tag, String color);
 
     /**
      * Deletes all persons in the {@code AddressBook} who have any of the {@code tags}.

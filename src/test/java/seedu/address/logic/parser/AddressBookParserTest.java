@@ -71,7 +71,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandToggleColor() throws ParseException {
         ToggleTagColorCommand command = (ToggleTagColorCommand) parser.parseCommand("tagcolor off");
-        assertEquals(new ToggleTagColorCommand(false, "", ""), command);
+        assertEquals(new ToggleTagColorCommand("off", null), command);
     }
 
     @Test
