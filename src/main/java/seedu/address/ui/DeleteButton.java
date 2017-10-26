@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -40,7 +41,7 @@ public class DeleteButton extends UiPart<Region> {
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleDeleteButtonPressed() throws CommandException, ParseException {
+    private void handleDeleteButtonPressed() throws CommandException, ParseException, IOException {
         CommandResult commandResult = logic.execute("delete " + getSelectedIndex());
         logger.info("Result: " + commandResult.feedbackToUser);
     }
