@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -133,6 +134,8 @@ public class CombinePanel extends UiPart<Region> {
         for(int i = 1; i < ROW; i++) {
             String dayOfWeek = DayOfWeek.of(i).toString();
             Label label = new Label(dayOfWeek);
+            timetableGrid.setValignment(label, VPos.CENTER);
+            timetableGrid.setHalignment(label, HPos.CENTER);
             timetableGrid.add(label,0,i);
         }
     }
