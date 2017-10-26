@@ -7,8 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -25,10 +27,12 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Status;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -53,8 +57,9 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS, PREFIX_PRIORITY, PREFIX_NOTE,
-                        PREFIX_TAG);
+                        PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS,
+                        PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO,
+                        PREFIX_TAG, PREFIX_RELATIONSHIP);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -71,10 +76,14 @@ public class AddCommandParser implements Parser<AddCommand> {
             Status status = new Status("NIL");
             Priority priority = new Priority("L");
             Note note = new Note("NIL");
+            //Initialize photo to the default icon
+            Photo photo = new Photo("src/main/resources/images/default.jpg");
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Set<Relationship> relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_RELATIONSHIP));
 
-            //Since Company, Position, Status and Priority are optional parameters, set them if they are present
+            //Since Company, Position, Status, Priority and Phot are optional
+            // parameters, set them if they are present
             if (arePrefixesPresent(argMultimap, PREFIX_COMPANY)) {
                 company = ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY)).get();
             }
@@ -95,8 +104,14 @@ public class AddCommandParser implements Parser<AddCommand> {
                 note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE)).get();
             }
 
+            if (arePrefixesPresent(argMultimap, PREFIX_PHOTO)) {
+                photo = ParserUtil.parsePhoto(argMultimap.getValue
+                        (PREFIX_PHOTO)).get();
+
+            }
+
             ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,
-                    note, tagList);
+                    note, photo, tagList, relationList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

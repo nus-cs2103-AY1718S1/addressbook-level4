@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.UniqueRelList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -48,9 +50,16 @@ public interface ReadOnlyPerson {
 
     Note getNote();
 
+    ObjectProperty<Photo> photoProperty();
+
+    Photo getPhoto();
+
     ObjectProperty<UniqueTagList> tagProperty();
 
     Set<Tag> getTags();
+
+    Set<Relationship> getRelation();
+    ObjectProperty<UniqueRelList> relProperty();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -66,7 +75,8 @@ public interface ReadOnlyPerson {
                 && other.getPosition().equals(this.getPosition())
                 && other.getStatus().equals(this.getStatus())
                 && other.getPriority().equals(this.getPriority())
-                && other.getNote().equals(this.getNote()));
+                && other.getNote().equals(this.getNote())
+                && other.getPhoto().equals(this.getPhoto()));
     }
 
     /**
@@ -91,6 +101,10 @@ public interface ReadOnlyPerson {
                 .append(getPriority())
                 .append(" Note: ")
                 .append(getNote())
+                .append(" Photo: ")
+                .append(getPhoto())
+                .append(" Relationship: ")
+                .append(getRelation())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

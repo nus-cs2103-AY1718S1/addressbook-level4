@@ -123,6 +123,22 @@ Examples:
 * `export` +
 Exports the data of everyone in the list in an excel file.
 
+
+=== Mass import of person's data command: `import`
+
+`Coming in v2.0` +
+Imports the data into a ... +
+Format: `import`
+
+****
+* Import persons data
+****
+
+Examples:
+
+* `import` [filename] +
+Imports the file and store it in [app].
+
 === Locating persons by name: `find`
 
 Synonyms/Aliases for the command: `f`, `look`, `search`, `check` +
@@ -185,6 +201,157 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Adding notes to persons : `note`
+
+`Coming in v2.0` +
+Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
+Format: `note [PERSON] [STRING]`
+
+Examples:
+* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
+
+
+=== Attaching photos to persons : `photo`
+
+`Implemented in v1.3` +
+Adds a photo to a person by specifying the path of the image file. Only .jpg
+file is allowed. Photo can be added either at the creation of a contact (with
+ `add` command) or when updating a contact's information (with `edit` command)
+
+Examples:
+
+* `add Jon... ph/~/Images/Photo.jpg`
+
+* `edit 1 ph/~/Images/Photo.jpg`
+
+=== View all persons with a specific tag : `tag`
+
+`Coming in v2.0` +
+Displays a list of all persons with a specific tag. +
+Format: `tag [TAG]`
+
+Examples:
+* `tag friend`
+
+=== View all persons from a specific company : `company`
+
+`Coming in v2.0` +
+Displays a list of all persons from a specific company. +
+Format: `company [COMPANY]`
+
+Examples:
+* `company ABC Foods`
+
+=== View a person's address on Google Maps within the app : `address`
+
+`Coming in v2.0` +
+Searches for the person's address on Google Maps and displays the result within the app. +
+Format: `address [PERSON]`
+
+Examples:
+* `address John Doe`
+
+=== Send an email to a person : `email`
+
+`Coming in v2.0` +
+Opens the user's default email client loaded with the person's email in the To: field. +
+Format: `email [PERSON]`
+
+Examples:
+* `email John Doe`
+
+=== Adding an event: `eventadd`
+
+`Since v1.1` +
+Synonyms/Aliases for the command: `addevent`, `ea`, `ae` +
+Adds an event to Sales Navigator +
+Format: `eventadd n/TITLE time/TIMING d/DESCRIPTION`
+
+Examples:
+
+* `eventadd n/Alice's Birthday time/1300-1830 d/Bestie's 21st, bring drinks!`
+* `eventadd n/CS2103 Final Exam time/1730-1930 d/Doomsday`
+
+=== Editing an event : `eventedit`
+
+`Since v1.2` +
+Synonyms/Aliases for the command: `editevent`, `ee` +
+Edits an existing event in Sales Navigator. +
+Format: `eventedit INDEX [n/TITLE] [time/TIMING] [d/DESCRIPTION]`
+
+****
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Example:
+
+* `edit 1 time/1400-1830 d/Bring drinks and buy cake!` +
+Edits the timing and description of the 1st event to be `1400-1830` and `Bring drinks and buy cake!` respectively.
+
+=== Deleting an event : `eventdel`
+
+`Since v1.1` +
+Synonyms/Aliases for the command: `delevent`, `eventdelete`, `deleteevent`, `ed`, `de` +
+Deletes the specified event from Sales Navigator. +
+Format: `delete INDEX`
+
+****
+* Deletes the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `delete 2` +
+Deletes the 2nd event in Sales Navigator.
+* `find Bob's Birthday` +
+`delete 1` +
+Deletes the 1st event in the results of the `find` command.
+
+=== Locating events by name: `eventfind`
+
+`Since v1.2` +
+Synonyms/Aliases for the command: `findevent`, `fe`, `ef` +
+Finds events whose titles contain any of the given keywords. +
+Format: `eventfind KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The search will not account for apostrophes. e.g searching `Bob` will not match `Bob's birthday`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the title is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `cs2103 midterm` will return `Submission for CS2103 Week 9`, `CS2106 Midterm`
+****
+
+Examples:
+
+* `find Bob's` +
+Returns `Bob's Birthday` and `Party at Bob's`
+* `find Birthday` +
+Returns any event having titles that contain `Birthday`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+=== Displaying user's schedule command: `checkschedule`
+
+`Coming in v1.4` +
+Displays user's schedule for the current week upon executing the command.
+After execution, a calendar GUI will appear in the main window, with events
+displayed in the corresponding time slots.
+Format: `checkschedule` / `thisweek`/`cs`/`tw`
+
+Example:
+
+* `checkschedule` +
+Displays user's schedule for the week.
 
 === Listing entered commands : `history`
 
@@ -268,111 +435,6 @@ Synonyms/Aliases for the command: `quit` +
 Exits the program. +
 Format: `exit` / `quit`
 
-=== Adding an event: `eventadd`
-
-`Since v1.1` +
-Synonyms/Aliases for the command: `addevent`, `ea`, `ae` +
-Adds an event to Sales Navigator +
-Format: `eventadd n/TITLE time/TIMING d/DESCRIPTION`
-
-Examples:
-
-* `eventadd n/Alice's Birthday time/1300-1830 d/Bestie's 21st, bring drinks!`
-* `eventadd n/CS2103 Final Exam time/1730-1930 d/Doomsday`
-
-=== Editing an event : `eventedit`
-
-`Since v1.2` +
-Synonyms/Aliases for the command: `editevent`, `ee` +
-Edits an existing event in Sales Navigator. +
-Format: `eventedit INDEX [n/TITLE] [time/TIMING] [d/DESCRIPTION]`
-
-****
-* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-****
-
-Example:
-
-* `edit 1 time/1400-1830 d/Bring drinks and buy cake!` +
-Edits the timing and description of the 1st event to be `1400-1830` and `Bring drinks and buy cake!` respectively.
-
-=== Deleting an event : `eventdel`
-
-`Since v1.1` +
-Synonyms/Aliases for the command: `delevent`, `eventdelete`, `deleteevent`, `ed`, `de` +
-Deletes the specified event from Sales Navigator. +
-Format: `delete INDEX`
-
-****
-* Deletes the event at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `delete 2` +
-Deletes the 2nd event in Sales Navigator.
-* `find Bob's Birthday` +
-`delete 1` +
-Deletes the 1st event in the results of the `find` command.
-
-=== Locating events by name: `eventfind`
-
-`Since v1.2` +
-Synonyms/Aliases for the command: `findevent`, `fe`, `ef` +
-Finds events whose titles contain any of the given keywords. +
-Format: `eventfind KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The search will not account for apostrophes. e.g searching `Bob` will not match `Bob's birthday`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the title is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `cs2103 midterm` will return `Submission for CS2103 Week 9`, `CS2106 Midterm`
-****
-
-Examples:
-
-* `find Bob's` +
-Returns `Bob's Birthday` and `Party at Bob's`
-* `find Birthday` +
-Returns any event having titles that contain `Birthday`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
-== Mass import of person's data command: `import`
-
-`Coming in v2.0` +
-Imports the data into a ... +
-Format: `import`
-
-****
-* Import persons data
-****
-
-Examples:
-
-* `import` [filename] +
-Imports the file and store it in [app].
-
-=== Displaying user's schedule command: `schedule`
-
-`Coming in v2.0` +
-Displays user's schedule
-Format: `schedule` / `calendar`
-
-Example:
-
-* `schedule` +
-Displays user's schedule.
-
 === App opens at startup of user's OS command: `startup`
 
 `Coming in v2.0` +
@@ -385,51 +447,6 @@ Example:
 Checks if ANSWER is yes/no and perform the relevant answer choice. +
 * `startup` yes +
 Sets opening app at startup of user's OS yes.
-
-=== Adding notes to persons : `note`
-
-`Coming in v2.0` +
-Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
-Format: `note [PERSON] [STRING]`
-
-Examples:
-* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
-
-=== View all persons with a specific tag : `tag`
-
-`Coming in v2.0` +
-Displays a list of all persons with a specific tag. +
-Format: `tag [TAG]`
-
-Examples:
-* `tag friend`
-
-=== View all persons from a specific company : `company`
-
-`Coming in v2.0` +
-Displays a list of all persons from a specific company. +
-Format: `company [COMPANY]`
-
-Examples:
-* `company ABC Foods`
-
-=== View a person's address on Google Maps within the app : `address`
-
-`Coming in v2.0` +
-Searches for the person's address on Google Maps and displays the result within the app. +
-Format: `address [PERSON]`
-
-Examples:
-* `address John Doe`
-
-=== Send an email to a person : `email`
-
-`Coming in v2.0` +
-Opens the user's default email client loaded with the person's email in the To: field. +
-Format: `email [PERSON]`
-
-Examples:
-* `email John Doe`
 
 === Saving the data
 

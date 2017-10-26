@@ -1,4 +1,5 @@
-package seedu.address.model.event;
+//@@author A0162268B
+package seedu.address.model.event.timeslot;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -7,7 +8,17 @@ import org.junit.Test;
 
 public class TimingTest {
     @Test
-    public void isValidTiming() {
+    public void compareTo() throws Exception {
+        Timing timeOne = new Timing("0000-1300");
+        Timing timeTwo = new Timing("1300-1400");
+        Timing timeThree = new Timing("1300-1500");
+        Timing timeFour = new Timing("1900-2100");
+
+        assertTrue(timeOne.compareTo(timeTwo) < 0);
+        assertTrue(timeTwo.compareTo(timeThree) == 0);
+        assertTrue(timeThree.compareTo(timeFour) < 0);
+        assertTrue(timeFour.compareTo(timeOne) > 0);
+
         assertFalse(Timing.isValidTiming(""));
         assertFalse(Timing.isValidTiming(" "));
         assertFalse(Timing.isValidTiming("1"));
@@ -23,3 +34,4 @@ public class TimingTest {
         assertTrue(Timing.isValidTiming("1900-2100"));
     }
 }
+

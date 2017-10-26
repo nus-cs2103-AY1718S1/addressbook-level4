@@ -7,8 +7,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -28,12 +30,14 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Status;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -56,7 +60,9 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
             + "[" + PREFIX_NOTE + "NOTE] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_PHOTO + "PHOTO] "
+            + "[" + PREFIX_TAG + "TAG]"
+            + "[" + PREFIX_RELATIONSHIP + "RELATIONSHIP]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -80,6 +86,33 @@ public class EditCommand extends UndoableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with {@code editPersonDescriptor}.
+     */
+    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
+                                             EditPersonDescriptor editPersonDescriptor) {
+        assert personToEdit != null;
+
+        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Company updatedCompany = editPersonDescriptor.getCompany().orElse(personToEdit.getCompany());
+        Position updatedPosition = editPersonDescriptor.getPosition().orElse(personToEdit.getPosition());
+        Status updatedStatus = editPersonDescriptor.getStatus().orElse(personToEdit.getStatus());
+        Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
+        Note updatedNote = editPersonDescriptor.getNote().orElse(personToEdit.getNote());
+        Photo updatedPhoto = editPersonDescriptor.getPhoto().orElse(personToEdit
+                .getPhoto());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Relationship> updatedRel = editPersonDescriptor.getRelation().orElse(personToEdit.getRelation());
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
+                updatedPosition, updatedStatus, updatedPriority, updatedNote,
+               updatedPhoto, updatedTags, updatedRel);
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -100,29 +133,6 @@ public class EditCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
-    }
-
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
-     */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
-
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Company updatedCompany = editPersonDescriptor.getCompany().orElse(personToEdit.getCompany());
-        Position updatedPosition = editPersonDescriptor.getPosition().orElse(personToEdit.getPosition());
-        Status updatedStatus = editPersonDescriptor.getStatus().orElse(personToEdit.getStatus());
-        Priority updatedPriority = editPersonDescriptor.getPriority().orElse(personToEdit.getPriority());
-        Note updatedNote = editPersonDescriptor.getNote().orElse(personToEdit.getNote());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
-                updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedTags);
     }
 
     @Override
@@ -157,7 +167,9 @@ public class EditCommand extends UndoableCommand {
         private Status status;
         private Priority priority;
         private Note note;
+        private Photo photo;
         private Set<Tag> tags;
+        private Set<Relationship> relation;
 
         public EditPersonDescriptor() {
         }
@@ -172,7 +184,9 @@ public class EditCommand extends UndoableCommand {
             this.status = toCopy.status;
             this.priority = toCopy.priority;
             this.note = toCopy.note;
+            this.photo = toCopy.photo;
             this.tags = toCopy.tags;
+            this.relation = toCopy.relation;
         }
 
         /**
@@ -180,7 +194,7 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.company,
-                    this.position, this.status, this.priority, this.note, this.tags);
+                    this.position, this.status, this.priority, this.note, this.tags, this.relation);
         }
 
         public Optional<Name> getName() {
@@ -207,60 +221,76 @@ public class EditCommand extends UndoableCommand {
             this.email = email;
         }
 
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
 
-        public void setCompany(Company company) {
-            this.company = company;
+        public void setAddress(Address address) {
+            this.address = address;
         }
 
         public Optional<Company> getCompany() {
             return Optional.ofNullable(company);
         }
 
-        public void setPosition(Position position) {
-            this.position = position;
+        public void setCompany(Company company) {
+            this.company = company;
         }
 
         public Optional<Position> getPosition() {
             return Optional.ofNullable(position);
         }
 
-        public void setStatus(Status status) {
-            this.status = status;
+        public void setPosition(Position position) {
+            this.position = position;
         }
 
         public Optional<Status> getStatus() {
             return Optional.ofNullable(status);
         }
 
-        public void setPriority(Priority priority) {
-            this.priority = priority;
+        public void setStatus(Status status) {
+            this.status = status;
         }
 
         public Optional<Priority> getPriority() {
             return Optional.ofNullable(priority);
         }
 
-        public void setNote(Note note) {
-            this.note = note;
+        public void setPriority(Priority priority) {
+            this.priority = priority;
         }
 
         public Optional<Note> getNote() {
             return Optional.ofNullable(note);
         }
 
-        public void setTags(Set<Tag> tags) {
-            this.tags = tags;
+        public void setNote(Note note) {
+            this.note = note;
         }
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        public void setPhoto(Photo photo) {
+            this.photo = photo;
+        }
+
+        public Optional<Photo> getPhoto() {
+            return Optional.ofNullable(photo);
+        }
+
+        public void setTags(Set<Tag> tags) {
+            this.tags = tags;
+        }
+
+        public void setRelation(Set<Relationship> relation) {
+            this.relation = relation;
+        }
+
+        public Optional<Set<Relationship>> getRelation() {
+            return Optional.ofNullable(relation);
         }
 
         @Override
@@ -287,7 +317,9 @@ public class EditCommand extends UndoableCommand {
                     && getStatus().equals(e.getStatus())
                     && getPriority().equals(e.getPriority())
                     && getNote().equals(e.getNote())
-                    && getTags().equals(e.getTags());
+                    && getPhoto().equals(e.getPhoto())
+                    && getTags().equals(e.getTags())
+                    && getRelation().equals(e.getRelation());
         }
     }
 }

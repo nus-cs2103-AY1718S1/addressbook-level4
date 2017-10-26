@@ -81,6 +81,7 @@
     -fx-padding: 0 1 0 1;
     -fx-background-insets: 0;
 }
+
 .split-pane *.horizontal-grabber {
     -fx-padding: 0;
     -fx-background-color: transparent;
@@ -229,6 +230,18 @@
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
+.importButton {
+    -fx-padding: 5 5 5 5;
+    -fx-border-color: white;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-background-color: #00bfff;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 8pt;
+    -fx-text-fill: white;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
 .button:hover {
     -fx-background-color: #3a3a3a;
 }
@@ -340,16 +353,15 @@
 }
 
 .tab-down-button {
--fx-padding: 0;
+    -fx-padding: 0;
 }
 
 .tab-down-button .arrow {
--fx-padding: 0;
+    -fx-padding: 0;
 }
 
-
 .transparentButton {
-    -fx-background-color:transparent;
+    -fx-background-color: transparent;
 
 }
 

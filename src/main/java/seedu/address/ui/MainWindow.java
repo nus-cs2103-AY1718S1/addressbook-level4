@@ -23,6 +23,8 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.HideCalendarEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -166,7 +168,7 @@ public class MainWindow extends UiPart<Region> {
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs
-            .getAddressBookFilePath(), logic.getFilteredPersonList().size());
+                .getAddressBookFilePath(), logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -175,8 +177,7 @@ public class MainWindow extends UiPart<Region> {
         //When calendar button is clicked, the browserPlaceHolder will switch
         // to the calendar view
         calendarView = new CalendarView();
-        calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new
-                EventHandler<MouseEvent>() {
+        calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (!browserPlaceholder.getChildren().contains(calendarView
@@ -240,6 +241,29 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Opens the calendar view.
+     */
+    @FXML
+    public void handleShowCalendar() {
+        if (!browserPlaceholder.getChildren().contains(calendarView.getRoot()
+        )) {
+            browserPlaceholder.getChildren().add(calendarView
+                    .getRoot());
+        }
+    }
+
+    /**
+     * Hides the calendar view.
+     */
+    @FXML
+    public void handleHideCalendar() {
+        if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
+            browserPlaceholder.getChildren().remove(calendarView
+                    .getRoot());
+        }
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -268,5 +292,17 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleShowCalendarEvent(ShowCalendarEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleShowCalendar();
+    }
+
+    @Subscribe
+    private void handleHideCalendarEvent(HideCalendarEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleHideCalendar();
     }
 }

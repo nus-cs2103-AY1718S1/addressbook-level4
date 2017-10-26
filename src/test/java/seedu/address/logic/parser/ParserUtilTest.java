@@ -21,6 +21,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -28,12 +29,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_PHOTO = "photo";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_PHOTO = "src/main/resources/images/default.jpg";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -161,6 +164,37 @@ public class ParserUtilTest {
 
         assertEquals(expectedEmail, actualEmail.get());
     }
+
+    // @@author a0107442n
+
+    @Test
+    public void parsePhoto_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parsePhoto(null);
+    }
+
+    @Test
+    public void parsePhoto_invalidValue_throwsIllegalValueException() throws
+            Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parsePhoto(Optional.of(INVALID_PHOTO));
+    }
+
+    @Test
+    public void parsePhoto_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parsePhoto(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parsePhoto_validValue_returnsPhoto() throws Exception {
+        Photo expectedPhoto = new Photo(VALID_PHOTO);
+        Optional<Photo> actualPhoto = ParserUtil.parsePhoto(Optional.of
+                (VALID_PHOTO));
+
+        assertEquals(expectedPhoto, actualPhoto.get());
+    }
+
+    //@@author
 
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {

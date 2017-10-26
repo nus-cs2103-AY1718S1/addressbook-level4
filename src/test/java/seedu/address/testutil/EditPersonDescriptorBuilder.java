@@ -37,7 +37,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setStatus(person.getStatus());
         descriptor.setPriority(person.getPriority());
         descriptor.setNote(person.getNote());
+        descriptor.setPhoto(person.getPhoto());
         descriptor.setTags(person.getTags());
+        descriptor.setRelation(person.getRelation());
     }
 
     /**
@@ -149,6 +151,21 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code Photo} of the {@code EditPersonDescriptor} that we are
+     * building.
+     */
+    public EditPersonDescriptorBuilder withPhoto(String note) {
+        try {
+            ParserUtil.parsePhoto(Optional.of(note)).ifPresent
+                (descriptor::setPhoto);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Photo is expected to be "
+                    + "unique.");
+        }
+        return this;
+    }
+
+    /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
@@ -157,6 +174,19 @@ public class EditPersonDescriptorBuilder {
             descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withRelation(String... relation) {
+        try {
+            descriptor.setRelation(ParserUtil.parseRel(Arrays.asList(relation)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("relationships are expected to be unique.");
         }
         return this;
     }
