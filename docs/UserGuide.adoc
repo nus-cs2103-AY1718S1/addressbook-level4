@@ -521,22 +521,19 @@ e.g. `sort debt`
 * `Nearby` command (since v1.2)
 * `Borrow` command (since v1.2)
 * Display nearby contacts (since v1.2)
-* Interest field (since v1.2)
+* `Interest` field (since v1.2)
 
-* Sort by various fields (since v1.3)
+* `Sort` by various fields (since v1.3)
 * `Payback` command (since v1.3)
 * `Repaid` command (since v1.3)
 * `Whitelist` command (since v1.3)
 * `Logout` command (since v1.3)
+* Person's debts are automatically incremented according to the interest rate of their loan (since v1.3)
 
 == Features to be included by `V2.0`
 
-//[V1.3]
-* List of people who have cleared their debts.
-* List of people who have overdue debts.
-* A person's debts are automatically incremented according to the interest rate of their loan.
-//[end of V1.3]
 //[V1.4]
+* List of people who have overdue debts.
 * A progress bar to indicate how much of the person's debt has been paid off.
 * A feature to export a person's contact in another format.
 * Profile pictures of clients shown next to their details.
