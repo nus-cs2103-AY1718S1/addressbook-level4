@@ -31,10 +31,10 @@ public class ColourTagCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        Map<Tag, String> currentTagColours = new HashMap<>(((ModelManager) model).getUserPrefs()
-                .getGuiSettings().getTagColours());
+        ModelManager m = ((ModelManager) model);
+        Map<Tag, String> currentTagColours = new HashMap<>(m.getUserPrefs().getGuiSettings().getTagColours());
         currentTagColours.put(tag, colour);
-        ((ModelManager) model).getUserPrefs().getGuiSettings().setTagColours(currentTagColours);
+        m.getUserPrefs().getGuiSettings().setTagColours(currentTagColours);
 
         return new CommandResult(String.format(MESSAGE_COLOUR_TAG_SUCCESS, tag, colour));
     }

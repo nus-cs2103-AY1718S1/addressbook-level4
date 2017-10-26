@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import javafx.beans.binding.Bindings;

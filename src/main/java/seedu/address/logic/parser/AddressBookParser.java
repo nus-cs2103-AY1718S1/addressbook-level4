@@ -64,7 +64,7 @@ public class AddressBookParser {
 
         case ColourTagCommand.COMMAND_WORD:
         case ColourTagCommand.COMMAND_ALIAS:
-                return new ColourTagCommandParser().parse(arguments);
+            return new ColourTagCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
