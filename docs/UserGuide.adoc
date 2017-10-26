@@ -331,9 +331,9 @@ User using versions before v1.2 should add a new person with `important` tag fir
 
 ==== Sorted Contacts 
 
-All persons displayed will be sorted in ascending alphabetical order based on their name
-Using `List` command will always display all persons in sorted ascedning alphabetical order
-Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons
+All persons displayed will be sorted in ascending alphabetical order based on their name. +
+Using `List` command will always display all persons in sorted ascedning alphabetical order. +
+Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons.
 
 === Coming soon in v2.0
 
