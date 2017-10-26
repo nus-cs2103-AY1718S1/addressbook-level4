@@ -75,8 +75,6 @@ public class TagCommandParserTest {
                 + VALID_TAG_NAME + "\t \n", expectedCommand);
 
         // multiple duplicated indexes
-        expectedCommand = new TagCommand(Arrays.asList(INDEX_FIRST_PERSON,
-                INDEX_SECOND_PERSON, INDEX_THIRD_PERSON), new Tag(VALID_TAG_NAME));
         assertParseSuccess(parser, "1,1,1,2,2,3" + " " + VALID_TAG_NAME, expectedCommand);
     }
 
