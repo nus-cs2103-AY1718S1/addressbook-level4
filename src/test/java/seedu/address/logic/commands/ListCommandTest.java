@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -15,6 +16,7 @@ import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 
 /**
+ * @author Sri-vatsa
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
  */
 public class ListCommandTest {
@@ -33,13 +35,25 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listIsNotFiltered_showsSameList() {
+    public void execute_list_successfully() {
+        showFirstPersonOnly(model);
         assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
-    public void execute_listIsFiltered_showsEverything() {
-        showFirstPersonOnly(model);
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+    public void execute_listCheckAlphabeticalSequence() {
+        listCommand.executeUndoableCommand();
+
+        String personAFullName;
+        String personBFullName;
+
+        for (int i = 0; i < model.getFilteredPersonList().size(); i++) {
+            for (int j = i + 1; j < model.getFilteredPersonList().size(); j++) {
+                personAFullName = model.getFilteredPersonList().get(i).getName().fullName;
+                personBFullName = model.getFilteredPersonList().get(j).getName().fullName;
+                assertTrue(personAFullName.compareTo(personBFullName) <=  0);
+            }
+        }
+
     }
 }

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_PERSON;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import java.util.function.Predicate;
@@ -84,18 +85,27 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+    public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
+        boolean isTagRemoved;
+        boolean hasOneOrMoreDeletion = false;
         for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
 
-            //creates a new person without the given tag
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            //creates a new person without each of the tags
             Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = newPerson.getTags();
-            newTags.remove(tag);
+            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+
+            for (Tag tag : tags) {
+                isTagRemoved = newTags.remove(tag);
+                if (isTagRemoved) {
+                    hasOneOrMoreDeletion = isTagRemoved;
+                }
+            }
             newPerson.setTags(newTags);
 
             addressBook.updatePerson(oldPerson, newPerson);
         }
+        return hasOneOrMoreDeletion;
     }
 
     @Override
@@ -161,12 +171,22 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Sort addressBook methods =============================================================
 
     /***
-     * Sorts persons in Addressbook by searchCount
+     * Sorts persons in address book by searchCount
      * @author Sri-vatsa
      */
     @Override
     public void sortPersonListBySearchCount() {
         addressBook.sortBySearchCount();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    /***
+     * Sorts persons in Address book alphabetically
+     */
+    @Override
+    public void sortPersonListLexicographically() {
+        addressBook.sortLexicographically();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }

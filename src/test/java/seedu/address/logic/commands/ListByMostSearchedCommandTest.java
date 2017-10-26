@@ -32,7 +32,7 @@ public class ListByMostSearchedCommandTest {
 
     @Test
     public void execute_listInDescendingSearchCount_verification() {
-        lmsCommand.execute();
+        lmsCommand.executeUndoableCommand();
 
         //In a list sorted in descending order of search count, SearchCountA refers to the search count A of the
         //person higher up on the list with a supposed search Count greater or equals to the search count of person

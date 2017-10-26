@@ -28,7 +28,7 @@ public interface Model {
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Deletes given tag from everyone in the addressbook */
-    void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
+    boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -59,15 +59,21 @@ public interface Model {
     UserPrefs getUserPrefs();
 
     /**
+     * @author Sri-vatsa
      * Updates search count for each person who is searched using {@code FindCommand}
      * Assumes filtered List of persons contains search results
-     * @author Sri-vatsa
      */
     void recordSearchHistory() throws CommandException;
 
     /**
-     *  Sort everyone in addressbook by searchCount
      * @author Sri-vatsa
+     * Sort everyone in addressbook by searchCount
      */
     void sortPersonListBySearchCount();
+
+    /**
+     * @author Sri-vatsa
+     * Sort everyone in addressbook lexicographically
+     */
+    void sortPersonListLexicographically();
 }
