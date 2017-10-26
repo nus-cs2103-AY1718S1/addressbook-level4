@@ -1,9 +1,11 @@
 package seedu.address.ui;
 
+import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -22,6 +24,9 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+
+import javax.swing.text.html.StyleSheet;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -44,6 +49,7 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private Scene scene;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -63,6 +69,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StyleSheet css;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -77,7 +86,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
-        Scene scene = new Scene(getRoot());
+        scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -125,21 +134,23 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
+    void fillInnerParts(ObservableList<ReadOnlyPerson> filteredPersonList) {
+
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), filteredPersonList);
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
     }
 
     void hide() {
@@ -203,6 +214,43 @@ public class MainWindow extends UiPart<Region> {
     private void handleExit() {
         raise(new ExitAppRequestEvent());
     }
+
+
+    /**
+     * Changes the theme color to dark of the program
+     */
+    @FXML
+    private void handleDarkTheme() {
+
+        int size = scene.getRoot().getStylesheets().size();
+
+        for (int i = 0; i < size; i++){
+            scene.getRoot().getStylesheets().remove(0);
+        }
+
+        scene.getRoot().getStylesheets().add("view/DarkTheme.css");
+        scene.getRoot().getStylesheets().add("view/Extensions.css");
+
+    }
+
+    /**
+     * Changes the theme color to light of the program
+     */
+    @FXML
+    private void handleLightTheme() {
+
+        int size = scene.getRoot().getStylesheets().size();
+        for (int i = 0; i < size; i++){
+
+            scene.getRoot().getStylesheets().remove(0);
+
+        }
+        scene.getRoot().getStylesheets().add("view/LightTheme.css");
+
+
+    }
+
+
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;

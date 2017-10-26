@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= AddressBook Level 4 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -732,9 +732,66 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* *` |novice user |use commands by using shortcuts (example 'f' instead of 'find') | I can use the features more easily/ fastly
+
+|`* * *` |novice user |be given suggestions for commands close to what I type when commands are entered incorrectly |I can learn quickly from my mistakes
+
+|`*` |novice user |Log out of my own addressbook and into another |I can set up an account for my friend
+
+|`* *` |novice user |remove people by clicking on a 'remove' icon on the list |I can remove people easier
+
+|`* *` |experienced user |edit people's details by double clicking on them in the list |I can modify details easily
+
+|`* *` |novice user |search by tags |I can find my friends faster
+
+|`*` |experienced user |duplicate a person |When I discover my contact has an identical twin with whom he shares his name, home, and phone I can add him quickly
+
+|`* *` |experienced user |add some contacts to a favourite list |they are easier to find
+
+|`* *` |experienced user| add more labels to the find feature (more customized find)| I can add multiple conditions to find
+
+|`* *` |novice user |sort list results by any keywords in addressbook |I can easily find the right information
+
+|`* *` |experienced user| check when the last time I logged in| I can make sure if my account is still secure
+
+|`* *` |experienced user| cselect and delete my historical operations| I can easily protect my privacy in case that other people might see it
+
+|`* *` |experienced user| create custom lists/folders like 'family', 'work' etc| I can organize contacts into folders so that it is more easy to retrieve
+
+|`*` |experienced user| can share a contact folder with another friend who is using addressbook| can have a shared database of contacts common to both of us
+
+|`* *` |experienced user| hide some contacts in the Addressbook (using a passwod etc)| I can store personal contacts which I might not want anyone to see
+
+|`*` |novice user |add a photo to a contact |just as an extra aesthetic feature
+
+|`*` |novice user |see a nice loading animation at the start of this program |I will feel this program is more professional
+
+|`* *` |experienced user| import other data into my addressbook| I can easily manage my all of my data
+
+|`* *` |experienced user| export my data as csv, json, spreedsheet file| I can backup my data or make it clearer to view
+
+|`* *` |experienced user| print all of my data | I can use them in real-life
+
 |=======================================================================
 
-{More to be added}
+== UI Changes: Delete and Undo/Redo Buttons
+
+The improved UI makes use of three new buttons to perform tasks quickly and intuitively, without the use of the command line interface.
+
+The 'Delete' button, taking the form of a red 'X' appearing in each personCard shown in the PersonListPanel, allows users to quickly delete people from the list with a single click.
+This button is handled by the 'PersonCard' object, which now handles the `buttonEvent` it throws when clicked. This causes a call on `logic.execute()` on `delete` + the number of the card's index.
+This command can be undone/redone normally, and also triggers the correct `Deleted Person: ____` text to appear below the command line.
+It does this by raising a `NewResultAvailableEvent`, which is handled by the ResultDisplay.
+
+The 'Undo' and 'Redo' buttons now exist beside the command line at the top of the addressbook.
+Their position is not final, and the <Region> added to align them to the right currently prevents the command line from occupying most of the space it did before. This will be fixed in future versions.
+Like the 'Delete' button, they update the ResultDisplay with the 'Undo Successful!' notice, again by raising the same `NewResultAvailableEvent`.
+To match the style of the 'Delete' Button, future verions may use smaller buttons and forward/backwards arrows as often used as undo/redo buttons in text editors.
+
+It should be noted that while the buttons appear to function properly, they may not yet properly work with historySnapshot functions.
+This is because 'PersonCard' does not presently have the 'ListElementPointer' `historySnapshot`, which exists soley in commandBox, as that was previously the only place commands ran from.
+This could be fixed by extracting that functionality to a new class utilized by both 'PersonCard' and 'CommandBox' if that functionality is desired.
 
 [appendix]
 == Use Cases
@@ -767,6 +824,74 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use Case: UC1 Display Contacts after customized find (custom search)
+
+*MSS*
+
+1. User enters keywords for different categories he wants to search by (eg. name, tags)
+2. AddressBook finds the list of people who satisfy all the conditions entered by the user
+3. AddressBook displays all these contacts and details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No people are found satisfying the given conditions
++
+Use case ends.
+
+=== Use Case: UC2 Import Contacts
+
+*MSS*
+
+1. User receives the contact file
+2. User selects import contacts option
+3. The Address Book app prompts user for location of this contact file
+4. User enters location
+5. Address Book merges the contact file into existing contact file
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. File address entered by user does not exist
+1. Eror message displayed
+2. User prompted to re-enter correct location
++
+Use case ends.
+
+=== Use Case: Use Case: UC3 Export Contacts
+
+*MSS*
+
+1. User selects contacts to export
+2. AddressBook creates file with list of contacts that user selected
+3. User specifices location to store this file of contacts
+4. AddressBook stores data as indicated
+5. User sends data to intended receiever
++
+Use case ends.
+
+=== Use Case: UC4 Adding Contacts to Favourite List
+
+*MSS*
+
+1. User selects contacts to add to favourite list
+2. AddressBook adds contacts to list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Duplicate contact
+1. AddressBook prompts user if it can merge duplicate contacts
+2. If user allows, it will merge duplicate contacts
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,7 +900,9 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
+.  The system should not take more than 3 seconds to complete a command.
+.  The system should automatically log out after 30 mins of inactivity (security)
+.  The system should have easily accesible walkthrough/ guide for novice users to familiarise themselves with the environment.
 {More to be added}
 
 [appendix]
@@ -811,3 +938,64 @@ Cons:
 
 * ...
 * ...
+
+[appendix]
+== Enhancement Description
+Author: Siri
+
+Added a Favourite List feature.
+
+The feature is implemented in a similar way to the ‘Delete’ and ‘List’ features – it uses the index
+instead of name to add/remove a person from the Favourite List. While the delete (eg. ‘delete 2’)
+command removes that particular Person Object from the list, the favourite command (eg. ‘fav 3’) adds the person at that index to the favourite List.
+
+The Favourite List feature is split into 3 commands:
+
+1.	favlist – This command displays the favourite list. The command favlist raises an event called InternalListEvent which is handled by displaying the favourite list instead of the normal Persons list.
+2.	Fav – This command calls the favCommandParser class which parses the input arguments and creates a FavCommand object, this class then adds the number at the index entered by the user into the Favourite List (while making sure there are no duplicate entries).
+3.	Unfav – This command calls the favCommandParser class which parses the input arguments and creates a FavCommand object, this class then adds the number at the index entered by the user into the Favourite List (while making sure there are no duplicate entries).
+
+A simple workflow for favlist command would be:
+
+Command entered: ‘favlist’
+
+1. AddresBookParser returns FavouriteCommand class to Main method.
+2. FavouriteCommand class executes CommandResult method
+3. ChangeListTo method in Commandesult calls the ChangeInternalListEvent with the command word ‘favlist’ as the parameter which returns the updated List.
+
+In a similar way, the ‘fav [index]’ and ‘unfav [index]’ commands also call various classes and methods in order to add/ remove a person from the favourite List respectively.
+
+This feature will make it more convenient for Users to organize their contacts so that they can access their favourite contacts by simply using the flist command instead of searching by name or tags.
+
+== Enhancement Description
+Author: Siri
+
+Added a Sort command feature.
+
+The feature is implemented in a similar way to the list
+feature: the sort command sorts the list in alphabhetical
+order of names and displays the sorted list to the user.
+However the sort command does not update the actual Person list
+in the AddressBook which means that every time the user
+reopens AddressBook, he/she is presented with an unsorted
+list. The reason behind this is for the user to be able
+to view the list in two ways:
+
+1. In the order of who he added most recently (if sort
+function is not used)
+
+2. In alphabhetical order of names (if sort function is used)
+
+== Enhancement Description
+Author: Peng Xu
+
+Added color tags
+
+The feature is that assign different colors to each tag of person card. Every time when program starts, it will assign color to each tag randomly.
+
+== Enhancement Description
+Author: Peng Xu
+
+Added theme change menu item
+
+The feature is that user can change background color via the theme buttons on the menubar.

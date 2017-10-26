@@ -24,7 +24,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private FilteredList<ReadOnlyPerson> filteredPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -96,6 +96,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void sortFilteredPersonList() {
+        this.addressBook.sortPersons();
+        ObservableList<ReadOnlyPerson> sortedList = this.addressBook.getPersonList();
+        filteredPersons = new FilteredList<>(sortedList);
     }
 
     @Override

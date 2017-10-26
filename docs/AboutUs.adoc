@@ -5,52 +5,42 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: stylesheets
 
 AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+The team below is responsible for this fork of the project. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Jacob Vosburgh
+image::jvossy.png[width="400", height="514" align="left"]
+{empty} [https://github.com/jvossy[github]]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: UI
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Sirisha Kommareddi
+image::siri.jpg[width="150", align="left"]
+{empty}[https://github.com/siri99[github]]
+
+Role: Developer
+Responsibilities: Logic
+
+'''
+
+=== Linus Peng
+image::linus.jpg[width="150", align="left"]
+{empty}[http://github.com/LinusMelb[github]] [<<Linus#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Storage
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Henning
+image::henning.jpg[width="150", align="left"]
+{empty}[https://github.com/coolpotato1[github]]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Model
 
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
-
-'''

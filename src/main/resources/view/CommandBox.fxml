@@ -2,8 +2,15 @@
 
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 
-<StackPane styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" promptText="Enter command here..."/>
-</StackPane>
-
+<HBox>
+  <StackPane styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" promptText="Enter command here..."/>
+  </StackPane>
+  <Region prefHeight="10.0" prefWidth="1.0" HBox.hgrow="ALWAYS" />
+  <Button onAction='#handleUndoButtonAction' id="undo" text="Undo"/>
+  <Button onAction='#handleRedoButtonAction' id="redo" text="Redo"/>
+</HBox>

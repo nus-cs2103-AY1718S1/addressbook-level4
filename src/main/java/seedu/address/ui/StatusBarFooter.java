@@ -9,10 +9,13 @@ import org.controlsfx.control.StatusBar;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -20,6 +23,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
+    public static final String SYNC_PERSONLIST_UPADTED_SIZE = "Total size: %d, ";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
 
     /**
@@ -36,14 +40,23 @@ public class StatusBarFooter extends UiPart<Region> {
 
     private static final String FXML = "StatusBarFooter.fxml";
 
+    private ObservableList<ReadOnlyPerson> filteredPersonList;
+
     @FXML
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
 
-
     public StatusBarFooter(String saveLocation) {
         super(FXML);
+        setSyncStatus(SYNC_STATUS_INITIAL);
+        setSaveLocation("./" + saveLocation);
+        registerAsAnEventHandler(this);
+    }
+
+    public StatusBarFooter(String saveLocation, ObservableList<ReadOnlyPerson> filteredPersonList) {
+        super(FXML);
+        this.filteredPersonList = filteredPersonList;
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
@@ -75,7 +88,10 @@ public class StatusBarFooter extends UiPart<Region> {
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
-        setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        logger.info(LogsCenter.getEventHandlingLogMessage(abce,
+                "Setting last updated status to " + lastUpdated));
+        setSyncStatus(String.format(SYNC_PERSONLIST_UPADTED_SIZE, filteredPersonList.size())
+                + String.format(SYNC_STATUS_UPDATED, lastUpdated));
     }
+
 }

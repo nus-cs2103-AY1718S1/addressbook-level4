@@ -114,6 +114,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+
+    /**
+     * Sorts the list of people in the address book.
+     */
+    public void sortPersons() {
+        this.persons.sortPersons();
+    }
+
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}

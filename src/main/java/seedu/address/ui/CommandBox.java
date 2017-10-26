@@ -3,7 +3,9 @@ package seedu.address.ui;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
@@ -29,6 +31,10 @@ public class CommandBox extends UiPart<Region> {
 
     @FXML
     private TextField commandTextField;
+    @FXML
+    private Button undo;
+    @FXML
+    private Button redo;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -146,6 +152,42 @@ public class CommandBox extends UiPart<Region> {
         }
 
         styleClass.add(ERROR_STYLE_CLASS);
+    }
+
+    /**
+     * handles button events given to it by the fxml doc that it is set as controller for by the constructor in UiPart
+     * @param buttonEvent
+     */
+    @FXML
+    private void handleUndoButtonAction(ActionEvent buttonEvent) {
+        try {
+            CommandResult commandResult = logic.execute("undo");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+        } catch (CommandException | ParseException e) {
+            // handle command failure
+            logger.info("Delete call failed on index undo");
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+
+    }
+
+    /**
+     * handles button events given to it by the fxml doc that it is set as controller for by the constructor in UiPart
+     * @param buttonEvent
+     */
+    @FXML
+    private void handleRedoButtonAction(ActionEvent buttonEvent) {
+        try {
+            CommandResult commandResult = logic.execute("redo");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+        } catch (CommandException | ParseException e) {
+            // handle command failure
+            logger.info("Delete call failed on index redo");
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+
     }
 
 }

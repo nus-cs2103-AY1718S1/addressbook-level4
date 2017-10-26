@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -17,6 +18,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The manager of the UI component.
@@ -36,10 +38,12 @@ public class UiManager extends ComponentManager implements Ui {
     private Config config;
     private UserPrefs prefs;
     private MainWindow mainWindow;
+    private ObservableList<ReadOnlyPerson> filteredPersonList;
 
     public UiManager(Logic logic, Config config, UserPrefs prefs) {
         super();
         this.logic = logic;
+        this.filteredPersonList = logic.getFilteredPersonList();
         this.config = config;
         this.prefs = prefs;
     }
@@ -55,7 +59,7 @@ public class UiManager extends ComponentManager implements Ui {
         try {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillInnerParts();
+            mainWindow.fillInnerParts(filteredPersonList);
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));

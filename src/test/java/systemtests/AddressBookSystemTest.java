@@ -65,7 +65,6 @@ public abstract class AddressBookSystemTest {
         setupHelper = new SystemTestSetupHelper();
         testApp = setupHelper.setupApplication();
         mainWindowHandle = setupHelper.setupMainWindowHandle();
-
         waitUntilBrowserLoaded(getBrowserPanel());
         assertApplicationStartingStateIsCorrect();
     }
@@ -111,7 +110,6 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
-
         waitUntilBrowserLoaded(getBrowserPanel());
     }
 
@@ -185,7 +183,8 @@ public abstract class AddressBookSystemTest {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
+            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
+                    + selectedCardName.replaceAll(" ", "+")
                     + GOOGLE_SEARCH_URL_SUFFIX);
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
@@ -232,11 +231,12 @@ public abstract class AddressBookSystemTest {
      * Asserts that only the sync status in the status bar was changed to the timing of
      * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
      */
+
     protected void assertStatusBarUnchangedExceptSyncStatus() {
         StatusBarFooterHandle handle = getStatusBarFooter();
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
-        assertEquals(expectedSyncStatus, handle.getSyncStatus());
+        assertEquals(expectedSyncStatus, handle.getSyncStatus().split(", ")[1]);
         assertFalse(handle.isSaveLocationChanged());
     }
 
@@ -248,7 +248,8 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE),
+                    getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
