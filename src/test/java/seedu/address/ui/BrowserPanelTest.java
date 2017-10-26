@@ -6,7 +6,8 @@ import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.POSTAL_CODE_LENGTH;
+import static seedu.address.ui.BrowserPanel.QUERY_POSTAL_CODE_LENGTH;
+import static seedu.address.ui.BrowserPanel.getMapQueryStringFromPostalString;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
@@ -43,12 +44,13 @@ public class BrowserPanelTest extends GuiUnitTest {
         // associated web page of a parcel
         postNow(selectionChangedEventStub);
         URL expectedParcelUrl = new URL(GOOGLE_MAP_URL_PREFIX
-                + ALICE.getAddress().postalCode.value.substring(1));
+                + getMapQueryStringFromPostalString(ALICE.getAddress().postalCode.toString()));
 
         waitUntilBrowserLoaded(browserPanelHandle);
 
-        int correctUrlLength = GOOGLE_MAP_URL_PREFIX.length() + POSTAL_CODE_LENGTH;
+        int correctUrlLength = GOOGLE_MAP_URL_PREFIX.length() + QUERY_POSTAL_CODE_LENGTH;
         String actualParcelUrl = browserPanelHandle.getLoadedUrl().toString().substring(0, correctUrlLength);
         assertEquals(expectedParcelUrl.toString(), actualParcelUrl);
     }
+
 }
