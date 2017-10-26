@@ -42,7 +42,6 @@ public class PostalCode {
         return test.matches(POSTAL_CODE_VALIDATION_REGEX);
     }
 
-
     @Override
     public String toString() {
         return value;
