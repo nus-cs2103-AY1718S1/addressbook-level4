@@ -1,5 +1,6 @@
 package seedu.address.model.insurance;
 
+import java.util.EnumMap;
 import java.util.UUID;
 
 import javafx.beans.property.DoubleProperty;
@@ -14,6 +15,7 @@ public interface ReadOnlyInsurance {
 
     ObjectProperty<UUID> idProperty();
     String getId();
+    EnumMap getRoleToPersonMap();
     ObjectProperty<ReadOnlyPerson> ownerProperty();
     ReadOnlyPerson getOwner();
     ObjectProperty<ReadOnlyPerson> insuredProperty();
@@ -22,12 +24,10 @@ public interface ReadOnlyInsurance {
     ReadOnlyPerson getBeneficiary();
     DoubleProperty premiumProperty();
     Double getPremium();
-    /*
     StringProperty contractPathProperty();
     String getContractPath();
     StringProperty signingDateProperty();
     String getSigningDate();
     StringProperty expiryDateProperty();
     String getExpiryDate();
-    */
 }

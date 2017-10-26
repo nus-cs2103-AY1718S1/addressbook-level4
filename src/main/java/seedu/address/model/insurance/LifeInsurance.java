@@ -3,6 +3,9 @@ package seedu.address.model.insurance;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.EnumMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
 
 import javafx.beans.property.DoubleProperty;
@@ -21,6 +24,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class LifeInsurance implements ReadOnlyInsurance {
 
     private ObjectProperty<UUID> id;
+    private enum LinkedRole {OWNER, INSURED, BENEFICIARY}
+    private EnumMap<LinkedRole, String> roleToPersonMap;
     private ObjectProperty<ReadOnlyPerson> owner;
     private ObjectProperty<ReadOnlyPerson> insured;
     private ObjectProperty<ReadOnlyPerson> beneficiary;
@@ -29,28 +34,22 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private StringProperty signingDate;
     private StringProperty expiryDate;
 
-    public LifeInsurance(UUID id) {
-        this.id = new SimpleObjectProperty<>(id);
+    public LifeInsurance() {
+        this.roleToPersonMap = new EnumMap<>(LinkedRole.class);
     }
-    public LifeInsurance(Double premium) {
+
+    public LifeInsurance(String owner, String insured, String beneficiary, Double premium,
+                         String contractPath, String signingDate, String expiryDate) {
+        this();
+        this.roleToPersonMap.put(LinkedRole.OWNER, owner);
+        this.roleToPersonMap.put(LinkedRole.INSURED, insured);
+        this.roleToPersonMap.put(LinkedRole.BENEFICIARY, beneficiary);
         this.premium = new SimpleDoubleProperty(premium);
-    }
-    public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary, Double premium) {
-        this.owner = new SimpleObjectProperty<>(owner);
-        this.insured = new SimpleObjectProperty<>(insured);
-        this.beneficiary = new SimpleObjectProperty<>(beneficiary);
-        this.premium = new SimpleDoubleProperty(premium);
+        this.contractPath = new SimpleStringProperty(contractPath);
+        this.signingDate = new SimpleStringProperty(signingDate);
+        this.expiryDate = new SimpleStringProperty(expiryDate);
 
     }
-    /*
-    public LifeInsurance(String owner, String insured, String beneficiary, Double premium) {
-        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
-        this.insured = new SimpleObjectProperty<>(insured);
-        this.beneficiary = new SimpleObjectProperty<>(beneficiary);
-        this.premium = new SimpleDoubleProperty(premium);
-
-    }
-    */
 
     public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary,
                          Double premium, String contractPath, String signingDate, String expiryDate) {
@@ -69,7 +68,34 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Creates a copy of the given ReadOnlyInsurance.
      */
     public LifeInsurance(ReadOnlyInsurance source) {
-        this(source.getOwner(), source.getInsured(), source.getBeneficiary(), source.getPremium());
+        this(source.getOwner(), source.getInsured(), source.getBeneficiary(), source.getPremium(),
+                source.getContractPath(), source.getSigningDate(), source.getExpiryDate());
+        if(source.getRoleToPersonMap() != null) {
+            this.roleToPersonMap = source.getRoleToPersonMap();
+        }
+    }
+
+    public LifeInsurance(ReadOnlyInsurance source, Person person) {
+        this.premium = new SimpleDoubleProperty(source.getPremium());
+        this.contractPath = new SimpleStringProperty(source.getContractPath());
+        this.signingDate = new SimpleStringProperty(source.getSigningDate());
+        this.expiryDate = new SimpleStringProperty(source.getExpiryDate());
+        this.roleToPersonMap = source.getRoleToPersonMap();
+        String name = person.getName().fullName;
+        Iterator it = source.getRoleToPersonMap().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if(pair.getValue().equals(name)) {
+                switch (pair.getKey().toString()){
+                    case "OWNER":
+                        this.owner = new SimpleObjectProperty<>(person);
+                    case "INSURED":
+                        this.insured = new SimpleObjectProperty<>(person);
+                    case "BENEFICIARY":
+                        this.beneficiary = new SimpleObjectProperty<>(person);
+                }
+            }
+        }
     }
 
     @Override
@@ -80,6 +106,11 @@ public class LifeInsurance implements ReadOnlyInsurance {
     @Override
     public String getId() {
         return id.toString();
+    }
+
+    @Override
+    public EnumMap getRoleToPersonMap() {
+        return roleToPersonMap;
     }
 
     public void setOwner(Person owner) {
@@ -137,7 +168,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     public Double getPremium() {
         return premium.get();
     }
-    /*
+
     public void setContractPath(String contractPath) {
         this.contractPath.set(requireNonNull(contractPath));
     }
@@ -179,5 +210,4 @@ public class LifeInsurance implements ReadOnlyInsurance {
     public String getExpiryDate() {
         return expiryDate.get();
     }
-    */
 }
