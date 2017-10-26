@@ -1,4 +1,4 @@
-package seedu.address.logic.parser.task;
+package seedu.address.logic.parser;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
