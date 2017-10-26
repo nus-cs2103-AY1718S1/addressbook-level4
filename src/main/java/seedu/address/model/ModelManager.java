@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -15,6 +16,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Appointment;
+import seedu.address.model.person.HasPotentialDuplicatesPredicate;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -58,7 +61,9 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
@@ -90,14 +95,15 @@ public class ModelManager extends ComponentManager implements Model {
      * Updates UI by refreshing personListPanel
      */
     @Override
-    public synchronized void setTagColor(boolean isOn, String tagString, String color) {
+    public synchronized void setTagColor(String tagString, String color) {
         Set<Tag> tag = new HashSet<>(addressBook.getTagList());
-        addressBook.setTags(tag, isOn, tagString, color);
+        addressBook.setTags(tag, tagString, color);
         indicateAddressBookChanged();
     }
 
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
      * @param tag all persons containing this tag will be deleted
      */
     public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
@@ -107,6 +113,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
      * @param tags all persons containing this tag will be deleted
      */
     @Override
@@ -118,7 +125,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Adds appointment for a contact in address book
-     *
      */
     @Override
     public void addAppointment(Appointment appointment) throws PersonNotFoundException {
@@ -139,6 +145,52 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(list);
     }
 
+    /**
+     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
+     * in increasing chronological order
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> listNameAscending() {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByNameAscending();
+        return FXCollections.unmodifiableObservableList(list);
+    }
+
+    /**
+     * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
+     * in decreasing chronological order
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> listNameDescending() {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListSortByNameDescending();
+        return FXCollections.unmodifiableObservableList(list);
+    }
+
+    /**
+     * @return an unmodifiable view of the list of ReadOnlyPerson that is reversed
+     */
+    @Override
+    public ObservableList<ReadOnlyPerson> listNameReversed() {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListReversed();
+        return FXCollections.unmodifiableObservableList(list);
+    }
+
+    /**
+     * Gets a list of duplicate names
+     */
+    private ArrayList<Name> getDuplicateNames() {
+        ArrayList<Name> examinedNames = new ArrayList<>();
+        ArrayList<Name> duplicateNames = new ArrayList<>();
+        ObservableList<ReadOnlyPerson> allPersonsInAddressBook = getFilteredPersonList();
+
+        for (ReadOnlyPerson person : allPersonsInAddressBook) {
+            if (examinedNames.contains(person.getName())) {
+                duplicateNames.add(person.getName());
+            }
+            examinedNames.add(person.getName());
+        }
+        return duplicateNames;
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -154,6 +206,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateDuplicatePersonList() {
+        ArrayList<Name> duplicateNames = getDuplicateNames();
+        HasPotentialDuplicatesPredicate predicate = new HasPotentialDuplicatesPredicate(duplicateNames);
+        updateFilteredPersonList(predicate);
     }
 
     @Override

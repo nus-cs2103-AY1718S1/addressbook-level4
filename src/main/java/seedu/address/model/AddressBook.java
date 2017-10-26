@@ -58,8 +58,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
-    public void setTags(Set<Tag> tags, boolean isOn, String tagString, String color) {
-        this.tags.setTags(tags, isOn, tagString, color);
+    public void setTags(Set<Tag> tags, String tagString, String color) {
+        this.tags.setTags(tags, tagString, color);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -172,6 +172,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
      * @param tag all persons containing this tag will be deleted
      */
     public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
@@ -182,6 +183,9 @@ public class AddressBook implements ReadOnlyAddressBook {
             }
         }
 
+        if (toRemove.isEmpty()) {
+            throw new PersonNotFoundException();
+        }
         for (Person person : toRemove) {
             removePerson(person);
             removeUnusedTags(person.getTags());
@@ -229,6 +233,18 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public ObservableList<ReadOnlyPerson> getPersonListSortByAppointment() {
         return persons.asObservableListSortedByAppointment();
+    }
+
+    public ObservableList<ReadOnlyPerson> getPersonListSortByNameAscending() {
+        return persons.asObservableListSortedByNameAsc();
+    }
+
+    public ObservableList<ReadOnlyPerson> getPersonListSortByNameDescending() {
+        return persons.asObservableListSortedByNameDsc();
+    }
+
+    public ObservableList<ReadOnlyPerson> getPersonListReversed() {
+        return persons.asObservableListReversed();
     }
 
     @Override

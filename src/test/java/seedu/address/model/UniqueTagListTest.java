@@ -88,7 +88,7 @@ public class UniqueTagListTest {
         Set<Tag> tags = new HashSet<>(model.getAddressBook().getTagList());
 
         //Set all to random colors
-        uniqueTagList.setTags(tags, true, "", "");
+        uniqueTagList.setTags(tags, "random", null);
 
         for (Tag tag1 : tags) {
             assertFalse("grey".equals(tag1.getTagColor()));
@@ -99,7 +99,7 @@ public class UniqueTagListTest {
         Set<Tag> tags1 = new HashSet<>(model.getAddressBook().getTagList());
 
         //Set all to grey
-        uniqueTagList.setTags(tags1, false, "", "");
+        uniqueTagList.setTags(tags1, "off", null);
 
         for (Tag tag1 : tags) {
             assertTrue("grey".equals(tag1.getTagColor()));
@@ -110,7 +110,7 @@ public class UniqueTagListTest {
         Set<Tag> tags2 = new HashSet<>(model.getAddressBook().getTagList());
 
         //Set friends to blue
-        uniqueTagList.setTags(tags, true, "friends", "blue");
+        uniqueTagList.setTags(tags, "friends", "blue");
 
         for (Tag tagtest : tags2) {
             if ("friends".equals(tagtest.tagName)) {

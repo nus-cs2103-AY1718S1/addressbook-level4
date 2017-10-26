@@ -49,9 +49,14 @@ public interface Model {
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
+     * Updates the filter of the filtered person list to filter out duplicate persons.
+     */
+    void updateDuplicatePersonList();
+
+    /**
      * Sets and updates the tag colors of a person
      */
-    void setTagColor(boolean toSet, String tag, String color);
+    void setTagColor(String tag, String color);
 
     /**
      * Deletes all persons in the {@code AddressBook} who have any of the {@code tags}.
@@ -67,4 +72,19 @@ public interface Model {
      * Returns a list of ReadOnlyPerson that is ordered chronologically in terms of appointment time
      */
     ObservableList<ReadOnlyPerson> listAppointment();
+
+    /**
+     * Returns a list of ReadOnlyPerson that is ordered in terms of name in ascending order
+     */
+    ObservableList<ReadOnlyPerson> listNameAscending();
+
+    /**
+     * Returns a list of ReadOnlyPerson that is ordered in terms of name in descending order
+     */
+    ObservableList<ReadOnlyPerson> listNameDescending();
+
+    /**
+     * Reverses displayed list
+     */
+    ObservableList<ReadOnlyPerson> listNameReversed();
 }
