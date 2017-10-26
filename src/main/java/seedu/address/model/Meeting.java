@@ -91,8 +91,7 @@ public class Meeting implements Comparable<Meeting> {
      * Format state as text for viewing.
      */
     public String toString() {
-        return "Date: " + dateTime.format(DATE_FORMATTER) + '\n'
-                + "Time: " + dateTime.format(TIME_FORMATTER) + '\n'
+        return "Date: " + dateTime.format(DATE_FORMATTER) + "  Time: " + dateTime.format(TIME_FORMATTER) + '\n'
                 + "Location: " + location + '\n'
                 + "Notes: " + notes;
     }
