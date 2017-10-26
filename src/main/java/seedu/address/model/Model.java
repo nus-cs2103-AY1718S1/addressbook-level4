@@ -76,4 +76,6 @@ public interface Model {
      * Sort everyone in addressbook lexicographically
      */
     void sortPersonListLexicographically();
+
+    void updateFilteredPersonList();
 }

@@ -191,6 +191,11 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void updateFilteredPersonList() {
+
+    }
+
 
     //=========== Util methods =============================================================
 

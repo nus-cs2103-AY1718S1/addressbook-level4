@@ -169,6 +169,11 @@ public class AddCommandTest {
         public void sortPersonListLexicographically() {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateFilteredPersonList() { fail("This method should not be called.");
+
+        }
     }
 
     /**
