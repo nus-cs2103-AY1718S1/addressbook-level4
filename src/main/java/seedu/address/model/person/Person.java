@@ -6,9 +6,13 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.schedule.Schedule;
@@ -41,6 +45,7 @@ public class Person implements ReadOnlyPerson {
         this.mrt = new SimpleObjectProperty<>(mrt);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        initiateSchedule();
     }
 
     /**
@@ -149,8 +154,19 @@ public class Person implements ReadOnlyPerson {
         return schedule;
     }
 
+    public void initiateSchedule(){
+        Schedule schedule = new Schedule();
+        this.schedule = new SimpleObjectProperty<>(schedule);
+    }
+
     public void setSchedule(Schedule schedule){
         this.schedule.set(schedule);
+    }
+
+    public void addSpanToSchedule(TreeSet<Integer> span){
+        for(Integer startTime: span){
+            getSchedule().addTime(startTime);
+        }
     }
 
     @Override
