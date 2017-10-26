@@ -198,12 +198,10 @@ You can find people whose names contain any of the given keywords. +
 |=======================================================================
 
 
-*Examples:*
+*Example:*
 
-* `f John` +
-Returns any `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+image::findexample.png[width="500"]
+    Figure 7: Find Command Usage Diagram
 
 === Deleting a person : `delete`
 
@@ -211,14 +209,10 @@ You can delete a specific person from the address book at a specified `INDEX`. +
 *Format:* `delete INDEX` +
 *Shorthand Format:* `d INDEX`
 
-*Examples:*
+*Example:*
 
-* `list` +
-`d 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+image::deleteexample.png[width="700"]
+    Figure 8: Delete Command Usage Diagram
 
 [WARNING]
 The index *must be a positive integer* `1, 2, 3, ...`
@@ -234,14 +228,10 @@ You can select a person based on their `INDEX` number. +
 Format: `select INDEX` +
 Shorthand Format: `s INDEX`
 
-*Examples:*
+*Example:*
 
-* `list` +
-`s 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+image::selectexample.png[width="700"]
+    Figure 9: Select Command Usage Diagram
 
 [WARNING]
 The index *must be a positive integer* `1, 2, 3, ...`
@@ -268,21 +258,11 @@ Restores the address book to the state before the previous _undoable_ command wa
 [NOTE]
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 
-*Examples:*
 
-* `delete 1` +
-`list` +
-`u` (reverses the `delete 1` command) +
+*Example:*
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+image::undoexample.png[width="700"]
+    Figure 10: Undo Command Usage Diagram
 
 === Redoing the previously undone command : `redo`
 
@@ -290,23 +270,10 @@ You can reverse the most recent `undo` command. +
 *Format:* `redo` +
 *Shorthand Format:* `r`
 
-*Examples:*
+*Example:*
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`r` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+image::redoexample.png[width="700"]
+    Figure 12: Redo Command Usage Diagram
 
 === Clearing all entries : `clear`
 
@@ -343,8 +310,10 @@ However, please include at least the hour and a day that can be specified.
 *Format:* `appointment INDEX d/TIME` +
 *Shorthand format:* `apt INDEX d/TIME`
 
-Example: `apt 1 d/next monday 3pm` +
-Example: `apt 1 d/Sun, Nov 21, 2pm` +
+*Example:*
+
+image::aptexample.png[width="500"]
+    Figure 13: Appointment Command Usage Diagram
 
 You can sort list by appointment dates. +
 *Format:* `appointment` +
@@ -367,10 +336,8 @@ Removing a Remark: You can remove a remark by typing 'r/' without specifying any
 
 *Examples:*
 
-* `remark 1 r/Loves coffee` +
-Adds a remark 'Loves coffee' to the 1st person in the list.
-* `remark 1 r/` +
-Clears the existing remark for the 1st person in the list.
+image::remarkexample.png[width="500"]
+    Figure 14: Remark Command Usage Diagram
 
 [WARNING]
 Existing remarks of the person will be removed
@@ -401,7 +368,7 @@ You can also exit MedNus by clicking on `File` in the top left corner +
 and clicking on `Exit`.
 
 image::exitUI.png[width="500"]
-    Figure 7: Methods to access `exit` command
+    Figure 15: Methods to access `exit` command
 
 === Displaying Appointments : [Coming in v2.0]
 ****
