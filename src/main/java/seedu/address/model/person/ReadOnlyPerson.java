@@ -26,6 +26,7 @@ public interface ReadOnlyPerson {
     ExpiryDate getExpiryDate();
     ObjectProperty<Remark> remarkProperty();
     Remark getRemark();
+    ObjectProperty<Group> groupProperty();
     Group getGroup();
     ObjectProperty<Image> imageProperty();
     Image getImage();
@@ -40,8 +41,9 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
-                && other.getExpiryDate().equals(this.getExpiryDate())
                 && other.getRemark().equals(this.getRemark())
+                && other.getGroup().groupName.equals(this.getGroup().groupName);
+                && other.getExpiryDate().equals(this.getExpiryDate())
                 && other.getImage().equals(this.getImage());
     }
 

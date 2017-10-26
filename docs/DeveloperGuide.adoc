@@ -444,6 +444,47 @@ public String toString() {
 **Pros:** Easy to implement. Easy to print. +
 **Cons:** Validation of date as String is complicated. Need to implement all ExpiryDate methods from scratch.
 
+=== Groups
+
+The groups feature is implemented in every component of the addressbook. In the logic section, there are two new commands: group and filter. The group command takes care of creating, adding to, and deleting a group. The default group selection is "none", and it cannot be deleted. If a group is deleted, then a person is assigned the none group.
+
+In the model section, there is a new field in the person object for a group. This object simply contains the group name. In the addressbook, class there's now a uniqueGroupList. This field is similar to the implementation for the Person List or Tag list. It keeps track of all groups within the addressbook and is used to sync when new groups are added or groups are deleted.
+
+In storage, the xml files have been updated to include the uniqueGroupList elements (XMLAdaptedGroup), as well as storing the group field for each person.
+
+In UI, there's now a list view that in a split panel that shows the menu on the left, and each created group on the right. Selecting a group will update the filtered list view to display only people in the selected group.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Groups vs Using Tags +
+**Alternative 1 (current choice):** Use Groups to filter view +
+**Pros:** Groups and tags can provide a more dynamic way of sorting your addressbook +
+**Cons:** Need whole new data structures to store groups and UI interfaces for presenting groups to user +
+**Alternative 2:** Use tags to filter view +
+**Pros:** Easy to implement in UI, easy to implement filter +
+**Cons:** Tags are used to describe a person, while groups should be used to categorize. For example a tag may be friend, while the group would be Americans or Singaporeans. Having groups separate from tags allows for a more nuanced use of addressbook.
+
+---
+
+**Aspect:** Implementation of Groups using UniqueGroupList +
+**Alternative 1 (current choice):** Use UniqueGroupList and add method for existence in list+
+**Pros:** Fits the current model for Persons and Tags and adds an easy way to check if a group exists without raising an exception+
+**Cons:** Deviates a bit from the past implementation for the other uniqueLists+
+**Alternative 2:** Use UniqueGroupList similar to UniquePersonList+
+**Pros:** Fits model for other structures in addressbook+
+**Cons:** Has some exceptions that make code cluttered and unclear+
+**Alternative 3:** Use basic List Structure+
+**Pros:** Easy to implement+
+**Cons:** Would require extensive modifications to fit the existing model for addressbook
+
+**Aspect:** Placement of group selection listener +
+**Alternative 1 (current choice):** Placed in MainWindow and modified CommandBox for CLI-less command execution +
+**Pros:** Allows transparent execution of filter command and output into the result box using existing model as well as keeps listeners in the same class +
+**Cons:** Overloads execution method and has a public method in CommandBox for executing command +
+**Alternative 2:** Place listener in CommandBox +
+**Pros:** Keeps the listener in the same class as the execute method +
+**Cons:** Clutters CommandBox by adding a listener to a class that doesn't have any
+
 == Testing
 
 Tests can be found in the `./src/test/java` folder.

@@ -18,6 +18,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Image;
 import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Name;
@@ -113,10 +114,12 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         ExpiryDate updatedExpiryDate = personToEdit.getExpiryDate();
         Remark updatedRemark = personToEdit.getRemark();
+        Group updatedGroup = editPersonDescriptor.getGroup().orElse(personToEdit.getGroup());
+      
         Image updatedImage = personToEdit.getImage();
-
+      
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedTags, updatedExpiryDate, updatedRemark, updatedImage);
+                updatedTags, updatedExpiryDate, updatedRemark, updatedGroup, updatedImage);
     }
 
     @Override
@@ -149,6 +152,7 @@ public class EditCommand extends UndoableCommand {
         private Image image;
         private ExpiryDate expiryDate;
         private Set<Tag> tags;
+        private Group group;
 
         public EditPersonDescriptor() {}
 
@@ -158,6 +162,7 @@ public class EditCommand extends UndoableCommand {
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
+            this.group = toCopy.group;
             this.image = toCopy.image;
             this.expiryDate = toCopy.expiryDate;
         }
@@ -166,7 +171,7 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags, this.group);
         }
 
         public void setName(Name name) {
@@ -209,12 +214,21 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
+
+        public void setGroup(Group group) {
+            this.group = group;
+        }
+
+        public Optional<Group> getGroup() {
+            return Optional.ofNullable(group);
+
         public Optional<Image> getImage() {
             return Optional.ofNullable(image);
         }
 
         public void setImage(Image image) {
             this.image = image;
+
         }
 
         @Override
@@ -236,7 +250,8 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getTags().equals(e.getTags())
+                    && getGroup().equals(e.getGroup());
         }
     }
 }

@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Image;
 import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Name;
@@ -40,6 +41,9 @@ public class XmlAdaptedPerson {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    @XmlElement(required = true)
+    private String group;
+
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
@@ -60,6 +64,7 @@ public class XmlAdaptedPerson {
         tagged = new ArrayList<>();
         expiryDate = source.getExpiryDate().toString();
         remark = source.getRemark().remark;
+        group = source.getGroup().groupName;
         image = source.getImage().getPath();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -83,8 +88,8 @@ public class XmlAdaptedPerson {
         final Set<Tag> tags = new HashSet<>(personTags);
         final ExpiryDate expiryDate = new ExpiryDate(this.expiryDate);
         final Remark remark = new Remark(this.remark);
+        final Group group = new Group(this.group);
         final Image image = new Image(this.image);
-        return new Person(name, phone, email, address, tags, expiryDate, remark, image);
-
+        return new Person(name, phone, email, address, tags, expiryDate, remark, group, image);
     }
 }

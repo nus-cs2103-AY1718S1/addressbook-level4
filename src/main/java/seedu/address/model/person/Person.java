@@ -45,11 +45,12 @@ public class Person implements ReadOnlyPerson {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.expiryDate = new SimpleObjectProperty<>(expiryDate);
         this.remarks = new SimpleObjectProperty<>(remarks);
+        this.group = new SimpleObjectProperty<>(new Group("none"));
         this.image = new SimpleObjectProperty<>(image);
     }
 
     public Person(Name name, Phone phone, Email email, Address address,
-                  Set<Tag> tags, Remark remarks, Group group, Image image) {
+                  Set<Tag> tags, ExpiryDate expiryDate, Remark remarks, Group group, Image image) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -57,6 +58,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.expiryDate = new SimpleObjectProperty<>(expiryDate);
         this.remarks = new SimpleObjectProperty<>(remarks);
         this.group = new SimpleObjectProperty<>(group);
         this.image = new SimpleObjectProperty<>(image);
@@ -67,7 +69,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-             source.getTags(), source.getExpiryDate(), source.getRemark(), source.getImage());
+             source.getTags(), source.getExpiryDate(), source.getRemark(), source.getGroup(), source.getImage());
+
     }
 
     public void setName(Name name) {
@@ -122,6 +125,11 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    public ObjectProperty<Group> groupProperty() {
+        return group;
+    }
+
+    @Override
     public Address getAddress() {
         return address.get();
     }
@@ -168,6 +176,14 @@ public class Person implements ReadOnlyPerson {
         return group.get();
     }
 
+    /**
+     * For setting the value of the group ObjectProperty
+     * @param group
+     */
+
+    public void setGroup(Group group) {
+        this.group.set(group);
+
     public void setImage(Image image) {
         requireNonNull(image);
         this.image.set(image);
@@ -181,6 +197,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Image getImage() {
         return image.get();
+
     }
 
     public ObjectProperty<UniqueTagList> tagProperty() {

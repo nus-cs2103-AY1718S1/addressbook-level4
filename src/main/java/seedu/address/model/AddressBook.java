@@ -10,10 +10,14 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UniqueGroupList;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicateGroupException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.GroupNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -26,6 +30,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueGroupList groups;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +42,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        groups = new UniqueGroupList();
     }
 
     public AddressBook() {}
@@ -55,8 +61,29 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setGroups(List<? extends Group> groups) throws DuplicateGroupException {
+        this.groups.setGroups(groups);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
+    }
+
+    /**
+     * Adds a group to the unique group list
+     * @param toAdd
+     */
+    public void addGroup (Group toAdd) throws DuplicateGroupException {
+        requireNonNull(toAdd);
+        groups.add(toAdd);
+    }
+
+    /**
+     * Returns a boolean describing whether or not the group is in the address book
+     */
+    public boolean groupExists (Group group) {
+        requireNonNull(group);
+        return groups.contains(group);
     }
 
     /**
@@ -66,12 +93,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setGroups(newData.getGroupList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateGroupException e) {
+            assert false : "AddressBooks should not have duplicate groups";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
+        syncGroupListWith(groups);
     }
 
     //// person-level operations
@@ -112,6 +143,47 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+    }
+
+    /**
+     * Ensures that group assigned to person exists in master list
+     */
+
+    private void syncGroupListWith (Group group) {
+        if (!groups.contains(group)) {
+            try {
+                groups.add(group);
+            } catch (DuplicateGroupException e) {
+                //TODO: Fail case
+            }
+        }
+    }
+
+    /**
+     * Ensures that group assigned to person exists in master list
+     *  @see #syncGroupListWith(Group)
+     */
+
+    private void syncGroupListWith (UniqueGroupList groups) {
+        groups.forEach(this::syncGroupListWith);
+    }
+
+    /**
+     * If a group is deleted, then remove it from any persons and replace with the default group
+     * @param group to be deleted
+     */
+    private void syncGroupWithPersonList (Group group) {
+        for (ReadOnlyPerson p: persons) {
+            if (p.getGroup().equals(group)) {
+                ReadOnlyPerson editedPerson = new Person (p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
+                        p.getTags(), p.getRemark(), groups.DEFAULT_GROUP);
+                try {
+                    updatePerson(p, editedPerson);
+                } catch (DuplicatePersonException | PersonNotFoundException e) {
+                    //TODO:Fail case
+                }
+            }
+        }
     }
 
     /**
@@ -156,6 +228,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Removes {@code group} from this {@code AddressBook}.
+     * @throws GroupNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeGroup(Group target) throws GroupNotFoundException {
+        if (groups.remove(target)) {
+            syncGroupWithPersonList(target);
+            return true;
+        } else {
+            throw new GroupNotFoundException();
+        }
+    }
+
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -178,6 +264,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return groups.asObservableList();
     }
 
     @Override
