@@ -247,6 +247,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+For the features described in this section, their design considerations are included where applicable.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -571,7 +572,7 @@ The sort command object receives the sorted list and creates `CommandResult` obj
 
 **Aspect:** How sort command executes +
 **Alternative 1 (current choice):** Sorts the contact list according to alphabetical order(ascending order). +
-**Pros:** Easy to imlement. +
+**Pros:** Easy to implement. +
 **Cons:** Less function for sort command. +
 **Alternative 2:** Sorts the contact list according to different order(ascending order or descending order). +
 **Pros:** Users have more choices. +
@@ -623,7 +624,7 @@ The list event command object creates `CommandResult` object and return it.
 
 The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
 
-The following *_sequence_* diagram below, Figure 3.6, show how the delete event operation works:
+The following *_sequence_* diagram _(Figure 3.6)_ below shows how the delete event operation works:
 
 image::DeleteEventSequenceDiagram.png[width="800"]
 _Figure 3.6: sequence diagram for deleteE command_
@@ -663,7 +664,7 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 
 The show participants mechanism is facilitated by `PersonJoinsEventsPredicate` and `LogicManager`. This command will help users to find participants of an event. For achieving this function, `PersonJoinsEventsPredicate` will filter the person list. This command inherits from `Command`.
 
-The following *_sequence_* diagram below, Figure 3.7, show how the show participants operation works:
+The following *_sequence_* diagram _(Figure 3.7)_ below show how the show participants operation works:
 
 image::ShowParticipantsSequenceDiagram.png[width="800"]
 _Figure 3.7: sequence diagram for showP INDEX command_
@@ -684,7 +685,7 @@ The show participants command object creates `CommandResult` object and return i
 
 The selectE command is facilitated by the `LogicManager`.
 
-The following *_sequence_* diagram below, Figure 3.8, show how the show all joined events operation works:
+The following *_sequence_* diagram _(Figure 3.8)_ show how the show all joined events operation works:
 
 image::ShowAllJoinedEventsSequenceDiagram.png[width="800"]
 _Figure 3.8: sequence diagram for selectE command_
@@ -705,24 +706,14 @@ The `SelectJoinedEventsCommand` then creates a `CommandResult` object and return
 [discrete]
 ===== Design Considerations
 
-**Aspect:** Implementation of `DeleteEventCommand` +
-**Alternative 1 (current choice):** Create a new command to delete events. +
-**Pros:** It is responsible only for deleting events, and not people. Easier to implement. +
-**Cons:** Users may accidentally type in "delete" for deleting a person instead of "deleteE" for deleting an event. +
-**Alternative 2:** Modify `DeleteCommand` to handle deletion for both persons and events. +
-**Pros:** Users would be less likely to type the wrong command. +
-**Cons:** Any changes to the deletion process of either a person or event may affect the other . Harder to implement. +
-
----
-
-**Aspect:** How deleteE command executes +
-**Alternative 1 (current choice):** Deletes the event at the specified index. +
-**Pros:** Easy to imlement. +
-**Cons:** User has to list/sort event list first. +
-**Alternative 2:** Delete the event with the specified name. +
-**Pros:** Users can delete directly without having to get the index. +
-**Cons:** Users would have to type more if the event name is long. It will be more complex for developers to maintain and test. +
-// end::deleteE[]
+**Aspect:** How selectE command executes +
+**Alternative 1 (current choice):** Shows events joined by person/s at the selected indexes. +
+**Pros:** User does not have to type out names. +
+**Cons:** User has to list/sort person list first. +
+**Alternative 2:** Show events joined by person/s using user entered name. +
+**Pros:** User can directly enter names to search for events where a person with the entered name has joined. +
+**Cons:** Users would have to type more if the name is long. User may mistype the name. +
+// end::selectE[]
 
 === Person-Event interaction
 In this application, we allow users to connect events and persons to show that some persons participate some events. +
