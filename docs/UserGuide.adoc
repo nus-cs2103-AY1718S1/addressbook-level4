@@ -521,9 +521,9 @@ e.g. `sort debt`
 * `Nearby` command (since v1.2)
 * `Borrow` command (since v1.2)
 * Display nearby contacts (since v1.2)
-* Interest field (since v1.2)
+* `Interest` field (since v1.2)
 
-* Sort by various fields (since v1.3)
+* `Sort` by various fields (since v1.3)
 * `Payback` command (since v1.3)
 * `Repaid` command (since v1.3)
 * `Whitelist` command (since v1.3)
