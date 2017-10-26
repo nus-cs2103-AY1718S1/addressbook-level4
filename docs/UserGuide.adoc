@@ -12,13 +12,13 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T17-B3/main
 
-By: `T17 - B3`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103 T17 - B3`      Since: `Jun 2016`      Licence: `MIT`
 
 == About
 What’s the first thing you think about when you hear the words _“command line interface (CLI)”_?
 Do you think of environments like the picture below, and feel daunted by it?
 
-image::CLI.png[width="500"]
+image::CLI.png[width="790"]
 _Figure 1: Command Line Interface_
 
 Rest assured, Circles is here to help. +
@@ -75,6 +75,8 @@ Format: `help` +
 1. Enter ‘help’ into the command box or press the ‘F1’ key on your keyboard. +
 2. Add new window will pop-up, showing the user-guide. (As shown in Figure 2) +
 
+image::Figure2.png[width="790"]
+_Figure 2: Circles’ Help Window_
 
 === Adding a person: `add`
 The most important feature for any user of an address book is to add the contacts. To add contacts: +
@@ -88,17 +90,16 @@ _E.g: add n/John Doe p/81234567 e/johnd@gmail.com a/Blk 311, Clementi Ave 2,
 _E.g: New person added: John Doe Phone: 81234567
 Email: johnd@gmail.com Address: Blk 311, Clementi Ave 2, #02-25, Tags: [owesMoney][friends]_
 
+image::Figure3.png[width="790"]
+_Figure 3: Add Successful Message_
+
+
 [TIP]
 A person can have any number of tags (including 0) +
 The parameters for add command can be in any order. +
 Entering `n/NAME, p/PHONE’ or ‘p/PHONE, n/NAME` will work as well. +
 The tag parameter (t/TAG) can be left empty if there are no tags for the person +
 You cannot add the exact same person into the Circles.
-
-Examples:
-
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
 To get a clear view of all the contacts available in your address book, you can simply use the List Command as shown in
@@ -108,6 +109,9 @@ Format: `list all` +
 1. Enter `list all` +
 2. The following message will appear if there are contacts in the address book. (As shown in Fig 4) +
 _E.g: Listed all persons_
+
+image::Figure4.png[width="790"]
+_Figure 4: List of Contacts_
 
 === Editing a person : `edit`
 
@@ -119,6 +123,9 @@ _E.g: In Figure 5, the INDEX of John Doe is 6, so you enter_ `edit 6 p/98765432`
 2. The following message will appear if the edit was successful. (As shown in Figure 5) +
 _E.g: Edited Person: John Doe Phone: 98765432 Email: johnd@gmail.com Address: Blk 311, Clementi Ave 2, #02-25 Tags: [owesMoney][friends]_
 
+image::Figure5.png[width="790"]
+_Figure 5: Edit a person's phone number_
+
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
@@ -127,18 +134,12 @@ _E.g: Edited Person: John Doe Phone: 98765432 Email: johnd@gmail.com Address: Bl
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
+
 [TIP]
 The INDEX must be a positive integer greater than 0. +
 The tag parameter (t/TAG) can be left empty if there are no tags for the person +
 The parameters for edit command can be in any order. Entering `n/NAME, p/PHONE’ or ‘p/PHONE, n/NAME` will work as well. +
 You cannot add the exact same person into the Circles.
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 === Locating persons by name: `find`
 
@@ -151,6 +152,9 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 1. Enter `find Yeoh` in the input field. Circles will filter out contact cards with text matching “Yeoh”.
 2. Contact cards with relevant matching text will be displayed (As shown in Figure 6)
 
+image::Figure6.png[width="790"]
+_Figure 6: Result of finding "Yeoh"_ +
+
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -158,13 +162,6 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
@@ -177,26 +174,23 @@ Format: `delete INDEX` +
 1. Enter `list` to view the index of the specific contact
 2. Enter `delete 1` to delete 1st person on the list. Results will be as shown in Figure 7 below.
 
+image::Figure7.png[width="790"]
+_Figure 7: Deleting a single person_ +
+
 [.underline]#For multiple deletion# +
 Format: `delete INDEX, INDEX` +
 
 1. Enter `list` to view the index of the specific contacts.
 2. Enter `delete 1, 6` to delete the 1st and 6th persons on the list. More deletions can be added to the command. Results will be as shown in Figure 8 below.
 
+image::Figure8.png[width="790"]
+_Figure 8: Deleting multiple people_ +
+
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
@@ -208,20 +202,14 @@ Format: `select INDEX` +
 _E.g._ `select 1`
 2. Results will be shown in Figure 9 where the browser looks up for the contact’s name.
 
+image::Figure9.png[width="790"]
+_Figure 9: Selecting a person_ +
+
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 If you want to retrieve a certain action you did previously or to simply view the past commands executed in
@@ -230,6 +218,9 @@ Format: `history` +
 
 1. Enter `history`.
 2. A list of previously entered commands will be generated as shown in Figure 10.
+
+image::Figure10.png[width="790"]
+_Figure 10: Showing history of commands entered_ +
 
 [NOTE]
 ====
@@ -248,28 +239,15 @@ Format: `undo` +
 1. Enter `undo` to undo a previously entered command
 2. Contact card will be restored as shown in Figure 11.
 
+image::Figure11.png[width="790"]
+_Figure 11: Undoing a command_ +
+
 
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 _Do note that this function does not work  for Select, Find, List, Sort, Exit commands._
 ====
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
 Now that you’ve retrieved a contact from the undo command, you realised that it was an incorrect contact
@@ -280,22 +258,9 @@ Format: `redo` +
 1. Enter `redo` to redo a previously undone command
 2. Contact card will be deleted as shown in Figure 12.
 
-Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+image::Figure12.png[width="790"]
+_Figure 12: Redoing a command_ +
 // end::undoredo[]
 
 === Sorting your contacts : `sort`
@@ -305,6 +270,9 @@ Format: `sort` +
 
 1. Enter `sort name` to sort contacts by name in alphabetical order.
 2. Circles will now have your contacts sorted by name and displayed as shown in Figure 13.
+
+image::Figure13.png[width="790"]
+_Figure 13: Sorting address book by name_ +
 
 [TIP]
 You can sort the address book by phone and email too! Just enter `sort phone` or
@@ -319,6 +287,10 @@ Format: `clear` +
 
 1. Enter `clear` to clear all contacts.
 2. Address book will now be empty as shown in Figure 14.
+
+image::Figure14.png[width="790"]
+_Figure 14: Clearing of address book_ +
+
 
 === Exiting the program : `exit`
 
