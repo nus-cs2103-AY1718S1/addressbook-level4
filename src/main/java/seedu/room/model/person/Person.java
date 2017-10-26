@@ -28,6 +28,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Timestamp> timestamp;
     private ObjectProperty<UniqueTagList> tags;
     private String sortCriteria = "name";
+    private boolean highlight = false;
 
     /**
      * Every field must be present and not null.
@@ -150,6 +151,14 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    public void setHighlightStatus(boolean val) {
+        this.highlight = val;
+    }
+
+    public boolean getHighlightStatus() {
+        return this.highlight;
     }
 
     @Override

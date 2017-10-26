@@ -142,6 +142,9 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateHighlightStatus(String highlightTag) {
+
+        }
         public void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException {
             fail("This method should not be called.");
         }

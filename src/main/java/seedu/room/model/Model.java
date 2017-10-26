@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
+import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
@@ -48,6 +49,12 @@ public interface Model {
 
     /** Sorts the Resident Book by name, phone, room or phone depending on the sortCriteria */
     void sortBy(String sortCriteria) throws AlreadySortedException;
+
+    /**
+     * Updates the highlight status of persons with the specified tag
+     * @throws TagNotFoundException if no specified tag exists
+     */
+    void updateHighlightStatus(String highlightTag);
 
     /** Swaps two residents' rooms */
     void swapRooms(ReadOnlyPerson person1, ReadOnlyPerson person2) throws PersonNotFoundException;

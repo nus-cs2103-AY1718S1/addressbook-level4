@@ -15,6 +15,7 @@ import seedu.room.logic.commands.EditCommand;
 import seedu.room.logic.commands.ExitCommand;
 import seedu.room.logic.commands.FindCommand;
 import seedu.room.logic.commands.HelpCommand;
+import seedu.room.logic.commands.HighlightCommand;
 import seedu.room.logic.commands.HistoryCommand;
 import seedu.room.logic.commands.ImportCommand;
 import seedu.room.logic.commands.ListCommand;
@@ -103,6 +104,10 @@ public class ResidentBookParser {
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
+
+        case HighlightCommand.COMMAND_WORD:
+        case HighlightCommand.COMMAND_ALIAS:
+            return new HighlightCommandParser().parse(arguments);
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();

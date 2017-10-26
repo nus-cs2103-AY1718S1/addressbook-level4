@@ -5,7 +5,6 @@ import static seedu.room.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
 import java.util.Iterator;
-
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -16,12 +15,12 @@ import seedu.room.commons.core.ComponentManager;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.model.ResidentBookChangedEvent;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
+import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.UniquePersonList;
 import seedu.room.model.person.exceptions.DuplicatePersonException;
 import seedu.room.model.person.exceptions.PersonNotFoundException;
-
 
 /**
  * Represents the in-memory model of the resident book data.
@@ -144,6 +143,14 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    /**
+     * Updates the highlight status of a person if tag matches input tag
+     */
+    public void updateHighlightStatus(String highlightTag) throws TagNotFoundException {
+        residentBook.updateHighlight(highlightTag);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateResidentBookChanged();
+    }
 
     //=========== Sorting Person List =============================================================
 
@@ -153,7 +160,6 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateResidentBookChanged();
     }
-
     //=========== Swapping Residents' Rooms =============================================================
 
     /**
@@ -166,5 +172,4 @@ public class ModelManager extends ComponentManager implements Model {
         residentBook.swapRooms(person1, person2);
         indicateResidentBookChanged();
     }
-
 }

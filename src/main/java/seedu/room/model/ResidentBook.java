@@ -10,7 +10,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
+import seedu.room.logic.commands.exceptions.TagNotFoundException;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.UniquePersonList;
@@ -163,6 +165,19 @@ public class ResidentBook implements ReadOnlyResidentBook {
         tags.add(t);
     }
 
+    /**
+     * Updates highlight status of person with specified tag
+     */
+    public void updateHighlight(String highlightTag) {
+        try {
+            persons.updateHighlight(highlightTag);
+            if (!this.tags.contains(new Tag(highlightTag))) {
+                throw new TagNotFoundException("Tag not found");
+            }
+        } catch (IllegalValueException e) {
+            throw new TagNotFoundException("Tag not found");
+        }
+    }
 
     //// sort resident book
     /**
@@ -224,4 +239,5 @@ public class ResidentBook implements ReadOnlyResidentBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
     }
+
 }

@@ -58,4 +58,8 @@ public interface ReadOnlyPerson extends Comparable {
         return builder.toString();
     }
 
+    /**
+     * Returns the highlight status of the person
+     */
+    boolean getHighlightStatus();
 }
