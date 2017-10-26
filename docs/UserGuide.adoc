@@ -72,15 +72,17 @@ Examples:
 
 === Listing all persons : `list` or `l`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the address book, in the last sorted order. +
 Format: `list`
 
 // tag::sort[]
 === Listing all persons in order: `sort`
 
-Shows a list of all persons in the address book by the indicated format. Currently only supports name. +
-+ Available FILTERTYPES: name
-Format: `list FILTERTYPE`
+Shows a list of all persons in the address book by the indicated format.
++ If no argument is indicated, sorts by default (currently name).
++ Available FILTERTYPES: 'name', 'email', 'phone', 'address', 'default'
++ Aliases for each FILTERTYPE: 'n', 'e', 'p', 'a'
++ Format: `sort FILTERTYPE`
 
 Examples:
 
@@ -337,6 +339,12 @@ Contact must be selected before selecting the buttons.
 
 ====
 // end::viewAddress[]
+
+// tag::changeTheme[]
+=== Changing Theme
+
+Allows the user to switch between dark and light themes.
+// end::changeTheme[]
 
 === Saving the data
 

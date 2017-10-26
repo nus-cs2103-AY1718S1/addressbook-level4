@@ -148,7 +148,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void sortFilteredPersonList() {
+        public void sortFilteredPersonList(String filterType) {
             fail("This method should not be called.");
         }
 
