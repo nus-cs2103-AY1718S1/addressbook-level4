@@ -221,6 +221,7 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Group> getGroup() {
             return Optional.ofNullable(group);
+        }
 
         public Optional<Image> getImage() {
             return Optional.ofNullable(image);

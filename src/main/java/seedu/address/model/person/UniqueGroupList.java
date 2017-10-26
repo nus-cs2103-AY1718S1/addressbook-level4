@@ -20,6 +20,10 @@ public class UniqueGroupList implements Iterable<Group> {
     public static final Group DEFAULT_GROUP = new Group ("none");
     private final ObservableList<Group> groups = FXCollections.observableArrayList();
 
+    public UniqueGroupList () {
+        groups.add(DEFAULT_GROUP);
+    }
+
     /**
      * returns true if the list contains the group
      */

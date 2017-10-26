@@ -24,7 +24,8 @@
         <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
       </Menu>
     </MenuBar>
-    <VBox fx:id="groupList" SplitPane.resizableWithParent="false" prefWidth="700" minWidth="700" maxWidth="700">
+    <VBox fx:id="groupList" SplitPane.resizableWithParent="false" prefWidth="700" minWidth="700" maxWidth="700"
+          maxHeight="120">
       <padding>
         <Insets top="10" right="10" bottom="10" left="10" />
       </padding>
