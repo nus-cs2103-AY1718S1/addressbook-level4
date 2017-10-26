@@ -25,6 +25,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.StorageStub;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
@@ -136,7 +137,7 @@ public class RemarkCommandTest {
      */
     private RemarkCommand prepareCommand(Index index, String remark) {
         RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));
-        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return remarkCommand;
     }
 }
