@@ -130,6 +130,9 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    /**
+     * updates the filteredlist to show all persons
+     */
     public void updateFilteredListToShowAll() {
         filteredPersons.setPredicate(null);
 

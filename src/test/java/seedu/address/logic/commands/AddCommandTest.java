@@ -166,7 +166,6 @@ public class AddCommandTest {
 
         public void updateFilteredListToShowAll() {
             fail("This method should not be called");
-
         }
     }
 

@@ -176,7 +176,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         for (ReadOnlyPerson p: persons) {
             if (p.getGroup().equals(group)) {
                 ReadOnlyPerson editedPerson = new Person (p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
-                        p.getTags(),p.getExpiryDate(), p.getRemark(), groups.DEFAULT_GROUP, p.getImage());
+                        p.getTags(), p.getExpiryDate(), p.getRemark(), groups.DEFAULT_GROUP, p.getImage());
                 try {
                     updatePerson(p, editedPerson);
                 } catch (DuplicatePersonException | PersonNotFoundException e) {

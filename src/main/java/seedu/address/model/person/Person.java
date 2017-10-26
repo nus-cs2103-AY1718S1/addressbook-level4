@@ -180,7 +180,6 @@ public class Person implements ReadOnlyPerson {
      * For setting the value of the group ObjectProperty
      * @param group
      */
-
     public void setGroup(Group group) {
         this.group.set(group);
     }
