@@ -12,7 +12,7 @@ import seedu.address.logic.commands.RemoveTagCommand;
 
 public class RemoveTagParserTest {
 
-    private static String EMPTY_TAG_INPUT = "";
+    private static String MESSAGE_EMPTY_TAG_INPUT = "";
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE);
 
@@ -21,7 +21,7 @@ public class RemoveTagParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no tagName specified
-        assertParseFailure(parser, EMPTY_TAG_INPUT, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, MESSAGE_EMPTY_TAG_INPUT, MESSAGE_INVALID_FORMAT);
     }
 
     @Test
