@@ -28,4 +28,9 @@ public class Remark {
     public int hashCode() {
         return value.hashCode();
     }
+
+    public int compareTo(Remark other) {
+        return toString().compareTo(other.toString());
+    }
+
 }
