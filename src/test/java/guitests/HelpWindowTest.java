@@ -41,12 +41,10 @@ public class HelpWindowTest extends AddressBookGuiTest {
         runCommand(HelpCommand.COMMAND_WORD);
         assertHelpWindowOpen();
     }
-    
     @Test
     public void openFileMenu() {
         getMainMenu().openFileWindowUsingMenu();
         guiRobot.pauseForHuman();
-       // guiRobot.targetWindow()
     }
 
     /**
