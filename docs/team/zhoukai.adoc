@@ -8,7 +8,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Allow multiple entry for email, theme change setting
 
 ==== External behavior
 
