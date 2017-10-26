@@ -5,9 +5,9 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Group;
 import seedu.address.model.person.Image;
-import seedu.address.model.person.ExpiryDate;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -45,7 +45,7 @@ public class PersonBuilder {
             Group defaultGroup = new Group(DEFAULT_GROUP);
             Image defaultImage = new Image(DEFAULT_IMAGE);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultTags, defaultExpiryDate, defaultRemark, defaultGroup defaultImage);
+                    defaultTags, defaultExpiryDate, defaultRemark, defaultGroup, defaultImage);
 
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");

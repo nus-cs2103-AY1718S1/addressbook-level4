@@ -162,10 +162,10 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(GroupContainsKeywordsPredicate predicate) {
             fail("This method should not be called.");
+        }
 
         public void updateFilteredListToShowAll() {
             fail("This method should not be called");
-
         }
     }
 
