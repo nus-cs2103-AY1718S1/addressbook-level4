@@ -8,10 +8,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.EditCommand.EditLessonDescriptor;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -22,7 +18,6 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -36,6 +31,8 @@ import seedu.address.model.module.Lesson;
 import seedu.address.testutil.EditLessonDescriptorBuilder;
 import seedu.address.testutil.LessonBuilder;
 import seedu.address.testutil.LessonUtil;
+
+
 
 public class AddressBookParserTest {
     @Rule
@@ -79,14 +76,14 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
-    @Test
-    public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(keywords), command);
-    }
-
+    /***
+     @Test public void parseCommand_find() throws Exception {
+     ListString keywords = Arrays.asList("foo", "bar", "baz");
+     FindCommand command = (FindCommand) parser.parseCommand(
+     FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+     assertEquals(new FindCommand(keywords), command);
+     }
+     ***/
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);

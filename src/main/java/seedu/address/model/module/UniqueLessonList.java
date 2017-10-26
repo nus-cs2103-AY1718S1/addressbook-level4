@@ -108,7 +108,7 @@ public class UniqueLessonList implements Iterable<Lesson> {
             FXCollections.sort(internalList, new Comparator<ReadOnlyLesson>() {
                 @Override
                 public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
-                    return firstLesson.getClassType().value.compareTo(secondLesson.getClassType().value);
+                    return firstLesson.getGroup().value.compareToIgnoreCase(secondLesson.getGroup().value);
                 }
             });
             break;
@@ -117,7 +117,7 @@ public class UniqueLessonList implements Iterable<Lesson> {
             FXCollections.sort(internalList, new Comparator<ReadOnlyLesson>() {
                 @Override
                 public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
-                    return firstLesson.getLocation().value.compareTo(secondLesson.getLocation().value);
+                    return firstLesson.getLocation().value.compareToIgnoreCase(secondLesson.getLocation().value);
                 }
             });
             break;
@@ -126,7 +126,7 @@ public class UniqueLessonList implements Iterable<Lesson> {
             FXCollections.sort(internalList, new Comparator<ReadOnlyLesson>() {
                 @Override
                 public int compare(ReadOnlyLesson firstLesson, ReadOnlyLesson secondLesson) {
-                    return firstLesson.getCode().fullCodeName.compareTo(secondLesson.getCode().fullCodeName);
+                    return firstLesson.getCode().fullCodeName.compareToIgnoreCase(secondLesson.getCode().fullCodeName);
                 }
             });
             break;

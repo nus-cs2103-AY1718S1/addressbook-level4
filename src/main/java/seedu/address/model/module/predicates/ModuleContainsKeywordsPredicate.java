@@ -2,23 +2,20 @@ package seedu.address.model.module.predicates;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import seedu.address.model.module.ReadOnlyLesson;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Phone Number} matches any of the keywords given.
  */
-public class ModuleContainsKeywordsPredicate extends FindPredicate {
+public class ModuleContainsKeywordsPredicate implements Predicate<ReadOnlyLesson> {
 
     private final List<String> keywords;
     private ArrayList<String> duplicateCodes = new ArrayList<String>();
 
     public ModuleContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
-    }
-
-    public List<String> getKeywords() {
-        return keywords;
     }
 
     @Override
