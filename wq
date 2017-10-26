@@ -235,7 +235,7 @@ Author: Raisa Kabir <raisa.kabir201@gmail.com>
 Date:   Fri Oct 20 09:02:52 2017 +0800
 
     Merge pull request #63 from raisa2010/tby1994-TaskManagerUI[v1.2]
-    
+
     tby1994-task manager UI [resolved conflicts][V1.2]
 
 [33mcommit ca358cf7aed87a765428354d5d24a3024858e51f[m
@@ -264,7 +264,7 @@ Author: Raisa Kabir <raisa.kabir201@gmail.com>
 Date:   Fri Oct 20 07:48:48 2017 +0800
 
     Merge pull request #59 from raisa2010/addtask-dg
-    
+
     changed sequence diagram
 
 [33mcommit b3743b84db6fdd7323f0c751305faa6b70461edd[m
@@ -305,7 +305,7 @@ Author: tpq95 <31122808+tpq95@users.noreply.github.com>
 Date:   Thu Oct 19 21:55:43 2017 +0800
 
     Merge pull request #57 from tpq95/v1.1.1-remove-tag-document
-    
+
     update DG for detag
 
 [33mcommit e955241298fb012620842de26dd91fefd8865244[m
@@ -314,7 +314,7 @@ Author: tpq95 <31122808+tpq95@users.noreply.github.com>
 Date:   Thu Oct 19 21:54:05 2017 +0800
 
     Merge pull request #18 from tpq95/v1.1-colour
-    
+
     update tag color and gui color
 
 [33mcommit 14e3ea60438b8c09d2d401b8bcfc2602c125de83[m
@@ -336,7 +336,7 @@ Author: peiquan <peiquan@hiei.local>
 Date:   Thu Oct 19 20:47:46 2017 +0800
 
     Merge branch 'master' into v1.1-colour
-    
+
     * master: (96 commits)
       update typicalperson
       Revert "remove tag command"
@@ -450,7 +450,7 @@ Author: TBY\User <tby1994@gmail.com>
 Date:   Thu Oct 19 14:35:31 2017 +0800
 
     Merge branch 'TaskManager' of https://github.com/tby1994/main into TaskManager
-    
+
     # Conflicts:
     #       src/test/java/guitests/AddressBookGuiTest.java
     #       src/test/java/guitests/guihandles/MainWindowHandle.java
@@ -492,7 +492,7 @@ Author: eryao95 <31096282+eryao95@users.noreply.github.com>
 Date:   Thu Oct 19 11:35:58 2017 +0800
 
     Merge pull request #55 from eryao95/add_birthday
-    
+
     updated birthday
 
 [33mcommit c2d8010d11ce1d88a111fcd8f227da4a1cba7412[m
@@ -537,7 +537,7 @@ Author: Raisa Kabir <raisa.kabir201@gmail.com>
 Date:   Thu Oct 19 11:04:03 2017 +0800
 
     Merge pull request #54 from raisa2010/addtask-documentation[v1.2]
-    
+
     edited UG for AddTaskCommand [V1.2]
 
 [33mcommit 40902f5c168bcbe8f744a2f9afd61ac60897135b[m
@@ -546,7 +546,7 @@ Author: eryao95 <31096282+eryao95@users.noreply.github.com>
 Date:   Thu Oct 19 11:03:21 2017 +0800
 
     Merge pull request #51 from eryao95/DG_for_findTag
-    
+
     updated DG
 
 [33mcommit 3bd02cacb01b2f6ff455e29a0f8510ae8336bc1e[m
@@ -568,7 +568,7 @@ Author: Raisa Kabir <raisa.kabir201@gmail.com>
 Date:   Thu Oct 19 10:22:59 2017 +0800
 
     Merge pull request #53 from raisa2010/addtask-dg[v1.2]
-    
+
     Addtask DG[V1.2]
 
 [33mcommit 331644be7e5251c6586b16fe009baf534bab9785[m
@@ -595,7 +595,7 @@ Author: tpq95 <31122808+tpq95@users.noreply.github.com>
 Date:   Thu Oct 19 09:29:38 2017 +0800
 
     Merge pull request #52 from tpq95/v1.1.1-remove-tag
-    
+
     revert changes to detag
 
 [33mcommit 8be1635275f36e1eef33e9941573ee3d237de163[m
@@ -634,7 +634,7 @@ Author: Raisa Kabir <raisa.kabir201@gmail.com>
 Date:   Thu Oct 19 07:46:10 2017 +0800
 
     Merge pull request #50 from tpq95/v1.1-remove-tag [V1.2]
-    
+
     remove tag
 
 [33mcommit a27f66b4caaaba37967ef2de6c40d2dab003a06e[m
@@ -650,7 +650,7 @@ Author: peiquan <peiquan@hiei.local>
 Date:   Thu Oct 19 07:29:24 2017 +0800
 
     Merge branch 'v1.1-remove-tag' of https://github.com/tpq95/main into v1.1-remove-tag
-    
+
     * 'v1.1-remove-tag' of https://github.com/tpq95/main: (35 commits)
       Delete TaskListPanel.java
       Delete TaskCard.java
@@ -686,7 +686,7 @@ Author: Raisa Kabir <raisa.kabir201@gmail.com>
 Date:   Thu Oct 19 07:14:32 2017 +0800
 
     Merge pull request #49 from CS2103AUG2017-T11-B3/revert-20-v1.1-remove-tag
-    
+
     Revert "remove tag command" [for running tests]
 
 [33mcommit 63925ddefaa6639d241023f4a56d27a5e56fec87[m
@@ -701,7 +701,7 @@ Author: Raisa Kabir <raisa.kabir201@gmail.com>
 Date:   Thu Oct 19 07:13:52 2017 +0800
 
     Merge pull request #20 from tpq95/v1.1-remove-tag [V1.2]
-    
+
     remove tag command
 
 [33mcommit 9c833d8d8df559b8527321069f0d22fd43e70928[m
@@ -717,7 +717,7 @@ Author: Raisa Kabir <raisa.kabir201@gmail.com>
 Date:   Thu Oct 19 07:00:14 2017 +0800
 
     Merge pull request #42 from tpq95/v1.1.1-document [V1.2]
-    
+
     update UG and DG for detag
 
 [33mcommit 5ba807f9871fb733208a14fd5cc9ae3c01051ee8[m
@@ -738,7 +738,7 @@ Author: Raisa Kabir <raisa.kabir201@gmail.com>
 Date:   Thu Oct 19 03:30:50 2017 +0800
 
     Merge pull request #48 from raisa2010/add-task
-    
+
     AddTask Feature Added
 
 [33mcommit 62743fe40347ebec4c3351131ada561f320abf7f[m
@@ -778,7 +778,7 @@ Author: eryao95 <31096282+eryao95@users.noreply.github.com>
 Date:   Wed Oct 18 22:25:45 2017 +0800
 
     Merge pull request #46 from eryao95/UG_for_birthday
-    
+
     updated UG for birthday
 
 [33mcommit 45691d796fec2ad14e30dee8e50cb27f2ad0eaf8[m
@@ -793,7 +793,7 @@ Author: eryao95 <31096282+eryao95@users.noreply.github.com>
 Date:   Wed Oct 18 22:02:41 2017 +0800
 
     Merge pull request #44 from eryao95/add_birthday
-    
+
     Add birthday
 
 [33mcommit 7e788f26e9cb9d93a9610575079b1c6a2b718149[m
@@ -802,7 +802,7 @@ Author: eryao95 <31096282+eryao95@users.noreply.github.com>
 Date:   Wed Oct 18 21:57:46 2017 +0800
 
     Merge pull request #16 from eryao95/documenting
-    
+
     updated on user guides
 
 [33mcommit ef26ea95a281558c481bb5da0ac8ac4c6a0688fe[m
@@ -951,7 +951,7 @@ Author: peiquan <peiquan@hiei.local>
 Date:   Tue Oct 17 16:49:39 2017 +0800
 
     Merge branch 'master' of https://github.com/CS2103AUG2017-T11-B3/main
-    
+
     * 'master' of https://github.com/CS2103AUG2017-T11-B3/main: (32 commits)
       Added line breaks
       Update AboutUs.adoc
@@ -1023,7 +1023,7 @@ Author: peiquan <peiquan@hiei.local>
 Date:   Mon Oct 16 19:29:42 2017 +0800
 
     Merge branch 'master' of https://github.com/CS2103AUG2017-T11-B3/main into v1.1-remove-tag
-    
+
     * 'master' of https://github.com/CS2103AUG2017-T11-B3/main: (26 commits)
       Added line breaks
       Update AboutUs.adoc
@@ -1078,7 +1078,7 @@ Author: DESKTOP-D6JEPK4\user <lite0520@gmail.com>
 Date:   Mon Oct 16 12:12:02 2017 +0800
 
     Merge branch 'new_findTag_Command' of https://github.com/eryao95/main
-    
+
     # Conflicts:
     #       src/main/java/seedu/address/storage/XmlAddressBookStorage.java
 
