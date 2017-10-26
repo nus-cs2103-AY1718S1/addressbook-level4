@@ -40,7 +40,7 @@ public class ToggleTagColorCommand extends Command {
         model.resetData(model.getAddressBook());
 
         if (color == null) {
-            message = String.format("%s%s", MESSAGE_SUCCESS, "random".equals(tag)? "random" : "off");
+            message = String.format("%s%s", MESSAGE_SUCCESS, "random".equals(tag) ? "random" : "off");
         } else if (!(containsTag(model.getAddressBook().getTagList(), tag))) {
             message = NO_SUCH_TAG_MESSAGE;
         } else {
