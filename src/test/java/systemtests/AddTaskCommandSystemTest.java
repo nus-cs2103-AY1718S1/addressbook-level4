@@ -89,10 +89,10 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         //assertCommandSuccess(BUY_PRESENTS);
 
         /* Case: add a task, missing start date -> added */
-       // assertCommandSuccess(SUBMISSION);
+        // assertCommandSuccess(SUBMISSION);
 
         /* Case: add a task, missing deadline -> added */
-       // assertCommandSuccess(GYM);
+        // assertCommandSuccess(GYM);
 
         /* Case: missing description -> rejected */
         command = AddTaskCommand.COMMAND_WORD + " " + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP;
