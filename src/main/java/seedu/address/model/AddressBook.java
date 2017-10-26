@@ -167,21 +167,27 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// Sort methods
 
     /***
-     * sorts persons in the addressbook by number of times they were previously searched
      * @author Sri-vatsa
+     * sorts persons in the addressbook by number of times they were previously searched
      */
     public void sortBySearchCount() {
         persons.sortBySearchCount();
     }
 
 
+    /***
+     * @author Sri-vatsa
+     * sorts persons in the addressbook alphabetically
+     */
+    public void sortLexicographically() {
+        persons.sortLexicographically();
+    }
 
     //// util methods
 
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
-        // TODO: refine later
     }
 
     @Override

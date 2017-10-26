@@ -14,6 +14,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -74,6 +75,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 AddCommand.COMMAND_WORD,
                 ClearCommand.COMMAND_WORD,
                 DeleteCommand.COMMAND_WORD,
+                DeleteTagCommand.COMMAND_WORD,
                 EditCommand.COMMAND_WORD,
                 ExitCommand.COMMAND_WORD,
                 FindCommand.COMMAND_WORD,
@@ -96,6 +98,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 AddCommand.MESSAGE_TEMPLATE,
                 ClearCommand.MESSAGE_TEMPLATE,
                 DeleteCommand.MESSAGE_TEMPLATE,
+                DeleteTagCommand.MESSAGE_TEMPLATE,
                 EditCommand.MESSAGE_TEMPLATE,
                 ExitCommand.MESSAGE_TEMPLATE,
                 FindCommand.MESSAGE_TEMPLATE,

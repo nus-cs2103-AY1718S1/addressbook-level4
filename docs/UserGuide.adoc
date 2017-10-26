@@ -51,7 +51,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 ====
-*Command Helper*  `Since v1.2`
+*Command Helper*
 
 * When you start typing in the command line, a helper box appears to show you the list of commands available.
 * e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
@@ -79,12 +79,13 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
+`From V1.3`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the address book in alphabetical order. +
 Format: `list`
 
 
-=== Listing all persons, sorted by search frequency : `listByMostSearched` `Since v1.2`
+=== Listing all persons, sorted by search frequency : `listByMostSearched`
 
 Shows a list of all persons in the address book, sorted by descending order of search frequency +
 Format: `listByMostSearched`
@@ -152,6 +153,25 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Deleting tags : `deleteTag`
+`From V1.3`
+
+Deletes the specified tags from everyone in address book. +
+Format: `deleteTag TAG1 TAG2 ...`
+
+****
+* Deletes all tags specified `TAG1 TAG2 ...`.
+* If a particular is not used in address book, user is notified that no tag is deleted.
+****
+
+Examples:
+
+* `deleteTag friends` +
+Deletes the tag `friends` from everyone in the address book.
+
+* `deleteTag friends colleagues` +
+Deletes tags `friends` and `colleagues` from everyone in the address book.
 
 === Selecting a person : `select`
 
@@ -238,7 +258,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Editing user preference : `pref` `Since v1.2`
+=== Editing user preference : `pref`
 
 Edits the user preference. +
 Format: `pref KEY [NEW_VALUE]` +
@@ -297,6 +317,9 @@ Can also use shortcut 'a'
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 Can also use shortcut 'd'
+* *Delete Tag* : `deleteTag TAG1 TAG2 ...` +
+e.g. `delete friends`
+Can also use shortcut 'dt'
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 Can also use shortcut 'e'
