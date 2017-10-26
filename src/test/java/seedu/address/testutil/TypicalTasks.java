@@ -38,7 +38,7 @@ public class TypicalTasks {
     public static final ReadOnlyTask PERSONAL_PROJECT = new TaskBuilder().withDescription("Finish art piece")
             .withStartDate("01-01-2017")
             .withDeadline("12-12-2017").build();
-/*=======
+    /*=======
             .withStartDate("Fri, Nov 3, '17").withDeadline("").withTags(VALID_TAG_URGENT).build();
     public static final ReadOnlyTask BUY_TICKETS = new TaskBuilder()
             .withDescription("Get tickets two weeks before flight")
@@ -50,7 +50,7 @@ public class TypicalTasks {
             .withDeadline("Thu, Mar 8, '18").build();
     public static final ReadOnlyTask MEETUP = new TaskBuilder().withDescription("Meet friends")
             .withDeadline("Tue, Dec 12, '17").build();
->>>>>>> master*/
+    >>>>>>> master*/
 
     // Manually added
     public static final ReadOnlyTask SCHOOL = new TaskBuilder().withDescription("Semester two starts")
