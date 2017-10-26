@@ -357,8 +357,9 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 ==== Mechanism
 
-The backing up of DummyName is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`. These commands do not support the undoing and redoing of user actions and thus, inherits from `Command`.
-These commands require access to `Storage` from `Logic` and the way to accomplish this is to post an event to `EventCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
+The backing up of DummyName is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`.
+`BackupCommand` inherits from `Command` as it does not support the undoing and redoing of user actions, whereas `RestoreBackupCommand` inherits from `UndoableCommand`.
+These commands require access to `Storage` from `Logic` and the way to accomplish this is to post an event to `EventsCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
 The following shows a sequence diagram of how the `BackupCommand` is carried out.
 
 image::BackupCommandSequenceDiagram.png[width="800"]
@@ -366,7 +367,7 @@ image::BackupCommandSequenceDiagram.png[width="800"]
 [NOTE]
 `RestoreBackupCommand` shares a similar sequence diagram in terms of logic.
 
-The `BackupCommand` is executed when the commands `backup` or `b` are entered. The data that is in `model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
+The `BackupCommand` is executed when the commands `backup` or `b` is entered. The data that is in `model` or the active address book is first passed as a parameter to `BackupDataEvent`. The event will be handled by `StorageManager` and is saved into the default file path "data/addressbook-backup.xml".
 The following is the implementation of `BackupCommand`:
 [source, java]
 ----
@@ -385,7 +386,7 @@ public class BackupCommand extends Command {
 }
 ----
 
-The `RestoreBackupCommand` is executed when the commands `restore` or `rb` are entered. `RestoreBackupDataEvent` is posted and `StorageManager` handles it.
+The `RestoreBackupCommand` is executed when the commands `restore` or `rb` is entered. `RestoreBackupDataEvent` is posted and `StorageManager` handles it.
 The data from default file path "data/addressbook-backup.xml" will be retrieved and it will replace the active address book.
 The following is the implementation of `RestoreBackupCommand`:
 [source, java]
@@ -395,6 +396,8 @@ public class RestoreBackupCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        //... other codes and checks...
+
         RestoreBackupDataEvent event = new RestoreBackupDataEvent();
 
         // posting event to help with restoring backup data
@@ -404,14 +407,18 @@ public class RestoreBackupCommand extends Command {
         ReadOnlyAddressBook backupAddressBookData = event.getAddressBookData();
         model.resetData(backupAddressBookData);
         return new CommandResult(String.format(MESSAGE_SUCCESS));
+
+        //... other codes and checks...
     }
 }
 ----
 
+If the backup file does not exist in the default file path, an error message will be shown to the user.
+This check is done before `RestoreBackupEvent` is posted. Once again, this requires `Logic` to access `Storage`.
+Therefore, a `BackupFilePresentEvent` will be posted and the `Subscriber` in `StorageManager` would handle this event to check if the backup file exist.
+
 [NOTE]
-Once the data has been restored, the original data will be lost and is no longer retrievable.
-[NOTE]
-A backup of address book is always created when the Address Book starts. This means that `RestoreBackupCommand` will not encounter an `IOException` where the file does not exist.
+A backup of the data is automatically created when *DummyName* is closed.
 
 ==== Design Considerations
 

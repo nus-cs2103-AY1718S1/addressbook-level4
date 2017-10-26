@@ -11,7 +11,6 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RestoreBackupCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -29,38 +28,22 @@ public class LogicManagerTest {
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
         String invalidCommand = "uicfhmowqewca";
-        assertParseException(invalidCommand, MESSAGE_UNKNOWN_COMMAND, "common");
+        assertParseException(invalidCommand, MESSAGE_UNKNOWN_COMMAND);
         assertHistoryCorrect(invalidCommand);
     }
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, "common");
+        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteCommand);
     }
 
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model, "common");
+        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
         assertHistoryCorrect(listCommand);
-    }
-
-    @Test
-    public void executeAfterUserPermission_invalidCommandFormat_throwsParseException() {
-        String invalidCommand = "uicfhmowqewca";
-        assertParseException(invalidCommand, MESSAGE_UNKNOWN_COMMAND, "permission");
-        assertHistoryCorrect(invalidCommand);
-    }
-
-    @Test
-    public void executeAfterUserPermission_validCommand_success() {
-        String permission = "no";
-        assertCommandSuccess(RestoreBackupCommand.COMMAND_WORD,
-                RestoreBackupCommand.MESSAGE_NO_BACKUP_FILE, model, "common");
-        assertCommandSuccess(permission, RestoreBackupCommand.MESSAGE_FAILURE, model, "permission");
-        assertHistoryCorrect(permission, RestoreBackupCommand.COMMAND_WORD);
     }
 
     @Test
@@ -72,37 +55,35 @@ public class LogicManagerTest {
     /**
      * Executes the command, confirms that no exceptions are thrown and that the result message is correct.
      * Also confirms that {@code expectedModel} is as specified.
-     * @see #assertCommandBehavior(Class, String, String, Model, String)
+     * @see #assertCommandBehavior(Class, String, String, Model)
      */
-    private void assertCommandSuccess(String inputCommand, String expectedMessage,
-                                      Model expectedModel, String commandType) {
-        assertCommandBehavior(null, inputCommand, expectedMessage, expectedModel, commandType);
+    private void assertCommandSuccess(String inputCommand, String expectedMessage, Model expectedModel) {
+        assertCommandBehavior(null, inputCommand, expectedMessage, expectedModel);
     }
 
     /**
      * Executes the command, confirms that a ParseException is thrown and that the result message is correct.
-     * @see #assertCommandBehavior(Class, String, String, Model, String)
+     * @see #assertCommandBehavior(Class, String, String, Model)
      */
-    private void assertParseException(String inputCommand, String expectedMessage, String commandType) {
-        assertCommandFailure(inputCommand, ParseException.class, expectedMessage, commandType);
+    private void assertParseException(String inputCommand, String expectedMessage) {
+        assertCommandFailure(inputCommand, ParseException.class, expectedMessage);
     }
 
     /**
      * Executes the command, confirms that a CommandException is thrown and that the result message is correct.
-     * @see #assertCommandBehavior(Class, String, String, Model, String)
+     * @see #assertCommandBehavior(Class, String, String, Model)
      */
-    private void assertCommandException(String inputCommand, String expectedMessage, String commandType) {
-        assertCommandFailure(inputCommand, CommandException.class, expectedMessage, commandType);
+    private void assertCommandException(String inputCommand, String expectedMessage) {
+        assertCommandFailure(inputCommand, CommandException.class, expectedMessage);
     }
 
     /**
      * Executes the command, confirms that the exception is thrown and that the result message is correct.
-     * @see #assertCommandBehavior(Class, String, String, Model, String)
+     * @see #assertCommandBehavior(Class, String, String, Model)
      */
-    private void assertCommandFailure(String inputCommand, Class<?> expectedException,
-                                      String expectedMessage, String commandType) {
+    private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage) {
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel, commandType);
+        assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel);
     }
 
     /**
@@ -112,36 +93,14 @@ public class LogicManagerTest {
      *      - {@code expectedModel}'s address book was saved to the storage file.
      */
     private void assertCommandBehavior(Class<?> expectedException, String inputCommand,
-                                           String expectedMessage, Model expectedModel, String commandType) {
-        if (commandType.equals("common")) {
-            executeCommonCommand(expectedException, inputCommand, expectedMessage, expectedModel);
-        } else { //if commandType.equals("permission")
-            executePermissionCommandAfterUserPermission(expectedException, inputCommand,
-                    expectedMessage, expectedModel);
-        }
-    }
-
-    /**
-     * Executes the previous command after user enters permission
-     * and check for correct exception thrown and correct feedback returned.
-     */
-    private void executePermissionCommandAfterUserPermission(Class<?> expectedException, String inputCommand,
-                                                             String expectedMessage, Model expectedModel) {
-        try {
-            CommandResult result = logic.executeAfterUserPermission(inputCommand);
-            assertEquals(expectedException, null);
-            assertEquals(expectedMessage, result.feedbackToUser);
-        } catch (CommandException | ParseException e) {
-            assertEquals(expectedException, e.getClass());
-            assertEquals(expectedMessage, e.getMessage());
-        }
-        assertEquals(expectedModel, model);
+                                       String expectedMessage, Model expectedModel) {
+        executeCommand(expectedException, inputCommand, expectedMessage, expectedModel);
     }
 
     /**
      * Executes the command and check for correct exception thrown and correct feedback returned.
      */
-    private void executeCommonCommand(Class<?> expectedException, String inputCommand,
+    private void executeCommand(Class<?> expectedException, String inputCommand,
                                       String expectedMessage, Model expectedModel) {
         try {
             CommandResult result = logic.execute(inputCommand);
