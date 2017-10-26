@@ -116,7 +116,7 @@ Both capital letters and small letters are can be entered.
 === List
 
 You have a variety of ways to list your contacts. +
-Click <<MedNus Features, here>> for a tabulated version of all available listing options.  +
+Click <<MedNus Features, here>> for a tabulated version of all available listing options. +
 
 * *Listing all persons* +
 You can use `list` to show a list of all persons in the address book. +
