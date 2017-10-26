@@ -471,6 +471,11 @@ The current validation allows the user to enter as many digits as he/she wants w
 numbers must be restricted to certain number of digits based on the country. Such validation will be performed in the future +
 version of the tool. The validation for number of digits will be quite extensive since different countries have different +
 number of digits in their phone numbers, which is the reason it is noe done yet.
+=======
+
+Load command's implementation is similar to other commands: LoadCommand class inherits UndoableCommand and load command's parser implements Parser interface. The following sequence diagram shows the execution of command "load testbook.xml"
+
+image::ParseLoadCommand.png[width="800"]
 
 === Configuration
 
