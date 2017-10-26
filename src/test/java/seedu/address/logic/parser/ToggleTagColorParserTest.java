@@ -35,6 +35,6 @@ public class ToggleTagColorParserTest {
 
         // Throw Parse error
         thrown.expect(ParseException.class);
-        parser.parse("Test");
+        parser.parse("tagcolor Test");
     }
 }
