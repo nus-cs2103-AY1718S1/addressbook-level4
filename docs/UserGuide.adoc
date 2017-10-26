@@ -86,7 +86,8 @@ Adds a temporary person to the address book which will be deleted when the numbe
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [temp/NUMBER_OF_DAYS] [t/TAG]...`
 
 [TIP]
-Deletion of temporary person is done at the start up of the addressbook.
+Deletion of temporary person is done at the start up of the addressbook, so restarting your addressbook may help if you
+realised a certain temporary contact stills remains in your address book after its expiry date.
 
 Examples:
 
@@ -183,6 +184,26 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+=== Deleting persons by tag: `deletebytag`
+
+Deletes all persons in the address book who has the supplied tag. +
+Format: `delete TAG`
+
+
+****
+* The addressbook automatically updates as the deletion happens.
+* `TAG` supplied is case-sensitive i.e. friends is different from Friends. This is to allow more freedom for users in the
+creation of tags. Please take note of this when using this command.
+* The alias for this command is dbt
+* This command will delete all persons who have the supplied `TAG`, even if they have other tags.
+****
+
+Examples:
+
+* `deletebytag friend` will delete all persons who have a tag of `friend`
+
+
 
 === Selecting a person : `select`
 
