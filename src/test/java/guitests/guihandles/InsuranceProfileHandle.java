@@ -3,6 +3,9 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
+/**
+ * A handler for the {@code InsuranceProfile} of the UI.
+ */
 public class InsuranceProfileHandle extends NodeHandle<Node> {
 
     private static final String OWNER_FIELD_ID = "#owner";

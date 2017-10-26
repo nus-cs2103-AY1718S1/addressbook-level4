@@ -1,12 +1,11 @@
 package guitests.guihandles;
 
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import seedu.address.ui.InsuranceProfile;
 
 /**
- * A handler for the {@code InsuranceProfile} of the UI.
+ * A handler for the {@code InsuranceListPanel} of the UI.
  */
 public class InsuranceListPanelHandle extends NodeHandle<Node> {
 
