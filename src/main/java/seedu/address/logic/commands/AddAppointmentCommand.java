@@ -111,6 +111,7 @@ public class AddAppointmentCommand extends Command {
     private boolean isDateValid() {
         requireNonNull(date);
         Calendar calendar = Calendar.getInstance();
+        return !date.getTime().before(calendar.getTime());
     }
 
     public Index getIndex() {
