@@ -1,5 +1,16 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.ListingUnit.LOCATION;
+import static seedu.address.model.ListingUnit.MODULE;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,17 +28,6 @@ import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.ListingUnit.LOCATION;
-import static seedu.address.model.ListingUnit.MODULE;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -159,10 +159,10 @@ public class ModelManager extends ComponentManager implements Model {
 
         for (int i = 0; i < bookedList.size(); i++) {
             if (bookedList.get(i).equals(target)) {
+                throw new DuplicateBookedSlotException();
+            } else if (i == (bookedList.size() - 1)) {
                 bookedList.add(target);
                 break;
-            } else if (i == bookedList.size() - 1) {
-                throw new DuplicateBookedSlotException();
             }
         }
     }

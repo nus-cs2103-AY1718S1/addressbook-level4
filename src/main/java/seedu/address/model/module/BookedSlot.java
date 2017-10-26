@@ -24,7 +24,7 @@ public class BookedSlot {
     }
 
     /**
-     * Returns true if both booked slot have the same location and time slot
+     * Returns true if both booked slot have the same location and time slot(case insensitive)
      */
     public boolean isSameStateAs(BookedSlot other) {
         return this.location.value.toUpperCase().equals(other.getLocation().value.toUpperCase())
