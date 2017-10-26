@@ -8,13 +8,29 @@ OurAb is a CLI(Command Line Interface)-based desktop Address Book application wr
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
 
+=== Enhancement Added: Display Next Meeting
+
+==== External Behaviour
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+
+Displays information about the next upcoming meeting. +
+
+image::liuhang-next-meeting-command.png[width="800"]
+
+#End of Extract#
+
+==== Justification
+
+To allow users to view the next meeting conveniently.
+
+---
+
 === Enhancement Added: Meetings Storage
 
 ==== External behavior
 
 * Provides storage for meetings managment, which will be implemented in future verions (> v1.3).
-
----
 
 ==== Justification
 
