@@ -28,7 +28,7 @@ public class EventCardTest extends GuiUnitTest {
         // changes made to Event reflects on card
         guiRobot.interact(() -> {
             event.setTitle(BIRTHDAY.getTitle());
-            event.setTiming(BIRTHDAY.getTiming());
+            event.setTimeslot(BIRTHDAY.getTimeslot());
             event.setDescription(BIRTHDAY.getDescription());
         });
         assertCardDisplay(eventCard, event, 2);
@@ -66,12 +66,10 @@ public class EventCardTest extends GuiUnitTest {
      * expectedEvent} correctly and matches
      * {@code expectedId}.
      */
-    private void assertCardDisplay(EventCard eventCard, ReadOnlyEvent
-            expectedEvent, int expectedId) {
+    private void assertCardDisplay(EventCard eventCard, ReadOnlyEvent expectedEvent, int expectedId) {
         guiRobot.pauseForHuman();
 
-        EventCardHandle eventCardHandle = new EventCardHandle(eventCard
-                .getRoot());
+        EventCardHandle eventCardHandle = new EventCardHandle(eventCard.getRoot());
 
         // verify id is displayed correctly
         assertEquals(Integer.toString(expectedId) + ". ", eventCardHandle.getId());

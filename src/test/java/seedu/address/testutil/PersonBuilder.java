@@ -15,6 +15,7 @@ import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Status;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -35,6 +36,7 @@ public class PersonBuilder {
     public static final String DEFAULT_NOTE = "NIL";
     public static final String DEFAULT_PHOTO = "src/main/resources/images/default.jpg";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_RELATIONSHIP = "siblings";
 
     private Person person;
 
@@ -51,9 +53,10 @@ public class PersonBuilder {
             Note defaultNote = new Note(DEFAULT_NOTE);
             Photo defaultPhoto = new Photo(DEFAULT_PHOTO);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+            Set<Relationship> defaultRel = SampleDataUtil.getRelSet(DEFAULT_RELATIONSHIP);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultCompany,
                     defaultPosition, defaultStatus, defaultPriority,
-                    defaultNote, defaultPhoto, defaultTags);
+                    defaultNote, defaultPhoto, defaultTags, defaultRel);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -86,6 +89,19 @@ public class PersonBuilder {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code relation} into a {@code Set<Relationship>} and set it to the {@code Person} that we are
+     * building.
+     */
+    public PersonBuilder withRelation(String... relation) {
+        try {
+            this.person.setRel(SampleDataUtil.getRelSet(relation));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("relationships are expected to be unique.");
         }
         return this;
     }

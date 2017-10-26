@@ -81,6 +81,7 @@
     -fx-padding: 0 1 0 1;
     -fx-background-insets: 0;
 }
+
 .split-pane *.horizontal-grabber {
     -fx-padding: 0;
     -fx-background-color: transparent;
@@ -352,16 +353,15 @@
 }
 
 .tab-down-button {
--fx-padding: 0;
+    -fx-padding: 0;
 }
 
 .tab-down-button .arrow {
--fx-padding: 0;
+    -fx-padding: 0;
 }
 
-
 .transparentButton {
-    -fx-background-color:transparent;
+    -fx-background-color: transparent;
 
 }
 

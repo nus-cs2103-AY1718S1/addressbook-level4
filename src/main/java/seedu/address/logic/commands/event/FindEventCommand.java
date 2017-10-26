@@ -1,3 +1,4 @@
+//@@author A0162268B
 package seedu.address.logic.commands.event;
 
 import seedu.address.logic.commands.Command;
@@ -5,8 +6,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.event.TitleContainsKeywordsPredicate;
 
 /**
- * @@reginleiff
- * Finds and lists all events in Sales Navigator which title contains any of the argument keywords.
+ * @@reginleiff Finds and lists all events in Sales Navigator which title contains any of the argument keywords.
  * Keyword matching is case sensitive.
  */
 public class FindEventCommand extends Command {

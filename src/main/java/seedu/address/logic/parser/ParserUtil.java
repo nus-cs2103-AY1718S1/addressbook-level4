@@ -16,8 +16,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.event.Description;
-import seedu.address.model.event.Timing;
 import seedu.address.model.event.Title;
+import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Company;
 import seedu.address.model.person.Email;
@@ -28,6 +28,7 @@ import seedu.address.model.person.Photo;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.Status;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -186,7 +187,7 @@ public class ParserUtil {
     }
 
     //@@author a0107442n
-
+  
     /**
      * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -197,12 +198,13 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> timing} into an {@code Optional<Timing>} if {@code timing} is present.
+     * Parses a {@code Optional<String> timeslot} into an {@code Optional<Timeslot>} if {@code timeslot} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Timing> parseTiming(Optional<String> timing) throws IllegalValueException {
-        requireNonNull(timing);
-        return timing.isPresent() ? Optional.of(new Timing(timing.get())) : Optional.empty();
+    public static Optional<Timeslot> parseTimeslot(Optional<String> timeslot)
+            throws IllegalValueException {
+        requireNonNull(timeslot);
+        return timeslot.isPresent() ? Optional.of(new Timeslot(timeslot.get())) : Optional.empty();
     }
 
     /**
@@ -225,5 +227,16 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+    /**
+     * Parses {@code Collection<String> relationship} into a {@code Set<Relationship>}.
+     */
+    public static Set<Relationship> parseRel(Collection<String> relation) throws IllegalValueException {
+        requireNonNull(relation);
+        final Set<Relationship> relationSet = new HashSet<>();
+        for (String relationType : relation) {
+            relationSet.add(new Relationship(relationType));
+        }
+        return relationSet;
     }
 }

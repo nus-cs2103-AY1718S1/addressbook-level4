@@ -40,6 +40,7 @@ public class AddressBookParserTest {
     public ExpectedException thrown = ExpectedException.none();
     private final AddressBookParser parser = new AddressBookParser();
 
+
     @Test
     public void parseCommand_add() throws Exception {
         Person person = new PersonBuilder().build();

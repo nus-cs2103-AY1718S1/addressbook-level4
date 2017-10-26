@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import java.util.Arrays;
 import java.util.Collections;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,10 +14,11 @@ public class CheckCommandsParser {
 
     /**
      * Parsers user input command and match it with the synonyms/aliases
+     *
      * @param userCommand user input command string
      * @return the relevant command it matches
      */
-    public static String matchCommand (String userCommand) {
+    public static String matchCommand(String userCommand) {
         /**
          * sets the initial finalUserCommand to error
          */

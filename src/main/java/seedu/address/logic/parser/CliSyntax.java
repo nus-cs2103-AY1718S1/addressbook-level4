@@ -17,8 +17,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_NOTE = new Prefix("no/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_PHOTO = new Prefix("ph/");
+    public static final Prefix PREFIX_RELATIONSHIP = new Prefix("r/");
 
     /* Prefix definitions for Event*/
     public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
-    public static final Prefix PREFIX_TIMING = new Prefix("time/");
+    public static final Prefix PREFIX_TIMESLOT = new Prefix("t/");
 }
