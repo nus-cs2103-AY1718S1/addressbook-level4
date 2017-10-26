@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -38,12 +39,15 @@ public class PersonCard extends UiPart<Region> {
     private Label phone;
     @FXML
     private Label formClass;
+    @FXML
+    private FlowPane tags;
 
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        initialiseTags(person);
         bindListeners(person);
     }
 
@@ -55,6 +59,8 @@ public class PersonCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         formClass.textProperty().bind(Bindings.convert(person.formClassProperty()));
+        tags.getChildren().clear();
+        initialiseTags(person);
     }
 
     @Override
@@ -73,5 +79,17 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * Initializes and styles tags belonging to a person.
+     * @param person must be a valid.
+     */
+    protected void initialiseTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-font-size:15px");
+            tags.getChildren().add(tagLabel);
+        });
     }
 }
