@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.FileNotFoundException;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -24,7 +22,6 @@ import seedu.address.model.UserPrefs;
  * Contains integration test (interaction with Logic) for {@code MergeCommand}
  */
 public class MergeCommandTest {
-    private final String TEST_DEFAULT_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/TestAddressBook.xml";
     private final String TEST_DATA_ERROR_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/DataConversionError.xml";
     private final String TEST_NEW_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/TestNewFile.xml";
 
@@ -78,6 +75,7 @@ public class MergeCommandTest {
     /**
      * Executes the command, confirms that no exceptions are thrown and that the result message is correct.
      * Also confirms that {@code expectedModel} is as specified.
+     *
      * @see #assertCommandBehavior(Class, String, String, Model, Logic)
      */
     private void assertCommandSuccess(String inputCommand, String expectedMessage, Model expectedModel, Logic expectedLogic) {
@@ -86,6 +84,7 @@ public class MergeCommandTest {
 
     /**
      * Executes the command, confirms that the exception is thrown and that the result message is correct.
+     *
      * @see #assertCommandBehavior(Class, String, String, Model, Logic)
      */
     private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage, Logic expectedLogic) {
