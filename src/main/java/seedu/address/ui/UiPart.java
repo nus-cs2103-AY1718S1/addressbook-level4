@@ -4,6 +4,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -37,6 +40,17 @@ public abstract class UiPart<T> {
     public static final String THEME_CSS_MODENA_WHITEONBLACK = "/modena/whiteOnBlack.css";
     public static final String THEME_CSS_MODENA_YELLOWONBLACK = "/modena/yellowOnBlack.css";
 
+    public static final List<String> THEME_LIST_DIR = Collections.unmodifiableList(
+            new ArrayList<String>() {{
+                add(THEME_CSS_DARKTHEME);
+                add(THEME_CSS_BOOTSTRAP3);
+                add(THEME_CSS_CASPIAN);
+                add(THEME_CSS_MODENA);
+                add(THEME_CSS_MODENA_BLACKONWHITE);
+                add(THEME_CSS_MODENA_WHITEONBLACK);
+                add(THEME_CSS_MODENA_YELLOWONBLACK);
+            }});
+
     private FXMLLoader fxmlLoader;
 
     /**
@@ -60,6 +74,23 @@ public abstract class UiPart<T> {
      */
     public UiPart(String fxmlFileName) {
         this(fxmlFileName != null ? MainApp.class.getResource(FXML_FILE_FOLDER + fxmlFileName) : null);
+    }
+
+    /**
+     * Returns theme name based on index
+     *
+     * @param index
+     */
+    public static String getThemeNameByIndex(int index) {
+        String themeName = THEME_LIST_DIR.get(index);
+        themeName = themeName.replaceAll(".css", "");
+        themeName = themeName.substring(themeName.lastIndexOf("/") + 1);
+        themeName = themeName.substring(0, 1).toUpperCase() + themeName.substring(1);
+
+        if (THEME_LIST_DIR.get(index).contains("modena") && !THEME_LIST_DIR.get(index).contains("modena.css")) {
+            themeName = "(Modena) " + themeName;
+        }
+        return themeName;
     }
 
     /**
