@@ -27,6 +27,7 @@ public class Autocompleter {
         "list", "redo", "select", "undo"};
 
     private int resultIndex;
+    private String textInCommandBox;
     private CommandBoxParser parser;
     private AutocompleteState state;
     private ArrayList<String> possibleAutocompleteResults;
@@ -35,6 +36,7 @@ public class Autocompleter {
     public Autocompleter() {
         registerAsAnEventHandler(this);
         resultIndex = 0;
+        textInCommandBox = EMPTY_STRING;
         parser = new CommandBoxParser();
         //default state will be autocomplete for command
         state = AutocompleteState.EMPTY;
