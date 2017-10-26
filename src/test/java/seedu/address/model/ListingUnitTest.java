@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.model.module.predicates.MarkedListPredicate;
+
 public class ListingUnitTest {
 
     @Test
@@ -20,6 +22,10 @@ public class ListingUnitTest {
         // set current listing unit to be module
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         assertTrue(ListingUnit.getCurrentListingUnit().equals(ListingUnit.MODULE));
+
+        // set the current predicate to be marked list predicate.
+        ListingUnit.setCurrentPredicate(new MarkedListPredicate());
+        assertTrue(ListingUnit.getCurrentPredicate().equals(ListingUnit.getCurrentPredicate()));
 
 
     }

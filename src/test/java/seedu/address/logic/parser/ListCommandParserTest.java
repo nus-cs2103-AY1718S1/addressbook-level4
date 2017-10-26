@@ -23,6 +23,11 @@ public class ListCommandParserTest {
     }
 
     @Test
+    public void parse_listMarked_returnsListCommand() {
+        assertParseSuccess(parser, " marked", new ListCommand(ListCommand.MARKED_LIST_KEYWORD));
+    }
+
+    @Test
     public void parse_invalidArgs_throwsParseException() {
         assertParseFailure(parser, "list asda", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ListCommand.MESSAGE_USAGE));

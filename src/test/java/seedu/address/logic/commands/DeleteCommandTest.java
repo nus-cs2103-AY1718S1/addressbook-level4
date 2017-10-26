@@ -23,6 +23,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.predicates.MarkedListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
@@ -48,8 +49,56 @@ public class DeleteCommandTest {
     }
 
     @Test
+    public void execute_validIndexMarkedList_success() throws Exception {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
+        model.bookmarkLesson(lessonToDelete);
+        model.updateFilteredLessonList(new MarkedListPredicate());
+
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.updateFilteredLessonList(new MarkedListPredicate());
+        expectedModel.deleteLesson(lessonToDelete);
+
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredLessonList().size() + 1);
+        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexModuleList_throwsCommandException() throws Exception {
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+        model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredLessonList().size() + 1);
+        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexMarkedList_throwsCommandException() throws Exception {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+        model.updateFilteredLessonList(new MarkedListPredicate());
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredLessonList().size() + 1);
+        DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidIndexLocationList_throwsCommandException() throws Exception {
+        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
+        model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredLessonList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 

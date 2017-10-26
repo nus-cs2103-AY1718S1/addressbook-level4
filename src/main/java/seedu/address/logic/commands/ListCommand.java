@@ -10,7 +10,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.ListingUnit;
-import seedu.address.model.module.predicates.FavouriteListPredicate;
+import seedu.address.model.module.predicates.MarkedListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
@@ -55,11 +55,12 @@ public class ListCommand extends Command {
             return executeListByAttribute(locationPredicate);
         } else if (parameter.equals(MARKED_LIST_KEYWORD)) {
             ListingUnit.setCurrentListingUnit(LESSON);
+
+            MarkedListPredicate markedListPredicate = new MarkedListPredicate();
             model.setViewingPanelAttribute("marked");
-            FavouriteListPredicate favouriteListPredicate = new FavouriteListPredicate();
-            ListingUnit.setCurrentPredicate(favouriteListPredicate);
+            ListingUnit.setCurrentPredicate(markedListPredicate);
             EventsCenter.getInstance().post(new ViewedLessonEvent());
-            return executeListByAttribute(favouriteListPredicate);
+            return executeListByAttribute(markedListPredicate);
         } else {
             assert false : "There cannot be other parameters passed in";
             return null;
@@ -71,7 +72,7 @@ public class ListCommand extends Command {
      */
     private CommandResult executeListByAttribute(Predicate predicate) {
         model.updateFilteredLessonList(predicate);
-        if (predicate instanceof FavouriteListPredicate) {
+        if (predicate instanceof MarkedListPredicate) {
             EventsCenter.getInstance().post(new ViewedLessonEvent());
         }
         EventsCenter.getInstance().post(new RefreshPanelEvent());

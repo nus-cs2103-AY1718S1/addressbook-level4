@@ -11,7 +11,7 @@ import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.predicates.FavouriteListPredicate;
+import seedu.address.model.module.predicates.MarkedListPredicate;
 
 
 /**
@@ -49,8 +49,8 @@ public class UnmarkCommand extends UndoableCommand {
 
         if (ListingUnit.getCurrentListingUnit().equals(LESSON)) {
             model.unBookmarkLesson(lessonToCollect);
-            if (ListingUnit.getCurrentPredicate() instanceof FavouriteListPredicate) {
-                model.updateFilteredLessonList(new FavouriteListPredicate());
+            if (ListingUnit.getCurrentPredicate() instanceof MarkedListPredicate) {
+                model.updateFilteredLessonList(new MarkedListPredicate());
             }
             EventsCenter.getInstance().post(new RefreshPanelEvent());
             return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToCollect));

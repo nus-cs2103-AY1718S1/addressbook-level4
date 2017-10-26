@@ -57,37 +57,29 @@ public class DeleteCommand extends UndoableCommand {
         switch (ListingUnit.getCurrentListingUnit()) {
 
         case MODULE:
-            Code codeToDelete = lastShownList.get(targetIndex.getZeroBased()).getCode();
-            return deleteLessonWithModuleCode(codeToDelete);
+            return deleteLessonWithModuleCode(targetIndex);
 
         case LOCATION:
-            Location locationToDelete = lastShownList.get(targetIndex.getZeroBased()).getLocation();
-            return deleteLessonWithLocation(locationToDelete);
+            return deleteLessonWithLocation(targetIndex);
 
         default:
-            ReadOnlyLesson lessonToDelete = lastShownList.get(targetIndex.getZeroBased());
-            try {
-                model.unbookBookedSlot(new BookedSlot(lessonToDelete.getLocation(), lessonToDelete.getTimeSlot()));
-                model.deleteLesson(lessonToDelete);
-            } catch (LessonNotFoundException pnfe) {
-                assert false : "The target lesson cannot be missing";
-            }
-            EventsCenter.getInstance().post(new ViewedLessonEvent());
-            return new CommandResult(String.format(MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete));
+            return deleteSpecifiedLesson(targetIndex);
         }
     }
 
     /**
      * Delete all lessons with specified location
      */
-    private CommandResult deleteLessonWithLocation(Location location) {
+    private CommandResult deleteLessonWithLocation(Index targetIndex) {
 
+        List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
+        Location locationToDelete = lastShownList.get(targetIndex.getZeroBased()).getLocation();
         try {
             model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
             ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
             for (int i = 0; i < lessonList.size(); i++) {
                 ReadOnlyLesson l = lessonList.get(i);
-                if (l.getLocation().equals(location)) {
+                if (l.getLocation().equals(locationToDelete)) {
                     model.unbookBookedSlot(new BookedSlot(l.getLocation(), l.getTimeSlot()));
                     model.deleteLesson(l);
                     i--;
@@ -100,20 +92,22 @@ public class DeleteCommand extends UndoableCommand {
 
         model.updateFilteredLessonList(new UniqueLocationPredicate(model.getUniqueLocationSet()));
         EventsCenter.getInstance().post(new ViewedLessonEvent());
-        return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS, location));
+        return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_LOCATION_SUCCESS, locationToDelete));
     }
 
     /**
      * Delete all lessons with specified Module Code.
      */
-    private CommandResult deleteLessonWithModuleCode(Code code) {
+    private CommandResult deleteLessonWithModuleCode(Index targetIndex) {
 
+        List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
+        Code moduleToDelete = lastShownList.get(targetIndex.getZeroBased()).getCode();
         try {
             model.updateFilteredLessonList(PREDICATE_SHOW_ALL_LESSONS);
             ObservableList<ReadOnlyLesson> lessonList = model.getFilteredLessonList();
             for (int i = 0; i < lessonList.size(); i++) {
                 ReadOnlyLesson lesson = lessonList.get(i);
-                if (lesson.getCode().equals(code)) {
+                if (lesson.getCode().equals(moduleToDelete)) {
                     model.unbookBookedSlot(new BookedSlot(lesson.getLocation(), lesson.getTimeSlot()));
                     model.deleteLesson(lesson);
                     i--;
@@ -124,7 +118,24 @@ public class DeleteCommand extends UndoableCommand {
         }
         model.updateFilteredLessonList(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
         EventsCenter.getInstance().post(new ViewedLessonEvent());
-        return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, code));
+        return new CommandResult(String.format(MESSAGE_DELETE_LESSON_WITH_MODULE_SUCCESS, moduleToDelete));
+    }
+
+    /**
+     * Delete all lessons with specified Module Code.
+     */
+    private CommandResult deleteSpecifiedLesson(Index targetIndex) {
+
+        List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
+        ReadOnlyLesson lessonToDelete = lastShownList.get(targetIndex.getZeroBased());
+        try {
+            model.unbookBookedSlot(new BookedSlot(lessonToDelete.getLocation(), lessonToDelete.getTimeSlot()));
+            model.deleteLesson(lessonToDelete);
+        } catch (LessonNotFoundException pnfe) {
+            assert false : "The target lesson cannot be missing";
+        }
+        EventsCenter.getInstance().post(new ViewedLessonEvent());
+        return new CommandResult(String.format(MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete));
     }
 
 

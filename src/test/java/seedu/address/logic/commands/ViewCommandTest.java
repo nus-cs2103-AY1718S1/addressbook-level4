@@ -30,7 +30,6 @@ import seedu.address.model.module.ReadOnlyLesson;
 public class ViewCommandTest {
 
     private Model model;
-    private Model expectedModel;
     private ViewCommand viewCommand;
 
     @Before

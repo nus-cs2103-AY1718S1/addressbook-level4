@@ -56,6 +56,18 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_duplicateTimeSlot_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateTimeSlotException();
+        Lesson validLesson = new LessonBuilder().build();
+
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+
+        getAddCommandForLesson(validLesson, modelStub).execute();
+
+    }
+
+    @Test
     public void execute_duplicateLesson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicateLessonException();
         Lesson validLesson = new LessonBuilder().build();
@@ -248,6 +260,28 @@ public class AddCommandTest {
         @Override
         public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
             lessonsAdded.add(new Lesson(lesson));
+        }
+
+        @Override
+        public void handleListingUnit() {
+
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
+    }
+
+    /**
+     * A Model stub that always thrown duplicate time slot exception.
+     */
+    private class ModelStubThrowingDuplicateTimeSlotException extends ModelStub {
+        final ArrayList<Lesson> lessonsAdded = new ArrayList<>();
+
+        @Override
+        public void bookingSlot(BookedSlot booking) throws DuplicateBookedSlotException {
+            throw new DuplicateBookedSlotException();
         }
 
         @Override
