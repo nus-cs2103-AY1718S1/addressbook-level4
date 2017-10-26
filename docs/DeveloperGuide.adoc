@@ -369,6 +369,31 @@ image::SortCommandActivityDiagram.png[width="800"]
 **Cons:** Changes made to the `internalList` might affect other existing commands.
 // end::sortcommand[]
 
+// tag::listcommand[]
+=== List mechanism
+
+The list mechanism is assisted by two classes `ListCommandParser` residing in `parser` and `PersonContainsKeywordsPredicate` residing in `person`. +
+It supports the listing of contacts which do not modify the addressbook(e.g. `Exit`, `Find`). Such commands inherit from `Command`, unlike commands inheriting from `UndoableCommand` which modify the state of the address book.
+
+The following sequence diagram shows how the list operation works:
+
+image::ListCommandSequenceDiagram.png[width="800"]
+
+The following activity diagram shows what happens when a user executes a new list command:
+
+image::ListCommandActivityDiagram.png[width="400"]
+
+=== Design Considerations
+
+**Aspect:** Implementation of `ListCommand` +
+**Alternative 1 (current choice):** Add a new class ListCommandParser +
+**Pros:** We will be able to provide arguments to list only certain types of contacts +
+**Cons:** Hard for new developers to understand why we used `list` command instead of `find` to get contacts with certain tags. +
+**Alternative 2:** No parser class +
+**Pros:** Easier for new developers to understand +
+**Cons:** All contacts are listed every time which may be an issue if user is trying to filter contacts by tags
+//end::listcommand[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -400,7 +425,53 @@ Examples for a valid birthday:
 
 Notice that the current implementation doesn't validate the validity of the date, only the format of the birthday and this was a conscious decision. This implementation manages to preserve the simplicity of this class. It could have been possible to use for example Java's Date class to implement a second validator for also the date, but this would have created inconsistency between the other attribute classes. Also, because the end product is an address book which only has to store the birthday, the validity of the date is not a concern for the program.
 
-=== Load command
+=== Phone attribute
+
+Person class consists of five different attributes: `Name`, `Address`, `Phone`, `Email` and `Birthday`. The Phone class +
+has implementation similar to other attribute classes. New instance of Phone is initialized through constructor. Important +
+thing to note here is the once the phone is validated to be only numbers, it is also followed by the conversion of phone +
+into the national convention format as well.
+
+The conversion to national convention is done within the Phone class in the following way:
+[source,java]
+----
+public Phone(String phone) throws IllegalValueException {
+    // ... phone validation logic ...
+
+    this.value = formatPhone(trimmedPhone);
+}
+
+public static String formatPhone(String trimmedPhone) {
+    // ... variable declarations ...
+    String formattedPhone = generateFormattedPhone(trimmedPhone, phoneLength);
+
+    return formattedPhone;
+}
+----
+
+*Validation*
+
+The valid form of phone is `xxxxxxxx` with as many characters as the user want, but no less than 3. Every character must +
+be a digit and there should be no other character like `+`. This prevents the user to enter alphabets or other invalid +
+characters while entering phone numbers.
+
+The example of valid phone numbers are:
+
+* `6596631234`
+* `919911204422`
+* `15671237070`
+
+The example of invalid phone numbers are:
+
+* `6596asd`
+* `+919911204422`
+* `12`
+
+The current validation allows the user to enter as many digits as he/she wants which is not the case in real life. The +
+numbers must be restricted to certain number of digits based on the country. Such validation will be performed in the future +
+version of the tool. The validation for number of digits will be quite extensive since different countries have different +
+number of digits in their phone numbers, which is the reason it is noe done yet.
+=======
 
 Load command's implementation is similar to other commands: LoadCommand class inherits UndoableCommand and load command's parser implements Parser interface. The following sequence diagram shows the execution of command "load testbook.xml"
 

@@ -31,11 +31,27 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals(expectedPerson.getPhone().value, formOriginalPhone(actualCard.getPhone()));
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Converts the phone from national convention into simple number
+     * Required to check whether expected is same as actaul phone from card(but card phone converted to simple number)
+     */
+    public static String formOriginalPhone(String currentPhone) {
+        StringBuilder originalPhone = new StringBuilder();
+        int phoneLength = currentPhone.length();
+        for (int count = phoneLength - 1; count >= 0; count--) {
+            if (currentPhone.charAt(count) == '-') {
+                continue;
+            }
+            originalPhone.insert(0, currentPhone.charAt(count));
+        }
+        return originalPhone.toString();
     }
 
     /**
