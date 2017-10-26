@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import java.io.IOException;
 import java.util.List;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.person.ReadOnlyPerson;
@@ -30,6 +31,10 @@ public class EmailCommand extends Command {
     public CommandResult execute() throws CommandException, IOException {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if ((emailIndex - 1) >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
         ReadOnlyPerson personToEmail = lastShownList.get(emailIndex - 1);
 
         OpenEmailClient emailClient = new OpenEmailClient(personToEmail.getEmail().toString());

@@ -35,10 +35,16 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_commandExecutionError_throwsCommandException() {
+    public void execute_deleteCommandExecutionError_throwsCommandException() {
         String deleteCommand = "delete 9";
         assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteCommand);
+    }
+
+    @Test
+    public void execute_emailCommandExecutionError_throwsCommandException() {
+        String emailCommand = "email 9";
+        assertCommandException(emailCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
