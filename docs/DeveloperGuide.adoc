@@ -516,8 +516,8 @@ Since our target audience are the NUS students, which include a large proportion
  ====Description
 
 Since our target audience are the NUS students, which include a large propotion of international students, our addressBook will support the users to add multiple phone numbers, emails addresses and home addresses.
-
 ==== Model
+
 UniquePhoneList Classes are created for each person to store the person's multiple phone numbers.
 
 A person has a primary phone number and a list of additional numbers.
@@ -530,6 +530,7 @@ Primary number is saved directly as an object in Person while additional numbers
 UniquePhoneList is a list of Phone object. It can be empty if the person does not have additional numbers.
 
 Primary phone number must not be null.
+
 
 ==== Logic
 PhoneCommand is created to add/remove additional phone numbers. It can also be used to show all numbers of a person.
@@ -551,26 +552,19 @@ If there are numbers in the uniquePhoneList, the all numbers will be displayed w
 image::showAllPhones.png[width="200']
 
 
+
 ==== Storage
 Xml file for newly created list will be created and the Xml for Person is updated for storing the information of the fields of every person.
-
 ==== Ui
 A new label will be displaced for each person for each instance of the same fields.
 
-
-
 == Documentation
-
 We use asciidoc for writing documentation.
-
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
-
 === Editing Documentation
-
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
-
 === Publishing Documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
