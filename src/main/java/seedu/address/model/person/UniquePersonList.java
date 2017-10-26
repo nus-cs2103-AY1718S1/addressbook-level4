@@ -91,6 +91,11 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    /**
+     * Removes the persons who have the tag supplied
+     *
+     * @throws CommandException if no one has this tag
+     */
     public void removeByTag(Tag tag) throws CommandException {
         Iterator<Person> itr = this.iterator();
         int numRemoved = 0;

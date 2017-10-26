@@ -5,8 +5,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 import seedu.address.model.tag.Tag;
 
-import java.util.List;
-
+/**
+ * Deletes a person identified by a tag supplied
+ */
 public class DeleteByTagCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "deletebytag";
     public static final String COMMAND_ALIAS = "dbt";
@@ -30,7 +31,7 @@ public class DeleteByTagCommand extends UndoableCommand {
 
         try {
             model.deleteByTag(toRemove);
-        } catch (IllegalValueException e ) {
+        } catch (IllegalValueException e) {
             assert false : "Tag provided must be valid";
         }
 
