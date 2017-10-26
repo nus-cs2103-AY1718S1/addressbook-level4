@@ -13,7 +13,7 @@ import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.model.person.Remark;
 
 public class RemarkCommandParserTest {
-    private Prefix.RemarkCommandParser parser = new Prefix.RemarkCommandParser();
+    private RemarkCommandParser parser = new RemarkCommandParser();
 
     @Test
     public void parse_indexSpecified_failure() throws Exception {
