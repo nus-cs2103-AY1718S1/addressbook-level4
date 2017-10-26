@@ -97,7 +97,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         } catch (DuplicateGroupException e) {
-            assert false : "AddressBooks should not have duplicate groups";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -176,7 +175,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         for (ReadOnlyPerson p: persons) {
             if (p.getGroup().equals(group)) {
                 ReadOnlyPerson editedPerson = new Person (p.getName(), p.getPhone(), p.getEmail(), p.getAddress(),
-                        p.getTags(),p.getExpiryDate(), p.getRemark(), groups.DEFAULT_GROUP, p.getImage());
+                        p.getTags(), p.getExpiryDate(), p.getRemark(), groups.DEFAULT_GROUP, p.getImage());
                 try {
                     updatePerson(p, editedPerson);
                 } catch (DuplicatePersonException | PersonNotFoundException e) {
