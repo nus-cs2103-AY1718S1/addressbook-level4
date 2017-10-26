@@ -16,6 +16,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_PRIORITY = new Prefix("pr/");
     public static final Prefix PREFIX_NOTE = new Prefix("no/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_PHOTO = new Prefix("ph/");
     public static final Prefix PREFIX_RELATIONSHIP = new Prefix("r/");
 
     /* Prefix definitions for Event*/

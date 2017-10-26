@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHOTO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
@@ -57,6 +58,10 @@ public class CommandTestUtil {
     public static final String VALID_PRIORITY_BOB = "M";
     public static final String VALID_NOTE_AMY = "Met this person last week";
     public static final String VALID_NOTE_BOB = "Likes coffee";
+    public static final String VALID_PHOTO_AMY =
+            "src/main/resources/images/summer.jpg";
+    public static final String VALID_PHOTO_BOB =
+            "src/main/resources/images/mad-men.jpg";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_REL_SIBLINGS = "siblings";
@@ -80,6 +85,8 @@ public class CommandTestUtil {
     public static final String PRIORITY_DESC_BOB = " " + PREFIX_PRIORITY + VALID_PRIORITY_BOB;
     public static final String NOTE_DESC_AMY = " " + PREFIX_NOTE + VALID_NOTE_AMY;
     public static final String NOTE_DESC_BOB = " " + PREFIX_NOTE + VALID_NOTE_BOB;
+    public static final String PHOTO_DESC_AMY = " " + PREFIX_PHOTO + VALID_PHOTO_AMY;
+    public static final String PHOTO_DESC_BOB = " " + PREFIX_PHOTO + VALID_PHOTO_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String REL_DESC_SIBLINGS = " " + PREFIX_RELATIONSHIP + VALID_REL_SIBLINGS;
@@ -94,6 +101,8 @@ public class CommandTestUtil {
     public static final String INVALID_STATUS_DESC = " " + PREFIX_STATUS; //empty string not allowed for status
     public static final String INVALID_PRIORITY_DESC = " " + PREFIX_PRIORITY + "A"; //only H, M, L allowed for priority
     public static final String INVALID_NOTE_DESC = " " + PREFIX_NOTE; //empty string not allowed for status
+    public static final String INVALID_PHOTO_DESC = " " + PREFIX_PHOTO; //empty
+    // string not allowed for status
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_REL_DESC = " " + PREFIX_RELATIONSHIP + "sibling*"; // '*' not allowed in
     // relationships
@@ -131,13 +140,16 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
                 .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
-                .withNote(VALID_NOTE_AMY).withTags(VALID_TAG_FRIEND).withRelation(VALID_REL_SIBLINGS).build();
+                .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
+                (VALID_TAG_FRIEND).withRelation(VALID_REL_SIBLINGS).build();
+
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withCompany(VALID_COMPANY_BOB).withPosition(VALID_POSITION_BOB)
                 .withStatus(VALID_STATUS_BOB).withPriority(VALID_PRIORITY_BOB)
-                .withNote(VALID_NOTE_BOB).withTags(VALID_TAG_FRIEND)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withRelation(VALID_REL_SIBLINGS).build();
+                .withNote(VALID_NOTE_BOB).withPhoto(VALID_PHOTO_BOB).withTags
+                (VALID_TAG_FRIEND).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+                .withRelation(VALID_REL_SIBLINGS).build();
 
         DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM)
                 .withTimeslot(VALID_TIMESLOT_MIDTERM)

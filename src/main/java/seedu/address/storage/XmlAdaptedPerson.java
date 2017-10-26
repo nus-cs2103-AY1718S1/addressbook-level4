@@ -15,6 +15,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -45,6 +46,8 @@ public class XmlAdaptedPerson {
     private String priority;
     @XmlElement(required = true)
     private String note;
+    @XmlElement(required = true)
+    private String photo;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -74,6 +77,7 @@ public class XmlAdaptedPerson {
         status = source.getStatus().value;
         priority = source.getPriority().value;
         note = source.getNote().value;
+        photo = source.getPhoto().photoUrl;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -121,8 +125,15 @@ public class XmlAdaptedPerson {
         if (this.note != null) {
             note = new Note(this.note);
         }
+        Photo photo = new Photo("NIL.jpg"); //to handle legacy versions where
+        // these
+        // optional fields were not stored
+        if (this.photo != null) {
+            photo = new Photo(this.photo);
+        }
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Relationship> rel = new HashSet<>(personRel);
-        return new Person(name, phone, email, address, company, position, status, priority, note, tags, rel);
+        return new Person(name, phone, email, address, company, position,
+                status, priority, note, photo, tags, rel);
     }
 }

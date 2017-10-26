@@ -37,6 +37,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setStatus(person.getStatus());
         descriptor.setPriority(person.getPriority());
         descriptor.setNote(person.getNote());
+        descriptor.setPhoto(person.getPhoto());
         descriptor.setTags(person.getTags());
         descriptor.setRelation(person.getRelation());
     }
@@ -145,6 +146,21 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseNote(Optional.of(note)).ifPresent(descriptor::setNote);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("note is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Photo} of the {@code EditPersonDescriptor} that we are
+     * building.
+     */
+    public EditPersonDescriptorBuilder withPhoto(String note) {
+        try {
+            ParserUtil.parsePhoto(Optional.of(note)).ifPresent
+                (descriptor::setPhoto);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Photo is expected to be "
+                    + "unique.");
         }
         return this;
     }

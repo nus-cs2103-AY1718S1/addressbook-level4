@@ -8,13 +8,26 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <AnchorPane>
    <children>
       <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="62.0" prefWidth="346.0" styleClass="label-header">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
+      <ImageView fx:id="photo" layoutX="428.0" layoutY="14.0" fitHeight="100"
+                 preserveRatio="true" AnchorPane.leftAnchor="428.0">
+      </ImageView>
+      <!--<Button fx:id="photoSelectionButton" layoutX="438" layoutY="125"-->
+              <!--prefWidth="80" prefHeight="25" text="import..."-->
+              <!--styleClass="importButton">-->
+      <!--</Button>-->
       <Label fx:id="positionLabel" layoutX="14.0" layoutY="68.0" prefHeight="28.0" prefWidth="318.0">
          <font>
             <Font size="19.0" />
@@ -25,7 +38,8 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <FlowPane id="tags" fx:id="tagsPane" layoutX="14.0" layoutY="119.0" prefHeight="40.0" prefWidth="318.0" />
+      <FlowPane id="tags" fx:id="tagsPane" layoutX="14.0" layoutY="119.0"
+                prefHeight="40.0" prefWidth="200.0" />
       <Label layoutX="385.0" layoutY="170.0" text="Email: " AnchorPane.leftAnchor="385.0">
          <font>
             <Font size="14.0" />
@@ -101,4 +115,12 @@
       <Line endX="500.0" layoutX="115.0" layoutY="336.0" startX="-100.0" stroke="#d0d0d0" />
       <Rectangle fx:id="defaultScreen" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="379.0" layoutY="4.0" stroke="TRANSPARENT" strokeType="INSIDE" width="634.0" />
    </children>
+   </AnchorPane>
+   <AnchorPane minHeight="25">
+      <Button fx:id="photoSelectionButton" layoutX="250" layoutY="410"
+              prefWidth="100" prefHeight="25" minHeight="25" text="import photo"
+              styleClass="importButton" alignment="CENTER">
+
+      </Button>
+   </AnchorPane>
 </AnchorPane>

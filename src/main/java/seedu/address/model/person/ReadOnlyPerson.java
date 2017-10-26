@@ -50,6 +50,10 @@ public interface ReadOnlyPerson {
 
     Note getNote();
 
+    ObjectProperty<Photo> photoProperty();
+
+    Photo getPhoto();
+
     ObjectProperty<UniqueTagList> tagProperty();
 
     Set<Tag> getTags();
@@ -71,7 +75,8 @@ public interface ReadOnlyPerson {
                 && other.getPosition().equals(this.getPosition())
                 && other.getStatus().equals(this.getStatus())
                 && other.getPriority().equals(this.getPriority())
-                && other.getNote().equals(this.getNote()));
+                && other.getNote().equals(this.getNote())
+                && other.getPhoto().equals(this.getPhoto()));
     }
 
     /**
@@ -96,6 +101,8 @@ public interface ReadOnlyPerson {
                 .append(getPriority())
                 .append(" Note: ")
                 .append(getNote())
+                .append(" Photo: ")
+                .append(getPhoto())
                 .append(" Relationship: ")
                 .append(getRelation())
                 .append(" Tags: ");

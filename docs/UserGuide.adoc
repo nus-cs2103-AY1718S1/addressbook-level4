@@ -123,6 +123,22 @@ Examples:
 * `export` +
 Exports the data of everyone in the list in an excel file.
 
+
+=== Mass import of person's data command: `import`
+
+`Coming in v2.0` +
+Imports the data into a ... +
+Format: `import`
+
+****
+* Import persons data
+****
+
+Examples:
+
+* `import` [filename] +
+Imports the file and store it in [app].
+
 === Locating persons by name: `find`
 
 Synonyms/Aliases for the command: `f`, `look`, `search`, `check` +
@@ -186,100 +202,64 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
-
-Synonyms/Aliases for the command: `h`, `past` +
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` / `h` / `past`
-
-=== Setting relationship between 2 persons: `set`
+=== Adding notes to persons : `note`
 
 `Coming in v2.0` +
-Synonyms/Aliases for the command: `set`, `connect` +
-Sets the relationship between 2 persons
-Format: `set [INDEX] [INDEX] [RELATIONSHIP]`
+Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
+Format: `note [PERSON] [STRING]`
+
+Examples:
+* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
+
+
+=== Attaching photos to persons : `photo`
+
+`Implemented in v1.3` +
+Adds a photo to a person by specifying the path of the image file. Only .jpg
+file is allowed. Photo can be added either at the creation of a contact (with
+ `add` command) or when updating a contact's information (with `edit` command)
 
 Examples:
 
-*`list` +
-* `set 1 2 siblings` +
-Sets the relationship between John and Betsy to siblings.
+* `add Jon... ph/~/Images/Photo.jpg`
 
-=== Sorting all entries : `sort`
+* `edit 1 ph/~/Images/Photo.jpg`
 
-Synonyms/Aliases for the command: `arrange`, `organise` +
-Sorts list by name, tag or address. +
-That are represented by 1, 2 and 3 respectively +
-Format: `sort [NUMBER]`
+=== View all persons with a specific tag : `tag`
 
-Examples:
-
-* `sort 1`
-
-* `sort 2`
-
-* `sort 3`
-
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
-
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+`Coming in v2.0` +
+Displays a list of all persons with a specific tag. +
+Format: `tag [TAG]`
 
 Examples:
+* `tag friend`
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+=== View all persons from a specific company : `company`
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
+`Coming in v2.0` +
+Displays a list of all persons from a specific company. +
+Format: `company [COMPANY]`
 
 Examples:
+* `company ABC Foods`
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+=== View a person's address on Google Maps within the app : `address`
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+`Coming in v2.0` +
+Searches for the person's address on Google Maps and displays the result within the app. +
+Format: `address [PERSON]`
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+Examples:
+* `address John Doe`
 
-=== Clearing all entries : `clear`
+=== Send an email to a person : `email`
 
-Clears all entries from the address book. +
-Format: `clear`
+`Coming in v2.0` +
+Opens the user's default email client loaded with the person's email in the To: field. +
+Format: `email [PERSON]`
 
-=== Exiting the program : `exit`
-
-Synonyms/Aliases for the command: `quit` +
-Exits the program. +
-Format: `exit` / `quit`
+Examples:
+* `email John Doe`
 
 === Adding an event: `eventadd`
 
@@ -360,31 +340,100 @@ Returns any event having titles that contain `Birthday`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-== Mass import of person's data command: `import`
+=== Displaying user's schedule command: `checkschedule`
 
-`Coming in v2.0` +
-Imports the data into a ... +
-Format: `import`
-
-****
-* Import persons data
-****
-
-Examples:
-
-* `import` [filename] +
-Imports the file and store it in [app].
-
-=== Displaying user's schedule command: `schedule`
-
-`Coming in v2.0` +
-Displays user's schedule
-Format: `schedule` / `calendar`
+`Coming in v1.4` +
+Displays user's schedule for the current week upon executing the command.
+After execution, a calendar GUI will appear in the main window, with events
+displayed in the corresponding time slots.
+Format: `checkschedule` / `thisweek`/`cs`/`tw`
 
 Example:
 
-* `schedule` +
-Displays user's schedule.
+* `checkschedule` +
+Displays user's schedule for the week.
+
+=== Listing entered commands : `history`
+
+Synonyms/Aliases for the command: `h`, `past` +
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history` / `h` / `past
+
+
+=== Sorting all entries : `sort`
+
+Synonyms/Aliases for the command: `arrange`, `organise` +
+Sorts list by name, tag or address. +
+That are represented by 1, 2 and 3 respectively +
+Format: `sort [NUMBER]`
+
+Examples:
+* `sort 1`
+
+* `sort 2`
+
+* `sort 3`
+
+// tag::undoredo[]
+=== Undoing previous command : `undo`
+
+Restores the address book to the state before the previous _undoable_ command was executed. +
+Format: `undo`
+
+[NOTE]
+====
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+====
+
+Examples:
+
+* `delete 1` +
+`list` +
+`undo` (reverses the `delete 1` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+=== Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command. +
+Format: `redo`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredo[]
+
+=== Clearing all entries : `clear`
+
+Clears all entries from the address book. +
+Format: `clear`
+
+=== Exiting the program : `exit`
+
+Synonyms/Aliases for the command: `quit` +
+Exits the program. +
+Format: `exit` / `quit`
 
 === App opens at startup of user's OS command: `startup`
 
@@ -398,51 +447,6 @@ Example:
 Checks if ANSWER is yes/no and perform the relevant answer choice. +
 * `startup` yes +
 Sets opening app at startup of user's OS yes.
-
-=== Adding notes to persons : `note`
-
-`Coming in v2.0` +
-Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
-Format: `note [PERSON] [STRING]`
-
-Examples:
-* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
-
-=== View all persons with a specific tag : `tag`
-
-`Coming in v2.0` +
-Displays a list of all persons with a specific tag. +
-Format: `tag [TAG]`
-
-Examples:
-* `tag friend`
-
-=== View all persons from a specific company : `company`
-
-`Coming in v2.0` +
-Displays a list of all persons from a specific company. +
-Format: `company [COMPANY]`
-
-Examples:
-* `company ABC Foods`
-
-=== View a person's address on Google Maps within the app : `address`
-
-`Coming in v2.0` +
-Searches for the person's address on Google Maps and displays the result within the app. +
-Format: `address [PERSON]`
-
-Examples:
-* `address John Doe`
-
-=== Send an email to a person : `email`
-
-`Coming in v2.0` +
-Opens the user's default email client loaded with the person's email in the To: field. +
-Format: `email [PERSON]`
-
-Examples:
-* `email John Doe`
 
 === Saving the data
 
