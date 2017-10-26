@@ -7,9 +7,9 @@ import static seedu.address.testutil.TypicalAliasTokens.MON;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.alias.AliasCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.alias.AliasCommand;
 import seedu.address.model.Model;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
