@@ -391,59 +391,37 @@ To transfer my data to another Computer,iInstall the app in the other computer a
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX [OTHER INDICES]...` +
-e.g. `delete 1 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Locate* : `locate INDEX` +
-e.g.`locate 2`[Coming in v2.0]
-* *Schedule* : `schedule INDEX d/DATE act/ACTIVITY` +
-e.g. `schedule 1 d/25-12 act/Christmas dinner`
-* *Copy* : `copy INDEX [OTHER INDICES]...` +
-e.g.`copy 1 2` [Coming in v2.0]
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Calendar* : `calendar`
-
-
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="59%",cols="10%,<5%,<35%,<40%",options="header",]
 |=======================================================================
 |Commands Words |Commands Alias |Format|Example
-|`Add` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`Add` | `a`  |'add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend `
 
-|`Clear` |user |add a new person |
+|`Clear` | `c`|'clear' |
 
-|`Delete` |user |delete a person |remove entries that I no longer need
+|`Delete` |`d`|`delete INDEX [OTHER INDICES]`|
 
-|`Edit` |user |delete multiple persons at once  |avoid going through the hassle of removing one at each time
+|`Edit` | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
-|`Find` |user |find a person by name |locate details of persons without having to go through the entire list
+|`Find` |`f` |`find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`find n/James Jake`
+rough the entire list
 
-|`List` |user |select multiple person |perform the same command to multiple contacts at once
+|`List` |`l` |`list`
 
-|`Help` | h |update my contact |update changes to my contact's details
+|`Help` | `h` | `help COMMAND WORD ` | `help add`
 
-|`Locate` |user |store multiple information of the same kind for a contact |accommodate contacts with multiple addresses, e-mail addresses or phone numbers
+|`Locate` |`lc` |`locate INDEX` | `locate 2`
 
-|`Schedule` |user |get suggestions on the tags I have used |be consistent with the tags I use
+|`Schedule` |`sc` |`schedule d/DATE act/ACTIVITY` | `schedule 1 d/25-12 act/Christmas dinner`
 
-|`Copy` |user |see a sorted list of my contacts |save time and energy on my end
+|`Copy` |`cp` |`copy INDEX [OTHER INDICES]`
 
-|`History` |user |use shortcut to any command | find someone in my contact list easier
+|`History` |`his`|`history`
 
-|`Undo` |user |see a summarised list of shortcut commands |refer to the corresponding shortcut for the command I want to use
+|`Undo` |`u`| `undo` |
 
-|`Redo` |user |rename any field |update my relationship with contact
+|`Redo` |`r` |`redo` |
 
-|`Calendar` |user |check the usage of commands easily |save time and energy on my end
+|`Calendar` |`cl` |`calendar' |
 
 |=======================================================================
 
