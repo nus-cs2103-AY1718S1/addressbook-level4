@@ -336,7 +336,7 @@ Removing a Remark: You can remove a remark by typing 'r/' without specifying any
 
 *Examples:*
 
-image::remarkexample.png[width="500"]
+image::remarkexample.png[width="700"]
     Figure 14: Remark Command Usage Diagram
 
 [WARNING]
