@@ -180,6 +180,12 @@ public class AddTaskCommandTest {
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
             fail("This method should not be called");
         }
+
+        @Override
+        public String getCommandMode() {
+            fail("This method should not be called ");
+            return null;
+        }
     }
 
     /**
