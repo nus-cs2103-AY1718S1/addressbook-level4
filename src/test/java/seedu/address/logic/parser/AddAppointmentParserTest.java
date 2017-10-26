@@ -12,9 +12,13 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddAppointmentCommand;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Appointment;
-
+import seedu.address.testutil.TypicalPersons;
 
 
 public class AddAppointmentParserTest {
@@ -61,7 +65,22 @@ public class AddAppointmentParserTest {
         } catch (ParseException e) {
             fail(e.getMessage());
         }
+    }
 
-
+    @Test
+    public void parseOffAppointment() {
+        try {
+            AddAppointmentCommand command = parser.parse("appointment 1 d/off");
+            assertTrue(command.getIndex().getOneBased() == 1);
+            command.setData(new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs()));
+            CommandResult result = command.execute();
+            assertEquals(("Appointment with "
+                    + TypicalPersons.getTypicalAddressBook().getPersonList().get(0).getName().toString()
+                    + " set to off."), result.feedbackToUser);
+        } catch (ParseException e) {
+            fail(e.getMessage());
+        } catch (CommandException e) {
+            fail();
+        }
     }
 }

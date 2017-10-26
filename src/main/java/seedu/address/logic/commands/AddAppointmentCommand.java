@@ -40,9 +40,15 @@ public class AddAppointmentCommand extends Command {
     private final Index index;
     private final Calendar date;
 
+
     public AddAppointmentCommand() {
         date = null;
         index = null;
+    }
+
+    public AddAppointmentCommand(Index index) {
+        this.index = index;
+        this.date = null;
     }
 
     public AddAppointmentCommand(Index index, Calendar date) {
@@ -53,9 +59,31 @@ public class AddAppointmentCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        if (date == null || index == null) {
+
+        if (date == null && index == null) {
             model.listAppointment();
             return new CommandResult("Rearranged contacts to show upcoming appointments.");
+        }
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToAddAppointment = lastShownList.get(index.getZeroBased());
+
+
+        if (date == null && index != null) {
+            Appointment appointment = new Appointment(personToAddAppointment.getName().toString());
+            try {
+                model.addAppointment(appointment);
+            } catch (PersonNotFoundException e) {
+                return new CommandResult(INVALID_PERSON);
+            }
+            return new CommandResult("Appointment with " + personToAddAppointment.getName().toString()
+                    + " set to off.");
         }
         requireNonNull(date);
         requireNonNull(index);
@@ -63,13 +91,7 @@ public class AddAppointmentCommand extends Command {
         if (!isDateValid()) {
             return new CommandResult(INVALID_DATE);
         }
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToAddAppointment = lastShownList.get(index.getZeroBased());
         Appointment appointment = new Appointment(personToAddAppointment.getName().toString(), date);
         try {
             model.addAppointment(appointment);

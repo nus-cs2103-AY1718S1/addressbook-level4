@@ -41,8 +41,10 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
 
         String[] args = userInput.split(" ");
         try {
-
             Index index = Index.fromOneBased(Integer.parseInt(args[1]));
+            if ("d/off".equals(args[2])) {
+                return new AddAppointmentCommand(index);
+            }
             com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
             List<DateGroup> groups = parser.parse(argumentMultimap.getValue(PREFIX_DATE).get());
             Calendar calendar = Calendar.getInstance();
