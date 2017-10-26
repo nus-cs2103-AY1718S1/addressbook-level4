@@ -621,6 +621,8 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 `data/import/` directory. +
 end::import[]
 
+//tag::autocomplete[]
+
 === Tab autocomplete mechanism
 
 image::SDforTabAutocomplete.png[width="900"]
@@ -661,6 +663,8 @@ Also creates coupling between the `Autocompleter` and `CommandBox`. +
 * **Alternative 2:** Implement `autocomplete` inside `CommandBox`
 ** **Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
 ** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +=== Tab autocomplete mechanism
+
+//end::autocomplete[]
 
 tag::trackingNumber[]
 
