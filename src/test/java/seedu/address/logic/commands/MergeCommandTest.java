@@ -19,7 +19,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
 /**
- * Contains integration test (interaction with Logic) for {@code MergeCommand}
+ * Contains integration test (interaction with Model) for {@code MergeCommand}
  */
 public class MergeCommandTest {
     private final String TEST_DATA_ERROR_FILE_PATH = "./src/test/data/XmlAddressBookStorageTest/DataConversionError.xml";
