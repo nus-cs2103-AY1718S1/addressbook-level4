@@ -33,36 +33,35 @@
     </VBox.margin>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5" focusTraversable="false" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="500.0" prefWidth="500.0" SplitPane.resizableWithParent="false">
-      <StackPane fx:id="personListPanelPlaceholder" minHeight="180.0" minWidth="231.0" prefHeight="180.0" prefWidth="231.0" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" focusTraversable="false" VBox.vgrow="ALWAYS">
+    <VBox fx:id="personList">
+      <StackPane fx:id="personListPanelPlaceholder" alignment="CENTER_LEFT" minWidth="350.0" VBox.vgrow="ALWAYS">
         <padding>
-          <Insets bottom="25.0" left="25.0" top="20.0" />
-        </padding></StackPane>
+          <Insets bottom="25.0" left="25.0" right="10.0" top="20.0" />
+        </padding>
+         </StackPane>
     </VBox>
-    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+    <VBox>
       <children>
-
-        <StackPane fx:id="resultDisplayPlaceholder" minHeight="210.0" prefHeight="210.0">
+        <StackPane fx:id="resultDisplayPlaceholder" prefHeight="450.0">
           <padding>
-            <Insets bottom="15.0" left="20.0" right="25.0" top="20.0" />
+            <Insets bottom="15.0" left="10.0" right="25.0" top="20.0" />
           </padding>
           <VBox.margin>
             <Insets />
           </VBox.margin>
         </StackPane>
-
-        <StackPane fx:id="browserPlaceholder" styleClass="browser-outer-pane">
+              <StackPane fx:id="personDetailPlaceholder" minWidth="400.0" prefHeight="630.0">
           <opaqueInsets>
             <Insets />
           </opaqueInsets>
           <padding>
-            <Insets bottom="25.0" left="20.0" right="25.0" top="10.0" />
+            <Insets bottom="25.0" left="10.0" right="25.0" top="10.0" />
           </padding>
         </StackPane>
       </children>
     </VBox>
   </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+  <StackPane fx:id="statusbarPlaceholder" minHeight="30.0" VBox.vgrow="NEVER" />
 </VBox>

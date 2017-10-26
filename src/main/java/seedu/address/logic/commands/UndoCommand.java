@@ -19,6 +19,8 @@ public class UndoCommand extends Command {
     public static final String COMMAND_WORD = "undo";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "u"));
+    public static final String COMMAND_HOTKEY = "Ctrl+Z";
+
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 

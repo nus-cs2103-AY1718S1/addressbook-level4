@@ -16,6 +16,8 @@ public class ClearCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "clear";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "c"));
+    public static final String COMMAND_HOTKEY = "Ctrl+Shift+C";
+
     public static final String MESSAGE_SUCCESS = "Rolodex has been cleared!";
 
 

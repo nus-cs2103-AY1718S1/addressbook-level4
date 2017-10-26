@@ -19,6 +19,8 @@ public class RedoCommand extends Command {
     public static final String COMMAND_WORD = "redo";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "r"));
+    public static final String COMMAND_HOTKEY = "Ctrl+Y";
+
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 

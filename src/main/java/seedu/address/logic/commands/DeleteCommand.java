@@ -19,6 +19,8 @@ public class DeleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "delete";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "d", "-"));
+    public static final String COMMAND_HOTKEY = "Ctrl+Shift+D";
+    public static final String FORMAT = "delete INDEX";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"

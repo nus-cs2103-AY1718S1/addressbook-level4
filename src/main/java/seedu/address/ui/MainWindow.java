@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -34,7 +35,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String ICON = "/images/rolodex_icon_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int MIN_WIDTH = 800;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -42,14 +43,14 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private ResultDisplay resultDisplay;
     private CommandBox commandBox;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane personDetailPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -66,6 +67,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private SplitPane splitPane;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -80,6 +84,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        setSplitPaneDividerProperty();
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -95,7 +100,7 @@ public class MainWindow extends UiPart<Region> {
      * Set key listeners for handling keyboard shortcuts.
      */
     protected void setKeyListeners() {
-        KeyListener keyListener = new KeyListener(getRoot(), personListPanel, commandBox);
+        KeyListener keyListener = new KeyListener(getRoot(), resultDisplay, personListPanel, commandBox);
         keyListener.handleKeyPress();
     }
 
@@ -137,13 +142,14 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getLatestPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        PersonDetailPanel personDetailPanel = new PersonDetailPanel();
+        personDetailPlaceholder.getChildren().add(personDetailPanel.getRoot());
+
+        resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getRolodexFilePath());
@@ -187,6 +193,18 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Proportions the split pane divider position according to window size
+     */
+    private void setSplitPaneDividerProperty() {
+
+        primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
+                splitPane.setDividerPositions(0.35f));
+
+        primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
+                splitPane.setDividerPositions(0.35f));
+    }
+
+    /**
      * Returns the current size and the position of the main Window.
      */
     GuiSettings getCurrentGuiSetting() {
@@ -222,10 +240,6 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

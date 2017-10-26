@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -107,6 +108,18 @@ public class PersonBuilder {
 
     public Person build() {
         return this.person;
+    }
+
+    /**
+     * Similar to the previous {@code build} except that this build returns a copy of the descriptor with tags
+     * union-exclusive to the specified {@code otherSet} of {@code Tag}s.
+     */
+    public Person build(Set<Tag> otherSet) {
+        EditPersonDescriptorBuilder descriptorBuilder = new EditPersonDescriptorBuilder(person);
+        EditCommand.EditPersonDescriptor descriptor = descriptorBuilder.build();
+        Person copy = new Person(person);
+        copy.setTags(descriptor.getXorTags(otherSet));
+        return copy;
     }
 
 }

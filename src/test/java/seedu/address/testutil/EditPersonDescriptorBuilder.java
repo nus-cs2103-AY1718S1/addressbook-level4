@@ -2,11 +2,13 @@ package seedu.address.testutil;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -98,5 +100,15 @@ public class EditPersonDescriptorBuilder {
 
     public EditPersonDescriptor build() {
         return descriptor;
+    }
+
+    /**
+     * Similar to the previous {@code build} except that this build returns a copy of the descriptor with tags
+     * union-exclusive to the specified {@code otherSet} of {@code Tag}s.
+     */
+    public EditPersonDescriptor build(Set<Tag> otherSet) {
+        EditPersonDescriptor copy = new EditPersonDescriptor(descriptor);
+        copy.setTags(copy.getXorTags(otherSet));
+        return copy;
     }
 }

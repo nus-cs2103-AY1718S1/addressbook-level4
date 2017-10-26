@@ -130,10 +130,22 @@
     -fx-text-fill: #444344;
 }
 
-.cell_small_label {
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
-    -fx-text-fill: #716F70;
+.cell_id_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: derive(gray, 35%);
+    -fx-font-size: 15px;
+}
+
+.person_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 26px;
+    -fx-text-fill: #444344;
+}
+
+.person_small_label {
+    -fx-font-family: "Lucida Grande", "Segoe UI", Optima;
+    -fx-font-size: 15px;
+    -fx-text-fill: #848484;
 }
 
 .anchor-pane {
@@ -150,12 +162,13 @@
      -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
-.browser-inner-pane {
+.person-detail-panel {
+    -fx-background-color: #ffffff;
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
 }
 
 .person-vbox {
-    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 2, 2);
+    -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, -2, 2);
 }
 
 .status-bar {
@@ -166,12 +179,8 @@
 .result-display {
     -fx-background-color: transparent;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-size: 12pt;
     -fx-text-fill: gray;
-}
-
-.result-display .label {
-    -fx-text-fill: black !important;
 }
 
 .status-bar .label {
@@ -234,7 +243,7 @@
     -fx-border-width: 2;
     -fx-background-radius: 0;
     -fx-background-color: #f7f5f4;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-family: "Segoe UI", Optima, Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
@@ -328,14 +337,30 @@
     -fx-background-color: transparent;
     -fx-border-width: 0;
 }
-
+/*
 #avatarImage {
     -fx-image: url("../images/avatarGray.png");
+}
+*/
+#phone {
+    -fx-image: url("../images/phone.png");
+}
+
+#initial_small {
+    -fx-font-family: "Roboto";
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 25px;
+}
+
+#initial_big {
+    -fx-font-family: "Roboto";
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 45px;
 }
 
 #commandTypeLabel {
     -fx-font-size: 11px;
-    -fx-text-fill: #F70D1A;
+    -fx-text-fill: #f70d1a;
 }
 
 #commandTextField {
@@ -354,7 +379,7 @@
     -fx-effect: dropshadow(gaussian, derive(#f7f5f4, -15%), 10, 0, 1, 2);
 }
 
-#filterField, #personListPanel, #personWebpage {
+#filterField, #personListPanel {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
@@ -369,9 +394,8 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
-    -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
-    -fx-background-radius: 2;
-    -fx-font-size: 11;
+    -fx-font-family: "Segoe UI", Optima;
+    -fx-text-fill: derive(gray, 20%);
+    -fx-padding: 1 0 1 0;
+    -fx-font-size: 14px;
 }

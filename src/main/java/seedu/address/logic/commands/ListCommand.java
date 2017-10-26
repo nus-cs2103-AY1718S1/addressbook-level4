@@ -20,6 +20,7 @@ public class ListCommand extends Command {
     public static final String COMMAND_WORD = "list";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "l", "show", "display"));
+    public static final String COMMAND_HOTKEY = "Ctrl+L";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
             + "Displays all persons in the rolodex, "

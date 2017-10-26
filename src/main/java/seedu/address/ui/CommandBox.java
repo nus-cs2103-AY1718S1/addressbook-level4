@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 import org.controlsfx.control.textfield.TextFields;
+import org.testfx.api.FxRobot;
 
 import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
@@ -18,7 +20,12 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -43,15 +50,11 @@ public class CommandBox extends UiPart<Region> {
     private int anchorPosition;
     private String selectedText = "";
     private String input;
-    private final String addCommandFormat = "add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS";
-    private final String editCommandFormat = "edit INDEX [Field(s) you want to change]";
-    private final String findCommandFormat = "find KEYWORD(S)";
-    private final String selectCommandFormat = "select INDEX";
-    private final String deleteCommandFormat = "delete INDEX";
     private final String[] autocompleteCommandList = {"add", "a", "delete", "d", "edit", "e", "find", "f", "search",
         "list", "l", "select", "s"};
     private final String[] addCommandFieldList = {"NAME", "PHONE_NUMBER", "EMAIL", "ADDRESS", "TAG", "INDEX",
         "KEYWORD"};
+    private FxRobot robot;
 
 
 
@@ -65,6 +68,7 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        this.robot = new FxRobot();
         loadKeyboardIcons();
         keyboardIcon.setImage(keyboardIdle);
         pause = new PauseTransition(Duration.millis(TIME_SINCE_TYPING));
@@ -113,10 +117,28 @@ public class CommandBox extends UiPart<Region> {
             break;
         case TAB:
             autocomplete();
+            //press control key to make the text selection in command box appear
+            pressCtrl();
             break;
         default:
             // let JavaFx handle the keypress
         }
+    }
+
+    public FxRobot getRobot() {
+        return this.robot;
+    }
+
+    /**
+     * press control key
+     */
+    public void pressCtrl() {
+        pause = new PauseTransition();
+        pause.setDuration(Duration.millis(100));
+        pause.setOnFinished(event -> {
+            robot.push(KeyCode.CONTROL);
+        });
+        pause.play();
     }
 
     /**
@@ -151,7 +173,6 @@ public class CommandBox extends UiPart<Region> {
      */
     protected void replaceText(String text) {
         commandTextField.setText(text);
-        //commandTextField.positionCaret(commandTextField.getText().length());
     }
 
     /**
@@ -230,13 +251,13 @@ public class CommandBox extends UiPart<Region> {
     private void autoSelectFirstField() {
         setFocus();
         switch (input) {
-        case addCommandFormat:
+        case AddCommand.FORMAT:
             commandTextField.selectRange(START_OF_FIRST_FIELD, END_OF_FIRST_FIELD);
             break;
-        case editCommandFormat:
-        case findCommandFormat:
-        case selectCommandFormat:
-        case deleteCommandFormat:
+        case EditCommand.FORMAT:
+        case FindCommand.FORMAT:
+        case SelectCommand.FORMAT:
+        case DeleteCommand.FORMAT:
             int indexOfFirstSpace = input.indexOf(" ");
             commandTextField.selectRange(indexOfFirstSpace + 1, input.length());
             break;
@@ -295,24 +316,24 @@ public class CommandBox extends UiPart<Region> {
         switch (command) {
         case "add":
         case "a":
-            replaceText(addCommandFormat);
+            replaceText(AddCommand.FORMAT);
             break;
         case "edit":
         case "e":
-            replaceText(editCommandFormat);
+            replaceText(EditCommand.FORMAT);
             break;
         case "find":
         case "f":
         case "search":
-            replaceText(findCommandFormat);
+            replaceText(FindCommand.FORMAT);
             break;
         case "select":
         case "s":
-            replaceText(selectCommandFormat);
+            replaceText(SelectCommand.FORMAT);
             break;
         case "delete":
         case "d":
-            replaceText(deleteCommandFormat);
+            replaceText(DeleteCommand.FORMAT);
             break;
         default:
         }

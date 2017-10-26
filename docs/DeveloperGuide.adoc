@@ -692,6 +692,7 @@ private void handleKeyPress(KeyEvent keyEvent) {
 ----
 
 When `TAB` is pressed, the current input in the command box is checked against the list of commands.
+
 * If the input command is a valid command that requires additional field(s), the full format of the command is displayed in the command box.
 At the same time, the placeholder for the first field that the user needs to key in is selected (as shown below).
 
@@ -737,8 +738,8 @@ The following class diagram shows the relationship between classes concerning th
 
 image::KeyListenerDiagram.png[width="800"]
 
-The `KeyListener` requires access to the `CommandBox` and `PersonListPanel` for key event executions,
-such as changing the focus node and executing word commands.
+The `KeyListener` requires access to the `CommandBox`, `PersonListPanel` and `ResultDisplay` for key event executions,
+such as changing the focus node.
 
 When the user launches the application, the `UiManager` calls `mainWindow.setKeyListeners()`
 which creates the `KeyListener` class to handle the key events.
