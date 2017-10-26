@@ -7,11 +7,12 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
- * A read-only immutable interface for a Person in the addressbook.
+ * A read-only immutable interface for a task in the taskBook.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyTask {
 
+    // Content property
     ObjectProperty<String> nameProperty();
     String getName();
     ObjectProperty<String> descriptionProperty();
@@ -20,6 +21,10 @@ public interface ReadOnlyTask {
     String getStartDateTime();
     ObjectProperty<String> endTimeProperty();
     String getEndDateTime();
+
+    // functional property
+    ObjectProperty<Integer> priorityProperty();
+    Integer getPriority();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<Boolean> completeProperty();
@@ -27,6 +32,7 @@ public interface ReadOnlyTask {
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
+     * state checking involves content property and functional property (priority, tag, and complete)
      */
     default boolean isSameStateAs(ReadOnlyTask other) {
         return other == this // short circuit if same object
@@ -35,11 +41,13 @@ public interface ReadOnlyTask {
                 && other.getDescription().equals(this.getDescription())
                 && other.getStartDateTime().equals(this.getStartDateTime())
                 && other.getEndDateTime().equals(this.getEndDateTime())
+                && other.getPriority().equals(this.getPriority())
+                && other.getTags().equals(this.getTags())
                 && other.getComplete().equals(this.getComplete()));
     }
 
     /**
-     * Formats the person as text, showing all contact details.
+     * Formats the task as text, showing all contact details.
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
@@ -52,6 +60,8 @@ public interface ReadOnlyTask {
                 .append(getEndDateTime())
                 .append(" Complete: ")
                 .append(getComplete())
+                .append(" Priority: ")
+                .append(getPriority())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
