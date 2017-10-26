@@ -194,7 +194,7 @@ public class ResidentBook implements ReadOnlyResidentBook {
 
 
     //// sort address book
-     /** Updates highlight status of person with specified tag
+    /** Updates highlight status of person with specified tag
      */
     public void updateHighlight(String highlightTag) {
         try {
