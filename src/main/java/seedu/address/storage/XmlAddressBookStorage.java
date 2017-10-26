@@ -17,8 +17,6 @@ import seedu.address.model.ReadOnlyAddressBook;
  * A class to access AddressBook data stored as an xml file on the hard disk.
  */
 public class XmlAddressBookStorage implements AddressBookStorage {
-    public static final String DEFAULT_MERGE_FILE_PATH = "./data/mergeAddressBook.xml";
-
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private String filePath;
@@ -101,7 +99,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlSerializableAddressBook defaultFileData = XmlFileStorage.loadDataFromSaveFile(defaultFile);
         XmlSerializableAddressBook newFileData = XmlFileStorage.loadDataFromSaveFile(newFile);
 
-        XmlFileStorage.mergeDataToFile(defaultFileData, newFileData);
+        XmlFileStorage.mergeDataToFile(defaultFileData, newFileData, filePath);
     }
 
 }

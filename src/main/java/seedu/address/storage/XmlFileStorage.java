@@ -1,7 +1,5 @@
 package seedu.address.storage;
 
-import static seedu.address.storage.XmlAddressBookStorage.DEFAULT_MERGE_FILE_PATH;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -46,10 +44,10 @@ public class XmlFileStorage {
     }
 
     /**
-     * Merges the given two addressbook data into one data file
+     * Merges the given two addressbook data into one data file of the file path.
      */
     public static void mergeDataToFile(XmlSerializableAddressBook defaultFileData,
-                                       XmlSerializableAddressBook newFileData) throws IOException {
+                                       XmlSerializableAddressBook newFileData, String filePath) throws IOException {
         ObservableList<ReadOnlyPerson> defaultFilePersonList = defaultFileData.getPersonList();
         ObservableList<ReadOnlyPerson> newFilePersonList = newFileData.getPersonList();
 
@@ -81,7 +79,7 @@ public class XmlFileStorage {
             }
         }
 
-        File mergeFile = new File(DEFAULT_MERGE_FILE_PATH);
+        File mergeFile = new File(filePath);
         FileUtil.createIfMissing(mergeFile);
 
         try {
