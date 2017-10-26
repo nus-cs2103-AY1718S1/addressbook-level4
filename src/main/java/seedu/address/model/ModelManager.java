@@ -172,6 +172,18 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
+    /**
+     * @param predicate
+     * @return the filter of the filtered person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    @Override
+    public List<ReadOnlyPerson> getPersonListByPredicate(Predicate<ReadOnlyPerson> predicate) {
+        FilteredList<ReadOnlyPerson> filteredList = new FilteredList<ReadOnlyPerson>(filteredPersons);
+        filteredList.setPredicate(predicate);
+        return FXCollections.unmodifiableObservableList(filteredList);
+    }
+
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
