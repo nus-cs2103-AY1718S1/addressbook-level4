@@ -2,9 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.awt.*;
-import java.net.URL;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -12,48 +9,49 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Photo {
     public static final String MESSAGE_PHOTO_CONSTRAINTS =
-            "Please enter the correct file path. Photos can only be in JPG " +
-                    "format.";
+            "Please enter the correct file path. Photos can only be in JPG "
+                    + "format.";
     public static final String PHOTOURL_VALIDATION_REGEX =
             "[\\w\\/\\-\\_\\.\\h]+\\.jpg";
-    public final String photoURL;
+    public final String photoUrl;
 
     /**
      * Validates given photo URL.
      *
      * @throws IllegalValueException if given photo URL string is invalid.
      */
-    public Photo(String photoURL) throws IllegalValueException {
-        requireNonNull(photoURL);
-        String photoURLTrimmed = photoURL.trim();
-        if (!isValidPhotoURL(photoURLTrimmed)) {
+    public Photo(String photoUrl) throws IllegalValueException {
+        requireNonNull(photoUrl);
+        String photoUrlTrimmed = photoUrl.trim();
+        if (!isValidPhotoUrl(photoUrlTrimmed)) {
             throw new IllegalValueException(MESSAGE_PHOTO_CONSTRAINTS);
         }
-        this.photoURL = photoURLTrimmed;
+        this.photoUrl = photoUrlTrimmed;
     }
 
     /**
      * Returns true if a given string is a valid person photo.
      */
-    public static boolean isValidPhotoURL(String testURL) {
-        return testURL.matches(PHOTOURL_VALIDATION_REGEX);
+    public static boolean isValidPhotoUrl(String testUrl) {
+        return testUrl.matches(PHOTOURL_VALIDATION_REGEX);
     }
 
     @Override
     public String toString() {
-        return photoURL;
+        return photoUrl;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Photo // instanceof handles nulls
-                && this.photoURL.equals(((Photo) other).photoURL)); // state check
+                && this.photoUrl.equals(((Photo) other).photoUrl)); // state
+        // check
     }
 
     @Override
     public int hashCode() {
-        return photoURL.hashCode();
+        return photoUrl.hashCode();
     }
 
 }

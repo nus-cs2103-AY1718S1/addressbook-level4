@@ -44,7 +44,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS,
-                        PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO, PREFIX_TAG,PREFIX_RELATIONSHIP);
+                        PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO,
+                        PREFIX_TAG, PREFIX_RELATIONSHIP);
 
         Index index;
 
@@ -67,8 +68,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY))
                     .ifPresent(editPersonDescriptor::setPriority);
             ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE)).ifPresent(editPersonDescriptor::setNote);
-            ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO)).ifPresent
-                    (editPersonDescriptor::setPhoto);
+            ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO)).ifPresent(editPersonDescriptor::setPhoto);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
             parseRelForEdit(argMultimap.getAllValues(PREFIX_RELATIONSHIP)).ifPresent(editPersonDescriptor::setRelation);
         } catch (IllegalValueException ive) {

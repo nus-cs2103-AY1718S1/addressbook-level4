@@ -125,7 +125,8 @@ public class Person implements ReadOnlyPerson {
     public Person(Name name, Phone phone, Email email, Address address, Company company, Position position,
                   Status status, Priority priority, Note note, Photo
                           photo, Set<Tag> tags, Set<Relationship> relation) {
-        requireAllNonNull(name, phone, email, address, company, position, status, priority, note, photo, tags, relation);
+        requireAllNonNull(name, phone, email, address, company, position,
+                status, priority, note, photo, tags, relation);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);

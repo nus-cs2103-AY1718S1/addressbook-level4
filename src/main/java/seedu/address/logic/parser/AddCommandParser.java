@@ -15,10 +15,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -36,7 +34,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Status;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
-import seedu.address.ui.CommandBox;
 
 /**
  * Parses input arguments and creates a new AddCommand object

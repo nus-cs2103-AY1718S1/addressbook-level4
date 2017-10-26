@@ -246,7 +246,8 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleShowCalendar() {
-        if(!browserPlaceholder.getChildren().contains(calendarView.getRoot())){
+        if (!browserPlaceholder.getChildren().contains(calendarView.getRoot()
+        )) {
             browserPlaceholder.getChildren().add(calendarView
                     .getRoot());
         }
@@ -257,7 +258,7 @@ public class MainWindow extends UiPart<Region> {
      */
     @FXML
     public void handleHideCalendar() {
-        if(browserPlaceholder.getChildren().contains(calendarView.getRoot())){
+        if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
             browserPlaceholder.getChildren().remove(calendarView
                     .getRoot());
         }

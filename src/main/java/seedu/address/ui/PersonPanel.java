@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -28,7 +27,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -102,17 +100,19 @@ public class PersonPanel extends UiPart<Region> {
                 FileChooser fileChooser = new FileChooser();
 
                 //Set extension filter
-                FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
-                //FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
-                fileChooser.getExtensionFilters().addAll(extFilterJPG);
+                FileChooser.ExtensionFilter extFilterJpg = new FileChooser
+                        .ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+                //FileChooser.ExtensionFilter extFilterPNG = new FileChooser
+                // .ExtensionFilter ("PNG files (*.png)", "*.PNG");
+                fileChooser.getExtensionFilters().addAll(extFilterJpg);
 
                 //Show open file dialog
-                File file = fileChooser.showOpenDialog(((Node)t.getTarget())
+                File file = fileChooser.showOpenDialog(( (Node) t.getTarget())
                         .getScene().getWindow());
 
                 try {
                     //EditCommand.EditPersonDescriptor descriptor = new
-                            //EditCommand.EditPersonDescriptor();
+                    //EditCommand.EditPersonDescriptor();
                     //descriptor.setPhoto(person.getPhoto());
                     //EditCommand command= new EditCommand(index, descriptor);
                     BufferedImage bufferedImage = ImageIO.read(file);
@@ -121,7 +121,7 @@ public class PersonPanel extends UiPart<Region> {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-             }
+            }
         });
     }
     //@@author
@@ -178,7 +178,7 @@ public class PersonPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         for (ReadOnlyPerson dataPerson : event.data.getPersonList()) {
             if (storedPerson.getName().equals(dataPerson.getName())) {
-                showPersonDetails(null,dataPerson);
+                showPersonDetails(null, dataPerson);
                 storedPerson = dataPerson;
                 break;
             }

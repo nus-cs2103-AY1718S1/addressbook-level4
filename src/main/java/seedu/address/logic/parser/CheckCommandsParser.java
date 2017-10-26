@@ -46,11 +46,9 @@ public class CheckCommandsParser {
         final String[] subSelectCommands = new String[] {"select", "s", "choose", "pick"};
         final String[] subSortCommands = new String[] {"sort", "arrange", "organise"};
         final String[] subUndoCommands = new String[] {"undo", "u"};
-        final String[] subCheckScheduleCommands = new String[] {"thisweek",
-                "schedule", "checkschedule", "tw", "cs"};
+        final String[] subCheckScheduleCommands = new String[] {"thisweek", "schedule", "checkschedule", "tw", "cs"};
         final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
-        final String[] subDeleteEventsCommands = new String[] { "eventdel", "delevent", "deleteevent",
-            "eventdelete", "de", "ed" };
+        final String[] subDeleteEventsCommands = new String[] { "eventdel", "delevent", "deleteevent", "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
 
