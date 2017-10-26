@@ -34,4 +34,3 @@ public class FindPhoneCommand extends Command {
                 && this.predicate.equals(((FindPhoneCommand) other).predicate)); // state check
     }
 }
-
