@@ -11,6 +11,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -48,6 +49,15 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane browserPlaceholder;
+
+    @FXML
+    private GridPane helpOverlay;
+
+    @FXML
+    private MenuItem helpOverlayItem;
+
+    @FXML
+    private MenuItem helpOverlayExit;
 
     @FXML
     private StackPane pinListPlaceHolder;
@@ -97,6 +107,8 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(helpOverlayItem, KeyCombination.valueOf("F2"));
+        setAccelerator(helpOverlayExit, KeyCombination.valueOf("ESC"));
     }
 
     /**
@@ -218,6 +230,22 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
+    }
+
+    /**
+     * Opens the help overlay
+     */
+    @FXML
+    private void handleOverlay() {
+        helpOverlay.setVisible(true);
+    }
+
+    /**
+     * Closes the help overlay
+     */
+    @FXML
+    private void handleOverlayExit() {
+        helpOverlay.setVisible(false);
     }
 
     public PersonListPanel getPersonListPanel() {
