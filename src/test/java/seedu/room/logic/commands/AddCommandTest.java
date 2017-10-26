@@ -14,15 +14,14 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-
 import seedu.room.commons.exceptions.IllegalValueException;
 import seedu.room.logic.CommandHistory;
 import seedu.room.logic.UndoRedoStack;
 import seedu.room.logic.commands.exceptions.AlreadySortedException;
 import seedu.room.logic.commands.exceptions.CommandException;
-import seedu.room.model.ResidentBook;
 import seedu.room.model.Model;
 import seedu.room.model.ReadOnlyResidentBook;
+import seedu.room.model.ResidentBook;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.ReadOnlyPerson;
 import seedu.room.model.person.exceptions.DuplicatePersonException;

@@ -2,7 +2,6 @@ package seedu.room.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.room.testutil.TypicalPersons.getTypicalResidentBook;
@@ -18,7 +17,7 @@ import seedu.room.model.Model;
 import seedu.room.model.ModelManager;
 import seedu.room.model.UserPrefs;
 import seedu.room.model.tag.Tag;
-import seedu.room.logic.commands.DeleteByTagCommand;
+
 
 public class DeleteByTagCommandTest {
     private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
