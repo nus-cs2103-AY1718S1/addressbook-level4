@@ -36,15 +36,17 @@ public class AddTagCommand extends UndoableCommand {
 
     private final Set<Tag> tag;
     private final Set<Index> index;
+    private final String indexDisplay;
 
     /**
      *
      * @param tag to be added to address book
      * @param index of the person in the filtered list to remove tag
      */
-    public AddTagCommand(Set<Tag> tag, Set<Index> index)  {
+    public AddTagCommand(Set<Tag> tag, Set<Index> index, String indexDisplay)  {
         this.tag = tag;
         this.index = index;
+        this.indexDisplay = indexDisplay;
     }
 
     @Override
@@ -52,23 +54,14 @@ public class AddTagCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         String successMessage;
         String duplicate;
-        List<String> listIndex = new ArrayList<>();
-        Iterator<Index> it = index.iterator();
-
-        while (it.hasNext()) {
-            int toAdd = it.next().getOneBased();
-            listIndex.add(String.valueOf(toAdd));
-        }
-
-        String indexOut = listIndex.stream().collect(Collectors.joining(", "));
 
         for (Index i : index) {
             if (i.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
-        successMessage = String.format(MESSAGE_ADDED_SUCCESS + " to index " + indexOut + ".", tag);
-        duplicate = String.format(MESSAGE_DUPLICATE_TAG + " index: " + indexOut + ".", tag);
+        successMessage = String.format(MESSAGE_ADDED_SUCCESS + " to index " + indexDisplay + ".", tag);
+        duplicate = String.format(MESSAGE_DUPLICATE_TAG + " index: " + indexDisplay + ".", tag);
 
         try {
             model.addTag(tag, index);

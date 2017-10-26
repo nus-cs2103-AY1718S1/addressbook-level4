@@ -36,15 +36,17 @@ public class RemoveTagCommand extends UndoableCommand {
 
     private final Set<Tag> tag;
     private final Set<Index> index;
+    private final String indexDisplay;
 
     /**
      *
      * @param tag to be removed from address book
      * @param index of the person in the filtered list to remove tag
      */
-    public RemoveTagCommand(Set<Tag> tag, Set<Index> index)  {
+    public RemoveTagCommand(Set<Tag> tag, Set<Index> index, String indexDisplay)  {
         this.tag = tag;
         this.index = index;
+        this.indexDisplay = indexDisplay;
     }
 
     @Override
@@ -52,16 +54,6 @@ public class RemoveTagCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         String successMessage;
         String notFound;
-        List<String> listIndex = new ArrayList<>();
-        Iterator<Index> it = index.iterator();
-
-        while (it.hasNext()) {
-            int toAdd = it.next().getOneBased();
-            listIndex.add(String.valueOf(toAdd));
-        }
-
-        String indexOut = listIndex.stream().collect(Collectors.joining(", "));
-
 
         if (!index.isEmpty()) {
 
@@ -70,8 +62,8 @@ public class RemoveTagCommand extends UndoableCommand {
                     throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
                 }
             }
-            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from index " + indexOut + ".", tag);
-            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexOut + ".", tag);
+            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from index " + indexDisplay + ".", tag);
+            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexDisplay + ".", tag);
         } else {
             successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from address book.", tag);
             notFound = String.format(MESSAGE_TAG_NOT_FOUND + " the address book.", tag);
