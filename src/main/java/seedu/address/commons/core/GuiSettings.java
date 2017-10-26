@@ -54,6 +54,10 @@ public class GuiSettings implements Serializable {
         return Collections.unmodifiableMap(tagColours);
     }
 
+    public void setTagColours(Map<Tag, String> newTagColours) {
+        tagColours = newTagColours;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
