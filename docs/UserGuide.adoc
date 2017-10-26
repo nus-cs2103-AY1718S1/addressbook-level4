@@ -243,7 +243,6 @@ Example:
 
 === Loading pre-existing address book : `load`
 
-`Coming in v2.0` +
 Loads pre-existing address book to current address book. The pre-existing +
 address book has to be in xml-format and it has to be in the data folder +
 with a different name than the current address book.

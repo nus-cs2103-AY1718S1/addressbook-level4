@@ -85,13 +85,13 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withBirthday(String birthday) {
         try {
             ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
+            throw new IllegalArgumentException("birthday is expected to be unique.");
         }
         return this;
     }
