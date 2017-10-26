@@ -429,6 +429,23 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::EnhancedAddCommand[]
+=== Enhanced add command mechanism
+A more flexible add command that only requires the name to be specified at the time of its execution. The other fields such as phone, email and address need not be specfied at the time of add command execution. +
+A separate parser for phone, email and address are used to accommodate this enhancement to isolate the interdependency between the modified enhanced add command with the other commands. +
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of enhanced 'add command' +
+**Alternative 1 (current choice):** Add new parser methods `parseAddPhone`, `parseAddEmail` and `parseAddAddress`  +
+**Pros:** Able to isolate the behaviour of the add command and the edit command so that editing an existing Person will not overwrite the fields that should not be edited. +
+**Cons:** More difficult to implement as more test cases has to be added for the new parser methods. +
+**Alternative 2:** Modify existing parser method `parsePhone`, `parseEmail` and `parseAddress` +
+**Pros:** Easier to implement as we can re-use existing tests and codes and just add minor modifications +
+**Cons:** The behaviour of edit command overlaps with the behaviour of the add command, causing unintended overwrite of other fields such as address when we don't want to. +
+// end::EnhancedAddCommand[]
+
 // tag::clearhistory[]
 === `clearhistory` command
 
