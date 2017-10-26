@@ -30,6 +30,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.predicates.FavouriteListPredicate;
 import seedu.address.model.module.predicates.FixedCodePredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
@@ -192,6 +193,29 @@ public class EditCommandTest {
             }
         }
         expectedModel.updateFilteredLessonList(new UniqueLocationPredicate(expectedModel.getUniqueLocationSet()));
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_editLessonInMarkedList_success() throws Exception {
+        model.bookmarkLesson(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
+        model.updateFilteredLessonList(new FavouriteListPredicate());
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updateFilteredLessonList(new FavouriteListPredicate());
+
+
+        Lesson editedLesson = new LessonBuilder().build();
+        EditLessonDescriptor descriptor = new EditLessonDescriptorBuilder(editedLesson).build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_LESSON, descriptor);
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+
+        expectedModel.updateLesson(
+                model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()), editedLesson);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson);
+
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 

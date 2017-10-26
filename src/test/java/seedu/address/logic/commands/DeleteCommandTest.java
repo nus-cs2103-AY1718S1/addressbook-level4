@@ -54,7 +54,7 @@ public class DeleteCommandTest {
         ReadOnlyLesson lessonToDelete = model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased());
         model.bookmarkLesson(lessonToDelete);
         model.updateFilteredLessonList(new FavouriteListPredicate());
-        
+
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_LESSON);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete);
