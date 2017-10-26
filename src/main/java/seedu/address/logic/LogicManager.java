@@ -53,8 +53,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 result = new CommandResult("Log in successful! Welcome to H.M.U v1.3!");
                 return result;
             } else {
-                    result = new CommandResult("Invalid Credentials. Please try again!");
-                    return result;
+                result = new CommandResult("Invalid Credentials. Please try again!");
+                return result;
             }
         }   else {
             logger.info("----------------[USER COMMAND][" + commandText + "]");
