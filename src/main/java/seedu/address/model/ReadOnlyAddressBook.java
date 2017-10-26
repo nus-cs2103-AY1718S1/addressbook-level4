@@ -36,5 +36,4 @@ public interface ReadOnlyAddressBook {
      */
 
     ObservableList<ReadOnlyTask> getTaskList();
-    
 }

@@ -20,7 +20,7 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
  */
 public class AddTaskCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "add";
+    public static final String COMMAND_WORD = "new";
 
     public static final String COMMAND_FORMAT = "add <header>\n"
             + "add <header> by <deadline> \n"
@@ -39,10 +39,10 @@ public class AddTaskCommand extends UndoableCommand {
 
 
     /**
-     * Empty Constructor 
+     * Empty Constructor
      */
     public AddTaskCommand() {}
-    
+
     /**
      * Creates an AddTaskCommand to add a task with only a header
      *
