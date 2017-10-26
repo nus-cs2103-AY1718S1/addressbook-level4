@@ -22,7 +22,7 @@ public class ListCommand extends Command {
             new HashSet<>(Arrays.asList(COMMAND_WORD, "l", "show", "display"));
     public static final String COMMAND_HOTKEY = "Ctrl+L";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ":"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": "
             + "Displays all persons in the rolodex, "
             + "sorted by the specified sort order or the default sort order." + "\n"
             + "Parameters: " + MESSAGE_SORT_USAGE + "\n"
