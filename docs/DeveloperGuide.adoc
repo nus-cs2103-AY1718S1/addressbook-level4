@@ -413,6 +413,56 @@ The following sequence diagram below shows how AddMeeting operation works:
 
 image::addMeetingSequenceDiagram.png[width="800"]
 
+=== Delete Meeting
+
+The delete meeting command inherits from UndoableCommand which allows user to delete meeting with the following parameters: 'INDEX' of meeting in the meeting list.
+
+Implementation:
+
+When the 'deletemeeting' command is called with the appropriate parameters, the instance of the 'Meeting' object created during addmeeting
+is called upon and removed.
+For example,
+
+[source,java]
+----
+deletemeeting 1
+----
+
+Deletes an object with the following parameters
+[source,java]
+----
+INDEX: 1
+----
+
+The 'INDEX' of meeting provides the name, date and location of the meeting which is used to remove it
+from the meeting list.
+
+=== Find Meeting
+
+The find meeting command inherits from Command which allows users to find meeting with the following parameters: [KEYWORD] of the meeting in the meeting list.
+
+Implementation:
+
+When the 'findmeeting' command is called with the appropriate parameters, a search for the instance of the 'Meeting' object created during addmeeting
+with keywords are listed.
+For example,
+
+[source,java]
+----
+findmeeting makan
+----
+
+Finds an object with the following parameters
+[source,java]
+----
+KEYWORD: makan
+----
+
+The 'KEYWORD' of meeting provides the name, date and location of the meeting which is used to list it.
+
+If none of the meetings contains the 'KEYWORD', the results would show 'No meetings found'.
+
+
 === Edit Meeting
 
 The edit meeting command is an undoable command which allows the user to edit the `MeetingName`, `DateTime` or `Place` of
