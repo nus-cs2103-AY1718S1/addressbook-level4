@@ -23,7 +23,6 @@ import seedu.address.logic.commands.UndoCommand;
  * Container for all command words, command aliases, and shorted command usage in the application.
  */
 public class Commands {
-    
     private static String[] ALL_COMMAND_WORDS = {
         AddCommand.COMMAND_WORD,
         BackupCommand.COMMAND_WORD,
@@ -96,5 +95,4 @@ public class Commands {
     }
 
     public static HashMap<String, String> getAllCommandUsages() { return ALL_COMMANDS_AND_SHORT_MESSAGES; }
-
 }
