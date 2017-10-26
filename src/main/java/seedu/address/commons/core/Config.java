@@ -11,7 +11,7 @@ public class Config {
     public static final String DEFAULT_CONFIG_FILE = "config.json";
 
     // Config values customizable through config file
-    private String appTitle = "Address App";
+    private String appTitle = "Intelli";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
 
@@ -68,5 +68,4 @@ public class Config {
         sb.append("\nPreference file Location : " + userPrefsFilePath);
         return sb.toString();
     }
-
 }

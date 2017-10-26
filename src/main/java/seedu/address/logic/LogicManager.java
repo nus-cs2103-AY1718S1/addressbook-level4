@@ -16,6 +16,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.graph.GraphWrapper;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.Storage;
 
 
 /**
@@ -28,11 +29,16 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+
     private final GraphWrapper graphWrapper;
     private final Viewer graphViewer;
 
-    public LogicManager(Model model) {
+    private final Storage storage;
+
+
+    public LogicManager(Model model, Storage storage) {
         this.model = model;
+        this.storage = storage;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
@@ -46,7 +52,7 @@ public class LogicManager extends ComponentManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack);
+            command.setData(model, history, undoRedoStack, storage);
             CommandResult result = command.execute();
             graphWrapper.buildGraph(model);
             undoRedoStack.push(command);

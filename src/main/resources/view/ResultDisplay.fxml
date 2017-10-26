@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8"
-    xmlns:fx="http://javafx.com/fxml/1">
-  <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display"/>
+<StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <TextArea editable="false" styleClass="result-display" />
+   <SplitPane fx:id="splitPane" dividerPositions="0.7" prefHeight="160.0" prefWidth="200.0">
+      <items>
+         <TextArea fx:id="resultDisplay" editable="false" prefWidth="346.0" styleClass="result-display" />
+         <TextArea fx:id="infoDisplay" editable="false" styleClass="result-display" />
+      </items>
+   </SplitPane>
 </StackPane>
