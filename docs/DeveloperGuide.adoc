@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T17-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T17-B3`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -31,6 +31,7 @@ This app will not work with earlier versions of Java 8.
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
+<<<
 
 === Setting up the project in your computer
 
@@ -50,6 +51,8 @@ This will generate all resources required by the application and tests.
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
+
+<<<
 
 === Configurations to do before writing code
 
@@ -81,10 +84,9 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding, get some sense of the overall design by reading the link:#architecture[Architecture] section.
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+<<<
 
 == Design
 
@@ -125,6 +127,8 @@ For example, the `Logic` component (see the class diagram given below) defines i
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
 
+<<<
+
 [discrete]
 ==== Events-Driven nature of the design
 
@@ -144,6 +148,8 @@ _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
+<<<
+
 The sections below give more details of each component.
 
 === UI component
@@ -162,6 +168,8 @@ The `UI` component,
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+
+<<<
 
 === Logic component
 
@@ -184,6 +192,8 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
+<<<
+
 === Model component
 
 image::ModelClassDiagramupdated.png[width="800"]
@@ -197,6 +207,8 @@ The `Model`,
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
+<<<
 
 === Storage component
 
@@ -213,6 +225,8 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+<<<
 
 == Implementation
 
@@ -345,6 +359,8 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+<<<
+
 === Enhanced Find Command
 
 The enhanced `find` command now allows searches for a Person's Name, Phone Number, Email, Address and Tags. It uses the
@@ -352,9 +368,58 @@ The enhanced `find` command now allows searches for a Person's Name, Phone Numbe
 
 To search whether a person contains the specific keywords, `PersonContainsKeywordsPredicate` will run 2 boolean methods:
 
-. First, it will call `getSearchText` from the `ReadOnlyPerson` class, which will return a String, and searches the String for the requested keyword. +
-. Second, it will get the Person's name by using `getName` method from `ReadOnlyPerson`, and check if the name contains the requested keyword by using `contains(CharSequence keyword)`.
+First, it will call `getSearchText()` from the `ReadOnlyPerson` class, which will return a String, and searches the String for the requested keyword.
+The code implementation is shown below, and is accessible in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson.java`] +
+[source,java]
+----
+default String getSearchText() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append(" ")
+                .append(getPhone())
+                .append(" ")
+                .append(getBirthday())
+                .append(" ")
+                .append(getAddress())
+                .append(" ")
+                .append(getEmail())
+                .append(" ")
+                .append(getEmail().getUserName())
+                .append(" ")
+                .append(getEmail().getDomainName());
+        for (Tag tag: getTags()) {
+            builder.append(" ")
+                .append(tag.tagName);
+        }
 
+        return builder.toString();
+    }
+----
+Next, it will get the Person's name by using `getName` method from `ReadOnlyPerson`, and check if the name contains the requested keyword by using `contains(CharSequence keyword)`.
+If there is any match, this boolean method will return true. This method is shown below; and can be found in link:{repoURL}/src/main/java/seedu/address/model/person/PersonContainsKeywordsPredicate.java[`PersonContainsKeywordsPredicate.java`]
+[source,java]
+----
+@Override
+public boolean test(ReadOnlyPerson person) {
+    return keywords.stream()
+            .anyMatch(keyword -> StringUtil
+            .containsWordIgnoreCase(person
+            .getSearchText(), keyword))
+            || keywords.stream()
+            .anyMatch(keyword -> checkName(
+            person.getName(), keyword));
+}
+
+private boolean checkName(Name personName, String keyword) {
+    return personName
+    .toString()
+    .toLowerCase()
+    .contains(keyword.trim()
+    .toLowerCase());
+}
+----
+
+[NOTE]
 The `getSearchText` method inside the `ReadOnlyPerson` class will convert all the Name, Phone Number, Email, Address and Tags into a String, that can be used to search for the person.
 
 ==== Design Considerations
@@ -367,20 +432,70 @@ The `getSearchText` method inside the `ReadOnlyPerson` class will convert all th
 *Pros:* Partial search words will show results for any fields in contact information +
 *Cons:* Usage such as `find a` will search for everything that contains `a` in a person's contact information, which is not useful for the user.
 
+<<<
+
 === Sort
 
 The `sort` command now allows for the list of contacts to be sorted via phone number, name, or email in lexicographic order.
 It uses the `sorted()` method included in `ObservableList.java`, with comparators defined by the developer.
 
-. To begin a sort, `SortCommand` will call `model.sort()` with a String parameter. This parameter defines how the list will be sorted,
+To begin a sort, `SortCommand` will call `model.sort(String type)` with a String parameter. This parameter defines how the list will be sorted,
 and can be one of 3 options, "name", "phone" or "email".
 
-. Next, a comparator will be chosen and passed into the `sorted()` method based on the parameter passed from the `Command`.
+Next, a comparator will be chosen and passed into the `sorted()` method based on the parameter passed from the `Command`.
+The methods for choosing the comparator and calling the `sortBy()` method are shown below, and can be found in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
 
-. A sorted list will be returned and displayed.
+[source,java]
+----
+@Override
+public void sort(String sortType) throws DuplicatePersonException {
+    switch (sortType) {
+    case SortCommand.ARGUMENT_NAME:
+        addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_NAME));
+        break;
+
+    case SortCommand.ARGUMENT_PHONE:
+        addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_PHONE));
+        break;
+
+    case SortCommand.ARGUMENT_EMAIL:
+        addressBook.setPersons(sortBy(COMPARATOR_SORT_BY_EMAIL));
+        break;
+
+    default:
+        break;
+
+    }
+    indicateAddressBookChanged();
+}
+----
+[source,java]
+----
+private ArrayList<ReadOnlyPerson> sortBy(Comparator<ReadOnlyPerson> comparator) {
+    ArrayList<ReadOnlyPerson> newList = new ArrayList<>();
+    updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+    SortedList<ReadOnlyPerson> sortedList =
+                getFilteredPersonList()
+                .filtered(PREDICATE_SHOW_PINNED_PERSONS)
+                .sorted(comparator);
+
+    newList.addAll(sortedList);
+    sortedList = getFilteredPersonList()
+    .filtered(PREDICATE_SHOW_UNPINNED_PERSONS)
+    .sorted(comparator);
+
+    newList.addAll(sortedList);
+    return newList;
+}
+----
+
+[NOTE]
+Expanding the number of ways the list can be sorted requires adding cases to the switch in link:{repoURL}/src/main/java/seedu/address/logic/commands/SortCommand.java[`SortCommand.java`]
+and creating a new comparator in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
 
 ==== Design Considerations
-*Aspect:* Order of sort +
+*Aspect:* Methodology used for sorting +
 *Alternative 1 (current choice):* `ObservableList` 's `sorted()` method +
 *Pros:* Easy to implement, relatively modular +
 *Cons:* Dependant on Java API, future changes to the method could affect the implementation
@@ -388,6 +503,107 @@ and can be one of 3 options, "name", "phone" or "email".
 *Alternative 2:* Override methods with own implementations +
 *Pros:* Less dependant on provided resources, more flexible with product's requirements +
 *Cons:* Resource-intensive
+
+<<<
+
+=== Deleting Multiple Contacts
+
+A method added to previous address book as an enhancement was to be able to delete multiple contacts at a time.
+This is done by creating an index that is a one-based index to read the list of people desired to be deleted instead of the default zero-based index.
+The one-based index code fragment is as follow:
+
+[source,java]
+----
+public static Index[] arrayFromOneBased(int[] oneBasedIndex) {
+    …
+    arrayIndex[i] = new Index(oneBasedIndex[i] - 1);
+    }
+    return arrayIndex;
+}
+----
+
+Parser will need to be taught to read oneBasedIndex array into Indexand we will use the newly created array to form a new method:
+
+[source,java]
+----
+public static Index[] parseDeleteIndex(String oneBasedIndex) throws IllegalValueException {
+…
+    for(String str : parts) {
+        trimmedIndex[i] = str.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex[i])) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+    …
+    }
+}
+----
+
+<<<
+
+Delete command will then need to be able to read the array in order to take in the index as shown below:
+
+[source,java]
+----
+public DeleteCommand parse(String args) throws ParseException {
+    …
+    Index index[] = ParserUtil.parseDeleteIndex(args);
+    …
+}
+----
+
+[NOTE]
+Command for Delete will be updated after parsing of new array for delete function is completed in link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand.java`]
+
+==== Design Considerations
+*Aspect:* Implementation of Multiple deletion +
+*Alternative 1 (current choice):* Use an one-based array to accept deletion of multiple contacts using their index +
+*Pros:* Implementation is simple +
+*Cons:* Might be slower than previous delete method as it has to read from an array before executing the deletion itself +
+
+<<<
+
+=== Listing by tags
+The List command was expanded to accommodate listing contacts with specific tags.
+This was done through the creation of predicates based on the argument passed in when the List command is called.
+The argument, being a String referring to the tag specified for listing, is passed into the `getPredicateForTags()` method shown below,
+which returns a predicate to check if each person in the list has the tag.
+
+[source,java]
+----
+    public Predicate<ReadOnlyPerson> getPredicateForTags(String arg) throws IllegalValueException {
+        try {
+            Tag targetTag = new Tag(arg);
+            Predicate<ReadOnlyPerson> taggedPredicate = p -> p.getTags().contains(targetTag);
+            return taggedPredicate;
+        }  catch (IllegalValueException ive) {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
+        }
+    }
+----
+The above method implementation can also be found at link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager.java`]
+
+The predicate is then passed into the updateFilteredPersonList() method to subsequently update the list being displayed.
+How `getPredicateForTags()` is called is demonstrated below; the snippet can be found in link:{repoURL}/src/main/java/seedu/address/logic/commands/ListCommand.java[`ListCommand.java`]
+[source,java]
+----
+Predicate <ReadOnlyPerson> predicateShowAllTagged = model.getPredicateForTags(tagToList);
+            model.updateFilteredPersonList(predicateShowAllTagged);
+            String concat = " with " + tagToList + " tag.";
+            return new CommandResult(String.format(MESSAGE_SUCCESS, concat));
+----
+
+[NOTE]
+The initial command, “list”, which merely displayed all the persons in the list, has now been changed to the command “list all”.
+
+==== Design Considerations
+*Aspect:* Filtering the list +
+*Alternative 1 (Current Choice):* Using a new predicate +
+*Pros:* Implementation not too complex, easy to debug +
+*Cons:* Usage is limited, will be slow if there are a large number of contacts +
+
+*Alternative 2:* creating HashMaps for each tag to each person in the contact list +
+*Pros:* O(1) implementation for filtering +
+*Cons:* Extremely space-inefficient +
 
 <<<
 
@@ -409,6 +625,8 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+<<<
 
 == Documentation
 
@@ -439,6 +657,8 @@ Here are the steps to convert the project documentation files to PDF format.
 
 image::chrome_save_as_pdf.png[width="300"]
 _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+
+<<<
 
 == Testing
 
@@ -489,6 +709,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+<<<
+
 == Dev Ops
 
 === Build Automation
@@ -513,6 +735,8 @@ Here are the steps to create a new release.
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
+
+<<<
 
 [appendix]
 == Suggested Programming Tasks to Get Started
@@ -759,17 +983,19 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+<<<
+
 [appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="70%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person| store my contacts' information easily
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
@@ -842,6 +1068,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 
 {More to be added}
+
+<<<
 
 [appendix]
 == Use Cases
@@ -940,6 +1168,8 @@ Use case ends.
 
 {More to be added}
 
+<<<
+
 [appendix]
 == Glossary
 
@@ -979,6 +1209,8 @@ UI
 ....
 A user interface (UI) is a platform which a user interacts with an application
 ....
+
+<<<
 
 [appendix]
 == Product Survey
