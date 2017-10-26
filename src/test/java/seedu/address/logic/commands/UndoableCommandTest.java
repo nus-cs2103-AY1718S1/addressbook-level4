@@ -12,7 +12,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.graph.GraphWrapper;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -52,7 +51,6 @@ public class UndoableCommandTest {
     class DummyCommand extends UndoableCommand {
         DummyCommand(Model model) {
             this.model = model;
-            this.graphWrapper = new GraphWrapper();
         }
 
         @Override

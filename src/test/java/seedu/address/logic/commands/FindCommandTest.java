@@ -25,7 +25,6 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.graph.GraphWrapper;
 import seedu.address.model.person.AddressContainsKeywordsPredicate;
 import seedu.address.model.person.AnyContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
@@ -39,7 +38,6 @@ import seedu.address.model.tag.TagContainsKeywordsPredicate;
  */
 public class FindCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private GraphWrapper graphWrapper = new GraphWrapper();
 
     @Test
     public void equals() {
@@ -232,7 +230,7 @@ public class FindCommandTest {
     private FindCommand prepareGlobalCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new AnyContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
@@ -242,7 +240,7 @@ public class FindCommandTest {
     private FindCommand prepareNameCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
@@ -252,7 +250,7 @@ public class FindCommandTest {
     private FindCommand prepareAddressCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
@@ -262,7 +260,7 @@ public class FindCommandTest {
     private FindCommand prepareEmailCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
@@ -272,7 +270,7 @@ public class FindCommandTest {
     private FindCommand preparePhoneCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
@@ -282,7 +280,7 @@ public class FindCommandTest {
     private FindCommand prepareTagCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 

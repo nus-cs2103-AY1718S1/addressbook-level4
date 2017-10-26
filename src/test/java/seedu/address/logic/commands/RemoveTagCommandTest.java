@@ -15,7 +15,6 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.graph.GraphWrapper;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code RemoveTagCommand}.
@@ -23,7 +22,6 @@ import seedu.address.model.graph.GraphWrapper;
 public class RemoveTagCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private GraphWrapper graphWrapper = new GraphWrapper();
 
     @Test
     public void execute_validTagNameWhichExists_success() throws Exception {
@@ -74,7 +72,7 @@ public class RemoveTagCommandTest {
      */
     private RemoveTagCommand prepareCommand(String tagToBeRemoved) {
         RemoveTagCommand removeTagCommand = new RemoveTagCommand(tagToBeRemoved);
-        removeTagCommand.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
+        removeTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return removeTagCommand;
     }
 }

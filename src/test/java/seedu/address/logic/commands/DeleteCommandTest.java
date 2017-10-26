@@ -18,7 +18,6 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.graph.GraphWrapper;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -27,7 +26,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private GraphWrapper graphWrapper = new GraphWrapper();
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
@@ -106,7 +104,7 @@ public class DeleteCommandTest {
      */
     private DeleteCommand prepareCommand(Index index) {
         DeleteCommand deleteCommand = new DeleteCommand(index);
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack(), graphWrapper);
+        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }
 
