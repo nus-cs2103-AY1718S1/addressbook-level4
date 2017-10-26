@@ -19,9 +19,11 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
+ * Contains integration tests (interaction with the Model) and unit tests for {@code markTaskCommand}.
  */
 public class MarkTaskCommandTest {
 
@@ -29,15 +31,18 @@ public class MarkTaskCommandTest {
 
     @Test
     public void execute_validIndexList_success() throws Exception {
+
         ReadOnlyTask taskToMark = model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased());
+        ReadOnlyTask expectedTask = new Task(taskToMark, true);
+
+        //System.out.println(taskToMark);
         MarkTaskCommand markTaskCommand = prepareCommand(INDEX_FIRST_TASK);
 
         //markTaskCommand.executeUndoableCommand();
         String expectedMessage = String.format(MarkTaskCommand.MESSAGE_MARK_TASK_SUCCESS, taskToMark);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getTaskBook(), new UserPrefs());
-        //System.out.println(expectedModel);
-        //expectedModel.deleteTask(taskToDelete);
+        expectedModel.markTask(taskToMark);
 
         assertCommandSuccess(markTaskCommand, model, expectedMessage, expectedModel);
     }
