@@ -33,9 +33,8 @@ public class ToggleTagColorParserTest {
         // Default case produces ToggleTagColorCommand (true, "args[0]", "args[1]")
         assertTrue(parser.parse("Test Test2").equals(expectedDefault));
 
-        // Throw ArrayIndexOutOfBoundsException
+        // Throw Parse error
         thrown.expect(ParseException.class);
-
         parser.parse("Test");
     }
 }
