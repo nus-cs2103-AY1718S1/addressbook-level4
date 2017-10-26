@@ -41,7 +41,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyEvent> filteredEvents;
-    private final FilteredList<ReadOnlyReminder> filteredReminders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -55,7 +54,6 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
-        filteredReminders = new FilteredList<>(this.addressBook.getReminderList());
     }
 
     public ModelManager() {
@@ -98,14 +96,9 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Model support for contact component =============================================================
 
     @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
+        addressBook.sortPersonList();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
@@ -123,16 +116,12 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
+        addressBook.sortPersonList();
         indicateAddressBookChanged();
     }
-
     @Override
-    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-            throws DuplicateEventException, EventNotFoundException {
-        requireAllNonNull(target, editedEvent);
-
-        addressBook.updateEvent(target, editedEvent);
-        sortEventList();
+    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
 
@@ -177,7 +166,19 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Model support for activity component =============================================================
 
     @Override
-    public void sortEventList() {
+    public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+        requireNonNull(event);
+        addressBook.addEvent(event);
+        addressBook.sortEventList();
+        updateFilteredEventsList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireAllNonNull(target, editedEvent);
+        addressBook.updateEvent(target, editedEvent);
         addressBook.sortEventList();
         indicateAddressBookChanged();
     }
@@ -185,20 +186,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
         addressBook.removeEvent(event);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
-        addressBook.addEvent(event);
-        updateFilteredEventsList(PREDICATE_SHOW_ALL_EVENTS);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException {
-        addressBook.addReminder(reminder);
-        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
         indicateAddressBookChanged();
     }
 
@@ -242,22 +229,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredEvents.setPredicate(predicate);
     }
     //=========== Filtered Activity List Accessors =============================================================
-
-    @Override
-    public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
-        return FXCollections.unmodifiableObservableList(filteredReminders);
-    }
-
-    /**
-     * Updates the filter of the filtered reminder list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-
-    @Override
-    public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
-        requireNonNull(predicate);
-        filteredReminders.setPredicate(predicate);
-    }
 
     @Override
     public boolean equals(Object obj) {

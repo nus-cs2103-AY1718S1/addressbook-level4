@@ -24,12 +24,6 @@ public interface ReadOnlyAddressBook {
     ObservableList<ReadOnlyEvent> getEventList();
 
     /**
-     * Returns an unmodifiable view of the events list.
-     * This list will not contain any duplicate events.
-     */
-    ObservableList<ReadOnlyReminder> getReminderList();
-
-    /**
      * Returns an unmodifiable view of the tags list.
      * This list will not contain any duplicate tags.
      */

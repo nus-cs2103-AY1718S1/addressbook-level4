@@ -29,11 +29,11 @@ public class PropertyManagerTest {
     public void preLoadedProperty_checkInitializationSuccessful() {
         assertEquals(5, PropertyManager.getAllShortNames().size());
 
-        assertEquals("name", PropertyManager.getPropertyFullName("n"));
-        assertEquals("email", PropertyManager.getPropertyFullName("e"));
-        assertEquals("phone", PropertyManager.getPropertyFullName("p"));
-        assertEquals("address", PropertyManager.getPropertyFullName("a"));
-        assertEquals("dateTime", PropertyManager.getPropertyFullName("dt"));
+        assertEquals("Name", PropertyManager.getPropertyFullName("n"));
+        assertEquals("Email", PropertyManager.getPropertyFullName("e"));
+        assertEquals("Phone", PropertyManager.getPropertyFullName("p"));
+        assertEquals("Address", PropertyManager.getPropertyFullName("a"));
+        assertEquals("DateTime", PropertyManager.getPropertyFullName("dt"));
 
         assertEquals(String.format(DEFAULT_MESSAGE, "Address"), PropertyManager.getPropertyConstraintMessage("a"));
         assertEquals(DEFAULT_REGEX, PropertyManager.getPropertyValidationRegex("a"));

@@ -453,13 +453,13 @@ convenient for the users themselves. We have set the default reminders to a day 
 users of their upcoming events via notifications on System Tray.
 
 image::SystemTrayNotifications.png[width="300"]
-_Figure 3.3.5 : Notifications via System Tray
+_Figure 3.3.5 : Notifications via System Tray_
 
 
 ==== Design consideration
 **Aspect:**  How to implement the idea of reminders into Events +
 **Alternative 1 (current choice):** Create a new reminder class that contains an event parameter to it. Events have a +
-list of reminders within them.
+list of reminders within them. +
 **Pros:** Independent. Reminder class is on its own and easy for future usage since it is already a class by itself. +
 Each reminder is tagged to an event, such that if we want to access the reminders in an event, it is easy to do so. +
 **Cons:** Require major changes to Logic and Model components for Event +
@@ -468,7 +468,7 @@ Each reminder is tagged to an event, such that if we want to access the reminder
 **Cons:** Less versatile and reminders cannot be applied anywhere else if needed. +
 
 image::ReminderClassDiagram.png[width="200"]
-_Figure 3.3.6 : Class Diagram for `Reminder`
+_Figure 3.3.6 : Class Diagram for `Reminder`_
 
 Therefore we have decided to adopt alternative 1 of creating a Reminder class as it is more versatile for future usage.
 
@@ -487,10 +487,10 @@ on its own.
 with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself.
 
 image::EventClassDiagram.png[width="200"]
-_Figure 3.3.7 : Class Diagram for `Event`
+_Figure 3.3.7 : Class Diagram for `Event`_
 
 image::EventReminderRS.png[width="300"]
-_Figure 3.3.8 : Relationship of Event and Reminder
+_Figure 3.3.8 : Relationship of Event and Reminder_
 
 The following sequence diagram shows how the automatic adding of reminders work
 

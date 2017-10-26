@@ -50,6 +50,15 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Sorts the persons based on time
+     *
+     */
+    public void sortPersons() {
+        internalList.sort((e1, e2) -> (e1.getName().toString()
+                .compareTo(e2.getName().toString())));
+    }
+
+    /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.

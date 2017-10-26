@@ -53,21 +53,10 @@ public class AddEventCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addEvent(toAdd);
-            DateTime temp = toAdd.getTime();
-            LocalDate tempDate = LocalDate.parse(temp.toString().substring(0, 7));
-            LocalDate dateNow = LocalDate.now();
-            long tempMsg = dateNow.until(tempDate, ChronoUnit.DAYS);
-            String msg = String.valueOf(tempMsg);
-            Reminder reminderAdd = new Reminder(temp, msg);
-            model.addReminder(reminderAdd);
-            model.sortEventList();
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateEventException de) {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
-        } catch (DuplicateReminderException dr) {
-            throw new CommandException(MESSAGE_DUPLICATE_REMINDER);
         }
-
     }
 
     @Override

@@ -30,7 +30,6 @@ import seedu.address.testutil.EditPersonDescriptorBuilder;
  * Contains helper methods for testing commands.
  */
 public class CommandTestUtil {
-
     public static final String VALID_NAME_AMY = "Amy Bee";
     public static final String VALID_NAME_BOB = "Bob Chou";
     public static final String VALID_PHONE_AMY = "11111111";
@@ -65,7 +64,6 @@ public class CommandTestUtil {
     public static final String NAME_DESC_EVENT2 = " " + PREFIX_NAME + VALID_NAME_EVENT2;
     public static final String DATE_DESC_EVENT2 = " " + PREFIX_DATE_TIME + VALID_DATE_EVENT2;
     public static final String VENUE_DESC_EVENT2 = " " + PREFIX_ADDRESS + VALID_VENUE_EVENT2;
-
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones

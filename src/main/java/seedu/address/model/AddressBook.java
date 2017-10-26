@@ -153,6 +153,39 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        if (persons.remove(key)) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
+    /**
+     * Sorts the persons according to their name.
+     */
+    public void sortPersonList() {
+        persons.sortPersons();
+    }
+
+    /*****************************************************
+     * Event-level operations
+     *****************************************************/
+
+    /**
+     * Adds an event to the address book.
+     *
+     * @throws DuplicateEventException if an equivalent event already exists.
+     */
+    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
+        Event newEvent = new Event(e);
+        events.add(newEvent);
+    }
+
+    /**
      * Replaces the given event {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
@@ -169,6 +202,34 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         events.setEvent(target, editedEvent);
     }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws EventNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
+        if (events.remove(key)) {
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+
+    /**
+     * Sorts the events according to their date time.
+     */
+    public void sortEventList() {
+        events.sortEvents();
+    }
+
+    /*****************************************************
+     * Tag-level operations
+     *****************************************************/
+
+    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
+        tags.add(t);
+    }
+
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
@@ -199,79 +260,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
-    /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
-            return true;
-        } else {
-            throw new PersonNotFoundException();
-        }
-    }
-
-    /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws EventNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
-        if (events.remove(key)) {
-            return true;
-        } else {
-            throw new EventNotFoundException();
-        }
-    }
-
-    /**
-     * Adds an event to the address book.
-     *
-     * @throws DuplicateEventException if an equivalent event already exists.
-     */
-    public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
-        Event newEvent = new Event(e);
-        events.add(newEvent);
-    }
-
-    /**
-     * Sorts the events according to time
-     */
-    public void sortEventList() {
-        events.sortEvents();
-    }
-
-    /*****************************************************
-     * Reminder-level operations
-     *****************************************************/
-
-    /**
-     * Adds a reminder to the address book.
-     * Also checks the new reminder's tags and updates {@link #tags} with any new tags found,*
-     * @throws DuplicateReminderException if an equivalent reminder already exists.
-     */
-    public void addReminder(ReadOnlyReminder r) throws DuplicateReminderException {
-        Reminder newReminder = new Reminder(r);
-        reminders.add(newReminder);
-    }
-
-
-
-    /*****************************************************
-     * Tag-level operations
-     *****************************************************/
-
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
-    }
-
     /*****************************************************
      * Util methods
      *****************************************************/
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
         // TODO: refine later
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
     }
 
     @Override

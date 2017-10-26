@@ -61,21 +61,15 @@ public interface Model {
 
     //=========== Model support for activity component =============================================================
 
-    /** Sorts the events list according to date/time */
-    void sortEventList();
-
     /** Adds an event */
     void addEvent(ReadOnlyEvent event) throws DuplicateEventException;
-
-    /** Deletes the given event */
-    void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
     /** Updates the given event */
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws DuplicateEventException, EventNotFoundException;
+    /** Deletes the given event */
+    void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException;
 
-    /** Adds a reminder */
-    void addReminder(ReadOnlyReminder reminder) throws DuplicateReminderException;
 
     //=========== Filtered Person/Activity List support =============================================================
 
@@ -85,15 +79,9 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered event list */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
-    /** Returns an unmodifiable view of the filtered reminder list */
-    ObservableList<ReadOnlyReminder> getFilteredReminderList();
-
     /** Updates the filter of the filtered person list to filter by the given {@code predicate}. */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /** Updates the filter of the filtered event list to filter by the given {@code predicate}. */
     void updateFilteredEventsList(Predicate<ReadOnlyEvent> predicate);
-
-    /** Updates the filter of the filtered event list to filter by the given {@code predicate}. */
-    void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate);
 }

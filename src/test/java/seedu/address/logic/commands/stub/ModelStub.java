@@ -37,10 +37,6 @@ public class ModelStub implements Model {
     public void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
         fail("This method should not be called.");
     }
-    @Override
-    public void sortEventList() {
-        fail("This method should not be called.");
-    }
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
