@@ -62,7 +62,10 @@ public class PersonInfo extends UiPart<Region> {
     }
 
     private void loadDefaultPage() {
-        circle.setRadius(0);
+        circle.setRadius(70);
+        initial.setText("C");
+        name.setText("Welcome to Circles!");
+        phone.setText("version 1.3");
     }
 
     private void loadPersonPage(ReadOnlyPerson person) {
