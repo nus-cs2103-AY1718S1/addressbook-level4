@@ -82,12 +82,7 @@ public class AddAppointmentCommand extends Command {
             appointment = new Appointment(personToAddAppointment.getName().toString(), date);
         }
 
-
-
-        requireNonNull(date);
-        requireNonNull(index);
-
-        if (!isDateValid()) {
+        if (date != null && !isDateValid()) {
             return new CommandResult(INVALID_DATE);
         }
 
