@@ -187,4 +187,13 @@ public class Parcel implements ReadOnlyParcel {
         return getAsText();
     }
 
+    @Override
+    public int compareTo(Object o) {
+        Parcel other = (Parcel) o;
+        if (other == this) {
+            return 0;
+        } else {
+            return this.getDeliveryDate().compareTo(other.getDeliveryDate());
+        }
+    }
 }

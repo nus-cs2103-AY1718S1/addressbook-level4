@@ -2,6 +2,8 @@ package seedu.address.model.parcel;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -16,6 +18,8 @@ public class DeliveryDate {
     public static final String DATE_VALIDATION_REGEX =
             "^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d$";
     public final String value;
+    public final String[] valueArray;
+    public final LocalDate date;
 
     /**
      * Validates given delivery date.
@@ -29,6 +33,9 @@ public class DeliveryDate {
             throw new IllegalValueException(MESSAGE_DELIVERY_DATE_CONSTRAINTS);
         }
         this.value = trimmedDate;
+        this.valueArray = trimmedDate.split("-");
+        this.date = LocalDate.parse(valueArray[2] + "-" + valueArray[1] + "-" + valueArray[0]);
+
     }
 
     /**
@@ -36,6 +43,10 @@ public class DeliveryDate {
      */
     public static boolean isValidDate(String test) {
         return test.matches(DATE_VALIDATION_REGEX);
+    }
+
+    private LocalDate getDate() {
+        return this.date;
     }
 
     @Override
@@ -55,4 +66,7 @@ public class DeliveryDate {
         return value.hashCode();
     }
 
+    public int compareTo(DeliveryDate deliveryDate) {
+        return this.date.compareTo(deliveryDate.getDate());
+    }
 }

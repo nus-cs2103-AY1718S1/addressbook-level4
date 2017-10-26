@@ -41,6 +41,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.testutil.TypicalParcels.AMY;
 import static seedu.address.testutil.TypicalParcels.BOB;
@@ -244,6 +245,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          * remains unchanged
          */
         executeCommand(SelectCommand.COMMAND_WORD + " 1");
+        selectParcel(INDEX_FIRST_PARCEL);
         assert getParcelListPanel().isAnyCardSelected();
         assertCommandSuccess(CARL);
 
@@ -368,6 +370,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
+        expectedModel.maintainSorted();
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();

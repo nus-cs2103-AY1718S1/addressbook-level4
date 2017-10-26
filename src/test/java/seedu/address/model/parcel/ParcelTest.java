@@ -93,4 +93,19 @@ public class ParcelTest {
 
     }
 
+    @Test
+    public void compareTo() throws IllegalValueException {
+        Parcel parcel = new Parcel(new ParcelBuilder().build());
+        Parcel sameParcel = new Parcel(new TrackingNumber(DEFAULT_TRACKING_NUMBER),
+                new Name(DEFAULT_NAME), new Phone(DEFAULT_PHONE),
+                new Email(DEFAULT_EMAIL), new Address(DEFAULT_ADDRESS),
+                new DeliveryDate(DEFAULT_DELIVERY_DATE),
+                Status.getInstance(DEFAULT_STATUS),
+                SampleDataUtil.getTagSet(DEFAULT_TAGS));
+        int parcelHash = parcel.hashCode();
+        int sameParcelHash = sameParcel.hashCode();
+        assertFalse(parcelHash == sameParcelHash);
+        assertEquals(parcel.compareTo(sameParcel), 0);
+    }
+
 }

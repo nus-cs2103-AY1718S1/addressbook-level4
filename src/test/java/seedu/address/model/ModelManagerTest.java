@@ -95,4 +95,5 @@ public class ModelManagerTest {
         differentUserPrefs.setAddressBookName("differentName");
         assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
     }
+
 }
