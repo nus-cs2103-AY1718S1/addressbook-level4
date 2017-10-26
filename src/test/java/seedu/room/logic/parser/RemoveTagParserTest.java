@@ -14,6 +14,7 @@ import seedu.room.logic.commands.RemoveTagCommand;
 public class RemoveTagParserTest {
 
     private static final String MESSAGE_EMPTY_TAG_INPUT = "";
+    private static final String MESSAGE_EMPTY_STRING_INPUT = "     ";
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE);
 
@@ -23,6 +24,13 @@ public class RemoveTagParserTest {
     public void parse_missingParts_failure() {
         // no tagName specified
         assertParseFailure(parser, MESSAGE_EMPTY_TAG_INPUT, MESSAGE_INVALID_FORMAT);
+
+    }
+
+    @Test
+    public void parse_emptyString_failure() {
+        // only empty string
+        assertParseFailure(parser, MESSAGE_EMPTY_STRING_INPUT, MESSAGE_INVALID_FORMAT);
     }
 
     @Test
