@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 
 /**
@@ -17,7 +18,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(PersonDetailsPanel.class);
 
     @FXML
-    private GridPane personDetailsBox;
+    private VBox personDetailsBox;
 
     @FXML
     private Label nameLabel;
@@ -33,7 +34,6 @@ public class PersonDetailsPanel extends UiPart<Region> {
 
     public PersonDetailsPanel() {
         super(FXML);
-
-        //registerAsAnEventHandler(this);
+        registerAsAnEventHandler(this);
     }
 }
