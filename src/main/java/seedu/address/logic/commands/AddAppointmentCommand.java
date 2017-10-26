@@ -74,17 +74,16 @@ public class AddAppointmentCommand extends Command {
 
         ReadOnlyPerson personToAddAppointment = lastShownList.get(index.getZeroBased());
 
-
+        Appointment appointment;
+        
         if (date == null && index != null) {
-            Appointment appointment = new Appointment(personToAddAppointment.getName().toString());
-            try {
-                model.addAppointment(appointment);
-            } catch (PersonNotFoundException e) {
-                return new CommandResult(INVALID_PERSON);
-            }
-            return new CommandResult("Appointment with " + personToAddAppointment.getName().toString()
-                    + " set to off.");
+            appointment = new Appointment(personToAddAppointment.getName().toString());
+        } else {
+            appointment = new Appointment(personToAddAppointment.getName().toString(), date);
         }
+
+
+
         requireNonNull(date);
         requireNonNull(index);
 
@@ -92,11 +91,14 @@ public class AddAppointmentCommand extends Command {
             return new CommandResult(INVALID_DATE);
         }
 
-        Appointment appointment = new Appointment(personToAddAppointment.getName().toString(), date);
         try {
             model.addAppointment(appointment);
         } catch (PersonNotFoundException e) {
             return new CommandResult(INVALID_PERSON);
+        }
+        if (date == null) {
+            return new CommandResult("Appointment with " + personToAddAppointment.getName().toString()
+                    + " set to off.");
         }
         return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName().toString()
                 + " on "
