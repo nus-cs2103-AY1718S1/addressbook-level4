@@ -13,10 +13,13 @@ import seedu.address.model.person.exceptions.TagNotFoundException;
 public class RemoveTagCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "removeTag";
 
+    public static final String COMMAND_PARAMETERS = "TAGNAME (must be alphanumeric)";
+
+    public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD + " " + COMMAND_PARAMETERS;
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ":Removes the tag identified by the user input from the tag lists of the address book and all"
             + " persons in the address book.\n"
-            + "Parameters: TAGNAME (must be alphanumeric)\n"
+            + "Parameters: " + COMMAND_PARAMETERS + "\n"
             + "Example: " + COMMAND_WORD + " friend";
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Removed Tag: %1$s";
