@@ -129,7 +129,6 @@ public class Autocompleter {
     private void autocompleteCommandWord(String commandBoxText) {
         ArrayList<String> possibleResults = getClosestCommands(commandBoxText);
         possibleAutocompleteResults = possibleResults;
-        System.out.println(commandBoxText);
         switch (possibleResults.size()) {
         case 0:
             state = AutocompleteState.COMMAND;
