@@ -1,4 +1,4 @@
-= H.M.U v1.1 - User Guide
+= H.M.U v1.3 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -152,6 +152,17 @@ Examples:
 Returns `john` and `John Doe` whose addresses contain the word 'stadium'.
 * `findByAddress stadium pier` +
 Returns any person having addresses containing `stadium` or `pier`
+
+=== Locating persons by phone: `findByPhone`
+
+Finds persons whose phone contain any of the given keywords. +
+Format: `findByPhone KEYWORD [MORE_KEYWORDS]`
+
+
+Examples:
+
+* `findByPhone 12345678` +
+Returns `john` and `John Doe` whose phone number is '12345678'.
 
 === Locating persons by email: `findByEmail`
 
@@ -362,11 +373,16 @@ e.g.`select 2`
 == Coming Soon in v2.0
 Customizable Toolbar +
 Password Support (Available in v1.2) +
+More User-Friendly Login (Available in v1.3) +
+Change Password (Available in v1.2) +
+More User-Friendly Change Password +
 Google Maps Support (Available in v1.1) +
 Contact's photo support +
 Search by Address (Available in v1.2) +
 Add Closest MRT Station to Contacts (Available in v1.2) +
 Search Contacts by Phone Number(Available in v1.2) +
-Scheduling +
+Scheduling (Available in v1.3) +
 Closest Meet-up Point +
+Search by Email (Available in v1.3) +
+Search by Phone Number (Available in v1.3) +
 
