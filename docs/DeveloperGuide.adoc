@@ -233,6 +233,8 @@ _Figure 2.2.4 : Structure of the Storage Component_
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The diagram _(Figure 2.2.4)_ above shows the structure of the `Storage` component.
+The `StorageManager` handles the saving and loading of data for both `AddressBookStorage` and `EventStorage`.
+`XmlSerializableAddressBook` and `XmlSerializableEventStorage` handle the conversion from Java to Xml format using `XmlAdaptedPerson`, `XmlAdaptedEvent` and `XmlAdaptedTag`.
 
 The `Storage` component:
 
