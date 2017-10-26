@@ -84,7 +84,7 @@ public class XmlAdaptedPerson {
         final ExpiryDate expiryDate = new ExpiryDate(this.expiryDate);
         final Remark remark = new Remark(this.remark);
         final Image image = new Image(this.image);
-        return new Person(name, phone, email, address, tags, expirayDate, remark, image);
+        return new Person(name, phone, email, address, tags, expiryDate, remark, image);
 
     }
 }
