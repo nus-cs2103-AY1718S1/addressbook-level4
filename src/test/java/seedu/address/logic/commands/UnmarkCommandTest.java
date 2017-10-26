@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import javafx.collections.ObservableList;
-import org.junit.Before;
 import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
