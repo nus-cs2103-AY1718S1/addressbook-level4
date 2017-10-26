@@ -6,15 +6,21 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_WHITELISTED_PERSONS;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private ReadOnlyPerson selectedPerson;
+    private Index index;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -23,6 +29,19 @@ public abstract class UndoableCommand extends Command {
      */
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
+        this.selectedPerson = model.getSelectedPerson();
+        if (selectedPerson != null) {
+            switch (model.getCurrentList()) {
+                case "blacklist":
+                    this.index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList().indexOf(selectedPerson));
+                    break;
+                case "whitelist":
+                    this.index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList().indexOf(selectedPerson));
+                    break;
+                default:
+                    this.index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(selectedPerson));
+            }
+        }
         this.previousAddressBook = new AddressBook(model.getAddressBook());
     }
 
@@ -31,18 +50,22 @@ public abstract class UndoableCommand extends Command {
      * was executed and updates the filtered person list to
      * show all persons.
      */
-    protected final void undo() {
+    protected final void undo() throws CommandException {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         updateCurrentDisplayedList(model.getCurrentList());
+        if (index != null) {
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+        }
     }
 
     /**
      * Executes the command and updates the filtered person
      * list to show all persons.
      */
-    protected final void redo() {
+    protected final void redo() throws CommandException{
         requireNonNull(model);
+        saveAddressBookSnapshot();
         try {
             executeUndoableCommand();
         } catch (CommandException ce) {
