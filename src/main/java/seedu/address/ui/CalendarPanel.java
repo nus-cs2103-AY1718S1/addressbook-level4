@@ -92,10 +92,12 @@ public class CalendarPanel extends UiPart<Region> {
                 LocalDate date = datePicker.getValue();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 String dateString = date.format(formatter);
+                String birthdayString = dateString.substring(0, 5);
                 logger.info("Date selected: " + dateString);
                 try {
+                    //CommandBox.replaceText();
                     logic.execute(FindTaskCommand.COMMAND_WORD + " " + dateString);
-                    logic.execute(FindCommand.COMMAND_WORD + " " + dateString);
+                    logic.execute(FindCommand.COMMAND_WORD + " " + birthdayString);
                 } catch (CommandException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {

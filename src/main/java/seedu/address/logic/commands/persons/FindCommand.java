@@ -14,9 +14,9 @@ public class FindCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names or tags "
             + "contain any of the specified keywords (case-insensitive)\n "
-            + "       or all person with birthday (dd-MM-yyyy) and displays them as a list with index numbers.\n"
+            + "       or all person with birthday (dd-MM) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie friends 01-01-2001 13-12-2017";
+            + "Example: " + COMMAND_WORD + " alice bob charlie friends 01-01 13-12";
 
     private final PersonContainsKeywordsPredicate predicate;
 
