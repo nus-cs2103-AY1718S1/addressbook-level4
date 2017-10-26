@@ -13,7 +13,6 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -101,6 +100,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTagFromAll(tag);
         indicateAddressBookChanged();
     }
+
     @Override
     public void sortPerson(int type) throws InvalidSortTypeException {
         addressBook.sortPerson(type);
@@ -140,8 +140,7 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Event Operations  ===========================================================================
 
     @Override
-    public synchronized void addEvent(ReadOnlyEvent event) throws
-            DuplicateEventException {
+    public synchronized void addEvent(ReadOnlyEvent event) {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         indicateAddressBookChanged();

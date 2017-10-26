@@ -25,7 +25,6 @@ public abstract class Command {
     }
 
     /**
-     * @@reginleiff
      * Constructs a feedback message to summarise an operation that displayed a listing of events.
      *
      * @param displaySize used to generate summary

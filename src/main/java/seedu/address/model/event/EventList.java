@@ -1,3 +1,4 @@
+//@@author A0162268B
 package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
