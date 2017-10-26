@@ -1,7 +1,11 @@
 package seedu.address.logic;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
@@ -12,6 +16,7 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.Status;
 
 /**
  * The main LogicManager of the app.
@@ -48,6 +53,26 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
         return model.getFilteredParcelList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getFilteredParcelListWithStatusCompleted() {
+        ObservableList<ReadOnlyParcel> parcelsWithStatusCompleted = getFilteredParcelList().stream()
+                .filter(parcel -> parcel.getStatus().equals(Status.COMPLETED))
+                .collect(collectingAndThen(toList(), filteredParcels ->
+                        FXCollections.observableArrayList(filteredParcels)));
+
+        return parcelsWithStatusCompleted;
+    }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getFilteredParcelListWithStatusNotCompleted() {
+        ObservableList<ReadOnlyParcel> parcelsWithStatusNotCompleted = getFilteredParcelList().stream()
+                .filter(parcel -> !parcel.getStatus().equals(Status.COMPLETED))
+                .collect(collectingAndThen(toList(), filteredParcels ->
+                        FXCollections.observableArrayList(filteredParcels)));
+
+        return parcelsWithStatusNotCompleted;
     }
 
     @Override
