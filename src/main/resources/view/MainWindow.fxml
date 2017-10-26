@@ -11,16 +11,16 @@
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@DarkTheme.css"/>
-        <URL value="@Extensions.css"/>
+        <URL value="@DarkTheme.css" />
+        <URL value="@Extensions.css" />
     </stylesheets>
 
     <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help"/>
+            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
         </Menu>
     </MenuBar>
     <SplitPane dividerPositions="0.5" VBox.vgrow="ALWAYS">
@@ -29,40 +29,37 @@
                 <children>
                     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
                         <padding>
-                            <Insets bottom="5" left="10" right="10" top="5"/>
+                            <Insets bottom="5" left="10" right="10" top="5" />
                         </padding>
                     </StackPane>
-                    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100"
-                               styleClass="pane-with-border" VBox.vgrow="NEVER">
+                    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
                         <padding>
-                            <Insets bottom="5" left="10" right="10" top="5"/>
+                            <Insets bottom="5" left="10" right="10" top="5" />
                         </padding>
                     </StackPane>
                     <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-                        <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0"
-                              SplitPane.resizableWithParent="false">
+                        <VBox fx:id="personList" minWidth="340.0" prefWidth="340.0" SplitPane.resizableWithParent="false">
                             <padding>
-                                <Insets bottom="10" left="10" right="10" top="10"/>
+                                <Insets bottom="10" left="10" right="10" top="10" />
                             </padding>
-                            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
                         </VBox>
                         <StackPane fx:id="browserPlaceholder" prefWidth="340">
                             <padding>
-                                <Insets bottom="10" left="10" right="10" top="10"/>
+                                <Insets bottom="10" left="10" right="10" top="10" />
                             </padding>
                         </StackPane>
                     </SplitPane>
                 </children>
             </VBox>
-            <VBox fx:id="eventList" maxWidth="400.0" minWidth="200.0" prefWidth="200.0"
-                  SplitPane.resizableWithParent="false">
-                <padding>
-                    <Insets bottom="10" left="10" right="10" top="10"/>
-                </padding>
-                <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-            </VBox>
+         <SplitPane fx:id="eventList" dividerPositions="0.5" maxWidth="500.0" orientation="VERTICAL">
+           <items>
+                   <StackPane fx:id="calendarViewPlaceholder" alignment="TOP_LEFT" />
+                   <StackPane fx:id="eventListPanelPlaceholder" alignment="TOP_LEFT" minHeight="-Infinity" />
+           </items>
+         </SplitPane>
         </items>
     </SplitPane>
 
-    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
+    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>

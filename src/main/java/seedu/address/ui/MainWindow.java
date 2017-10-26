@@ -45,6 +45,7 @@ public class MainWindow extends UiPart<Region> {
     private EventListPanel eventListPanel;
     private Config config;
     private UserPrefs prefs;
+    private CalendarView calendarView;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -63,6 +64,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane calendarViewPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -140,6 +144,9 @@ public class MainWindow extends UiPart<Region> {
         eventListPanel = new EventListPanel(logic.getEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
+        calendarView = new CalendarView(logic.getEventList());
+        calendarViewPlaceholder.getChildren().add(calendarView.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -148,6 +155,8 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+
 
 
     }
