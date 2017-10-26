@@ -28,6 +28,11 @@ public class ArgumentTokenizer {
         return extractArguments(argsString, positions);
     }
 
+    /**
+     * Returns the part of the argsString that is unquoted.
+     * @param argsString argument string.
+     * @return unquoted argument string.
+     */
     private static String extractUnquotedArgsString(String argsString) {
         if (argsString.indexOf(QUOTE_REGEX) == argsString.lastIndexOf(QUOTE_REGEX)) {
             return argsString;

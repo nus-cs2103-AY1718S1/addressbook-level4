@@ -1,6 +1,10 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_MONTHLY;
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_WEEKLY;
+import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
 
 import org.ocpsoft.prettytime.nlp.PrettyTimeParser;
 import org.ocpsoft.prettytime.nlp.parse.DateGroup;
@@ -12,6 +16,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Description;
+import seedu.address.model.task.StartDate;
+import seedu.address.model.task.TaskDates;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
@@ -20,17 +30,6 @@ import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_MONTHLY;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_WEEKLY;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
-
-import seedu.address.model.tag.Tag;
-import seedu.address.model.task.Deadline;
-import seedu.address.model.task.Description;
-import seedu.address.model.task.StartDate;
-import seedu.address.model.task.TaskDates;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -145,6 +144,12 @@ public class ParserUtil {
                 parseRecurInterval(date.get()))) : Optional.empty();
     }
 
+    /**
+     * Parses Dates using PrettyTime NLP.
+     * @param naturalLanguageInput date input.
+     * @return Date output.
+     * @throws IllegalValueException if string cannot be parsed.
+     */
     public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {
         List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
         if (dateGroup.isEmpty()) {
@@ -154,10 +159,15 @@ public class ParserUtil {
         return dates.get(dates.size()-1);
     }
 
+    /**
+     * Parses the recur interval of a date.
+     * @param dateString input string.
+     * @return Suffix of the recur interval.
+     */
     public static Suffix parseRecurInterval(String dateString) {
-        return (dateString.contains(SUFFIX_RECURRING_DATE_WEEKLY.toString()) ? SUFFIX_RECURRING_DATE_WEEKLY :
-                (dateString.contains(SUFFIX_RECURRING_DATE_MONTHLY.toString())) ? SUFFIX_RECURRING_DATE_MONTHLY :
-                        (dateString.contains(SUFFIX_RECURRING_DATE_YEARLY.toString())) ? SUFFIX_RECURRING_DATE_YEARLY :
-                                SUFFIX_NO_RECUR_INTERVAL);
+        return (dateString.contains(SUFFIX_RECURRING_DATE_WEEKLY.toString()) ? SUFFIX_RECURRING_DATE_WEEKLY
+                : (dateString.contains(SUFFIX_RECURRING_DATE_MONTHLY.toString())) ? SUFFIX_RECURRING_DATE_MONTHLY
+                : (dateString.contains(SUFFIX_RECURRING_DATE_YEARLY.toString())) ? SUFFIX_RECURRING_DATE_YEARLY
+                : SUFFIX_NO_RECUR_INTERVAL);
     }
 }
