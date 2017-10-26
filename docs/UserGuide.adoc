@@ -335,6 +335,8 @@ All persons displayed will be sorted in ascending alphabetical order based on th
 Using `List` command will always display all persons in sorted ascedning alphabetical order. +
 Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons.
 
+==== Sorted Contacts
+
 === Coming soon in v2.0
 
 ==== Import export of addressbook from header menu bar
@@ -361,6 +363,11 @@ Functions wll be found from `new UI panel`.
 
 All contacts in the list will sorted in ascending alphabetical order.  +
 Functions wll be found from improved `list` command.
+
+==== Import & export of addressbook
+
+User is able to import or export an xml file of an addressbook from +
+the commandline or menu toolbar
 
 == FAQ
 
