@@ -219,7 +219,9 @@ public class Person implements ReadOnlyPerson {
     /**
      * Replaces this person's tags with the tags in the argument tag set.
      */
-    public void setTags(Set<Tag> replacement) { tags.set(new UniqueTagList(replacement)); }
+    public void setTags(Set<Tag> replacement) {
+        tags.set(new UniqueTagList(replacement));
+    }
 
     public String getDetailByPrefix(Prefix prefix) {
         if (prefix.equals(PREFIX_NAME)) {
@@ -239,7 +241,8 @@ public class Person implements ReadOnlyPerson {
                 detail += tag.tagName + " ";
             }
             return detail.trim();
-        } return "";
+        }
+        return "";
     }
 
     @Override

@@ -71,8 +71,19 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Creates a copy of the given ReadOnlyInsurance.
      */
     public LifeInsurance(ReadOnlyInsurance source) {
-        this(source.getOwner(), source.getInsured(), source.getBeneficiary(), source.getPremium(),
-                source.getContractPath(), source.getSigningDate(), source.getExpiryDate());
+        if (source.ownerProperty() != null) {
+            this.owner = new SimpleObjectProperty<>(source.getOwner());
+        }
+        if (source.insuredProperty() != null) {
+            this.insured = new SimpleObjectProperty<>(source.getInsured());
+        }
+        if (source.beneficiaryProperty() != null) {
+            this.beneficiary= new SimpleObjectProperty<>(source.getBeneficiary());
+        }
+        this.premium = new SimpleDoubleProperty(source.getPremium());
+        this.contractPath = new SimpleStringProperty(source.getContractPath());
+        this.signingDate = new SimpleStringProperty(source.getSigningDate());
+        this.expiryDate = new SimpleStringProperty(source.getExpiryDate());
         if (source.getRoleToPersonMap() != null) {
             this.roleToPersonMap = source.getRoleToPersonMap();
         }
@@ -90,16 +101,16 @@ public class LifeInsurance implements ReadOnlyInsurance {
             Map.Entry pair = (Map.Entry) it.next();
             if (pair.getValue().equals(name)) {
                 switch (pair.getKey().toString()) {
-                    case "OWNER":
+                case "OWNER":
                     this.owner = new SimpleObjectProperty<>(person);
                     break;
-                    case "INSURED":
+                case "INSURED":
                     this.insured = new SimpleObjectProperty<>(person);
                     break;
-                    case "BENEFICIARY":
+                case "BENEFICIARY":
                     this.beneficiary = new SimpleObjectProperty<>(person);
                     break;
-                    default:
+                default:
                     assert(false);
                 }
             }
@@ -155,7 +166,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
 
     @Override
     public ObjectProperty<ReadOnlyPerson> beneficiaryProperty() {
-        return owner;
+        return beneficiary;
     }
 
     @Override

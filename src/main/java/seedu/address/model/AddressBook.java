@@ -68,23 +68,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.lifeInsuranceMap = (HashMap<String, LifeInsurance>) insurances;
     }
 
-    public void syncLifeInsurance() {
-        //Get the list of insurance ids of a person and filter out the ones that are empty
-        persons.forEach(p -> {
-            if (!p.getLifeInsuranceIds().isEmpty()) {
-                //for every insurance id get the insurance object from lifeInsuranceMap
-                p.getLifeInsuranceIds().forEach( id -> {
-                    String idString = id.toString();
-                    ReadOnlyInsurance lf = lifeInsuranceMap.get(idString);
-                    LifeInsurance newLifeInsurance = new LifeInsurance(lf, p);
-                    lifeInsuranceMap.replace(idString, newLifeInsurance);
-                    p.addLifeInsurances(newLifeInsurance);
-                });
-            }
-        });
-
-    }
-
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -100,7 +83,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
 
         setLifeInsurances(newData.getLifeInsuranceMap());
-        syncLifeInsurance();
+        syncMasterLifeInsuranceMapWith();
     }
 
     //// person-level operations
@@ -190,8 +173,20 @@ public class AddressBook implements ReadOnlyAddressBook {
      *  - exists in the master map {@link #lifeInsuranceMap
      *  - points to a LifeInsurance object in the master list
      */
-    private void syncMasterLifeInsuranceMapWith(ReadOnlyPerson person) {
-
+    public void syncMasterLifeInsuranceMapWith() {
+        //Get the list of insurance ids of a person and filter out the ones that are empty
+        persons.forEach(p -> {
+            if (!p.getLifeInsuranceIds().isEmpty()) {
+                //for every insurance id get the insurance object from lifeInsuranceMap
+                p.getLifeInsuranceIds().forEach( id -> {
+                    String idString = id.toString();
+                    ReadOnlyInsurance lf = lifeInsuranceMap.get(idString);
+                    LifeInsurance newLifeInsurance = new LifeInsurance(lf, p);
+                    lifeInsuranceMap.replace(idString, newLifeInsurance);
+                    p.addLifeInsurances(newLifeInsurance);
+                });
+            }
+        });
     }
 
     //// tag-level operations
@@ -221,10 +216,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public Map<String, ReadOnlyInsurance> getLifeInsuranceMap() {
         final Map<String, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
-                .collect(Collectors.<Map.Entry<String,LifeInsurance>,String,ReadOnlyInsurance>toMap(
-                        i -> i.getKey(),
-                        i -> i.getValue()
-                ));
+            .collect(Collectors.<Map.Entry<String,LifeInsurance>,String,ReadOnlyInsurance>toMap(
+                i -> i.getKey(),
+                i -> i.getValue()
+            ));
         return lifeInsurances;
     }
 
