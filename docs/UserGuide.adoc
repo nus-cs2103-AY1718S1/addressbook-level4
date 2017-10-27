@@ -85,6 +85,11 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Listing all reminders : `listReminder`
+
+Shows a list of all persons in the address book. +
+Format: `listReminder`
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -421,16 +426,29 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add Person* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Reminder* : `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...` +
+e.g. `addReminder z/Proposal Submission p/Low d/20/12/2017 1500 m/Submit to John t/work`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Delete Person* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete Reminder* : `deleteReminder INDEX` +
+e.g. `deleteReminder 5`
+* *Edit Person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Edit Reminder* : `editReminder INDEX [z/TASK] [p/PRIORITY] [d/DATE and TIME] [M/MESSAGE] [t/TAG]...` +
+e.g. `editReminder 2 p/Medium m/Venue changed to Office`
+* *Find Person* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *Find Email* : `findEmail KEYWORD [MORE_KEYWORDS]` +
+e.g. `findEmail james@example.com`
+* *Find Phone* : `findPhone KEYWORD [MORE_KEYWORDS]` +
+e.g. `findPhone 87654321`
+* *Find Reminder* : `findReminder KEYWORD [MORE_KEYWORDS]` +
+e.g. `findReminder Project`
+* *List Persons* : `list`
+* *List Reminders* : `listReminder`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
@@ -441,10 +459,11 @@ e.g.`tag 1,2,3 friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Birthday*: `birthday INDEX b/BIRTHDAY` +
+* *Update Birthday*: `birthday INDEX b/BIRTHDAY` +
 e.g. `birthday 4 b/20/10/1995`
-* *Sort* : `sort`
-* *SortAge* : `sortAge`
-* *SortBirthday* : `sortBirthday`
+* *Sort by Name* : `sort`
+* *Sort by Age* : `sortAge`
+* *Sort by Birthday* : `sortBirthday`
+* *Sort by Priority* : `sortPriority`
 * *Retrieve* : `retrieve TAGNAME` +
 e.g. `retrieve friends`
