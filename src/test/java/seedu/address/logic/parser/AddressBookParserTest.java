@@ -5,6 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.PORTRAIT_DESC_FIRST;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PORTRAIT_PATH_FIRST;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PORTRAIT_PATH_SECOND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -75,8 +78,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommandPortrait() throws Exception {
         PortraitCommand command = (PortraitCommand) parser.parseCommand(PortraitCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + "p/sample.jpg");
-        assertTrue(parser.parseCommand(PortraitCommand.COMMAND_WORD) instanceof PortraitCommand);
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PORTRAIT_DESC_FIRST);
+        assertEquals(new PortraitCommand(INDEX_FIRST_PERSON, VALID_PORTRAIT_PATH_FIRST), command);
     }
 
     @Test

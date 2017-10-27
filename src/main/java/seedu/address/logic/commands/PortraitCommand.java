@@ -18,6 +18,12 @@ public class PortraitCommand extends UndoableCommand {
     public static final String MESSAGE_DELETE_PORTRAIT_SUCCESS = "Removed head portrait from Person: %1$s";
 
     private Index index;
+    private String filePath;
+
+    public PortraitCommand (Index index, String filePath) {
+        this.index = index;
+        this.filePath = filePath;
+    }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
@@ -32,5 +38,13 @@ public class PortraitCommand extends UndoableCommand {
     @Override
     protected void redo() {
 
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return this == other
+                || (other instanceof PortraitCommand
+                && this.index.equals(((PortraitCommand) other).index)
+                && this.filePath.equals(((PortraitCommand) other).filePath));
     }
 }
