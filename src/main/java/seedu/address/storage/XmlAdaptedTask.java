@@ -29,6 +29,9 @@ public class XmlAdaptedTask {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement(required = true)
     private Boolean complete;
+    @XmlElement(required = true)
+    private Integer priority;
+
 
     /**
      * Constructs an XmlAdaptedPerson.

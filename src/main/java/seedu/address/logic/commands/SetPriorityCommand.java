@@ -10,8 +10,7 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Marks a task identified as completed using it's last displayed index from the address book.
- * When list tasks again the marked tasks will not be shown, but can be reviewed when the history is listed.
+ * Sets the priority of a task identified as completed using it's last displayed index from the address book.
  */
 public class SetPriorityCommand extends UndoableCommand {
 
@@ -23,7 +22,7 @@ public class SetPriorityCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) PRIORITY (must be an integer between 1 and 5\n"
             + "Example: " + COMMAND_WORD + " 1 2";
 
-    public static final String MESSAGE_MARK_TASK_SUCCESS = "Update Priority of Task: %1$s";
+    public static final String MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS = "Update Priority of Task: %1$s";
 
     private final Index targetIndex;
     private final Integer priority;
@@ -53,7 +52,7 @@ public class SetPriorityCommand extends UndoableCommand {
             assert false : "The target updated can cause duplication";
         }
 
-        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, taskToUpdate));
+        return new CommandResult(String.format(MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS, taskToUpdate));
     }
 
     @Override
