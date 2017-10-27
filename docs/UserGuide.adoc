@@ -142,6 +142,7 @@ You can use `list ascending` to show a list of contacts sorted by name in ascend
 You can use `list descending` to show a list of contacts sorted by name in descending order. +
 *Format:* `list descending` +
 *Shorthand Format:* `l dsc`
+// end::list[]
 
 === Listing persons by blood type : `bloodtype` [Since v1.2]
 
@@ -298,6 +299,8 @@ You can reverse the most recent `undo` command. +
 
 image::redoexample.png[width="700"]
     Figure 10: Redo Command Usage Diagram
+
+// end::undoredo[]
 
 === Clearing all entries : `clear`
 

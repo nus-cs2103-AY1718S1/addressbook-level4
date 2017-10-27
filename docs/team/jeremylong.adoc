@@ -27,8 +27,6 @@ include::../UserGuide.adoc[tag=list]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
-
 
 
 === Other contributions
