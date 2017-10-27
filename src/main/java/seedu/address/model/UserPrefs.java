@@ -113,6 +113,13 @@ public class UserPrefs {
         }
     }
 
+    /**
+     *
+     * @param oldUsername
+     * @param newUsername
+     * @param password
+     * @return true if username is changes successfully
+     */
     public boolean changeUsername(String oldUsername, String newUsername, String password) {
         if (checkPassword(password) && checkUsername(oldUsername)) {
             username = newUsername;
