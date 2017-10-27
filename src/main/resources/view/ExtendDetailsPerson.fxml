@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="imageView" fitHeight="97.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" translateX="75.0" translateY="20.0">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <image>
+            <Image url="@../images/PEERSONAL_icon.png" />
+         </image>
+      </ImageView>
+      <HBox prefHeight="24.0" prefWidth="300.0" spacing="5.0" translateY="30.0">
+         <children>
+            <Label fx:id="name" text="\$name" translateX="20.0" />
+         </children>
+      </HBox>
+      <ImageView fx:id="PhoneIcon" fitHeight="10.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" translateY="44.0" />
+      <Label fx:id="phone" text="\$phone" translateX="20.0" translateY="30.0" />
+      <Label fx:id="address" text="\$address" translateX="20.0" translateY="30.0" />
+      <Label fx:id="email" text="\$email" translateX="20.0" translateY="30.0" />
+      <Label fx:id="remark" text="\$remark" translateX="20.0" translateY="30.0" />
+      <Label fx:id="birthday" text="\$birthday" translateX="20.0" translateY="30.0" />
+      <Label fx:id="age" text="\$age" translateX="20.0" translateY="30.0" />
+      <FlowPane fx:id="tags" prefHeight="33.0" prefWidth="300.0" translateY="35.0" />
+      <ImageView fitHeight="10.0" fitWidth="15.0" layoutX="10.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true" translateY="-77.0" />
+      <ImageView fitHeight="10.0" fitWidth="15.0" layoutX="10.0" layoutY="276.0" pickOnBounds="true" preserveRatio="true" translateY="-70.0" />
+      <ImageView fitHeight="10.0" fitWidth="15.0" layoutX="10.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true" translateY="-63.0" />
+      <ImageView fitHeight="10.0" fitWidth="15.0" layoutX="10.0" layoutY="296.0" pickOnBounds="true" preserveRatio="true" translateY="-56.0" />
+      <ImageView fitHeight="10.0" fitWidth="15.0" layoutX="10.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" translateY="-50.0" />
+   </children>
+</VBox>
