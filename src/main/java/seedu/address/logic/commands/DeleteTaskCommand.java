@@ -33,7 +33,7 @@ public class DeleteTaskCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+        List<ReadOnlyTask> lastShownList = model.getSortedTaskList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);

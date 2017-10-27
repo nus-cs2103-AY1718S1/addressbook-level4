@@ -68,7 +68,7 @@ public class EditTaskCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+        List<ReadOnlyTask> lastShownList = model.getSortedTaskList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
