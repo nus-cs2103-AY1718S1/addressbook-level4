@@ -7,6 +7,7 @@ import javax.smartcardio.Card;
 import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -21,13 +22,13 @@ import seedu.address.model.schedule.Schedule;
  * Panel containing the list of persons.
  */
 public class AgendaPanel extends UiPart<Region> {
-    private static final String FXML = "PersonListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+    private static final String FXML = "AgendaPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(AgendaPanel.class);
 
     @FXML
     private ListView<ScheduleCard> scheduleCardListView;
 
-    public PersonListPanel(ObservableList<Schedule> scheduleList) {
+    public AgendaPanel(ObservableList<Schedule> scheduleList) {
         super(FXML);
         setConnections(scheduleList);
         registerAsAnEventHandler(this);
@@ -38,10 +39,10 @@ public class AgendaPanel extends UiPart<Region> {
      * and adds listener to {@code scheduleCardListView} for selection change.
      */
     private void setConnections(ObservableList<Schedule> scheduleList) {
-        ObservableList<Schedule> mappedList = EasyBind.map(
+        ObservableList<ScheduleCard> mappedList = EasyBind.map(
                 scheduleList, (schedule) -> new ScheduleCard(schedule, scheduleList.indexOf(schedule) + 1));
         scheduleCardListView.setItems(mappedList);
-        scheduleCardListView.setCellFactory(listView -> new AgendaPanel.ScheduleCardListViewCell());
+        scheduleCardListView.setCellFactory(listView -> new ScheduleCardListViewCell());
         //addListenerForSelectionChangeEvent();
     }
 
@@ -80,7 +81,7 @@ public class AgendaPanel extends UiPart<Region> {
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code ScheduleCard}.
      */
-    class ScheduleCardListViewCell extends ListCell<Schedule> {
+    class ScheduleCardListViewCell extends ListCell<ScheduleCard> {
 
         @Override
         protected void updateItem(ScheduleCard schedule, boolean empty) {
