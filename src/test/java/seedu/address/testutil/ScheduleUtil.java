@@ -17,7 +17,7 @@ public class ScheduleUtil {
      */
     public static String getScheduleCommand(Schedule schedule, Index... indices) {
         StringBuilder scheduleCommand = new StringBuilder(ScheduleCommand.COMMAND_WORD + " ");
-        for(Index index: indices) {
+        for (Index index: indices) {
             scheduleCommand.append(index.getOneBased() + " ");
         }
         scheduleCommand.append(getScheduleDetails(schedule));
@@ -31,7 +31,7 @@ public class ScheduleUtil {
      */
     public static String getScheduleCommandUsingAlias(Schedule schedule, Index... indices) {
         StringBuilder scheduleCommand = new StringBuilder(ScheduleCommand.COMMAND_ALIAS + " ");
-        for(Index index: indices) {
+        for (Index index: indices) {
             scheduleCommand.append(index.getOneBased() + " ");
         }
         scheduleCommand.append(getScheduleDetails(schedule));

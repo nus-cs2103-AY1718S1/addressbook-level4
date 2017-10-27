@@ -28,8 +28,8 @@ public class ScheduleCommandParserTest {
                 .withActivity(VALID_ACTIVITY_AMY).build();
 
         Set<Index> indices = new HashSet<>();
-        indices.add(INDEX_FIRST_PERSON);
 
+        indices.add(INDEX_FIRST_PERSON);
         assertParseSuccess(parser, "1" + SCHEDULE_DATE_DESC_AMY + ACTIVITY_DESC_AMY,
                 new ScheduleCommand(indices, expectedSchedule));
     }
