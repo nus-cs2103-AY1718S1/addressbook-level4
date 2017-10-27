@@ -206,6 +206,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
         requireNonNull(predicate);
         filteredParcels.setPredicate(predicate);
+        updatedDeliveredAndUndeliveredList();
     }
 
     @Override
