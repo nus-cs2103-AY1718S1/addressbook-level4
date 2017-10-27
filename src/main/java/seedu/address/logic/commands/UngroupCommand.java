@@ -64,7 +64,7 @@ public class UngroupCommand extends UndoableCommand {
         try {
             editedGroups.remove(group);
             editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getAppointment(),
+                    personToEdit.getAddress(), personToEdit.getAppointment(), personToEdit.getProfilePicture(),
                     editedGroups.toSet(), personToEdit.getTags());
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {

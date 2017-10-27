@@ -3,9 +3,12 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -40,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label appointment;
     @FXML
+    private ImageView profilePicture;
+    @FXML
     private FlowPane groups;
     @FXML
     private FlowPane tags;
@@ -51,6 +56,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         initGroups(person);
+        initPicture(person);
         bindListeners(person);
     }
 
@@ -64,6 +70,7 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         appointment.textProperty().bind(Bindings.convert(person.appointmentProperty()));
+        //profilePicture.textProperty().bind(Bindings.convert(person.profilePictureProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
@@ -80,6 +87,11 @@ public class PersonCard extends UiPart<Region> {
 
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    }
+
+    private void initPicture(ReadOnlyPerson person) {
+        Image im = new Image(person.getProfilePicture().value);
+        profilePicture.setImage(im);
     }
 
     private void initGroups(ReadOnlyPerson person) {
