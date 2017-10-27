@@ -28,11 +28,10 @@ public class DateOfBirth {
      */
     public static final String DOB_VALIDATION_REGEX = "\\p{Alnum}+[\\s-./]\\p{Alnum}+([\\s-./]\\p{Alnum}*)?";
 
-    public static final String[] MONTH_NAME_SHORT = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-            "Oct", "Nov", "Dec"};
-    public static final String[] MONTH_NAME_LONG = {"january", "february", "march", "april", "may", "june", "july",
-            "august", "september", "october", "november", "december"};
-    
+    public static final String[] MONTH_NAME_SHORT = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    public static final String[] MONTH_NAME_LONG = {"january", "february", "march",
+        "april", "may", "june", "july", "august", "september", "october", "november", "december"};
     private static final DateTimeFormatter DOB_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
     public final LocalDate dateOfBirth;
     private boolean dateSet;
@@ -68,9 +67,9 @@ public class DateOfBirth {
      */
     private LocalDate dateFormatter(String dob) throws IllegalValueException {
         List<String> arguments = Arrays.asList(dob.split("[\\s-/.]"));
-        String day = arguments.get(0),
-                month = arguments.get(1),
-                year = arguments.size() > 2 ? arguments.get(2) : String.valueOf(LocalDate.now().getYear());
+        String day = arguments.get(0);
+        String month = arguments.get(1);
+        String year = arguments.size() > 2 ? arguments.get(2) : String.valueOf(LocalDate.now().getYear());
         if (arguments.size() > 3 || arguments.size() < 2) {
             throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
         }
