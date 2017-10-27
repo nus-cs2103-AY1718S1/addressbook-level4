@@ -75,6 +75,14 @@ Examples:
 * `changepw admin tom harry`
 * `changepw admin !@# !!!!`
 
+=== Changing password : `changeuser`
+Changes a user's username needed to access H.M.U v1.2 +
+Format: `changepw old_username new_username password` +
+
+Examples:
+
+* `changeuser admin user password`
+
 === Adding a person: `add`
 
 Adds a person to the address book +
