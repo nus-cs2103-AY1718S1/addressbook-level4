@@ -12,14 +12,14 @@ It is written in Java, and has about 6 kLoC.
 link:main/Jeremy.md[Functional code] +
 link:test/Jeremy.md[Test code] +
 
-=== Enhancement Added:
+=== Enhancement Added: List
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=list]
 
 #End of Extract#
 
@@ -29,20 +29,7 @@ include::../UserGuide.adoc[tag=undoredo]
 
 {Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
-==== Implementation
 
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-#End of Extract#
-
----
-
-=== Enhancement Proposed: Add command `remark`
-
-{Explain similar to the Undo/Redo feature above.}
 
 === Other contributions
 
@@ -56,4 +43,4 @@ CSS parts)
 *** https://github.com/CS2103AUG2017-T17-B2/main/pull/91/files[Major Formatting]
 (In collaboration with http://github.com/ErnestOYH[Ernest]) +
 *** https://github.com/CS2103AUG2017-T17-B2/main/pull/125/files[Illustrations] +
-
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/61[Test Coverage]

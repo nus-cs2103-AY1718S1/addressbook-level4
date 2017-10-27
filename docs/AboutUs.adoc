@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Eric Loh
 image::EricLoh.jpg[width="150", align="left"]
-{empty}[https://github.com/Ericloh[github]] [<<ericloh#, portfolio>>]
+{empty}[https://github.com/Ericloh[Github]] [<<ericloh#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI + Integration + Deliverables and Deadlines
@@ -44,7 +44,7 @@ https://github.com/CS2103AUG2017-T17-B2/main/pull/78[Alt, Control] +
 https://github.com/CS2103AUG2017-T17-B2/main/pull/82[Shift-Delete, Shift-Backspace] +
 https://github.com/CS2103AUG2017-T17-B2/main/pull/112/files[Edit Command]
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/124[List Package] +
-List Tag, Ascending, Descending, Reverse
+Ascending, Descending, Reverse
 
 * Other Major Contributions : +
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/50/files[MedNus UI modifications] +
@@ -57,7 +57,7 @@ CSS parts)
 *** https://github.com/CS2103AUG2017-T17-B2/main/pull/91/files[Major Formatting]
 (In collaboration with http://github.com/ErnestOYH[Ernest]) +
 *** https://github.com/CS2103AUG2017-T17-B2/main/pull/125/files[Illustrations] +
-
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/61[Test Coverage]
 
 
 

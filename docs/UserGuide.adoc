@@ -113,7 +113,8 @@ Both capital letters and small letters are can be entered.
 
 <<<
 
-=== List
+// tag::list[]
+=== Listing Contacts: `list`
 
 You have a variety of ways to list your contacts. +
 Click <<MedNus Features, here>> for a tabulated version of all available listing options. +
