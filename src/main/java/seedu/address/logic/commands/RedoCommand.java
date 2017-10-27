@@ -17,6 +17,7 @@ public class RedoCommand extends Command {
     public static final String COMMAND_ALIAS = "r";
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
+    public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD;
 
     @Override
     public CommandResult execute() throws CommandException {

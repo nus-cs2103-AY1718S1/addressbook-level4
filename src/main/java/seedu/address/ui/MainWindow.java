@@ -129,7 +129,7 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), prefs.getGuiSettings().getTagColours());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -140,6 +140,8 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        resultDisplay.setLinkedInput(commandBox);
     }
 
     void hide() {
@@ -180,7 +182,7 @@ public class MainWindow extends UiPart<Region> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), prefs.getGuiSettings().getTagColours());
     }
 
     /**

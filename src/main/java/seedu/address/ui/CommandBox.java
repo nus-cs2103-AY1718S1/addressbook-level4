@@ -47,11 +47,9 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Returns the {@code AutoCompletionBinding} bound to the text field in the command box.
+     * Returns the {@code TextField} in the command box (i.e. the user input).
      */
-    public AutoCompletionBinding<String> getAutoCompletionBinding() {
-        return this.autoCompletionBinding;
-    }
+    protected TextField getCommandTextField() { return commandTextField; }
 
     /**
      * Handles the key press event, {@code keyEvent}.
