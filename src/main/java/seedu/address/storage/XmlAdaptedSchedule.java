@@ -41,12 +41,8 @@ public class XmlAdaptedSchedule {
         // extract out schedule date and activity from schedule string
         String[] tokens = schedule.split(" ");
         String scheduleDate = tokens[1];
+        String activity = tokens[3];
 
-        StringBuilder activity = new StringBuilder();
-        for (int i = 3; i < tokens.length; i++) {
-            activity.append(tokens[i] + " ");
-        }
-
-        return new Schedule(new ScheduleDate(scheduleDate), new Activity(activity.toString().trim()));
+        return new Schedule(new ScheduleDate(scheduleDate), new Activity(activity));
     }
 }

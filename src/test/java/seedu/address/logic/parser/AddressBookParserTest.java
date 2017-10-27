@@ -9,9 +9,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -206,15 +204,11 @@ public class AddressBookParserTest {
     public void parseCommand_schedule() throws Exception {
         Schedule schedule = new ScheduleBuilder().build();
         ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleUtil.getScheduleCommand(
-                schedule, INDEX_FIRST_PERSON));
+                INDEX_FIRST_PERSON, schedule));
         ScheduleCommand commandUsingAlias = (ScheduleCommand) parser.parseCommand(ScheduleUtil
-                .getScheduleCommandUsingAlias(schedule, INDEX_FIRST_PERSON));
-
-        Set<Index> indices = new HashSet<>();
-        indices.add(INDEX_FIRST_PERSON);
-
-        assertEquals(new ScheduleCommand(indices, schedule), command);
-        assertEquals(new ScheduleCommand(indices, schedule), commandUsingAlias);
+                .getScheduleCommandUsingAlias(INDEX_FIRST_PERSON, schedule));
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), command);
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), commandUsingAlias);
     }
 
     @Test

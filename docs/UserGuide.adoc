@@ -206,7 +206,7 @@ Returns all persons with tag `friends` and `lovers`
 Alias: `d`
 
 Deletes the specified person(s) from the address book. +
-Format: `delete INDEX [UNIQUE INDEX]...`
+Format: `delete INDEX [OTHER INDICES]...`
 
 ****
 * Deletes the people at the specified `INDEX`.
@@ -250,28 +250,28 @@ Locates the 1st person's address in the results of the `find` command.
 
 Alias: `sc`
 
-Schedules an activity with person(s) specified by the index number(s). +
-Format: `schedule INDEX [INDEX]... d/DATE act/ACTIVITY`
+Schedules an activity with a person in the contact list. +
+Format: `schedule INDEX d/DATE act/ACTIVITY`
 
 ****
-* DATE must follow DD-MM-YYYY format
+* DATE must follow DD-MM-YYYY or DD-MM format
 ****
 
 Examples:
 
 * `list` +
-`schedule 1 3 d/15-01-2018 act/Play basketball` +
-Associates the specified schedule with the 1st and 3rd persons in the address book.
+`schedule 3 d/15-01-2018 act/Play basketball` +
+Associates the specified schedule with the 3rd person in the address book.
 * `find Betsy` +
 `schedule 1 d/25-12 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
 
-=== Getting email addresses : `copy` [Since v1.3]
+=== Getting email addresses : `copy` [Coming in v2.0]
 
 Alias: `c`
 
 Outputs to console the email addresses of all person(s) selected by index number(s). +
-Format: `copy INDEX [UNIQUE INDEX]...`
+Format: `copy INDEX [OTHER INDICES...]`
 
 ****
 * Copies email addresses of people at the specified `INDEX`.
@@ -404,11 +404,11 @@ To transfer my data to another Computer,iInstall the app in the other computer a
 
 |`Locate` |`lc` |`locate INDEX` | `locate 2`
 
-|`Schedule` |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12 act/Christmas dinner`
+|`Schedule` |`sc` |`schedule d/DATE act/ACTIVITY` | `schedule 1 d/25-12 act/Christmas dinner`
 
-|`Copy` |`cp` |`copy INDEX [UNIQUE INDEX]...`|
+|`Copy` |`cp` |`copy INDEX [OTHER INDICES]`|
 
-|`Delete` |`d`|`delete INDEX [UNIQUE INDEX]...`|
+|`Delete` |`d`|`delete INDEX [OTHER INDICES]`|
 
 |`History` |`his`|`history`|
 

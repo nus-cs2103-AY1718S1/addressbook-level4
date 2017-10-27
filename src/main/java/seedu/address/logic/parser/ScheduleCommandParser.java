@@ -5,8 +5,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTIVITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
@@ -37,22 +35,13 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         }
 
         try {
-            String indicesOneString = argMultimap.getPreamble();
-            String[] indicesInString = indicesOneString.split("\\s+");
-
-            Set<Index> indices = new HashSet<>();
-
-            for (String indexString : indicesInString) {
-                Index index = ParserUtil.parseIndex(indexString);
-                indices.add(index);
-            }
-
+            Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
             ScheduleDate date = ParserUtil.parseScheduleDate(argMultimap.getValue(PREFIX_DATE)).get();
             Activity activity = ParserUtil.parseActivity(argMultimap.getValue(PREFIX_ACTIVITY)).get();
 
             Schedule schedule = new Schedule(date, activity);
 
-            return new ScheduleCommand(indices, schedule);
+            return new ScheduleCommand(index, schedule);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

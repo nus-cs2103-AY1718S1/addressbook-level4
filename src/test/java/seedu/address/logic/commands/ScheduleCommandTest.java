@@ -4,14 +4,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ScheduleBuilder;
 
@@ -24,9 +20,7 @@ public class ScheduleCommandTest {
     public void constructor_nullSchedule_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new ScheduleCommand(null, null);
-        Set<Index> indices = new HashSet<>();
-        indices.add(INDEX_FIRST_PERSON);
-        new ScheduleCommand(indices, null);
+        new ScheduleCommand(INDEX_FIRST_PERSON, null);
         new ScheduleCommand(null, new ScheduleBuilder().build());
     }
 
@@ -34,16 +28,14 @@ public class ScheduleCommandTest {
     public void equals() {
         Schedule meeting = new ScheduleBuilder().withActivity("Meeting").build();
         Schedule playing = new ScheduleBuilder().withActivity("Playing").build();
-        Set<Index> indices = new HashSet<>();
-        indices.add(INDEX_FIRST_PERSON);
-        ScheduleCommand scheduleMeetingCommand = new ScheduleCommand(indices, meeting);
-        ScheduleCommand schedulePlayingCommand = new ScheduleCommand(indices, playing);
+        ScheduleCommand scheduleMeetingCommand = new ScheduleCommand(INDEX_FIRST_PERSON, meeting);
+        ScheduleCommand schedulePlayingCommand = new ScheduleCommand(INDEX_FIRST_PERSON, playing);
 
         // same object -> returns true
         assertTrue(scheduleMeetingCommand.equals(scheduleMeetingCommand));
 
         // same values -> returns true
-        ScheduleCommand scheduleMeetingCommandCopy = new ScheduleCommand(indices, meeting);
+        ScheduleCommand scheduleMeetingCommandCopy = new ScheduleCommand(INDEX_FIRST_PERSON, meeting);
         assertTrue(scheduleMeetingCommand.equals(scheduleMeetingCommandCopy));
 
         // different types -> returns false

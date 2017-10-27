@@ -35,54 +35,53 @@ public class ScheduleCommand extends UndoableCommand {
             + PREFIX_ACTIVITY + "ACTIVITY\n"
             + MESSAGE_GET_MORE_HELP;
 
-    public static final String MESSAGE_SCHEDULE_SUCCESS = "Scheduled an activity with %1$d person(s)";
+    public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Scheduled an activity with %1$s";
+    public static final String MESSAGE_DUPLICATE_SCHEDULE = "Schedule already exists";
 
-    private final Set<Index> indices;
+    private final Index index;
     private final Schedule schedule;
 
     /**
      * Creates a ScheduleCommand to add the specified {@code Schedule}
      */
-    public ScheduleCommand(Set<Index> indices, Schedule schedule) {
-        requireNonNull(indices);
+    public ScheduleCommand(Index index, Schedule schedule) {
+        requireNonNull(index);
         requireNonNull(schedule);
-        this.indices = indices;
+        this.index = index;
         this.schedule = schedule;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        for (Index index: indices) {
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
 
-            if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
+        ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+        Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
 
-            ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+        if (schedules.contains(schedule)) {
+            throw new CommandException(MESSAGE_DUPLICATE_SCHEDULE);
+        }
 
-            Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
+        schedules.add(schedule);
 
-            if (!schedulePerson.getSchedules().contains(schedule)) {
-                schedules.add(schedule);
-            }
+        Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
+                schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
+                schedulePerson.getTags());
 
-            Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
-                    schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
-                    schedulePerson.getTags());
-            try {
-                model.updatePerson(schedulePerson, scheduleAddedPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-            } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
-            }
+        try {
+            model.updatePerson(schedulePerson, scheduleAddedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_SCHEDULE_SUCCESS, indices.size()));
+        return new CommandResult(String.format(MESSAGE_ADD_SCHEDULE_SUCCESS, schedulePerson.getName()));
     }
 
     @Override

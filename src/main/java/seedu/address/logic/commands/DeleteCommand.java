@@ -7,7 +7,6 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -26,7 +25,7 @@ public class DeleteCommand extends UndoableCommand {
             + MESSAGE_GET_MORE_HELP;
 
     //public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted selected person(s)!";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted all person(s)!";
 
     private final ArrayList<Index> targetIndices;
 
