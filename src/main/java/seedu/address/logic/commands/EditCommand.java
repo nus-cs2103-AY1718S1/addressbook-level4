@@ -39,6 +39,8 @@ public class EditCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "edit";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "e", "change", "modify"));
+    public static final String COMMAND_HOTKEY = "Ctrl+E";
+    public static final String FORMAT = "edit INDEX [Field(s) you want to change]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "

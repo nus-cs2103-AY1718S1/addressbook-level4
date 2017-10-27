@@ -1,27 +1,37 @@
 package seedu.address.ui;
 
-import static seedu.address.ui.util.KeyListenerUtil.CLEAR;
-import static seedu.address.ui.util.KeyListenerUtil.DELETE_SELECTION;
-import static seedu.address.ui.util.KeyListenerUtil.FOCUS_COMMAND_BOX;
-import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST;
-import static seedu.address.ui.util.KeyListenerUtil.FOCUS_PERSON_LIST_ALT;
-import static seedu.address.ui.util.KeyListenerUtil.FOCUS_RESULT_DISPLAY;
-import static seedu.address.ui.util.KeyListenerUtil.HISTORY;
-import static seedu.address.ui.util.KeyListenerUtil.LIST;
-import static seedu.address.ui.util.KeyListenerUtil.NEW_FILE;
-import static seedu.address.ui.util.KeyListenerUtil.OPEN_FILE;
-import static seedu.address.ui.util.KeyListenerUtil.REDO;
-import static seedu.address.ui.util.KeyListenerUtil.UNDO;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_ADD;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_CLEAR;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE_SELECTION;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_EDIT;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FIND;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FOCUS_COMMAND_BOX;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FOCUS_PERSON_LIST;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FOCUS_PERSON_LIST_ALT;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FOCUS_RESULT_DISPLAY;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_HISTORY;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_LIST;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_NEW_FILE;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_OPEN_FILE;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_REDO;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_SELECT;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_UNDO;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.NewCommand;
 import seedu.address.logic.commands.OpenCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 /**
@@ -51,7 +61,6 @@ public class KeyListener {
             if (commandBox.isFocused() || !(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN)) {
                 commandBox.processInput();
             }
-            //commandBox.processInput();
             executeKeyEvent(event);
         });
     }
@@ -62,41 +71,57 @@ public class KeyListener {
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
-        if (FOCUS_PERSON_LIST.match(keyEvent) || FOCUS_PERSON_LIST_ALT.match(keyEvent)) {
+        if (KEY_COMBINATION_FOCUS_PERSON_LIST.match(keyEvent)
+                || KEY_COMBINATION_FOCUS_PERSON_LIST_ALT.match(keyEvent)) {
             personListPanel.setFocus();
 
-        } else if (FOCUS_COMMAND_BOX.match(keyEvent)) {
+        } else if (KEY_COMBINATION_FOCUS_COMMAND_BOX.match(keyEvent)) {
             commandBox.setFocus();
 
-        } else if (FOCUS_RESULT_DISPLAY.match(keyEvent)) {
+        } else if (KEY_COMBINATION_FOCUS_RESULT_DISPLAY.match(keyEvent)) {
             resultDisplay.setFocus();
 
-        } else if (DELETE_SELECTION.match(keyEvent)) {
+        } else if (KEY_COMBINATION_DELETE_SELECTION.match(keyEvent)) {
             deleteSelectedContact();
 
-        } else if (CLEAR.match(keyEvent)) {
+        } else if (KEY_COMBINATION_CLEAR.match(keyEvent)) {
             executeCommand(ClearCommand.COMMAND_WORD);
 
-        } else if (HISTORY.match(keyEvent)) {
+        } else if (KEY_COMBINATION_HISTORY.match(keyEvent)) {
             executeCommand(HistoryCommand.COMMAND_WORD);
 
-        } else if (UNDO.match(keyEvent)) {
+        } else if (KEY_COMBINATION_UNDO.match(keyEvent)) {
             executeCommand(UndoCommand.COMMAND_WORD);
 
-        } else if (REDO.match(keyEvent)) {
+        } else if (KEY_COMBINATION_REDO.match(keyEvent)) {
             executeCommand(RedoCommand.COMMAND_WORD);
 
-        } else if (LIST.match(keyEvent)) {
+        } else if (KEY_COMBINATION_LIST.match(keyEvent)) {
             executeCommand(ListCommand.COMMAND_WORD);
 
-        } else if (OPEN_FILE.match(keyEvent)) {
+        } else if (KEY_COMBINATION_OPEN_FILE.match(keyEvent)) {
             executeCommand(OpenCommand.COMMAND_WORD);
 
-        } else if (NEW_FILE.match(keyEvent)) {
+        } else if (KEY_COMBINATION_NEW_FILE.match(keyEvent)) {
             executeCommand(NewCommand.COMMAND_WORD);
 
+        } else if (KEY_COMBINATION_ADD.match(keyEvent)) {
+            displayCommandFormat(AddCommand.FORMAT);
+
+        } else if (KEY_COMBINATION_EDIT.match(keyEvent)) {
+            displayCommandFormat(EditCommand.FORMAT);
+
+        } else if (KEY_COMBINATION_FIND.match(keyEvent)) {
+            displayCommandFormat(FindCommand.FORMAT);
+
+        } else if (KEY_COMBINATION_SELECT.match(keyEvent)) {
+            displayCommandFormat(SelectCommand.FORMAT);
+
+        } else if (KEY_COMBINATION_DELETE.match(keyEvent)) {
+            displayCommandFormat(DeleteCommand.FORMAT);
+
         } else {
-            // no key combination matches, do nothing
+                // no key combination matches, do nothing
         }
     }
 
@@ -110,6 +135,14 @@ public class KeyListener {
             commandBox.replaceText(command);
             commandBox.handleCommandInputChanged();
         }
+    }
+
+    /**
+     * display the full command format for commands that require multiple fields
+     */
+    private void displayCommandFormat(String command) {
+        commandBox.replaceText(command);
+        commandBox.pressCtrl();
     }
 
     /**

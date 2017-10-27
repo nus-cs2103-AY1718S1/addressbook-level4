@@ -20,6 +20,8 @@ public class SelectCommand extends Command {
     public static final String COMMAND_WORD = "select";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "s"));
+    public static final String COMMAND_HOTKEY = "Ctrl+S";
+    public static final String FORMAT = "select INDEX";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the last person listing.\n"
