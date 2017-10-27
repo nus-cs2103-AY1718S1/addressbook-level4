@@ -26,7 +26,7 @@ import seedu.address.model.person.TagContainsKeywordsPredicate;
 
 //@@author Jeremy
 /**
- * Contains integration tests (interaction with the Model) for {@code FindCommand}.
+ * Contains integration tests (interaction with the Model) for {@code ListByTagCommand}.
  */
 public class ListByTagCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
