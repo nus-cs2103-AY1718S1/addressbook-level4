@@ -3,9 +3,9 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event requesting to view the help page.
+ * An event requesting to toggle the style of Pin tab.
  */
-public class PinPersonEvent extends BaseEvent {
+public class ListPinToggleStyleEvent extends BaseEvent {
 
     @Override
     public String toString() {

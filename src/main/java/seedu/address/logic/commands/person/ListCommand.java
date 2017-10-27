@@ -2,6 +2,8 @@ package seedu.address.logic.commands.person;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_NOT_HIDDEN;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ListAllToggleStyle;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 
@@ -17,6 +19,7 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(PREDICATE_SHOW_NOT_HIDDEN);
+        EventsCenter.getInstance().post(new ListAllToggleStyle());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
