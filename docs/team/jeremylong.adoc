@@ -9,8 +9,8 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
 It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: +
-[https://github.com[Functional code]] +
-[https://github.com[Test code]] {give links to collated code files}
+xref::..collated/main/Jeremy.md[Functional code] +
+xref::..collated/test/Jeremy.md[Test code] +
 
 === Enhancement Added: Undo/Redo
 
