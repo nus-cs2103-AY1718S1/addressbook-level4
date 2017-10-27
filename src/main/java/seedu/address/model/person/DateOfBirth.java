@@ -28,12 +28,12 @@ public class DateOfBirth {
      */
     public static final String DOB_VALIDATION_REGEX = "\\p{Alnum}+[\\s-./]\\p{Alnum}+([\\s-./]\\p{Alnum}*)?";
 
-    private static final DateTimeFormatter DOB_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
-
+    public static final String[] MONTH_NAME_SHORT = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+            "Oct", "Nov", "Dec"};
     public static final String[] MONTH_NAME_LONG = {"january", "february", "march", "april", "may", "june", "july",
             "august", "september", "october", "november", "december"};
-    public  static final String[] MONTH_NAME_SHORT = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-            "Oct", "Nov", "Dec"};
+    
+    private static final DateTimeFormatter DOB_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
     public final LocalDate dateOfBirth;
     private boolean dateSet;
 
