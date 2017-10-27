@@ -73,6 +73,12 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public ObservableList<ReadOnlyParcel> getActiveList() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
     public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
         fail("This method should not be called.");
         return null;
