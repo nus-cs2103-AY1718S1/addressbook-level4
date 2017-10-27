@@ -12,6 +12,7 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -29,17 +30,34 @@ public abstract class UndoableCommand extends Command {
      */
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
-        this.selectedPerson = model.getSelectedPerson();
-        if (selectedPerson != null) {
-            switch (model.getCurrentList()) {
-            case "blacklist":
-                this.index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList().indexOf(selectedPerson));
-                break;
-            case "whitelist":
-                this.index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList().indexOf(selectedPerson));
-                break;
-            default:
-                this.index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(selectedPerson));
+        if (model.getSelectedPerson() != null) {
+            this.selectedPerson = new Person(model.getSelectedPerson());
+            if (model.getAllPersons().size() > 0) {
+                // if the command is not "clear"
+                switch (model.getCurrentList()) {
+                case "blacklist":
+                    if (model.getFilteredBlacklistedPersonList().contains(selectedPerson)) {
+                        this.index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList()
+                                .indexOf(selectedPerson));
+                    } else {
+                        this.index = null;
+                    }
+                    break;
+                case "whitelist":
+                    if (model.getFilteredWhitelistedPersonList().contains(selectedPerson)) {
+                        this.index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList()
+                                .indexOf(selectedPerson));
+                    } else {
+                        this.index = null;
+                    }
+                    break;
+                default:
+                    if (model.getFilteredPersonList().contains(selectedPerson)) {
+                        this.index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(selectedPerson));
+                    } else {
+                        this.index = null;
+                    }
+                }
             }
         }
         this.previousAddressBook = new AddressBook(model.getAddressBook());
