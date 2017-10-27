@@ -12,31 +12,18 @@ import seedu.address.model.schedule.Schedule;
  */
 public class ScheduleUtil {
     /**
-     * Returns a schedule command string for allocating the {@code schedule} with contact(s) of the specified
-     * {@code indices}.
+     * Returns a schedule command string for allocating the {@code schedule} with contact of index {@code index}.
      */
-    public static String getScheduleCommand(Schedule schedule, Index... indices) {
-        StringBuilder scheduleCommand = new StringBuilder(ScheduleCommand.COMMAND_WORD + " ");
-        for (Index index: indices) {
-            scheduleCommand.append(index.getOneBased() + " ");
-        }
-        scheduleCommand.append(getScheduleDetails(schedule));
-
-        return scheduleCommand.toString();
+    public static String getScheduleCommand(Index index, Schedule schedule) {
+        return ScheduleCommand.COMMAND_WORD + " " + index.getOneBased() + " " + getScheduleDetails(schedule);
     }
 
     /**
-     * Returns a schedule command string for allocating the {@code schedule} with contact(s) of the specified
-     * {@code indices} using schedule command's alias.
+     * Returns a schedule command string for allocating the {@code schedule} with contact of index {@code index}
+     * using schedule command's alias.
      */
-    public static String getScheduleCommandUsingAlias(Schedule schedule, Index... indices) {
-        StringBuilder scheduleCommand = new StringBuilder(ScheduleCommand.COMMAND_ALIAS + " ");
-        for (Index index: indices) {
-            scheduleCommand.append(index.getOneBased() + " ");
-        }
-        scheduleCommand.append(getScheduleDetails(schedule));
-
-        return scheduleCommand.toString();
+    public static String getScheduleCommandUsingAlias(Index index, Schedule schedule) {
+        return ScheduleCommand.COMMAND_ALIAS + " " + index.getOneBased() + " " + getScheduleDetails(schedule);
     }
 
     /**
@@ -44,8 +31,8 @@ public class ScheduleUtil {
      */
     public static String getScheduleDetails(Schedule schedule) {
         StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_DATE + schedule.getScheduleDate().toString() + " " + PREFIX_ACTIVITY
-                + schedule.getActivity().toString());
+        sb.append(PREFIX_DATE + schedule.getScheduleDate().toString() + " ");
+        sb.append(PREFIX_ACTIVITY + schedule.getActivity().toString());
         return sb.toString();
     }
 }
