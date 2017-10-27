@@ -43,6 +43,9 @@ public class SwitchThemeCommand extends Command {
             isLight = true;
             setCurrentThemeUnit(THEME_LIGHT_UNIT);
             break;
+
+        default:
+            break;
         }
 
     }
