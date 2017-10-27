@@ -91,9 +91,7 @@ public class EditCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        EventsCenter.getInstance().post(new PersonModifiedEvent(editedPerson));
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(model.getIndex(editedPerson)));
+        raiseEvents(editedPerson);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
@@ -112,6 +110,14 @@ public class EditCommand extends UndoableCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getXorTags(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+    }
+
+    /**
+     * Raise events for editing a person.
+     */
+    private void raiseEvents(ReadOnlyPerson editedPerson) {
+        EventsCenter.getInstance().post(new PersonModifiedEvent(editedPerson));
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(model.getIndex(editedPerson)));
     }
 
     @Override
