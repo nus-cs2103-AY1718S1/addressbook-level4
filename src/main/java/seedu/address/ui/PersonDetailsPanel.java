@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -32,6 +31,9 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private Label nameLabel;
 
     @FXML
+    private Label birthdayLabel;
+
+    @FXML
     private Label phoneLabel;
 
     @FXML
@@ -51,6 +53,11 @@ public class PersonDetailsPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ReadOnlyPerson person = personList.get(event.targetIndex);
         nameLabel.setText(person.getName().fullName);
+        if (person.getBirthday().value.equals("01/01/1900")) {
+            birthdayLabel.setText("");
+        } else {
+            birthdayLabel.setText(person.getBirthday().toString());
+        }
         phoneLabel.setText(person.getPhone().toString());
         emailLabel.setText(person.getEmail().toString());
         addressLabel.setText(person.getAddress().toString());
@@ -61,6 +68,11 @@ public class PersonDetailsPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ReadOnlyPerson person = event.getNewSelection().person;
         nameLabel.setText(person.getName().fullName);
+        if (person.getBirthday().value.equals("01/01/1900")) {
+            birthdayLabel.setText("");
+        } else {
+            birthdayLabel.setText(person.getBirthday().toString());
+        }
         phoneLabel.setText(person.getPhone().toString());
         emailLabel.setText(person.getEmail().toString());
         addressLabel.setText(person.getAddress().toString());
