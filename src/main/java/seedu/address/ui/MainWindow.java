@@ -281,11 +281,13 @@ public class MainWindow extends UiPart<Region> {
 
     @Subscribe
     private void handleShowPinnedListEvent(ListPinToggleStyleEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         listPinToggleStyle();
     }
 
     @Subscribe
     private void handleShowAllListEvent(ListAllToggleStyle event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         listAllToggleStyle();
     }
 
