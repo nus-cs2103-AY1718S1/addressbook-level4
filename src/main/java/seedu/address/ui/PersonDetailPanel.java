@@ -98,14 +98,20 @@ public class PersonDetailPanel extends UiPart<Region> {
         showPersonDetails(event.getNewSelection().person);
     }
 
+    /**
+     * Updates the panel when the selected person's details change
+     */
     @Subscribe
     private void handlePersonDetailsChangedEvent(PersonModifiedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showPersonDetails(event.getModifiedPerson());
     }
 
+    /**
+     * Empties the panel when person list is cleared
+     */
     @Subscribe
-    private void handleListClearedEvent(ListClearedEvent event) {
+    private void handlePersonListClearedEvent(ListClearedEvent event) {
         showEmptyPanel();
     }
 }

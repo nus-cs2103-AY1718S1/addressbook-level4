@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Indicates that a person has been edited.
+ * Indicates that a person has been modified.
  */
 public class PersonModifiedEvent extends BaseEvent {
 
