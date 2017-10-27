@@ -48,7 +48,7 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getOccupation, source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getOccupation(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getRemark(), source.getWebsite(), source.getTags());
     }
 
