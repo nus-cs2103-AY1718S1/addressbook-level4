@@ -114,7 +114,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-    //@@author Jeremy
+
     /**
      * Handles KeyPress Commands that are keyed with Shift button held down
      */
@@ -137,7 +137,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-    //@@author Jeremy
+
     /**
      * Deletes the word or a chunk of blank spaces on the left.
      * Does not matter if caret is at end of text or between lines. Method will automatically
@@ -167,7 +167,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-    //@@author Jeremy
+
     /**
      * Deletes chunk in the situation where caret is at the far right
      */
@@ -179,7 +179,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-    //@@author Jeremy
+
     /**
      * Forms a new word with all string elements between the two parameters removed
      */
@@ -195,7 +195,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setText(answer);
     }
 
-    //@@author Jeremy
+
     /**
      * Checks if caret is at either ends
      */
@@ -205,7 +205,7 @@ public class CommandBox extends UiPart<Region> {
         return atFarLeft || atFarRight;
     }
 
-    //@@author Jeremy
+
     /**
      * Shifts the caret left to the left of the first character of the next word
      * <p>
@@ -229,7 +229,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-    //@@author Jeremy
+
     /**
      * Shifts the caret right to the right of the last character of the next word
      * <p>
@@ -254,7 +254,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-    //@@author Jeremy
+
     /**
      * Shifts the caret left, ignoring all empty spaces
      * <p>
@@ -280,7 +280,7 @@ public class CommandBox extends UiPart<Region> {
         return caretHolder;
     }
 
-    //@@author Jeremy
+
     /**
      * Shifts the caret right, ignoring all empty spaces
      * <p>
@@ -306,7 +306,7 @@ public class CommandBox extends UiPart<Region> {
         return caretHolder;
     }
 
-    //@@author Jeremy
+
     /**
      * Shifts the caret left, ignoring all char
      * <p>
@@ -332,7 +332,7 @@ public class CommandBox extends UiPart<Region> {
         return caretHolder;
     }
 
-    //@@author Jeremy
+
     /**
      * Shifts the caret right, ignoring all char
      * <p>
@@ -358,7 +358,6 @@ public class CommandBox extends UiPart<Region> {
         return caretHolder;
     }
 
-    //@@author Jeremy
     /**
      * Returns true if string element before currentCaretPosition index is empty
      */
@@ -368,7 +367,6 @@ public class CommandBox extends UiPart<Region> {
         return (" ".equals(convertToString));
     }
 
-    //@@author Jeremy
     /**
      * Returns true if string element after currentCaretPosition index is empty
      */
@@ -378,7 +376,6 @@ public class CommandBox extends UiPart<Region> {
         return (" ".equals(convertToString));
     }
 
-    //@@author Jeremy
     /**
      * Adds the next prefix required for the input
      */
@@ -407,7 +404,6 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(finalText.length());
     }
 
-    //@@author Jeremy
     /**
      * Fundamental Check: Checks if add poll KeyWord is in the input text
      * Additional Checks: Checks if prefix is in the input text
@@ -434,7 +430,6 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-    //@@author Jeremy
     /**
      * Polls the input statement to check if sentence starts with " add " or " a "
      * <p>
@@ -457,7 +452,6 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-    //@@author Jeremy
     /**
      * Polls the input statement to check if
      * 1. sentence starts with " edit " or " e " and
@@ -480,7 +474,6 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
-    //@@author Jeremy
     /**
      * Checks if the first two elements of the string are "a "
      */
@@ -489,7 +482,6 @@ public class CommandBox extends UiPart<Region> {
                 && Character.toString(stringToEvaluate.charAt(1)).equals(" "));
     }
 
-    //@@author Jeremy
     /**
      * Checks if the first four elements of the string are "add "
      */
@@ -498,7 +490,6 @@ public class CommandBox extends UiPart<Region> {
                 && Character.toString(stringToEvaluate.charAt(3)).equals(" "));
     }
 
-    //@@author Jeremy
     /**
      * Checks if the commandTextField all prefixes excluding tag
      */
@@ -508,7 +499,6 @@ public class CommandBox extends UiPart<Region> {
                 && containsDate();
     }
 
-    //@@author Jeremy
     /**
      * Adds prefix string to existing text input
      */
@@ -516,7 +506,6 @@ public class CommandBox extends UiPart<Region> {
         return commandTextField.getText().concat(" ").concat(prefix.getPrefix());
     }
 
-    //@@author Jeremy
     /**
      * Checks if existing input has Bloodtype Prefix String
      */
@@ -525,7 +514,6 @@ public class CommandBox extends UiPart<Region> {
         return currentInput.contains(PREFIX_BLOODTYPE.getPrefix());
     }
 
-    //@@author Jeremy
     /**
      * Checks if existing input has Remark Prefix String
      */
@@ -534,7 +522,6 @@ public class CommandBox extends UiPart<Region> {
         return currentInput.contains(PREFIX_REMARK.getPrefix());
     }
 
-    //@@author Jeremy
     /**
      * Checks if existing input has Remark Prefix String
      */
@@ -543,7 +530,6 @@ public class CommandBox extends UiPart<Region> {
         return currentInput.contains(PREFIX_DATE.getPrefix());
     }
 
-    //@@author Jeremy
     /**
      * Checks if existing input has Address Prefix String
      */
@@ -552,7 +538,6 @@ public class CommandBox extends UiPart<Region> {
         return currentInput.contains(PREFIX_ADDRESS.getPrefix());
     }
 
-    //@@author Jeremy
     /**
      * Checks if existing input has Email Prefix String
      */
@@ -561,7 +546,6 @@ public class CommandBox extends UiPart<Region> {
         return currentInput.contains(PREFIX_EMAIL.getPrefix());
     }
 
-    //@@author Jeremy
     /**
      * Checks if existing input has Phone Prefix String
      */
@@ -570,7 +554,6 @@ public class CommandBox extends UiPart<Region> {
         return currentInput.contains(PREFIX_PHONE.getPrefix());
     }
 
-    //@@author Jeremy
     /**
      * Checks if existing input has Name Prefix String
      */
@@ -578,6 +561,7 @@ public class CommandBox extends UiPart<Region> {
         String currentInput = commandTextField.getText();
         return currentInput.contains(PREFIX_NAME.getPrefix());
     }
+    //@@author
 
     /**
      * Updates the text field with the previous input in {@code historySnapshot},

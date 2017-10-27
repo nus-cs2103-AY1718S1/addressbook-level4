@@ -149,18 +149,15 @@ public class Person implements ReadOnlyPerson {
         return tags.get().contains(tag);
     }
 
-    //@@author Jeremy
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
 
-    //@@author Jeremy
     @Override
     public ObjectProperty<Remark> remarkProperty() {
         return remark;
     }
 
-    //@@author Jeremy
     @Override
     public Remark getRemark() {
         return remark.get();
