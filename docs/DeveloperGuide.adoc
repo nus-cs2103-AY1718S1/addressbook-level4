@@ -260,7 +260,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram _(Figure 3.1.1.1)_ shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 3.1.1.1 Structure of commands_
+_Figure 3.1.1.1: Structure of commands_
 
 As you can see from the diagram _(Figure 3.1.1.1)_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -304,12 +304,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command). This is shown in the image _(Figure 3.1.1.2)_ below.
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 3.1.1.2 undo example part 1_
+_Figure 3.1.1.2: undo example part 1_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person. This is show in the image _(Figure 3.1.1.3)_ below.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 3.1.1.3 undo example part 2_
+_Figure 3.1.1.3: undo example part 2_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -319,15 +319,15 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed. This is shown in the image _(Figure 3.1.1.4)_ below.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 3.1.1.4 undo example part 3_
+_Figure 3.1.1.4: undo example part 3_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
 The following *_sequence diagram_* _(Figure 3.1.1.5)_ shows how the undo operation works:
 
-image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 3.1.1.5 undo sequential diagram_
+image::UndoRedoSequencediagram.png[width="800"]
+_Figure 3.1.1.5: undo sequential diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -337,17 +337,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow). This is shown in the image _(Figure 3.1.1.6)_ below.
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 3.1.1.6 redo example part 1_
+_Figure 3.1.1.6: redo example part 1_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution. This is shown in the image _(Figure 3.1.1.7)_ below.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 3.1.1.7 redo example part 2_
+_Figure 3.1.1.7: redo example part 2_
 
 The following *_activity diagram_* _(Figure 3.1.1.8)_ summarize what happens inside the `UndoRedoStack` when a user executes a new command.
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 3.1.1.8 undo/redo activity_
+_Figure 3.1.1.8: undo/redo activity_
 
 
 [discrete]
@@ -597,7 +597,7 @@ The add event command is facilitated by `LogicManager` class. It allows user to 
 The following *_sequence diagram_* _(Figure 3.4)_ shows how add event command works:
 
 image::AddEventCommandSequenceDiagram.png[width="800"]
-_Figure 3.4 AddEvent command sequence diagram_
+_Figure 3.4: AddEvent command sequence diagram_
 
 The user enters an addEvent command, which is received by `LogicManager`. `LogicManager` calls `AddressBookParser` to parse the command. +
 `AddressBookParser` will firstly check the format of the parameters. If format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object. +
@@ -726,7 +726,7 @@ We will explain it in terms of Model and Storage. +
 For model, we simply use the "referencing model", which is shown in the diagram _(Figure 3.7.1)_ below: +
 
 image::DG_model_join.png[width = "800"]
-_Figure 3.7.1 interaction model_
+_Figure 3.9.1: interaction model_
 
 Refer to the diagram above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
 Similarly, the participation list in Person model stores all the event in which this person joins.
@@ -746,14 +746,14 @@ public void disjoin(Person personToRemove, Event eventToRemove) {
 For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram _(Figure 3.7.2)_ below:
 
 image::DG_infinity loop.png[width = "800"]
-_Figure 3.7.2 infinity loop_
+_Figure 3.9.2: infinity loop_
 
 To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`, both of them does not have participant or participation information.
 Hence, we can avoid the infinity referencing problem. +
 The updated storage is shown in the diagram _(Figure 3.7.3)_ below:
 
 image::DG_join_storage.png[width = "800"]
-_Figure 3.7.3 interaction storage_
+_Figure 3.9.3: interaction storage_
 
 [discrete]
 ===== Design Considerations
