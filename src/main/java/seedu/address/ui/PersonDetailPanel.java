@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonModifiedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.util.Avatar;
@@ -96,5 +97,10 @@ public class PersonDetailPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showPersonDetails(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handlePersonDetailsChangedEvent(PersonModifiedEvent event) {
+        showPersonDetails(event.getModifiedPerson());
     }
 }
