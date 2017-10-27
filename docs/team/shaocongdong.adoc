@@ -15,6 +15,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 * AddTask command
 * deleteTask command
 * seleteTask command
+* Help on implementing markTask command
+* setPriority command
+* taskByPriority command
 
 ==== External behavior
 
