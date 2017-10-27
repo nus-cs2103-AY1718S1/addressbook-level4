@@ -308,6 +308,9 @@ public class CombinePanel extends UiPart<Region> {
         noteData = new String[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
+               if (i == 1 && j == 2){
+                   return;
+               }
                 Random rdm = new Random();
                 int length = 0 + (int) (Math.random() * 50);
                 noteData[i][j] = generateString(rdm, letters, length);
@@ -342,7 +345,9 @@ public class CombinePanel extends UiPart<Region> {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String text = noteData[i][j];
-
+                if (text == null){
+                    return;
+                }
                 int x = 120 + (int) (Math.random() * 255);
                 int y = 120 + (int) (Math.random() * 255);
                 int z = 120 + (int) (Math.random() * 255);
