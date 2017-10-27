@@ -155,7 +155,7 @@ public class AddCommandParserTest {
         // invalid dob
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + INVALID_DOB_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                DateOfBirth.MESSAGE_DOB_CONSTRAINTS);
+                DateOfBirth.MESSAGE_INVALID_MONTH);
 
         // invalid tag
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB

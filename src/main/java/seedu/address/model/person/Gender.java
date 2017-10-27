@@ -51,22 +51,13 @@ public class Gender {
             throw new IllegalValueException(MESSAGE_GENDER_CONSTRAINTS);
         }
         switch (gen.toLowerCase()) {
-        case ("female"):
+        case ("female"): case ("f"):
             this.value = GenderType.FEMALE;
             break;
-        case ("f"):
-            this.value = GenderType.FEMALE;
-            break;
-        case ("male"):
+        case ("male"): case ("m"):
             this.value = GenderType.MALE;
             break;
-        case ("m"):
-            this.value = GenderType.MALE;
-            break;
-        case ("other"):
-            this.value = GenderType.OTHER;
-            break;
-        case("o"):
+        case ("other"): case("o"):
             this.value = GenderType.OTHER;
             break;
         default:
