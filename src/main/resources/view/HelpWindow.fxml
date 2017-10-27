@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
 <StackPane fx:id="helpWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <WebView fx:id="browser" />
+   <VBox fx:id="layout">
+      <children>
+         <TextField fx:id="txtSearch" promptText="Search and press ENTER" />
+         <HBox fx:id="controls">
+            <children>
+               <Button fx:id="btnSearch" mnemonicParsing="false" text="Search">
+                  <HBox.margin>
+                     <Insets right="10.0" />
+                  </HBox.margin>
+               </Button>
+               <Button fx:id="btnClear" mnemonicParsing="false" text="Clear" />
+            </children>
+         </HBox>
+        <WebView fx:id="browser" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100000.0" />
+      </children>
+   </VBox>
 </StackPane>
