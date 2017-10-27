@@ -4,7 +4,6 @@ import java.util.TreeSet;
 
 import static java.util.Objects.requireNonNull;
 
-import apple.laf.JRSUIUtils;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
