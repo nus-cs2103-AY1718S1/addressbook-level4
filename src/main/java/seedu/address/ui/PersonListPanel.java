@@ -13,8 +13,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.ListEvent;
-import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -67,25 +65,6 @@ public class PersonListPanel extends UiPart<Region> {
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
-    }
-
-    @Subscribe
-    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
-        ObservableList<ReadOnlyPerson> personList = event.getNewSelection()
-                .group.groupMembersProperty().get().asObservableList();
-        ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        personListView.setItems(mappedList);
-    }
-
-    @Subscribe
-    private void handleListEvent(ListEvent event) {
-        ObservableList<ReadOnlyPerson> personList = event.data;
-        ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        personListView.setItems(mappedList);
     }
 
     /**

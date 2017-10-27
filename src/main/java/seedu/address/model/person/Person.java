@@ -214,10 +214,6 @@ public class Person implements ReadOnlyPerson {
         groups.set(new UniqueGroupList(replacement));
     }
 
-    /**
-     * Replaces this person's groups with the groups in the argument group set.
-     */
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

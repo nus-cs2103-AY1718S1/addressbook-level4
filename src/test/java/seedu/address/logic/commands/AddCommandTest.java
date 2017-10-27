@@ -169,18 +169,13 @@ public class AddCommandTest {
         }
 
         @Override
-        public void showUnfilteredPersonList() {
-            fail("This method should not be called.");
-        }
-
-        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
 
         @Override
         public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
-
+            fail("This method should not be called.");
         }
     }
 

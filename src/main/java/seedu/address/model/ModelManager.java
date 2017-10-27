@@ -7,6 +7,8 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,7 +16,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.events.model.ListEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
@@ -68,11 +70,6 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
-    /** Raises an event to indicate a list command has occurred */
-    private void indicateListEvent() {
-        raise(new ListEvent(getFilteredPersonList()));
-    }
-
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
@@ -123,9 +120,14 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
             throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
+        addressBook.deletePersonFromGroup(targetGroup, toRemove);
+        /** Update filtered list with predicate for current group members in group after removing a person */
+        ObservableList<ReadOnlyPerson> personList = addressBook.getGroupList()
+                .get(targetGroup.getZeroBased()).groupMembersProperty().get().asObservableList();
+        updateFilteredPersonList(getGroupMembersPredicate(personList));
+        indicateAddressBookChanged();
 
     }
-
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -144,23 +146,31 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void showUnfilteredPersonList() {
-        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
-        indicateListEvent();
-    }
-
-    @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
-        indicateListEvent();
-    }
 
+    }
 
     @Override
     public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
         requireNonNull(predicate);
         filteredGroups.setPredicate(predicate);
+    }
+
+    /** Returns predicate that returns true if group member list contains a person */
+    /** Used to update FilteredPersonList whenever there is a need to display group members */
+    public Predicate<ReadOnlyPerson> getGroupMembersPredicate(ObservableList<ReadOnlyPerson> personList) {
+        return personList::contains;
+    }
+
+    /** Handle any GroupPanelSelectionChangedEvent raised and set predicate to show group members only */
+    @Subscribe
+    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+        ObservableList<ReadOnlyPerson> personList = event.getNewSelection()
+                .group.groupMembersProperty().get().asObservableList();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        updateFilteredPersonList(getGroupMembersPredicate(personList));
     }
 
     @Override
@@ -181,5 +191,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredGroups.equals(other.filteredGroups);
     }
+
+
 
 }

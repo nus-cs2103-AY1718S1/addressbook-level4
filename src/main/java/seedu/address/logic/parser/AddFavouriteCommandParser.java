@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new AddFaveCommand object
  */
-public class AddFaveCommandParser implements Parser<AddFavouriteCommand> {
+public class AddFavouriteCommandParser implements Parser<AddFavouriteCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddFaveCommandCommand
