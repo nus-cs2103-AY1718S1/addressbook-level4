@@ -28,7 +28,14 @@ public class Remark {
         }
         value = remark;
         moduleCode = module;
+    }
 
+    /**
+     * Creates a copy of the given Remark.
+     */
+    public Remark(Remark source) {
+        value = source.value;
+        moduleCode = source.moduleCode;
     }
 
     @Override
