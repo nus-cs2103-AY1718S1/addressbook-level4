@@ -10,11 +10,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <StackPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="personDetailsGrid" gridLinesVisible="true" style="-fx-background-color: white;">
+      <GridPane fx:id="personDetailsGrid" gridLinesVisible="true" style="-fx-background-image: url(images/wallpaper1.png);">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -31,10 +30,7 @@
                         <Image url="images/profile.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="nameLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" style="-fx-font-size: 36px; -fx-font-style: bold;" text="Person Name" textAlignment="CENTER" underline="true" wrapText="true">
-                     <font>
-                        <Font name="System Bold Italic" size="36.0" />
-                     </font>
+                  <Label fx:id="nameLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" style="-fx-font-size: 36px; -fx-font-weight: bold;" text="Person Name" textAlignment="CENTER" underline="true" wrapText="true">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
