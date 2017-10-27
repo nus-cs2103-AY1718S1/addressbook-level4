@@ -22,6 +22,7 @@ import seedu.address.logic.commands.MarkCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnmarkCommand;
 import seedu.address.logic.commands.ViewCommand;
@@ -107,6 +108,9 @@ public class AddressBookParser {
 
         case ColorKeywordCommand.COMMAND_WORD:
             return new ColorKeywordCommandParser().parse(arguments);
+
+        case SwitchThemeCommand.COMMAND_WORD:
+            return new SwitchThemeCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

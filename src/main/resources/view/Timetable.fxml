@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane styleClass="grid-pane" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane styleClass="grid-pane" stylesheets="@LightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -45,7 +45,7 @@
                         <Label styleClass="cell_small_label" text="2000" />
                      </children>
                   </HBox>
-                  <GridPane fx:id="timetableGrid" prefHeight="520.0" styleClass="grid-pane" stylesheets="@DarkTheme.css">
+                  <GridPane fx:id="timetableGrid" prefHeight="520.0" styleClass="grid-pane" stylesheets="@LightTheme.css">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

@@ -11,10 +11,10 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="sceneBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
-    <URL value="@DarkTheme.css" />
-    <URL value="@Extensions.css" />
+    <URL value="@LightTheme.css" />
+    <URL value="@LightExtensions.css" />
   </stylesheets>
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
@@ -29,11 +29,11 @@
       <items>
          <VBox prefHeight="170.0" prefWidth="440.0" styleClass="split-pane:horizontal .split-pane-divider" SplitPane.resizableWithParent="false">
             <children>
-              <StackPane fx:id="commandBoxPlaceholder" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" styleClass="pane-without-border" stylesheets="@DarkTheme.css" VBox.vgrow="NEVER">
+              <StackPane fx:id="commandBoxPlaceholder" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" VBox.vgrow="NEVER">
                   <opaqueInsets>
                      <Insets />
                   </opaqueInsets></StackPane>
-              <StackPane fx:id="resultDisplayPlaceholder" maxHeight="133.0" minHeight="133.0" prefHeight="133.0" styleClass="pane-with-border" stylesheets="@DarkTheme.css" VBox.vgrow="NEVER">
+              <StackPane fx:id="resultDisplayPlaceholder" maxHeight="133.0" minHeight="133.0" prefHeight="133.0" styleClass="pane-with-border" stylesheets="@LightTheme.css" VBox.vgrow="NEVER">
                   <VBox.margin>
                      <Insets />
                   </VBox.margin></StackPane>
