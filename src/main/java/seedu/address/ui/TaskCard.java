@@ -60,6 +60,10 @@ public class TaskCard extends UiPart<Region> {
 
     }
 
+    public ReadOnlyTask getTask () {
+        return task;
+    }
+
     private static String getTagColor(String tagName) {
         if (!tagColors.containsKey(tagName)) {
             String color = colors.get(0);
