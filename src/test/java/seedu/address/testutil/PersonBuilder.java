@@ -117,6 +117,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Person} that we are building to be pinned.
+     */
+    public PersonBuilder withPinned(boolean isPinned) {
+        this.person.setPinned(isPinned);
+        return this;
+    }
+
     public Person build() {
         return this.person;
     }
