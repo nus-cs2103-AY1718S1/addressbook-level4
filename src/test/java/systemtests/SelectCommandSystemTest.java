@@ -8,6 +8,10 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalParcels.getTypicalParcels;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -16,6 +20,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.parcel.Status;
 
 public class SelectCommandSystemTest extends AddressBookSystemTest {
     @Test
@@ -27,7 +32,8 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, INDEX_FIRST_PARCEL);
 
         /* Case: select the last card in the parcel list -> selected */
-        Index parcelCount = Index.fromOneBased(getTypicalParcels().size());
+        Index parcelCount = Index.fromOneBased(getTypicalParcels().stream()
+                .filter(p -> !p.getStatus().equals(Status.COMPLETED)).collect(Collectors.toList()).size());
         command = SelectCommand.COMMAND_WORD + " " + parcelCount.getOneBased();
         assertCommandSuccess(command, parcelCount);
 
