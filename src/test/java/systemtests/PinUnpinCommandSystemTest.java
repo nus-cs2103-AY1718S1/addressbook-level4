@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.person.UnpinCommand.MESSAGE_UNPIN_PER
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getUnpinPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.util.List;
@@ -48,18 +47,18 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
 
         /* ----------------- Performing unpin operation while an unfiltered list is being shown -------------------- */
 
-        /* Case: unpin the second person in the pinned person list,
+        /* Case: unpin the first person in the list,
          command with leading spaces and trailing spaces -> unpinned */
         expectedModel = getModel();
-        command = "     " + UnpinCommand.COMMAND_WORD + "      " + INDEX_SECOND_PERSON.getOneBased() + "       ";
-        ReadOnlyPerson unpinnedPerson = unpinPerson(expectedModel, INDEX_SECOND_PERSON);
+        command = "     " + UnpinCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
+        ReadOnlyPerson unpinnedPerson = unpinPerson(expectedModel, INDEX_FIRST_PERSON);
         expectedResultMessage = String.format(MESSAGE_UNPIN_PERSON_SUCCESS, unpinnedPerson);
         assertUnpinCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: unpin the first person in the pinned person list -> unpinned */
-        Model modelBeforeUnpinningFirst = getModel();
-        modelBeforeUnpinningFirst.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_PINNED);
-        assertUnpinCommandSuccess(INDEX_FIRST_PERSON);
+        /* Case: unpin the last person in the list -> unpinned */
+        Model modelBeforeUnpinningLast = getModel();
+        lastPersonIndex = getLastIndex(modelBeforeUnpinningLast);
+        assertUnpinCommandSuccess(lastPersonIndex);
 
         /* ------------------ Performing pin operation while a filtered list is being shown ---------------------- */
 
@@ -72,10 +71,15 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered person list, pin index within bounds of address book but out of bounds of person list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         command = PinCommand.COMMAND_WORD + " " + invalidIndex;
         assertPinCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: filtered person list, pin person already pinned
+         * -> rejected
+         */
+        command = PinCommand.COMMAND_WORD + " 1";
+        assertPinCommandFailure(command, Messages.MESSAGE_PERSON_ALREADY_PINNED);
 
         /* ------------------ Performing unpin operation while a filtered list is being shown ---------------------- */
 
@@ -88,9 +92,14 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered person list, pin index within bounds of address book but out of bounds of person list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
         command = UnpinCommand.COMMAND_WORD + " " + invalidIndex;
         assertUnpinCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: filtered person list, unpin person not pinned
+         * -> rejected
+         */
+        command = UnpinCommand.COMMAND_WORD + " 1";
+        assertPinCommandFailure(command, Messages.MESSAGE_PERSON_ALREADY_UNPINNED);
 
         /* ---------------------------- Performing invalid pin and unpin operation ------------------------------- */
 
@@ -99,7 +108,6 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
         assertPinCommandFailure(command, MESSAGE_INVALID_PIN_COMMAND_FORMAT);
         command = UnpinCommand.COMMAND_WORD + " 0";
         assertUnpinCommandFailure(command, MESSAGE_INVALID_UNPIN_COMMAND_FORMAT);
-
 
         /* Case: invalid index (-1) -> rejected */
         command = PinCommand.COMMAND_WORD + " -1";
@@ -227,7 +235,6 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
      * @return the unpinned person
      */
     private ReadOnlyPerson unpinPerson(Model model, Index index) {
-        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ONLY_PINNED);
         ReadOnlyPerson targetPerson = getUnpinPerson(model, index);
         try {
             model.unpinPerson(targetPerson);
@@ -279,7 +286,6 @@ public class PinUnpinCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertUnpinCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                            Index expectedSelectedCardIndex) {
-        showOnlyPinned();
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
