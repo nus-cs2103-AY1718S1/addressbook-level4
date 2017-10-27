@@ -144,6 +144,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
     public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
             throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
         addressBook.deletePersonFromGroup(targetGroup, toRemove);
@@ -179,7 +180,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void showUnfilteredPersonList() {
         filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
-        indicateListEvent();
     }
 
     @Override
