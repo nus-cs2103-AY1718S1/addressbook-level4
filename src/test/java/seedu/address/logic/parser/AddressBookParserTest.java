@@ -206,6 +206,7 @@ public class AddressBookParserTest {
         assertEquals(new RemarkCommand(index, new Remark(remark)), testRemarkCommand);
         assertNotEquals(new RemarkCommand(index, new Remark("")), testRemarkCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

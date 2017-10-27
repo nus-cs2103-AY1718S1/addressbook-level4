@@ -9,9 +9,9 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.commands.ToggleTagColorCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-//@@author Jeremy
 public class ToggleTagColorParserTest {
 
+    //@@author Jeremy
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -38,6 +38,7 @@ public class ToggleTagColorParserTest {
         thrown.expect(ParseException.class);
         parser.parse("Test");
     }
+    //@@author
 
     @Test
     public void parseMoreThanTwoWords() throws Exception {

@@ -225,13 +225,11 @@ public class ParserUtilTest {
         ParserUtil.parseRemark(null);
     }
 
-    //@@author Jeremy
     @Test
     public void parseRemarkOptionalEmptyReturnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
     }
 
-    //@@author Jeremy
     @Test
     public void parseRemarkValidValueReturnsRemark() throws Exception {
         Remark expectedRemark = new Remark(VALID_REMARK);
@@ -239,4 +237,5 @@ public class ParserUtilTest {
 
         assertEquals(expectedRemark, actualRemark.get());
     }
+    //@@author
 }

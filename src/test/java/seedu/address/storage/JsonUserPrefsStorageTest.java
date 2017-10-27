@@ -88,7 +88,6 @@ public class JsonUserPrefsStorageTest {
         assertTrue("TypicalAddressBookName".equals(upUnderTest.getAddressBookName()));
     }
 
-    //@@author Jeremy
     @Test
     public void testUserPrefsEquals() {
         UserPrefs upUnderTest = getTypicalUserPrefs();
@@ -108,7 +107,6 @@ public class JsonUserPrefsStorageTest {
 
     }
 
-    //@@author Jeremy
     @Test
     public void testUserPrefsHashCode() {
         UserPrefs upUnderTest = getTypicalUserPrefs();
@@ -129,6 +127,7 @@ public class JsonUserPrefsStorageTest {
         // Same user pref generates same hash
         assertTrue(firstHashCode == thirdHashCode);
     }
+    //@@author
 
     private UserPrefs getTypicalUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();

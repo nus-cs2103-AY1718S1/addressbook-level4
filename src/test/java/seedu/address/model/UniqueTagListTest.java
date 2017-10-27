@@ -35,6 +35,7 @@ public class UniqueTagListTest {
         uniqueTagList.add((Tag) myIterator.next());
 
     }
+    //@@author
 
     @Test
     public void asObservableListModifyListThrowsUnsupportedOperationException() {
@@ -148,5 +149,6 @@ public class UniqueTagListTest {
         // different sets -> returns false
         assertFalse(uniqueTagList.equals(uniqueTagListThree));
     }
+    //@@author
 
 }
