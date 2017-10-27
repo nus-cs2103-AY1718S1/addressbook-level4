@@ -123,8 +123,10 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicateTaskException, TaskNotFoundException {
         requireAllNonNull(target, editedTask);
 
+
+
         taskBook.updateTask(target, editedTask);
-        indicateAddressBookChanged();
+        indicateTaskBookChanged();
     }
 
     @Override
@@ -133,6 +135,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(task, value);
 
         taskBook.updateTaskPriority(task, value);
+        indicateTaskBookChanged();
 
     }
 

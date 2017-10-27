@@ -8,6 +8,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
@@ -25,7 +26,8 @@ public class SetPriorityCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) PRIORITY (must be an integer between 1 and 5\n"
             + "Example: " + COMMAND_WORD + " 1 c/2";
 
-    public static final String MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS = "Updating the Priority of Task %1$s";
+    public static final String MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS = "Updated the Priority of Task %1$s";
+    public static final String MESSAGE_UPDATE_TASK_PRIORITY_OUT_OF_RANGE = "Priority value should be 1~5";
 
     private final Index targetIndex;
     private final Integer priority;
@@ -46,9 +48,15 @@ public class SetPriorityCommand extends UndoableCommand {
         }
 
         ReadOnlyTask taskToUpdate = lastShownList.get(targetIndex.getZeroBased());
+        Task updatedTask = createUpdatedTask(taskToUpdate, priority);
+
+        // Checking if the priority value inputted is out of range
+        if (updatedTask == null) {
+            return new CommandResult(MESSAGE_UPDATE_TASK_PRIORITY_OUT_OF_RANGE);
+        }
 
         try {
-            model.updateTaskPriority(taskToUpdate, priority);
+            model.updateTask(taskToUpdate, updatedTask);
         } catch (TaskNotFoundException tnfe) {
             assert false : "The target task cannot be missing";
         } catch (DuplicateTaskException dte) {
@@ -58,6 +66,31 @@ public class SetPriorityCommand extends UndoableCommand {
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         return new CommandResult(String.format(MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS, taskToUpdate.getName()));
     }
+
+    /**
+     * Create an updated task by only modifying its priority property
+     * @param target , the targeted task to be edited
+     * @param value , the new priority value
+     * @return the updated task or null
+     */
+    public Task createUpdatedTask (ReadOnlyTask target, Integer value) {
+        // Preliminary checking
+        if (value < 0 || value > 5) {
+            return null;
+        }
+
+        Task updatedTask = new Task(
+                target.getName(),
+                target.getDescription(),
+                target.getStartDateTime(),
+                target.getEndDateTime(),
+                target.getTags(),
+                target.getComplete(),
+                value);
+
+        return updatedTask;
+    }
+
 
     @Override
     public boolean equals(Object other) {
