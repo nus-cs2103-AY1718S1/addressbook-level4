@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -13,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
@@ -20,6 +22,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.RolodexBuilder;
+import seedu.address.testutil.TypicalIndexes;
 
 public class ModelManagerTest {
     @Rule
@@ -106,4 +109,23 @@ public class ModelManagerTest {
         assertFalse(person1.getTags().equals(null));
         assertFalse(person2.getTags().equals(null));
     }
+
+    @Test
+    public void getIndex() {
+        Rolodex rolodex = new RolodexBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+
+        ModelManager modelManager = new ModelManager(rolodex, userPrefs);
+
+        // Alice has first index
+        Index expectedIndex = TypicalIndexes.INDEX_FIRST_PERSON;
+        Index actualIndex = modelManager.getIndex(ALICE);
+        assertEquals(expectedIndex, actualIndex);
+
+        // Benson has second index
+        expectedIndex = TypicalIndexes.INDEX_SECOND_PERSON;
+        actualIndex = modelManager.getIndex(BENSON);
+        assertEquals(expectedIndex, actualIndex);
+    }
+
 }
