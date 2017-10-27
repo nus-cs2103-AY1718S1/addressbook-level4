@@ -57,7 +57,7 @@ public class ResultDisplay extends UiPart<Region> {
     private void updateInfoDisplay(String oldInput, String newInput) {
         if (lastFoundCommand.isEmpty()
             || (newInput.length() < oldInput.length() && !newInput.contains(lastFoundCommand))
-            || newInput.equals("clearhistory")) {
+            || (newInput.length() > oldInput.length()) && allCommandUsages.containsKey(newInput)) {
             infoDisplay.setText("");
             lastFoundCommand = "";
             if (allCommandUsages.containsKey(newInput)) {
