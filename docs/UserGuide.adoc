@@ -121,6 +121,18 @@ Examples:
 * `highlight owes money`
 * `highlight nonExistentTag` - Clears current highlighting
 
+=== Swap Rooms: `swaproom`
+
+Swaps the rooms of two residents in the residentbook. The indexes are based on the last list displayed to the user.
+Format: `swaproom `index` `index``
+
+[TIP]
+The command `swaproom 1 2` and `swaproom 2 1` are equivalent
+
+Examples:
+* `swaproom 1 2`
+* `swaproom 3 5`
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the resident book. +
