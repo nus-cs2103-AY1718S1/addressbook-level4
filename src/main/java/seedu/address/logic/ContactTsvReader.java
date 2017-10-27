@@ -15,6 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Occupation;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -64,6 +65,8 @@ public class ContactTsvReader {
                     ArrayList<String> columns = tsvLinetoArrayList(line);
                     Name name = ParserUtil.parseName(checkEmptyAndReturn(retrieveColumnField(columns, 0)))
                             .get();
+                    Occupation occupation = ParserUtil.parseOccupation(checkEmptyAndReturn(retrieveColumnField(columns,
+                            0))).get();
                     Phone phone = ParserUtil.parsePhone(checkEmptyAndReturn(retrieveColumnField(columns, 1)))
                             .get();
                     Email email = ParserUtil.parseEmail(checkEmptyAndReturn(retrieveColumnField(columns, 2)))
@@ -78,7 +81,8 @@ public class ContactTsvReader {
                                     .replace("\"", "")
                                     .split("[,\\s]+"))));
                     Remark remark = new Remark("");
-                    ReadOnlyPerson toAddPerson = new Person(name, phone, email, address, remark, website, tagList);
+                    ReadOnlyPerson toAddPerson = new Person(name, occupation, phone, email, address, remark, website,
+                            tagList);
                     toAddPeople.add(toAddPerson);
                 } catch (IllegalValueException ive) {
                     throw new ParseException(ive.getMessage(), ive);
