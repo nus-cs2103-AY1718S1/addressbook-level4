@@ -1,17 +1,18 @@
 package seedu.address.model.lesson.predicate;
 
-import org.junit.Test;
-
-import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
-import seedu.address.testutil.LessonBuilder;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
+import seedu.address.testutil.LessonBuilder;
+
 
 public class MarkedLessonsContainsKeywordsPredicateTest {
 
@@ -60,8 +61,8 @@ public class MarkedLessonsContainsKeywordsPredicateTest {
     @Test
     public void test_markedLessonsAllAttributeContainsKeywords_returnsTrue() {
         // One keyword to find location
-        MarkedLessonContainsKeywordsPredicate predicate
-                = new MarkedLessonContainsKeywordsPredicate(Collections.singletonList("LT27"));
+        MarkedLessonContainsKeywordsPredicate predicate =
+                new MarkedLessonContainsKeywordsPredicate(Collections.singletonList("LT27"));
         assertTrue(predicate.test(new LessonBuilder().withLocation("LT27").withMarked().build()));
 
         // One keyword to find group
@@ -119,10 +120,10 @@ public class MarkedLessonsContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_MarkedLessonAllAttributeDoesNotContainKeywords_returnsFalse() {
+    public void test_markedLessonDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
-        MarkedLessonContainsKeywordsPredicate predicate
-                = new MarkedLessonContainsKeywordsPredicate(Collections.emptyList());
+        MarkedLessonContainsKeywordsPredicate predicate =
+                new MarkedLessonContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test((new LessonBuilder().withMarked().build())));
 
         // Non-matching keyword for all attributes
@@ -133,8 +134,8 @@ public class MarkedLessonsContainsKeywordsPredicateTest {
 
     @Test
     public void test_unmarkedLesson_returnsFalse() {
-        MarkedLessonContainsKeywordsPredicate predicate
-                = new MarkedLessonContainsKeywordsPredicate(Arrays.asList("LEC"));
+        MarkedLessonContainsKeywordsPredicate predicate =
+                new MarkedLessonContainsKeywordsPredicate(Arrays.asList("LEC"));
         assertFalse(predicate.test(new LessonBuilder().withUnmarked().build()));
     }
 }

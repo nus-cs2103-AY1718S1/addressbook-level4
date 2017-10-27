@@ -1,16 +1,17 @@
 package seedu.address.model.lesson.predicate;
 
-import org.junit.Test;
-import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
-import seedu.address.testutil.LessonBuilder;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
+import seedu.address.testutil.LessonBuilder;
 
 public class ModuleContainsKeywordsPredicateTest {
 

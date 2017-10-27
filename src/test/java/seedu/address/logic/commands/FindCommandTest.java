@@ -1,8 +1,19 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -15,17 +26,6 @@ import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
-import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
-
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -94,7 +94,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_findByValidModuleCode_ModuleFound() {
+    public void execute_findByValidModuleCode_moduleFound() {
         ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
         keywords.add("MA1101");
         FindCommand findByModule = new FindCommand(keywords);
@@ -107,7 +107,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_findByValidLocation_LocationFound() {
+    public void execute_findByValidLocation_locationFound() {
         ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
         keywords.add("LT27");
         FindCommand findByLocation = new FindCommand(keywords);
@@ -120,7 +120,7 @@ public class FindCommandTest {
     }
 
     @Test
-    public void execute_findByValidLessonDetails_LessonsFound() {
+    public void execute_findByValidLessonDetails_lessonsFound() {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
         model.setViewingPanelAttribute("module");
         model.setCurrentViewingLesson(MA1101R_L1);
@@ -128,7 +128,7 @@ public class FindCommandTest {
         FindCommand findByLesson = new FindCommand(keywords);
         findByLesson.setData(model, new CommandHistory(), new UndoRedoStack());
         expectedMessage = FindCommand.MESSAGE_SUCCESS;
-        model.updateFilteredLessonList(new LessonContainsKeywordsPredicate(keywords,MA1101R_L1,"module"));
+        model.updateFilteredLessonList(new LessonContainsKeywordsPredicate(keywords, MA1101R_L1, "module"));
         expectedList = model.getFilteredLessonList();
 
         assertCommandSuccess(findByLesson, expectedMessage, expectedList);
@@ -148,12 +148,13 @@ public class FindCommandTest {
 
         assertCommandSuccess(findByMarkedLesson, expectedMessage, expectedList);
     }
-    /*
+
+    /***
      * Asserts that {@code command} is successfully executed, and<br>
      * - the command feedback is equal to {@code expectedMessage}<br>
      * - the {@code FilteredList<ReadOnlyLesson>} is equal to {@code expectedList}<br>
      * - the {@code AddressBook} in model remains the same after executing the {@code command}
-     */
+     ***/
     private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyLesson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();

@@ -1,23 +1,23 @@
 package seedu.address.model.lesson.predicate;
 
-import org.junit.Test;
-
-import seedu.address.model.module.ReadOnlyLesson;
-import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
-import seedu.address.testutil.LessonBuilder;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+
+import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
+import seedu.address.testutil.LessonBuilder;
 
 public class LessonContainsKeywordsPredicateTest {
 
-    public static final ReadOnlyLesson lessonForTest = new LessonBuilder().build();
-    public static final String attributeForTest = "module";
+    public static final ReadOnlyLesson LESSON = new LessonBuilder().build();
+    public static final String ATTRIBUTE = "module";
 
     @Test
     public void equals() {
@@ -37,19 +37,19 @@ public class LessonContainsKeywordsPredicateTest {
         keywordTwo.add("bbb");
         keywordTwo.add("bbb");
 
-        LessonContainsKeywordsPredicate predicateOne = new LessonContainsKeywordsPredicate(keywordOne, lessonForTest,
-                attributeForTest);
-        LessonContainsKeywordsPredicate predicateTwo = new LessonContainsKeywordsPredicate(keywordTwo, lessonForTest,
-                attributeForTest);
-        LessonContainsKeywordsPredicate predicateNull = new LessonContainsKeywordsPredicate(keywordNull, lessonForTest,
-                attributeForTest);
+        LessonContainsKeywordsPredicate predicateOne = new LessonContainsKeywordsPredicate(keywordOne, LESSON,
+                ATTRIBUTE);
+        LessonContainsKeywordsPredicate predicateTwo = new LessonContainsKeywordsPredicate(keywordTwo, LESSON,
+                ATTRIBUTE);
+        LessonContainsKeywordsPredicate predicateNull = new LessonContainsKeywordsPredicate(keywordNull, LESSON,
+                ATTRIBUTE);
 
         // same object -> returns true
         assertTrue(predicateOne.equals(predicateOne));
 
         // same values -> returns true
         LessonContainsKeywordsPredicate predicateTestOne = new LessonContainsKeywordsPredicate(keywordOne,
-                lessonForTest, attributeForTest);
+                LESSON, ATTRIBUTE);
         assertTrue(predicateOne.equals(predicateTestOne));
 
         // different types -> returns false
@@ -69,67 +69,67 @@ public class LessonContainsKeywordsPredicateTest {
     public void test_lessonAllAttributeContainsKeywords_returnsTrue() {
         // One keyword to find location
         LessonContainsKeywordsPredicate predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
-                "LT27"), lessonForTest, attributeForTest);
+                "LT27"), LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withLocation("LT27").build()));
 
         // One keyword to find group
         predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
-                "12"), lessonForTest, attributeForTest);
+                "12"), LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withGroup("12").build()));
 
         // One keyword to find class type
         predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
-                "LEC"), lessonForTest, attributeForTest);
+                "LEC"), LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withClassType("LEC").build()));
 
         // One keyword to find time slot
         predicate = new LessonContainsKeywordsPredicate(Collections.singletonList(
-                "MON[1200-1300]"), lessonForTest, attributeForTest);
+                "MON[1200-1300]"), LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
 
         // Only one matching keyword to find location
-        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("LT26", "LT27"), lessonForTest,
-                attributeForTest);
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("LT26", "LT27"), LESSON,
+                ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withLocation("LT27").build()));
 
         // Only one matching keyword to find group
-        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("1", "2"), lessonForTest, attributeForTest);
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("1", "2"), LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withGroup("1").build()));
 
         // Only one matching keyword to find class type
-        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("TUT", "LEC"), lessonForTest, attributeForTest);
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("TUT", "LEC"), LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withClassType("LEC").build()));
 
         // Only one matching keyword to find time slot
         predicate = new LessonContainsKeywordsPredicate(Arrays.asList("MON[1200-1300]", "TUE[0900-1000]"),
-                lessonForTest, attributeForTest);
+                LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
 
         // Mixed-case keywords to find location
         predicate = new LessonContainsKeywordsPredicate(Arrays.asList("Lt12"),
-                lessonForTest, attributeForTest);
+                LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withLocation("LT12").build()));
 
         // Mixed-case keywords to find class type
         predicate = new LessonContainsKeywordsPredicate(Arrays.asList("LeC"),
-                lessonForTest, attributeForTest);
+                LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withClassType("LEC").build()));
 
         // Mixed-case keywords to find time slot
         predicate = new LessonContainsKeywordsPredicate(Arrays.asList("mOn[1200-1300]"),
-                lessonForTest, attributeForTest);
+                LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
 
         // partial keywords that is a substring of the location that user intend to find
-        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("LT"), lessonForTest, attributeForTest);
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("LT"), LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withLocation("LT12").build()));
 
         // partial keywords that is a substring of the time slot that user intend to find
-        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("MON"), lessonForTest, attributeForTest);
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("MON"), LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withTimeSlot("MON[1200-1300]").build()));
 
         // partial keywords that is a substring of the class type that user intend to find
-        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("T"), lessonForTest, attributeForTest);
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("T"), LESSON, ATTRIBUTE);
         assertTrue(predicate.test(new LessonBuilder().withClassType("TUT").build()));
 
     }
@@ -138,20 +138,20 @@ public class LessonContainsKeywordsPredicateTest {
     public void test_lessonAllAttributeDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         LessonContainsKeywordsPredicate predicate = new LessonContainsKeywordsPredicate(Collections.emptyList(),
-                lessonForTest, attributeForTest);
-        assertFalse(predicate.test(lessonForTest));
+                LESSON, ATTRIBUTE);
+        assertFalse(predicate.test(LESSON));
 
         // Non-matching keyword for all attributes
-        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("COM1"), lessonForTest, attributeForTest);
-        assertFalse(predicate.test(lessonForTest));
+        predicate = new LessonContainsKeywordsPredicate(Arrays.asList("COM1"), LESSON, ATTRIBUTE);
+        assertFalse(predicate.test(LESSON));
 
     }
 
     @Test
     public void test_differentModuleCode_returnsFalse() {
-        LessonContainsKeywordsPredicate predicate = new LessonContainsKeywordsPredicate(Arrays.asList("COM1")
-                , lessonForTest, attributeForTest);
-        assertFalse(predicate.test(new LessonBuilder().withCode("CS2100").withLocation("LT22").withClassType("LEC").
-                withTimeSlot("MON[1200-1300]").withGroup("1").build()));
+        LessonContainsKeywordsPredicate predicate = new LessonContainsKeywordsPredicate(Arrays.asList("COM1"),
+                LESSON, ATTRIBUTE);
+        assertFalse(predicate.test(new LessonBuilder().withCode("CS2100").withLocation("LT22").withClassType("LEC")
+                .withTimeSlot("MON[1200-1300]").withGroup("1").build()));
     }
 }

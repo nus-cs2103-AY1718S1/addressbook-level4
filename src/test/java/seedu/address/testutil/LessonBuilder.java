@@ -126,8 +126,8 @@ public class LessonBuilder {
      * Sets the {@code isMarked} to marked of the {@code Lesson} that we are building.
      */
     public LessonBuilder withMarked() {
-       this.lesson.setAsMarked();
-       return this;
+        this.lesson.setAsMarked();
+        return this;
     }
 
     /**
