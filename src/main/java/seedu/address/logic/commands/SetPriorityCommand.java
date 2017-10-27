@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -8,6 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
+
 
 /**
  * Sets the priority of a task identified as completed using it's last displayed index from the address book.
@@ -22,7 +25,7 @@ public class SetPriorityCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) PRIORITY (must be an integer between 1 and 5\n"
             + "Example: " + COMMAND_WORD + " 1 c/2";
 
-    public static final String MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS = "Update Priority of Task: %1$s";
+    public static final String MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS = "Updating the Priority of Task %1$s";
 
     private final Index targetIndex;
     private final Integer priority;
@@ -52,7 +55,8 @@ public class SetPriorityCommand extends UndoableCommand {
             assert false : "The target updated can cause duplication";
         }
 
-        return new CommandResult(String.format(MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS, taskToUpdate));
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        return new CommandResult(String.format(MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS, taskToUpdate.getName()));
     }
 
     @Override
