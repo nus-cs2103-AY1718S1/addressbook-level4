@@ -120,4 +120,16 @@ public class UniqueParcelList implements Iterable<Parcel> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+    /**
+     * Sorts the internal list and returns it.
+     */
+    public ObservableList<Parcel> getSortedList() {
+        try {
+            setParcels(internalList.sorted());
+        } catch (DuplicateParcelException e) {
+            e.printStackTrace();
+        }
+        return internalList;
+    }
 }
