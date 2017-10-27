@@ -69,4 +69,13 @@ public class PersonDetailPanelHandle extends NodeHandle<Node> {
                 .map(Label.class::cast)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Returns a copy of an empty tag list.
+     */
+    public List<String> getEmptyTagList() {
+        List<String> tagLabelsCopy = getTags();
+        tagLabelsCopy.clear();
+        return tagLabelsCopy;
+    }
 }
