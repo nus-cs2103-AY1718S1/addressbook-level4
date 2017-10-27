@@ -3,20 +3,29 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.ObservableList;
 import seedu.address.email.Email;
 import seedu.address.email.EmailManager;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Contains integration test (interaction with Model) for {@code MergeCommand}
@@ -56,8 +65,12 @@ public class MergeCommandTest {
 
     @Test
     public void merge_success() {
+        // uses model and logic stubs to ensure testing files do not merge into actual data
+        ModelStubAcceptingMergePath modelStub = new ModelStubAcceptingMergePath();
+        Logic logicStub = new LogicManager(modelStub, emailManager);
+
         String mergeCommand = MergeCommand.COMMAND_WORD + " " + TEST_NEW_FILE_PATH;
-        assertCommandSuccess(mergeCommand, MergeCommand.MESSAGE_SUCCESS, model, logic);
+        assertCommandSuccess(mergeCommand, MergeCommand.MESSAGE_SUCCESS, logicStub);
     }
 
     @Test
@@ -76,27 +89,26 @@ public class MergeCommandTest {
      * Executes the command, confirms that no exceptions are thrown and that the result message is correct.
      * Also confirms that {@code expectedModel} is as specified.
      *
-     * @see #assertCommandBehavior(Class, String, String, Model, Logic)
+     * @see #assertCommandBehavior(Class, String, String, Logic)
      */
-    private void assertCommandSuccess(String inputCommand, String expectedMessage, Model expectedModel, Logic expectedLogic) {
-        assertCommandBehavior(null, inputCommand, expectedMessage, expectedModel, expectedLogic);
+    private void assertCommandSuccess(String inputCommand, String expectedMessage, Logic expectedLogic) {
+        assertCommandBehavior(null, inputCommand, expectedMessage, expectedLogic);
     }
 
     /**
      * Executes the command, confirms that the exception is thrown and that the result message is correct.
      *
-     * @see #assertCommandBehavior(Class, String, String, Model, Logic)
+     * @see #assertCommandBehavior(Class, String, String, Logic)
      */
     private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage, Logic expectedLogic) {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel, expectedLogic);
+        assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedLogic);
     }
 
     private void assertCommandBehavior(Class<?> expectedException, String inputCommand,
-                                       String expectedMessage, Model expectedModel, Logic expectedLogic) {
+                                       String expectedMessage, Logic expectedLogic) {
 
         try {
-            CommandResult result = logic.execute(inputCommand);
+            CommandResult result = expectedLogic.execute(inputCommand);
             assertEquals(expectedException, null);
             assertEquals(expectedMessage, result.feedbackToUser);
         } catch (CommandException | ParseException e) {
@@ -104,7 +116,80 @@ public class MergeCommandTest {
             assertEquals(expectedMessage, e.getMessage());
         }
 
-        assertEquals(expectedModel, model);
-        assertEquals(expectedLogic, logic);
+    }
+
+    /**
+     * A default model stub that have all of the methods failing.
+     */
+    private class ModelStub implements Model {
+        @Override
+        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetData(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+                throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredListToShowAll() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void mergeAddressBook(String newFilePath) {
+            fail("This method should not be called.");
+        }
+    }
+
+    /**
+     * A Model stub that always accept the merge path given.
+     */
+    private class ModelStubAcceptingMergePath extends MergeCommandTest.ModelStub {
+        String mergeFilePath = "dummy";
+
+        @Override
+        public void mergeAddressBook(String newFilePath) {
+            mergeFilePath = newFilePath;
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            return new AddressBook();
+        }
     }
 }
