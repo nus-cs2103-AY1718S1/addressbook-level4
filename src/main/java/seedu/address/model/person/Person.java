@@ -144,7 +144,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable meeting set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     @Override
@@ -157,7 +157,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Replaces this person's tags with the tags in the argument tag set.
+     * Replaces this person's meetings with the meetings in the argument meeting set.
      */
     public void setMeetings(Set<Meeting> replacement) {
         meetings.set(new UniqueMeetingList(replacement));

@@ -37,6 +37,9 @@ public class XmlAdaptedPerson {
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
+    @XmlElement
+    private List<XmlAdaptedMeeting> meetings = new ArrayList<>();
+
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
@@ -59,6 +62,10 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        meetings = new ArrayList<>();
+        for (Meeting meeting : source.getMeetings()) {
+            meetings.add(new XmlAdaptedMeeting(meeting));
+        }
     }
 
     /**
@@ -71,6 +78,9 @@ public class XmlAdaptedPerson {
         final List<Meeting> personMeetings = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+        for (XmlAdaptedMeeting meeting : meetings) {
+            personMeetings.add(meeting.toModelType());
         }
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);

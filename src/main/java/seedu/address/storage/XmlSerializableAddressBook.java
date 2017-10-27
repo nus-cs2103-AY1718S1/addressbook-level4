@@ -45,6 +45,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        meetings.addAll(src.getMeetingList().stream().map(XmlAdaptedMeeting::new).collect(Collectors.toList()));
     }
 
     @Override
@@ -77,9 +78,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<Meeting> getMeetingList() {
-        final ObservableList<Meeting> meetings = this.meetings.stream().map(t -> {
+        final ObservableList<Meeting> meetings = this.meetings.stream().map(m -> {
             try {
-                return t.toModelType();
+                return m.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
                 //TODO: better error handling
