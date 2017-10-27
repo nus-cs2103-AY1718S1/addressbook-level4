@@ -296,7 +296,8 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `removeTag` +
+and `clear`).
 ====
 
 Examples:
@@ -353,6 +354,39 @@ Format: `clearhistory`
 After the command history is cleared, you will not be able to undo any previous commands.
 ====
 
+=== Adding remarks to a person: `remark`
+
+Adds a remark to a person in the address book +
+Format: `remark INDEX r/REMARK`
+
+[Note]
+Can be used to keep track of the relationship status between people in the address book.
+eg. What is the relationship between person with INDEX 1 and person with INDEX 3 within
+in the address book.
+Using the same command on the same INDEX will overwrite the previous remark.
+
+****
+* Add a remark to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+  The index *must be a positive integer* 1, 2, 3, ...
+* Existing values will be updated to the input values.
+* When editing remark, the existing remark of the person will be removed i.e adding of remark is not cumulative.
+* You can remove the remark of a person by typing `r/` without specifying any remarks after it.
+****
+
+Examples:
+
+* `remark 3 r/Is the husband of Jessie`
+* `remark 2 r/Is the wife of John`
+
+=== Backing up: `backup`
+
+Backs up the current address book to a fixed location (`addressbook.xml.bak` in current working directory).
+
+[WARNING]
+====
+Any existing backup at the same location will be overwritten after running this command.
+====
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -363,7 +397,92 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== Features (Coming in v2.0)
+== Features(Coming in v2.0)
+
+=== Add a relationship
+
+Adds a relationship between two persons. +
+Format: `addRelationship SOURCE_INDEX DESTINATION_INDEX DIRECTION`
+
+****
+* Add a relationship between the person with `SOURCE_INDEX` and `DESTINATION_INDEX`, with the direction of the relationship specified.
+* All indexes refer to the indexes shown in the most recent listing.
+* `SOURCE_INDEX` refers to the index of the person from whom the relationship is initiated.
+* `DESTINATION_INDEX` refers to the index of the person to whom the relationship is directed.
+* `DIRECTION` which refers to the direction of this relationship, can only be `directed` or `undirected`.
+* If the `DIRECTION` is `directed`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` matters.
+* If the `DIRECTION` is `undirected`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` does not matter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`addRelationship 2 3 directed` +
+Adds a directed relationship starting from the 2nd person to the 3rd person in the list.
+* `list` +
+`addRelationship 2 3 undirected` +
+Adds an undirected relationship between the 2nd person and the 3rd person in the list.
+
+=== Add a named relationship
+
+Adds a relationship between two persons and gives this relationship a name. +
+Format: `addNamedRelationship SOURCE_INDEX DESTINATION_INDEX DIRECTION NAME`
+
+****
+* Adds a relationship between `SOURCE_INDEX` and `DESTINATION_INDEX` with the direction of the relationship specified and name of the relationship given.
+* All indexes refer to the indexes shown in the most recent listing.
+* `SOURCE_INDEX` refers to the index of the person from whom the relationship is initiated.
+* `DESTINATION_INDEX` refers to the index of the person to whom the relationship is directed.
+* `DIRECTION` which refers to the direction of this relationship, can only be `directed` or `undirected`.
+* `NAME` referring to the name of the relationship *can only be alphanumeric*.
+* If the `DIRECTION` is `directed`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` matters.
+* If the `DIRECTION` is `undirected`, the order of `SOURCE_INDEX` and `DESTINATION_INDEX` does not matter.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`addRelationship 2 3 directed knows` +
+Adds a directed relationship named `knows` starting from the 2nd person to the 3rd person in the list.
+* `list` +
+`addRelationship 2 3 undirected cousins` +
+Adds an undirected relationship named `cousins` between the 2nd person and the 3rd person in the list.
+
+=== Add a confidence estimate
+
+Adds a confidence estimate for an attribute of a person. +
+Format: `addConfidenceEstimate INDEX ATTRIBUTE_TYPE ESTIMATE`
+
+****
+* `INDEX` refers to the index of the person whose attribute the user wants to add a confidence estimate to as shown in the most recent listing.
+* `ATTRIBUTE_TYPE` refers to the type of attribute that the confidence estimate is added to (e.g. Address, Email, Name, Phone, Tags, Relationships).
+* `ESTIMATE` refers to the estimate the user gives to the attribute.
+* The estimate *has to be non-negative and smaller or equal to 1*.
+****
+
+Example:
+
+* `list` +
+`addConfidenceEstimate 2 Address 0.8` +
+Adds a confidence estimate of 0.8 to the `Address` of the 2nd person in the list.
+
+=== Delete a confidence estimate
+
+Deletes a confidence estimate for an attribute of a person. +
+Format: `deleteConfidenceEstimate INDEX ATTRIBUTE_TYPE`
+
+****
+* `INDEX` refers to the index of the person whose attribute the user wants to delete the confidence estimate to as shown in the most recent listing.
+* `ATTRIBUTE_TYPE` refers to the type of attribute that the confidence estimate is added to (e.g. Address, Email, Name, Phone, Tags, Relationships).
+****
+
+Example:
+
+* `list` +
+`deleteConfidenceEstimate 2 Address` +
+Deletes a confidence estimate from the `Address` of the 2nd person in the list.
 
 === List all related persons : `listrelated`
 
@@ -422,3 +541,5 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Remark* `remark INDEX r/REMARK` +
+e.g. `remark 2 r/The husband of Juliet Lee`

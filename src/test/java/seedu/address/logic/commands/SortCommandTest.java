@@ -14,6 +14,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.testutil.StorageStub;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
@@ -32,7 +33,7 @@ public class SortCommandTest {
         unsortedModel = new ModelManager(getUnsortedAddressBook(), new UserPrefs());
 
         sortCommand = new SortCommand();
-        sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        sortCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
     }
 
     @Test

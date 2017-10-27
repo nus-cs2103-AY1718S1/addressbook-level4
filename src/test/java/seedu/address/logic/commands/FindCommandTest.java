@@ -32,6 +32,7 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.TagContainsKeywordsPredicate;
+import seedu.address.testutil.StorageStub;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -230,7 +231,7 @@ public class FindCommandTest {
     private FindCommand prepareGlobalCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new AnyContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 
@@ -240,7 +241,7 @@ public class FindCommandTest {
     private FindCommand prepareNameCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 
@@ -250,7 +251,7 @@ public class FindCommandTest {
     private FindCommand prepareAddressCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 
@@ -260,7 +261,7 @@ public class FindCommandTest {
     private FindCommand prepareEmailCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 
@@ -270,7 +271,7 @@ public class FindCommandTest {
     private FindCommand preparePhoneCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 
@@ -280,7 +281,7 @@ public class FindCommandTest {
     private FindCommand prepareTagCommand(String userInput) {
         FindCommand command =
                 new FindCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 

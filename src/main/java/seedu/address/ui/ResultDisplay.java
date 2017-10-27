@@ -22,13 +22,16 @@ public class ResultDisplay extends UiPart<Region> {
     private static final String FXML = "ResultDisplay.fxml";
 
     private final StringProperty displayed = new SimpleStringProperty("");
+    private final StringProperty infoDisplayed = new SimpleStringProperty("");
 
     @FXML
     private TextArea resultDisplay;
+    private TextArea infoDisplay;
 
     public ResultDisplay() {
         super(FXML);
         resultDisplay.textProperty().bind(displayed);
+        resultDisplay.setWrapText(true);
         registerAsAnEventHandler(this);
     }
 

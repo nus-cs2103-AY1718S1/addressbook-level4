@@ -326,6 +326,14 @@
     -fx-text-fill: white;
 }
 
+#commandTextField .text-input, .text-input:focused {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
+
+.auto-complete-popup .list-cell {
+    -fx-background-color: white;
+}
+
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
@@ -333,6 +341,10 @@
 #resultDisplay .content {
     -fx-background-color: transparent, #383838, transparent, #383838;
     -fx-background-radius: 0;
+}
+
+#infoDisplay .content {
+    -fx-background-color: transparent, #383838, transparent, #383838;
 }
 
 #tags {
