@@ -20,7 +20,6 @@ public class GraphPanelTest extends GuiUnitTest {
 
     private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
             FXCollections.observableList(getTypicalPersons());
-    private PersonPanelSelectionChangedEvent selectionChangedEventStub;
 
     private GraphPanel graphPanel;
     private GraphPanelHandle graphPanelHandle;
@@ -30,7 +29,7 @@ public class GraphPanelTest extends GuiUnitTest {
         try {
             guiRobot.interact(() -> graphPanel = new GraphPanel(TYPICAL_PERSONS));
             uiPartRule.setUiPart(graphPanel);
-            graphPanel = new GraphPanelHandle(graphPanel.getRoot());
+            graphPanelHandle = new GraphPanelHandle(graphPanel.getRoot());
         } catch (NullPointerException e) {
             throw new NullPointerException();
         }
@@ -39,16 +38,8 @@ public class GraphPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // select ALICE
-        postNow(new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0)));
-        assertGraphIsDisplayed(ALICE, graphPanelHandle);
+        postNow(new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0)));;
         // select BOB
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1)));
-        assertGraphIsDisplayed(BOB, graphPanelHandle);
-
-    }
-
-    // ======================================= HELPER METHOD ============================================
-    private void assertGraphIsDisplayed(ReadOnlyPerson alice, GraphPanelHandle graphPanelHandle) {
-        // TODO: Add test
     }
 }

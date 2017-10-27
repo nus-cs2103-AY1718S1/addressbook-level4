@@ -52,6 +52,6 @@ public class MainWindowHandle extends StageHandle {
         return extendedPersonCard;
     }
 
-    public GraphPanelHandle getGraphPanel() { return graphPanel;
-    }
+    public GraphPanelHandle getGraphPanel() {
+        return graphPanel; }
 }
