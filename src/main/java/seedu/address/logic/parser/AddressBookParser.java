@@ -20,7 +20,6 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListFaveCommand;
 import seedu.address.logic.commands.ModListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveFavouriteCommand;
@@ -83,7 +82,7 @@ public class AddressBookParser {
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALT:
-            return new ListCommand();
+            return new ListCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALT:
@@ -130,10 +129,6 @@ public class AddressBookParser {
         case RemoveFavouriteCommand.COMMAND_WORD:
         case RemoveFavouriteCommand.COMMAND_ALT:
             return new RemoveFavouriteCommandParser().parse(arguments);
-
-        case ListFaveCommand.COMMAND_WORD:
-        case ListFaveCommand.COMMAND_ALT:
-            return new ListFaveCommand();
 
         case ModListCommand.COMMAND_WORD:
         case ModListCommand.COMMAND_ALT:

@@ -112,7 +112,63 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
 
-        internalList.set(index, new Person(editedPerson));
+        int targetIndex;
+
+        /** Main favourite (fadd) logic
+         * If person is marked as favourite, remove it from its current position
+         * Attempt to insert at the head of the list
+         * If the person at the top is favourite
+         * Find new position where:
+         * It's lexicographically smaller than the person's name preceding it
+         * i.e If the edited person's name is Ben, it should come after Alex, if Alex is marked as favourite
+         * Insert at the new position
+         */
+
+        if (editedPerson.getFavourite().getStatus()) {
+            targetIndex = 0;
+            ReadOnlyPerson currentPerson;
+            for (int i = 0; i < internalList.size(); i++) {
+                currentPerson = internalList.get(i);
+                if (currentPerson.getFavourite().getStatus()) {
+                    System.out.println();
+                    if (currentPerson.getName().fullName.compareTo(editedPerson.getName().fullName) < 0) {
+                        targetIndex++;
+                    }
+                }
+            }
+
+            internalList.remove(index);
+            internalList.add(targetIndex, new Person(editedPerson));
+
+        } else {
+
+            /** Main favourite (fremove) logic
+             * If person is unmarked as favourite, insert person at new position
+             * Find new position where:
+             * New position should be after all the favourites
+             * Insert at the new position
+             */
+
+            targetIndex = index;
+            for (int i = index + 1; i < internalList.size(); i++) {
+                if (internalList.get(i).getFavourite().getStatus()) {
+                    targetIndex++;
+                }
+            }
+
+            /** If there is no change in position, do not remove person
+             *  Continue with normal edit logic
+             */
+            if (targetIndex != index) {
+                internalList.remove(index);
+                internalList.add(targetIndex, new Person(editedPerson));
+            } else {
+                internalList.set(index, new Person(editedPerson));
+            }
+
+        }
+
+
     }
 
     /**
