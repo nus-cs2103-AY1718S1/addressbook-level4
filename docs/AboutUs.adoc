@@ -35,6 +35,35 @@ image::jeremylong.JPG[width="150", align="left"]
 Role: Developer +
 Responsibilities: Storage + Testing + Documentation
 
+* Features Implemented : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/46[Remark Command]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/48[List By Tags Command]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/73[Keyboard Shortcuts Part 1] +
+Escape, Shift-Alt, Shift-Control, Add Command
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/78[Keyboard Shortcuts Part 2] +
+Alt, Control
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/82[Keyboard Shortcuts Part 3] +
+Shift-Delete, Shift-Backspace
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/112/files[Keyboard Shortcuts Part 4] +
+Edit Command
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/124[List Package] +
+List Tag, Ascending, Descending, Reverse
+
+* Other Major Contributions : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/50/files[MedNus UI modifications] +
+(Special Thanks to https://github.com/rushan-khor[rushan] for creating the first UI +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/49/files[modification] and
+code comments to identify the respective +
+CSS parts)
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/112[Add Command - Only name input is compulsory]
+** User Guide +
+*** https://github.com/CS2103AUG2017-T17-B2/main/pull/91/files[Major Formatting]
+(In collaboration with http://github.com/ErnestOYH[Ernest]) +
+*** https://github.com/CS2103AUG2017-T17-B2/main/pull/125/files[Illustrations] +
+
+
+
+
 '''
 
 === Khor Ru Shan
