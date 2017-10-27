@@ -44,7 +44,11 @@ public class LogicManager extends ComponentManager implements Logic {
         this.undoRedoStack = new UndoRedoStack();
         this.graphWrapper = new GraphWrapper();
         graphWrapper.buildGraph(model);
-        graphViewer = graphWrapper.display();
+        if (System.getProperty("testfx.headless") == null) {
+            graphViewer = graphWrapper.display();
+        } else {
+            graphViewer = null;
+        }
     }
 
     @Override
