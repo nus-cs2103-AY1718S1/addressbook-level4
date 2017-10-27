@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
@@ -78,6 +79,17 @@ public class ParcelListPanel extends UiPart<Region> {
                         raise(new ParcelPanelSelectionChangedEvent(newValue));
                     }
                 });
+
+        tabPanePlaceholder.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if(newValue.getText().equals("All Parcels")) {
+                        logger.fine("Tab in parcel list panel changed to : '" + newValue.getText() + "'");
+                        handleTabSelection(INDEX_FIRST_TAB);
+                    } else {
+                        handleTabSelection(INDEX_SECOND_TAB);
+                    }
+                }
+        );
     }
 
     /**
@@ -105,6 +117,10 @@ public class ParcelListPanel extends UiPart<Region> {
     private void handleJumpToTabEvent(JumpToTabRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         tabPanePlaceholder.getSelectionModel().select(event.targetIndex);
+    }
+
+    public void handleTabSelection(Index selectedIndex) {
+        EventsCenter.getInstance().post(new JumpToTabRequestEvent(selectedIndex));
     }
 
     /**
