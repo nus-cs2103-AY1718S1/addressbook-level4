@@ -71,4 +71,6 @@ public interface Model {
     void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate);
 
     void taskByEnd();
+
+    void taskByPriority();
 }

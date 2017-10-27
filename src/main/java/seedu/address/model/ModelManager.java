@@ -202,6 +202,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void taskByPriority() {
+        sortedTasks.setComparator((t1, t2) -> t1.getPriority().compareTo(t2.getPriority()));
+    }
+
+    @Override
     public boolean equals(Object obj) {
         // short circuit if same object
         if (obj == this) {
