@@ -145,6 +145,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(list);
     }
 
+    //@@author Jeremy
     /**
      * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
      * in increasing chronological order
@@ -173,6 +174,7 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonListReversed();
         return FXCollections.unmodifiableObservableList(list);
     }
+    //@@author
 
     /**
      * Gets a list of duplicate names

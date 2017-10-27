@@ -11,6 +11,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 public class ToggleTagColorParserTest {
 
+    //@@author Jeremy
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -37,6 +38,7 @@ public class ToggleTagColorParserTest {
         thrown.expect(ParseException.class);
         parser.parse("Test");
     }
+    //@@author
 
     @Test
     public void parseMoreThanTwoWords() throws Exception {

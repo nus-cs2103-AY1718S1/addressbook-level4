@@ -191,6 +191,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
+    //@@author Jeremy
     @Test
     public void parseCommandRemarkCommandWordReturnsRemarkCommand() throws Exception {
         //Create RemarkCommand up for testing
@@ -205,6 +206,7 @@ public class AddressBookParserTest {
         assertEquals(new RemarkCommand(index, new Remark(remark)), testRemarkCommand);
         assertNotEquals(new RemarkCommand(index, new Remark("")), testRemarkCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

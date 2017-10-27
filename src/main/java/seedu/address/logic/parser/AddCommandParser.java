@@ -54,6 +54,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+
+            //@@author Jeremy
             Phone phone = (!arePrefixesPresent(argMultimap, PREFIX_PHONE))
                     ? new Phone("000") : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = (!arePrefixesPresent(argMultimap, PREFIX_EMAIL))
@@ -65,6 +67,8 @@ public class AddCommandParser implements Parser<AddCommand> {
                     : ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE)).get();
             Remark remark = (!arePrefixesPresent(argMultimap, PREFIX_REMARK))
                     ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
+            //@@author
+
             Optional<Date> date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE));
             Appointment appointment;
             if (date.isPresent()) {
