@@ -116,7 +116,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 PrefCommand.MESSAGE_TEMPLATE,
                 ChooseCommand.MESSAGE_TEMPLATE,
                 NextMeetingCommand.MESSAGE_TEMPLATE,
-                SearchCommand.COMMAND_ALIAS
+                SearchCommand.MESSAGE_TEMPLATE
         );
         return templateList;
     }

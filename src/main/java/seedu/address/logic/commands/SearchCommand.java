@@ -11,6 +11,7 @@ public class SearchCommand extends Command {
     public static final String COMMAND_WORD = "search";
     public static final String COMMAND_ALIAS = "se";
 
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " KEYWORDS";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose parameters contain any of "
             + "the specified keywords\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
