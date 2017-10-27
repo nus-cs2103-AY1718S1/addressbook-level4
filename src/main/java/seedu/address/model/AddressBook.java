@@ -231,25 +231,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
-        /*
-        ArrayList<ReadOnlyPerson> temp = new ArrayList<>();
-        ObservableList<ReadOnlyPerson> personList = persons.asObservableList();
-        for(ReadOnlyPerson person: personList){
-            temp.add(person);
-        }
-        ObservableList<ReadOnlyPerson> temp2 = FXCollections.observableArrayList(temp);
-        Comparator<ReadOnlyPerson> ALPHA_ORDER = new Comparator<ReadOnlyPerson>() {
-            public int compare(ReadOnlyPerson first, ReadOnlyPerson second) {
-                int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
-                if (x== 0) {
-                    x = (first.getName().fullName).compareTo(second.getName().fullName);
-                }
-                return x;
-            }
-        };
-        temp2.sort(ALPHA_ORDER);
-        return temp2;
-        */
         return persons.asObservableList();
     }
 
