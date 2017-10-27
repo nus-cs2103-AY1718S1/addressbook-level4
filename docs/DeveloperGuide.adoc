@@ -16,9 +16,9 @@ By: `Team Rolodex`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-Rolodex is a desktop contact management application. It is catered to computing professionals who prefer working without a mouse to manage their contacts more efficiently.
+link:#rolodex[Rolodex] is a desktop contact management application. It is catered to computing professionals who prefer working without a mouse to manage their contacts more efficiently.
 
-This guide will walk you through the design, implementation and development environment of Rolodex. This is the go-to page for all your information needs in understanding our application.
+This guide will walk you through the design, implementation and development environment of link:#rolodex[Rolodex]. This is the go-to page for all your information needs in understanding our application.
 
 == Setting up
 
@@ -27,14 +27,14 @@ This guide will walk you through the design, implementation and development envi
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+Having any link:#java[Java 8] version is not enough. +
+This app will not work with earlier versions of link:#java[Java 8].
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
+IntelliJ by default has Gradle and link:#java-fx[JavaFx] plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
@@ -74,7 +74,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Configuring Rolodex `.rldx` extensions
 
-Rolodex files are associated with the `.rldx` extensions and are an extension of xml. To configure xml tools in intellij for `rldx` files,
+link:#rolodex[Rolodex] files are associated with the `.rldx` extensions and are an extension of xml. To configure xml tools in intellij for `rldx` files,
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
 . Select `Editor` > `File Types`
@@ -92,7 +92,7 @@ After forking the repo, links in the documentation will still point to the `se-e
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up Travis to perform link:#continuous-integration[Continuous Integration (CI)] for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
@@ -154,7 +154,7 @@ image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `RolodexChangedEvent` when the Rolodex data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `RolodexChangedEvent` when the link:#rolodex[Rolodex] data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -175,7 +175,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses link:#java-fx[JavaFx] UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
@@ -214,7 +214,7 @@ _Figure 2.4.1 : Structure of the Model Component_
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Rolodex data.
+* stores the link:#rolodex[Rolodex] data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -228,7 +228,7 @@ _Figure 2.5.1 : Structure of the Storage Component_
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Rolodex data in xml format and read it back.
+* can save the link:#rolodex[Rolodex] data in xml format and read it back.
 
 === Common classes
 
@@ -241,13 +241,13 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 === Undo/Redo mechanism
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the rolodex (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the link:#rolodex[rolodex] (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the rolodex before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the link:#rolodex[rolodex] before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -449,7 +449,7 @@ public void saveRolodex(ReadOnlyRolodex rolodex, String filePath) throws IOExcep
 **Pros:** The application can be quickly reloaded onto the active window. +
 **Cons:** User might need to switch back and forth between the Rolodex directories. +
 **Alternative 2:** Reload `MainApp` with a new application instance. +
-**Constraint:** JavaFX only allows launch(args) to be launched once per execution time on a code level.
+**Constraint:** link:#java-fx[JavaFX] only allows launch(args) to be launched once per execution time on a code level.
 Another approach would be to reload the application with a loaded and built .jar. +
 **Pros:** Easier logic to understand for new developers. +
 **Cons:** Building and debugging with a second .jar will be confusing and problematic to any development workflow. +
@@ -478,12 +478,12 @@ Another approach would be to reload the application with a loaded and built .jar
 
 // tag::findClose[]
 === Fuzzy finding mechanism
-The fuzzy finding mechanism is powered by https://en.wikipedia.org/wiki/Levenshtein_distance[Levenshtein distance],
+The link:#fuzzy-finding[fuzzy finding] mechanism is powered by https://en.wikipedia.org/wiki/Levenshtein_distance[Levenshtein distance],
 a string heuristic for measuring the difference between two character sequences. It can be informally viewed as the number
 of _hops_ that are required to get from a string to another, where _hops_ are insertions, deletions and substitution
 operations.
 
-The activity diagram for the fuzzy finding can be loosely described as seen in the figure below:
+The activity diagram for the link:#fuzzy-finding[fuzzy finding] can be loosely described as seen in the figure below:
 
 image::FuzzyFindActivityDiagram.png[]
 
@@ -515,9 +515,9 @@ to the currently examined name word in which the contact will be added.
 ==== Design Considerations
 
 **Aspect:** Length of name word +
-**Alternative 1 (current choice):** Use a global minimum for defining when the fuzzy finding should execute. +
+**Alternative 1 (current choice):** Use a global minimum for defining when the link:#fuzzy-finding[fuzzy finding] should execute. +
 **Pros:** Name words have higher minimum hop to length ratio. +
-**Cons:** User might need fuzzy finding on name words with character length lesser than the global minimum. +
+**Cons:** User might need link:#fuzzy-finding[fuzzy finding] on name words with character length lesser than the global minimum. +
 **Pros:** Easy logic to understand, implement and maintain. +
 **Cons:** Rudimentary algorithm.
 
@@ -525,7 +525,7 @@ to the currently examined name word in which the contact will be added.
 
 **Aspect:** Location of fuzzy find settings +
 **Alternative 1 (current choice):** Use private static constant in a person. +
-**Pros:** User does not need to worry about changing the settings or the intricacies of the fuzzy finding. +
+**Pros:** User does not need to worry about changing the settings or the intricacies of the link:#fuzzy-finding[fuzzy finding]. +
 **Cons:** User might need stricter or looser limits than the ones defined for them. +
 **Pros:** Developers can easily change and manage settings and limits. +
 **Cons:** Users have no way of accessing the settings and limits. +
@@ -616,7 +616,7 @@ comparator before executing a sort and filter which is handled by the event cons
 
 // tag::commandAbbreviations[]
 === Abbreviation mechanism
-The ability for users to enter a variety of different words for a same command is implemented using `java.util.set`.
+The ability for users to enter a variety of different words for a same command is implemented using https://docs.oracle.com/javase/8/docs/api/java/util/Set.html[`java.util.set`].
 
 An example as implemented in the open command:
 
@@ -659,7 +659,7 @@ public void parseAllCommandAbbreviationsAreDisjoint() {
 ==== Design Considerations
 
 **Aspect:** Implementation +
-**Alternative 1 (current choice):** A Set of strings +
+**Alternative 1 (current choice):** A https://docs.oracle.com/javase/8/docs/api/java/util/Set.html[Set] of strings +
 **Pros:** Constant access time per command level. Improves performance and reliability significantly. +
 **Pros:** Ease of testing for conflicting abbreviations, particularly where developers forget if they used a
 same abbreviation for two different commands (e.g. assigning `h` to both the `history` and `help` commands). +
@@ -670,7 +670,7 @@ on https://github.com/CS2103AUG2017-W11-B2/main/issues[github]. +
 **Cons:** Developers would have to manually check through all commands to ensure the accuracy of the abbreviations,
 which is time-consuming and makes way for human errors. +
 **Cons:** A switch-case for all possible commands abbreviations would perform significantly slower than direct memory
-access on a java `HashSet`, in the worst case.
+access on a java https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.html[`HashSet`], in the worst case.
 
 // end::commandAbbreviations[]
 
@@ -902,7 +902,7 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform link:#continuous-integration[Continuous Integration] on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Making a Release
 
@@ -1472,8 +1472,8 @@ Use case resumes at step 2.
 .  Should be able to work offline.
 .  Should be free to download.
 .  Startup time should be less than 3s.
-.  Should be usable by a human who has never seen a command line interface before.
-.  Should be usable by a human who has never used a command line interface before.
+.  Should be usable by a human who has never seen a link:#command-line-interface[command line interface] before.
+.  Should be usable by a human who has never used a link:#command-line-interface[command line interface] before.
 .  Data should be encrypted when application is not running.
 .  A computing professional should be able to manage his/her AddressBook contacts in a fast and efficient manner
 .  Commands should be intuitive and easy to learn.
@@ -1481,6 +1481,41 @@ Use case resumes at step 2.
 
 [appendix]
 == Glossary
+
+[[command-line-interface]]
+Command Line Interface (CLI)
+
+....
+A user interface to a computer's operating system or an application in which the user responds to a visual prompt by typing in a command on a specified line, receives a response back from the system, and then enters another command, and so forth.
+....
+
+[[continuous-integration]]
+Continuous Integration (CI)
+
+....
+The practice of merging all developer working copies to a shared mainline several times a day.
+....
+
+[[fuzzy-finding]]
+Fuzzy Finding
+
+....
+In computer science, approximate string matching (often colloquially referred to as fuzzy string searching) is the technique of finding strings that match a pattern approximately (rather than exactly).
+....
+
+[[java]]
+Java
+
+....
+A general-purpose computer programming language that is used in many products today.
+....
+
+[[java-fx]]
+JavaFX
+
+....
+A software platform for creating and delivering desktop applications, as well as rich internet applications (RIAs) that can run across a wide variety of devices.
+....
 
 [[mainstream-os]]
 Mainstream OS
@@ -1496,23 +1531,9 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
+[[rolodex]]
+Rolodex
 
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
-
-ifndef::env-github[]
-include::NavigationMenu.adoc[]
-endif::[]
+....
+The name of this application is Rolodex. It is used to refer to the java object of a similar name developed for this application under the application's model component. A Rolodex is also as a rotating file device used to store business contact information. Its name is a combination of the words rolling and index.
+....
