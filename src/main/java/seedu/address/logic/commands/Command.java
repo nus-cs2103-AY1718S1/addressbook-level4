@@ -10,6 +10,9 @@ import seedu.address.model.Model;
  * Represents a command with hidden internal logic and the ability to be executed.
  */
 public abstract class Command {
+    public static final String MESSAGE_GET_MORE_HELP = "For more information regarding the command, "
+            + "enter 'help' (without the '   ') in the command box.";
+
     protected Model model;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;

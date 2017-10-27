@@ -13,6 +13,8 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
+import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -21,13 +23,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-
+    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com/maps/search/?api=1&query=";
+    public static final String GOOGLE_MAPS_URL_SUFFIX = "&dg=dbrw&newdg=1";
     private static final String FXML = "BrowserPanel.fxml";
-
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     @FXML
     private WebView browser;
 
@@ -41,9 +40,18 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loads google maps web page locating person's address.
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        Address personAddress = person.getAddress();
+
+        String urlEncodedAddressIntermediate = personAddress.toString().replaceAll("#", "%23");
+        String urlEncodedAddressFinal = urlEncodedAddressIntermediate.replaceAll(" ", "+");
+
+        loadPage(GOOGLE_MAPS_URL_PREFIX
+                + urlEncodedAddressFinal
+                + GOOGLE_MAPS_URL_SUFFIX);
     }
 
     public void loadPage(String url) {
@@ -66,8 +74,21 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    /**
+     * Opens the Calendar window.
+     */
+    private void loadCalendar() {
+        loadPage("https://www.timeanddate.com/calendar/");
+    }
+
+    @Subscribe
+    private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadCalendar();
     }
 }

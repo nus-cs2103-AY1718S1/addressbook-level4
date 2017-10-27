@@ -10,10 +10,14 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.commandidentifier.CommandIdentifier;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.email.Email;
+import seedu.address.model.schedule.Activity;
+import seedu.address.model.schedule.ScheduleDate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -62,6 +66,16 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> country} into an {@code Optional<Country>} if {@code country} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Country> parseCountry (Optional<String> country) throws IllegalValueException {
+        requireNonNull(country);
+        return country.isPresent() ? Optional.of(new Country(country.get())) : Optional.empty();
+    }
+
+
+    /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -71,12 +85,45 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    public static Set<Email> parseEmails(Collection<String> emails) throws IllegalValueException {
+        requireNonNull(emails);
+        final Set<Email> emailSet = new HashSet<>();
+        for (String emailName : emails) {
+            emailSet.add(new Email(emailName));
+        }
+        return emailSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> scheduleDate} into an {@code Optional<ScheduleDate>}
+     * if {@code scheduleDate} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ScheduleDate> parseScheduleDate(Optional<String> scheduleDate) throws IllegalValueException {
+        requireNonNull(scheduleDate);
+        return scheduleDate.isPresent() ? Optional.of(new ScheduleDate(scheduleDate.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String activity} into an {@code Optional<Activity>} if {@code activity} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Activity> parseActivity(Optional<String> activity) throws IllegalValueException {
+        requireNonNull(activity);
+        return activity.isPresent() ? Optional.of(new Activity(activity.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code commandWord} into an {@code CommandWord} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static CommandIdentifier parseCommandIdentifier(String commandWord) throws IllegalValueException {
+        requireNonNull(commandWord);
+        return new CommandIdentifier(commandWord.trim());
     }
 
     /**

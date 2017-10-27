@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ConTag - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,45 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T15-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+{empty} +
 
-== Quick Start
+image::contag_logo_ugdg.png[align="center"]
+
+{empty} +
+
+By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
+
+
+== Introduction
+
+=== Welcome to ConTag!
+
+Contag is specially designed for heavy business user or frequent traveller.
+
+
+=== Authors and Contributors
+The intial version of the user guide was written by Team SE-EDU. The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.    
+
+=== The ConTag Help System
+
+Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book. You can also get help on specific menu items by keying in `help` in the command line of Contag or pressing the `F1` key.
+
+=== Features and Capabilities Overview
+The following list is a  overview of some of the features and capabilities which ConTag offers you:
+
+* Saving all the attributes of a person's contact in the address book for easier manageability
+
+* Locating the address of your contact via the integrated google map
+
+* Creating a new schedule or activity with a contact
+
+* Sending email to multiply emails simultaneously
+
+
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -26,14 +60,14 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::UI_Map.PNG[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/block 123, john street, #01-01, Singapore 407989` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -48,34 +82,61 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Command words can be replaced by their specified aliases e.g. `delete INDEX` is the same as `d INDEX`.
 ====
 
 === Viewing help : `help`
 
-Format: `help`
+Alias: `h`
 
-=== Adding a person: `add`
-
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Shows the usage of the specific command identified. If no command is specified, opens help window. +
+Format: `help [COMMAND_IDENTIFIER]`
 
 [TIP]
-A person can have any number of tags (including 0)
+A command identifier includes all existing commands and their aliases.
+
+[NOTE]
+You need to close the all help windows before executing `help [COMMAND_IDENTIFIER]`.
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `help` (without command identifier)
+* `help add` (using command word)
+* `help a` (using alias)
+
+
+=== Adding a person: `add`
+
+Alias: `a`
+
+Adds a person to the address book +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/OTHER EMAIL]... a/ADDRESS [t/TAG]...`
+
+[TIP]
+A person can have any number of tags (including 0).
+A person must have at least 1 email.
+
+[NOTE]
+ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter.
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/1234567 t/criminal`
 
 === Listing all persons : `list`
+
+Alias: `l`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
 === Editing a person : `edit`
 
+Alias: `e`
+
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -92,53 +153,86 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by any field : `find` [Since v1.2]
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Alias: `f`
+
+Finds person based on the searched  field. +
+Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRESS] or  [t/TAG]`
+
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive. e.g `[e/google]` will match person with email of `[google.com]` domain
+* Only full words will be matched e.g. `[e/goo]` will not match person with email with `[google.com]` domain
+* Phone search must be of either 4 or 8 digits only e.g `[p/98989898 9227]`
 ****
 
 Examples:
-
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+* `find e/yahoo` +
+Returns person with email of `yahoo.com` domain
+* `find e/yahoo hotmail` +
+Returns person with email of `yahoo.com` and `hotmail.com` domain
+
+
+* `find p/98989898` +
+Returns person with phone of `98989898`
+
+* `find p/9898` +
+Returns person with phone of `98989898`
+
+* `find p/9898 7888` +
+Returns person with phone of `98989898` and `99997888`
+
+
+* `find a/Geylang` +
+Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
+* `find a/#10-08` +
+Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
+
+
+* `find t/friends` +
+Returns all persons with tag `friends`
+* `find t/friends lovers` +
+Returns all persons with tag `friends` and `lovers`
+
+=== Deleting person(s) : `delete`
+
+Alias: `d`
+
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX [UNIQUE INDEX]...`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the people at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
 ****
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`delete 1 2` +
+Deletes the 1st and 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Locating a person's address : `locate` [Since v1.2]
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Alias: `lc`
+
+Locates the address of the person identified by the index number used in the last person listing. +
+Format: `locate INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the Google Maps web page of the address at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -146,13 +240,71 @@ Format: `select INDEX`
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
+`locate 2` +
+Locates the 2nd person's address in the address book.
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`locate 1` +
+Locates the 1st person's address in the results of the `find` command.
+
+=== Scheduling an activity: `schedule` [Since v1.3]
+
+Alias: `sc`
+
+Schedules an activity with person(s) specified by the index number(s). +
+Format: `schedule INDEX [INDEX]... d/DATE act/ACTIVITY`
+
+****
+* DATE must follow DD-MM-YYYY format
+****
+
+Examples:
+
+* `list` +
+`schedule 1 3 d/15-01-2018 act/Play basketball` +
+Associates the specified schedule with the 1st and 3rd persons in the address book.
+* `find Betsy` +
+`schedule 1 d/25-12 act/Christmas dinner` +
+Associates the specified schedule with the 1st person in the results of the `find` command.
+
+=== Getting email addresses : `copy` [Since v1.3]
+
+Alias: `c`
+
+Outputs to console the email addresses of all person(s) selected by index number(s). +
+Format: `copy INDEX [UNIQUE INDEX]...`
+
+****
+* Copies email addresses of people at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
+****
+
+Examples:
+
+* `copy 1` +
+Outputs the 1st person's email address in console: `johndoe@example.com`
+* `copy 1 4 5` +
+Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
+
+=== Opening calendar : `calendar` [Since v1.3]
+
+Alias: `cl`
+
+Open a calendar browser that display the current events. +
+Format: `calendar`
+
+Examples:
+
+Opens up calendar browser in the address book. +
+* `calendar` (using command word) +
+* `cl` (using alias) +
+Opens up calendar browser in the address book.
+
 
 === Listing entered commands : `history`
+
+Alias: `his`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -164,6 +316,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
+
+Alias: `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -191,6 +345,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
+Alias: `r`
+
 Reverses the most recent `undo` command. +
 Format: `redo`
 
@@ -214,10 +370,14 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
+Alias: `x`
+
 Clears all entries from the address book. +
 Format: `clear`
 
 === Exiting the program : `exit`
+
+Alias: `q`
 
 Exits the program. +
 Format: `exit`
@@ -227,26 +387,40 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+To transfer my data to another Computer,iInstall the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="59%",cols="5%,<2%,<50%,<42%",options="header",]
+|=======================================================================
+|Commands Words |Commands Alias |Format|Example
+|`Add`] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
+
+|`Edit` | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
+
+|`Find` |`f` |`find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`find n/James Jake`
+
+|`Help` | `h` | `help COMMAND WORD` | `help add`
+
+|`Locate` |`lc` |`locate INDEX` | `locate 2`
+
+|`Schedule` |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12 act/Christmas dinner`
+
+|`Copy` |`cp` |`copy INDEX [UNIQUE INDEX]...`|
+
+|`Delete` |`d`|`delete INDEX [UNIQUE INDEX]...`|
+
+|`History` |`his`|`history`|
+
+|`Clear` | `c`| `clear` |
+
+|`List` |`l` |`list` |
+
+|`Undo` |`u`| `undo` |
+
+|`Redo` |`r` |`redo` |
+
+|`Calendar` |`cl` |`calendar` |
+
+|=======================================================================
+
