@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -46,6 +47,8 @@ public class TaskCard extends UiPart<Region> {
     private Label endDateTime;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label priority;
 
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
@@ -78,6 +81,7 @@ public class TaskCard extends UiPart<Region> {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         startDateTime.textProperty().bind(Bindings.convert(task.startTimeProperty()));
         endDateTime.textProperty().bind(Bindings.convert(task.endTimeProperty()));
+        priority.textProperty().bind(Bindings.convert(task.priorityProperty()));
         task.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(task);
