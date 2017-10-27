@@ -67,12 +67,12 @@ public class DateOfBirth {
      */
     private LocalDate dateFormatter(String dob) throws IllegalValueException {
         List<String> arguments = Arrays.asList(dob.split("[\\s-/.]"));
-        String day = arguments.get(0);
-        String month = arguments.get(1);
-        String year = arguments.size() > 2 ? arguments.get(2) : String.valueOf(LocalDate.now().getYear());
         if (arguments.size() > 3 || arguments.size() < 2) {
             throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
         }
+        String day = arguments.get(0);
+        String month = arguments.get(1);
+        String year = arguments.size() > 2 ? arguments.get(2) : String.valueOf(LocalDate.now().getYear());
         return LocalDate.parse(getValidDay(day) + " " + getValidMonth(month) + " " + getValidYear(year),
                 DOB_FORMAT);
     }
