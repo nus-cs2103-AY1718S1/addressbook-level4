@@ -9,10 +9,10 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
 It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: +
-link:..collated/main/Jeremy.md[Functional code] +
-link:..collated/test/Jeremy.md[Test code] +
+link:main/Jeremy.md[Functional code] +
+link:test/Jeremy.md[Test code] +
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added:
 
 ==== External behavior
 
@@ -46,5 +46,14 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 
 === Other contributions
 
-* Storage Enhancement
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/50/files[MedNus UI modifications] +
+(Special Thanks to https://github.com/rushan-khor[rushan] for creating the first UI +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/49/files[modification] and
+code comments to identify the respective +
+CSS parts)
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/112[Add Command - Only name input is compulsory]
+** User Guide +
+*** https://github.com/CS2103AUG2017-T17-B2/main/pull/91/files[Major Formatting]
+(In collaboration with http://github.com/ErnestOYH[Ernest]) +
+*** https://github.com/CS2103AUG2017-T17-B2/main/pull/125/files[Illustrations] +
 

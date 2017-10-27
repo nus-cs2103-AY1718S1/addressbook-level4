@@ -38,14 +38,11 @@ Responsibilities: Storage + Testing + Documentation
 * Features Implemented : +
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/46[Remark Command]
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/48[List By Tags Command]
-** https://github.com/CS2103AUG2017-T17-B2/main/pull/73[Keyboard Shortcuts Part 1] +
-Escape, Shift-Alt, Shift-Control, Add Command
-** https://github.com/CS2103AUG2017-T17-B2/main/pull/78[Keyboard Shortcuts Part 2] +
-Alt, Control
-** https://github.com/CS2103AUG2017-T17-B2/main/pull/82[Keyboard Shortcuts Part 3] +
-Shift-Delete, Shift-Backspace
-** https://github.com/CS2103AUG2017-T17-B2/main/pull/112/files[Keyboard Shortcuts Part 4] +
-Edit Command
+** Keyboard Shortcuts +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/73[Escape, Shift-Alt, Shift-Control, Add Command] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/78[Alt, Control] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/82[Shift-Delete, Shift-Backspace] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/112/files[Edit Command]
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/124[List Package] +
 List Tag, Ascending, Descending, Reverse
 
