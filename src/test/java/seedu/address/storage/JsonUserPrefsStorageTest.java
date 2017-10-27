@@ -81,12 +81,14 @@ public class JsonUserPrefsStorageTest {
         assertEquals(expected, actual);
     }
 
+    //@@author Jeremy
     @Test
     public void testUserPrefsGetAddressBookName() {
         UserPrefs upUnderTest = getTypicalUserPrefs();
         assertTrue("TypicalAddressBookName".equals(upUnderTest.getAddressBookName()));
     }
 
+    //@@author Jeremy
     @Test
     public void testUserPrefsEquals() {
         UserPrefs upUnderTest = getTypicalUserPrefs();
@@ -106,6 +108,7 @@ public class JsonUserPrefsStorageTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void testUserPrefsHashCode() {
         UserPrefs upUnderTest = getTypicalUserPrefs();

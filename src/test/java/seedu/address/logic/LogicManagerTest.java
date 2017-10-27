@@ -51,6 +51,7 @@ public class LogicManagerTest {
         assertHistoryCorrect(listCommand);
     }
 
+    //@@author Jeremy
     @Test
     public void executeValidListByTagTest() {
         String listByTagCommand = ListByTagCommand.COMMAND_WORD + " colleagues";
@@ -159,6 +160,7 @@ public class LogicManagerTest {
         reverseCommand = ListCommand.COMMAND_ALIAS + " " + ListReverseCommand.COMMAND_WORD + " test";
         assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
     }
+    //@@author
 
     @Test
     public void getFilteredPersonListModifyListThrowsUnsupportedOperationException() {

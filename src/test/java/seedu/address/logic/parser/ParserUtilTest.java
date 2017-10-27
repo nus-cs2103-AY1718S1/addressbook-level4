@@ -218,17 +218,20 @@ public class ParserUtilTest {
         assertEquals(expectedTagSet, actualTagSet);
     }
 
+    //@@author Jeremy
     @Test
     public void parseRemarkNullThrowsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseRemark(null);
     }
 
+    //@@author Jeremy
     @Test
     public void parseRemarkOptionalEmptyReturnsOptionalEmpty() throws Exception {
         assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
     }
 
+    //@@author Jeremy
     @Test
     public void parseRemarkValidValueReturnsRemark() throws Exception {
         Remark expectedRemark = new Remark(VALID_REMARK);

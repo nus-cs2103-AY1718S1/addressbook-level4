@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+//@@author Jeremy
 /**
  * Finds and lists all persons in address book in descending order by name
  */

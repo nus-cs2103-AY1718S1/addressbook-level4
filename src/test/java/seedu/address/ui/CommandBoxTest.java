@@ -94,6 +94,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 
+    //@@author Jeremy
     @Test
     public void handleKeyPressEscape() {
         //Command Box text field should contain nothing the first time
@@ -112,6 +113,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue("".equals(commandBoxHandle.getInput()));
     }
 
+    //@@author Jeremy
     @Test
     public void handleKeyPressShiftAlt() {
         //Extracts the textfield. Needed to use the caret related methods
@@ -128,6 +130,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 0);
     }
 
+    //@@author Jeremy
     @Test
     public void handleKeyPressAlt() {
         //Extracts the textfield. Needed to use the caret related methods
@@ -213,6 +216,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void handleKeyPressShiftControl() {
         //Shift-Control shifts the caret all the way right
@@ -237,6 +241,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 4);
     }
 
+    //@@author Jeremy
     @Test
     public void handleKeyPressControl() {
         //Extracts the textfield. Needed to use the caret related methods
@@ -326,6 +331,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void handleShiftDeleteTestOne() {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -379,6 +385,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void handleShiftDeleteTestTwo() {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -441,6 +448,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 0);
     }
 
+    //@@author Jeremy
     @Test
     public void handleShiftBackSpaceTestOne() {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -494,6 +502,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void handleShiftBackSpaceTestTwo() {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -556,6 +565,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getCaretPosition() == 0);
     }
 
+    //@@author Jeremy
     @Test
     public void handleValidRightKeyPressAddLenMaxThree() {
         //This test focuses on ensuring that the key press works only for the add command
@@ -672,6 +682,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(testString.equals(mySandBox.getText()));
     }
 
+    //@@author Jeremy
     @Test
     public void handleValidRightKeyPressAddLenAboveThree() {
         TextField mySandBox = commandBoxForTesting.getCommandTextField();
@@ -727,6 +738,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void handleInvalidRightKeyPressAdd() {
         //Test to ensure add command shortcut does not trigger as long as
@@ -759,6 +771,7 @@ public class CommandBoxTest extends GuiUnitTest {
     }
 
 
+    //@@author Jeremy
     @Test
     public void handleValidRightKeyPressAddPrefixInOrder() {
         //Add Command allows users to enter the prefix in any order
@@ -821,6 +834,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void handleValidRightKeyPressAddPrefixRandom() {
         //The Add Command shortcut accounts for missing prefix or jump in prefix.
@@ -871,6 +885,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertFalse(mySandBox.getCaretPosition() == 0);
     }
 
+    //@@author Jeremy
     @Test
     public void handleInvalidRightKeyPressEdit() {
         //Extracts the textfield. Needed to use the caret related methods
@@ -917,6 +932,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void handleInvalidCommandWordEdit() {
         //Test for !containsEditCommand && containsOnlyNumbers -> False
@@ -965,6 +981,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertTrue(mySandBox.getText().length() == counter);
     }
 
+    //@@author Jeremy
     @Test
     public void handleInvalidNumberRightKeyPressEdit() {
         //Test for containsEditCommand && !containsOnlyNumbers -> False
@@ -997,6 +1014,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void handleValidRightKeyPressEditPrefixInOrder() {
 
@@ -1056,6 +1074,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     }
 
+    //@@author Jeremy
     @Test
     public void handleValidRightKeyPressEditPrefixRandom() {
         //The Edit Command shortcut accounts for missing prefix or jump in prefix.
@@ -1106,6 +1125,7 @@ public class CommandBoxTest extends GuiUnitTest {
         assertFalse(mySandBox.getCaretPosition() == 0);
     }
 
+    //@@author Jeremy
     @Test
     public void testGetTextField() {
         TextField myTextField = commandBoxForTesting.getCommandTextField();

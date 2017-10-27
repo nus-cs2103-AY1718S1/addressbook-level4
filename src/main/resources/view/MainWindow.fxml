@@ -45,6 +45,7 @@
         </StackPane>
     </SplitPane>
 
+    <!-- @@author Jeremy -->
     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
             <Insets left="20.0" right="20.0" top="20.0" />
