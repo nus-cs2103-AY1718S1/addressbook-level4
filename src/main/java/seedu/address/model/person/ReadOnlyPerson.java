@@ -48,19 +48,33 @@ public interface ReadOnlyPerson {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Birthday: ")
-                .append(getBirthday())
-                .append(" Phone: ")
-                .append(getPhone())
-                .append(" Email: ")
-                .append(getEmail())
-                .append(" Address: ")
-                .append(getAddress())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
-        builder.append("\nEvents:\n");
-        getEvents().forEach(builder::append);
+        if (getBirthday().value.equals("01/01/1900")) {
+            builder.append(getName())
+                    .append(" Phone: ")
+                    .append(getPhone())
+                    .append(" Email: ")
+                    .append(getEmail())
+                    .append(" Address: ")
+                    .append(getAddress())
+                    .append(" Tags: ");
+            getTags().forEach(builder::append);
+            builder.append("\nEvents:\n");
+            getEvents().forEach(builder::append);
+        } else {
+            builder.append(getName())
+                    .append(" Birthday: ")
+                    .append(getBirthday())
+                    .append(" Phone: ")
+                    .append(getPhone())
+                    .append(" Email: ")
+                    .append(getEmail())
+                    .append(" Address: ")
+                    .append(getAddress())
+                    .append(" Tags: ");
+            getTags().forEach(builder::append);
+            builder.append("\nEvents:\n");
+            getEvents().forEach(builder::append);
+        }
         return builder.toString();
     }
 
