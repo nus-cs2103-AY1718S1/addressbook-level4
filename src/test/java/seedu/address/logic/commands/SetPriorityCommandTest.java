@@ -39,7 +39,7 @@ public class SetPriorityCommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
+    public void executeValidIndexUnfilteredListSuccess() {
         Index lastTaskIndex = Index.fromOneBased(model.getFilteredTaskList().size());
 
         assertExecutionSuccess(INDEX_FIRST_TASK, 1);
@@ -48,14 +48,14 @@ public class SetPriorityCommandTest {
     }
 
     @Test
-    public void execute_invalidIndexUnfilteredList_failure() {
+    public void executeInvalidIndexUnfilteredListFailure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
 
         assertExecutionFailure(outOfBoundsIndex, 1, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_invalidPriorityValue_failure() {
+    public void executeInvalidPriorityValueFailure() {
         Index lastTaskIndex = Index.fromOneBased(model.getFilteredTaskList().size());
 
         assertExecutionFailure(lastTaskIndex, 100, SetPriorityCommand.MESSAGE_UPDATE_TASK_PRIORITY_OUT_OF_RANGE);
@@ -78,7 +78,7 @@ public class SetPriorityCommandTest {
         assertFalse(setPriorityFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(setPriorityFirstCommand.equals(null));
+        assertFalse(setPriorityFirstCommand == null);
 
         // different task -> returns false
         assertFalse(setPriorityFirstCommand.equals(setPrioritySecondCommand));

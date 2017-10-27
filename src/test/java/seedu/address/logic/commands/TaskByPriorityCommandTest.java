@@ -19,7 +19,6 @@ import seedu.address.model.UserPrefs;
 public class TaskByPriorityCommandTest {
 
     private Model model;
-    private Model expectedModel;
     private TaskByPriorityCommand taskByPriorityCommand;
 
     @Before
@@ -31,6 +30,7 @@ public class TaskByPriorityCommandTest {
 
     @Test
     public void execute() {
+        Model expectedModel;
         expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalTaskbook(), new UserPrefs());
         expectedModel.taskByPriority();
         assertCommandSuccess(taskByPriorityCommand, model, taskByPriorityCommand.MESSAGE_SUCCESS, expectedModel);
