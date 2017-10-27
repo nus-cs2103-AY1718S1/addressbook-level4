@@ -13,8 +13,10 @@ import javax.imageio.ImageIO;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PhotoChangeEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -33,15 +35,15 @@ public class UploadPhotoCommand extends UndoableCommand {
 
     public static final String MESSAGE_UPLOAD_IMAGE_SUCCESS = "Uploaded image to Person: %1$s";
     private final Index targetIndex;
-    private final String filePath;
+    //private final String filePath;
     private final FileChooser fileChooser = new FileChooser();
     private Stage stage;
     private ImageView imageView = new ImageView();
     private HashMap<Email, String> photoList;
 
-    public UploadPhotoCommand(Index targetIndex, String filePath) {
+    public UploadPhotoCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
-        this.filePath = filePath;
+     //   this.filePath = filePath;
     }
 
     @Override
@@ -50,17 +52,20 @@ public class UploadPhotoCommand extends UndoableCommand {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
+        ReadOnlyPerson personToUploadImage = lastShownList.get(targetIndex.getZeroBased());
         File imageFile;
         //  Photo targetPhoto = lastShownList.get(targetIndex.getZeroBased()).getPhoto();
 
         imageFile = handleFileChooser();
-        imageFile = saveFile(imageFile);
+        imageFile = saveFile(imageFile, personToUploadImage.getEmail());
+        EventsCenter.getInstance().post(new PhotoChangeEvent());
 
-        ReadOnlyPerson personToUploadImage = lastShownList.get(targetIndex.getZeroBased());
+
+
         // ReadOnlyPerson editedPerson = lastShownList.get(targetIndex.getZeroBased());
         // editedPerson.getPhoto().setPath(imageFile.getPath());
-        photoList.put(personToUploadImage.getEmail(), imageFile.getPath());
+       // photoList.put(personToUploadImage.getEmail(), imageFile.getPath());
+       // EventsCenter.getInstance().registerHandler(handler);
         return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
     }
 
@@ -81,9 +86,9 @@ public class UploadPhotoCommand extends UndoableCommand {
     /**
      * Reads and saves image file into project directory folder "photos".
      */
-    private File saveFile(File file) {
+    private File saveFile(File file, Email email) {
 
-        File path = new File("photos/" + file.getName());
+        File path = new File("src/main/photos/" + email.toString() + ".png");
 
         try {
             path.mkdirs();
