@@ -41,7 +41,10 @@ public class LogicManager extends ComponentManager implements Logic {
             undoRedoStack.push(command);
             return result;
         } finally {
-            history.add(commandText);
+            // prevent login details from being stored
+            if (!commandText.contains("login")) {
+                history.add(commandText);
+            }
         }
     }
 
