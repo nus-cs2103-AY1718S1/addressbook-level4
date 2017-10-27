@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -21,6 +22,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchThemeRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -48,6 +50,9 @@ public class MainWindow extends UiPart<Region> {
     private LessonListPanel lessonListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    @FXML
+    private VBox sceneBox;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -198,6 +203,28 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Handles SwitchThemeEvent.
+     */
+    @FXML
+    public void handleSwitchTheme(SwitchThemeRequestEvent event) {
+        if (!event.isLight) {
+            sceneBox.getStylesheets().clear();
+            sceneBox.getStylesheets().add("/view/DarkTheme.css");
+            sceneBox.getStylesheets().add("/view/DarkExtensions.css");
+            resultDisplayPlaceholder.getStylesheets().clear();
+            resultDisplayPlaceholder.getStylesheets().add("/view/DarkTheme.css");
+            resultDisplayPlaceholder.getStylesheets().add("/view/DarkExtensions.css");
+        } else {
+            sceneBox.getStylesheets().clear();
+            sceneBox.getStylesheets().add("/view/LightTheme.css");
+            sceneBox.getStylesheets().add("/view/LightExtensions.css");
+            resultDisplayPlaceholder.getStylesheets().clear();
+            resultDisplayPlaceholder.getStylesheets().add("/view/LightTheme.css");
+            resultDisplayPlaceholder.getStylesheets().add("/view/LightExtensions.css");
+        }
+    }
+
+    /**
      * Opens the help window.
      */
     @FXML
@@ -231,4 +258,12 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    @Subscribe
+    private void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSwitchTheme(event);
+    }
+
+
 }

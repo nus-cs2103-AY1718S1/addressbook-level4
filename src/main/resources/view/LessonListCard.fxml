@@ -21,14 +21,14 @@
       </padding>
          <FlowPane>
             <children>
-           <Label fx:id="id" styleClass="cell_big_label" stylesheets="@DarkTheme.css" text="\$id">
+           <Label fx:id="id" styleClass="cell_big_label" stylesheets="@LightTheme.css" text="\$id">
              <minWidth>
                <!-- Ensures that the label text is never truncated -->
                <Region fx:constant="USE_PREF_SIZE" />
              </minWidth>
            </Label>
                <Label fx:id="bookmark" />
-           <Label fx:id="code" alignment="CENTER" contentDisplay="CENTER" styleClass="cell_big_label" stylesheets="@DarkTheme.css" text="\$code">
+           <Label fx:id="code" alignment="CENTER" contentDisplay="CENTER" styleClass="cell_big_label" stylesheets="@LightTheme.css" text="\$code">
                   <padding>
                      <Insets left="10.0" />
                   </padding></Label>
@@ -37,15 +37,15 @@
       <FlowPane fx:id="lecturers" alignment="CENTER" />
          <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="2.0">
             <children>
-            <Label fx:id="classType" styleClass="cell_small_label" stylesheets="@DarkTheme.css" text="\$classType" />
-               <Label fx:id="group" stylesheets="@DarkTheme.css" text="\$group" />
+            <Label fx:id="classType" styleClass="cell_small_label" stylesheets="@LightTheme.css" text="\$classType" />
+               <Label fx:id="group" stylesheets="@LightTheme.css" text="\$group" />
             </children>
             <VBox.margin>
                <Insets />
             </VBox.margin>
          </HBox>
-      <Label fx:id="venue" styleClass="cell_small_label" stylesheets="@DarkTheme.css" text="\$venue" />
-      <Label fx:id="timeSlot" styleClass="cell_small_label" stylesheets="@DarkTheme.css" text="\$timeSlot" />
+      <Label fx:id="venue" styleClass="cell_small_label" stylesheets="@LightTheme.css" text="\$venue" />
+      <Label fx:id="timeSlot" styleClass="cell_small_label" stylesheets="@LightTheme.css" text="\$timeSlot" />
     </VBox>
       <rowConstraints>
          <RowConstraints />

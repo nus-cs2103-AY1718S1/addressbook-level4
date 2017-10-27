@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="stackPane" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" styleClass="pane-without-border" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="stackPane" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <Label fx:id="keywordLabel" maxHeight="-Infinity" maxWidth="-Infinity" text="Label" />
    <Text fx:id="commandTextDefault" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="JUSTIFY" StackPane.alignment="CENTER_LEFT">
       <StackPane.margin>
