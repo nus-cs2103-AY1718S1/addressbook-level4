@@ -189,6 +189,15 @@ public class ModelManager extends ComponentManager implements Model {
      * {@code addressBook}
      */
     @Override
+    public ObservableList<ReadOnlyParcel> getActiveList() {
+        return FXCollections.unmodifiableObservableList(activeFilteredList);
+    }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
     public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
         return FXCollections.unmodifiableObservableList(filteredUndeliveredParcels);
     }

@@ -78,6 +78,8 @@ public interface Model {
      */
     ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList();
 
+    ObservableList<ReadOnlyParcel> getActiveList();
+
     /**
      * Returns an unmodifiable view of the filtered parcel list
      */
