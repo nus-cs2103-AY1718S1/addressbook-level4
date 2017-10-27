@@ -7,8 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.schedule.ReadOnlySchedule;
 import seedu.address.model.schedule.Schedule;
-
-
+import seedu.address.model.schedule.ScheduleName;
 
 
 /**
@@ -27,12 +26,16 @@ public class XmlAdaptedSchedule {
     public XmlAdaptedSchedule() {}
 
     /**
-     * Converts a given Tag into this class for JAXB use.
+     * Converts a given Schedule into this class for JAXB use.
      *
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedSchedule(ReadOnlySchedule source) {
         scheduleName = source.getName().toString();
+        for (ReadOnlySchedule schedule: source.getSchedules()) {
+            schedules.add(new XmlAdaptedSchedule(schedule));
+        }
+
     }
 
     /**
@@ -41,6 +44,7 @@ public class XmlAdaptedSchedule {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Schedule toModelType() throws IllegalValueException {
+        final ScheduleName scheduleName = new ScheduleName(this.scheduleName);
         return new Schedule(scheduleName);
     }
 
