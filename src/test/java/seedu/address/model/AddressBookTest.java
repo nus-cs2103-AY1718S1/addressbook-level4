@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.schedule.ReadOnlySchedule;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -77,6 +78,7 @@ public class AddressBookTest {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ReadOnlyGroup> groups = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlySchedule> schedules = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
@@ -96,6 +98,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<ReadOnlyGroup> getGroupList() {
             return groups;
+        }
+
+        @Override
+        public ObservableList<ReadOnlySchedule> getScheduleList() {
+            return schedules;
         }
     }
 

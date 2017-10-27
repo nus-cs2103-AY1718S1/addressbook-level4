@@ -23,6 +23,11 @@ import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
+import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -36,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
     private final UniqueTagList tags;
     private final UniqueGroupList groups;
+    private final UniqueScheduleList schedules;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -48,6 +54,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         groups = new UniqueGroupList();
+        schedules = new UniqueScheduleList();
     }
 
     public AddressBook() {}
@@ -278,6 +285,32 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new GroupNotFoundException();
         }
     }
+
+    //// schedule-level operations
+
+    /**
+     * Adds a schedule to the address book.
+     *
+     * @throws DuplicateScheduleException if an equivalent schedule already exists.
+     */
+
+    public void addSchedule(ReadOnlySchedule s) throws DuplicateScheduleException {
+        Schedule newSchedule = new Schedule(s);
+        schedules.add(newSchedule);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws ScheduleNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeSchedule(ReadOnlySchedule key) throws ScheduleNotFoundException {
+        if (schedules.remove(key)) {
+            return true;
+        } else {
+            throw new ScheduleNotFoundException();
+        }
+    }
+
     //// util methods
 
     @Override
@@ -302,6 +335,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyGroup> getGroupList() {
         return groups.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlySchedule> getScheduleList() {
+        return schedules.asObservableList();
     }
 
     @Override
