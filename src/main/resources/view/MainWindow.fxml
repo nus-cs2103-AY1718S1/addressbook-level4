@@ -40,6 +40,7 @@
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
+   <StackPane fx:id="searchBarPlaceholder" prefHeight="30.0" prefWidth="918.0" />
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">

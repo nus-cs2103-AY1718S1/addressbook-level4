@@ -67,6 +67,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane functionButtonsPanel;
 
+    @FXML
+    private StackPane searchBarPlaceholder;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -149,6 +152,9 @@ public class MainWindow extends UiPart<Region> {
 
         FunctionButtons functionButtons = new FunctionButtons(logic, primaryStage, this);
         functionButtonsPanel.getChildren().add(functionButtons.getRoot());
+
+        SearchBar searchBar = new SearchBar(logic);
+        searchBarPlaceholder.getChildren().add(searchBar.getRoot());
     }
 
     void hide() {

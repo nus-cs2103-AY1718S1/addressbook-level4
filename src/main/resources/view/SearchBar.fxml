@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="56.0">
+         <children>
+            <CheckBox fx:id="nameCheckBox" mnemonicParsing="false" onAction="#onSearchbarChanged" text="Name" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="nameField" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="31.0" prefWidth="33.0" />
+      <StackPane alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="61.0">
+         <children>
+            <CheckBox fx:id="phoneCheckBox" mnemonicParsing="false" onAction="#onSearchbarChanged" text="Phone" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="phoneField" prefWidth="138.0" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="31.0" prefWidth="33.0" />
+      <StackPane alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="68.0">
+         <children>
+            <CheckBox fx:id="addressCheckBox" mnemonicParsing="false" onAction="#onSearchbarChanged" text="Address" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="addressField" prefWidth="138.0" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="31.0" prefWidth="33.0" />
+      <StackPane alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="56.0">
+         <children>
+            <CheckBox fx:id="emailCheckBox" mnemonicParsing="false" onAction="#onSearchbarChanged" text="Email" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="emailField" prefWidth="138.0" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="31.0" prefWidth="33.0" />
+      <StackPane alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="49.0">
+         <children>
+            <CheckBox fx:id="tagsCheckBox" mnemonicParsing="false" onAction="#onSearchbarChanged" text="Tags" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="tagsField" prefWidth="138.0" />
+         </children>
+      </StackPane>
+   </children>
+</HBox>
