@@ -56,23 +56,18 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredParcelListWithStatusCompleted() {
-        ObservableList<ReadOnlyParcel> parcelsWithStatusCompleted = getFilteredParcelList().stream()
-                .filter(parcel -> parcel.getStatus().equals(Status.COMPLETED))
-                .collect(collectingAndThen(toList(), filteredParcels ->
-                        FXCollections.observableArrayList(filteredParcels)));
-
-        return parcelsWithStatusCompleted;
+    public ObservableList<ReadOnlyParcel> getDeliveredParcelList() {
+        return model.getFilteredDeliveredParcelList();
     }
 
     @Override
-    public ObservableList<ReadOnlyParcel> getFilteredParcelListWithStatusNotCompleted() {
-        ObservableList<ReadOnlyParcel> parcelsWithStatusNotCompleted = getFilteredParcelList().stream()
-                .filter(parcel -> !parcel.getStatus().equals(Status.COMPLETED))
-                .collect(collectingAndThen(toList(), filteredParcels ->
-                        FXCollections.observableArrayList(filteredParcels)));
+    public void setActiveList(boolean isDelivered) {
+        model.setActiveList(isDelivered);
+    }
 
-        return parcelsWithStatusNotCompleted;
+    @Override
+    public ObservableList<ReadOnlyParcel> getUndeliveredParcelList() {
+        return model.getFilteredUndeliveredParcelList();
     }
 
     @Override
