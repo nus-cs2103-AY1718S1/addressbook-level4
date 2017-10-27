@@ -39,7 +39,6 @@ public class BorrowCommandTest {
 
     @Test
     public void execute_successfulBorrowing() {
-        Index firstPerson = Index.fromOneBased(1);
         ReadOnlyPerson personWhoBorrowed = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         String expectedMessage = String.format(BorrowCommand.MESSAGE_BORROW_SUCCESS,
                 personWhoBorrowed.getName().toString(), VALID_DEBT_FIGURE);
@@ -47,7 +46,7 @@ public class BorrowCommandTest {
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
             expectedModel.addDebtToPerson(personWhoBorrowed, new Debt(VALID_DEBT_FIGURE));
 
-            BorrowCommand borrowCommand = prepareCommand(firstPerson, new Debt(VALID_DEBT_FIGURE));
+            BorrowCommand borrowCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(VALID_DEBT_FIGURE));
 
             assertCommandSuccess(borrowCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
@@ -116,7 +115,7 @@ public class BorrowCommandTest {
     }
 
     /**
-     * Parses {@code userInput} into a {@code BorrowCommand}.
+     * Prepares a {@code BorrowCommand}.
      */
     private BorrowCommand prepareCommand(Index index, Debt debt) {
         BorrowCommand command = null;
