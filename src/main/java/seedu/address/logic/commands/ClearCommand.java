@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ListClearedEvent;
 import seedu.address.model.Rolodex;
 
 /**
@@ -25,6 +27,8 @@ public class ClearCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() {
         requireNonNull(model);
         model.resetData(new Rolodex());
+
+        EventsCenter.getInstance().post(new ListClearedEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

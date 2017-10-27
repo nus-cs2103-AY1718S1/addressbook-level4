@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ListClearedEvent;
 import seedu.address.commons.events.ui.PersonModifiedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -47,23 +48,21 @@ public class PersonDetailPanel extends UiPart<Region> {
 
     public PersonDetailPanel() {
         super(FXML);
-        initialise();
+        showEmptyPanel();
         registerAsAnEventHandler(this);
     }
 
     /**
-     * Initialize the panel with empty fields
+     * Displays an empty panel
      */
-    private void initialise() {
+    private void showEmptyPanel() {
         name.setText("");
         phone.setText("");
         email.setText("");
         address.setText("");
         initial.setText("");
+        tags.getChildren().clear();
         avatar.setFill(Color.TRANSPARENT);
-
-        //avatarImage = new Image(getClass().getResourceAsStream("/images/avatarGray.png"));
-        //avatar.fitWidthProperty().bind(personDetailPanel.widthProperty());
     }
 
     /**
@@ -101,6 +100,12 @@ public class PersonDetailPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonDetailsChangedEvent(PersonModifiedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showPersonDetails(event.getModifiedPerson());
+    }
+
+    @Subscribe
+    private void handleListClearedEvent(ListClearedEvent event) {
+        showEmptyPanel();
     }
 }
