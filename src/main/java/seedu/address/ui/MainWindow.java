@@ -253,16 +253,30 @@ public class MainWindow extends UiPart<Region> {
         helpOverlay.setVisible(false);
     }
 
+    /**
+     * Lists all Person in Bluebird.
+     */
     @FXML
-    private void handleListAllClicked() throws CommandException, ParseException {
+    private void handleListAllClicked() {
         listAllToggleStyle();
-        logic.execute("list");
+        try {
+            logic.execute("list");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to list all using label");
+        }
     }
 
+    /**
+     * Lists pinned Person in Bluebird.
+     */
     @FXML
-    private void handleListPinnedClicked() throws CommandException, ParseException {
+    private void handleListPinnedClicked() {
         listPinToggleStyle();
-        logic.execute("listpin");
+        try {
+            logic.execute("listpin");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to list pinned using label");
+        }
     }
 
     public PersonListPanel getPersonListPanel() {
