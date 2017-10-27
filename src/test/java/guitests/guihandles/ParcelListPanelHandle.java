@@ -11,7 +11,8 @@ import seedu.address.ui.ParcelCard;
  * Provides a handle for {@code ParcelListPanel} containing the list of {@code ParcelCard}.
  */
 public class ParcelListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
-    public static final String PARCEL_LIST_VIEW_ID = "#parcelListView";
+    public static final String UNDELIVERED_PARCEL_LIST_VIEW_ID = "#allUncompletedParcelListView";
+    public static final String DELIVERED_PARCEL_LIST_VIEW_ID = "#allCompletedParcelListView";
 
     private Optional<ParcelCard> lastRememberedSelectedParcelCard;
 
