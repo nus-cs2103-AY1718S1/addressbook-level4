@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tooltip;
@@ -35,19 +35,20 @@ public class CalendarView extends UiPart<Region> {
     private DatePicker datePicker;
 
     public CalendarView(ObservableList<Event> eventList) {
-
         super(FXML);
+
         initCalendar(eventList);
         initListener();
-
 
     }
 
     /**
      * Initialise the calendar and highlight dates with Event.
+     *
      * @param eventList
      */
     private void initCalendar(ObservableList<Event> eventList) {
+
         box.getChildren().clear();
         datePicker = new DatePicker(LocalDate.now());
 
@@ -79,10 +80,23 @@ public class CalendarView extends UiPart<Region> {
                 };
             }
         };
-        datePicker.setDayCellFactory(dayCellFactory);
-        Node pop = datePickerSkin.getPopupContent();
 
-        box.getChildren().add(pop);
+        datePicker.setDayCellFactory(dayCellFactory);
+
+        DatePickerContent calendarView = (DatePickerContent) datePickerSkin.getPopupContent();
+        calendarView.minWidthProperty().setValue(box.minWidthProperty().getValue());
+
+        AnchorPane.setLeftAnchor(calendarView, 0.0);
+        AnchorPane.setRightAnchor(calendarView, 5.0);
+
+        System.out.println(calendarView.getPrefHeight());
+
+
+
+
+
+
+        box.getChildren().add(calendarView);
     }
 
     /**

@@ -51,7 +51,7 @@ public class ParserUtil {
      */
     public static ArrayList<Index> parseIndexes(String oneBasedIndexes)throws IllegalValueException {
         String[] ns = oneBasedIndexes.trim().split(" ");
-        ArrayList<Index> numbers = new ArrayList<Index>();
+        ArrayList<Index> numbers = new ArrayList<>();
         boolean allvalid = true;
         for (String a: ns) {
             String s = a.trim();
