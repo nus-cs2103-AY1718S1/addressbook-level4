@@ -13,7 +13,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -23,9 +25,11 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.StorageStub;
 
@@ -135,14 +139,23 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        /**
+         * This method is called as the construction of a new graph needs the FilteredPersonList.
+         * Therefore a dummy list is given.
+         */
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
+            UniquePersonList dummyList = new UniquePersonList();
+            return FXCollections.unmodifiableObservableList(dummyList.asObservableList());
         }
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addRelationship(Index fromPerson, Index toPerson, RelationshipDirection direction) {
             fail("This method should not be called.");
         }
     }

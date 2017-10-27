@@ -157,6 +157,11 @@
     -fx-text-fill: black !important;
 }
 
+.info-display {
+    -fx-background-color: transparent;
+    -fx-text-fill: #99e6ff;
+}
+
 .status-bar .label {
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;

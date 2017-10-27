@@ -10,6 +10,7 @@ import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,8 @@ public class BrowserPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
+        selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0,
+                new HashMap<>()));
 
         guiRobot.interact(() -> browserPanel = new BrowserPanel());
         uiPartRule.setUiPart(browserPanel);

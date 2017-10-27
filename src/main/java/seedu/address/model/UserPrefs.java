@@ -1,8 +1,11 @@
 package seedu.address.model;
 
+import java.util.Map;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * Represents User's preferences.
@@ -14,7 +17,7 @@ public class UserPrefs {
     private String addressBookName = "MyAddressBook";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(500, 500, 0, 0, SampleDataUtil.getSampleTagColours());
     }
 
     public GuiSettings getGuiSettings() {
@@ -25,8 +28,8 @@ public class UserPrefs {
         this.guiSettings = guiSettings;
     }
 
-    public void setGuiSettings(double width, double height, int x, int y) {
-        guiSettings = new GuiSettings(width, height, x, y);
+    public void setGuiSettings(double width, double height, int x, int y, Map<Tag, String> tagColours) {
+        guiSettings = new GuiSettings(width, height, x, y, tagColours);
     }
 
     public String getAddressBookFilePath() {

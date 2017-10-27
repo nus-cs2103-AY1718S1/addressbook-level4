@@ -219,11 +219,28 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::addRelationship[]
+=== addRelationship command
+
+The addRelationship command adds a directed or undirected relationship between two persons in the address book.
+The user is able to view the changes in the relationships in the graph window.
+
+==== Design Considerations
+
+**Aspect:** Implementation for addRelationship command +
+**Alternative 1 (current choice):** The command is implemented by adding one additional attribute `UniqueRelationshipList` to each person. +
+**Pros:** Implementation is easier as it follows the same logic as having the UniqueTagList. +
+**Cons:** All the relationships in the address book are not organized into a single entity (e.g. an adjacency list) which is more intuitive when the implementation involves a graph. +
+**Alternative 2:** Organize all the relationships into a single entity, instead of making them into lists under persons in the address book. +
+**Pros:** It is more intuitive to organize all the relationships into a single entity when the implementation involves a graph. +
+**Cons:** Maintenance of this single entity of graph can be costly as it can become massive. +
+**Cons:** Currently a person is identified by his/her index in the most recent listing. As the indexes of persons change, matching the relationship to the correct persons involved will be a headache.
+
 // tag::removeTag[]
 === removeTag command
 
-The removeTag command removes a tag with the specified name from the address book. All the appearances of the tag in
-the address book are removed. This command is implemented in the style of the `edit` command and `delete` command.
+The removeTag command removes a tag with the specified name from the address book. All the appearances of the tag in the address book are removed.
+This command is implemented in the style of the `edit` command and `delete` command.
 
 ==== Design Considerations
 

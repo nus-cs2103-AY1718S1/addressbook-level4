@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -10,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -17,7 +17,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static List<String> DEFAULT_COLORED_TAGS = Arrays.asList("friends", "colleagues", "family", "neighbours");
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -28,6 +27,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+    private final Map<Tag, String> tagColours;
 
     @FXML
     private HBox cardPane;
@@ -46,9 +46,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public PersonCard(ReadOnlyPerson person, int displayedIndex, Map<Tag, String> tagColours) {
         super(FXML);
         this.person = person;
+        this.tagColours = tagColours;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
@@ -77,8 +78,8 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label newLabel = new Label(tag.tagName);
-            if (DEFAULT_COLORED_TAGS.contains(tag.tagName)) {
-                newLabel.getStyleClass().add(tag.tagName);
+            if (tagColours.containsKey(tag)) {
+                newLabel.setStyle("-fx-background-color: " + tagColours.get(tag));
             }
             tags.getChildren().add(newLabel);
         });

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.Rule;
@@ -13,8 +15,10 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.tag.Tag;
 
 public class JsonUserPrefsStorageTest {
 
@@ -81,10 +85,24 @@ public class JsonUserPrefsStorageTest {
 
     private UserPrefs getTypicalUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setGuiSettings(1000, 500, 300, 100);
+        userPrefs.setGuiSettings(1000, 500, 300, 100, getSampleTagColours());
         userPrefs.setAddressBookFilePath("addressbook.xml");
         userPrefs.setAddressBookName("TypicalAddressBookName");
         return userPrefs;
+    }
+
+    private static Map<Tag, String> getSampleTagColours() {
+        HashMap<Tag, String> sampleTagColours = new HashMap<>();
+        try {
+            sampleTagColours.put(new Tag("friends"), "red");
+            sampleTagColours.put(new Tag("colleagues"), "green");
+            sampleTagColours.put(new Tag("family"), "yellow");
+            sampleTagColours.put(new Tag("neighbours"), "blue");
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+
+        return sampleTagColours;
     }
 
     @Test
@@ -115,7 +133,7 @@ public class JsonUserPrefsStorageTest {
     public void saveUserPrefs_allInOrder_success() throws DataConversionException, IOException {
 
         UserPrefs original = new UserPrefs();
-        original.setGuiSettings(1200, 200, 0, 2);
+        original.setGuiSettings(1200, 200, 0, 2, new HashMap<>());
 
         String pefsFilePath = testFolder.getRoot() + File.separator + "TempPrefs.json";
         JsonUserPrefsStorage jsonUserPrefsStorage = new JsonUserPrefsStorage(pefsFilePath);
@@ -126,7 +144,7 @@ public class JsonUserPrefsStorageTest {
         assertEquals(original, readBack);
 
         //Try saving when the file exists
-        original.setGuiSettings(5, 5, 5, 5);
+        original.setGuiSettings(5, 5, 5, 5, getSampleTagColours());
         jsonUserPrefsStorage.saveUserPrefs(original);
         readBack = jsonUserPrefsStorage.readUserPrefs().get();
         assertEquals(original, readBack);

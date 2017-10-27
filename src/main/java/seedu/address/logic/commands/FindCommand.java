@@ -16,11 +16,14 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
     public static final String COMMAND_ALIAS = "f";
 
+    public static final String COMMAND_PARAMETERS = "KEYWORD [MORE_KEYWORDS]... or KEYWORD [PREFIX]/[MORE_KEYWORDS]...";
+
+    public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD + " " + COMMAND_PARAMETERS;
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose details contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "A prefix can also be specified to narrow the search to persons whose particular detail contains any of "
             + "the keywords (case-sensitive).\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]... or KEYWORD [PREFIX]/[MORE_KEYWORDS]...\n"
+            + "Parameters: " + COMMAND_PARAMETERS + "\n"
             + "Examples:\n"
             + COMMAND_WORD + " alice Serangoon\n"
             + COMMAND_WORD + " n/alice bob\n"

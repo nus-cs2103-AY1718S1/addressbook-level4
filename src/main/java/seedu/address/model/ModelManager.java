@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,12 +12,18 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.RelationshipDirection;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -26,6 +33,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final UserPrefs userPrefs;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
     /**
@@ -38,6 +46,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.userPrefs = userPrefs;
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -54,6 +63,10 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
+    }
+
+    public UserPrefs getUserPrefs() {
+        return userPrefs;
     }
 
     /** Raises an event to indicate the model has changed */
@@ -100,6 +113,48 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTag(tagGettingRemoved);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addRelationship(Index indexFromPerson, Index indexToPerson, RelationshipDirection direction)
+            throws IllegalValueException, DuplicateRelationshipException {
+        List<ReadOnlyPerson> lastShownList = getFilteredPersonList();
+
+        if (indexFromPerson.getZeroBased() >= lastShownList.size()
+                || indexToPerson.getZeroBased() >= lastShownList.size()) {
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson fromPerson = lastShownList.get(indexFromPerson.getZeroBased());
+        ReadOnlyPerson toPerson = lastShownList.get(indexToPerson.getZeroBased());
+        ReadOnlyPerson fromPersonCopy = fromPerson.copy();
+        ReadOnlyPerson toPersonCopy = toPerson.copy();
+        Relationship relationshipForFromPerson = new Relationship(fromPersonCopy, toPersonCopy, direction);
+        Relationship relationshipForToPerson = relationshipForFromPerson;
+        if (!direction.isDirected()) {
+            relationshipForToPerson = new Relationship(toPersonCopy, fromPersonCopy, direction);
+        }
+
+
+        /*
+         Updating the model
+         */
+        try {
+            Person fPerson = (Person) fromPersonCopy;
+            Person tPerson = (Person) toPersonCopy;
+            fPerson.addRelationship(relationshipForFromPerson);
+            tPerson.addRelationship(relationshipForToPerson);
+            this.updatePerson(fromPerson, fPerson);
+            this.updatePerson(toPerson, tPerson);
+        } catch (DuplicateRelationshipException dre) {
+            throw new DuplicateRelationshipException();
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("the person's relationship is unmodified. IMPOSSIBLE.");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     //=========== Filtered Person List Accessors =============================================================
