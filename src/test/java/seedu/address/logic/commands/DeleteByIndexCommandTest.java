@@ -26,7 +26,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
  */
-public class DeleteCommandTest {
+public class DeleteByIndexCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 

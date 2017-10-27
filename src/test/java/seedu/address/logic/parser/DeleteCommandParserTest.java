@@ -6,10 +6,13 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.junit.Test;
 
 import seedu.address.logic.commands.DeleteByIndexCommand;
+import seedu.address.logic.commands.DeleteByTagCommand;
+import seedu.address.logic.commands.DeleteCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -21,6 +24,20 @@ import seedu.address.logic.commands.DeleteByIndexCommand;
 public class DeleteCommandParserTest {
 
     private DeleteCommandParser parser = new DeleteCommandParser();
+
+    @Test
+    public void parse_emptyTagArgs_throwsParseException() {
+        assertParseFailure(parser, "-tag    ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validTagArgs_returnsDeleteCommand() {
+        HashSet<String> keys = new HashSet<>(Arrays.asList("friends", "colleagues"));
+        DeleteCommand expectedDeleteCommand = new DeleteByTagCommand(keys);
+        assertParseSuccess(parser, "-tag colleagues friends", expectedDeleteCommand);
+        assertParseSuccess(parser, "-tag   \t friends \t\t\n colleagues", expectedDeleteCommand);
+    }
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {

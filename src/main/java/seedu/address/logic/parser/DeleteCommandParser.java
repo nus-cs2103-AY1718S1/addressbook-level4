@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.ParserUtil.parseWhitespaceSeparatedStrings;
 
+import java.util.HashSet;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
@@ -41,7 +42,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
         if (opArgs.getOptions().contains(DeleteByTagCommand.COMMAND_OPTION)) {
             List<String> tags = parseWhitespaceSeparatedStrings(filteredArgs);
-            return new DeleteByTagCommand(tags);
+            HashSet<String> tagSet = new HashSet<>(tags);
+            return new DeleteByTagCommand(tagSet);
         } else {
             try {
                 List<Index> indexes = ParserUtil.parseMultipleIndexes(filteredArgs);

@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.model.person.ReadOnlyPerson;
@@ -13,9 +14,9 @@ import seedu.address.model.person.TagsContainKeywordsPredicate;
 public class DeleteByTagCommand extends DeleteCommand {
     public static final String COMMAND_OPTION = "tag";
 
-    private Collection<String> targetTags;
+    private Set<String> targetTags;
 
-    public DeleteByTagCommand(Collection<String> tags) {
+    public DeleteByTagCommand(Set<String> tags) {
         targetTags = tags;
     }
 
@@ -26,7 +27,6 @@ public class DeleteByTagCommand extends DeleteCommand {
         TagsContainKeywordsPredicate predicate = new TagsContainKeywordsPredicate(tags);
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         List<ReadOnlyPerson> persons = lastShownList.stream().filter(predicate).collect(Collectors.toList());
-
         return persons;
     }
 
