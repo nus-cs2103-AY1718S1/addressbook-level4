@@ -14,7 +14,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
@@ -55,7 +54,6 @@ public class NearbyPersonListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in nearby person list panel changed to : '" + newValue + "'");
-                        raise(new NearbyPersonPanelSelectionChangedEvent(newValue));
                     }
                 });
     }
