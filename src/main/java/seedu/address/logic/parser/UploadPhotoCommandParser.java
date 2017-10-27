@@ -15,13 +15,22 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the UploadImageCommand
      * and returns an UploadImageCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public UploadPhotoCommand parse(String args) throws ParseException {
         try {
-           // String filePath = args.substring(1);
-            Index index = ParserUtil.parseIndex(args);
-            return new UploadPhotoCommand(index);
+            String[] argsArr = args.split(" ");
+
+            String indexString = argsArr[1];
+            String filePath = "";
+            System.out.println(argsArr.length);
+            if(argsArr.length>2){
+                filePath = argsArr[2];
+            }
+           // System.out.println(indexString + " " + filePath);
+            Index index = ParserUtil.parseIndex(indexString);
+            return new UploadPhotoCommand(index, filePath);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadPhotoCommand.MESSAGE_USAGE));

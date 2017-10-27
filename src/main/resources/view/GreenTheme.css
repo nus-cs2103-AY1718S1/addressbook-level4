@@ -3,6 +3,29 @@
     background-color: #7bb135; /* Used in the default.html file */
 }
 
+body {
+     -fx-background-color: derive(#527623, 20%);
+    background-color: #7bb135; /* Used in the default.html file */
+}
+
+h1 {
+    font-size: 32pt;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    text-fill: white;
+    color: white;
+}
+
+h2 {
+    font-size: 20pt;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    text-fill: white;
+    color: white;
+}
+
+.welcomeImage {
+    width: 100%;
+}
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";

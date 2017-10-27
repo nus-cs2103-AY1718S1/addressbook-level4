@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,20 +31,22 @@ public class UploadPhotoCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Uploads image to the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX (must be a positive integer) or INDEX (must be a positive integer) and image file path\n"
+            + "Example: " + COMMAND_WORD + " 1\n"
+            + "OR: " + COMMAND_WORD + " 1 " + "C:\\Users\\Pictures\\photo.jpg";
 
     public static final String MESSAGE_UPLOAD_IMAGE_SUCCESS = "Uploaded image to Person: %1$s";
+    public static final String MESSAGE_UPLOAD_IMAGE_FALURE = "Image file is not valid. Try again!";
     private final Index targetIndex;
-    //private final String filePath;
+    private final String filePath;
     private final FileChooser fileChooser = new FileChooser();
     private Stage stage;
     private ImageView imageView = new ImageView();
     private HashMap<Email, String> photoList;
 
-    public UploadPhotoCommand(Index targetIndex) {
+    public UploadPhotoCommand(Index targetIndex, String filePath) {
         this.targetIndex = targetIndex;
-     //   this.filePath = filePath;
+        this.filePath = filePath;
     }
 
     @Override
@@ -56,16 +59,23 @@ public class UploadPhotoCommand extends UndoableCommand {
         File imageFile;
         //  Photo targetPhoto = lastShownList.get(targetIndex.getZeroBased()).getPhoto();
 
-        imageFile = handleFileChooser();
-        imageFile = saveFile(imageFile, personToUploadImage.getEmail());
-        EventsCenter.getInstance().post(new PhotoChangeEvent());
+        if (filePath.equals("")) {
+            imageFile = handleFileChooser();
+        } else {
+            imageFile = new File(filePath);
+        }
 
-
+        if (isValidImageFile(imageFile)) {
+            imageFile = saveFile(imageFile, personToUploadImage.getEmail());
+            EventsCenter.getInstance().post(new PhotoChangeEvent());
+        } else {
+            return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
+        }
 
         // ReadOnlyPerson editedPerson = lastShownList.get(targetIndex.getZeroBased());
         // editedPerson.getPhoto().setPath(imageFile.getPath());
-       // photoList.put(personToUploadImage.getEmail(), imageFile.getPath());
-       // EventsCenter.getInstance().registerHandler(handler);
+        // photoList.put(personToUploadImage.getEmail(), imageFile.getPath());
+        // EventsCenter.getInstance().registerHandler(handler);
         return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_SUCCESS, personToUploadImage));
     }
 
@@ -83,6 +93,23 @@ public class UploadPhotoCommand extends UndoableCommand {
         File file = fileChooser.showOpenDialog(stage);
         return file;
     }
+
+    /**
+     * Checks if file given is an valid image file.
+     */
+    private boolean isValidImageFile(File file) {
+        boolean isValid = true;
+        try {
+            Image image = ImageIO.read(file);
+            if (image == null) {  //file is not an image file
+                isValid = false;
+            }
+        } catch (IOException ex) { //file could not be opened
+            isValid = false;
+        }
+        return isValid;
+    }
+
     /**
      * Reads and saves image file into project directory folder "photos".
      */
@@ -105,4 +132,5 @@ public class UploadPhotoCommand extends UndoableCommand {
         }
         return path;
     }
+
 }
