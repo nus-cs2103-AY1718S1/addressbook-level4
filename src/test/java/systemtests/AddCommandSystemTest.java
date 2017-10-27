@@ -108,6 +108,15 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + TAG_DESC_FRIEND;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
+        /*
+         * Case: add a parcel with all fields same as another parcel in the address book except status ->
+         * rejected
+         */
+        command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_BOB
+                + TAG_DESC_FRIEND;
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PARCEL);
+
         /* Case: add a duplicate parcel except with different tags -> rejected */
         // "friends" is an existing tag used in the default model, see TypicalParcels#ALICE
         // This test will fail is a new tag that is not in the model is used, see the bug documented in
@@ -190,19 +199,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_BOB + STATUS_DESC_AMY
-                + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
-
-        /*
-         * Case: add a parcel with all fields same as another parcel in the address book except status ->
-         * added
-         */
-        toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_BOB)
-                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_BOB)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_AMY + STATUS_DESC_BOB
                 + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
