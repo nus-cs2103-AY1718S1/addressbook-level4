@@ -263,7 +263,7 @@ Examples:
 `schedule 1 3 d/15-01-2018 act/Play basketball` +
 Associates the specified schedule with the 1st and 3rd persons in the address book.
 * `find Betsy` +
-`schedule 1 d/25-12 act/Christmas dinner` +
+`schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
 
 === Getting email addresses : `copy` [Since v1.3]
@@ -404,7 +404,7 @@ To transfer my data to another Computer,iInstall the app in the other computer a
 
 |`Locate` |`lc` |`locate INDEX` | `locate 2`
 
-|`Schedule` |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12 act/Christmas dinner`
+|`Schedule` |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
 
 |`Copy` |`cp` |`copy INDEX [UNIQUE INDEX]...`|
 
