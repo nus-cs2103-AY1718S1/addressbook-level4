@@ -132,16 +132,13 @@ public class PersonBuilder {
      */
     public PersonBuilder withUnspecifiedEmail() {
         this.person.setEmail(Email.UNSPECIFIED);
-        
         return this;
     }
-    
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
      */
     public PersonBuilder withRemark(String remark) {
         this.person.setRemark(new Remark(remark));
-        
         return this;
     }
 
