@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox id="stackPane" fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="TOP_LEFT" minHeight="105" spacing="15.0" GridPane.columnIndex="0">
+            <padding>
+                <Insets bottom="5" left="5" right="15" top="5" />
+            </padding>
+            <HBox alignment="TOP_LEFT" spacing="10">
+            <ImageView>
+               <image>
+                  <Image url="@../../../../docs/images/icons/student(32px).png" />
+               </image>
+            </ImageView>
+                <Label fx:id="name" styleClass="cell_big_label" text="\$first">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
+                <Label fx:id="id" styleClass="cell_big_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+            </HBox>
+            <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+            <graphic>
+               <ImageView>
+                  <image>
+                     <Image url="@../../../../docs/images/icons/phone.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+            <VBox.margin>
+               <Insets />
+            </VBox.margin></Label>
+            <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+            <graphic>
+               <ImageView>
+                  <image>
+                     <Image url="@../../../../docs/images/icons/address.png" />
+                  </image>
+               </ImageView>
+            </graphic></Label>
+            <Label fx:id="formClass" styleClass="cell_small_label" text="\$formClass">
+            <graphic>
+               <ImageView>
+                  <image>
+                     <Image url="@../../../../docs/images/icons/class.png" />
+                  </image>
+               </ImageView>
+            </graphic></Label>
+            <Label fx:id="grades" styleClass="cell_small_label" text="\$grades">
+            <graphic>
+               <ImageView>
+                  <image>
+                     <Image url="@../../../../docs/images/icons/grades.png" />
+                  </image>
+               </ImageView>
+            </graphic></Label>
+            <Label fx:id="postalCode" styleClass="cell_small_label" text="\$postalCode">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@../../../../docs/images/icons/postalCode.png" />
+                        </image>
+                    </ImageView>
+                </graphic></Label>
+            <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+            <graphic>
+               <ImageView>
+                  <image>
+                     <Image url="@../../../../docs/images/icons/email.png" />
+                  </image>
+               </ImageView>
+            </graphic></Label>
+            <Label fx:id="remark" styleClass="cell_small_label" text="\$remark">
+            <graphic>
+               <ImageView>
+                  <image>
+                     <Image url="@../../../../docs/images/icons/remark.png" />
+                  </image>
+               </ImageView>
+            </graphic></Label>
+            <FlowPane fx:id="tags" alignment="BASELINE_LEFT" />
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+        </VBox>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+    <GridPane minWidth="600">
+   <AnchorPane prefHeight="200.0" prefWidth="200.0">
+      <children>
+         <LineChart fx:id="lineChart" layoutY="10.0" maxHeight="1.5" maxWidth="1.5" minHeight="500" minWidth="700" prefHeight="600" prefWidth="800.0">
+           <xAxis>
+             <CategoryAxis minHeight="400.0" minWidth="400.0" side="BOTTOM" fx:id="xNameAxis" />
+           </xAxis>
+           <yAxis>
+             <NumberAxis fx:id="yGradeAxis" side="LEFT" tickLabelFill="#ffffff2e" />
+           </yAxis>
+         </LineChart>
+      </children></AnchorPane>
+    </GridPane>
+</HBox>

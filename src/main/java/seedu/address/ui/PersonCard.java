@@ -38,17 +38,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
     private Label formClass;
-    @FXML
-    private Label grades;
-    @FXML
-    private Label postalCode;
-    @FXML
-    private Label email;
-    @FXML
-    private Label remark;
     @FXML
     private FlowPane tags;
 
@@ -62,56 +52,15 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
-     * Obtain tag colors
-     * @param tagValue is the String description of the tag
-     * @return the designated tag colors according to the tag description
-     */
-    private static String obtainTagColors(String tagValue) {
-
-        if (!tagColors.containsKey(tagValue)) {
-            switch(tagValue) {
-            case "friends":
-                tagColors.put(tagValue, availableColors[1]);
-                break;
-            case "colleagues":
-                tagColors.put(tagValue, availableColors[0]);
-                break;
-            default:
-                tagColors.put(tagValue, availableColors[2]);
-            }
-        }
-        return tagColors.get(tagValue);
-    }
-
-    /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
         formClass.textProperty().bind(Bindings.convert(person.formClassProperty()));
-        grades.textProperty().bind(Bindings.convert(person.gradesProperty()));
-        postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            initialiseTags(person);
-        });
-    }
-
-    /**
-     * Initialise the {@code person} tags
-     * @param person Person to be assigned tag colour.
-     */
-    private void initialiseTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
+        tags.getChildren().clear();
+        initialiseTags(person);
     }
 
     @Override
@@ -130,5 +79,17 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * Initializes and styles tags belonging to a person.
+     * @param person must be a valid.
+     */
+    protected void initialiseTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-font-size:15px");
+            tags.getChildren().add(tagLabel);
+        });
     }
 }

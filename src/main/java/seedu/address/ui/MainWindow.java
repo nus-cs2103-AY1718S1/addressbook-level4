@@ -41,12 +41,16 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private ExtendedPersonCard extendedPersonCard;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
     private StackPane browserPlaceholder;
+
+    @FXML
+    private StackPane extendedPersonCardPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -126,11 +130,11 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        extendedPersonCard = new ExtendedPersonCard(logic.getFilteredPersonList());
+        extendedPersonCardPlaceholder.getChildren().add(extendedPersonCard.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -208,8 +212,8 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+    public ExtendedPersonCard getExtendedPersonCard() {
+        return this.extendedPersonCard;
     }
 
     @Subscribe
