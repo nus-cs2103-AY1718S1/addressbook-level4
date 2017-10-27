@@ -513,7 +513,7 @@ The implementation process consisted of +
 === Making Appointments
 The appointment feature was implemented as an end-to-end feature that added modifications to all components.
 
-The implementation process consisted of first creating the appoint command which behaves just like the comment command, making the new command accept arguments, adding extra line in Person Card reserved for the appointment information, and implementing the Appoint Command execution in Logic. 
+The implementation process consisted of first creating the appoint command which behaves just like the comment command, making the new command accept arguments, adding extra line in Person Card reserved for the appointment information, and implementing the Appoint Command execution in Logic.
 
 ==== Design Considerations
 **Aspect:** Implementation of `Appoint` +
