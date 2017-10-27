@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.PersonDetailPanelHandle;
+import seedu.address.commons.events.ui.PersonModifiedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -33,10 +34,19 @@ public class PersonDetailPanelTest extends GuiUnitTest {
 
     @Test
     public void display() {
+
+        // changes in person selection reflect on panel
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0)));
         assertPanelDisplaysPerson(ALICE, personDetailPanelHandle);
 
         postNow(new PersonPanelSelectionChangedEvent(new PersonCard(BOB, 1)));
+        assertPanelDisplaysPerson(BOB, personDetailPanelHandle);
+
+        // changes made to person reflect on panel
+        postNow(new PersonModifiedEvent(ALICE));
+        assertPanelDisplaysPerson(ALICE, personDetailPanelHandle);
+
+        postNow(new PersonModifiedEvent(BOB));
         assertPanelDisplaysPerson(BOB, personDetailPanelHandle);
     }
 
