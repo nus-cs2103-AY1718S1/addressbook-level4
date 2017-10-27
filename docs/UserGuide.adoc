@@ -14,6 +14,13 @@ endif::[]
 
 By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+
+Introducing iConnect, our one-stop student networking application. We aim to serve as your personal secretary to ease your job as a student. Due to the ever-increasing workload, it has become a challenge to keep track of various school commitments while maintaining relationships with peers.
+
+With iConnect, missing schedules and losing contact with friends will be a thing of the past.
+Let’s get connected now!
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -34,7 +41,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`delete`**`I/1 3` : deletes the 1st and 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
@@ -50,26 +57,27 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help` `h` _[Since v1.3]_
+=== Viewing help : `help` _[Since v1.3]_
+
+_Alias: `h`_
 
 Format: `help command`
- (or) `h command`
 
- ****
- * Shows the command usage of the given command name.
- ****
+****
+* Shows the command usage of the given command name.
+****
 
- Example:
+ Examples:
 
  * `help list` +
 Shows the usage of command `list`
 
-=== Adding a person: `add` `create` `put` _[Since v1.1]_
+=== Adding a person: `add` _[Since v1.1]_
 
-Adds a person to the address book +
+_Alias: `create` `put`_
+
+Adds a person to the address book. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-(or) `create n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-(or) `put n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -81,17 +89,19 @@ Examples:
 * `creat n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `put n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 
-=== Listing all persons : `list` `show` `all` _[Since v1.1]_
+=== Listing all persons : `list` _[Since v1.1]_
+
+_Alias: `show` `all`_
 
 Shows a list of all persons in the address book. +
-Format: `list` or `show` or `all`
+Format: `list`
 
-=== Editing a person : `edit` `update` `modify` _[Since v1.1]_
+=== Editing a person : `edit` _[Since v1.1]_
+
+_Alias: `update` `modify`_
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
- (or)`update INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
- (or)`modify INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -112,12 +122,12 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `modify 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively
 
-=== Locating persons by different attributes: `find` `search` `get` _[Since v1.2]_
+=== Locating persons by different attributes: `find` _[Since v1.2]_
+
+_Alias: `search` `get`_
 
 Finds persons whose specified attributes contain any of the given keywords. +
 Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
-(or)`search [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
-(or)`get [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
 
 ****
 * The search for `Name` `Email` `Address` is case insensitive. e.g `hans` will match `Hans`, `Clementi Street` will match `clementi street`.
@@ -143,7 +153,7 @@ Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi St
 
 === Sorting list of persons: `sort` _[Since v1.2]_
 
-Sorts the full list of persons based on the specified attribute +
+Sorts the full list of persons based on the specified attribute. +
 Format: `sort [n/(ASC OR DSC)]`
 
 ****
@@ -165,20 +175,19 @@ Returns list of persons sorted by phone in ascending order
 * `sort t/DSC` +
 Returns list of persons sorted by time added in descending order
 
-=== Deleting a person : `delete` `remove` `-` _[Since v1.2]_
+=== Deleting a person : `delete` _[Since v1.2]_
+
+_Alias: `remove` `-`_
 
 Deletes a group of people from the address book. +
-Format:`delete I/INDEX INDEX ...`
-(or)`remove I/INDEX INDEX ...`
-(or)`- I/INDEX INDEX ...`
-(or)`delete n/Name `
-(or)`remove n/Name`
-(or)`- n/Name`
+Format:`delete I/INDEX INDEX ...` (or) `delete n/Name`
 
 ****
-* Deletes the people with given name or at these given specified `INDEX`.
-* The indexed refer to the index numbers shown in the most recent listing.
-* The indexed *must be a positive integer* 1, 2, 3, ...
+* Deletes person with given name or at these given specified `INDEX`.
+* The index refer to the index numbers shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The name must be the full name of the person.
+* Only one name is allowed for `delete` command.
 ****
 
 Examples:
@@ -205,7 +214,7 @@ Format: `t-add [TAG] INDEX`
 * Adds tag to the person(s) at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
-* The [TAG] *must not have its first word as number*
+* The [TAG] *must not have its first word as number*.
 ****
 
 Examples:
@@ -223,7 +232,7 @@ Format: `t-remove INDEX... [TAG]`
 * Removes a tag from the person(s) at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
-* The [TAG] *must not have its first word as number*
+* The [TAG] *must not have its first word as number*.
 ****
 
 Examples:
@@ -247,6 +256,7 @@ Examples:
 Shows all the people with tag `friend` or tag `classmate`
 
 === Find the location of a person using Google Map: `m-show` _[Since v1.3]_
+
 Format: `m-show INDEX`
 
 ****
@@ -262,14 +272,15 @@ Examples:
 Shows the address of person with index 1 on the google map
 
 === Find the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
+
 Format: `m-route INDEX a/ADDRESS`
 
 ****
 * Find the address of the person with the index number.
 * Only one index number is allowed as the input.
 * The index *must be a positive integer* 1, 2, 3, ...
-* The address entered is the current location of the user (the place they want to start from)
-* A route will be shown on the map with the address as start location and selected person's address as destination
+* The address entered is the current location of the user (the place they want to start from).
+* A route will be shown on the map with the address as start location and selected person's address as destination.
 ****
 
 Examples:
@@ -280,17 +291,19 @@ Shows the route from `Clementi Street` to the address of person with index numbe
 Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
 
 === Making a backup address book: `export` _[Coming in v2.0]_
+
 Format: `export PATH`
 
 ****
 * Export all the information of contacts to the given local address.
 ****
 
-=== Selecting a person : `select` `choose` _[Since v1.1]_
+=== Selecting a person : `select` _[Since v1.1]_
+
+_Alias: `choose`_
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
- (or) `choose INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -307,7 +320,9 @@ Selects the 2nd person in the address book
 `choose 1` +
 Selects the 1st person in the results of the `find` command
 
-=== Listing entered commands : `history` `record` _[Since v1.1]_
+=== Listing entered commands : `history` _[Since v1.1]_
+
+_Alias: `record`_
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` or `record`
@@ -415,29 +430,44 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: Can I use this app without network connection? +
+*A*: You can achieve most of the commands offline except for those features using the browser window (e.g. `select` or `m-show`).
+
 == Command Summary
 
+* *Help* : `help COMMAND_WORD`
+e.g. `help list`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX INDEX...` +
-e.g. `delete 3 4`
+* *List* : `list`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *TagAdd* : `t-add INDEX INDEX... [TAG]` +
-e.g. `t-add 3 4 friends`
-* *TagFind* : `t-find [TAG]` +
-e.g. `t-find friends`
-* *TagRemove* : `t-remove INDEX INDEX... [TAG]` +
-e.g. `t-remove 3 4 friends`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+* *Find* : `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]` +
+e.g. `find n/James p/8765 e/jamesho@example.com a/clementi street`
 * *Sort* : `sort [n/(ASC/DSC)] [p/(ASC/DSC)] [e/(ASC/DSC)] [a/(ASC/DSC)]` +
 e.g. `sort n/ASC`
-* *List* : `list`
-* *Help* : `help`
+* *Delete* : `delete I/INDEX INDEX...` +
+e.g. `delete I/3 4`
+* *TagAdd* : `t-add INDEX INDEX... [TAG]` +
+e.g. `t-add 3 4 friends`
+* *TagRemove* : `t-remove INDEX INDEX... [TAG]` +
+e.g. `t-remove 3 4 friends`
+* *TagFind* : `t-find [TAG]` +
+e.g. `t-find friends`
+* *MapShow* : `m-show INDEX` +
+e.g. `m-show 1`
+* *MapRoute* : `m-route INDEX a/ADDRESS` +
+e.g. `m-show 1 a/NUS`
+* *Export* : `export PATH` +
+e.g. `export /desktop/new_folder`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *BinList* : `bin-list`
+* *BinRestore* : `bin-restore INDEX INDEX...` +
+e.g. `bin-restore 1 2`
+* *BinClear* : `bin-clear`
+* *Clear* : `clear`
+* *Exit* : `exit`

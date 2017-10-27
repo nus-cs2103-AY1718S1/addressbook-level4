@@ -14,6 +14,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+
+iConnect is a one-stop student networking application. We aim to ease the job as a university student. Due to the ever-increasing workload, it has become a challenge to keep track of various school commitments while maintaining relationships with peers.With iConnect, missing schedules and losing contact with friends will be a thing of the past.
+
 == Setting up
 
 === Prerequisites
@@ -218,7 +222,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::find[]
+// tag::findmech[]
 === Enhanced Find mechanism
 
 The enhanced version of find mechanism is facilitated by the `AddressBookParser`, which resides inside `LogicManager`. It allows the users to search for person(s) by substrings of multiple different attributes (e.g. `Name`, `Phone`, `Email`, `Address`), which the case is insensitive for `Name`, `Email` and `Address` attributes.
@@ -448,6 +452,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 //tag::sortmech[]
 === Sorting Mechanism
+
 The sorting mechanism is facilitated by `SortCommandParser` and `SortCommand`, with both classes residing in the `Logic` component of the address book. Since the address book state will be modified during the sorting process, the `sort` has to be undoable.
 
 `SortCommandParser` takes in an argument in the form of `[PREFIX]/[ORDER]` that defines how `UniquePersonList` should be sorted, with `PREFIX` specifying the sort type and `ORDER` specifying the sort order. It first checks for validity against a regular expression. Once verified, the argument will be tokenized to identify the sort order and sort type. A `SortCommand` object is then created with the identified sort type and sort order.
@@ -499,21 +504,7 @@ If the list is found to be empty, an `EmptyListException` will be thrown from `U
 **Cons:** Requires restarting of app which waste time and processing resources when list is long. +
 //end::sortmech[]
 
-=== Logging
-
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
-
-*Logging Levels*
-
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
+// tag::tagadd[]
 === Adding a tag to multiple people
 
 Adding a tag to multiple people is facilitated by `TagAddCommand`, which extends `UndoableCommand`, it supports undoing and redoing of commands that modifies the state of the address book.
@@ -579,10 +570,7 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 **Pros:** It is efficient for the user +
 **Cons:** Difficult to implement.
 
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
+// tag::deletemech[]
 === Improvements on DeleteCommand
 
 We have improved the delete command to let it be able to delete by multiple indexes or a name with prefix. The reason why we do this is to improve the efficiency to delete the contacts.The prefix for deleting by name is `n/`. The prefix for deleting by indexes is `I/`.
@@ -627,6 +615,25 @@ Moreover, if there is more than one person in the list with the name give, then 
 **Alternative 2:** Delete the first person with the name in the list and show it to user. +
 **Pros:**  It cost users less time to delete a person if they know the sequence of the persons with the same name. +
 **Cons:** It is hard to guarantee the right person is deleted. The user may need to redo to fix it.
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 
 
@@ -1280,20 +1287,3 @@ AddressBook.xml
 ....
 The file that the contact list is stored to, located in the ‘data’ folder
 ....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

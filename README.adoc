@@ -18,15 +18,6 @@ endif::[]
 * This is a desktop Address Book application. It has a GUI (Graphical User Interface) but most of the user interactions happen using a CLI (Command Line Interface).
 * It is a Java application intended for students learning Software Engineering while using Java as the main programming language.
 * It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level4[level 4]:
-** Commands can now be entered in shorthand.
-** Synonyms of command can now be use to complete the same task.
-** GUI has been improved for better readability.
-** Error messages are now highlighted in red.
-** Status bar now can show the number of contacts displayed.
-** Google map has been integrated.
-** Scheduler feature has been added.
-** New commands have been added with university students in focus.
 
 
 == Site Map
