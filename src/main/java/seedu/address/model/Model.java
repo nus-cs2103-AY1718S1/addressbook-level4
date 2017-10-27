@@ -9,9 +9,12 @@ import seedu.address.model.module.BookedSlot;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
 /**
  * The API of the Model component.
@@ -113,6 +116,19 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate);
+
+    /**
+     * Adds the given remark.
+     * @throws DuplicateRemarkException
+     */
+    void addRemark(Remark r) throws DuplicateRemarkException;
+
+    /**
+     * Update the given remark.
+     * @throws DuplicateRemarkException
+     * @throws RemarkNotFoundException
+     */
+    void updateRemark(Remark target, Remark editedRemark) throws DuplicateRemarkException, RemarkNotFoundException;
 
     /**
      * handle different ListingUnit after redo and undo

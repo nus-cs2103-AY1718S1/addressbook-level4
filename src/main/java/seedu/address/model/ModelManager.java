@@ -23,9 +23,12 @@ import seedu.address.model.module.BookedSlot;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.RemarkNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
@@ -248,6 +251,16 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate) {
         requireNonNull(predicate);
         filteredLessons.setPredicate(predicate);
+    }
+
+    @Override
+    public void addRemark(Remark r) throws DuplicateRemarkException {
+        addressBook.addRemark(r);
+    }
+
+    @Override
+    public void updateRemark(Remark target, Remark editedRemark) throws DuplicateRemarkException, RemarkNotFoundException {
+        addressBook.updateRemark(target, editedRemark);
     }
 
     @Override
