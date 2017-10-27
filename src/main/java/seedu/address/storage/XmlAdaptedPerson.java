@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.DateUtil;
 
 /**
  * JAXB-friendly version of the Person.
@@ -47,6 +49,8 @@ public class XmlAdaptedPerson {
     private String deadline;
     @XmlElement (required = true)
     private String dateRepaid;
+    @XmlElement (required = true)
+    private String lastAccruedDate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -74,6 +78,7 @@ public class XmlAdaptedPerson {
         dateBorrow = source.getDateBorrow().value;
         deadline = source.getDeadline().value;
         dateRepaid = source.getDateRepaid().value;
+        lastAccruedDate = DateUtil.formatDate(source.getLastAccruedDate());
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -100,10 +105,12 @@ public class XmlAdaptedPerson {
         final DateBorrow dateBorrow = new DateBorrow(this.dateBorrow);
         final Deadline deadline = new Deadline(this.deadline);
         final DateRepaid dateRepaid = new DateRepaid(this.dateRepaid);
+        final Date lastAccruedDate = DateUtil.convertStringToDate(this.lastAccruedDate);
         final Set<Tag> tags = new HashSet<>(personTags);
         Person adaptedPerson = new Person(name, phone, email, address, postalCode, debt, interest, deadline, tags);
         adaptedPerson.setDateBorrow(dateBorrow);
         adaptedPerson.setDateRepaid(dateRepaid);
+        adaptedPerson.setLastAccruedDate(lastAccruedDate);
         return adaptedPerson;
     }
 }
