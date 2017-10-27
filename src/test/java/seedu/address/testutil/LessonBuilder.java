@@ -16,7 +16,7 @@ import seedu.address.model.util.SampleDataUtil;
 /**
  * A utility class to help with building Person objects.
  */
-public class LessonBuilder { //TODO: change the name to LessonBuilder
+public class LessonBuilder {
 
     public static final String DEFAULT_CODE = "MA1101R";
     public static final String DEFAULT_CLASS_TYPE = "LEC";
@@ -24,6 +24,7 @@ public class LessonBuilder { //TODO: change the name to LessonBuilder
     public static final String DEFAULT_GROUP = "1";
     public static final String DEFAULT_TIME_SLOT = "FRI[1400-1600]";
     public static final String DEFAULT_LECTURER = "Ma Siu Lun";
+    private static final boolean DEFAULT_ISMARKED = true;
 
     private Lesson lesson;
 
@@ -118,6 +119,22 @@ public class LessonBuilder { //TODO: change the name to LessonBuilder
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("class type is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the {@code isMarked} to marked of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withMarked() {
+        this.lesson.setAsMarked();
+        return this;
+    }
+
+    /**
+     * Sets the {@code isMarked} to unmarked of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withUnmarked() {
+        this.lesson.setAsUnmarked();
         return this;
     }
 
