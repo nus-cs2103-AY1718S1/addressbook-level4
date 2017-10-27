@@ -7,8 +7,10 @@ import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_EMAIL;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_NAME;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_PHONE;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import java.util.function.Predicate;
@@ -162,10 +164,9 @@ public class ModelManager extends ComponentManager implements Model {
         Boolean tagExist = false;
 
         if (!index.isEmpty()) {
-            Iterator<Index> indexIt = index.iterator();
-            while (indexIt.hasNext()) {
-                int indexToRemove = indexIt.next().getZeroBased();
-                Person toDelete = new Person(getFilteredPersonList().get(indexToRemove));
+            List<Index> indexList = new ArrayList<>(index);
+            for (Index i : indexList) {
+                Person toDelete = new Person(getFilteredPersonList().get(0));
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
                 Set<Tag> newTags = deleteTag(tag, oldTags);

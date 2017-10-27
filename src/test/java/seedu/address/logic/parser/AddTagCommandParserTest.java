@@ -27,7 +27,7 @@ public class AddTagCommandParserTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToAdd);
         indexSet.add(INDEX_SECOND_PERSON);
-        AddTagCommand addTagCommand = new AddTagCommand(tagSet, indexSet);
+        AddTagCommand addTagCommand = new AddTagCommand(tagSet, indexSet, "2");
         assertParseSuccess(parser, "enemy 2", addTagCommand);
     }
 
@@ -39,7 +39,7 @@ public class AddTagCommandParserTest {
         tagSet.add(tagToAdd);
         indexSet.add(INDEX_FIRST_PERSON);
         indexSet.add(INDEX_SECOND_PERSON);
-        AddTagCommand addTagCommand = new AddTagCommand(tagSet, indexSet);
+        AddTagCommand addTagCommand = new AddTagCommand(tagSet, indexSet, "1, 2");
         assertParseSuccess(parser, "enemy 1 2", addTagCommand);
     }
 
