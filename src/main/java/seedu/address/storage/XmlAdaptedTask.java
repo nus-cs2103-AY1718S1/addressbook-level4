@@ -55,6 +55,7 @@ public class XmlAdaptedTask {
             tagged.add(new XmlAdaptedTag(tag));
         }
         complete = source.getComplete();
+        priority = source.getPriority();
     }
 
     /**
@@ -73,6 +74,7 @@ public class XmlAdaptedTask {
         final String endDateTime = this.endDateTime;
         final Set<Tag> tags = new HashSet<>(personTags);
         final Boolean complete = this.complete;
-        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete);
+        final Integer priority = this.priority;
+        return new Task(taskName, taskDescription, startDateTime, endDateTime, tags, complete, priority);
     }
 }
