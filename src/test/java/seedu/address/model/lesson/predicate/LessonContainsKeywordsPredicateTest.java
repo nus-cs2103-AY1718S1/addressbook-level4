@@ -29,9 +29,6 @@ public class LessonContainsKeywordsPredicateTest {
         List<String> keywordNull = new ArrayList<String>() {
         };
 
-        ReadOnlyLesson lessonForTest = new LessonBuilder().build();
-        String attributeForTest = "module";
-
         keywordOne.add("111");
         keywordOne.add("222");
         keywordOne.add("333");
