@@ -29,6 +29,11 @@ public class ModelStub implements Model {
     }
 
     @Override
+    public void setActiveList(boolean isDelivered) {
+        fail("This method should not be called.");
+    }
+
+    @Override
     public void resetData(ReadOnlyAddressBook newData) {
         fail("This method should not be called.");
     }
@@ -57,6 +62,18 @@ public class ModelStub implements Model {
 
     @Override
     public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
         fail("This method should not be called.");
         return null;
     }
