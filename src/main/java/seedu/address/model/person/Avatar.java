@@ -31,7 +31,7 @@ public class Avatar {
         try {
             Image imgObj = new Image(this.avatarFilePath);
             this.avatarImage = new SimpleObjectProperty<Image>(imgObj);
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
     }

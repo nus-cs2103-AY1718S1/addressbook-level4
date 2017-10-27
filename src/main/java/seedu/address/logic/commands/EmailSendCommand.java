@@ -7,7 +7,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.storage.AddressBookStorage;
 
 /**
  * Sends an email with a logged in email

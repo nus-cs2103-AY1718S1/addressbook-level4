@@ -13,8 +13,6 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.XmlAddressBookStorage;
 
 /**
  * The main LogicManager of the app.
