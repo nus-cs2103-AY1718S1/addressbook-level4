@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -46,6 +47,16 @@ public class PersonDetailsPanel extends UiPart<Region> {
         super(FXML);
         this.personList = personList;
         registerAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    private void handleClearPersonListEvent(ClearPersonListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        nameLabel.setText("Person Name");
+        birthdayLabel.setText("");
+        phoneLabel.setText("");
+        emailLabel.setText("");
+        addressLabel.setText("");
     }
 
     @Subscribe
