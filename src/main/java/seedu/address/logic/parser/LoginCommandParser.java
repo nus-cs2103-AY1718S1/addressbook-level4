@@ -15,6 +15,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class LoginCommandParser implements Parser<LoginCommand> {
 
+    public static final String ONE_OR_MORE_SPACES_REGEX = "\\s+";
+
     /**
      * Parses the given {@code String} of arguments in the context of the LoginCommand
      * and returns an LoginCommand object for execution.
@@ -24,7 +26,7 @@ public class LoginCommandParser implements Parser<LoginCommand> {
         requireNonNull(args);
         String trimmedArgs = args.trim();
         try {
-            String[] argsList = trimmedArgs.split(" ");
+            String[] argsList = trimmedArgs.split(ONE_OR_MORE_SPACES_REGEX);
 
             // if incorrect number of arguments are supplied, throw ArrayOutOfBoundsException
             if (argsList.length != 2) {
