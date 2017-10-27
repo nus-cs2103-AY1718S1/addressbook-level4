@@ -446,6 +446,38 @@ A separate parser for phone, email and address are used to accommodate this enha
 **Cons:** The behaviour of edit command overlaps with the behaviour of the add command, causing unintended overwrite of other fields such as address when we don't want to. +
 // end::EnhancedAddCommand[]
 
+// tag::RemarkCommand[]
+=== Remark mechanism
+The remark command takes in the user input through command line in the format remark INDEX r/ REMARK, where INDEX is the index of the person in the addressbook and REMARK is the remark of the relationship of that person to another person. +
+Eg. remark 1 r/ is the husband of Chelsea +
+
+image::RemarkLogicDiagram.png[width="800"]
+
+image::RemarkModelDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of remark command +
+**Alternative 1 (current choice):** Addition of a remarks command is a standalone +
+**Pros:** There is more flexibility and remarks do not have to be stated upon addition of Person to addressbook. +
+**Cons:** More difficult to implement as new remark command and tests need to be created +
+**Alternative 2:** Add in remarks together with other Person details such as address, phone, email, etc +
+**Pros:** Easy to implement (implement spacing to create a new command class, just modify existing add command) +
+**Cons:** The user will have to key in huge amount of information before adding into the addressbook. +
+
+---
+
+**Aspect:** Implement remark as distinct from tag +
+**Alternative 1 (current choice):** Create a new seperate remark command +
+**Pros:** Able to provide a cleaner user interface and experience. Also reduces complications in modifying existing working tag system. +
+**Cons:** More work has to be done in testing and creating a new command. +
+**Alternative 2:** update the tag to accept sentences for remarks +
+**Pros:** Easy to implement as we do not need to add a new command. +
+**Cons:** The Tag may be more difficult to find and more work is needed to change the find tag command. Additionally, the user interface of tag command also needs to be changed to accommodate long tags. +
+
+Credits: Mechanism adapted from Yamgent https://github.com/se-edu/addressbook-level4/pull/599
+// end::RemarkCommand[]
+
 // tag::clearhistory[]
 === `clearhistory` command
 
@@ -470,7 +502,6 @@ The `clearhistory` command is implemented as a regular command that calls `.clea
 **Alternative 2:** Indicate that history is empty. +
 **Pros:** Clearer messages about the state of the command history. +
 **Cons:** More complex to implement, and the end result of clearing an empty history also results in a cleared history, meaning the user intention of clearing their history is fufilled regardless of which alternative is chosen.
-
 // end::clearhistory[]
 
 === Logging
@@ -1105,6 +1136,45 @@ Use case resumes at step 2.
 ** 7a1. AddressBook shows an error message.
 +
 Use case resumes at step 6.
+
+[discrete]
+=== Use case: Add a remark
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to add/update the remark to a specific person in the list
+4. AddressBook add/update the remark of the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. User does not specify a remark to add.
++
+[none]
+** 3b1. AddressBook overwrites the previous remark and replaced it with an empty remark.
++
+Use case ends.
+
+* 3c. User updates valid remark with new value that is invalid.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: Sort a list of persons

@@ -342,6 +342,30 @@ Format: `clearhistory`
 After the command history is cleared, you will not be able to undo any previous commands.
 ====
 
+=== Adding remarks to a person: `remark`
+
+Adds a remark to a person in the address book +
+Format: `remark INDEX r/REMARK`
+
+[Note]
+Can be used to keep track of the relationship status between people in the address book.
+eg. What is the relationship between person with INDEX 1 and person with INDEX 3 within
+in the address book.
+Using the same command on the same INDEX will overwrite the previous remark.
+
+****
+* Add a remark to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+  The index *must be a positive integer* 1, 2, 3, ...
+* Existing values will be updated to the input values.
+* When editing remark, the existing remark of the person will be removed i.e adding of remark is not cumulative.
+* You can remove the remark of a person by typing `r/` without specifying any remarks after it.
+****
+
+Examples:
+
+* `remark 3 r/Is the husband of Jessie`
+* `remark 2 r/Is the wife of John`
+
 === Backing up: `backup`
 
 Backs up the current address book to a fixed location (`addressbook.xml.bak` in current working directory).
@@ -505,3 +529,5 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Remark* `remark INDEX r/REMARK` +
+e.g. `remark 2 r/The husband of Juliet Lee`
