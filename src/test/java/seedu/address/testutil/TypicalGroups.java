@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
@@ -57,35 +56,7 @@ public class TypicalGroups {
                 ALICE_GROUP, BENSON_GROUP, CARL_GROUP, DANIEL_GROUP, ELLE_GROUP, FIONA_GROUP, GEORGE_GROUP));
     }
 
-    public static AddressBook getEmptyAddressBook() {
-        AddressBook ab = new AddressBook();
-        return ab;
-    }
+    //Methods for getEmptyAddressBook() and getSortedAddressBook() are removed unlike in TypicalPersons
+    //as there's no equivalent usage in SortCommandTest.
 
-    public static AddressBook getSortedAddressBook(String type, boolean isReverseOrder) {
-        AddressBook ab = new AddressBook();
-        List<ReadOnlyGroup> groupList;
-
-        switch(type) {
-        case "name":
-            groupList = getTypicalGroups();
-            break;
-        default:
-            groupList = getTypicalGroups();
-        }
-
-        if (isReverseOrder) {
-            Collections.reverse(groupList);
-        }
-
-        for (ReadOnlyGroup group : groupList) {
-            try {
-                ab.addGroup(group);
-            } catch (DuplicateGroupException e) {
-                assert false : "not possible";
-            }
-        }
-
-        return ab;
-    }
 }

@@ -11,7 +11,7 @@ public class UniqueGroupListTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+    public void asObservableListModifyListThrowsUnsupportedOperationException() {
         UniqueGroupList uniqueGroupList = new UniqueGroupList();
         thrown.expect(UnsupportedOperationException.class);
         uniqueGroupList.asObservableList().remove(0);

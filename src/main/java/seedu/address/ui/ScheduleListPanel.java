@@ -4,16 +4,17 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-import com.google.common.eventbus.Subscribe;
+//import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
+//import javafx.application.Platform;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.JumpToScheduleListRequestEvent;
+//import seedu.address.commons.events.ui.JumpToScheduleListRequestEvent;
 import seedu.address.commons.events.ui.SchedulePanelSelectionChangedEvent;
 import seedu.address.model.schedule.ReadOnlySchedule;
 
@@ -53,9 +54,12 @@ public class ScheduleListPanel extends UiPart<Region> {
                 });
     }
 
+
+
     /**
      * Scrolls to the {@code ScheduleCard} at the {@code index} and selects it.
      */
+    /* Both methods should be disabled until tests for this schedule list panel is done.
     private void scrollTo(int index) {
         Platform.runLater(() -> {
             scheduleListView.scrollTo(index);
@@ -68,6 +72,7 @@ public class ScheduleListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+    */
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code ScheduleCard}.

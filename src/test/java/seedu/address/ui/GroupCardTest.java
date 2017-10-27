@@ -49,7 +49,7 @@ public class GroupCardTest extends GuiUnitTest {
         assertTrue(groupCard.equals(groupCard));
 
         // null -> returns false
-        assertFalse(groupCard.equals(null));
+        assertFalse(groupCard == null);
 
         // different types -> returns false
         assertFalse(groupCard.equals(0));
