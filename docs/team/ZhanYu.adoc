@@ -115,6 +115,7 @@ https://ci.appveyor.com/project/ZY-Ang/main[AppVeyor],
 https://coveralls.io/github/CS2103AUG2017-W11-B2/main?branch=master[Coveralls] and
 https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
 * Added a simple navbar to the github pages for ease of navigation.
+* Added a highlight function for the HelpWindow to allow the ease of looking for text in the help document.
 
 == Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
 

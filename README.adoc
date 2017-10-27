@@ -38,6 +38,7 @@ Rolodex is an extension of AddressBook - Level 4, which is a desktop address boo
 * The original source code of this application is from the https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by https://github.com/se-edu/[SE-EDU] initiative.
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
-* Some code used for fuzzy finding was adapted from http://rosettacode.org/wiki/Levenshtein_distance#Java[Rosetta Code] licensed under http://www.gnu.org/licenses/fdl-1.2.html[GNU Free Documentation License 1.2]
+* Some code used for fuzzy finding was adapted from http://rosettacode.org/wiki/Levenshtein_distance#Java[Rosetta Code] licensed under http://www.gnu.org/licenses/fdl-1.2.html[GNU Free Documentation License 1.2].
+* The help window highlight function is implemented using Johann Burkard's http://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html[jQuery-highlight] and https://jquery.com/[jQuery].
 
 == Licence : link:LICENSE[MIT]
