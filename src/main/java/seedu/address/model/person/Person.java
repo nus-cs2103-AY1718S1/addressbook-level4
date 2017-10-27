@@ -205,9 +205,10 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         Phone phone = this.getPhone();
         Email email = this.getEmail();
         Address address = this.getAddress();
+        Remark remark = this.getRemark();
         Set<Tag> tags = this.getTags();
         Set<Relationship> relationships = this.getRelationships();
-        return new Person(name, phone, email, address, tags, relationships);
+        return new Person(name, phone, email, address, remark, tags, relationships);
     }
 
     @Override
