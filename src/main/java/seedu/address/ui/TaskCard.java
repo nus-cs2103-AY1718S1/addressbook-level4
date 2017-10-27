@@ -100,13 +100,13 @@ public class TaskCard extends UiPart<Region> {
      */
     private String priorityStringValueConverter (Integer priorityValue) {
         switch (priorityValue) {
-            case 1: return " Super Important";
-            case 2: return " Important";
-            case 3: return " Normal";
-            case 4: return " Trivial";
-            case 5: return " Super Trivial";
+        case 1: return " Super Important";
+        case 2: return " Important";
+        case 3: return " Normal";
+        case 4: return " Trivial";
+        case 5: return " Super Trivial";
+        default: return "";
         }
-        return "";
     }
 
     /**
