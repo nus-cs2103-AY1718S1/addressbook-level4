@@ -1198,6 +1198,16 @@ Invalid-action
 An action that will trigger warnings and error messages
 Eg.: Dangerous events, delete and clashing events
 ....
+[[Priority]]
+Priority
+
+....
+The importance of a task in the taskBook. Integer values of 1 to 5 are used to represent the priority.
+....
+[NOTE]
+====
+The value correspondence: 1 (super important), 2 (important), 3 (normal), 4 (trivial), and 5 (super trivial).
+====
 
 [appendix]
 == Product Survey

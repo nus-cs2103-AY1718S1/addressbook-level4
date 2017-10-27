@@ -123,8 +123,20 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicateTaskException, TaskNotFoundException {
         requireAllNonNull(target, editedTask);
 
+
+
         taskBook.updateTask(target, editedTask);
-        indicateAddressBookChanged();
+        indicateTaskBookChanged();
+    }
+
+    @Override
+    public void updateTaskPriority(ReadOnlyTask task, Integer value)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireAllNonNull(task, value);
+
+        taskBook.updateTaskPriority(task, value);
+        indicateTaskBookChanged();
+
     }
 
     @Override
@@ -187,6 +199,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void taskByEnd() {
         sortedTasks.setComparator((t1, t2) -> t1.getEndDateTime().compareTo(t2.getEndDateTime()));
+    }
+
+    @Override
+    public void taskByPriority() {
+        sortedTasks.setComparator((t1, t2) -> t1.getPriority().compareTo(t2.getPriority()));
     }
 
     @Override

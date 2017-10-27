@@ -4,9 +4,11 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -30,7 +32,7 @@ public class AddTaskCommandParser {
     public AddTaskCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION,
-                        PREFIX_START_DATE_TIME, PREFIX_END_DATE_TIME, PREFIX_TAG);
+                        PREFIX_START_DATE_TIME, PREFIX_END_DATE_TIME, PREFIX_PRIORITY, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DESCRIPTION,
                 PREFIX_START_DATE_TIME, PREFIX_END_DATE_TIME)) {
@@ -42,10 +44,18 @@ public class AddTaskCommandParser {
             String description = ParserUtil.parseString(argMultimap.getValue(PREFIX_DESCRIPTION)).get();
             String startDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME)).get();
             String endDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get();
+
+            Optional<Integer> priority = ParserUtil.parseInteger(argMultimap.getValue(PREFIX_PRIORITY));
+
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Boolean complete = false;
-
             ReadOnlyTask task = new Task(name, description, startDateTime, endDateTime, tagList, complete);
+
+            // Renew the task object with the priority parameter specially set if given
+            if (priority.isPresent()) {
+                Integer priorityValue = priority.get();
+                task = new Task(name, description, startDateTime, endDateTime, tagList, complete, priorityValue);
+            }
 
             return new AddTaskCommand(task);
         } catch (IllegalValueException ive) {
