@@ -2,9 +2,9 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
-    /**
-     * Changes a user's password
-     */
+/**
+ * Changes a user's username
+ */
 public class ChangeUsernameCommand extends Command {
     public static final String COMMAND_WORD = "changeuser";
 
@@ -22,7 +22,7 @@ public class ChangeUsernameCommand extends Command {
         this.oldUsername = oldUsername;
         this.newUsername = newUsername;
         this.password = password;
-        }
+    }
 
     @Override
     public CommandResult execute() throws CommandException {
