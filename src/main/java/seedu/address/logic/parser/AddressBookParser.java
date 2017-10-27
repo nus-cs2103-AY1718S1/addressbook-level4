@@ -28,6 +28,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SelectTaskCommand;
 import seedu.address.logic.commands.SetPriorityCommand;
 import seedu.address.logic.commands.TaskByEndCommand;
+import seedu.address.logic.commands.TaskByPriorityCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -120,6 +121,10 @@ public class AddressBookParser {
         case TaskByEndCommand.COMMAND_WORD:
         case TaskByEndCommand.COMMAND_ALIAS:
             return new TaskByEndCommand();
+
+        case TaskByPriorityCommand.COMMAND_WORD:
+        case TaskByPriorityCommand.COMMAND_ALIAS:
+            return new TaskByPriorityCommand();
 
         case ExportTaskCommand.COMMAND_WORD:
         case ExportTaskCommand.COMMAND_ALIAS:
