@@ -335,6 +335,52 @@ All persons displayed will be sorted in ascending alphabetical order based on th
 Using `List` command will always display all persons in sorted ascedning alphabetical order. +
 Persons with `Important` or `important` tag will be at the top in ascending alphabetical order then follow by other persons.
 
+==== Gmap command accepts uperson name
+
+Gmap command can now accept person name instead of just Index only.
+
+Displays the google map of the person identified by the name used in the last person listing. +
+Format: `gmap NAME`
+
+****
+* Loads the peron's address into Google map page at the specified `NAME`.
+* The name reference is case-insensitive
+* The name *must be a whole word* such as `Bernice` and not `Bern`.
+****
+
+Examples:
+
+* `list` +
+`gmap Bernice` +
+Display google map of the person with name *Bernice* in the address book.
+* `find Yu` +
+`gmap Yu` +
+Display google map of the person in the results of the `find` command with *Yu* surname.
+
+==== Changing theme with CLI command
+
+Theme command can now accept both theme NAME and INDEX.
+
+Changes the theme of the main window with specified name or index. +
+Format: `theme NAME` +
+Format: `theme INDEX`
+
+****
+* Loads the theme based on `NAME` or `INDEX`.
+* The name reference is case-insensitive.
+* The name *must be a whole word* such as `darktheme` and not `dark`.
+* The index must be a positive integer.
+* Input command `theme` will display a current list of available themes.
+****
+
+Examples:
+
+`theme caspian` +
+Changes the addressbook theme to *Caspian* theme. +
+`theme 1` +
+Changes the addressbook theme to theme `INDEX` of one, which is default *DarkTheme*.
+
+
 === Coming soon in v2.0
 
 ==== Import export of addressbook from header menu bar
@@ -361,6 +407,11 @@ Functions wll be found from `new UI panel`.
 
 All contacts in the list will sorted in ascending alphabetical order.  +
 Functions wll be found from improved `list` command.
+
+==== Import & export of addressbook
+
+User is able to import or export an xml file of an addressbook from +
+the commandline or menu toolbar
 
 == FAQ
 
