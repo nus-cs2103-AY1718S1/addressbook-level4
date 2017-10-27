@@ -20,6 +20,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.NameContainsKeywordsPredicate;
 import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.testutil.EditParcelDescriptorBuilder;
 
@@ -131,6 +132,31 @@ public class CommandTestUtil {
      */
     public static void showFirstParcelOnly(Model model) {
         ReadOnlyParcel parcel = model.getAddressBook().getParcelList().get(0);
+        final String[] splitName = parcel.getName().fullName.split("\\s+");
+        model.updateFilteredParcelList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredParcelList().size() == 1;
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first parcel in the {@code model}'s address book.
+     * with status not completed (Active List default state references Undelivered parcels)
+     */
+    public static void showFirstParcelInActiveListOnly(Model model) {
+        List<ReadOnlyParcel> parcels = model.getAddressBook().getParcelList();
+        ReadOnlyParcel parcel = parcels.get(0);
+
+        for (ReadOnlyParcel p : parcels) {
+            if (!p.getStatus().equals(Status.COMPLETED)) {
+                parcel = p;
+                break;
+            }
+        }
+
+        if (parcel.getStatus().equals(Status.COMPLETED)) {
+            throw new NullPointerException("No parcels with COMPLETED status");
+        }
+
         final String[] splitName = parcel.getName().fullName.split("\\s+");
         model.updateFilteredParcelList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
