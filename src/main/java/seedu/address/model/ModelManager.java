@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -50,6 +51,12 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
+        File dir = new File("src/main/photos/");
+        for (File file : dir.listFiles())
+            if (file.getName().equals("default.jpeg")) {
+            }else{
+                file.delete();
+            }
         indicateAddressBookChanged();
     }
 
@@ -73,6 +80,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        File photoPath = new File("src/main/photos/" + target.getEmail().toString() + ".png");
+        photoPath.delete();
         indicateAddressBookChanged();
     }
 
