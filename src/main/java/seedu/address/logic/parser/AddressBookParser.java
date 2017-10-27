@@ -122,7 +122,6 @@ public class AddressBookParser {
         case AddScheduleCommand.COMMAND_WORD:
         case AddScheduleCommand.COMMAND_ALIAS:
             return new AddScheduleCommandParser().parse(arguments);
-                
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
