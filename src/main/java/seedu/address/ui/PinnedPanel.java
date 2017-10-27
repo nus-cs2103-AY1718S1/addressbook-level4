@@ -98,7 +98,7 @@ public class PinnedPanel extends UiPart<Region> {
     }
 
     public void highlight() {
-        this.pinnedListView.setStyle("-fx-border-color: lightgreen; -fx-border-width: 4");
+        this.pinnedListView.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
     }
 
     public void unhighlight() {

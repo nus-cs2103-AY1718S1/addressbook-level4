@@ -31,7 +31,7 @@ Some users find the contact they want by scrolling through the list as opposed t
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=]
+include::../DeveloperGuide.adoc[tag=sort]
 
 #End of Extract#
 

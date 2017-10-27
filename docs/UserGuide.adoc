@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T15-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T15-B4` `Deepak Buddha` `Alpheus Lim` `Azizi Azfar` `Wyn K Heng`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
@@ -87,15 +87,56 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
+== Get to know Bluebird
+
+In this section, we have provided a screenshot of what your screen would look like, and a quick guide to help you
+navigate our user interface with ease.
+
+== Command Summary
+
+* *Add* : `add` `n/NAME` `p/PHONE_NUMBER` `e/EMAIL` `a/ADDRESS` `[t/TAG]` `...` +
+e.g. `add` `n/James Ho` `p/22224444` `e/jamesho@example.com` `a/123, Clementi Rd, 1234665` `t/friend` `t/colleague`
+* *Clear* : `clear`
+* *Delete* : `delete` `INDEX` +
+e.g. `delete` `3`
+* *Multi-Delete* : `delete` `INDEX` `[MORE INDEX]` ... +
+e.g. `delete` `4` `7`
+* *Edit* : `edit` `INDEX` `[n/NAME]` `[p/PHONE_NUMBER]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]` `...` +
+e.g. `edit` `2` `n/James Lee` `e/jameslee@example.com`
+* *Find* : `find` `KEYWORD` `[MORE_KEYWORDS]` +
+e.g. `find` `James` `Jake`
+* *List* : `list`
+* *Help* : `help`
+* *Select* : `select` `INDEX` +
+e.g.`select` `2`
+* *History* : `history`
+* *Sort* : `sort` `KEYWORD` +
+e.g. `sort` `NAME`
+* *Undo* : `undo`
+* *Redo* : `redo`
+* *Hide* : `hide` `INDEX` +
+e.g.`hide` `1`
+* *Alias* : `alias` `k/KEYWORD` `s/REPRESENTATION` +
+e.g. `alias` `k/del` `s/delete`
+* *Unalias* : `unalias` `k/KEYWORD` +
+e.g. `unalias` `k/del`
+* *Pin* : `pin` `INDEX` +
+e.g. `pin` `2`
+* *Unpin* : `unpin` `INDEX` +
+e.g. `unpin` `1`
+
 == Features
 
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which
+can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]` `...` can be used as `{nbsp}`
+(i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also
+acceptable.
 ====
 
 === Viewing help : `help`
@@ -112,8 +153,8 @@ A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add` `n/John Doe` `p/98765432` `e/johnd@example.com` `a/John street, block 123, #01-01`
+* `add` `n/Betsy Crowe` `t/friend` `e/betsycrowe@example.com` `a/Newgate Prison` `p/1234567` `t/criminal`
 
 === Listing all persons : `list`
 
@@ -124,7 +165,7 @@ Format: `list`
 === Sorts the list : `sort`
 
 Sorts the list based on given keyword +
-Format: `sort KEYWORD`
+Format: `sort` `KEYWORD`
 
 ****
 * Sorts the list based on their name, phone, email, or address.
@@ -133,16 +174,16 @@ Format: `sort KEYWORD`
 
 Examples:
 
-* `sort name` +
+* `sort` `name` +
 Sorts the list in alphabetical order of their name.
-* `sort phone` +
+* `sort` `phone` +
 Sorts the list in numerical order of their phone.
 // end::sort[]
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit` `INDEX` `[n/NAME]` `[p/PHONE]` `[e/EMAIL]` `[a/ADDRESS`] `[t/TAG]` `...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -154,58 +195,78 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
+* `edit` `1` `p/91234567` `e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `edit` `2` `n/Betsy Crower` `t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 // tag::find[]
 === Locating persons by the person's details: `find`
 
 Finds persons whose details contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find` `KEYWORD` `[MORE_KEYWORDS]` `...`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
+* The search is case insensitive. e.g `hans` will match `Hans`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * The person's name, phone, email, address and tags will be searched.
-* Partial words will be matched e.g. `Ha` will match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Partial words will be matched e.g. `Ha` will match `Hans`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
+`Bo Yang`.
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `find friend` +
-Returns any person having the tag `friend`
+* `find` `John` +
+Returns `john` and `John Doe`.
+* `find` `Betsy` `Tim` `John` +
+Returns any person having names `Betsy`, `Tim`, or `John`.
+* `find` `friend` +
+Returns any person having the tag `friend`.
 // end::find[]
 
 // tag::hide[]
 === Hiding a person: `hide`
 
 Hide specified person according to index from the address book. +
-Format: `hide INDEX`
+Format: `hide` `INDEX`
 
 ****
 * Hides the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The indext *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
 
-* `hide 2`
+* `hide` `2` +
 Hides the 2nd person in the address book.
 // end::hide[]
+
+// tag::unhide[]
+=== Undoing hide action: `unhide`
+
+Unhide specific person according to index on the list of hidden contacts. +
+Format: `unhide` `INDEX`
+
+****
+* User can see who has been hidden with the command `listhidden`.
+* User can then undo the hidden command with the command `unhide` from the list of hidden contacts.
+****
+
+Examples:
+
+* `listhidden` +
+Shows a list of contacts the user has already hidden in Bluebird.
+* `unhide` `2` +
+Reverses `hide` action, unhides 2nd person from the list of hidden contacts in the address book.
+// end::unhide[]
 
 // tag::alias[]
 === Creates an alias for command or shortcut : `alias`
 
 Creates an alias based on given keyword and representation +
-Format: `alias k/KEYWORD s/REPRESENTATION`
+Format: `alias` `k/KEYWORD` `s/REPRESENTATION`
 
 ****
 * Adds an alias with the keyword as as a substitute for the respective representation.
@@ -214,17 +275,17 @@ Format: `alias k/KEYWORD s/REPRESENTATION`
 
 Examples:
 
-* `alias k/disappear s/hide` +
+* `alias` `k/disappear` `s/hide` +
 Creates an alias command 'disappear' that is understood as the 'hide' command word.
-* `alias k/ph s/Public Holiday` +
+* `alias` `k/ph` `s/Public Holiday` +
 Creates an alias shortcut that translates ph into Public Holiday every time it is entered by user.
 // end::alias[]
 
 // tag::unalias[]
-=== Removes an alias for command or shortcut : `Unalias`
+=== Removes an alias for command or shortcut : `unalias`
 
-Removes an existing alias based on given keyword and representation +
-Format: `unalias k/KEYWORD`
+Removes an existing alias based on given keyword and representation. +
+Format: `unalias` `k/KEYWORD`
 
 ****
 * Removes an existing alias that has been made with the same keyword.
@@ -233,37 +294,68 @@ Format: `unalias k/KEYWORD`
 
 Examples:
 
-* `unalias k/disappear` +
+* `unalias` `k/disappear` +
 Removes the alias command 'disappear'. Next instances of disappear will no longer be a hide command.
-* `unalias k/ph` +
+* `unalias` `k/ph` +
 Removes the alias shortcut 'ph'. Next instances of ph will no longer translate to Public Holiday.
 // end::unalias[]
+
+// tag::pin[]
+=== Pin a person
+
+Pins a person to a pin panel for easy access. +
+Format: `pin` `INDEX`
+
+****
+* Pins the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+// end::pin[]
+
+// tag::unpin[]
+=== Unpin a person
+
+Unpins a person from the pin panel. +
+Format: `unpin` `INDEX`
+
+****
+* Unpins the person at the specified `INDEX`.
+* The index refers to the index number shown in the pinned person listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
 
 === Deleting person(s) : `delete`
 
 Deletes the specified person(s) from the address book. +
-Format: `delete INDEX [MORE_INDEX]`
+Format: `delete` `INDEX` `[MORE_INDEX]`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the person at the specified `INDEX` or the specified `INDEX RANGE`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* The index *can be multiple positive integers with a space in between* 1 2 3 ...
+* Acceptable inputs:
+** The input *can be a single positive integer* 1, 2, 3, ...
+** The input *can be multiple positive integers with a space in between* 1 2 3 ...
+** The input *can be a range of positive integers, denoted by a "~" in between the minimum and maximum index (both inclusive)* 1~4, 2~7, ...
 ****
 
 Examples:
 
 * `list` +
-`delete 2 3 4` +
+`delete` `2` `3` `4` +
 Deletes the 2nd, 3rd and 4th person in the address book.
-* `find Betsy` +
-`delete 1` +
+* `find` `Betsy` +
+`delete` `1` +
 Deletes the 1st person in the results of the `find` command.
+* `list` +
+`delete` `2~5`
+Deletes 2nd to 5th person (*both inclusive*) in the address book.
+
 
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select` `INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -274,10 +366,10 @@ Format: `select INDEX`
 Examples:
 
 * `list` +
-`select 2` +
+`select` `2` +
 Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
+* `find` `Betsy` +
+`select` `1` +
 Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
@@ -303,19 +395,19 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 Examples:
 
-* `delete 1` +
+* `delete` `1` +
 `list` +
 `undo` (reverses the `delete 1` command) +
 
-* `select 1` +
+* `select` `1` +
 `list` +
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
+* `delete` `1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `delete` `1` command) +
 
 === Redoing the previously undone command : `redo`
 
@@ -324,19 +416,19 @@ Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `delete` `1` +
+`undo` (reverses the `delete` `1` command) +
+`redo` (reapplies the `delete` `1` command) +
 
-* `delete 1` +
+* `delete` `1` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
+* `delete` `1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` (reverses the `delete` `1` command) +
+`redo` (reapplies the `delete` `1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
@@ -355,45 +447,20 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
-data of your previous Address Book folder.
-
-== Command Summary
-
-* *Add* : `add` `n/NAME` `p/PHONE_NUMBER` `e/EMAIL` `a/ADDRESS` `[t/TAG]` ... +
-e.g. `add` `n/James Ho` `p/22224444` `e/jamesho@example.com` `a/123, Clementi Rd, 1234665` `t/friend` `t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete` `INDEX` +
-e.g. `delete` `3`
-* *Multi-Delete* : `delete` `INDEX` `[MORE_INDEX]` +
-e.g. `delete` `4` `7`
-* *Edit* : `edit` `INDEX` `[n/NAME]` `[p/PHONE_NUMBER]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]` ... +
-e.g. `edit` `2` `n/James Lee` `e/jameslee@example.com`
-* *Find* : `find` `KEYWORD` `[MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select` `INDEX` +
-e.g.`select` `2`
-* *History* : `history`
-* *Sort* : `sort` `KEYWORD` +
-e.g. `sort` `NAME`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Hide* : `hide` `INDEX` +
-e.g.`hide` `1`
-* *Alias* : `alias k/KEYWORD s/REPRESENTATION`
-* *Unalias* : `alias k/KEYWORD`
-
 == Since v1.2
 
 . Enhanced find to allow you to search using any of the person's detail
 . Hide feature to enable you to hide sensitive contacts from your child
 . Multi-delete feature which helps you to delete multiple contacts effortlessly
 . Alias and Unalias feature which allows you to set custom keywords for any commands
+
+== Since v1.3
+
+. Pin/Unpin person
+. Add individual fields without restriction to add entire line
+. Each person now has a Birthday field
+. Task feature has been added
+. Introduced basic User Interface
 
 == Coming in v2.0
 
@@ -404,3 +471,10 @@ e.g.`hide` `1`
 . A to-do list which helps manage your tasks
 . Child Mode to prevent your child from modifying vital information in Bluebird
 . Parent Mode which will enable all commands for you
+
+== FAQ
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+data of your previous Address Book folder.
+

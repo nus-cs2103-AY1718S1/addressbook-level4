@@ -14,6 +14,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `Team T15-B4`      Since: `Sep 2017`      Licence: `MIT`
 
+== Overview
+
+Bluebird is a Java-based address book and task organisation software application. With concise and clear
+descriptions, our developer guide aims to provide an inside look as to how the Bluebird team created the software, should
+any fellow developers be interested to contribute to our application. In addition, with diagrams to illustrate
+the architectural flow of how components interact with one another and beginner-friendly explanations, our developer
+guide aims to also serve as an avenue for beginners to software application building.
+
 == Setting up
 
 === Prerequisites
@@ -146,6 +154,9 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+==== Model-View-Controller (MVC) pattern
+Model View Components
+
 === UI component
 
 image::UiClassDiagram.png[width="800"]
@@ -213,6 +224,38 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+=== Software Design Principles
+Intro
+
+==== Single Responsibility Principle (SRP)
+
+==== Open-Closed Principle (OCP)
+****
+Open-Closed Principle (OCP): A module should be open for extension but closed for modification. That is, modules should be written so that they can be extended, without requiring them to be modified.
+****
+
+
+When different classes interact with one another, coupling is inevitable and and interaction will naturally lead to increased coupling. Bluebird applies OCP in order to reduce coupling and increase cohesion. +
+As shown in Figure 2.7.2.1, if a new command is added to Bluebird, there is no need to modify the `Command` class, the new command can simply just inherit from
+`Command`.
+
+image::OCPLogic.png[width="800"]
+
+
+==== Liskov Substitution Principle (LSP)
+
+ Liskov Substitution Principle (LSP): Derived classes must be substitutable for their base classes.
+
+Bluebird applies the Liskov Substitution Principle to avoid breaking the functionality of the code.
+An example of this can be seen below:
+
+image::LSP-CommandClass.png[width="500"]
+
+The `UndoableCommand` class follows the Liskov Substitution Principle.
+
+
+==== Dependency Inversion Principle (DIP)
 
 == Implementation
 
@@ -368,6 +411,65 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+[discrete]
+=== Since v1.1
+
+// tag::sort[]
+=== Sorting of contacts
+
+The sort command sorts the `People` in `AddressBook` based on their `Name`, `Phone`, `Email` or `Address`. The sort command is also an `UndoableCommand` and users can undo the sort if they wish to.
+`SortCommand` inherits from `UndoableCommand` which inherits from `Command` and the logic is
+shown in Figure 3.4.1 below.
+
+image::sortLogicDiagram.png[width="700"]
+Figure 3.4.1: Logic of SortCommand
+
+There will be a `SortCommandParser` as well to parse out the `KEYWORD` which is either name, phone, email
+or address. This will ensure that users type in the right `KEYWORD` to sort the list however they want.
+
+==== Sorting by name
+
+Suppose a user wants to sort by name, the user will type `sort name` into the command box. This will then be processed by `LogicManager` which executes the command and `AddressBookParser` will
+parse the command accordingly. A `SortCommand` will be returned to the `LogicManager` which will then execute it. Finally, the result of the execution will be returned and displayed
+on the `ResultDisplay` Ui for the user. The sequence diagram for this scenario is shown in Figure 3.4.2 below.
+
+image::sortSD.png[width="800"]
+Figure 3.4.2: Sequence diagram for sorting by name
+
+When `SortCommand` executes,
+
+. It will first call the sortList() method in `ModelManager`
+. Then, it will call the sortList() method in `AddressBook`
+. Finally, it will call the sort() method to sort the internal list in `UniquePersonList`
+
+The sequence diagram for executeUndoableCommand() is given in Figure 3.4.3 below.
+
+image::sortExecuteSD.png[width="750"]
+Figure 3.4.3: Sequence diagram for SortCommand executeUndoableCommand()
+
+
+==== Design Considerations
+
+**Aspect:** Which details to sort +
+**Alternative 1 (current choice):** List of contacts will be able to be sorted by name, phone, email or address +
+**Pros:** This gives users freedom to select how they want it to be sorted by +
+**Cons:** Some users may not find the need to sort by phone, email or address +
+**Alternative 2:** List of contacts will be sorted by name only +
+**Pros:** Majority of users will only sort by name when they want to view their list of contacts +
+**Cons:** For the minority that may want to sort using other details, they do not have the option to do so +
+
+**Aspect:** To sort automatically by name every time Bluebird starts or not +
+**Alternative 1 (current choice):** List of contacts will be sorted by name automatically everytime Bluebird starts +
+**Pros:** Users do not have to sort every single time they add a new contact +
+**Cons:** Some users may only want to sort by other details other than name, therefore they have to sort every time they run Bluebird +
+**Alternative 2:** Not automatically sort +
+**Pros:** This gives users freedom to select how they want their list to be sorted +
+**Cons:** Forgetful users may not be able to find their contact if they forget to sort by name when they add a new contact +
+// end::sort[]
+
+[discrete]
+=== Since v1.2
+
 //  tag::find[]
 === Enhanced find
 
@@ -417,6 +519,7 @@ to choose any word to alias if they desire to do so. +
 **Cons:** The user is very restricted on what to alias and cannot have aliases for shortcut words.
 //  end::alias[]
 
+// tag::delete[]
 === Enhanced Delete
 
 The enhanced delete feature allows for multiple indices to be accepted by the parser. This is done by splitting the inputs into multiple string tokens,
@@ -433,6 +536,27 @@ A loop is then used to iterate through the list to delete the persons requested 
 **Alternative 2:** The indices are deleted one by one, without using a list. +
 **Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
 **Cons:** It has to display the result repeatedly after every every person is deleted successfully. +
+// end::delete[]
+
+// tag::hide[]
+=== Hide
+
+The hide feature allows for multiple indices to be accepted by the parser. This is done similar to the enhanced delete
+feature, where inputs are split into multiple string tokens, each containing the index of the person to be hidden.
+A list, listhidden, is then used to store all the indices of the person(s) to be hidden. Unhide is then done to revert
+the previously hidden indices from the list storing all hidden persons.
+
+==== Design Considerations
+
+**Aspect**: Defining how accurate the hide command will be +
+** Alternative 1 (current choice):** Indicse are parsed into a list containing all the index of person to be deleted. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** The use of a loop will increase the time for the code to run. +
+**Alternative 2**: The indices are deleted one by one, without using a list. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** User has to repeatedly type the command multiple times, and application has to display the result repeatedly
+after every person is hidden successfully.
+// end::hide[]
 
 == Documentation
 

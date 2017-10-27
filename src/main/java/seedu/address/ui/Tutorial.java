@@ -69,10 +69,6 @@ public class Tutorial {
             break;
         case 5:
             mainWindow.unhighlightAll();
-            mainWindow.highlightCalenderPanel();
-            break;
-        case 6:
-            mainWindow.unhighlightAll();
             mainWindow.highlightPinnedPanel();
             break;
         default:

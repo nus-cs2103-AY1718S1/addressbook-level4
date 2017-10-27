@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class TutorialMessages {
 
-    public static final int TOTAL_NUM_STEPS = 13;
+    public static final int TOTAL_NUM_STEPS = 12;
     public static final int PROMPT_NUM_STEPS = 3;
     /* Introductory Messages */
     public static final String INTRO_BEGIN = "Welcome to Bluebird! Would you like to go through the tutorial?";
@@ -24,8 +24,7 @@ public class TutorialMessages {
     public static final String INTRO_FIVE = "This is the search box, where "
             + "you are able to search for the person you want.";
     public static final String INTRO_SIX = "This is the person list panel, where you will see your list of contacts";
-    public static final String INTRO_SEVEN = "This is the calender panel, which will help you manage your schedule";
-    public static final String INTRO_EIGHT = "This is the pinned person panel,"
+    public static final String INTRO_SEVEN = "This is the pinned person panel,"
             + " where you can see your list of pinned contacts";
     public static final String INTRO_END = "Features of Bluebird:\n"
             + "1. Add a contact\n"
@@ -89,7 +88,6 @@ public class TutorialMessages {
             add(INTRO_FIVE);
             add(INTRO_SIX);
             add(INTRO_SEVEN);
-            add(INTRO_EIGHT);
             add(INTRO_END);
             add(USAGE_BEGIN);
         }

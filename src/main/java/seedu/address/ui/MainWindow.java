@@ -11,6 +11,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -56,10 +57,16 @@ public class MainWindow extends UiPart<Region> {
     private StackPane browserPlaceholder;
 
     @FXML
-    private StackPane pinListPlaceHolder;
+    private GridPane helpOverlay;
 
     @FXML
-    private StackPane calenderPanelPlaceHolder;
+    private MenuItem helpOverlayItem;
+
+    @FXML
+    private MenuItem helpOverlayExit;
+
+    @FXML
+    private StackPane pinListPlaceHolder;
 
     @FXML
     private HBox sortFindPanelPlaceholder;
@@ -106,6 +113,8 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(helpOverlayItem, KeyCombination.valueOf("F2"));
+        setAccelerator(helpOverlayExit, KeyCombination.valueOf("ESC"));
     }
 
     /**
@@ -234,6 +243,22 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    /**
+     * Opens the help overlay
+     */
+    @FXML
+    private void handleOverlay() {
+        helpOverlay.setVisible(true);
+    }
+
+    /**
+     * Closes the help overlay
+     */
+    @FXML
+    private void handleOverlayExit() {
+        helpOverlay.setVisible(false);
+    }
+
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
@@ -267,7 +292,6 @@ public class MainWindow extends UiPart<Region> {
         resultDisplay.unhighlight();
         sortFindPanel.unhighlight();
         pinnedPanel.unhighlight();
-        calenderPanelPlaceHolder.setStyle("");
     }
 
     public void highlightCommandBox() {
@@ -292,10 +316,6 @@ public class MainWindow extends UiPart<Region> {
 
     public void highlightPinnedPanel() {
         pinnedPanel.highlight();
-    }
-
-    public void highlightCalenderPanel() {
-        calenderPanelPlaceHolder.setStyle("-fx-border-color: lightgreen; -fx-border-width: 4");
     }
 
     public void setCommandPrompt(String toPrompt) {

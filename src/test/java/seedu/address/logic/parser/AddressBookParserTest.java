@@ -16,28 +16,32 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListPinCommand;
-import seedu.address.logic.commands.PinCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.UnpinCommand;
+import seedu.address.logic.commands.alias.AliasCommand;
+import seedu.address.logic.commands.person.AddCommand;
+import seedu.address.logic.commands.person.DeleteCommand;
+import seedu.address.logic.commands.person.EditCommand;
+import seedu.address.logic.commands.person.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.person.FindCommand;
+import seedu.address.logic.commands.person.ListCommand;
+import seedu.address.logic.commands.person.ListPinCommand;
+import seedu.address.logic.commands.person.PinCommand;
+import seedu.address.logic.commands.person.RemarkCommand;
+import seedu.address.logic.commands.person.SelectCommand;
+import seedu.address.logic.commands.person.SortCommand;
+import seedu.address.logic.commands.person.UnpinCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.alias.AliasToken;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonHasKeywordsPredicate;
 import seedu.address.model.person.Remark;
+import seedu.address.testutil.AliasTokenBuilder;
+import seedu.address.testutil.AliasTokenUtil;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -157,6 +161,13 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommandAlias() throws Exception {
+        AliasToken aliasToken = new AliasTokenBuilder().build();
+        AliasCommand command = (AliasCommand) parser.parseCommand(AliasTokenUtil.getAliasCommand(aliasToken));
+        assertEquals(new AliasCommand(aliasToken), command);
     }
 
     @Test
