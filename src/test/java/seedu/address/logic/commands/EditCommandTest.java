@@ -68,7 +68,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastParcel = Index.fromOneBased(model.getFilteredParcelList().size());
+        Index indexLastParcel = Index.fromOneBased(model.getActiveList().size());
         ReadOnlyParcel lastParcel = model.getFilteredParcelList().get(indexLastParcel.getZeroBased());
 
         ParcelBuilder parcelInList = new ParcelBuilder(lastParcel);
