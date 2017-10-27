@@ -555,8 +555,8 @@ The user enters a sort command which is got by `LogicManager`.
 Then `AddressBookParser` creates the sort command object and return it.
 `LogicManager` receives the command object and executes the command.
 The sort command object calls `sortPersons()` in the `Model`.
-Then `Model` returns the sorted list.
-The sort command object receives the sorted list and creates `CommandResult` object and return it.
+Then `Model` processes the person list.
+The sort command creates `CommandResult` object and return it.
 `LogicManager` receives the result and shows it through `UI`.
 
 [discrete]
@@ -655,7 +655,7 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 
 **Aspect:** How deleteE command executes +
 **Alternative 1 (current choice):** Deletes the event at the specified index. +
-**Pros:** Easy to imlement. +
+**Pros:** Easy to implement. +
 **Cons:** User has to list/sort event list first. +
 **Alternative 2:** Delete the event with the specified name. +
 **Pros:** Users can delete directly without having to get the index. +
@@ -682,6 +682,17 @@ Then, `ShowParticipantsCommand` calls `updateFilteredPersonList(p)` in the `Mode
 Then `Model` process the person list.
 The show participants command object creates `CommandResult` object and return it.
 `LogicManager` receives the result and shows it through `UI`.
+
+[discrete]
+===== Design Considerations
+
+**Aspect:** How showP command executes +
+**Alternative 1 (current choice):** Show participants of the event at the specified index. +
+**Pros:** Easy to implement. +
+**Cons:** Sometimes users have to list all the events so that they can get all the indexes. +
+**Alternative 2:** Show participants of the event with the specified name. +
+**Pros:** Users can use the command without listing events. +
+**Cons:** Users need more time to type if the event name is too long. +
 
 === ShowAllJoinedEvent mechanism
 
@@ -1401,8 +1412,8 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to sort persons
-2.  AddressBook shows a list of sorted persons
+1.  User enters "sort" command.
+2.  Planno shows a list of sorted person.s
 +
 Use case ends.
 
@@ -1412,7 +1423,7 @@ Use case ends.
 * 2a. The list is empty.
 +
 [none]
-** 2a1. AddressBook shows a successful message.
+** 2a1. Planno shows a successful message.
 +
 Use case ends.
 
@@ -1421,18 +1432,63 @@ Use case ends.
 
 *MSS*
 
-1. User enters value for list command.
-2. AddressBook displays list of persons.
+1. User enters "list" command.
+2. Planno displays list of persons.
 +
 Use case ends.
 
 *Extensions*
 
-* 1a. There is no person in AddressBook
+* 1a. There is no person in AddressBook.
 +
-** AddressBook shows a no person message.
+** Planno shows a no person message.
 +
 Use case ends.
+
+[discrete]
+=== Use case: List events
+
+*MSS*
+
+1. User enters "listE" command.
+2. Planno displays list of persons.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. There is no event in EventList
++
+** Planno shows a no event message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Show participants of an event
+
+*MSS*
+
+1.  User requests to list events
+2.  Planno shows a list of events
+3.  User requests to show participants of a specific event in the list
+4.  Planno shows participants of the event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Planno shows an error message.
++
+Use case resumes at step 2.
+
 
 [discrete]
 === Use case: Find person/s by name
@@ -1503,7 +1559,7 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: find a person by tag
+=== Use case: Find a person by tag
 
 *MSS*
 
@@ -1626,21 +1682,3 @@ Undoable command
 ....
 An undoable command is a command which modifies data in address book. For example, add, delete are undoable commands, while find, list are not.
 ....
-
-
-[appendix]
-== Product survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
