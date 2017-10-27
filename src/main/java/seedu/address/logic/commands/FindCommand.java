@@ -1,10 +1,9 @@
 package seedu.address.logic.commands;
 
 import java.util.List;
+
 import java.util.function.Predicate;
 
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.FindLessonRequestEvent;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
@@ -58,7 +57,6 @@ public class FindCommand extends Command {
             break;
         }
         model.updateFilteredLessonList(predicate);
-        EventsCenter.getInstance().post(new FindLessonRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
