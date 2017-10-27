@@ -30,46 +30,65 @@ public class ParcelTest {
                 new DeliveryDate(DEFAULT_DELIVERY_DATE),
                 Status.getInstance(DEFAULT_STATUS),
                 SampleDataUtil.getTagSet(DEFAULT_TAGS));
-        Parcel differentParcel = new Parcel(parcel);
+        Parcel differentParcel;
+        Parcel sameParcelWithDifferentStatus = new Parcel(parcel);
+        sameParcelWithDifferentStatus.setStatus(Status.OVERDUE);
 
         // parcel equality
-        assertEquals(parcel, sameParcel);
+        assertEquals(parcel, sameParcel); // check different object reference but attributes are the same.
+        assertEquals(parcel, sameParcelWithDifferentStatus); // Status will not influence Parcel#equals()
+        sameParcelWithDifferentStatus.setStatus(Status.DELIVERING);
+        assertEquals(parcel, sameParcelWithDifferentStatus);
 
-        // parcel inequality
+        // Internal state checks for Parcel
+        // Tracking number
+        differentParcel = new Parcel(parcel);
         differentParcel.setTrackingNumber(new TrackingNumber("RR123661123SG"));
         assertEquals(differentParcel.getTrackingNumber(), new TrackingNumber("RR123661123SG"));
         assertEquals(differentParcel.trackingNumberProperty().get(),
                 new SimpleObjectProperty<>(new TrackingNumber("RR123661123SG")).get());
         assertFalse(parcel.equals(differentParcel));
 
+        differentParcel = new Parcel(parcel);
+        // Name equality
         differentParcel.setName(new Name("John"));
         assertEquals(differentParcel.getName(), new Name("John"));
         assertEquals(differentParcel.nameProperty().get(), new SimpleObjectProperty<>(new Name("John")).get());
 
+        // Phone equality
         differentParcel.setPhone(new Phone("111"));
         assertEquals(differentParcel.getPhone(), new Phone("111"));
         assertEquals(differentParcel.phoneProperty().get(), new SimpleObjectProperty<>(new Phone("111")).get());
 
+        // Email equality
         differentParcel.setEmail(new Email("John@john.com"));
         assertEquals(differentParcel.getEmail(), new Email("John@john.com"));
         assertEquals(differentParcel.emailProperty().get(),
                 new SimpleObjectProperty<>(new Email("John@john.com")).get());
 
+        // Address Equality
         differentParcel.setAddress(new Address("test drive S123661"));
         assertEquals(differentParcel.getAddress(), new Address("test drive S123661"));
         assertEquals(differentParcel.addressProperty().get(),
                 new SimpleObjectProperty<>(new Address("test drive S123661")).get());
 
+        // PostalCode Equality
+        assertEquals(differentParcel.addressProperty().get().postalCode,
+                new SimpleObjectProperty<>(new Address("test drive S123661")).get().postalCode);
+
+        // Delivery Date Equality
         differentParcel.setDeliveryDate(new DeliveryDate("05-05-2005"));
         assertEquals(differentParcel.getDeliveryDate(), new DeliveryDate("05-05-2005"));
         assertEquals(differentParcel.deliveryDateProperty().get(),
                 new SimpleObjectProperty<>(new DeliveryDate("05-05-2005")).get());
 
+        // Status Equality
         differentParcel.setStatus(Status.getInstance("Completed"));
         assertEquals(differentParcel.getStatus(), Status.getInstance("Completed"));
         assertEquals(differentParcel.statusProperty().get(),
                 new SimpleObjectProperty<>(Status.getInstance("Completed")).get());
 
+        // Tags Equality
         differentParcel.setTags(SampleDataUtil.getTagSet("test"));
         assertEquals(differentParcel.getTags(), SampleDataUtil.getTagSet("test"));
         assertEquals(differentParcel.tagProperty().get(), new SimpleObjectProperty<>(
