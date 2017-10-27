@@ -171,7 +171,7 @@ public class MergeCommandTest {
         }
 
         @Override
-        public void mergeAddressBook(String newFilePath) {
+        public void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
             fail("This method should not be called.");
         }
     }
@@ -180,11 +180,11 @@ public class MergeCommandTest {
      * A Model stub that always accept the merge path given.
      */
     private class ModelStubAcceptingMergePath extends MergeCommandTest.ModelStub {
-        String mergeFilePath = "dummy";
+        ObservableList<ReadOnlyPerson> mergeFilePersonList;
 
         @Override
-        public void mergeAddressBook(String newFilePath) {
-            mergeFilePath = newFilePath;
+        public void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
+            mergeFilePersonList = newFilePersonList;
         }
 
         @Override
