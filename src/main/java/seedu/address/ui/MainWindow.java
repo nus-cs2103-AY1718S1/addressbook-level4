@@ -140,6 +140,8 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        resultDisplay.setLinkedInput(commandBox);
     }
 
     void hide() {

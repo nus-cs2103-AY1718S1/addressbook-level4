@@ -19,6 +19,7 @@ public class HistoryCommand extends Command {
     public static final String COMMAND_ALIAS = "hs";
     public static final String MESSAGE_SUCCESS = "Entered commands (from most recent to earliest):\n%1$s";
     public static final String MESSAGE_NO_HISTORY = "You have not yet entered any commands.";
+    public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD;
 
     @Override
     public CommandResult execute() {

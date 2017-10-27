@@ -14,6 +14,7 @@ public class BackupCommand extends Command {
     public static final String COMMAND_WORD = "backup";
     public static final String COMMAND_ALIAS = "bak";
     public static final String MESSAGE_SUCCESS = "Backup created.";
+    public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD;
 
     @Override
     public CommandResult execute() throws CommandException {
