@@ -18,4 +18,3 @@ public class ListReminderCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-
