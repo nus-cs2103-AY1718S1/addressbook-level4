@@ -22,6 +22,8 @@ public interface ReadOnlyTask {
     String getEndDateTime();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Boolean> completeProperty();
+    Boolean getComplete();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +34,8 @@ public interface ReadOnlyTask {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getDescription().equals(this.getDescription())
                 && other.getStartDateTime().equals(this.getStartDateTime())
-                && other.getEndDateTime().equals(this.getEndDateTime()));
+                && other.getEndDateTime().equals(this.getEndDateTime())
+                && other.getComplete().equals(this.getComplete()));
     }
 
     /**
@@ -41,13 +44,24 @@ public interface ReadOnlyTask {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" Description: ")
+                .append(getDescription())
                 .append(" Start: ")
                 .append(getStartDateTime())
                 .append(" End: ")
                 .append(getEndDateTime())
+                .append(" Complete: ")
+                .append(getComplete())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
+
+    /**
+     * return true if the underlying two tasks have the same content.
+     * @param other
+     * @return
+     */
+    boolean equals(Object other);
 
 }

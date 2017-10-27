@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -149,6 +150,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void markTask(ReadOnlyTask task) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
             fail("This method should not be called.");
         }
@@ -165,6 +171,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public SortedList<ReadOnlyTask> getSortedTaskList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
@@ -172,6 +184,11 @@ public class AddCommandTest {
         @Override
         public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
 
+        }
+
+        @Override
+        public void taskByEnd() {
+            fail("This method should not be called.");
         }
 
     }

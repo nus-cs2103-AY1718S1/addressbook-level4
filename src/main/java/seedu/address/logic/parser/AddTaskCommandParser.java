@@ -43,8 +43,9 @@ public class AddTaskCommandParser {
             String startDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_START_DATE_TIME)).get();
             String endDateTime = ParserUtil.parseString(argMultimap.getValue(PREFIX_END_DATE_TIME)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            Boolean complete = false;
 
-            ReadOnlyTask task = new Task(name, description, startDateTime, endDateTime, tagList);
+            ReadOnlyTask task = new Task(name, description, startDateTime, endDateTime, tagList, complete);
 
             return new AddTaskCommand(task);
         } catch (IllegalValueException ive) {
