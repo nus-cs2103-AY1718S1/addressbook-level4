@@ -40,7 +40,7 @@ public class TypicalParcels {
             .withTags("owesMoney", "friends").build();
     public static final ReadOnlyParcel CARL = new ParcelBuilder().withTrackingNumber("RR222000111SG")
             .withName("Carl Kurz").withPhone("95352563").withEmail("heinz@example.com")
-            .withAddress("18 Marina Blvd, S018980").withStatus("pending")
+            .withAddress("18 Marina Blvd, S018980").withStatus("completed")
             .withDeliveryDate("03-02-2000").build();
     public static final ReadOnlyParcel DANIEL = new ParcelBuilder().withTrackingNumber("RR111321123SG")
             .withName("Daniel Meier").withPhone("87652533").withEmail("cornelia@example.com")
