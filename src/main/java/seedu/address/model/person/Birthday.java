@@ -10,18 +10,21 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Person's birthday should be in format: DD/MM/YYYY";
 
-
     public static final String BIRTHDAY_VALIDATION_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d";
 
     public final String value;
 
     /**
-     * Validates given birthday.
-     *
-     * @throws IllegalValueException if given birthday address string is invalid.
-     */
+ * Validates given birthday.
+ *
+ * @throws IllegalValueException if given birthday address string is invalid.
+ */
+
     public Birthday(String birthday) throws IllegalValueException {
         String trimmedBirthday = birthday;
+        if (birthday != null && !isValidBirthday(trimmedBirthday)) {
+            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
         this.value = trimmedBirthday;
     }
 
