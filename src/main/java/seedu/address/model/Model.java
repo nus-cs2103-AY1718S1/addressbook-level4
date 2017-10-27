@@ -84,6 +84,11 @@ public interface Model {
 
     void deleteReminderTag(Tag tag) throws ReminderNotFoundException, DuplicateReminderException;
 
+    //// tag-level operations
+
+    /** Checks if the given tag is unused by any person and deletes it if necessary. */
+    void deleteUnusedTag(Tag tag);
+
     /** Returns an unmodifiable view of the filtered reminder list */
     ObservableList<ReadOnlyReminder> getFilteredReminderList();
 

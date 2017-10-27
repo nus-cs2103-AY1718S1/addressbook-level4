@@ -199,6 +199,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    public void removeTag(Tag t) {
+        tags.remove(t);
+    }
+
+    /**
+     * Check if tag {@code t} in tag list is not used by any person in person list.
+     */
+    public boolean isUnusedTag(Tag t) {
+        for (ReadOnlyPerson person : getPersonList()) {
+            if (person.getTags().contains(t)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     //// sync master tag list
 
     /**

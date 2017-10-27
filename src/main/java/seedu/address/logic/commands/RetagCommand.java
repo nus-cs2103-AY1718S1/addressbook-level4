@@ -76,8 +76,7 @@ public class RetagCommand extends UndoableCommand {
             }
         }
 
-        //Todo: Replace the tag name in unique tag list also
-
+        model.deleteUnusedTag(targetTag);
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetTag.toString(), newTag.toString()));
     }
 

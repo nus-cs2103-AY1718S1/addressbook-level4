@@ -155,6 +155,16 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //// tag-level operations
+
+    @Override
+    public void deleteUnusedTag(Tag tag) {
+        if (addressBook.isUnusedTag(tag)) {
+            addressBook.removeTag(tag);
+            indicateAddressBookChanged();
+        }
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
