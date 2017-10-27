@@ -18,7 +18,7 @@ By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
 
 Introducing iConnect, our one-stop student networking application. We aim to serve as your personal secretary to ease your job as a student. Due to the ever-increasing workload, it has become a challenge to keep track of various school commitments while maintaining relationships with peers.
 
-With iConnect, missing schedules and losing contact with friends will be a thing of the past. 
+With iConnect, missing schedules and losing contact with friends will be a thing of the past.
 Let’s get connected now!
 
 == Quick Start
