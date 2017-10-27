@@ -30,6 +30,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Remark> remark;
 
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueRelationshipList> relationships;
@@ -44,6 +45,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         // protected internal relationships from changes in the arg list
@@ -119,6 +121,20 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     @Override
     public Address getAddress() {
         return address.get();
+    }
+
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
     }
 
     /**
