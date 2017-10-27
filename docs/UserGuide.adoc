@@ -68,6 +68,23 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding a relationship between two persons: `addRelationship`
+
+Adds a relationship between two persons in the address book +
+Format: `addRelationship FROM_INDEX TO_INDEX DIRECTION`
+
+****
+* The indexes of the persons are based on the most recent listing shown
+* The direction of the relationship can only be `directed` or `undirected`. The direction is case-insensitive
+* The order of the indexes matters only when the direction is `directed`, as the relationship points from the person with FROM_INDEX to the person with TO_INDEX
+* At any point of time there will be at most 1 relationship between any two persons. If adding a different relationship from the existing one between two persons is attempted, upon the addition the previous relationship between these two persons will be removed.
+****
+
+Examples:
+
+* `addRelationship 1 3 directed`
+* `addRelationship 2 3 undirected`
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
