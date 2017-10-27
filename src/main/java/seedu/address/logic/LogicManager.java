@@ -25,6 +25,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.NextMeetingCommand;
 import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -89,7 +90,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 UndoCommand.COMMAND_WORD,
                 PrefCommand.COMMAND_WORD,
                 ChooseCommand.COMMAND_WORD,
-                NextMeetingCommand.COMMAND_WORD
+                NextMeetingCommand.COMMAND_WORD,
+                SearchCommand.COMMAND_WORD
         );
         return FXCollections.observableList(commandList);
     }
@@ -113,7 +115,8 @@ public class LogicManager extends ComponentManager implements Logic {
                 UndoCommand.MESSAGE_TEMPLATE,
                 PrefCommand.MESSAGE_TEMPLATE,
                 ChooseCommand.MESSAGE_TEMPLATE,
-                NextMeetingCommand.MESSAGE_TEMPLATE
+                NextMeetingCommand.MESSAGE_TEMPLATE,
+                SearchCommand.COMMAND_ALIAS
         );
         return templateList;
     }
