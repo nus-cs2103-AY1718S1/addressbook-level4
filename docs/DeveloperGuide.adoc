@@ -364,9 +364,31 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+=== Swap Rooms Command
+
+The swaproom command swaps the rooms of two residents specified with indexes.
+[source,java]
+----
+public boolean equals(Object other) {
+    return other == this // short circuit if same object
+        || (other instanceof SwaproomCommand // instanceof handles nulls
+        && this.targetIndex1.equals(((SwaproomCommand) other).targetIndex1)
+        && this.targetIndex2.equals(((SwaproomCommand) other).targetIndex2)) // state check
+        || (other instanceof SwaproomCommand // instanceof handles nulls
+        && this.targetIndex1.equals(((SwaproomCommand) other).targetIndex2)
+        && this.targetIndex2.equals(((SwaproomCommand) other).targetIndex1)); // state check
+}
+----
+
+In the method above is defined in `SwaproomCommand.java`. It is important to notw that two swaproom commands with their residents' indexes swapped are still equal to each other. For example the following commands are equal:
+* `swaproom 3 4`
+* `swaproom 4 3`
+
+Illegal arguments will raise a CommandException which will be displayed to the user in the command output box.
+
 === Highlight Command
 
-The sort command is implemented to highlight the contacts with the specified tag
+The highlight command is implemented to highlight the contacts with the specified tag
 
 If the tag specified does not exist, trying to highlight the persons with the tag will raise an exception:
 [source,java]
