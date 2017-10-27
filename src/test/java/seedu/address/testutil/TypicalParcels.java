@@ -56,6 +56,10 @@ public class TypicalParcels {
             .withName("George Best").withPhone("9482442").withEmail("anna@example.com")
             .withAddress("Block 532 HDB Upper Cross Street s050532").withDeliveryDate("07-02-2007")
             .withTags("family", "friends").withStatus("completed").build();
+    public static final ReadOnlyParcel JOHN = new ParcelBuilder().withTrackingNumber("RR696969696SG")
+            .withName("John Best").withPhone("9482442").withEmail("anna@example.com")
+            .withAddress("Block 532 HDB Upper Cross Street s050532").withDeliveryDate("07-02-2007")
+            .withTags("family", "friends").withStatus("pending").build();
 
     // Manually added
     public static final ReadOnlyParcel HOON = new ParcelBuilder().withTrackingNumber("RR121212124SG")
@@ -95,6 +99,6 @@ public class TypicalParcels {
     }
 
     public static List<ReadOnlyParcel> getTypicalParcels() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, JOHN));
     }
 }
