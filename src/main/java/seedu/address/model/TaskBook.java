@@ -146,7 +146,7 @@ public class TaskBook implements ReadOnlyTaskBook {
                 target.getTags(),
                 target.getComplete(),
                 value);
-        
+
         // syncMasterTagListWith(updatedTask);
         // Don't update master tags for now because this method doesn't modify the tags property.
 

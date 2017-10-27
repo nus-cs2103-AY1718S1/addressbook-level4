@@ -3,7 +3,7 @@ package seedu.address.logic.commands;
 /**
  * Task sorted by priority value from 1 to 5
  */
-public class TaskByPriorityCommand extends Command{
+public class TaskByPriorityCommand extends Command {
 
     public static final String COMMAND_WORD = "taskByPriority";
     public static final String COMMAND_ALIAS = "tbp";
