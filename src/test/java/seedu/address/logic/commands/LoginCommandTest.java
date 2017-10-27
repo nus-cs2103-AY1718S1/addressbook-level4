@@ -88,14 +88,15 @@ public class LoginCommandTest {
      * Parses {@code uname} and {@pwd} into a {@code LoginCommand}.
      */
     private LoginCommand prepareCommand(String uname, String pwd) {
-       try {
-           Username username = new Username(uname);
-           Password password = new Password(pwd);
-           LoginCommand command = new LoginCommand(username, password);
-           command.setData(model, new CommandHistory(), new UndoRedoStack());
-           return command;
-       } catch (IllegalValueException ive) {
-           ive.printStackTrace();
-       }
+        LoginCommand command = null;
+        try {
+            Username username = new Username(uname);
+            Password password = new Password(pwd);
+            command = new LoginCommand(username, password);
+            command.setData(model, new CommandHistory(), new UndoRedoStack());
+        } catch (IllegalValueException ive) {
+            ive.printStackTrace();
+        }
+        return command;
     }
 }
