@@ -9,8 +9,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -28,6 +30,8 @@ public class ScheduleCommand extends UndoableCommand {
 
     public static final String COMMAND_ALIAS = "sc";
 
+    public static final String SHOW_SCHEDULE_ARGS = "show";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Schedules an Activity with a person.\n"
             + "Parameters: INDEX "
@@ -38,8 +42,8 @@ public class ScheduleCommand extends UndoableCommand {
     public static final String MESSAGE_ADD_SCHEDULE_SUCCESS = "Scheduled an activity with %1$s";
     public static final String MESSAGE_DUPLICATE_SCHEDULE = "Schedule already exists";
 
-    private final Index index;
-    private final Schedule schedule;
+    private Index index;
+    private Schedule schedule;
 
     /**
      * Creates a ScheduleCommand to add the specified {@code Schedule}
@@ -67,6 +71,7 @@ public class ScheduleCommand extends UndoableCommand {
         }
 
         schedules.add(schedule);
+        schedule.setPersonInvolved(schedulePerson);
 
         Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
                 schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,

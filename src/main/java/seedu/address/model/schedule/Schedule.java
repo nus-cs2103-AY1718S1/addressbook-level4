@@ -4,21 +4,27 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+
 /**
  * Represents a Schedule in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Schedule {
-    public final ScheduleDate scheduleDate;
-    public final Activity activity;
+    private ObjectProperty<ScheduleDate> scheduleDate;
+    private ObjectProperty<Activity> activity;
+    private ObjectProperty<ReadOnlyPerson> personInvolved;
 
     /**
      * Every field must be present and not null.
      */
     public Schedule(ScheduleDate scheduleDate, Activity activity) {
         requireAllNonNull(scheduleDate, activity);
-        this.scheduleDate = scheduleDate;
-        this.activity = activity;
+        this.scheduleDate = new SimpleObjectProperty<>(scheduleDate);
+        this.activity = new SimpleObjectProperty<>(activity);
     }
 
     /**
@@ -29,11 +35,31 @@ public class Schedule {
     }
 
     public ScheduleDate getScheduleDate() {
+        return scheduleDate.get();
+    }
+
+    public ObjectProperty<ScheduleDate> getScheduleDateProperty() {
         return scheduleDate;
     }
 
     public Activity getActivity() {
+        return activity.get();
+    }
+
+    public ObjectProperty<Activity> getActivityProperty() {
         return activity;
+    }
+
+    public ReadOnlyPerson getPersonInvolved() {
+        return personInvolved.get();
+    }
+
+    public ObjectProperty<ReadOnlyPerson> getPersonInvolvedProperty() {
+        return personInvolved;
+    }
+
+    public void setPersonInvolved(ReadOnlyPerson personInvolved) {
+        this.personInvolved = new SimpleObjectProperty<>(personInvolved);
     }
 
     @Override
