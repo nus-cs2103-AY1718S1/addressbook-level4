@@ -8,7 +8,7 @@ import seedu.address.model.meeting.MeetingContainsKeywordsPredicate;
  */
 public class FindMeetingCommand extends Command {
 
-    public static final String COMMAND_WORD = "find meeting";
+    public static final String COMMAND_WORD = "findmeeting";
     public static final String COMMAND_ALIAS = "fm";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all meetings which contains any of "
