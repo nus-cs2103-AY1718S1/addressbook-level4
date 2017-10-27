@@ -56,7 +56,11 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addPerson(toAdd);
-            Index targetIndex = new Index(model.getAddressBook().getPersonList().indexOf(toAdd));
+            int index = model.getAddressBook().getPersonList().indexOf(toAdd);
+            if (index < 0) {
+                index = 0;
+            }
+            Index targetIndex = new Index(index);
             EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {
