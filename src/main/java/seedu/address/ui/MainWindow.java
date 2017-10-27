@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.ParcelListPanel.INDEX_SECOND_TAB;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -20,6 +22,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowParcelListEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -135,8 +138,8 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        parcelListPanel = new ParcelListPanel(logic.getFilteredParcelListWithStatusNotCompleted(),
-                logic.getFilteredParcelListWithStatusCompleted());
+        parcelListPanel = new ParcelListPanel(logic.getUndeliveredParcelList(),
+                logic.getDeliveredParcelList());
         parcelListPanelPlaceholder.getChildren().add(parcelListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -224,6 +227,11 @@ public class MainWindow extends UiPart<Region> {
     private void handleHideParcelListEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         splitPanePlaceholder.setDividerPositions(1.0);
+    }
+
+    @FXML @Subscribe
+    private void handleTabEvent(JumpToTabRequestEvent event) {
+        logic.setActiveList(event.targetIndex == INDEX_SECOND_TAB.getZeroBased());
     }
 
     @FXML @Subscribe
