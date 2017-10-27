@@ -27,6 +27,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<DateAdded> dateAdded;
     private ObjectProperty<UniqueEventList> events;
+    private ObjectProperty<Birthday> birthday;
 
     /**
      * /**
@@ -43,6 +44,8 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags & events from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.events = new SimpleObjectProperty<>(new UniqueEventList(events));
+
+        //this.birthday = new SimpleObjectProperty<>(new Birthday(""));
     }
 
     /**
@@ -65,6 +68,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Name getName() {
         return name.get();
+    }
+
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+        return birthday.get();
     }
 
     public void setPhone(Phone phone) {
