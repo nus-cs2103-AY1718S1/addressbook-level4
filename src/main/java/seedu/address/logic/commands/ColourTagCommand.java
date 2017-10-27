@@ -15,9 +15,12 @@ public class ColourTagCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "colourtag";
     public static final String COMMAND_ALIAS = "ct";
 
+    public static final String COMMAND_PARAMETERS = "TAG (must be alphanumeric) COLOUR";
+
+    public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD + " " + COMMAND_PARAMETERS;
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Changes the colour of the given tag to the given colour.\n"
-            + "Parameters: TAG (must be alphanumeric) COLOUR\n"
+            + "Parameters: " + COMMAND_PARAMETERS + "\n"
             + "Example: " + COMMAND_WORD + " friend red";
     public static final String MESSAGE_COLOUR_TAG_SUCCESS = "Colour of %1$s will be %2$s on next start.";
 

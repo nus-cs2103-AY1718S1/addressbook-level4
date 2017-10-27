@@ -46,7 +46,7 @@ public class CommandBoxTest extends GuiUnitTest {
     public void commandBox_multipleSuggestions() {
         String input = "l";
         commandBoxHandle.enterInput(input);
-        assertEquals("clear", commandBoxHandle.getInput());
+        assertEquals("addRelationship", commandBoxHandle.getInput());
     }
 
     @Test
