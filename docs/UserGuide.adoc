@@ -431,7 +431,8 @@ The `undo` command fails as there are no undoable commands executed previously
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+Reverses the most recent `undo` command.
+
 Format: `redo`
 
 Examples:
@@ -454,13 +455,15 @@ The `redo` command fails as there are no `undo` commands executed previously
 
 === Listing all persons removed: `bin-list` _[Coming in v2.0]_
 
-Shows a list of persons removed from the address book. +
+Shows a list of persons removed from the address book.
+
 Format: `bin-list`
 
 === Restoring person(s) : `bin-restore` _[Coming in v2.0]_
 
-Restores person(s) from bin. +
-Format:`bin-restore INDEX INDEX ...`
+Restores person(s) from bin.
+
+Format: `bin-restore INDEX INDEX ...`
 
 ****
 * Recovers the people at these given specified `INDEX`.
@@ -477,17 +480,20 @@ Restores the 1st and 2nd person in the bin-list
 
 === Clearing all contacts from bin : `bin-clear` _[Coming in v2.0]_
 
-Clears all entries in the bin. +
+Clears all entries in the bin.
+
 Format: `clear-bin`
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the address book.
+
 Format: `clear`
 
 === Exiting the program : `exit`
 
-Exits the program. +
+Exits the program.
+
 Format: `exit`
 
 === Saving the data
