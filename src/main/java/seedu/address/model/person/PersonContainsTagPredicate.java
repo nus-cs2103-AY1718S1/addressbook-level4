@@ -28,11 +28,11 @@ public class PersonContainsTagPredicate implements Predicate<ReadOnlyPerson> {
     public boolean test(ReadOnlyPerson person) {
         Set<Tag> tagList = person.getTags();
         for (Tag tag : tagList) {
-            if (!tagKeywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword))) {
-                return false;
+            if (tagKeywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword))) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
