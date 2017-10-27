@@ -298,11 +298,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 AddCommand.MESSAGE_USAGE));
 
         /* Case: missing status -> accepted */
-        toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+        toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB).withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withTags(VALID_TAG_FRIEND)
                 .withStatus("PENDING").build();
-        command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
+        command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_AMY + PHONE_DESC_BOB
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, toAdd);
 
