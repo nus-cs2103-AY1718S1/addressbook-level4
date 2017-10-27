@@ -14,6 +14,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_EVENT_TIME = new Prefix("et/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_BIRTHDAY = new Prefix("b/");
+    public static final Prefix PREFIX_PORTRAIT = new Prefix("p/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_PERSON = new Prefix("p/");
     public static final Prefix PREFIX_EVENT = new Prefix("e/");
