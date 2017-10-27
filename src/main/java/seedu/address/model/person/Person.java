@@ -22,6 +22,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Birthday> birthday;
     private ObjectProperty<Remark> remark;
 
     private ObjectProperty<UniqueTagList> tags;
@@ -29,10 +30,13 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+
+    public Person(Name name, Phone phone, Birthday birthday, Email email,
+                  Address address, Remark remark, Set<Tag> tags) {
+        requireAllNonNull(name, phone, birthday, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
+        this.birthday = new SimpleObjectProperty<>(birthday);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.remark = new SimpleObjectProperty<>(remark);
@@ -44,8 +48,10 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+
+        this(source.getName(), source.getPhone(), source.getBirthday(), source.getEmail(), source.getAddress(),
                 source.getRemark(), source.getTags());
+
     }
 
     public void setName(Name name) {
@@ -104,6 +110,18 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    public void setBirthday(Birthday birthday) {
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() { return birthday.get(); }
+
     public void setRemark(Remark remark) {
         this.remark.set(requireNonNull(remark));
     }
@@ -148,7 +166,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, birthday, email, address, tags);
     }
 
     @Override

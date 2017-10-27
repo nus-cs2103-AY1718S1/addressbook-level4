@@ -5,9 +5,12 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import seedu.address.logic.commands.GmapCommand;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
  * Test scope: similar to {@code DeleteCommandParserTest}.
@@ -21,11 +24,14 @@ public class GmapCommandParserTest {
     @Test
     public void parse_validArgs_returnsSelectCommand() {
         assertParseSuccess(parser, "1", new GmapCommand(INDEX_FIRST_PERSON));
+
+        GmapCommand expectedFindCommand =
+                new GmapCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "b", String.format(MESSAGE_INVALID_COMMAND_FORMAT, GmapCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "0", String.format(MESSAGE_INVALID_COMMAND_FORMAT, GmapCommand.MESSAGE_USAGE));
     }
 }
