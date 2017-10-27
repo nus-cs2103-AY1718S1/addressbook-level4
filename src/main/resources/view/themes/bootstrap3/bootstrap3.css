@@ -950,4 +950,5 @@ VBox > .split-menu-button.last > .arrow-button {
 
 .list-cell:filled:selected {
     -fx-background-color: #bbffff;
+	-fx-text-fill: black;
 }
