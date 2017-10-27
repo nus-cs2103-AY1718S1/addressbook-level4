@@ -48,7 +48,6 @@ public class ParserUtilTest {
     private static final String VALID_COMMAND_IDENTIFIER_2 = "delete";
     private static final String VALID_COMMAND_IDENTIFIER_3 = "d";
     private static final String VALID_SCHEDULE_DATE_1 = "01-01-1997";
-    private static final String VALID_SCHEDULE_DATE_2 = "01-01";
     private static final String VALID_ACTIVITY = "Team meeting";
 
     @Rule
@@ -191,12 +190,9 @@ public class ParserUtilTest {
     @Test
     public void parseScheduleDate_validValue_returnsScheduleDate() throws Exception {
         ScheduleDate expectedScheduleDate1 = new ScheduleDate(VALID_SCHEDULE_DATE_1);
-        ScheduleDate expectedScheduleDate2 = new ScheduleDate(VALID_SCHEDULE_DATE_2);
         Optional<ScheduleDate> actualScheduleDate1 = ParserUtil.parseScheduleDate(Optional.of(VALID_SCHEDULE_DATE_1));
-        Optional<ScheduleDate> actualScheduleDate2 = ParserUtil.parseScheduleDate(Optional.of(VALID_SCHEDULE_DATE_2));
 
         assertEquals(expectedScheduleDate1, actualScheduleDate1.get());
-        assertEquals(expectedScheduleDate2, actualScheduleDate2.get());
     }
 
     @Test
