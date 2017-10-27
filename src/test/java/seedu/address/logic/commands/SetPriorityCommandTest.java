@@ -85,7 +85,7 @@ public class SetPriorityCommandTest {
     }
 
     /**
-     * Executes a {@code SetPriorityCommand} with the given {@code index, value}, and checks that
+     * Executes a {@code SetPriorityCommand} with the given {@code index}, and checks that
      * the updated task priority is properly reflected.
      */
     private void assertExecutionSuccess(Index index, Integer value) {
@@ -105,8 +105,10 @@ public class SetPriorityCommandTest {
     }
 
     /**
-     * Executes a {@code SetPriorityCommand} with the given {@code index, value}, and checks that a
-     * {@code CommandException is thrown with the {@code expectedMessage}.
+     * Assert execution failure by default, a wrong execution command inputted.
+     * @param index , the index of the task
+     * @param value , the new priority
+     * @param expectedMessage , the expected message String
      */
     private void assertExecutionFailure(Index index, Integer value, String expectedMessage) {
         SetPriorityCommand setPriorityCommand = prepareCommand(index, value);
@@ -121,7 +123,7 @@ public class SetPriorityCommandTest {
     }
 
     /**
-     * Returns a {@code SetPriorityCommand} with parameters {@code index, value}.
+     * Returns a {@code SetPriorityCommand} with parameters {@code index}.
      */
     private SetPriorityCommand prepareCommand(Index index, Integer value) {
         SetPriorityCommand setPriorityCommand = new SetPriorityCommand(index, value);
