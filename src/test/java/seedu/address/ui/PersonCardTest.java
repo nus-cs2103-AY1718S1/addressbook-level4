@@ -15,16 +15,21 @@ import seedu.address.testutil.PersonBuilder;
 
 public class PersonCardTest extends GuiUnitTest {
 
+    /**
+     * Tests if a person's attributes is binded in each individual person card
+     */
     @Test
     public void display() {
-        // check if the attributes of a person is binded in the card
         Person personWithRightAttributes = new PersonBuilder().withFormClass("6E1").withName("Alice Pauline")
-                .withPhone("student: 97272031 parent: 97979797").build();
+                .withPhone("student: 97272031 parent: 97979797").withTags().build();
         PersonCard personCard = new PersonCard(personWithRightAttributes, 1);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithRightAttributes, 1);
     }
 
+    /**
+     * Tests if the person is initialised with tags on the individual person card
+     */
     @Test
     public void displayPerson() {
         // no tags

@@ -80,7 +80,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     }
 
     /**
-     * @param person
+     * Displays statistics of @param person according to class
      */
     private void displayGraphStats (ReadOnlyPerson person) {
         xNameAxis.setLabel("Student Names");
