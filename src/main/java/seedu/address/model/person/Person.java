@@ -156,7 +156,7 @@ public class Person implements ReadOnlyPerson {
         return schedule;
     }
 
-    public void initiateSchedule(){
+    public void initiateSchedule() {
         Schedule schedule = new Schedule();
         this.schedule = new SimpleObjectProperty<>(schedule);
     }
@@ -165,8 +165,8 @@ public class Person implements ReadOnlyPerson {
         this.schedule.set(schedule);
     }
 
-    public void addSpanToSchedule(TreeSet<Integer> span){
-        for(Integer startTime: span){
+    public void addSpanToSchedule(TreeSet<Integer> span) {
+        for (Integer startTime : span) {
             getSchedule().addTime(startTime);
         }
     }

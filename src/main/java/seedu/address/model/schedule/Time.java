@@ -4,24 +4,28 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Time {
 
-    private final Integer EarliestTime = 0600;
-    private final Integer LatestTime = 2330;
+    private final Integer earliestTime = 0600;
+    private final Integer latestTime = 2330;
 
     private Integer time;
 
     public Time(String time) throws IllegalValueException {
         this.time = Integer.parseInt(time);
-        if(!isValid()){
+        if (!isValid()) {
             throw new IllegalValueException("Not a proper time form");
         }
     }
 
-    public boolean isValid(){
+
+    /**
+     * Returns if the time input is a valid schedule time.
+     */
+    public boolean isValid() {
         //As the string representing the time is no more accurate than 30 min, the ast two digits must be 30 or 00.
-        if(time % 100 != 0 && time % 100 != 30){
+        if (time % 100 != 0 && time % 100 != 30) {
             return false;
         }
-        return (this.time >= EarliestTime && this.time <= LatestTime);
+        return (this.time >= earliestTime && this.time <= latestTime);
     }
 
     public Integer getTime() {
