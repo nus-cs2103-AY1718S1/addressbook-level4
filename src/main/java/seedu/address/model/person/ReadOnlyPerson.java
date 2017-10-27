@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -24,9 +25,12 @@ public interface ReadOnlyPerson {
     Remark getRemark();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    Set<Relationship> getRelationships();
+    ReadOnlyPerson copy();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
+     * Relationships and tags of the person are not taking into account.
      */
     default boolean isSameStateAs(ReadOnlyPerson other) {
         return other == this // short circuit if same object
