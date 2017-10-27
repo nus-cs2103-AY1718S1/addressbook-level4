@@ -379,7 +379,7 @@ The user can use this command with only ONE of the following prefixes
 
 It is implemented to search with one type of detail only so that the returned results will be relevant to that type of detail used only. i.e. if a user search for a person with phone number then only the phone numbers of the returned contacts are relevant, and other details are irrelevant to the input phone number during the search.
 
-Alternative considered is to allow user input multiple details in each search. It may help to narrow down and shorten the list of contacts that will be returned, but it is not useful as user may only recall some details of a person only and thus not implemented . For example:
+Alternative considered is to allow user input multiple details in each search. It may help to narrow down and shorten the list of contacts that will be returned, but it is not useful as user may only recall some details of a person only. For example:
 
 *Scenario one*
 
@@ -397,7 +397,7 @@ Alternative considered is to allow user input multiple details in each search. I
 * User cannot recall the number and key in a random number `43567823`
 * There will be no results returned in this scenario as input phone number does not match the phone number in the `Contact 1` although the name matches exactly.
 
-From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise this `finds` command is practically not useful as no results will be returned.
+From the two scenarios, we know that unless the user knows the exact details (i.e. full name, exact phone number, exact email and etc) otherwise `finds` command with multiple details input is practically not useful as no results will be returned.
 
 == Documentation
 
