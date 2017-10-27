@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_FILEPATH;
 
+import java.io.IOException;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -13,6 +14,7 @@ import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.storage.PhotoStorage;
 
 /***/
 public class AddPhotoCommand extends UndoableCommand {
@@ -34,12 +36,18 @@ public class AddPhotoCommand extends UndoableCommand {
         this.photo = photo;
     }
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException, IOException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        try {
+            PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getName().hashCode());
+            photo.resetFilePath(rewrite.setNewFilePath());
+        } catch(IOException e) {
+            throw new CommandException(e.getMessage());
+        }
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
                 personToEdit.getAge(), photo,
@@ -48,7 +56,7 @@ public class AddPhotoCommand extends UndoableCommand {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (PersonNotFoundException fpe) {
             throw new AssertionError("The target person cannot be missing.");
         }
         model.getFilteredPersonList();

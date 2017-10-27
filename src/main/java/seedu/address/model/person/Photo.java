@@ -23,12 +23,12 @@ public class Photo {
             File file = new File(filepath);
             this.filepath = filepath;
             if (isValidFilePath(file)) {
-                try {
-                    String localUrl = file.toURI().toURL().toString();
-                    this.url = localUrl;
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+              //  try {
+             //       String localUrl = file.toURI().toURL().toString();
+              //      this.url = localUrl;
+               // } catch (MalformedURLException e) {
+                //    e.printStackTrace();
+               // }
             } else {
                 throw new IllegalArgumentException(URL_VALIDATION);
             }
@@ -46,6 +46,10 @@ public class Photo {
     //url of the image that is parsed into Image class
     public String getUrl() {
         return this.url;
+    }
+    
+    public void resetFilePath(String filepath) {
+        this.filepath = filepath;
     }
 
 }
