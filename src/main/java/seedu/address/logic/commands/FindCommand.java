@@ -18,7 +18,8 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_PARAMETERS = "KEYWORD [MORE_KEYWORDS]... or KEYWORD [PREFIX]/[MORE_KEYWORDS]...";
 
-    public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD + " " + COMMAND_PARAMETERS;
+    public static final String SHORT_MESSAGE_USAGE = "global find: find\n"
+            + "specific find: find n/NAME or find e/EMAIL or find p/PHONE or find t/TAG";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose details contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "A prefix can also be specified to narrow the search to persons whose particular detail contains any of "

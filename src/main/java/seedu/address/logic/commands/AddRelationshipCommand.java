@@ -16,15 +16,18 @@ public class AddRelationshipCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addRelationship";
     public static final String COMMAND_ALIAS = "addre";
 
+    public static final String COMMAND_PARAMETERS = "FROM_INDEX, TO_INDEX (must be positive integers), "
+        + "DIRECTION (either \"directed\" or \"undirected\". "
+        + "[INDEXOFFROMPERSON] "
+        + "[INDEXOFTOPERSON] "
+        + "[DIRECTION]";
+
+    public static final String SHORT_MESSAGE_USAGE = COMMAND_WORD + " " + COMMAND_PARAMETERS;
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a relationship between the two persons specified. "
             + "by the index numbers used in the last person listing. "
             + "Direction of the relationship is specified by the direction in user input.\n"
-            + "Parameters: FROM_INDEX, TO_INDEX (must be positive integers), "
-            + "DIRECTION (either \"directed\" or \"undirected\". "
-            + "[INDEXOFFROMPERSON] "
-            + "[INDEXOFTOPERSON] "
-            + "[DIRECTION]\n"
+            + "Parameters: " + COMMAND_PARAMETERS + "\n"
             + "Example: " + COMMAND_WORD + " 1 2 directed";
 
     public static final String MESSAGE_ADD_RELATIONSHIP_SUCCESS = "Added a %3$s relationship between : %1$s and %2$s";
