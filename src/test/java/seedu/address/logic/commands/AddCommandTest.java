@@ -150,6 +150,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateTaskPriority(ReadOnlyTask target, Integer value) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void markTask(ReadOnlyTask task) throws TaskNotFoundException {
             fail("This method should not be called.");
         }
@@ -188,6 +193,11 @@ public class AddCommandTest {
 
         @Override
         public void taskByEnd() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void taskByPriority() {
             fail("This method should not be called.");
         }
 
