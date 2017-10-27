@@ -3,7 +3,9 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -22,24 +24,34 @@ public class UntagCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "untag";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Untags one or more persons identified by the index numbers used in the last person listing.\n"
+            + ": Untags one or more persons in the last person listing.\n"
+            + "- Untag by the index numbers used\n"
             + "Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME\n"
-            + "Example: " + COMMAND_WORD + " 1,2,3 friends";
+            + "Example: " + COMMAND_WORD + " 1,2,3 friends\n"
+            + "- Untag a tag from persons in the list\n"
+            + "Parameters: -all + TAGNAME\n"
+            + "Example: " + COMMAND_WORD + " -all friends\n"
+            + "- Untag all tags from persons in the list\n"
+            + "Parameters: -all\n"
+            + "Example: " + COMMAND_WORD + " -all";
 
     public static final String MESSAGE_SUCCESS = "%d persons successfully untagged from %s:";
+    public static final String MESSAGE_SUCCESS_TAG = "%s tag successfully removed.";
+    public static final String MESSAGE_SUCCESS_ALL_TAGS = "All tags successfully removed.";
     public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAG = "%d persons do not have this tag:";
 
     public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
-    public static final String MESSAGE_DUPLICATE_TAG = "One or more persons already have this tag.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private boolean toAll;
+    private boolean toAllPersonsInFilteredList;
     private List<Index> targetIndexes;
     private Tag tag;
 
     public UntagCommand() {
-        this.toAll = true;
+        this.toAllPersonsInFilteredList = true;
+        this.targetIndexes = null;
+        this.tag = null;
     }
 
     /**
@@ -48,7 +60,8 @@ public class UntagCommand extends UndoableCommand {
     public UntagCommand(Tag tag) {
         requireNonNull(tag);
 
-        this.toAll = true;
+        this.toAllPersonsInFilteredList = true;
+        this.targetIndexes = null;
         this.tag = tag;
     }
 
@@ -60,7 +73,7 @@ public class UntagCommand extends UndoableCommand {
         requireNonNull(targetIndexes);
         requireNonNull(tag);
 
-        this.toAll = false;
+        this.toAllPersonsInFilteredList = false;
         this.targetIndexes = targetIndexes;
         this.tag = tag;
     }
@@ -68,60 +81,87 @@ public class UntagCommand extends UndoableCommand {
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        if (toAll && tag != null) {
+
+        if (toAllPersonsInFilteredList) {
             for (ReadOnlyPerson personToUntag : lastShownList) {
-                Person untaggedPerson = new Person(personToUntag);
-                UniqueTagList updatedTags = new UniqueTagList(personToUntag.getTags());
-                updatedTags.remove(tag);
-                untaggedPerson.setTags(updatedTags.toSet());
-                try {
-                    model.updatePerson(personToUntag, untaggedPerson);
-                } catch (DuplicatePersonException e) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                } catch (PersonNotFoundException e) {
-                    throw new AssertionError("The target person cannot be missing");
-                }
+                removeTagFromPerson(personToUntag, tag);
             }
-        } else if (tag == null) {
-            for (ReadOnlyPerson personToUntag : lastShownList) {
-                Person untaggedPerson = new Person(personToUntag);
-                UniqueTagList updatedTags = new UniqueTagList();
-                untaggedPerson.setTags(updatedTags.toSet());
-                try {
-                    model.updatePerson(personToUntag, untaggedPerson);
-                } catch (DuplicatePersonException e) {
-                    throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-                } catch (PersonNotFoundException e) {
-                    throw new AssertionError("The target person cannot be missing");
-                }
-            }
+
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return (tag == null) ? new CommandResult(MESSAGE_SUCCESS_ALL_TAGS)
+                    : new CommandResult(String.format(MESSAGE_SUCCESS_TAG, tag.toString()));
         }
 
         for (Index targetIndex : targetIndexes) {
-            ReadOnlyPerson personToUntag = lastShownList.get(targetIndex.getZeroBased());
-            Person untaggedPerson = new Person(personToUntag);
-            UniqueTagList updatedTags = new UniqueTagList(personToUntag.getTags());
-            updatedTags.remove(tag);
-            untaggedPerson.setTags(updatedTags.toSet());
-            try {
-                model.updatePerson(personToUntag, untaggedPerson);
-            } catch (DuplicatePersonException e) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-            } catch (PersonNotFoundException e) {
-                throw new AssertionError("The target person cannot be missing");
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(MESSAGE_INVALID_INDEXES);
             }
         }
 
+        ArrayList<ReadOnlyPerson> alreadyUntaggedPersons = new ArrayList<>();
+        ArrayList<ReadOnlyPerson> toBeUntaggedPersons = new ArrayList<>();
+        for (Index targetIndex : targetIndexes) {
+            ReadOnlyPerson personToUntag = lastShownList.get(targetIndex.getZeroBased());
+            if (!personToUntag.getTags().contains(tag)) {
+                alreadyUntaggedPersons.add(personToUntag);
+                continue;
+            }
+            removeTagFromPerson(personToUntag, tag);
+            toBeUntaggedPersons.add(personToUntag);
+        }
+
+        //Todo: Delete the tag from unique tag list if no persons have it
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult("Persons succcessfully untagged.");
+        StringJoiner toBeUntaggedJoiner = new StringJoiner(", ");
+        for (ReadOnlyPerson person : toBeUntaggedPersons) {
+            toBeUntaggedJoiner.add(person.getName().toString());
+        }
+        if (alreadyUntaggedPersons.size() > 0) {
+            StringJoiner alreadyUntaggedJoiner = new StringJoiner(", ");
+            for (ReadOnlyPerson person : alreadyUntaggedPersons) {
+                alreadyUntaggedJoiner.add(person.getName().toString());
+            }
+            return new CommandResult(String.format(MESSAGE_SUCCESS,
+                    targetIndexes.size() - alreadyUntaggedPersons.size(), tag.toString()) + " "
+                    + toBeUntaggedJoiner.toString() + "\n"
+                    + String.format(MESSAGE_PERSONS_DO_NOT_HAVE_TAG, alreadyUntaggedPersons.size()) + " "
+                    + alreadyUntaggedJoiner.toString());
+        }
+        return new CommandResult(String.format(MESSAGE_SUCCESS,
+                targetIndexes.size(), tag.toString()) + " " + toBeUntaggedJoiner.toString());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UntagCommand // instanceof handles nulls
-                && this.targetIndexes.equals(((UntagCommand) other).targetIndexes)) // state check
-                && this.tag.equals(((UntagCommand) other).tag); // state check
+                && ((targetIndexes == null) || this.targetIndexes.equals(((UntagCommand) other).targetIndexes)))
+                && ((tag == null) || this.tag.equals(((UntagCommand) other).tag)); // state check
+    }
+
+    /**
+     * Removes a tag from the person
+     * Removes all tags if tag is not specified
+     * @param person to be untagged
+     * @param tag to be removed
+     */
+    private void removeTagFromPerson(ReadOnlyPerson person, Tag tag) throws CommandException {
+        Person untaggedPerson = new Person(person);
+        UniqueTagList updatedTags = new UniqueTagList();
+        if (tag != null) {
+            updatedTags = new UniqueTagList(person.getTags());
+            updatedTags.remove(tag);
+        }
+        untaggedPerson.setTags(updatedTags.toSet());
+
+        try {
+            model.updatePerson(person, untaggedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("The target person cannot be missing");
+        }
     }
 
 }

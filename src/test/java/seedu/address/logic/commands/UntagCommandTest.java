@@ -1,11 +1,11 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertFalse;
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstAndSecondPersonsOnly;
-import static seedu.address.logic.commands.TagCommand.MESSAGE_INVALID_INDEXES;
+import static seedu.address.logic.commands.UntagCommand.MESSAGE_INVALID_INDEXES;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
@@ -30,48 +30,47 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
-public class TagCommandTest {
+public class UntagCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_unfilteredList_success() throws Exception {
         PersonBuilder firstPersonInList = new PersonBuilder(ALICE);
-        Person firstTaggedPerson = firstPersonInList.withTags("friends", "retrieveTester", "tagTester").build();
+        Person firstUntaggedPerson = firstPersonInList.withTags("retrieveTester", "friends").build();
         PersonBuilder secondPersonInList = new PersonBuilder(BENSON);
-        Person secondTaggedPerson = secondPersonInList.withTags("owesMoney", "friends",
-                "retrieveTester", "tagTester").build();
-        Tag tag = new Tag("tagTester");
-        TagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
+        Person secondUntaggedPerson = secondPersonInList.withTags("owesMoney", "retrieveTester").build();
+        Tag tag = new Tag("friends");
+        UntagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
 
-        String expectedMessage = String.format(TagCommand.MESSAGE_SUCCESS, 2, tag.toString()) + " "
-                + firstTaggedPerson.getName().toString() + ", "
-                + secondTaggedPerson.getName().toString();
+        String expectedMessage = String.format(UntagCommand.MESSAGE_SUCCESS, 2, tag.toString()) + " "
+                + firstUntaggedPerson.getName().toString() + ", "
+                + secondUntaggedPerson.getName().toString();
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondUntaggedPerson);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_unfilteredListContainsPersonsWithTag_success() throws Exception {
+    public void execute_unfilteredListContainsPersonsWithoutTag_success() throws Exception {
         PersonBuilder firstPersonInList = new PersonBuilder(ALICE);
-        Person firstTaggedPerson = firstPersonInList.withTags("friends", "retrieveTester", "owesMoney").build();
+        Person firstUntaggedPerson = firstPersonInList.withTags("friends", "retrieveTester").build();
         PersonBuilder secondPersonInList = new PersonBuilder(BENSON);
-        Person secondTaggedPerson = secondPersonInList.withTags("owesMoney", "friends", "retrieveTester").build();
+        Person secondUntaggedPerson = secondPersonInList.withTags("friends", "retrieveTester").build();
         Tag tag = new Tag("owesMoney");
-        TagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
+        UntagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
 
-        String expectedMessage = String.format(TagCommand.MESSAGE_SUCCESS, 1, tag.toString()) + " "
-                + firstTaggedPerson.getName().toString() + "\n"
-                + String.format(TagCommand.MESSAGE_PERSONS_ALREADY_HAVE_TAG, 1) + " "
-                + secondTaggedPerson.getName().toString();
+        String expectedMessage = String.format(UntagCommand.MESSAGE_SUCCESS, 1, tag.toString()) + " "
+                + secondUntaggedPerson.getName().toString() + "\n"
+                + String.format(UntagCommand.MESSAGE_PERSONS_DO_NOT_HAVE_TAG, 1) + " "
+                + firstUntaggedPerson.getName().toString();
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondUntaggedPerson);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -81,46 +80,45 @@ public class TagCommandTest {
         showFirstAndSecondPersonsOnly(model);
 
         ReadOnlyPerson firstPersonInList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person firstTaggedPerson = new PersonBuilder(firstPersonInList).withTags("friends",
-                "retrieveTester", "tagTester").build();
+        Person firstUntaggedPerson = new PersonBuilder(firstPersonInList).withTags("retrieveTester").build();
         ReadOnlyPerson secondPersonInList = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        Person secondTaggedPerson = new PersonBuilder(secondPersonInList).withTags("owesMoney", "friends",
-                "retrieveTester", "tagTester").build();
-        Tag tag = new Tag("tagTester");
-        TagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
+        Person secondUntaggedPerson = new PersonBuilder(secondPersonInList).withTags("owesMoney",
+                "retrieveTester").build();
+        Tag tag = new Tag("friends");
+        UntagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
 
-        String expectedMessage = String.format(TagCommand.MESSAGE_SUCCESS, 2, tag.toString()) + " "
-                + firstTaggedPerson.getName().toString() + ", "
-                + secondTaggedPerson.getName().toString();
+        String expectedMessage = String.format(UntagCommand.MESSAGE_SUCCESS, 2, tag.toString()) + " "
+                + firstUntaggedPerson.getName().toString() + ", "
+                + secondUntaggedPerson.getName().toString();
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondUntaggedPerson);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
-    public void execute_filteredListContainsPersonsWithTag_success() throws Exception {
+    public void execute_filteredListContainsPersonsWithoutTag_success() throws Exception {
         showFirstAndSecondPersonsOnly(model);
 
         ReadOnlyPerson firstPersonInList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person firstTaggedPerson = new PersonBuilder(firstPersonInList).withTags("friends",
-                "retrieveTester", "owesMoney").build();
+        Person firstUntaggedPerson = new PersonBuilder(firstPersonInList).withTags("friends",
+                "retrieveTester").build();
         ReadOnlyPerson secondPersonInList = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        Person secondTaggedPerson = new PersonBuilder(secondPersonInList).withTags("owesMoney", "friends",
+        Person secondUntaggedPerson = new PersonBuilder(secondPersonInList).withTags("friends",
                 "retrieveTester").build();
         Tag tag = new Tag("owesMoney");
-        TagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
+        UntagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON), tag);
 
-        String expectedMessage = String.format(TagCommand.MESSAGE_SUCCESS, 1, tag.toString()) + " "
-                + firstTaggedPerson.getName().toString() + "\n"
-                + String.format(TagCommand.MESSAGE_PERSONS_ALREADY_HAVE_TAG, 1) + " "
-                + secondTaggedPerson.getName().toString();
+        String expectedMessage = String.format(UntagCommand.MESSAGE_SUCCESS, 1, tag.toString()) + " "
+                + secondUntaggedPerson.getName().toString() + "\n"
+                + String.format(UntagCommand.MESSAGE_PERSONS_DO_NOT_HAVE_TAG, 1) + " "
+                + firstUntaggedPerson.getName().toString();
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
-        expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstUntaggedPerson);
+        expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondUntaggedPerson);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -128,7 +126,8 @@ public class TagCommandTest {
     @Test
     public void execute_invalidPersonIndexesUnfilteredList_failure() throws Exception {
         Index outOfBound = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        TagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, outOfBound), new Tag("tagTester"));
+        UntagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, outOfBound),
+                new Tag("dummyTag"));
 
         assertCommandFailure(command, model, MESSAGE_INVALID_INDEXES);
     }
@@ -141,7 +140,8 @@ public class TagCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        TagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, outOfBoundIndex), new Tag("tagTester"));
+        UntagCommand command = prepareCommand(Arrays.asList(INDEX_FIRST_PERSON, outOfBoundIndex),
+                new Tag("dummyTag"));
 
         assertCommandFailure(command, model, MESSAGE_INVALID_INDEXES);
     }
@@ -150,12 +150,12 @@ public class TagCommandTest {
     public void equals() throws Exception {
         final List<Index> indexList = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
         final Tag tag = new Tag("dummyTag");
-        final TagCommand command = new TagCommand(indexList, tag);
+        final UntagCommand command = new UntagCommand(indexList, tag);
 
         // same values -> returns true
         final List<Index> indexListCopy = Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
         final Tag tagCopy = new Tag("dummyTag");
-        assertTrue(command.equals(new TagCommand(indexListCopy, tagCopy)));
+        assertTrue(command.equals(new UntagCommand(indexListCopy, tagCopy)));
 
         // same object -> returns true
         assertTrue(command.equals(command));
@@ -168,18 +168,30 @@ public class TagCommandTest {
 
         // different index list -> returns false
         final List<Index> anotherIndexList = Arrays.asList(INDEX_FIRST_PERSON, INDEX_THIRD_PERSON);
-        assertFalse(command.equals(new TagCommand(anotherIndexList, tag)));
+        assertFalse(command.equals(new UntagCommand(anotherIndexList, tag)));
 
         // different tag -> returns false
         final Tag anotherTag = new Tag("anotherTag");
-        assertFalse(command.equals(new TagCommand(indexList, anotherTag)));
+        assertFalse(command.equals(new UntagCommand(indexList, anotherTag)));
     }
 
     /**
-     * Returns an {@code TagCommand}.
+     * Returns an {@code UntagCommand}.
      */
-    private TagCommand prepareCommand(List<Index> indexes, Tag tag) {
-        TagCommand command = new TagCommand(indexes, tag);
+    private UntagCommand prepareCommand() {
+        UntagCommand command = new UntagCommand();
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    private UntagCommand prepareCommand(Tag tag) {
+        UntagCommand command = new UntagCommand(tag);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    private UntagCommand prepareCommand(List<Index> indexes, Tag tag) {
+        UntagCommand command = new UntagCommand(indexes, tag);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
