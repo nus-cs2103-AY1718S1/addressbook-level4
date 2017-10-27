@@ -58,7 +58,7 @@ public class LocationContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_moduleCodeContainsKeywords_returnsTrue() {
+    public void test_locationContainsKeywords_returnsTrue() {
         // One keyword
         LocationContainsKeywordsPredicate predicate = new LocationContainsKeywordsPredicate(Collections.singletonList(
                 "LT27"));
@@ -79,7 +79,7 @@ public class LocationContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_moduleCodeDoesNotContainKeywords_returnsFalse() {
+    public void test_locationDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         LocationContainsKeywordsPredicate predicate = new LocationContainsKeywordsPredicate(Collections.emptyList());
         assertFalse(predicate.test(new LessonBuilder().withLocation("LT27").build()));
