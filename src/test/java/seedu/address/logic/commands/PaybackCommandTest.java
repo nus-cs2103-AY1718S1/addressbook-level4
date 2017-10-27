@@ -39,7 +39,6 @@ public class PaybackCommandTest {
 
     @Test
     public void execute_successfulPayback() {
-        Index firstPerson = Index.fromOneBased(1);
         ReadOnlyPerson personWhoPayback = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         String expectedMessage = String.format(PaybackCommand.MESSAGE_PAYBACK_SUCCESS,
                 personWhoPayback.getName().toString(), VALID_DEBT_FIGURE);
@@ -47,7 +46,7 @@ public class PaybackCommandTest {
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
             expectedModel.deductDebtFromPerson(personWhoPayback, new Debt(VALID_DEBT_FIGURE));
 
-            PaybackCommand paybackCommand = prepareCommand(firstPerson, new Debt(VALID_DEBT_FIGURE));
+            PaybackCommand paybackCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(VALID_DEBT_FIGURE));
             assertCommandSuccess(paybackCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -79,9 +78,8 @@ public class PaybackCommandTest {
     //@@author jelneo
     @Test
     public void execute_unsuccessfulPayback_dueToInvalidFigure() {
-        Index firstPerson = Index.fromOneBased(1);
         try {
-            PaybackCommand paybackCommand = prepareCommand(firstPerson, new Debt(INVALID_DEBT_FIGURE));
+            PaybackCommand paybackCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(INVALID_DEBT_FIGURE));
             assertCommandFailure(paybackCommand, model, MESSAGE_INVALID_FORMAT);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -90,9 +88,8 @@ public class PaybackCommandTest {
 
     @Test
     public void execute_unsuccessfulPayback_dueToAmountExceedingDebtOwed() {
-        Index firstPerson = Index.fromOneBased(1);
         try {
-            PaybackCommand paybackCommand = prepareCommand(firstPerson, new Debt(ENORMOUS_DEBT_FIGURE));
+            PaybackCommand paybackCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(ENORMOUS_DEBT_FIGURE));
             assertCommandFailure(paybackCommand, model, PaybackCommand.MESSAGE_PAYBACK_FAILURE);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -128,7 +125,7 @@ public class PaybackCommandTest {
     }
 
     /**
-     * Parses {@code userInput} into a {@code PaybackCommand}.
+     * Prepares a {@code PaybackCommand}.
      */
     private PaybackCommand prepareCommand(Index index, Debt debt) {
         PaybackCommand command = null;
