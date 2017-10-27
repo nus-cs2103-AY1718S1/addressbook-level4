@@ -62,11 +62,16 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
+A person can be added with just the name being specified
+The Order of name, phone number, email, address and tags being added does not matter
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe e/betsycrowe@example.com`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe a/Newgate Prison p/1234567 e/betsycrowe@example.com`
+* `add n/Betsy Crowe`
 
 === Adding a relationship between two persons: `addRelationship`
 

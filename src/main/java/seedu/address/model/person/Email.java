@@ -10,15 +10,22 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Email {
 
+    public static final Email UNSPECIFIED = new Email();
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
-
     public final String value;
 
     /**
+     * The default Email constructor when email is not specified by the user
+     */
+    private Email() {
+        value = "<Unspecified email>";
+    }
+
+    /**
      * Validates given email.
-     *
+     * An exception to the ILLegalValueException is the String "Unspecified email"
      * @throws IllegalValueException if given email address string is invalid.
      */
     public Email(String email) throws IllegalValueException {

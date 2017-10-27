@@ -86,6 +86,15 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the default address when address is not specified by the user
+     */
+    public PersonBuilder withUnspecifiedAddress() {
+        this.person.setAddress(Address.UNSPECIFIED);
+
+        return this;
+    }
+
+    /**
      * Sets the {@code Phone} of the {@code Person} that we are building.
      */
     public PersonBuilder withPhone(String phone) {
@@ -94,6 +103,15 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("phone is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the default phone when phone is not specified by the user
+     */
+    public PersonBuilder withUnspecifiedPhone() {
+        this.person.setPhone(Phone.UNSPECIFED);
+
         return this;
     }
 
@@ -109,6 +127,13 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the default email when email is not specified by the user
+     */
+    public PersonBuilder withUnspecifiedEmail() {
+        this.person.setEmail(Email.UNSPECIFIED);
+        return this;
+    }
     /**
      * Sets the {@code Remark} of the {@code Person} that we are building.
      */
