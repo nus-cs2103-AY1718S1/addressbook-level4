@@ -269,11 +269,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
-
+        
         executeCommand(command);
-      
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-      
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
