@@ -29,7 +29,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/contag_logo.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -53,6 +53,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private MenuItem calendarItem;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -90,10 +93,12 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(calendarItem, KeyCombination.valueOf("F2"));
     }
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -129,6 +134,12 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+
+
+
+
+
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -152,6 +163,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -192,6 +204,17 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+
+    /**
+     * Opens the Calendar window.
+     */
+    @FXML
+    public void handleCalendar() {
+        //browserPanel.loadCalendar();
+        browserPanel.loadPage("https://www.timeanddate.com/calendar/");
+    }
+
+
     void show() {
         primaryStage.show();
     }
@@ -218,3 +241,4 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 }
+

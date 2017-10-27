@@ -12,6 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.commandidentifier.CommandIdentifier;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.email.Email;
@@ -63,6 +64,16 @@ public class ParserUtil {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
     }
+
+    /**
+     * Parses a {@code Optional<String> country} into an {@code Optional<Country>} if {@code country} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Country> parseCountry (Optional<String> country) throws IllegalValueException {
+        requireNonNull(country);
+        return country.isPresent() ? Optional.of(new Country(country.get())) : Optional.empty();
+    }
+
 
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.

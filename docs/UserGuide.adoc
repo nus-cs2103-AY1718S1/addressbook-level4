@@ -10,11 +10,45 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+{empty} +
 
-== Quick Start
+image::contag_logo_ugdg.png[align="center"]
+
+{empty} +
+
+By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
+
+
+== Introduction
+
+=== Welcome to ConTag!
+
+Contag is specially designed for heavy business user or frequent traveller.
+
+
+=== Authors and Contributors
+The intial version of the user guide was written by Team SE-EDU. The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.    
+
+=== The ConTag Help System
+
+Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book. You can also get help on specific menu items by keying in `help` in the command line of Contag or pressing the `F1` key.
+
+=== Features and Capabilities Overview
+The following list is a  overview of some of the features and capabilities which ConTag offers you:
+
+* Saving all the attributes of a person's contact in the address book for easier manageability
+
+* Locating the address of your contact via the integrated google map
+
+* Creating a new schedule or activity with a contact
+
+* Sending email to multiply emails simultaneously
+
+
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -76,13 +110,14 @@ Examples:
 Alias: `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/OTHER EMAIL]... a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0).
+A person must have at least 1 email.
 
 [NOTE]
-ADDRESS needs to follow the format:"`BLOCK`, `STREET`, [`UNIT`,] `POSTAL CODE`" with UNIT being an optional parameter.
+ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter.
 
 Examples:
 
@@ -101,7 +136,7 @@ Format: `list`
 Alias: `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -208,7 +243,7 @@ Examples:
 `locate 2` +
 Locates the 2nd person's address in the address book.
 * `find Betsy` +
-`select 1` +
+`locate 1` +
 Locates the 1st person's address in the results of the `find` command.
 
 === Scheduling an activity: `schedule` [Since v1.3]
@@ -251,6 +286,21 @@ Examples:
 Outputs the 1st person's email address in console: `johndoe@example.com`
 * `copy 1 4 5` +
 Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
+
+=== Opening calendar : `calendar` [Since v1.3]
+
+Alias: `cl`
+
+Open a calendar browser that display the current events. +
+Format: `calendar`
+
+Examples:
+
+Opens up calendar browser in the address book. +
+* `calendar` (using command word) +
+* `cl` (using alias) +
+Opens up calendar browser in the address book.
+
 
 === Listing entered commands : `history`
 
@@ -337,30 +387,40 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+To transfer my data to another Computer,iInstall the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX [OTHER INDICES]...` +
-e.g. `delete 1 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Locate* : `locate INDEX` +
-e.g.`locate 2`[Coming in v2.0]
-* *Schedule* : `schedule INDEX d/DATE act/ACTIVITY` +
-e.g. `schedule 1 d/25-12 act/Christmas dinner`
-* *Copy* : `copy INDEX [OTHER INDICES]...` +
-e.g.`copy 1 2` [Coming in v2.0]
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="59%",cols="5%,<2%,<50%,<42%",options="header",]
+|=======================================================================
+|Commands Words |Commands Alias |Format|Example
+|`Add`] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
+
+|`Edit` | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
+
+|`Find` |`f` |`find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`find n/James Jake`
+
+|`Help` | `h` | `help COMMAND WORD` | `help add`
+
+|`Locate` |`lc` |`locate INDEX` | `locate 2`
+
+|`Schedule` |`sc` |`schedule d/DATE act/ACTIVITY` | `schedule 1 d/25-12 act/Christmas dinner`
+
+|`Copy` |`cp` |`copy INDEX [OTHER INDICES]`|
+
+|`Delete` |`d`|`delete INDEX [OTHER INDICES]`|
+
+|`History` |`his`|`history`|
+
+|`Clear` | `c`| `clear` |
+
+|`List` |`l` |`list` |
+
+|`Undo` |`u`| `undo` |
+
+|`Redo` |`r` |`redo` |
+
+|`Calendar` |`cl` |`calendar` |
+
+|=======================================================================
+

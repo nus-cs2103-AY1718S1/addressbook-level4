@@ -25,7 +25,7 @@ public class AddCommand extends UndoableCommand {
             + ": Adds a person to the address book.\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
+            + PREFIX_PHONE + "PHONE " // country is derived from phone internally
             + PREFIX_EMAIL + "EMAIL "
             + "[" + PREFIX_EMAIL + "OTHER EMAIL]... "
             + PREFIX_ADDRESS + "ADDRESS "

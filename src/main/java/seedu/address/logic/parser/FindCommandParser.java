@@ -87,10 +87,8 @@ public class FindCommandParser implements Parser<FindCommand> {
      * Returns true if email parameter has a length of 4 digits or 8 digits exactly
      * @param phoneNumbers
      */
+
     public static boolean validPhoneNumbers(String [] phoneNumbers) {
         return Stream.of(phoneNumbers).allMatch(length -> length.matches("\\d{4}") || length.matches("\\d{8}"));
     }
-
-
-
 }
