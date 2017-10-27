@@ -66,6 +66,8 @@ public class GroupListPanel extends UiPart<Region> {
     private void handleJumpToGroupListRequestEvent(JumpToGroupListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+        /** To ensure that group at index 1 can be selected even when previous selection was its index */
+        groupListView.getSelectionModel().clearSelection();
     }
 
     /**

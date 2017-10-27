@@ -261,6 +261,20 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a person to a group in the address book.
+     *
+     * @throws GroupNotFoundException if group does not exist.
+     * @throws PersonNotFoundException if person does not exist.
+     * @throws NoPersonsException if group is empty.
+     *
+     */
+
+    public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toAdd)
+            throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
+        groups.removePersonFromGroup(targetGroup, toAdd);
+    }
+
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws GroupNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */

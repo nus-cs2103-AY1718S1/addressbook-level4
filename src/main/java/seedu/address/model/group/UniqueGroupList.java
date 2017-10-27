@@ -19,6 +19,7 @@ import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 
@@ -116,6 +117,8 @@ public class UniqueGroupList implements Iterable<Group> {
      * Adds person to specified group in the list.
      *
      * @throws GroupNotFoundException if no such group could be found in the list.
+     * @throws DuplicatePersonException if an equivalent person exists in the list.
+     * @throws PersonNotFoundException if no such person could be found in the list.
      */
     public void addPersonToGroup(Index target, ReadOnlyPerson toAdd)
             throws GroupNotFoundException, DuplicatePersonException, PersonNotFoundException {
@@ -132,6 +135,37 @@ public class UniqueGroupList implements Iterable<Group> {
             targetGroup.addMember(toAdd);
         } catch (DuplicatePersonException dpe) {
             throw new DuplicatePersonException();
+        }
+
+        internalList.set(target.getZeroBased(), targetGroup);
+    }
+
+    /**
+     * Removes person from specified group in the list.
+     *
+     * @throws GroupNotFoundException if no such group could be found in the list.
+     * @throws NoPersonsException if list is empty.
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public void removePersonFromGroup(Index target, ReadOnlyPerson toAdd)
+            throws GroupNotFoundException, NoPersonsException, PersonNotFoundException {
+        requireNonNull(toAdd);
+        requireNonNull(target);
+
+        Group targetGroup = internalList.get(target.getZeroBased());
+
+        if (targetGroup.getMembers().size() < 1) {
+            throw new NoPersonsException();
+        }
+
+        if (isNull(targetGroup)) {
+            throw new GroupNotFoundException();
+        }
+
+        try {
+            targetGroup.deleteMember(toAdd);
+        } catch (PersonNotFoundException pnfe) {
+            throw new PersonNotFoundException();
         }
 
         internalList.set(target.getZeroBased(), targetGroup);

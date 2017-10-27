@@ -26,7 +26,6 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      */
     public PersonCardHandle getHandleToSelectedCard() {
         List<PersonCard> personList = getRootNode().getSelectionModel().getSelectedItems();
-
         if (personList.size() != 1) {
             throw new AssertionError("Person list size expected 1.");
         }
