@@ -1,15 +1,15 @@
 package guitests.guihandles;
 
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ScrollPane;
 
 /**
  * A handle to the {@code CommandBox} in the GUI.
  */
-public class HelpOverlayHandle extends NodeHandle<GridPane> {
+public class HelpOverlayHandle extends NodeHandle<ScrollPane> {
 
     public static final String HELP_OVERLAY_ID = "#helpOverlay";
 
-    public HelpOverlayHandle(GridPane helpOverlayNode) {
+    public HelpOverlayHandle(ScrollPane helpOverlayNode) {
         super(helpOverlayNode);
     }
 

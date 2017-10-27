@@ -9,10 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -62,7 +62,7 @@ public class MainWindow extends UiPart<Region> {
     private Label allLabel;
 
     @FXML
-    private GridPane helpOverlay;
+    private ScrollPane helpOverlay;
 
     @FXML
     private MenuItem helpOverlayItem;
