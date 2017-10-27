@@ -97,13 +97,17 @@ public class ParcelListPanel extends UiPart<Region> {
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            allUncompletedParcelListView.scrollTo(index);
-            allUncompletedParcelListView.getSelectionModel().clearAndSelect(index);
+            if(tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 0) {
+                allUncompletedParcelListView.scrollTo(index);
+                allUncompletedParcelListView.getSelectionModel().clearAndSelect(index);
+            }
         });
 
         Platform.runLater(() -> {
-            allCompletedParcelListView.scrollTo(index);
-            allCompletedParcelListView.getSelectionModel().clearAndSelect(index);
+            if(tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 1) {
+                allCompletedParcelListView.scrollTo(index);
+                allCompletedParcelListView.getSelectionModel().clearAndSelect(index);
+            }
         });
     }
 
