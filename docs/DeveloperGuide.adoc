@@ -774,6 +774,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a group of people with names or similar tag |save time from deleting one by one
 
+|`* * *` |user |to be able to add birthday details to contacts |check for a person's birthday
+
 |`* *` |user |add birthday date to contact |save more details of a person
 
 |`* *` |user |hide details of a person |just see the name of the person
