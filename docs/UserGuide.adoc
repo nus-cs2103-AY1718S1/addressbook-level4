@@ -29,8 +29,8 @@ Let’s get connected now!
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `iConnect.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your iConnect.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -57,26 +57,30 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+[NOTE]
+iConnect will be referred to as *address book* in the following documentation.
+
 === Viewing help : `help` _[Since v1.3]_
 
-_Alias: `h`_
+_Alias:_ `h`
 
-Format: `help command`
+Shows the usage of the given command word.
 
-****
-* Shows the command usage of the given command name.
-****
+Format: `help COMMAND`
 
- Examples:
+Examples:
 
- * `help list` +
+* `help list` +
 Shows the usage of command `list`
+* `help add` +
+Shows the usage of command `add`
 
 === Adding a person: `add` _[Since v1.1]_
 
-_Alias: `create` `put`_
+_Alias:_ `create` `put`
 
-Adds a person to the address book. +
+Stores a person’s contact details to address book records.
+
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
@@ -91,24 +95,26 @@ Examples:
 
 === Listing all persons : `list` _[Since v1.1]_
 
-_Alias: `show` `all`_
+_Alias:_ `show` `all`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons stored in address book.
+
 Format: `list`
 
 === Editing a person : `edit` _[Since v1.1]_
 
-_Alias: `update` `modify`_
+_Alias:_ `update` `modify`
 
-Edits an existing person in the address book. +
+Edits an existing person in the address book.
+
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Modifies the person at the specified INDEX. The index refers to the index number shown in the last persons listing. The index must be a positive integer 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* You can remove all the person’s tags by typing t/ without specifying any tags after it.
 ****
 
 Examples:
@@ -124,19 +130,19 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 
 === Locating persons by different attributes: `find` _[Since v1.2]_
 
-_Alias: `search` `get`_
+_Alias:_ `search` `get`
 
-Finds persons whose specified attributes contain any of the given keywords. +
+Searches for persons whose specified attribute contains any of the given keywords.
+
 Format: `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
 
 ****
-* The search for `Name` `Email` `Address` is case insensitive. e.g `hans` will match `Hans`, `Clementi Street` will match `clementi street`.
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
-* The person can be found by searching any substring of the attibute. e.g. `hn` will match `John`, `1234` will match `98123476`.
 * A prefix is required before entering a different type of keyword.
-* Each prefix should appear at most once with its keywords grouping behind. e.g. `n/alice bob`.
-* Searching by multiple keywords of the same type is allowed except for `Address` type.
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+* The order of the keywords does not matter. e.g. Hans Bo will match Bo Hans.
+* You can find a person by searching for any substring of the attribute. e.g. hn will match John, 1234 will match 98123476.
+* All keywords regarding a certain attribute should be put after the prefix. e.g. n/alice bob.
+* You can only search for one address per time for Address type.
+* Persons matching at least one keyword will be returned. e.g. Hans Bo will return Hans Gruber, Bo Yang.
 * At least one of the optional fields must be provided.
 ****
 
@@ -154,7 +160,11 @@ Returns any person having names `Betsy`, `Tim`, `John` or living at `Clementi St
 === Sorting list of persons: `sort` _[Since v1.2]_
 
 Sorts the full list of persons based on the specified attribute. +
+
 Format: `sort [n/(ASC OR DSC)]`
+
+[TIP]
+The list can be sorted by one of the following attribute: name, phone, email, address, time added.
 
 ****
 * Sort command only accepts one attribute.
@@ -177,9 +187,10 @@ Returns list of persons sorted by time added in descending order
 
 === Deleting a person : `delete` _[Since v1.2]_
 
-_Alias: `remove` `-`_
+_Alias:_ `remove` `-`
 
-Deletes a group of people from the address book. +
+Deletes a group of people from the address book.
+
 Format:`delete I/INDEX INDEX ...` (or) `delete n/Name`
 
 ****
@@ -207,8 +218,9 @@ Deletes the 1st person in the results of the `find` command
 
 === Adding a tag to a person(s) : `t-add` _[Since v1.1]_
 
-Adds tag to specified person(s) from the address book. +
-Format: `t-add [TAG] INDEX`
+Adds tag to specified person(s) from the address book.
+
+Format: `t-add TAG INDEX`
 
 ****
 * Adds tag to the person(s) at the specified `INDEX`.
@@ -225,8 +237,9 @@ Adds the tag friends to the 2nd and 3rd person in the address book
 
 === Removing a tag to a person(s) : `t-remove` _[Since v1.2]_
 
-Removes a tag from specified person(s) from the address book. +
-Format: `t-remove INDEX... [TAG]`
+Removes a tag from specified person(s) from the address book.
+
+Format: `t-remove INDEX... TAG`
 
 ****
 * Removes a tag from the person(s) at the specified `INDEX`.
@@ -243,6 +256,8 @@ Removes the tag friends from the 2nd and 3rd person in the address book
 
 === Find the person(s) with given tags: `t-find` _[Since v1.3]_
 
+Finds all persons with the given tag.
+
 Format: `t-find TAG`
 
 ****
@@ -256,6 +271,8 @@ Examples:
 Shows all the people with tag `friend` or tag `classmate`
 
 === Find the location of a person using Google Map: `m-show` _[Since v1.3]_
+
+Finds the location of a person as specified in the contact address in Google Map.
 
 Format: `m-show INDEX`
 
@@ -272,6 +289,8 @@ Examples:
 Shows the address of person with index 1 on the google map
 
 === Find the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
+
+Gets the shortest path from the location provided to the address of the selected person in Google map.
 
 Format: `m-route INDEX a/ADDRESS`
 
@@ -290,7 +309,55 @@ Shows the route from `Clementi Street` to the address of person with index numbe
 * `m-route 7 a/John street, block 123, #01-01` +
 Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
 
+=== Schedule an Event: s-add _[Since v1.4]_
+
+Adds an event, along with the members involved, into the calendar.
+
+Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION`
+
+[TIP]
+It is possible to create an event without any members.
+
+****
+* Creates an event with the given event name, event time and duration.
+* Members added will be reflected in the event list panel.
+* The index must be a positive integer 1, 2, 3, ...
+* TIME will be added in the following format: yyyy-MM-dd HH:mm
+* Duration must be a positive integer and is in minutes.
+****
+
+Examples:
+
+* `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120` +
+Adds a two-hour long event called ‘iConnect Conference’ on 4th of December 2017 at 8:45AM ,with the specified person at index 1, 2 and 3 into the addressbook calendar.
+* `s-add n/Exam Date t/2017-12-04 14:30 d/120` +
+Adds a two-hour long event called ‘Exam Date’ on 4th of December 2017 at 2:30PM into the addressbook calendar.
+
+=== Cancel an Event: s-remove _[Since v1.4]_
+
+Removes an event from the calendar.
+
+Format: `s-remove e/INDEX INDEX...`
+
+[TIP]
+It is possible to remove multiple events with a single command.
+
+****
+* INDEX is referring to the index of an event in the event list panel
+* The index must be a positive integer 1, 2, 3, ...
+* Person details will be updated each time a deletion of event is made.
+****
+
+Examples:
+
+* `s-remove 1` +
+Removes a single event with the index 1.
+* `s-remove 1 2 3` +
+Removes 3 events with the index 1, 2 and 3.
+
 === Making a backup address book: `export` _[Coming in v2.0]_
+
+Backup your contact details to the given path.
 
 Format: `export PATH`
 
@@ -300,9 +367,10 @@ Format: `export PATH`
 
 === Selecting a person : `select` _[Since v1.1]_
 
-_Alias: `choose`_
+_Alias:_ `choose`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the person identified by the index number used in the last person listing.
+
 Format: `select INDEX`
 
 ****
@@ -322,9 +390,10 @@ Selects the 1st person in the results of the `find` command
 
 === Listing entered commands : `history` _[Since v1.1]_
 
-_Alias: `record`_
+_Alias:_ `record`
 
-Lists all the commands that you have entered in reverse chronological order. +
+Lists all the commands that you have entered in reverse chronological order.
+
 Format: `history` or `record`
 
 [NOTE]
@@ -335,7 +404,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the address book to the state before the previous _undoable_ command was executed.
+
 Format: `undo`
 
 [NOTE]
@@ -458,6 +528,10 @@ e.g. `t-find friends`
 e.g. `m-show 1`
 * *MapRoute* : `m-route INDEX a/ADDRESS` +
 e.g. `m-show 1 a/NUS`
+* *ScheduleAdd* : `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION` +
+e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120`
+* *ScheduleRemove* : `s-remove e/INDEX INDEX...` +
+e.g. `s-remove e/1 2 3`
 * *Export* : `export PATH` +
 e.g. `export /desktop/new_folder`
 * *Select* : `select INDEX` +
