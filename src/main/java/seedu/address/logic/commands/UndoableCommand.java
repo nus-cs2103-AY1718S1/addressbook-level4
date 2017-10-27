@@ -32,14 +32,14 @@ public abstract class UndoableCommand extends Command {
         this.selectedPerson = model.getSelectedPerson();
         if (selectedPerson != null) {
             switch (model.getCurrentList()) {
-                case "blacklist":
-                    this.index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList().indexOf(selectedPerson));
-                    break;
-                case "whitelist":
-                    this.index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList().indexOf(selectedPerson));
-                    break;
-                default:
-                    this.index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(selectedPerson));
+            case "blacklist":
+                this.index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList().indexOf(selectedPerson));
+                break;
+            case "whitelist":
+                this.index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList().indexOf(selectedPerson));
+                break;
+            default:
+                this.index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(selectedPerson));
             }
         }
         this.previousAddressBook = new AddressBook(model.getAddressBook());
@@ -63,7 +63,7 @@ public abstract class UndoableCommand extends Command {
      * Executes the command and updates the filtered person
      * list to show all persons.
      */
-    protected final void redo() throws CommandException{
+    protected final void redo() throws CommandException {
         requireNonNull(model);
         saveAddressBookSnapshot();
         try {

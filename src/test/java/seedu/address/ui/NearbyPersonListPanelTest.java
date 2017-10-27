@@ -16,7 +16,6 @@ import guitests.guihandles.NearbyPersonListPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
