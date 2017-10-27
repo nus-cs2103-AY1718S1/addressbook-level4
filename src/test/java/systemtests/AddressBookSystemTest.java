@@ -151,7 +151,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
-        assertListMatching(getParcelListPanel(), expectedModel.getFilteredParcelList());
+        assertListMatching(getParcelListPanel(), expectedModel.getActiveList());
     }
 
     /**
@@ -252,7 +252,7 @@ public abstract class AddressBookSystemTest {
         try {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
-            assertListMatching(getParcelListPanel(), getModel().getFilteredParcelList());
+            assertListMatching(getParcelListPanel(), getModel().getActiveList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
