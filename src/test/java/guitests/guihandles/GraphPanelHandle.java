@@ -8,7 +8,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class GraphPanelHandle extends NodeHandle<Node> {
 
-    public static final String GRAPH_DISPLAY_ID = "#graphPanelPlaceholder";
+    public static final String GRAPH_DISPLAY_ID = "#lineChart";
     private ReadOnlyPerson person;
 
     public GraphPanelHandle(Node graphPanelNode) {
