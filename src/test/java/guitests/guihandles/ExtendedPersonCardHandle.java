@@ -1,11 +1,7 @@
 package guitests.guihandles;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Region;
 
 /**
  * Provides a handle to a person card in the person list panel.
@@ -21,7 +17,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     private static final String GRADES_FIELD_ID = "#grades";
     private static final String POSTALCODE_FIELD_ID = "#postalCode";
     private static final String REMARK_FIELD_ID = "#remark";
-    private static final String TAGS_FIELD_ID = "#tags";
 
 
     private final Label idLabel;
@@ -33,7 +28,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
     private final Label gradesLabel;
     private final Label postalCodeLabel;
     private final Label remarkLabel;
-    private final List<Label> tagLabels;
 
 
     public ExtendedPersonCardHandle(Node cardNode) {
@@ -48,13 +42,6 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
         this.postalCodeLabel = getChildNode(POSTALCODE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.remarkLabel = getChildNode(REMARK_FIELD_ID);
-
-        Region tagsContainer = getChildNode(TAGS_FIELD_ID);
-        this.tagLabels = tagsContainer
-                .getChildrenUnmodifiable()
-                .stream()
-                .map(Label.class::cast)
-                .collect(Collectors.toList());
     }
 
     public String getId() {
@@ -91,12 +78,5 @@ public class ExtendedPersonCardHandle extends NodeHandle<Node> {
 
     public String getRemark() {
         return remarkLabel.getText();
-    }
-
-    public List<String> getTags() {
-        return tagLabels
-                .stream()
-                .map(Label::getText)
-                .collect(Collectors.toList());
     }
 }

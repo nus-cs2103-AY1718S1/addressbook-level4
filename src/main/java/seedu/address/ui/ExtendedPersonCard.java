@@ -7,7 +7,6 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -42,8 +41,6 @@ public class ExtendedPersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private Label remark;
-    @FXML
-    private FlowPane tags;
 
     public ExtendedPersonCard() {
         super(FXML);
@@ -62,8 +59,6 @@ public class ExtendedPersonCard extends UiPart<Region> {
         postalCode.setText(person.getPostalCode().toString());
         email.setText(person.getEmail().toString());
         remark.setText(person.getRemark().toString());
-        tags.getChildren().clear();
-        initTags(person);
     }
 
     @Subscribe
@@ -72,15 +67,4 @@ public class ExtendedPersonCard extends UiPart<Region> {
         loadPersonDetails(event.getNewSelection().person);
     }
 
-    /**
-     * Initializes and styles tags belonging to a person.
-     * @param person must be a valid.
-     */
-    protected void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-font-size:15px");
-            tags.getChildren().add(tagLabel);
-        });
-    }
 }

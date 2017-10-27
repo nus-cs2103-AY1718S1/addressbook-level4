@@ -8,13 +8,10 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
-import java.util.stream.Collectors;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.ExtendedPersonCardHandle;
-import javafx.application.Platform;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -58,24 +55,7 @@ public class ExtendedPersonCardTest extends GuiUnitTest {
         assertEquals(expectedPerson.getPostalCode().toString(), extendedPersonCardHandle.getPostalCode());
         assertEquals(expectedPerson.getEmail().toString(), extendedPersonCardHandle.getEmail());
         assertEquals(expectedPerson.getRemark().toString(), extendedPersonCardHandle.getRemark());
-
-        //update tag information displayed
-        Platform.runLater((Runnable) () -> {
-            extendedPersonCard.loadPersonDetails(expectedPerson);
-            assertTagsDisplayed(expectedPerson, extendedPersonCardHandle);
-        });
-
     }
-
-    /*
-     * If {@code extended person card} displays tags of {@code expectedPerson} --> returns true
-     */
-    private void assertTagsDisplayed(ReadOnlyPerson expectedPerson, ExtendedPersonCardHandle
-            extendedPersonCardHandleHandle) {
-        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
-                extendedPersonCardHandle.getTags());
-    }
-
 
     @Test
     public void equals() {

@@ -40,15 +40,11 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private ExtendedPersonCard extendedPersonCard;
     private GraphPanel graphPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-
-    @FXML
-    private StackPane browserPlaceholder;
 
     @FXML
     private StackPane extendedPersonCardPlaceholder;
