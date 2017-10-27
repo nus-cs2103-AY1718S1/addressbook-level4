@@ -233,6 +233,8 @@ _Figure 2.2.4 : Structure of the Storage Component_
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The diagram _(Figure 2.2.4)_ above shows the structure of the `Storage` component.
+The `StorageManager` handles the saving and loading of data for both `AddressBookStorage` and `EventStorage`.
+`XmlSerializableAddressBook` and `XmlSerializableEventStorage` handle the conversion from Java to Xml format using `XmlAdaptedPerson`, `XmlAdaptedEvent` and `XmlAdaptedTag`.
 
 The `Storage` component:
 
@@ -247,6 +249,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+For the features described in this section, their design considerations are included where applicable.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -571,7 +574,7 @@ The sort command creates `CommandResult` object and return it.
 
 **Aspect:** How sort command executes +
 **Alternative 1 (current choice):** Sorts the contact list according to alphabetical order(ascending order). +
-**Pros:** Easy to imlement. +
+**Pros:** Easy to implement. +
 **Cons:** Less function for sort command. +
 **Alternative 2:** Sorts the contact list according to different order(ascending order or descending order). +
 **Pros:** Users have more choices. +
@@ -623,7 +626,7 @@ The list event command object creates `CommandResult` object and return it.
 
 The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
 
-The following *_sequence_* diagram below, Figure 3.6, show how the delete event operation works:
+The following *_sequence_* diagram _(Figure 3.6)_ below shows how the delete event operation works:
 
 image::DeleteEventSequenceDiagram.png[width="800"]
 _Figure 3.6: sequence diagram for deleteE command_
@@ -663,7 +666,7 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 
 The show participants mechanism is facilitated by `PersonJoinsEventsPredicate` and `LogicManager`. This command will help users to find participants of an event. For achieving this function, `PersonJoinsEventsPredicate` will filter the person list. This command inherits from `Command`.
 
-The following *_sequence_* diagram below, Figure 3.7, show how the show participants operation works:
+The following *_sequence_* diagram _(Figure 3.7)_ below show how the show participants operation works:
 
 image::ShowParticipantsSequenceDiagram.png[width="800"]
 _Figure 3.7: sequence diagram for showP INDEX command_
@@ -691,16 +694,50 @@ The show participants command object creates `CommandResult` object and return i
 **Pros:** Users can use the command without listing events. +
 **Cons:** Users need more time to type if the event name is too long. +
 
+=== ShowAllJoinedEvent mechanism
+
+The selectE command is facilitated by the `LogicManager`.
+
+The following *_sequence_* diagram _(Figure 3.8)_ show how the show all joined events operation works:
+
+image::ShowAllJoinedEventsSequenceDiagram.png[width="800"]
+_Figure 3.8: sequence diagram for selectE command_
+
+The user enters a SelectE command which is received by `LogicManger`.
+``LogicManager` calls `AddressBookParser` to parse the user command.
+`AddressBookParser` will call `SelectJoinedEventsCommandParser` to parse the list of INDEXES.
+`AddressBookParser` creates an `SelectJoinedEventsCommand` object and returns it.
+`LogicManager` receives the `Command` object and executes it.
+The `SelectJoinedEventsCommand` calls `getFilteredPersonList()` in the `Model` to get the person list.
+The `SelectJoinedEventsCommand` then creates a list of event names using the person list and list of INDEXES.
+The `SelectJoinedEventsCommand` then proceeds to create a `EventContainsKeywordsPredicate` with the list of event names.
+The `SelectJoinedEventsCommand` then calls `updateFilteredEventList(p)` in the `Model`.
+The `Model` processes the event list.
+The `SelectJoinedEventsCommand` then creates a `CommandResult` object and returns it to `LogicManager`.
+`LogicManager` receives the result and displays it through the `UI`.
+
+[discrete]
+===== Design Considerations
+
+**Aspect:** How selectE command executes +
+**Alternative 1 (current choice):** Shows events joined by person/s at the selected indexes. +
+**Pros:** User does not have to type out names. +
+**Cons:** User has to list/sort person list first. +
+**Alternative 2:** Show events joined by person/s using user entered name. +
+**Pros:** User can directly enter names to search for events where a person with the entered name has joined. +
+**Cons:** Users would have to type more if the name is long. User may mistype the name. +
+// end::selectE[]
+
 === Person-Event interaction
 In this application, we allow users to connect events and persons to show that some persons participate some events. +
 We will explain it in terms of Model and Storage. +
 
 [discrete]
 ==== Model level
-For model, we simply use the "referencing model", which is shown in the diagram below: +
+For model, we simply use the "referencing model", which is shown in the diagram _(Figure 3.7.1)_ below: +
 
 image::DG_model_join.png[width = "800"]
-_Figure ?.?.? interaction model_
+_Figure 3.7.1 interaction model_
 
 Refer to the diagram above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
 Similarly, the participation list in Person model stores all the event in which this person joins.
@@ -717,17 +754,17 @@ public void disjoin(Person personToRemove, Event eventToRemove) {
 
 [discrete]
 ==== Storage level
-For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram below:
+For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram _(Figure 3.7.2)_ below:
 
 image::DG_infinity loop.png[width = "800"]
-_Figure ?.?.? infinity loop_
+_Figure 3.7.2 infinity loop_
 
 To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`, both of them does not have participant or participation information.
 Hence, we can avoid the infinity referencing problem. +
-The updated storage is shown in the diagram below:
+The updated storage is shown in the diagram _(Figure 3.7.3)_ below:
 
 image::DG_join_storage.png[width = "800"]
-_Figure ?.?.? interaction storage_
+_Figure 3.7.3 interaction storage_
 
 [discrete]
 ===== Design Considerations
@@ -1563,6 +1600,7 @@ Use case ends.
 .  Should be usable to a novice who has never used such type of application before
 .  Should startup within 7 seconds
 .  Background color should be appropriate to not discomfort users' eyes.
+
 {More to be added}
 
 [appendix]
