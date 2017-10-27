@@ -145,6 +145,62 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+=== Locating persons by emails: `findEmail`
+
+Finds persons whose emails is same as the keyword. +
+Format: `findEmail KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the email is searched.
+* Only full words will be matched e.g. `johnny` will not match `johnny@example.con`
+* Multiple emails can be searched at one time.
+****
+
+Examples:
+
+* `findEmail alex@example.com` +
+Returns person with the email `alex@example.com`
+* `findEmail alex@example.com jamie@example.com` +
+Returns person with emails `alex@example.com` , `jamie@example.com`
+
+=== Locating persons by emails: `findPhone`
+
+Finds persons whose phone is same as the keyword. +
+Format: `findPhone KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the numbers is searched.
+* Only full words will be matched e.g. `9567` will not match `95678432`
+* Multiple phone numbers can be searched at one time.
+****
+
+Examples:
+
+* `findPhone 86564385` +
+Returns person with the phone number `96564385`
+* `find 87655678 98435670` +
+Returns person with numbers `87655678` , `98435670`
+
+=== Locating reminders by task names: `findReminder`
+
+Finds reminderss whose task names contain any of the given keywords. +
+Format: `findReminder KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `proposals` will match `Proposals`
+* The order of the keywords does not matter. e.g. `Proposal Submission` will match `Submission Proposal`
+* Only the task name is searched.
+* Only full words will be matched e.g. `proposal` will not match `proposals`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Proposal Submission` will return `Proposal Draft`, `Project Submission`
+****
+
+Examples:
+
+* `findReminder Proposal` +
+Returns `Proposal` and `Proposal Submission`
+* `find Meeting and Project Work` +
+Returns any reminder having task names `Meeting`, `Proposal Submission`
+
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
