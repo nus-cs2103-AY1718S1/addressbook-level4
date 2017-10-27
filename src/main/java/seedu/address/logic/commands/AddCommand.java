@@ -2,11 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
 
@@ -26,11 +24,9 @@ public class AddCommand extends UndoableCommand {
             + "Parameters: "
             + PREFIX_TRACKING_NUMBER + "TRACKING_NUMBER "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "[PHONE] "
-            + PREFIX_EMAIL + "[EMAIL] "
+            + PREFIX_PHONE + "PHONE "
+            + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
-            + PREFIX_DELIVERY_DATE + "DELIVERYDATE "
-            + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TRACKING_NUMBER + "RR999999999SG "
@@ -38,8 +34,6 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 S123123 "
-            + PREFIX_DELIVERY_DATE + "25-12-2000 "
-            + PREFIX_STATUS + "PENDING"
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
@@ -60,11 +54,6 @@ public class AddCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.addParcel(toAdd);
-            model.maintainSorted();
-            if (model.hasSelected()) {
-                model.reselect(toAdd);
-            }
-
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateParcelException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PARCEL);

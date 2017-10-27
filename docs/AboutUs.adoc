@@ -12,7 +12,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Kyle Timothy Ng Chu
-image::kowalski985.jpg[width="150", align="left"]
+image::kowalski95.jpg[width="150", align="left"]
 {empty}[http://github.com/kowalski985[github]] [<<kylechu#, portfolio>>]
 
 Role: Team Lead, Integration, Scheduling and Tracking, Developer in charge of Logic Component +
@@ -31,7 +31,7 @@ Responsibilities: TBA
 
 === Kennard Ng Pool Hua
 image::kennard123661.jpg[width="150", align="left"]
-{empty}[https://github.com/Kennard123661[github]] [<<kennard123661#, portfolio>>]
+{empty}[https://github.com/Kennard123661[github]] [<<kennardngpoolhua#, portfolio>>]
 
 Role: Testing, Scheduling and Tracking, Deliverables and Deadlines, Documentation, Developer in charge of Storage Component +
 Responsibilities: TBA

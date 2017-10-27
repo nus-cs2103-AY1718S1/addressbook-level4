@@ -3,11 +3,9 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
 
@@ -28,6 +26,7 @@ import seedu.address.testutil.EditParcelDescriptorBuilder;
  */
 public class CommandTestUtil {
 
+
     public static final String VALID_TRACKING_NUMBER_AMY = "RR231476598SG";
     public static final String VALID_TRACKING_NUMBER_BOB = "RR123456897SG";
     public static final String VALID_NAME_AMY = "Amy Bee";
@@ -38,14 +37,9 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1 S123123";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3 S456456";
-    public static final String VALID_DELIVERY_DATE_AMY = "01-01-2001";
-    public static final String VALID_DELIVERY_DATE_BOB = "02-02-1990";
-    public static final String VALID_DELIVERY_DATE_AMY_FULLSTOPS = "1.01.2001";
-    public static final String VALID_DELIVERY_DATE_AMY_SLASHES = "01/1/2001";
-    public static final String VALID_STATUS_AMY = "deliVerIng"; // for case insenstivity
-    public static final String VALID_STATUS_BOB = "Completed"; // case insensitivity of Status
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+
     public static final String TRACKING_NUMBER_DESC_AMY = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_AMY;
     public static final String TRACKING_NUMBER_DESC_BOB = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_BOB;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -56,10 +50,6 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
-    public static final String DELIVERY_DATE_DESC_AMY = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_AMY;
-    public static final String DELIVERY_DATE_DESC_BOB = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_BOB;
-    public static final String STATUS_DESC_AMY = " " + PREFIX_STATUS + VALID_STATUS_AMY;
-    public static final String STATUS_DESC_BOB = " " + PREFIX_STATUS + VALID_STATUS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
@@ -69,10 +59,7 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_DELIVERY_DATE_DESC = " "
-            + PREFIX_DELIVERY_DATE + "05-13-2010"; // No 13th month allowed
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
-    public static final String INVALID_STATUS_DESC = " " + PREFIX_STATUS + "happy";
 
     public static final EditCommand.EditParcelDescriptor DESC_AMY;
     public static final EditCommand.EditParcelDescriptor DESC_BOB;
@@ -80,12 +67,10 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditParcelDescriptorBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
                 .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditParcelDescriptorBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
                 .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
     }
 
     /**

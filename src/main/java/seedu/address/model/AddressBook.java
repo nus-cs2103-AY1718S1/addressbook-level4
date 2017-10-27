@@ -193,15 +193,4 @@ public class AddressBook implements ReadOnlyAddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(parcels, tags);
     }
-
-    /**
-     * Function that sorts the lists of parcels
-     */
-    public void sort() {
-        try {
-            this.setParcels(parcels.getSortedList());
-        } catch (DuplicateParcelException e) {
-            e.printStackTrace();
-        }
-    }
 }

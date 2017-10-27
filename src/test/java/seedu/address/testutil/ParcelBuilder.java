@@ -4,13 +4,11 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.parcel.Address;
-import seedu.address.model.parcel.DeliveryDate;
 import seedu.address.model.parcel.Email;
 import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Parcel;
 import seedu.address.model.parcel.Phone;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -26,8 +24,6 @@ public class ParcelBuilder {
     public static final String DEFAULT_ADDRESS = "6, Jurong West Ave 1, #08-111 S649520";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_TRACKING_NUMBER = "RR999966699SG";
-    public static final String DEFAULT_DELIVERY_DATE = "01-01-2001";
-    public static final String DEFAULT_STATUS = "PENDING";
 
     private Parcel parcel;
 
@@ -38,11 +34,9 @@ public class ParcelBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            DeliveryDate defaultDeliveryDate = new DeliveryDate(DEFAULT_DELIVERY_DATE);
-            Status defaultStatus = Status.getInstance(DEFAULT_STATUS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.parcel = new Parcel(defaultTrackingNumber, defaultName, defaultPhone, defaultEmail, defaultAddress,
-                    defaultDeliveryDate, defaultStatus, defaultTags);
+                    defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default parcel's values are invalid.");
         }
@@ -124,31 +118,6 @@ public class ParcelBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
-        return this;
-    }
-
-    /**
-     * Sets the {@code DeliveryDate} of the {@code Parcel} that we are building.
-     */
-    public ParcelBuilder withDeliveryDate(String deliveryDate) {
-        try {
-            this.parcel.setDeliveryDate(new DeliveryDate(deliveryDate));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("delivery date is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Status} of the {@code Parcel} that we are building.
-     */
-    public ParcelBuilder withStatus(String status) {
-        try {
-            this.parcel.setStatus(Status.getInstance(status));
-        } catch (IllegalValueException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-
         return this;
     }
 

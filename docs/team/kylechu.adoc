@@ -8,14 +8,14 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Tab autocomplete
+=== Enhancement Added: Undo/Redo
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=autocomplete]
+include::../UserGuide.adoc[tag=undoredo]
 
 #End of Extract#
 
@@ -23,28 +23,28 @@ include::../UserGuide.adoc[tag=autocomplete]
 
 ==== Justification
 
-Ark is an application that our users will be using on a regular basis. Therefore, a tab autocomplete feature will make
-it easier for our users to use the application and to improve their productivity. This increase in productivity is
-essential since Ark is meant to be used by people managing large volumes of deliveries each day.
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=autocomplete]
+include::../DeveloperGuide.adoc[tag=undoredo]
 
 #End of Extract#
 
 ---
 
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
 
 === Other contributions
 
-* Updated the add command to make Phone and email fields optional
-(Pull requests https://github.com/CS2103AUG2017-T16-B1/main/pull/114[#114])
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
 == Project: Modulus
 
-http://nusmodulus.herokuapp.com/[Modulus] is module mapping database to help NUS students in their search for possible
-modules in their Partner Universities that could possible be mapped back to modules back in NUS.
+{Optionally (not graded), you may include other projects in your portfolio.}

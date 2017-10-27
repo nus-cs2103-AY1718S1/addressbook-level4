@@ -33,7 +33,7 @@ public class AddCommandIntegrationTest {
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addParcel(validParcel);
-        expectedModel.maintainSorted();
+
         assertCommandSuccess(prepareCommand(validParcel, model), model,
                 String.format(AddCommand.MESSAGE_SUCCESS, validParcel), expectedModel);
     }

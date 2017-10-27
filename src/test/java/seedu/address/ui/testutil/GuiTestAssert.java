@@ -19,13 +19,10 @@ public class GuiTestAssert {
      */
     public static void assertCardEquals(ParcelCardHandle expectedCard, ParcelCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getTrackingNumber(), actualCard.getTrackingNumber());
         assertEquals(expectedCard.getAddress(), actualCard.getAddress());
         assertEquals(expectedCard.getEmail(), actualCard.getEmail());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
-        assertEquals(expectedCard.getDeliveryDate(), actualCard.getDeliveryDate());
-        assertEquals(expectedCard.getStatus(), actualCard.getStatus());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -33,13 +30,10 @@ public class GuiTestAssert {
      * Asserts that {@code actualCard} displays the details of {@code expectedParcel}.
      */
     public static void assertCardDisplaysParcel(ReadOnlyParcel expectedParcel, ParcelCardHandle actualCard) {
-        assertEquals(expectedParcel.getTrackingNumber().value, actualCard.getTrackingNumber());
         assertEquals(expectedParcel.getName().fullName, actualCard.getName());
         assertEquals(expectedParcel.getPhone().value, actualCard.getPhone());
         assertEquals(expectedParcel.getEmail().value, actualCard.getEmail());
         assertEquals(expectedParcel.getAddress().toString(), actualCard.getAddress());
-        assertEquals(expectedParcel.getDeliveryDate().value, actualCard.getDeliveryDate());
-        assertEquals(expectedParcel.getStatus().toString(), actualCard.getStatus());
         assertEquals(expectedParcel.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }

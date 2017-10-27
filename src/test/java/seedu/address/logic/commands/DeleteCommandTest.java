@@ -27,17 +27,14 @@ public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        model.maintainSorted();
         ReadOnlyParcel parcelToDelete = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PARCEL);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS, parcelToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.maintainSorted();
         expectedModel.deleteParcel(parcelToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
@@ -61,7 +58,6 @@ public class DeleteCommandTest {
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PARCEL_SUCCESS, parcelToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.maintainSorted();
         expectedModel.deleteParcel(parcelToDelete);
         showNoParcel(expectedModel);
 
