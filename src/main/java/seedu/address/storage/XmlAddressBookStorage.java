@@ -78,28 +78,4 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         //saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
     }
 
-    @Override
-    public void mergeAddressBook(String newFilePath) throws DataConversionException, IOException {
-        mergeAddressBook(newFilePath, filePath);
-    }
-
-    /**
-     * Similar to {@link #mergeAddressBook(String)}
-     * @param defaultFilePath location of the data. Cannot be null
-     * @param newFilePath location of the data. Cannot be null
-     */
-    public void mergeAddressBook(String newFilePath, String defaultFilePath) throws DataConversionException,
-            IOException {
-        requireNonNull(defaultFilePath);
-        requireNonNull(newFilePath);
-
-        File defaultFile = new File(defaultFilePath);
-        File newFile = new File(newFilePath);
-
-        XmlSerializableAddressBook defaultFileData = XmlFileStorage.loadDataFromSaveFile(defaultFile);
-        XmlSerializableAddressBook newFileData = XmlFileStorage.loadDataFromSaveFile(newFile);
-
-        XmlFileStorage.mergeDataToFile(defaultFileData, newFileData, filePath);
-    }
-
 }

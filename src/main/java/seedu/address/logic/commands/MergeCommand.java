@@ -2,15 +2,19 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.email.Email;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.storage.XmlFileStorage;
+import seedu.address.storage.XmlSerializableAddressBook;
 
 /**
  * Merge the file given with the default storage file
@@ -36,16 +40,17 @@ public class MergeCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
+        XmlSerializableAddressBook newFileData;
         try {
-            model.mergeAddressBook(newFilePath);
+            newFileData = XmlFileStorage.loadDataFromSaveFile(new File(newFilePath));
         } catch (FileNotFoundException fne) {
             throw new CommandException(MESSAGE_FILE_NOT_FOUND);
         } catch (DataConversionException dce) {
             throw new CommandException(MESSAGE_DATA_CONVERSION_ERROR);
-        } catch (IOException ex) {
-            throw new CommandException(ex.getMessage());
         }
 
+        ObservableList<ReadOnlyPerson> newFilePersonList = newFileData.getPersonList();
+        model.mergeAddressBook(newFilePersonList);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

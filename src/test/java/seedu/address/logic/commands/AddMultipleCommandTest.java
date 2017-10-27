@@ -170,7 +170,7 @@ public class AddMultipleCommandTest {
         }
 
         @Override
-        public void mergeAddressBook(String newFilePath) {
+        public void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
             fail("This method should not be called.");
         }
 

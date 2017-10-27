@@ -54,7 +54,7 @@ public interface Model {
     /** Deletes all the given tag {@code tag}. */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException;
 
-    /** Merges new file given by {@code newFilePath} to default addressbook storage **/
-    void mergeAddressBook(String newFilePath) throws DataConversionException, IOException;
+    /** Merges new file data {@code newFilePersonList} to default addressbook storage **/
+    void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList);
 
 }

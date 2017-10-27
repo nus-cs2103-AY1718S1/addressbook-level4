@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.io.IOException;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -14,14 +13,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
-import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.XmlAddressBookStorage;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -32,7 +28,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-    private final AddressBookStorage addressBookStorage;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,7 +40,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
     }
 
     public ModelManager() {
@@ -71,8 +65,32 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void mergeAddressBook(String newFilePath) throws DataConversionException, IOException {
-        addressBookStorage.mergeAddressBook(newFilePath);
+    public synchronized void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
+        Boolean isAddressBookChanged = false;
+        ObservableList<ReadOnlyPerson> defaultFilePersonList = addressBook.getPersonList();
+
+        for (ReadOnlyPerson newDataPerson : newFilePersonList) {
+            boolean isSamePerson = false;
+            for (ReadOnlyPerson defaultDataPerson : defaultFilePersonList) {
+                if (defaultDataPerson.equals(newDataPerson)) {
+                    isSamePerson = true;
+                    break;
+                }
+            }
+            if (!isSamePerson) {
+                try {
+                    addressBook.addPerson(new Person(newDataPerson));
+                } catch (DuplicatePersonException dpe) {
+                    assert false : "Unexpected exception " + dpe.getMessage();
+                }
+                isAddressBookChanged = true;
+            }
+        }
+
+        if (isAddressBookChanged) {
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            indicateAddressBookChanged();
+        }
     }
 
     @Override
