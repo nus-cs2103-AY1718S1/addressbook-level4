@@ -16,7 +16,6 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToTaskListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -43,69 +42,77 @@ public class SetPriorityCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         Index lastTaskIndex = Index.fromOneBased(model.getFilteredTaskList().size());
 
-        assertExecutionSuccess(INDEX_FIRST_TASK);
-        assertExecutionSuccess(INDEX_THIRD_TASK);
-        assertExecutionSuccess(lastTaskIndex);
+        assertExecutionSuccess(INDEX_FIRST_TASK, 1);
+        assertExecutionSuccess(INDEX_THIRD_TASK, 1);
+        assertExecutionSuccess(lastTaskIndex, 1);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
 
-        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        assertExecutionFailure(outOfBoundsIndex, 1, Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_invalidPriorityValue_failure() {
+        Index lastTaskIndex = Index.fromOneBased(model.getFilteredTaskList().size());
+
+        assertExecutionFailure(lastTaskIndex, 100, SetPriorityCommand.MESSAGE_UPDATE_TASK_PRIORITY_OUT_OF_RANGE);
+
     }
 
     @Test
     public void equals() {
-        SelectTaskCommand selectFirstCommand = new SelectTaskCommand(INDEX_FIRST_TASK);
-        SelectTaskCommand selectSecondCommand = new SelectTaskCommand(INDEX_SECOND_TASK);
+        SetPriorityCommand setPriorityFirstCommand = new SetPriorityCommand(INDEX_FIRST_TASK, 1);
+        SetPriorityCommand setPrioritySecondCommand = new SetPriorityCommand(INDEX_SECOND_TASK, 2);
 
-        // same object -> returns true
-        assertTrue(selectFirstCommand.equals(selectFirstCommand));
+        // same object
+        assertTrue(setPriorityFirstCommand.equals(setPriorityFirstCommand));
 
         // same values -> returns true
-        SelectTaskCommand selectFirstCommandCopy = new SelectTaskCommand(INDEX_FIRST_TASK);
-        assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
+        SetPriorityCommand setPriorityFirstCommandCopy = new SetPriorityCommand(INDEX_FIRST_TASK, 1);
+        assertTrue(setPriorityFirstCommand.equals(setPriorityFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(selectFirstCommand.equals(1));
+        assertFalse(setPriorityFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(selectFirstCommand.equals(null));
+        assertFalse(setPriorityFirstCommand.equals(null));
 
         // different task -> returns false
-        assertFalse(selectFirstCommand.equals(selectSecondCommand));
+        assertFalse(setPriorityFirstCommand.equals(setPrioritySecondCommand));
     }
 
     /**
-     * Executes a {@code SelectTaskCommand} with the given {@code index}, and checks that
-     * {@code JumpToTaskListRequestEvent} is raised with the correct index.
+     * Executes a {@code SetPriorityCommand} with the given {@code index, value}, and checks that
+     * the updated task priority is properly reflected.
      */
-    private void assertExecutionSuccess(Index index) {
-        SelectTaskCommand selectTaskCommand = prepareCommand(index);
+    private void assertExecutionSuccess(Index index, Integer value) {
+        SetPriorityCommand setPriorityCommand = prepareCommand(index, value);
+        int indexInteger = index.getZeroBased();
 
         try {
-            CommandResult commandResult = selectTaskCommand.execute();
-            assertEquals(String.format(SelectTaskCommand.MESSAGE_SELECT_TASK_SUCCESS, index.getOneBased()),
+            CommandResult commandResult = setPriorityCommand.execute();
+            assertEquals(String.format(SetPriorityCommand.MESSAGE_UPDATE_TASK_PRIORITY_SUCCESS,
+                    getTypicalTaskbook().getTaskList().get(indexInteger).getName()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToTaskListRequestEvent lastEvent =
-                (JumpToTaskListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+        assertEquals(value, model.getTaskBook().getTaskList().get(indexInteger).getPriority());
     }
 
     /**
-     * Executes a {@code SelectTaskCommand} with the given {@code index}, and checks that a {@code CommandException}
-     * is thrown with the {@code expectedMessage}.
+     * Executes a {@code SetPriorityCommand} with the given {@code index, value}, and checks that a
+     * {@code CommandException is thrown with the {@code expectedMessage}.
      */
-    private void assertExecutionFailure(Index index, String expectedMessage) {
-        SelectTaskCommand selectTaskCommand = prepareCommand(index);
+    private void assertExecutionFailure(Index index, Integer value, String expectedMessage) {
+        SetPriorityCommand setPriorityCommand = prepareCommand(index, value);
 
         try {
-            selectTaskCommand.execute();
+            setPriorityCommand.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
             assertEquals(expectedMessage, ce.getMessage());
@@ -118,7 +125,7 @@ public class SetPriorityCommandTest {
      */
     private SetPriorityCommand prepareCommand(Index index, Integer value) {
         SetPriorityCommand setPriorityCommand = new SetPriorityCommand(index, value);
-        SetPriorityCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        setPriorityCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return setPriorityCommand;
     }
 }

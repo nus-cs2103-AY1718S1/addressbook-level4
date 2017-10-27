@@ -52,7 +52,7 @@ public class SetPriorityCommand extends UndoableCommand {
 
         // Checking if the priority value inputted is out of range
         if (updatedTask == null) {
-            return new CommandResult(MESSAGE_UPDATE_TASK_PRIORITY_OUT_OF_RANGE);
+            throw new CommandException(MESSAGE_UPDATE_TASK_PRIORITY_OUT_OF_RANGE);
         }
 
         try {
