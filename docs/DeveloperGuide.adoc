@@ -102,7 +102,7 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 2.1.1: Architecture Diagram_
 
 The *_Architecture Diagram_* _(Figure 2.1.1)_ given above explains the high-level design of the App. Given below is a quick overview of each component:
 
@@ -139,7 +139,7 @@ For example, the `Logic` component defines it's API in the `Logic.java` interfac
 The *_Sequence Diagram_* _(Figure 2.1.2)_ below shows how the components interact using event center for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.2 : Component interactions for `delete 1` command (part 1)_
+_Figure 2.1.2: Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -147,7 +147,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below _(Figure 2.1.3)_ shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3 : Component interactions for `delete 1` command (part 2)_
+_Figure 2.1.3: Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -159,7 +159,7 @@ The sections below give more details of each component.
 ==== UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 2.2.1: Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -178,10 +178,10 @@ The `UI` component:
 The diagrams _(Figure 2.2.2.1 to Figure 2.2.2.3)_ given below show the structure of whole logic component, and structure of commands in details. +
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.2.2.1 : Structure of the Logic Component_
+_Figure 2.2.2.1: Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.2.2.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 2.2.2.2: Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -196,14 +196,14 @@ The logic will perform the following steps:
 Given below is the *_Sequence Diagram_* _(Figure 2.2.2.3)_ for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.2.2.3 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 2.2.2.3: Interactions Inside the Logic Component for the `delete 1` Command_
 
 ==== Model component
 
 The following diagram _(Figure 2.2.3)_ shows the class structure of the Model component.
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.2.3 : Structure of the Model Component_
+_Figure 2.2.3: Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -228,7 +228,7 @@ In detail, the `AddressBook` and the `EventList` are respectively responsible fo
 ==== Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.2.4 : Structure of the Storage Component_
+_Figure 2.2.4: Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -260,7 +260,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram _(Figure 3.1.1.1)_ shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 3.1.1.1 Structure of commands_
+_Figure 3.1.1.1: Structure of commands_
 
 As you can see from the diagram _(Figure 3.1.1.1)_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -304,12 +304,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command). This is shown in the image _(Figure 3.1.1.2)_ below.
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 3.1.1.2 undo example part 1_
+_Figure 3.1.1.2: undo example part 1_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person. This is show in the image _(Figure 3.1.1.3)_ below.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 3.1.1.3 undo example part 2_
+_Figure 3.1.1.3: undo example part 2_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -319,15 +319,15 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed. This is shown in the image _(Figure 3.1.1.4)_ below.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 3.1.1.4 undo example part 3_
+_Figure 3.1.1.4: undo example part 3_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
 The following *_sequence diagram_* _(Figure 3.1.1.5)_ shows how the undo operation works:
 
-image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 3.1.1.5 undo sequential diagram_
+image::UndoRedoSequencediagram.png[width="800"]
+_Figure 3.1.1.5: undo sequential diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -337,17 +337,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow). This is shown in the image _(Figure 3.1.1.6)_ below.
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 3.1.1.6 redo example part 1_
+_Figure 3.1.1.6: redo example part 1_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution. This is shown in the image _(Figure 3.1.1.7)_ below.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 3.1.1.7 redo example part 2_
+_Figure 3.1.1.7: redo example part 2_
 
 The following *_activity diagram_* _(Figure 3.1.1.8)_ summarize what happens inside the `UndoRedoStack` when a user executes a new command.
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 3.1.1.8 undo/redo activity_
+_Figure 3.1.1.8: undo/redo activity_
 
 
 [discrete]
@@ -597,7 +597,7 @@ The add event command is facilitated by `LogicManager` class. It allows user to 
 The following *_sequence diagram_* _(Figure 3.4)_ shows how add event command works:
 
 image::AddEventCommandSequenceDiagram.png[width="800"]
-_Figure 3.4 AddEvent command sequence diagram_
+_Figure 3.4: AddEvent command sequence diagram_
 
 The user enters an addEvent command, which is received by `LogicManager`. `LogicManager` calls `AddressBookParser` to parse the command. +
 `AddressBookParser` will first check the format of the parameters. If the format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object. +
@@ -683,6 +683,17 @@ Then `Model` processes the person list.
 The show participants command object creates `CommandResult` object and returns it.
 `LogicManager` receives the result and displays it through `UI`.
 
+[discrete]
+===== Design Considerations
+
+**Aspect:** How showP command executes +
+**Alternative 1 (current choice):** Show participants of the event at the specified index. +
+**Pros:** Easy to implement. +
+**Cons:** Sometimes users have to list all the events so that they can get all the indexes. +
+**Alternative 2:** Show participants of the event with the specified name. +
+**Pros:** Users can use the command without listing events. +
+**Cons:** Users need more time to type if the event name is too long. +
+
 === ShowAllJoinedEvent mechanism
 
 The selectE command is facilitated by the `LogicManager`. This command inherits from `Command`.
@@ -726,7 +737,7 @@ We will explain it in terms of Model and Storage. +
 For model, we simply use the "referencing model", which is shown in the diagram _(Figure 3.9.1)_ below: +
 
 image::DG_model_join.png[width = "800"]
-_Figure 3.9.1 interaction model_
+_Figure 3.9.1: interaction model_
 
 Referring to the diagram _(Figure 3.9.1)_ above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
 Similarly, the participation list in Person model stores all the event in which this person joins.
@@ -746,14 +757,14 @@ public void disjoin(Person personToRemove, Event eventToRemove) {
 For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram _(Figure 3.9.2)_ below:
 
 image::DG_infinity loop.png[width = "800"]
-_Figure 3.9.2 infinity loop_
+_Figure 3.9.2: infinity loop_
 
 To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`. Both of them do not have participant or participation information.
 Hence, we can avoid the infinity referencing problem. +
 The updated storage is shown in the diagram _(Figure 3.9.3)_ below:
 
 image::DG_join_storage.png[width = "800"]
-_Figure 3.9.3 interaction storage_
+_Figure 3.9.3: interaction storage_
 
 [discrete]
 ===== Design Considerations
@@ -813,7 +824,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot _(Figure 4.3)_ below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 4.3 : Saving documentation as PDF files in Chrome_
+_Figure 4.3: Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -1371,7 +1382,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. User presses F1 on the keyboard or clicks on help icon.
+* 1a. User presses F1 on the keyboard or clicks on help icon
 +
 Use case resumes at step 2.
 
@@ -1388,7 +1399,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. User click File -> Exit button.
+* 1a. User click File -> Exit button
 +
 Use case resumes at step 2.
 
@@ -1397,7 +1408,7 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to sort persons.
+1.  User enters "sort" command.
 2.  Planno shows a list of sorted persons.
 +
 Use case ends.
@@ -1416,7 +1427,7 @@ Use case ends.
 
 *MSS*
 
-1. User enters value for list command.
+1. User enters "list" command.
 2. Planno displays list of persons.
 +
 Use case ends.
@@ -1429,6 +1440,50 @@ Use case ends.
 ** Planno shows a no person message.
 +
 Use case ends.
+
+[discrete]
+=== Use case: List events
+
+*MSS*
+
+1. User enters "listE" command.
+2. Planno displays list of persons.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. There is no event in EventList
++
+** Planno shows a no event message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Show participants of an event
+
+*MSS*
+
+1.  User requests to list events
+2.  Planno shows a list of events
+3.  User requests to show participants of a specific event in the list
+4.  Planno shows participants of the event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+* 3a. The given index is invalid
++
+** Planno shows an error message.
++
+Use case resumes at step 2.
+
 
 [discrete]
 === Use case: Find person/s by name
@@ -1474,7 +1529,7 @@ Use case ends.
 +
 ** Planno displays persons with name matching at least one keyword.
 +
-User case resumes at step 3.
+Use case resumes at step 3.
 
 * 3a. User enters invalid index value
 +
@@ -1673,21 +1728,3 @@ Undoable command
 ....
 An undoable command is a command which modifies data in address book. For example, add, delete are undoable commands, while find, list are not.
 ....
-
-
-[appendix]
-== Product survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

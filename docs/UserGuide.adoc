@@ -43,7 +43,7 @@ This app will not work with earlier versions of Java 8.
    Note that you will see some initial data if it is the first time to use.
 +
 image::UG_origin.png[width="790"]
-_Figure 2 GUI_
+_Figure 2: GUI_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -77,7 +77,7 @@ For the details of each command, please refer to Features section.
 * Unless otherwise stated, all the example screenshots are operated based on the following stage:
 
 image::UG_add.png[width="790"]
-_Figure 3.1 base stage_
+_Figure 3.1: base stage_
 ****
 
 === Adding
@@ -113,7 +113,7 @@ You will see the following after typing 4 above example add command to
 *an empty address book and an empty event list*:
 
 image::UG_add.png[width="790"]
-_Figure 3.2 add command result_
+_Figure 3.2: add command result_
 
 === Listing
 
@@ -130,7 +130,7 @@ Format & Example: `listE`
 You will see the following after typing 2 above example list command:
 
 image::UG_list.png[width="790"]
-_Figure 3.3 list command result_
+_Figure 3.3: list command result_
 
 === Sorting all persons and events: `sort`
 
@@ -141,7 +141,7 @@ Format & Example: `sort`
 You will see the following after typing sort command:
 
 image::UG_sort.png[width="790"]
-_Figure 3.4 sort command result_
+_Figure 3.4: sort command result_
 
 === Editing
 ==== Editing a person : `edit`
@@ -184,7 +184,7 @@ Edits the event description of 2nd event to be `Submit handwritten assignment`
 You will see the following after typing 4 above edit command:
 
 image::UG_edit.png[width="790"]
-_Figure 3.5 edit command result_
+_Figure 3.5: edit command result_
 
 === Locating persons by name: `find`
 
@@ -215,12 +215,12 @@ Returns any person having name `John` or having tag `colleagues`
 You will see the following after typing `find John`:
 
 image::UG_find_1.png[width="790"]
-_Figure 3.6.1 find command result 1_
+_Figure 3.6.1: find command result 1_
 
 Subsequently, you will see the following after typing `find Betsy john`:
 
 image::UG_find_2.png[width="790"]
-_Figure 3.6.2 find command result 2_
+_Figure 3.6.2: find command result 2_
 
 === Deleting
 ==== Deleting a person : `delete`
@@ -262,7 +262,7 @@ Deletes the 2nd event in the event list.
 You will see the following after typing `delete 1` and `deleteE 1`:
 
 image::UG_delete.png[width="790"]
-_Figure 3.7 delete command result_
+_Figure 3.7: delete command result_
 
 === Connecting a person to an event : `join`
 You can use it to show a person is involved in an event. +
@@ -284,7 +284,7 @@ This command only displays a successful message. You cannot see explicit change 
 You will see the following after typing above commands: +
 
 image::UG_join.png[width='790']
-_Figure 3.8 join result_
+_Figure 3.8: join result_
 
 === Disconnecting a person to an event : `disjoin`
 You can use it to show a person is not involved in an event any more. +
@@ -308,7 +308,7 @@ This command only displays a successful message. You cannot see explicit change 
 You will see the following after typing above commands: +
 
 image::UG_disjoin.png[width='790']
-_Figure 3.9 disjoin result_
+_Figure 3.9: disjoin result_
 
 === Showing all participants of an event : `showP`
 
@@ -331,7 +331,7 @@ Shows all persons who are involved in the 1st event of event list.
 You will see the following after typing above commands: +
 
 image::UG_showPerson.png[width='790']
-_Figure 3.10.1 select persons result_
+_Figure 3.10: show persons result_
 
 === Selecting all events which a person joins : `selectE`
 
@@ -357,7 +357,7 @@ Shows all events which the 1st person in the results of the `find` command joins
 You will see the following after typing `list` and `selectE 2`: +
 
 image::UG_selectEvent.png[width='790']
-_Figure 3.10.2 select events result_
+_Figure 3.11: select events result_
 
 === Listing entered commands : `history`
 
@@ -371,7 +371,7 @@ Format & Example: `history`
 You will see the following after typing history command: +
 
 image::UG_history.png[width='790']
-_Figure 3.11 select persons result_
+_Figure 3.12: history result_
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -402,17 +402,17 @@ The `undo` command fails as there are no undoable commands executed previously.
 You will see the following after typing `delete 1` and `clear`:
 
 image::UG_clear.png[width='790']
-_Figure 3.12.1 before undo_
+_Figure 3.13.1: before undo_
 
 You will see the following after typing `undo`:
 
 image::UG_undo1.png[width='790']
-_Figure 3.12.2 undo once_
+_Figure 3.13.2: undo once_
 
 You will see the following after typing `undo` again:
 
 image::UG_undo2.png[width='790']
-_Figure 3.12.3 undo twice_
+_Figure 3.13.3: undo twice_
 
 === Redoing the previously undone command : `redo`
 
@@ -439,17 +439,17 @@ The `redo` command fails as there are no `undo` commands executed previously.
 You will see the following after typing `delete 1`, `clear`, `undo` and `undo`:
 
 image::UG_undo2.png[width='790']
-_Figure 3.13.1 before redo_
+_Figure 3.14.1: before redo_
 
 You will see the following after typing `redo`:
 
 image::UG_redo1.png[width='790']
-_Figure 3.12.2 redo once_
+_Figure 3.14.2: redo once_
 
 You will see the following after typing `redo` again:
 
 image::UG_redo2.png[width='790']
-_Figure 3.12.2 redo twice
+_Figure 3.14.2: redo twice
 
 // end::undoredo[]
 
@@ -465,7 +465,7 @@ Format & Example: `clear`
 You will see the following after clear command:
 
 image::UG_clear.png[width="790"]
-_Figure 3.13 clear command result_
+_Figure 3.15: clear result_
 
 === Viewing help : `help`
 
