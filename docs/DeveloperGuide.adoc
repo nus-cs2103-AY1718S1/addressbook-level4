@@ -364,20 +364,20 @@ _Figure 3.1.1.8 undo/redo activity_
 ---
 
 **Aspect:** How undo & redo executes +
-**Alternative 1 (current choice):** Individual command knows how to undo/redo by itself. +
+**Alternative 1 (current choice):** Individual command knows how to undo/redo by itself +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
-**Alternative 2:** Saves the entire address book. +
+**Alternative 2:** Save the entire address book +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
-**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
+**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`) +
 **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
 **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
-**Alternative 2:** Include all commands. +
+**Alternative 2:** Include all commands +
 **Pros:** Might be more intuitive for the user. +
 **Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
@@ -394,7 +394,7 @@ _Figure 3.1.1.8 undo/redo activity_
 
 ---
 
-*Next, we will show specific implementation for each type of command:* +
+*The following sections detail the specific implementation of undo and redo for each type of `UndoableCommand`:* +
 
 ==== Undo an adding command
 * We keep the person added by that command.
@@ -404,7 +404,7 @@ _Figure 3.1.1.8 undo/redo activity_
 [NOTE]
 The person is associated with a list of tags, and we need to eliminate them when we undo. +
 
-.The whole process is following:
+.The process is as follows:
 .. When we add a person to address book:
 1. Extract all tags which are associated with this person but not in the tag list before executing add command. +
 2. Keep the tags extracted in step 1 in another list named `newTags`. +
@@ -413,26 +413,26 @@ The person is associated with a list of tags, and we need to eliminate them when
 1. Delete the person from address book. +
 2. Remove all tags which are in `newTags` from the tag list in the address book. +
 .. When we redo this command:
-1. Add this person into address book (Since newTags has already existed).
+1. Add this person into address book (Since newTags already exists).
 
 ---
 
 [discrete]
 ===== Design Considerations
-**Aspect:** How to deal with tags when we undo add command. +
-**Alternative 1 (current choice):** Remove all tags which only exists in this person. +
-**Pros:** This allows to undo add command completely. +
-**Cons:** Need to ensure each tag to be removed does not exist in any other person. +
-**Alternative 2:** Do not remove any tag. +
+**Aspect:** How to deal with tags when we undo add command +
+**Alternative 1 (current choice):** Remove all tags which only exists in this person +
+**Pros:** This allows the add command to be undone completely. +
+**Cons:** Need to ensure each tag that is supposed to be removed does not exist in any other person. +
+**Alternative 2:** Do not remove any tag +
 **Pros:** Easy to implement. +
-**Cons:** Tag list is not revert to the state before add command executing.
+**Cons:** Tag list is not reverted to the state before add command executes.
 
 ==== Undo an delete command
 * We keep the person to be deleted, and his position in the address book.
 * To undo it, we add this person to the original position in the address book.
 * To redo it, we delete this person from the address book.
 
-.The whole process is following:
+.The process is as follows:
 .. When we delete a person from the address book:
 1. Get the target person by `index`. +
 2. Store both target person and the `index`. +
@@ -444,11 +444,11 @@ The person is associated with a list of tags, and we need to eliminate them when
 
 [discrete]
 ===== Design Considerations
-**Aspect:** Where to add the target person when we undo the delete person. +
-**Alternative 1 (current choice):** Add it to the original position `index`. +
-**Pros:** This allows to undo delete command completely, and the sequence of persons in address book will not change because of undoing. +
-**Cons:** Need to spend more time adding a person in the middle of the list, because it requires all persons behind `index` to switch to right. +
-**Alternative 2:** Just add it at the back of address book. +
+**Aspect:** Where to add the target person when we undo the delete person +
+**Alternative 1 (current choice):** Add it to the original position `index` +
+**Pros:** This allows the delete command to be undone completely, and the sequence of persons in address book will not change because of the undo. +
+**Cons:** Need to spend more time adding a person back to its original position in the middle of the list, because it requires all persons behind `index` to switch to right. +
+**Alternative 2:** Just add it at the back of address book +
 **Pros:** Easy to implement, and more efficient. +
 **Cons:** The sequence of persons in address book will change. +
 
@@ -462,7 +462,7 @@ The person is associated with a list of tags, and we need to eliminate them when
 [NOTE]
 Similar as `add` command, if the `editedPerson` causes some change in `tagList`, we need to remove such tags accordingly. +
 
-.The whole process is following:
+.The process is as follows:
 .. When we edit a person to address book:
 1. Extract all tags which are associated with `editedPerson` but not in the tag list before executing edit command. +
 2. Keep the tags extracted in step 1 in another list named `newTags`. +
@@ -473,16 +473,16 @@ Similar as `add` command, if the `editedPerson` causes some change in `tagList`,
 3. Remove all tags which are in `newTags` from the tag list in the address book. +
 .. When we redo this command:
 1. Swap back the role of `personToEdit` and `editedPerson`
-2. Execute edit operation (Since newTags has already existed). +
+2. Execute edit operation (Since newTags already exists). +
 
 ---
 
 ==== Undo an clear command
-* We can only keep the whole copy of address book to undo clear command.
+* We keep the whole copy of address book for undo clear command.
 * To undo it, we reset the data of the address book.
 * To redo it, we clear the address book again.
 
-.The whole process is following:
+.The process is as follows:
 .. When we clear the address book:
 1. Keep a copy of the address book. +
 2. Assign an empty address book to clear the address book. +
@@ -495,14 +495,14 @@ Similar as `add` command, if the `editedPerson` causes some change in `tagList`,
 //tag:: find[]
 === Find mechanism
 The Find mechanism is facilitated by `NameContainsKeyWordPredicate` class, which resides in `model.person` package. This command
-supports users of finding a list of persons by tags and names. Any person that have either of the entered keyword will be filtered
+supports users of finding a list of persons by tags and names. Any person that has either of the entered keyword will be filtered
 into the list. Such command will inherit from `Command`.
 
 The find command accept two types of keyword:
 
 * `tag`: it is identified by a prefix `t/`. +
 e.g. `find t/friends` means to find any person that have a tag called `friends`
-* `name`: anything that do not begin with `tag` is identified as `name` key word. +
+* `name`: anything that does not begin with `tag` is identified as `name` keyword. +
 e.g. `find friends` means to find any person whose name contains the keyword `friends`
 [NOTE]
 if a `tag name` is not preceded with a prefix `t/`, then the `tag name` will be identified as a `person name`. As a result, the people with their name containing the `tag name` will be displayed.
@@ -512,9 +512,9 @@ Below is a *_sequence diagram_* _(Figure 3.2)_ for executing a find command: `fi
 image::findSequenceDiagram.png[width="800"]
 _Figure 3.2: sequence diagram for find command_
 
-The command will be sent to LogicManager, and LogicManager will call AddressBookParser to parse
-the command. Subsequently, FindCommandParser will parse argument `t/friends` and create a new `findCommand` with
-predicate `t/friends`. The `findCommand` is then executed in LogicManager, during which the `findCommand` will update
+The command will be sent to `LogicManager` where it will call `AddressBookParser` to parse
+the command. Subsequently, `FindCommandParser` will parse argument `t/friends` and create a new `findCommand` with
+predicate `t/friends`. The `findCommand` is then executed in `LogicManager`, during which the `findCommand` will update
 the filtered person list with predicate tag called `friends`. This update will cause the person list displayed in GUI to be updated,
 so that the persons with tag `friends` will be displayed.
 
@@ -522,22 +522,22 @@ so that the persons with tag `friends` will be displayed.
 ==== Design considerations
 
 ---
-**Aspect:**  implementation of find command +
-**Alternative 1 (current choice):** Select people that has any of the keywords +
-**Pros:**  For every person, we only need to ensure at least on keyword exist, so we don't need to go through every information of a person.   +
-**Cons:**  It is difficult to know by which keyword a person is selected +
-**Alternative 2:** Select people that has any of the keywords, and highlight selected keywords in each person's `person card`. +
+**Aspect:**  Implementation of find command +
+**Alternative 1 (current choice):** Select people that have any of the keywords +
+**Pros:**  For every person, we only need to ensure that at least one keyword exists, so we don't need to go through every information of a person.   +
+**Cons:**  It is difficult to know by which keyword a person is selected. +
+**Alternative 2:** Select people that has any of the keywords, and highlight selected keywords in each person's `person card` +
 **Pros:** Shows clearly what keywords each selected person contains. +
-**Cons:**  We need to go through everything of a person, in order to highlight EVERY keyword the person has +
+**Cons:**  We need to go through everything of a person, in order to highlight EVERY keyword the person has. +
 
 ---
 **Aspect:** Type of keywords that can be found +
 **Alternative 1 (current choice):** Only person name and tag can be used in the find command +
-**Pros:** We only need to check a person's name and tag list to find match +
-**Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
-**Alternative 2:** Include all information of a person (i.e. phone, email, address) +
-**Pros:** a person can be found in more ways +
-**Cons:** implementation is complicated
+**Pros:** We only need to check a person's name and tag list to find any matches. +
+**Cons:** User will not be able to find a person by other information such as phone or email. +
+**Alternative 2:** Include every information of a person (i.e. phone, email, address) +
+**Pros:** A person can be found in many ways. +
+**Cons:** Implementation is complicated.
 
 
 // tag::sort[]
@@ -550,45 +550,45 @@ The following *_sequence diagram_* _(Figure 3.3)_ shows how the sort operation w
 image::SortSequenceDiagram.png[width="800"]
 _Figure 3.3: sequence diagram for sort command_
 
-The user enters a sort command which is got by `LogicManager`.
+The user enters a sort command which is received by `LogicManager`.
 `LogicManager` calls `AddressBookParser` to parse the command.
-Then `AddressBookParser` creates the sort command object and return it.
+Then `AddressBookParser` creates the sort command object and returns it.
 `LogicManager` receives the command object and executes the command.
 The sort command object calls `sortPersons()` in the `Model`.
 Then `Model` returns the sorted list.
-The sort command object receives the sorted list and creates `CommandResult` object and return it.
-`LogicManager` receives the result and shows it through `UI`.
+The sort command object receives the sorted list and creates `CommandResult` object and returns it.
+`LogicManager` receives the result and displays it through `UI`.
 
 [discrete]
 ==== Design considerations
 
 **Aspect:** How sort command affects the data +
-**Alternative 1 (current choice):** Sorts the copy of contact list and return it. +
-**Pros:** It is more defensive and keep the data unchanged. +
+**Alternative 1 (current choice):** Sort the copy of contact list and return it. +
+**Pros:** It is more defensive and keeps the data unchanged. +
 **Cons:** Users have to sort the list every time when they open the application. +
-**Alternative 2:** Sorts the contact list and return it. +
+**Alternative 2:** Sort the actual contact list and return it. +
 **Pros:** Users do not need to type the command everytime. +
-**Cons:** Sort command is not undoable which means that the order of list cannot change anymore after you call it and it is less defensive because you could frequently change the original data. +
+**Cons:** Sort command is not undoable which means that the order of list cannot change anymore after you call it. It is also less defensive because you can frequently change the original data. +
 
 ---
 
 **Aspect:** How sort command executes +
-**Alternative 1 (current choice):** Sorts the contact list according to alphabetical order(ascending order). +
+**Alternative 1 (current choice):** Sorts the contact list according to alphabetical order (ascending order). +
 **Pros:** Easy to implement. +
 **Cons:** Less function for sort command. +
-**Alternative 2:** Sorts the contact list according to different order(ascending order or descending order). +
-**Pros:** Users have more choices. +
+**Alternative 2:** Sorts the contact list according to different order (ascending order or descending order). +
+**Pros:** Users will have more choices. +
 **Cons:** It will be more complex for developers to maintain and test. +
 
 ---
 
-**Aspect:** What could be sorted +
+**Aspect:** What can be sorted +
 **Alternative 1 (current choice):** According to names +
 **Pros:** It is useful and necessary for general users. +
 **Cons:** It is too narrow and common. +
 **Alternative 2:** According to address/email/phone number +
-**Pros:** It provides more choices for users +
-**Cons:** Because address/email/phone number is unique, most of time you could find them without sorting the list. +
+**Pros:** It provides more choices for users. +
+**Cons:** Because address/email/phone number is unique, you can usually find them without sorting the list. +
 // end::sort[]
 
 === AddEvent mechanism
@@ -600,8 +600,8 @@ image::AddEventCommandSequenceDiagram.png[width="800"]
 _Figure 3.4 AddEvent command sequence diagram_
 
 The user enters an addEvent command, which is received by `LogicManager`. `LogicManager` calls `AddressBookParser` to parse the command. +
-`AddressBookParser` will firstly check the format of the parameters. If format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object. +
-`Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses model interface to execute adding operation, and returns `CommandResult`. +
+`AddressBookParser` will first check the format of the parameters. If the format is valid, it calls `AddEventCommand` constructor, which returns an `AddEventCommand` object. +
+`Logic Manager` receives the `AddEventCommand` object and calls execute(). Then, `AddEventCommand` uses `Model` to execute adding operation, and returns `CommandResult`. +
 `Logic Manager` receives the `CommandResult`, and returns to `UI`. +
 
 === ListEvent mechanism
@@ -613,51 +613,51 @@ The following *_sequence diagram_* _(Figure 3.5)_ shows how the list event opera
 image::ListEventSequenceDiagram.png[width="800"]
 _Figure 3.5: sequence diagram for list command_
 
-The user enters a listE command which is got by `LogicManager`.
+The user enters a listE command which is received by `LogicManager`.
 `LogicManager` calls `AddressBookParser` to parse the command.
-Then `AddressBookParser` creates the list event command object and return it.
+Then `AddressBookParser` creates the list event command object and returns it.
 `LogicManager` receives the command object and executes the command.
 The list event command object calls `updateFilteredEventList()` in the `Model`.
-Then `Model` process the event list.
-The list event command object creates `CommandResult` object and return it.
+Then `Model` processes the event list.
+The list event command object creates `CommandResult` object and returns it.
 `LogicManager` receives the result and shows it through `UI`.
 
 === DeleteEvent mechanism
 
 The delete event command is facilitated by the `LogicManager`. It supports `undo` and `redo` as it inherits from `UndoableCommand`. Other delete commands are implemented similarly.
 
-The following *_sequence_* diagram _(Figure 3.6)_ below shows how the delete event operation works:
+The following *_sequence diagram_* _(Figure 3.6)_ below shows how the delete event operation works:
 
 image::DeleteEventSequenceDiagram.png[width="800"]
 _Figure 3.6: sequence diagram for deleteE command_
 
 The user enters a deleteE command which is received by `LogicManger`.
-``LogicManager` calls `AddressBookParser` to parse the user command.
+`LogicManager` calls `AddressBookParser` to parse the user command.
 `AddressBookParser` creates an `DeleteEventCommand` object and returns it.
 `LogicManager` receives the `Command` object and executes it.
 The `DeleteEventCommand` calls `deleteEvent()` in the `Model`.
 `Model` will proceed to delete the event.
 The `DeleteEventCommand` then creates a `CommandResult` object and returns it to `LogicManager`.
-`LogicManager` receives the result anddisplays it through the `UI`.
+`LogicManager` receives the result and displays it through the `UI`.
 
 [discrete]
 ===== Design Considerations
 
 **Aspect:** Implementation of `DeleteEventCommand` +
-**Alternative 1 (current choice):** Create a new command to delete events. +
+**Alternative 1 (current choice):** Create a new command to delete events +
 **Pros:** It is responsible only for deleting events, and not people. Easier to implement. +
 **Cons:** Users may accidentally type in "delete" for deleting a person instead of "deleteE" for deleting an event. +
-**Alternative 2:** Modify `DeleteCommand` to handle deletion for both persons and events. +
+**Alternative 2:** Modify `DeleteCommand` to handle deletion for both persons and events +
 **Pros:** Users would be less likely to type the wrong command. +
-**Cons:** Any changes to the deletion process of either a person or event may affect the other . Harder to implement. +
+**Cons:** Any changes to the deletion process of either a person or event may affect the other. Harder to implement. +
 
 ---
 
 **Aspect:** How deleteE command executes +
-**Alternative 1 (current choice):** Deletes the event at the specified index. +
+**Alternative 1 (current choice):** Deletes the event at the specified index +
 **Pros:** Easy to imlement. +
 **Cons:** User has to list/sort event list first. +
-**Alternative 2:** Delete the event with the specified name. +
+**Alternative 2:** Delete the event with the specified name +
 **Pros:** Users can delete directly without having to get the index. +
 **Cons:** Users would have to type more if the event name is long. It will be more complex for developers to maintain and test. +
 // end::deleteE[]
@@ -666,34 +666,34 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 
 The show participants mechanism is facilitated by `PersonJoinsEventsPredicate` and `LogicManager`. This command will help users to find participants of an event. For achieving this function, `PersonJoinsEventsPredicate` will filter the person list. This command inherits from `Command`.
 
-The following *_sequence_* diagram _(Figure 3.7)_ below show how the show participants operation works:
+The following *_sequence diagram_* _(Figure 3.7)_ below show how the show participants operation works:
 
 image::ShowParticipantsSequenceDiagram.png[width="800"]
 _Figure 3.7: sequence diagram for showP INDEX command_
 
-The user enters a showP INDEX command which is got by `LogicManager`.
+The user enters a showP INDEX command which is received by `LogicManager`.
 `LogicManager` calls `AddressBookParser` to parse the command.
 `AddressBookParser` will call `ShowParticipantsCommandParser` to parse the INDEX.
 `ShowParticipantsCommandParser` will create `ShowParticipantsCommand` object using the INDEX.
-Then `AddressBookParser` receives the command object and return it to `LogicManager`.
+Then `AddressBookParser` receives the command object and returns it to `LogicManager`.
 `LogicManager` receives the command object and executes the command.
 `ShowParticipantsCommand` will create the `PersonJoinsEventsPredicate` according to the INDEX.
 Then, `ShowParticipantsCommand` calls `updateFilteredPersonList(p)` in the `Model`,  which uses the predicate created before.
-Then `Model` process the person list.
-The show participants command object creates `CommandResult` object and return it.
-`LogicManager` receives the result and shows it through `UI`.
+Then `Model` processes the person list.
+The show participants command object creates `CommandResult` object and returns it.
+`LogicManager` receives the result and displays it through `UI`.
 
 === ShowAllJoinedEvent mechanism
 
-The selectE command is facilitated by the `LogicManager`.
+The selectE command is facilitated by the `LogicManager`. This command inherits from `Command`.
 
-The following *_sequence_* diagram _(Figure 3.8)_ show how the show all joined events operation works:
+The following *_sequence diagram_* _(Figure 3.8)_ show how the show all joined events operation works:
 
 image::ShowAllJoinedEventsSequenceDiagram.png[width="800"]
 _Figure 3.8: sequence diagram for selectE command_
 
 The user enters a SelectE command which is received by `LogicManger`.
-``LogicManager` calls `AddressBookParser` to parse the user command.
+`LogicManager` calls `AddressBookParser` to parse the user command.
 `AddressBookParser` will call `SelectJoinedEventsCommandParser` to parse the list of INDEXES.
 `AddressBookParser` creates an `SelectJoinedEventsCommand` object and returns it.
 `LogicManager` receives the `Command` object and executes it.
@@ -709,10 +709,10 @@ The `SelectJoinedEventsCommand` then creates a `CommandResult` object and return
 ===== Design Considerations
 
 **Aspect:** How selectE command executes +
-**Alternative 1 (current choice):** Shows events joined by person/s at the selected indexes. +
+**Alternative 1 (current choice):** Shows events joined by person/s at the selected indexes +
 **Pros:** User does not have to type out names. +
 **Cons:** User has to list/sort person list first. +
-**Alternative 2:** Show events joined by person/s using user entered name. +
+**Alternative 2:** Show events joined by person/s using user entered name +
 **Pros:** User can directly enter names to search for events where a person with the entered name has joined. +
 **Cons:** Users would have to type more if the name is long. User may mistype the name. +
 // end::selectE[]
@@ -723,16 +723,16 @@ We will explain it in terms of Model and Storage. +
 
 [discrete]
 ==== Model level
-For model, we simply use the "referencing model", which is shown in the diagram _(Figure 3.7.1)_ below: +
+For model, we simply use the "referencing model", which is shown in the diagram _(Figure 3.9.1)_ below: +
 
 image::DG_model_join.png[width = "800"]
-_Figure 3.7.1 interaction model_
+_Figure 3.9.1 interaction model_
 
-Refer to the diagram above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
+Referring to the diagram _(Figure 3.9.1)_ above, there is a participant list in the Event model, which stores all the persons who are involved in this event.
 Similarly, the participation list in Person model stores all the event in which this person joins.
 
-Hence, we need to maintain both lists when operating `join` and `disjoin` commands.+
-The following code shows how to operate `disjoin`:
+Hence, we need to maintain both lists when operating `join` and `disjoin` commands. +
+The following code shows how `disjoin` operates:
 
 [source,java]
 public void disjoin(Person personToRemove, Event eventToRemove) {
@@ -743,28 +743,28 @@ public void disjoin(Person personToRemove, Event eventToRemove) {
 
 [discrete]
 ==== Storage level
-For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram _(Figure 3.7.2)_ below:
+For storage, since persons and events reference each other, it is easy to have an *Infinity loop of reference*, as shown in the diagram _(Figure 3.9.2)_ below:
 
 image::DG_infinity loop.png[width = "800"]
-_Figure 3.7.2 infinity loop_
+_Figure 3.9.2 infinity loop_
 
-To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`, both of them does not have participant or participation information.
+To solve it, we create two storage entities: `XmlAdaptedEventNoParticipant` and `XmlAdaptedPersonNoParticipation`. Both of them do not have participant or participation information.
 Hence, we can avoid the infinity referencing problem. +
-The updated storage is shown in the diagram _(Figure 3.7.3)_ below:
+The updated storage is shown in the diagram _(Figure 3.9.3)_ below:
 
 image::DG_join_storage.png[width = "800"]
-_Figure 3.7.3 interaction storage_
+_Figure 3.9.3 interaction storage_
 
 [discrete]
 ===== Design Considerations
 
-**Aspect:** How to implement person-event interaction. +
-**Alternative 1 (current choice):** Set `participationList` in Person, and `participantList` in Event. They references to each other. +
+**Aspect:** How to implement person-event interaction +
+**Alternative 1 (current choice):** Set `participationList` in Person, and `participantList` in Event. They reference each other +
 **Pros:** Easy to implement. +
 **Cons:** Need to maintain both lists when operating `join` and `disjoin`. +
-**Alternative 2:** Use association class. +
+**Alternative 2:** Use association class +
 **Pros:** Can save every participation entry. +
-**Cons:** Need to implement extra storage for association class, and cost more time to operate `show person` and `select event`.
+**Cons:** Need to implement extra storage for association class, and it is costly in terms of time to operate `show person` and `select event`.
 
 === Logging
 
@@ -1212,23 +1212,24 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1. User enters values for a new person.
-2. AddressBook add the new person into the database.
+2. Planno adds the new person into the database.
 +
 Use case ends.
 
 *Extensions*
-2a. There is already this person
+
+[none]
+* 2a. There is already this person
 +
 Use case ends.
-[none]
-* 2a. The list is empty.
++
+* 2b. The list is empty
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+* 3a. The given index is invalid
 +
-[none]
-** 3a1. AddressBook shows an error message.
+** Planno shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1237,24 +1238,23 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list persons.
+2.  Planno shows a list of persons.
+3.  User requests to delete a specific person in the list.
+4.  Planno deletes the person.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The list is empty
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+* 3a. The given index is invalid
 +
-[none]
-** 3a1. AddressBook shows an error message.
+** Planno shows an error message
 +
 Use case resumes at step 2.
 
@@ -1264,30 +1264,28 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User find target person by his name.
-2.  AddressBook shows the result of find command.
+2.  Planno shows the result of find command.
 3.  User types new information for the target person.
-4.  AddressBook updates the information and displays successful message.
+4.  Planno updates the information and displays successful message.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The target person cannot be found.
+* 2a. The target person cannot be found
 +
 Use case ends.
 
 * 3a. User types invalid information
 +
-[none]
-** 3a1. AddressBook shows an error message.
+** Planno shows an error message.
 +
 Use case resumes at step 2.
 
-* 3b. New information is the same as original.
+* 3b. New information is the same as original
 +
-[none]
-** 3b1. AddressBook shows an unnecessary update message.
+** Planno shows an unnecessary update message.
 +
 Use case ends.
 
@@ -1297,7 +1295,7 @@ Use case ends.
 *MSS*
 
 1. User enters values for a new person
-2. AddressBook add the new person into the database
+2. Planno add the new person into the database
 +
 Use case ends.
 
@@ -1314,19 +1312,18 @@ Use case ends.
 *MSS*
 
 1. User enters "history" command to view all history commands.
-2. AddressBook displays all history commands.
+2. Planno displays all history commands.
 3. User enters "undo" to request to undo the last link:#undoable-command[undoable command].
-4. AddressBook undoes the last link:#undoable-command[undoable command] and displays successful message.
+4. Planno undoes the last link:#undoable-command[undoable command] and displays successful message.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 3a. No more link:#undoable-command[undoable command] commands in the history.
+* 3a. No more link:#undoable-command[undoable command] commands in the history
 +
-[none]
-** 3a1 AddressBook displays error message.
+** Planno displays error message.
 +
 Use case ends.
 
@@ -1336,29 +1333,28 @@ Use case ends.
 *MSS*
 
 1. User enters "history" command to view all history commands.
-2. AddressBook displays all history commands.
+2. Planno displays all history commands.
 3. User enters "redo" to request to undo the last link:#redoable-command[redoable command].
-4. AddressBook undoes the last link:#redoable-command[redoable command] and displays successful message.
+4. Planno undoes the last link:#redoable-command[redoable command] and displays successful message.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 3a. No more link:#redoable-command[redoable command] commands in the history.
+* 3a. No more link:#redoable-command[redoable command] commands in the history
 +
-[none]
-** 3a1 AddressBook displays error message.
+** Planno displays error message.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Clear the address book
+=== Use case: Clear Planno
 
 *MSS*
 
 1. User enters "clear" command to delete all entries in address book.
-2. AddressBook deletes all data
+2. Planno deletes all data
 +
 Use case ends.
 
@@ -1368,14 +1364,14 @@ Use case ends.
 *MSS*
 
 1. User enters value for help command.
-2. AddressBook displays the help window.
+2. Planno displays the help window.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User presses F1 on the keyboard or clicks on help icon
+* 1a. User presses F1 on the keyboard or clicks on help icon.
 +
 Use case resumes at step 2.
 
@@ -1385,7 +1381,7 @@ Use case resumes at step 2.
 *MSS*
 
 1. User enters "exit" command for exiting the app.
-2. AddressBook terminates its work and exit.
+2. Planno terminates its work and exit.
 +
 Use case ends.
 
@@ -1401,18 +1397,17 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to sort persons
-2.  AddressBook shows a list of sorted persons
+1.  User requests to sort persons.
+2.  Planno shows a list of sorted persons.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The list is empty
 +
-[none]
-** 2a1. AddressBook shows a successful message.
+** Planno shows a successful message.
 +
 Use case ends.
 
@@ -1422,15 +1417,16 @@ Use case ends.
 *MSS*
 
 1. User enters value for list command.
-2. AddressBook displays list of persons.
+2. Planno displays list of persons.
 +
 Use case ends.
 
 *Extensions*
 
-* 1a. There is no person in AddressBook
+[none]
+* 1a. There is no person in Planno
 +
-** AddressBook shows a no person message.
+** Planno shows a no person message.
 +
 Use case ends.
 
@@ -1440,15 +1436,16 @@ Use case ends.
 *MSS*
 
 1. User enters values for find command.
-2. AddressBook displays persons with name matching at least one keyword.
+2. Planno displays persons with name matching at least one keyword.
 +
 Use case ends.
 
 *Extensions*
 
+[none]
 * 1a. There is no person with a name matching any keyword
 +
-** AddressBook shows a no person found message.
+** Planno shows a no person found message.
 +
 Use case ends.
 
@@ -1458,29 +1455,30 @@ Use case ends.
 *MSS*
 
 1. User enters value for list command.
-2. AddressBook displays list of persons.
+2. Planno displays list of persons.
 3. User enters index value for select command.
-4. AddressBook displays Google search page of the person at the entered index value.
+4. Planno displays Google search page of the person at the entered index value.
 +
 Use case ends.
 
 *Extensions*
 
-* 1a. There is no person in AddressBook
+[none]
+* 1a. There is no person in Planno
 +
-** AddressBook shows a no person message.
+** Planno shows a no person message.
 +
 Use case ends.
 
-* 1b. User enters value for find command.
+* 1b. User enters value for find command
 +
-** 1b1. AddressBook displays persons with name matching at least one keyword.
+** Planno displays persons with name matching at least one keyword.
 +
 User case resumes at step 3.
 
 * 3a. User enters invalid index value
 +
-** AddressBook displays an invalid index message.
+** Planno displays an invalid index message.
 +
 Use case ends.
 
@@ -1490,39 +1488,88 @@ Use case ends.
 *MSS*
 
 1. User enters value for history command.
-2. AddressBook displays a list of commands the User has entered from most recent to earliest.
+2. Planno displays a list of commands the User has entered from most recent to earliest.
 +
 Use case ends.
 
 *Extensions*
 
+[none]
 * 1a. User has not entered any previous commands
 +
-** AddressBook displays a no previous command entered message.
+** Planno displays a no previous command entered message.
 +
 Use case ends.
 
 [discrete]
-=== Use case: find a person by tag
+=== Use case: Find a person by tag
 
 *MSS*
 
 1. User enters tag names for a person list
-2. AddressBook displays the list of persons that contains either of the tag names
+2. Planno displays the list of persons that contains either of the tag names.
 +
 Use case ends.
 
 *Extensions*
 
+[none]
 * 1a. User does not enter tag names
 +
-AddressBook shows and error message.
+** Planno shows an error message.
 +
 Use case ends.
 
 * 1b. User does not use correct format
 +
-AddressBook displays an empty list.
+** Planno displays an empty list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Select all joined events
+
+*MSS*
+
+1. User enters value for list command.
+2. Planno displays list of persons.
+3. User enters value for list event command.
+4. Planno displays list of events.
+5. User enters index value/s for selectJoinedEvents command.
+6. Planno displays all events of the person/s at the entered index value/s.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no person in Planno
++
+** Planno shows a no person message.
++
+Use case ends.
+
+* 1b. User enters value for find command
++
+** Planno displays persons with name matching at least one keyword.
++
+Use case resumes at step 3.
+
+* 3a. There is no event in Planno
++
+** Planno displays a blank event list.
++
+Use case resumes at step 5.
+
+* 5a. User enters invalid index value
++
+** Planno displays an invalid index message.
++
+Use case ends.
+
+* 5b. The selected person has not joined any events
++
+** Planno displays a blank event list.
 +
 Use case ends.
 
