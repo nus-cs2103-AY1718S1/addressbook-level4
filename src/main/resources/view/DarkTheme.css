@@ -371,7 +371,7 @@
 }
 
 #commandTextField {
-    -fx-background-color: derive(#A9A9A9, 20%);
+    -fx-background-color: derive(#d4cbb3, 20%);
     -fx-background-insets: 0;
     -fx-border-color: derive(#d4cbb3, 20%);
     -fx-border-insets: 0;
@@ -379,7 +379,7 @@
     -fx-font-family: monospace;
     -fx-font-weight: bolder;
     -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-text-fill: #6B4A40;
 }
 
 #commandTextFieldKeyword {
