@@ -329,37 +329,6 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
         requireNonNull(remark);
         return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
     }
-
-    /**
-     * Parses a {@code Optional<String> bloodType} into an {@code Optional<Bloodtype>} if {@code bloodType} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Bloodtype> parseBloodType(Optional<String> bloodType) throws IllegalValueException {
-        requireNonNull(bloodType);
-        return bloodType.isPresent() ? Optional.of(new Bloodtype(bloodType.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName, Tag.DEFAULT_COLOR));
-        }
-        return tagSet;
-    }
-    /**
-     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code appointment} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Date> parseDate(Optional<String> date) throws ParseException {
-        requireNonNull(date);
-        return date.isPresent() ? Optional.of(Appointment.DATE_FORMATTER.parse(date.get())) : Optional.empty();
-
-    }
-}
 ```
 ###### /java/seedu/address/logic/parser/RemarkCommandParser.java
 ``` java
@@ -449,61 +418,6 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonListReversed();
         return FXCollections.unmodifiableObservableList(list);
     }
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    public void setRemark(Remark remark) {
-        this.remark.set(requireNonNull(remark));
-    }
-
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    @Override
-    public ObjectProperty<Remark> remarkProperty() {
-        return remark;
-    }
-
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    @Override
-    public Remark getRemark() {
-        return remark.get();
-    }
-
-    @Override
-    public ObjectProperty<Appointment> appointmentProperty() {
-        return appointment;
-    }
-
-    @Override
-    public Appointment getAppointment() {
-        return appointment.get();
-    }
-
-    public void setAppointment(Appointment appointment) {
-        this.appointment.set(appointment);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, bloodType, tags);
-    }
-
-    @Override
-    public String toString() {
-        return getAsText();
-    }
-}
 ```
 ###### /java/seedu/address/model/person/Remark.java
 ``` java
@@ -614,19 +528,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
     }
-
-    @Override
-    @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
-        try {
-            saveAddressBook(event.data);
-        } catch (IOException e) {
-            raise(new DataSavingExceptionEvent(e));
-        }
-    }
-
-}
 ```
 ###### /java/seedu/address/storage/XmlAddressBookStorage.java
 ``` java
@@ -676,9 +577,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         }
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Handles KeyPress Commands that are keyed with Shift button held down
      */
@@ -701,9 +600,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         }
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Deletes the word or a chunk of blank spaces on the left.
      * Does not matter if caret is at end of text or between lines. Method will automatically
@@ -733,9 +630,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Deletes chunk in the situation where caret is at the far right
      */
@@ -747,9 +642,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         }
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Forms a new word with all string elements between the two parameters removed
      */
@@ -765,9 +658,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         commandTextField.setText(answer);
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Checks if caret is at either ends
      */
@@ -777,9 +668,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return atFarLeft || atFarRight;
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Shifts the caret left to the left of the first character of the next word
      * <p>
@@ -803,9 +692,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Shifts the caret right to the right of the last character of the next word
      * <p>
@@ -830,9 +717,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Shifts the caret left, ignoring all empty spaces
      * <p>
@@ -858,9 +743,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return caretHolder;
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Shifts the caret right, ignoring all empty spaces
      * <p>
@@ -886,9 +769,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return caretHolder;
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Shifts the caret left, ignoring all char
      * <p>
@@ -914,9 +795,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return caretHolder;
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
+
     /**
      * Shifts the caret right, ignoring all char
      * <p>
@@ -942,9 +821,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return caretHolder;
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Returns true if string element before currentCaretPosition index is empty
      */
@@ -954,9 +830,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return (" ".equals(convertToString));
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Returns true if string element after currentCaretPosition index is empty
      */
@@ -966,9 +839,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return (" ".equals(convertToString));
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Adds the next prefix required for the input
      */
@@ -997,9 +867,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         commandTextField.positionCaret(finalText.length());
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Fundamental Check: Checks if add poll KeyWord is in the input text
      * Additional Checks: Checks if prefix is in the input text
@@ -1026,9 +893,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         }
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Polls the input statement to check if sentence starts with " add " or " a "
      * <p>
@@ -1051,9 +915,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         }
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Polls the input statement to check if
      * 1. sentence starts with " edit " or " e " and
@@ -1076,9 +937,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         }
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if the first two elements of the string are "a "
      */
@@ -1087,9 +945,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && Character.toString(stringToEvaluate.charAt(1)).equals(" "));
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if the first four elements of the string are "add "
      */
@@ -1098,9 +953,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && Character.toString(stringToEvaluate.charAt(3)).equals(" "));
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if the commandTextField all prefixes excluding tag
      */
@@ -1110,9 +962,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 && containsDate();
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Adds prefix string to existing text input
      */
@@ -1120,9 +969,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return commandTextField.getText().concat(" ").concat(prefix.getPrefix());
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if existing input has Bloodtype Prefix String
      */
@@ -1131,9 +977,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return currentInput.contains(PREFIX_BLOODTYPE.getPrefix());
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if existing input has Remark Prefix String
      */
@@ -1142,9 +985,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return currentInput.contains(PREFIX_REMARK.getPrefix());
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if existing input has Remark Prefix String
      */
@@ -1153,9 +993,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return currentInput.contains(PREFIX_DATE.getPrefix());
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if existing input has Address Prefix String
      */
@@ -1164,9 +1001,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return currentInput.contains(PREFIX_ADDRESS.getPrefix());
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if existing input has Email Prefix String
      */
@@ -1175,9 +1009,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return currentInput.contains(PREFIX_EMAIL.getPrefix());
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if existing input has Phone Prefix String
      */
@@ -1186,9 +1017,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return currentInput.contains(PREFIX_PHONE.getPrefix());
     }
 
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
     /**
      * Checks if existing input has Name Prefix String
      */
@@ -1196,95 +1024,6 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         String currentInput = commandTextField.getText();
         return currentInput.contains(PREFIX_NAME.getPrefix());
     }
-
-    /**
-     * Updates the text field with the previous input in {@code historySnapshot},
-     * if there exists a previous input in {@code historySnapshot}
-     */
-    private void navigateToPreviousInput() {
-        assert historySnapshot != null;
-        if (!historySnapshot.hasPrevious()) {
-            return;
-        }
-
-        replaceText(historySnapshot.previous());
-    }
-
-    /**
-     * Updates the text field with the next input in {@code historySnapshot},
-     * if there exists a next input in {@code historySnapshot}
-     */
-    private void navigateToNextInput() {
-        assert historySnapshot != null;
-        if (!historySnapshot.hasNext()) {
-            return;
-        }
-
-        replaceText(historySnapshot.next());
-    }
-
-    /**
-     * Sets {@code CommandBox}'s text field with {@code text} and
-     * positions the caret to the end of the {@code text}.
-     */
-    private void replaceText(String text) {
-        commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
-    }
-
-    /**
-     * Handles the Enter button pressed event.
-     */
-    @FXML
-    private void handleCommandInputChanged() {
-        try {
-            CommandResult commandResult = logic.execute(commandTextField.getText());
-            initHistory();
-            historySnapshot.next();
-            // process result of the command
-            commandTextField.setText("");
-            logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
-
-        } catch (CommandException | ParseException e) {
-            initHistory();
-            // handle command failure
-            setStyleToIndicateCommandFailure();
-            logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage(), true));
-        }
-    }
-
-    /**
-     * Initializes the history snapshot.
-     */
-    private void initHistory() {
-        historySnapshot = logic.getHistorySnapshot();
-        // add an empty string to represent the most-recent end of historySnapshot, to be shown to
-        // the user if she tries to navigate past the most-recent end of the historySnapshot.
-        historySnapshot.add("");
-    }
-
-    /**
-     * Sets the command box style to use the default style.
-     */
-    private void setStyleToDefault() {
-        commandTextField.getStyleClass().remove(ERROR_STYLE_CLASS);
-    }
-
-    /**
-     * Sets the command box style to indicate a failed command.
-     */
-    private void setStyleToIndicateCommandFailure() {
-        ObservableList<String> styleClass = commandTextField.getStyleClass();
-
-        if (styleClass.contains(ERROR_STYLE_CLASS)) {
-            return;
-        }
-
-        styleClass.add(ERROR_STYLE_CLASS);
-    }
-
 ```
 ###### /java/seedu/address/ui/CommandBox.java
 ``` java
