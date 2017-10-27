@@ -1,8 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.util.List;
-import java.util.function.Predicate;
-
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.FindLessonRequestEvent;
 import seedu.address.model.ListingUnit;
@@ -11,6 +8,9 @@ import seedu.address.model.module.predicates.LessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.LocationContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.MarkedLessonContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Finds and lists items in address book which module or location contains any of the argument keywords.
@@ -39,17 +39,21 @@ public class FindCommand extends Command {
         switch (ListingUnit.getCurrentListingUnit()) {
         case LOCATION:
             this.predicate = new LocationContainsKeywordsPredicate(keywords);
+            ListingUnit.setCurrentPredicate(this.predicate);
             break;
         case LESSON:
             if (model.getCurrentViewingAttribute().equals("marked")) {
                 this.predicate = new MarkedLessonContainsKeywordsPredicate(keywords);
+                ListingUnit.setCurrentPredicate(this.predicate);
                 break;
             }
             this.predicate = new LessonContainsKeywordsPredicate(keywords, model.getCurrentViewingLesson(),
                     model.getCurrentViewingAttribute());
+            ListingUnit.setCurrentPredicate(this.predicate);
             break;
         default:
             this.predicate = new ModuleContainsKeywordsPredicate(keywords);
+            ListingUnit.setCurrentPredicate(this.predicate);
             break;
         }
         model.updateFilteredLessonList(predicate);
