@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -7,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
 <StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <GridPane fx:id="mainDetailsPane" gridLinesVisible="false">
      <columnConstraints>
@@ -38,6 +40,7 @@
             </children>
          </GridPane>
          <VBox fx:id="contactDetailsVBox" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" />
+              <StackPane fx:id="schedulePlaceholder" styleClass="panelTitlePadding" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       </children>
    </GridPane>
 </StackPane>
