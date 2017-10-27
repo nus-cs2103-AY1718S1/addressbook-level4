@@ -89,14 +89,14 @@ Examples:
 === Adding a new task : `addTask`
 
 Adds a new task to the task book +
-Format: `addTask n/TaskName d/Description s/startDateTime f/finishDateTime [t/TAG]...` +
+Format: `addTask n/TaskName d/Description s/startDateTime f/finishDateTime c/priority [t/TAG]...` +
 
 [TIP]
-A task can have any number of tags (including 0), the tag mechanism is the same as that for person
+A task can have any number of tags (including 0), the tag mechanism is the same as that for person. A task has a special field called priority (ranges from 1 to 5, with 1 being the most important). If a priority is not specified during adding of this task, a `normal` (3) priority  wil be set by default.
 
 Examples:
 
-* `addTask n/picnic d/have fun at Botanic Garden s/1/1/2099 12:00pm f/1/1/2099 15:00pm t/friends`
+* `addTask n/picnic d/have fun at Botanic Garden s/1/1/2017 12:00pm f/1/1/2017 15:00pm c/3 t/friends`
 
 === Listing all persons : `list`
 
@@ -237,7 +237,7 @@ Deletes the 1st task in the task book.
 === Marking a task : `markTask`
 
 Marks the specific task from the task book. +
-Format: `markTask IDNEX`
+Format: `markTask INDEX`
 
 ****
 * Marks the task at the specified `INDEX`.
@@ -248,8 +248,28 @@ Format: `markTask IDNEX`
 Examples:
 
 * `list` +
-* `markTask` 1 +
+* `markTask 1` +
 Marks the 1st task in the task book to be completed.
+
+=== Setting a priority for a task : `setPriority`
+
+Sets the priority field of a task that is already present in ths taskBook with an integer value between 1 to 5. +
+Format: `setPriority INDEX c/new value specified`
+
+****
+* Sets the priority value of the current task with the specific INDEX provided.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The new value of the task's priority should still be between 1 to 5 (inclusive).
+****
+
+Examples:
+
+* `setPriority 1 c/1` +
+Sets the priority of this task to be `Super Important`.
+
+* `setPriority 1 c/6` +
+An Exception is thrown: A priority value is defined within integer range of 1 to 5.
 
 === Selecting a person : `select`
 
@@ -287,6 +307,14 @@ Examples:
 * `select 2` +
 Selects the 2nd task in the task book.
 
+=== Sorting the current taskBook by their priority : `taskByPriority`
+Sorts the task currently present in the taskBook by priority.
+Format: `taskByPriority`
+
+[NOTE]
+====
+This sorting will not affect the order of the tasks currently in the storage. However, the current index shown will be the index used for a specific task to `edit`, `delete`, `setPriority`, `mark`...
+====
 
 === Listing entered commands : `history`
 
@@ -364,24 +392,16 @@ Address book data are saved in the hard disk automatically after any command tha
 There is no need to save manually.
 
 == Coming in v2.0
-=== Marking a task as complete/incomplete
-=== Finding a person by name
 === Auto-focusing on input bar at the start of the application
 === Setting a task to be recurring
-=== Seeing tasks in certain range of time
-=== Listing tasks by priority
 === Listing tasks by tag
+=== Linking a task to a person
 === Viewing one task details with the relevant person in the addressbook
 === Viewing one person details with the relevant tasks displayed in the addressbook
-=== Having a map view of the current selected person or himself
-=== Linking a task to a person
-=== Adding a general notes or comments to each contact person
 === Listing last few contacts the user have found
-=== Exporting contact info as an add command (user can choose whether to disclose the private information about this contact details)
-=== Exporting task details as an add command
 === Pinning important contacts or task on top
 === Remindering region in task bar|see the reminder and be reminded of the deadline or the up comings of this task
-=== Possible new features
+=== Suggested possible new features
 ==== Adding image to a contact person
 ==== Sorting persons by name
 ==== Adding new tasks with hierarchy
@@ -392,7 +412,6 @@ There is no need to save manually.
 ==== Suggesting next part of the commands
 ==== Trigger & password
 ==== Customising background wallpaper
-==== Having a settings manager/config file
 
 == FAQ
 

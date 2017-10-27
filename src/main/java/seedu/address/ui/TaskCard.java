@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -46,6 +47,8 @@ public class TaskCard extends UiPart<Region> {
     private Label endDateTime;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label priority;
 
     public TaskCard(ReadOnlyTask task, int displayedIndex) {
         super(FXML);
@@ -56,6 +59,10 @@ public class TaskCard extends UiPart<Region> {
         }
         bindListeners(task);
 
+    }
+
+    public ReadOnlyTask getTask () {
+        return task;
     }
 
     private static String getTagColor(String tagName) {
@@ -78,10 +85,28 @@ public class TaskCard extends UiPart<Region> {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
         startDateTime.textProperty().bind(Bindings.convert(task.startTimeProperty()));
         endDateTime.textProperty().bind(Bindings.convert(task.endTimeProperty()));
+        priority.textProperty().bind(Bindings.convert(
+                new SimpleObjectProperty<>(priorityStringValueConverter(task.priorityProperty().get()))));
         task.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(task);
         });
+    }
+
+    /**
+     * Priority value string converter for converting integer value to String literals
+     * @param priorityValue ,  the inputted priority value
+     * @return the string literal
+     */
+    private String priorityStringValueConverter (Integer priorityValue) {
+        switch (priorityValue) {
+        case 1: return " Super Important";
+        case 2: return " Important";
+        case 3: return " Normal";
+        case 4: return " Trivial";
+        case 5: return " Super Trivial";
+        default: return "";
+        }
     }
 
     /**

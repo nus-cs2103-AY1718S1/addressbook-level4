@@ -49,7 +49,7 @@ public class EditTaskCommand extends UndoableCommand {
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the task book.";
 
     private final Index index;
     private final EditTaskDescriptor editTaskDescriptor;
@@ -68,7 +68,7 @@ public class EditTaskCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+        List<ReadOnlyTask> lastShownList = model.getSortedTaskList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
@@ -103,8 +103,9 @@ public class EditTaskCommand extends UndoableCommand {
         Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
         Boolean updateComplete = editTaskDescriptor.getComplete().orElse(taskToEdit.getComplete());
         //Remark updatedRemark = taskToEdit.getRemark(); // edit command does not allow editing remarks
+        Integer originalPriority = taskToEdit.getPriority(); // edit command is not used to update priority
         return new Task(updatedTaskName, updatedDescription, updatedStartDateTime, updatedEndDateTime,
-                updatedTags, updateComplete);
+                updatedTags, updateComplete, originalPriority);
     }
 
     @Override
