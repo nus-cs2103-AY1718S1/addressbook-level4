@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
@@ -25,7 +26,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(PersonDetailsPanel.class);
 
     @FXML
-    private VBox personDetailsBox;
+    private GridPane personDetailsGrid;
 
     @FXML
     private Label nameLabel;
