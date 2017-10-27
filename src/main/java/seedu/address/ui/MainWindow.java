@@ -138,8 +138,7 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        CalendarPanel calendarPanel = new CalendarPanel(logic, model.getAddressBook().getPersonList(),
-                model.getAddressBook().getTaskList());
+        CalendarPanel calendarPanel = new CalendarPanel(logic, model);
         calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
 
         TaskListPanel taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
