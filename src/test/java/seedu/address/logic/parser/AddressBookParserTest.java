@@ -18,8 +18,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.scene.control.TextFormatter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AppointCommand;
+import seedu.address.logic.commands.ChangePictureCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -106,6 +108,12 @@ public class AddressBookParserTest {
         UngroupCommand command = (UngroupCommand) parser.parseCommand(UngroupCommand.COMMAND_WORD + " "
             + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GROUP_NAME + " " + group.groupName);
         assertEquals(new UngroupCommand(INDEX_FIRST_PERSON, group), command);
+    }
+
+    @Test
+    public void parseCommand_changePicture() throws Exception {
+        ChangePictureCommand command = (ChangePictureCommand) parser.parseCommand(ChangePictureCommand.COMMAND_WORD);
+        assertTrue(command instanceof ChangePictureCommand);
     }
 
     @Test
