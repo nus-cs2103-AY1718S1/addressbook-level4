@@ -18,6 +18,10 @@ public class BirthdayTest {
         assertTrue(Birthday.isValidBirthday("11/12/1998"));
         assertTrue(Birthday.isValidBirthday("12/01/1971"));
         assertTrue(Birthday.isValidBirthday("14/01/1986"));
+
+        // birthday is not set
+        assertTrue(Birthday.isValidBirthday("NIL"));
+        assertTrue(Birthday.isValidBirthday(Birthday.BIRTHDAY_TEMPORARY));
     }
 }
 
