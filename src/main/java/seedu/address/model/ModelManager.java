@@ -155,9 +155,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private void updateAllPersons(HashMap<Tag, String> allTagColours) {
-        for (ReadOnlyPerson person: addressBook.getPersonList()) {
-            person.setTagHashMap(allTagColours);
-        }
+        colourPrefs.updateColorMap(allTagColours);
     }
 
     /**

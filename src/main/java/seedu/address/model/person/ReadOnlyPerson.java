@@ -25,8 +25,6 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     boolean isPinned();
     ObjectProperty<Boolean> pinnedProperty();
-    HashMap<Tag, String> getTagColours();
-    void setTagHashMap(HashMap<Tag, String> tagColours);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

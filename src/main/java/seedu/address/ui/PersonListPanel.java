@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -24,19 +25,21 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+    private HashMap<String, String> colourMap;
 
     @FXML
     private ListView<PersonCard> personListView;
 
-    public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+    public PersonListPanel(ObservableList<ReadOnlyPerson> personList, HashMap<String, String> colourMap) {
         super(FXML);
+        this.colourMap = colourMap;
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1, colourMap));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();

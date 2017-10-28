@@ -15,6 +15,7 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class PersonInfo extends UiPart<Region> {
@@ -25,6 +26,8 @@ public class PersonInfo extends UiPart<Region> {
 
     private static final Color[] colors = {Color.BLUE, Color.BROWN, Color.GREEN, Color.RED, Color.YELLOW, Color.PURPLE,
             Color.ORANGE, Color.CHOCOLATE, Color.AQUAMARINE, Color.INDIGO, Color.GRAY};
+
+    private HashMap<String, String> colourMap;
 
     @FXML
     private Circle circle;
@@ -51,8 +54,10 @@ public class PersonInfo extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonInfo() {
+    public PersonInfo(HashMap<String, String> colourMap) {
         super(FXML);
+
+        this.colourMap = colourMap;
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
@@ -100,14 +105,14 @@ public class PersonInfo extends UiPart<Region> {
         tags.getChildren().clear();
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            setTagColour(tagLabel, tag, person);
+            setTagColour(tagLabel, tag);
             tags.getChildren().add(tagLabel);
         });
     }
 
-    private void setTagColour(Label tagLabel, Tag tag, ReadOnlyPerson person) {
-        if (person.getTagColours().containsKey(tag)) {
-            tagLabel.setStyle("-fx-background-color: " + person.getTagColours().get(tag));
+    private void setTagColour(Label tagLabel, Tag tag) {
+        if (colourMap.containsKey(tag.tagName)) {
+            tagLabel.setStyle("-fx-background-color: " + colourMap.get(tag.tagName));
         } else {
             tagLabel.setStyle("-fx-background-color: blue");
         }

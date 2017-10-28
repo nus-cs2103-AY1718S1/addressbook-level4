@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,7 +25,6 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<Boolean> pinned;
-    private HashMap<Tag, String> tagColours;
 
     /**
      * Every field must be present and not null.
@@ -40,10 +38,6 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         pinned = new SimpleObjectProperty<>(checkPinTag(tags));
-        tagColours = new HashMap<>();
-        for (Tag tag: tags) {
-            tagColours.put(tag, "blue");
-        }
     }
 
     /**
@@ -147,16 +141,6 @@ public class Person implements ReadOnlyPerson {
         return pinned;
     }
 
-    @Override
-    public void setTagHashMap(HashMap<Tag, String> allTagColours) {
-        tagColours = new HashMap<>();
-        allTagColours.forEach((tag, colour) -> tagColours.put(tag, colour));
-    }
-
-    @Override
-    public HashMap<Tag, String> getTagColours() {
-        return tagColours;
-    }
 
     /**
      * Replaces this person's tags with the tags in the argument tag set.

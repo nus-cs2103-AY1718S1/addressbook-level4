@@ -137,13 +137,13 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personInfoPanel = new PersonInfo();
+        personInfoPanel = new PersonInfo(prefs.getColourMap());
         personInfoPlaceholder.getChildren().add(personInfoPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), prefs.getColourMap());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        groupListPanel = new GroupListPanel(logic.getFilteredPersonList());
+        groupListPanel = new GroupListPanel(logic.getFilteredPersonList(), prefs.getColourMap());
         groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();

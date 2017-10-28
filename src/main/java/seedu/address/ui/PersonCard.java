@@ -11,6 +11,8 @@ import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
+import java.util.HashMap;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -19,6 +21,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static final String PIN_ICON = "/images/pinned_icon.png";
+    private HashMap<String, String> colourMap;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -41,9 +44,10 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public PersonCard(ReadOnlyPerson person, int displayedIndex, HashMap<String, String> colourMap) {
         super(FXML);
         this.person = person;
+        this.colourMap = colourMap;
         id.setText(displayedIndex + ". ");
         initTags(person);
         setPinIcon(person);
@@ -70,14 +74,14 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            setTagColour(tagLabel, tag, person);
+            setTagColour(tagLabel, tag);
             tags.getChildren().add(tagLabel);
         });
     }
 
-    private void setTagColour(Label tagLabel, Tag tag, ReadOnlyPerson person) {
-        if (person.getTagColours().containsKey(tag)) {
-            tagLabel.setStyle("-fx-background-color: " + person.getTagColours().get(tag));
+    private void setTagColour(Label tagLabel, Tag tag) {
+        if (colourMap.containsKey(tag.tagName)) {
+            tagLabel.setStyle("-fx-background-color: " + colourMap.get(tag.tagName));
         } else {
             tagLabel.setStyle("-fx-background-color: blue");
         }

@@ -14,24 +14,27 @@ import seedu.address.commons.events.ui.NewTagColourChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class GroupListPanel extends UiPart<Region> {
 
     private static final String FXML = "GroupListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(GroupListPanel.class);
+    private HashMap<String, String> colourMap;
 
     @javafx.fxml.FXML
     private ListView<PersonCard> groupListView;
 
-    public GroupListPanel(ObservableList<ReadOnlyPerson> personList) {
+    public GroupListPanel(ObservableList<ReadOnlyPerson> personList, HashMap<String, String> colourMap) {
         super(FXML);
+        this.colourMap = colourMap;
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1, colourMap));
         groupListView.setItems(mappedList);
         groupListView.setCellFactory(listView -> new GroupListPanel.PersonListViewCell());
         setEventHandlerForSelectionChangeEvent();
