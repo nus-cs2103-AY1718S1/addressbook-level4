@@ -77,4 +77,12 @@ public class RemarkCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
         }
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RemarkCommand // instanceof handles nulls
+                && remarkContent.equals(((RemarkCommand) other).remarkContent)
+                && index.equals((((RemarkCommand) other).index)));
+    }
 }
