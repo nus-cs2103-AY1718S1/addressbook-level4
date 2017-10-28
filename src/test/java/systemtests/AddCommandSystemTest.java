@@ -19,10 +19,10 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_COMPLETED;
+import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_DELIVERING;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FLAMMABLE;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FROZEN;
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
@@ -37,9 +37,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_DELIVERING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -87,8 +86,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         ReadOnlyParcel toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + TRACKING_NUMBER_DESC_AMY + "  "
                 + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " " + EMAIL_DESC_AMY + "   "
-                + ADDRESS_DESC_AMY + "   " + DELIVERY_DATE_DESC_AMY + " " + STATUS_DESC_AMY + "   "
-                + TAG_DESC_FRIEND + " ";
+                + ADDRESS_DESC_AMY + "   " + DELIVERY_DATE_DESC_AMY + " " + STATUS_DESC_DELIVERING + "   "
+                + TAG_DESC_FLAMMABLE + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -104,8 +103,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a duplicate parcel -> rejected */
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
-                + TAG_DESC_FRIEND;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING
+                + TAG_DESC_FLAMMABLE;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
         /*
@@ -113,8 +112,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          * rejected
          */
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_BOB
-                + TAG_DESC_FRIEND;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_COMPLETED
+                + TAG_DESC_FLAMMABLE;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
         /* Case: add a duplicate parcel except with different tags -> rejected */
@@ -123,7 +122,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         // AddressBook#addParcel(ReadOnlyParcel)
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY
-                + STATUS_DESC_AMY +  " " + PREFIX_TAG.getPrefix() + "friends";
+                + STATUS_DESC_DELIVERING +  " " + PREFIX_TAG.getPrefix() + "friends";
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
         /*
@@ -132,11 +131,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
-                + TAG_DESC_FRIEND;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING
+                + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /*
@@ -145,11 +144,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
-                + TAG_DESC_FRIEND;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING
+                + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a parcel with all fields same as another parcel in the address book except phone ->
@@ -157,11 +156,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_BOB
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
-                + TAG_DESC_FRIEND;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING
+                + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a parcel with all fields same as another parcel in the address book except email ->
@@ -169,11 +168,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_BOB
-                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY + TAG_DESC_FRIEND;
+                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /*
@@ -182,11 +181,11 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_BOB)
-                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
-                + TAG_DESC_FRIEND;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING
+                + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /*
@@ -195,29 +194,29 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
          */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_BOB + STATUS_DESC_AMY
-                + TAG_DESC_FRIEND;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_BOB + STATUS_DESC_DELIVERING
+                + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a parcel with all fields except phone -> added with phone set to default value of 'NIL' */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
                 .withName(VALID_NAME_AMY).withPhone(Phone.PHONE_DEFAULT_VALUE).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY + TAG_DESC_FRIEND;
+                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a parcel with all fields except email -> added with email set to default value of 'NIL' */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
                 .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(Email.EMAIL_DEFAULT_VALUE)
-                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
-                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY + TAG_DESC_FRIEND;
+                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /* Case: filters the parcel list before adding -> added */
@@ -233,8 +232,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a parcel with tags, command with parameters in random order -> added */
         toAdd = BOB;
-        command = AddCommand.COMMAND_WORD + TAG_DESC_FRIEND + PHONE_DESC_BOB + ADDRESS_DESC_BOB
-                + STATUS_DESC_BOB + NAME_DESC_BOB + TAG_DESC_HUSBAND + EMAIL_DESC_BOB
+        command = AddCommand.COMMAND_WORD + TAG_DESC_FLAMMABLE + PHONE_DESC_BOB + ADDRESS_DESC_BOB
+                + STATUS_DESC_COMPLETED + NAME_DESC_BOB + TAG_DESC_FROZEN + EMAIL_DESC_BOB
                 + TRACKING_NUMBER_DESC_BOB + DELIVERY_DATE_DESC_BOB;
         assertCommandSuccess(command, toAdd);
 
@@ -255,9 +254,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
                 .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY_FULLSTOPS)
-                .withStatus(VALID_STATUS_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withStatus(VALID_STATUS_DELIVERING).withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY + TAG_DESC_FRIEND;
+                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a parcel with all fields but using delivery date with forward slash
@@ -267,43 +266,43 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
                 .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
                 .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY_SLASHES)
-                .withStatus(VALID_STATUS_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withStatus(VALID_STATUS_DELIVERING).withTags(VALID_TAG_FLAMMABLE).build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY + TAG_DESC_FRIEND;
+                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
 
         /* Case: missing tracking number -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY;
+                + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 AddCommand.MESSAGE_USAGE));
 
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY;
+                + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 AddCommand.MESSAGE_USAGE));
 
         /* Case: missing address -> rejected */
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY;
+                + EMAIL_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 AddCommand.MESSAGE_USAGE));
 
         /* Case: missing delivery date -> rejected */
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + STATUS_DESC_AMY;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + STATUS_DESC_DELIVERING;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 AddCommand.MESSAGE_USAGE));
 
         /* Case: missing status -> accepted */
         toAdd = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB).withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withTags(VALID_TAG_FRIEND)
+                .withDeliveryDate(VALID_DELIVERY_DATE_AMY).withTags(VALID_TAG_FLAMMABLE)
                 .withStatus("PENDING").build();
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_BOB + NAME_DESC_AMY + PHONE_DESC_BOB
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + TAG_DESC_FRIEND;
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
         /* Case: invalid keyword -> rejected */
@@ -342,7 +341,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid status -> rejected */
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING
                 + INVALID_STATUS_DESC;
         assertCommandFailure(command, Status.MESSAGE_STATUS_CONSTRAINTS);
 

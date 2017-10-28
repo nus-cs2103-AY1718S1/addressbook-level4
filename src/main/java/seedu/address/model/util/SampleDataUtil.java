@@ -21,6 +21,7 @@ import seedu.address.model.tag.Tag;
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
 public class SampleDataUtil {
+
     public static Parcel[] getSampleParcels() {
         try {
             return new Parcel[] {
