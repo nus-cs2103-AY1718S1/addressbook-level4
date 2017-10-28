@@ -115,6 +115,22 @@ public class UserPrefs {
 
     /**
      *
+     * @param oldUsername
+     * @param newUsername
+     * @param password
+     * @return true if username is changes successfully
+     */
+    public boolean changeUsername(String oldUsername, String newUsername, String password) {
+        if (checkPassword(password) && checkUsername(oldUsername)) {
+            username = newUsername;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     *
      * @param input
      * @return a String that is hashed using SHA-256
      */
