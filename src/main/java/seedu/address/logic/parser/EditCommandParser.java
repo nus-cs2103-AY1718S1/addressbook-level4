@@ -62,7 +62,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                     .ifPresent(editPersonDescriptor::setHandphone);
             ParserUtil.parseHomePhone(argMultimap.getValue(PREFIX_HOME_PHONE))
                     .ifPresent(editPersonDescriptor::setHomePhone);
-            ParserUtil.parseOfficePhone(argMultimap.getValue(PREFIX_OFFICE_PHONE))
+            ParserUtil.parseOfficePhoneForEdit(argMultimap.getValue(PREFIX_OFFICE_PHONE))
                     .ifPresent(editPersonDescriptor::setOfficePhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);

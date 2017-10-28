@@ -81,12 +81,25 @@ public class ParserUtil {
     /**
      * Parses a {@code Optional<String> officePhone} into an {@code Optional<OfficePhone>} if {@code officePhone} is
      * present.
+     * Meant for parsing for Add command.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<OfficePhone> parseOfficePhone(Optional<String> officePhone) throws IllegalValueException {
         requireNonNull(officePhone);
         return officePhone.isPresent() ? Optional.of(new OfficePhone(officePhone.get()))
                 : Optional.of(new OfficePhone(OfficePhone.NO_OFFICE_PHONE_SET));
+    }
+
+    /**
+     * Parses a {@code Optional<String> officePhone} into an {@code Optional<OfficePhone>} if {@code officePhone}
+     * is present.
+     * Meant for parsing for Edit command.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<OfficePhone> parseOfficePhoneForEdit(Optional<String> officePhone)
+            throws IllegalValueException {
+        requireNonNull(officePhone);
+        return officePhone.isPresent() ? Optional.of(new OfficePhone(officePhone.get())) : Optional.empty();
     }
 
     /**

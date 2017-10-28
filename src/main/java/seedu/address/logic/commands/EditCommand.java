@@ -283,6 +283,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Debt> getDebt() {
             return Optional.ofNullable(debt);
         }
+
         public void setInterest(Interest interest) {
             this.interest = interest;
         }
