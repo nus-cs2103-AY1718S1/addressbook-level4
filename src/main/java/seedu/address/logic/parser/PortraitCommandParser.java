@@ -10,7 +10,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PortraitCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-public class PortraitCommandParser {
+/**
+ * Parse the argument to be a portrait command
+ */
+public class PortraitCommandParser implements Parser<PortraitCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the PortraitCommand
@@ -20,9 +23,8 @@ public class PortraitCommandParser {
     public PortraitCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PORTRAIT);
         if (!arePrefixesPresent(argMultimap, PREFIX_PORTRAIT)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PortraitCommand.COMMAND_WORD));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PortraitCommand.MESSAGE_USAGE));
         }
-        
         Index index;
         String filePath;
         try {

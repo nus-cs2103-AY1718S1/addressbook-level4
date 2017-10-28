@@ -5,6 +5,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PORTRAIT;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 
+/**
+ * A command that add an head portrait to a person
+ */
 public class PortraitCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "portrait";
