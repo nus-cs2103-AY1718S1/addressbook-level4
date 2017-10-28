@@ -8,19 +8,19 @@ public class Day {
     private final Integer day;
 
     public Day(String dayToAdd) throws IllegalValueException {
-        if (dayToAdd.equals("Monday")) {
+        if ("Monday".equals(dayToAdd)) {
             day = 1;
-        } else if (dayToAdd.equals("Tuesday")) {
+        } else if ("Tuesday".equals(dayToAdd)) {
             day = 2;
-        } else if (dayToAdd.equals("Wednesday")) {
+        } else if ("Wednesday".equals(dayToAdd)) {
             day = 3;
-        } else if (dayToAdd.equals("Thursday")) {
+        } else if ("Thursday".equals(dayToAdd)) {
             day = 4;
-        } else if (dayToAdd.equals("Friday")) {
+        } else if ("Friday".equals(dayToAdd)) {
             day = 5;
-        } else if (dayToAdd.equals("Saturday")) {
+        } else if ("Saturday".equals(dayToAdd)) {
             day = 6;
-        } else if (dayToAdd.equals("Sunday")) {
+        } else if ("Sunday".equals(dayToAdd)) {
             day = 7;
         } else {
             throw new IllegalValueException("Not a proper day");

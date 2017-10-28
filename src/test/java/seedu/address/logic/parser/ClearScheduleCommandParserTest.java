@@ -17,7 +17,7 @@ public class ClearScheduleCommandParserTest {
     private ClearScheduleCommandParser parser = new ClearScheduleCommandParser();
 
     @Test
-    public void parse_allFieldsPresent_success() throws IllegalValueException {
+    public void parseAllFieldsPresentSuccess() throws IllegalValueException {
 
         Index exampleIndex = Index.fromOneBased(1);
         Day exampleDay = new Day("Friday");
