@@ -83,6 +83,11 @@ Examples:
 Shows a list of all persons in the address book. +
 Format: `list`
 
+=== Listing all tags : `tags`
+
+Shows a list of all tags in the address book. +
+Format: `tags`
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
@@ -366,6 +371,7 @@ There is no need to save manually.
 | *Help* | *h* | `help` +
 | *Add* | *a* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 | *List* | *l* | `list` +
+| *Tags* | *t* | `tags` +
 | *Edit* | *e* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 | *Favourite* | *fav* | `favourite INDEX` +
 | *Find* | *f* | `find [PREFIX KEYWORD]...` +
