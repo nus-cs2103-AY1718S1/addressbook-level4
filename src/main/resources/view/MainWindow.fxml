@@ -6,13 +6,15 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="sceneBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
-    <URL value="@DarkTheme.css" />
-    <URL value="@Extensions.css" />
+    <URL value="@LightTheme.css" />
+    <URL value="@LightExtensions.css" />
   </stylesheets>
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
@@ -23,34 +25,71 @@
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>
   </MenuBar>
-
-  <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-    <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
-    </padding>
-  </StackPane>
-
-  <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-      minHeight="100" prefHeight="100" maxHeight="100">
-    <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
-    </padding>
-  </StackPane>
+   <SplitPane dividerPositions="0.5" prefHeight="38.0" prefWidth="692.0">
+      <items>
+         <VBox prefHeight="170.0" prefWidth="440.0" styleClass="split-pane:horizontal .split-pane-divider" SplitPane.resizableWithParent="false">
+            <children>
+              <StackPane fx:id="commandBoxPlaceholder" maxHeight="37.0" minHeight="-Infinity" prefHeight="37.0" prefWidth="310.0" VBox.vgrow="NEVER">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets></StackPane>
+              <StackPane fx:id="resultDisplayPlaceholder" maxHeight="133.0" minHeight="133.0" prefHeight="133.0" styleClass="pane-with-border" stylesheets="@LightTheme.css" VBox.vgrow="NEVER">
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin></StackPane>
+            </children>
+            <padding>
+               <Insets left="170.0" top="20.0" />
+            </padding>
+         </VBox>
+         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
+            <children>
+               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" StackPane.alignment="TOP_CENTER">
+                  <children>
+                     <ImageView fitHeight="164.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../images/logo2.png" />
+                        </image>
+                        <VBox.margin>
+                           <Insets top="50.0" />
+                        </VBox.margin>
+                     </ImageView>
+                  </children>
+               </VBox>
+            </children>
+            <padding>
+               <Insets top="-35.0" />
+            </padding>
+         </StackPane>
+      </items>
+      <VBox.margin>
+         <Insets />
+      </VBox.margin>
+   </SplitPane>
 
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="20.0" left="30.0" top="20.0" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+      <StackPane fx:id="lessonListPanelPlaceholder" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+               <Insets left="10.0" />
+            </VBox.margin></StackPane>
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+    <StackPane fx:id="browserPlaceholder" prefWidth="340.0">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="20.0" left="10.0" right="30.0" top="20.0" />
       </padding>
     </StackPane>
+      <VBox.margin>
+         <Insets />
+      </VBox.margin>
   </SplitPane>
 
-  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+  <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER">
+      <VBox.margin>
+         <Insets />
+      </VBox.margin></StackPane>
 </VBox>
