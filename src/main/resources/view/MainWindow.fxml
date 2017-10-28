@@ -329,7 +329,7 @@
             </GridPane>
          </content>
          <StackPane.margin>
-            <Insets bottom="8.0" left="10.0" right="10.0" top="85.0" />
+            <Insets bottom="8.0" left="10.0" right="10.0" top="165.0" />
          </StackPane.margin>
       </ScrollPane>
    </children>
