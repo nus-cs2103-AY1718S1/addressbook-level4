@@ -53,6 +53,7 @@ public class CombinePanel extends UiPart<Region> {
     private final Logic logic;
     private GridData[][] gridData;
     private String[][]noteData;
+    private ReadOnlyLesson selectedModule;
 
     @FXML
     private StackPane stackPane;
@@ -81,6 +82,7 @@ public class CombinePanel extends UiPart<Region> {
         timeBox.setVisible(false);
         browser.setVisible(false);
         registerAsAnEventHandler(this);
+        selectedModule = null;
 
         noteBox.setVisible(true);
         stickyNotesInit();
@@ -290,11 +292,16 @@ public class CombinePanel extends UiPart<Region> {
     @Subscribe
     private void handleLessonPanelSelectionChangedEvent(LessonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadLessonPage(event.getNewSelection().lesson);
         if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)) {
+            loadLessonPage(event.getNewSelection().lesson);
             timeBox.setVisible(false);
             browser.setVisible(true);
             noteBox.setVisible(false);
+        }
+
+        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.MODULE)) {
+            selectedModule = event.getNewSelection().lesson;
+            stickyNotesInit();
         }
     }
 
@@ -322,8 +329,18 @@ public class CombinePanel extends UiPart<Region> {
                     continue;
                 }
                 Remark remark = remarks.get(count);
-                noteData[i][j] = remark.moduleCode.fullCodeName + " : " + remark.value;
-                count++;
+                while (selectedModule != null && !remark.moduleCode.equals(selectedModule.getCode())) {
+                    count++;
+                    if (count < size) {
+                        remark = remarks.get(count);
+                    } else {
+                        break;
+                    }
+                }
+                if (count < size) {
+                    noteData[i][j] = remark.moduleCode.fullCodeName + " : " + remark.value;
+                    count++;
+                }
             }
         }
     }
