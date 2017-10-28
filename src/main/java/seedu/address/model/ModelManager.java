@@ -125,8 +125,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         ReadOnlyPerson removedBlacklistedPerson = addressBook.removeBlacklistedPerson(target);
-        updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         changeListTo(BlacklistCommand.COMMAND_WORD);
+        updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         indicateAddressBookChanged();
         return removedBlacklistedPerson;
     }
@@ -161,8 +161,8 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) {
         ReadOnlyPerson newBlacklistPerson = addressBook.addBlacklistedPerson(person);
-        updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         changeListTo(BlacklistCommand.COMMAND_WORD);
+        updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         indicateAddressBookChanged();
         return newBlacklistPerson;
     }
@@ -348,6 +348,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
         setCurrentList("blacklist");
+        syncBlacklist();
         return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
     }
 
@@ -358,6 +359,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
         setCurrentList("whitelist");
+        syncWhitelist();
         return FXCollections.unmodifiableObservableList(filteredWhitelistedPersons);
     }
 
@@ -374,7 +376,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
-        syncBlacklist();
         filteredBlacklistedPersons.setPredicate(predicate);
     }
 
@@ -385,7 +386,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
-        syncWhitelist();
         filteredWhitelistedPersons.setPredicate(predicate);
     }
 
