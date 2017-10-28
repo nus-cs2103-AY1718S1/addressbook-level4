@@ -2,6 +2,7 @@ package guitests;
 
 import java.util.concurrent.TimeoutException;
 
+import guitests.guihandles.CalendarViewHandle;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -79,8 +80,8 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+    protected CalendarViewHandle getCalendarView() {
+        return mainWindowHandle.getCalendarView();
     }
 
     protected StatusBarFooterHandle getStatusBarFooter() {

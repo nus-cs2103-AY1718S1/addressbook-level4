@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -107,7 +106,6 @@ public class CalendarWindow extends UiPart<Region> {
             List<Entry<?>> result = calendar.findEntries(person.getName().toString());
             calendar.removeEntries(result);
             calendar.addEntry(entry);
-
         }
     }
 
