@@ -140,7 +140,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Sorts the list according to name
+     * Sorts the list according to name, tag, company, priority and status
      */
     public void sortPerson(String type) throws InvalidSortTypeException {
         persons.sortPersonList(type);
