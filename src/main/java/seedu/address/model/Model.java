@@ -44,7 +44,7 @@ public interface Model {
     void removeTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException;
 
     /** Returns the index of the given person */
-     Index getIndex(ReadOnlyPerson target);
+    Index getIndex(ReadOnlyPerson target);
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getLatestPersonList();
