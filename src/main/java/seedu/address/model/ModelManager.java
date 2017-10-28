@@ -24,6 +24,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ShowPersonListViewEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -66,6 +67,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
+        indicateChangedToPersonListView();
         addressBook.resetData(newData);
         indicateAddressBookChanged();
     }
@@ -82,14 +84,23 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /**
+     * Raises an event to indicate that the UI needs to switch to viewing the Person List
+     */
+    private void indicateChangedToPersonListView() {
+        raise(new ShowPersonListViewEvent());
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        indicateChangedToPersonListView();
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        indicateChangedToPersonListView();
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
@@ -98,6 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
+        indicateChangedToPersonListView();
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
@@ -128,6 +140,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void sortByDataFieldFirst(String dataField) {
+        indicateChangedToPersonListView();
         switch (dataField) {
         case DATA_FIELD_NAME:
             sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
