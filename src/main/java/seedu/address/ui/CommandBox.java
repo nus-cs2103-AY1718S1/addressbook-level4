@@ -29,6 +29,7 @@ public class CommandBox extends UiPart<Region> {
     private ListElementPointer autoCompleteSnapshot;
     private boolean isAutoCompletePossibilitiesUpToDate = false;
     private int oldCaretPosition = 0;
+    private String textAfterCaret = "";
 
     @FXML
     private TextField commandTextField;
@@ -112,12 +113,15 @@ public class CommandBox extends UiPart<Region> {
             // Remember old caret position, so that selected text include all autocompleted text
             oldCaretPosition = commandTextField.getCaretPosition();
         }
+
         // loop back to the start (original user input) if all autocomplete options are exhausted
         if (!autoCompleteSnapshot.hasPrevious()) {
             autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
             replaceText(autoCompleteSnapshot.current());
+            appendText(textAfterCaret);
         } else {
             replaceTextAndSelectAllForward(autoCompleteSnapshot.previous());
+            appendText(textAfterCaret);
         }
     }
 
@@ -138,6 +142,17 @@ public class CommandBox extends UiPart<Region> {
     private void replaceTextAndSelectAllForward(String text) {
         commandTextField.setText(text);
         commandTextField.selectRange(oldCaretPosition, commandTextField.getText().length());
+    }
+
+    /**
+     * Appends {@code text} to the end of the text already in {@code CommandBox},
+     * while maintaining caret position and selection anchor
+     */
+    private void appendText(String text) {
+        int caretPosition = commandTextField.getCaretPosition();
+        int anchor = commandTextField.getAnchor();
+        commandTextField.setText(commandTextField.getText() + text);
+        commandTextField.selectRange(anchor, caretPosition);
     }
 
     /**
@@ -173,8 +188,16 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot.add("");
     }
 
+    /**
+     * Initializes or reinitializes the autocomplete snapshot.
+     */
     private void initAutoComplete() {
-        logic.updateAutoCompletePossibilities(commandTextField.getText());
+        // only pass the text before the caret into autocomplete
+        logic.updateAutoCompletePossibilities(commandTextField.getText()
+            .substring(0, commandTextField.getCaretPosition()));
+        // remember the text after caret
+        textAfterCaret = commandTextField.getText()
+            .substring(commandTextField.getCaretPosition(), commandTextField.getText().length());
         autoCompleteSnapshot = logic.getAutoCompleteSnapshot();
         isAutoCompletePossibilitiesUpToDate = true;
     }
