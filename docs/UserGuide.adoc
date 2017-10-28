@@ -93,10 +93,9 @@ _e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend
 [TIP]
 Once you have familiarized yourself with the application, try typing a command's alias in place of the full command keyword to save more time!
 
-
 === Viewing help : `help`
 
-Alias: `h`
+=> Alias: `h` <=
 
 Shows the usage of the specific command identified. If no command is specified, opens help window. +
 Format: `help [COMMAND_IDENTIFIER]`
@@ -113,11 +112,9 @@ Examples:
 * `help add` (using command word)
 * `help a` (using alias)
 
-
-=== Adding a person
 === Adding a person: `add`
 
-Alias: `a`
+=> Alias: `a` <=
 
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/OTHER EMAIL]... a/ADDRESS [t/TAG]...`
@@ -136,14 +133,14 @@ Examples:
 
 === Listing all persons : `list`
 
-Alias: `l`
+=> Alias: `l` <=
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
 === Editing a person : `edit`
 
-Alias: `e`
+=> Alias: `e` <=
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
@@ -168,7 +165,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 === Finding persons by any field : `find` [Since v1.2]
 
-Alias: `f`
+=> Alias: `f` <=
 
 Finds person based on the searched  field. +
 Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [e/EMAIL] or [a/ADDRESS] or  [t/TAG]`
@@ -216,7 +213,7 @@ Returns all persons with tag `friends` and `lovers`
 
 === Deleting person(s) : `delete`
 
-Alias: `d`
+=> Alias: `d` <=
 
 Deletes the specified person(s) from the address book. +
 Format: `delete INDEX [UNIQUE INDEX]...`
@@ -239,7 +236,7 @@ Deletes the 1st person in the results of the `find` command.
 
 === Locating a person's address : `locate` [Since v1.2]
 
-Alias: `lc`
+=> Alias: `lc` <=
 
 Locates the address of the person identified by the index number used in the last person listing. +
 Format: `locate INDEX`
@@ -261,7 +258,7 @@ Locates the 1st person's address in the results of the `find` command.
 
 === Scheduling an activity: `schedule` [Since v1.3]
 
-Alias: `sc`
+=> Alias: `sc` <=
 
 Schedules an activity with person(s) specified by the index number(s). +
 Format: `schedule INDEX [INDEX]... d/DATE act/ACTIVITY`
@@ -281,7 +278,7 @@ Associates the specified schedule with the 1st person in the results of the `fin
 
 === Getting email addresses : `copy` [Since v1.3]
 
-Alias: `y`
+=> Alias: `y` <=
 
 Outputs to console the email addresses of all person(s) selected by index number(s). +
 Format: `copy INDEX [UNIQUE INDEX]...`
@@ -302,7 +299,7 @@ Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between
 
 === Opening calendar : `calendar` [Since v1.3]
 
-Alias: `cl`
+=> Alias: `cl` <=
 
 Open a calendar browser that display the current events. +
 Format: `calendar`
@@ -317,7 +314,7 @@ Opens up calendar browser in the address book.
 
 === Listing entered commands : `history`
 
-Alias: `his`
+=> Alias: `his` <=
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -330,7 +327,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Alias: `u`
+=> Alias: `u` <=
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -358,7 +355,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Alias: `r`
+=> Alias: `r` <=
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -383,24 +380,24 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Alias: `c`
+=> Alias: `c` <=
 
 Clears all entries from the address book. +
 Format: `clear`
 
 === Exiting the program : `exit`
 
-Alias: `q`
+=> Alias: `q` <=
 
 Exits the program. +
 Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Address book data is saved in the hard disk automatically after any command that modifies data. +
 There is no need to save manually.
 
-To transfer my data to another Computer,iInstall the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+To transfer data to another Computer, install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
 
