@@ -14,10 +14,12 @@ import seedu.address.model.person.DateRepaid;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Handphone;
+import seedu.address.model.person.HomePhone;
 import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OfficePhone;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
@@ -30,7 +32,11 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String phone;
+    private String handphone;
+    @XmlElement(required = true)
+    private String homePhone;
+    @XmlElement(required = true)
+    private String officePhone;
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
@@ -65,7 +71,9 @@ public class XmlAdaptedPerson {
      */
     public XmlAdaptedPerson(ReadOnlyPerson source) {
         name = source.getName().fullName;
-        phone = source.getPhone().value;
+        handphone = source.getHandphone().value;
+        homePhone = source.getHomePhone().value;
+        officePhone = source.getOfficePhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
         postalCode = source.getPostalCode().value;
@@ -91,7 +99,9 @@ public class XmlAdaptedPerson {
             personTags.add(tag.toModelType());
         }
         final Name name = new Name(this.name);
-        final Phone phone = new Phone(this.phone);
+        final Handphone handphone = new Handphone(this.handphone);
+        final HomePhone homePhone = new HomePhone(this.homePhone);
+        final OfficePhone officePhone = new OfficePhone(this.officePhone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final PostalCode postalCode = new PostalCode(this.postalCode);
@@ -101,7 +111,8 @@ public class XmlAdaptedPerson {
         final Deadline deadline = new Deadline(this.deadline);
         final DateRepaid dateRepaid = new DateRepaid(this.dateRepaid);
         final Set<Tag> tags = new HashSet<>(personTags);
-        Person adaptedPerson = new Person(name, phone, email, address, postalCode, debt, interest, deadline, tags);
+        Person adaptedPerson = new Person(name, handphone, homePhone, officePhone, email, address, postalCode, debt,
+                interest, deadline, tags);
         adaptedPerson.setDateBorrow(dateBorrow);
         adaptedPerson.setDateRepaid(dateRepaid);
         return adaptedPerson;
