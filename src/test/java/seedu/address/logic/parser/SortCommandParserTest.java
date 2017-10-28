@@ -20,6 +20,6 @@ public class SortCommandParserTest {
     @Test
     public void parse_validArg_returnsSortCommand() {
         //SortCommand exp
-        assertParseSuccess(parser, "1", new SortCommand(1));
+        assertParseSuccess(parser, "name", new SortCommand("name"));
     }
 }
