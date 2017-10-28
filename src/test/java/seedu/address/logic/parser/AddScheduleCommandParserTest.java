@@ -1,9 +1,8 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.commands.CommandTestUtil.DAY_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_AMY;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
@@ -24,14 +23,10 @@ public class AddScheduleCommandParserTest {
         Day exampleDay = new Day("Friday");
         Time exampleStartTime = new Time("0730");
         Time exampleEndTime = new Time("1000");
-        String input = AddScheduleCommand.COMMAND_WORD + " 1 " + DAY_DESC_AMY +
+        String input =  "1" + DAY_DESC_AMY +
                 START_TIME_DESC_AMY
                 + END_TIME_DESC_AMY;
-
-        System.out.println(input);
-        // multiple names - last name accepted
-        assertParseSuccess(parser, input, new AddScheduleCommand(exampleIndex, exampleDay, exampleStartTime,
-                exampleEndTime));
+        assertParseSuccess(parser, input, new AddScheduleCommand(exampleIndex,
+                exampleDay, exampleStartTime, exampleEndTime));
     }
 }
-
