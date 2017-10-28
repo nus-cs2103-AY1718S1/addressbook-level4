@@ -135,13 +135,13 @@ public interface Model {
             throws TaskNotFoundException, DuplicateTaskException;
 
     /**
-     * Marks the given task as completed
+     * Marks the given tasks as completed
      */
     void markTasks(List<ReadOnlyTask> targets)
             throws TaskNotFoundException, DuplicateTaskException;
 
     /**
-     * Unmarks the given task as completed
+     * Unmarks the given tasks as completed
      */
     void unmarkTasks(List<ReadOnlyTask> targets)
             throws TaskNotFoundException, DuplicateTaskException;

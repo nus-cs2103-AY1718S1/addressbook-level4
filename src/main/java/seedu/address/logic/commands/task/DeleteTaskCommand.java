@@ -12,7 +12,7 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Deletes a task identified using it's last displayed indices from the task listing.
+ * Deletes a task identified using it's last displayed index from the task listing.
  */
 public class DeleteTaskCommand extends UndoableCommand {
 

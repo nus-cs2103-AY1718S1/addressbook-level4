@@ -31,8 +31,8 @@ public class RescheduleTaskCommand extends UndoableCommand {
             + "2. from [START TIME] to [END TIME] "
             + "Example: " + COMMAND_WORD + " 1 from 8am to 12pm";
 
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
-    public static final String MESSAGE_RESCHEDULE_SUCCESS = "Task rescheduled: %1$s";
+    private static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
+    private static final String MESSAGE_RESCHEDULE_SUCCESS = "Task rescheduled: %1$s";
 
     private Index index;
     private Optional<LocalDateTime> newStartDateTime = Optional.empty();
