@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -25,71 +26,58 @@ public class UntagCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Untags one or more persons in the last person listing.\n"
-            + "- Untag by the index numbers used\n"
+            + "- Untag all tags of persons identified by the index numbers used\n"
+            + "Parameters: INDEX,[MORE_INDEXES]... (must be positive integers)\n"
+            + "Example: " + COMMAND_WORD + " 1,2,3\n"
+            + "- Untag one or more tags of persons identified by the index numbers used\n"
             + "Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME\n"
-            + "Example: " + COMMAND_WORD + " 1,2,3 friends\n"
-            + "- Untag a tag from persons in the list\n"
-            + "Parameters: -all + TAGNAME\n"
-            + "Example: " + COMMAND_WORD + " -all friends\n"
-            + "- Untag all tags from persons in the list\n"
-            + "Parameters: -all\n"
-            + "Example: " + COMMAND_WORD + " -all";
+            + "Example: " + COMMAND_WORD + " 1,2,3 friends/colleagues\n"
+            + "- Untag all tags of all persons in the last person listing\n"
+            + "Parameters: -a\n"
+            + "Example: " + COMMAND_WORD + " -a\n"
+            + "- Untag one or more tags of all persons in the last person listing\n"
+            + "Parameters: -a + TAGNAME\n"
+            + "Example: " + COMMAND_WORD + " -a friends/colleagues";
 
-    public static final String MESSAGE_SUCCESS = "%d persons successfully untagged from %s:";
-    public static final String MESSAGE_SUCCESS_TAG = "%s tag successfully removed.";
+    public static final String MESSAGE_SUCCESS = "%d person(s) successfully untagged from %s:";
+    public static final String MESSAGE_SUCCESS_MULTIPLE_TAGS = "%s tag(s) successfully removed.";
     public static final String MESSAGE_SUCCESS_ALL_TAGS = "All tags successfully removed.";
-    public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAG = "%d persons do not have this tag:";
+    public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAGS = "%d person(s) do not have any tags specified:";
 
     public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
+    public static final String MESSAGE_EMPTY_TAG_LIST = "Please provide one or more tags! \n%1$s";
     public static final String MESSAGE_INVALID_INDEXES = "One or more person indexes provided are invalid.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
-    private boolean toAllPersonsInFilteredList;
+    private boolean toAllInFilteredList;
     private List<Index> targetIndexes;
-    private Tag tag;
-
-    public UntagCommand() {
-        this.toAllPersonsInFilteredList = true;
-        this.targetIndexes = null;
-        this.tag = null;
-    }
+    private List<Tag> tags;
 
     /**
-     * @param tag of the person
+     * @param targetIndexes of the persons in the filtered person list to untag
+     * @param tags of the persons
      */
-    public UntagCommand(Tag tag) {
-        requireNonNull(tag);
-
-        this.toAllPersonsInFilteredList = true;
-        this.targetIndexes = null;
-        this.tag = tag;
-    }
-
-    /**
-     * @param targetIndexes of the person in the filtered person list to untag
-     * @param tag of the person
-     */
-    public UntagCommand(List<Index> targetIndexes, Tag tag) {
+    public UntagCommand(boolean toAllInFilteredList, List<Index> targetIndexes, List<Tag> tags) {
         requireNonNull(targetIndexes);
-        requireNonNull(tag);
+        requireNonNull(tags);
 
-        this.toAllPersonsInFilteredList = false;
+        this.toAllInFilteredList = toAllInFilteredList;
         this.targetIndexes = targetIndexes;
-        this.tag = tag;
+        this.tags = tags;
     }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (toAllPersonsInFilteredList) {
+        if (toAllInFilteredList) {
             for (ReadOnlyPerson personToUntag : lastShownList) {
-                removeTagFromPerson(personToUntag, tag);
+                removeTagsFromPerson(personToUntag, tags);
             }
 
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return (tag == null) ? new CommandResult(MESSAGE_SUCCESS_ALL_TAGS)
-                    : new CommandResult(String.format(MESSAGE_SUCCESS_TAG, tag.toString()));
+            return (tags.isEmpty()) ? new CommandResult(MESSAGE_SUCCESS_ALL_TAGS)
+                    : new CommandResult(String.format(MESSAGE_SUCCESS_MULTIPLE_TAGS, tags.toString()));
         }
 
         for (Index targetIndex : targetIndexes) {
@@ -102,15 +90,17 @@ public class UntagCommand extends UndoableCommand {
         ArrayList<ReadOnlyPerson> toBeUntaggedPersons = new ArrayList<>();
         for (Index targetIndex : targetIndexes) {
             ReadOnlyPerson personToUntag = lastShownList.get(targetIndex.getZeroBased());
-            if (!personToUntag.getTags().contains(tag)) {
+            if (Collections.disjoint(personToUntag.getTags(), tags)) {
                 alreadyUntaggedPersons.add(personToUntag);
                 continue;
             }
-            removeTagFromPerson(personToUntag, tag);
+            removeTagsFromPerson(personToUntag, tags);
             toBeUntaggedPersons.add(personToUntag);
         }
 
-        //Todo: Delete the tag from unique tag list if no persons have it
+        for (Tag tag : tags) {
+            model.deleteUnusedTag(tag);
+        }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         StringJoiner toBeUntaggedJoiner = new StringJoiner(", ");
@@ -123,35 +113,37 @@ public class UntagCommand extends UndoableCommand {
                 alreadyUntaggedJoiner.add(person.getName().toString());
             }
             return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    targetIndexes.size() - alreadyUntaggedPersons.size(), tag.toString()) + " "
+                    targetIndexes.size() - alreadyUntaggedPersons.size(), tags.toString()) + " "
                     + toBeUntaggedJoiner.toString() + "\n"
-                    + String.format(MESSAGE_PERSONS_DO_NOT_HAVE_TAG, alreadyUntaggedPersons.size()) + " "
+                    + String.format(MESSAGE_PERSONS_DO_NOT_HAVE_TAGS, alreadyUntaggedPersons.size()) + " "
                     + alreadyUntaggedJoiner.toString());
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS,
-                targetIndexes.size(), tag.toString()) + " " + toBeUntaggedJoiner.toString());
+                targetIndexes.size(), tags.toString()) + " " + toBeUntaggedJoiner.toString());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UntagCommand // instanceof handles nulls
-                && ((targetIndexes == null) || this.targetIndexes.equals(((UntagCommand) other).targetIndexes)))
-                && ((tag == null) || this.tag.equals(((UntagCommand) other).tag)); // state check
+                && this.targetIndexes.equals(((UntagCommand) other).targetIndexes))
+                && this.tags.equals(((UntagCommand) other).tags); // state check
     }
 
     /**
      * Removes a tag from the person
      * Removes all tags if tag is not specified
      * @param person to be untagged
-     * @param tag to be removed
+     * @param tags to be removed
      */
-    private void removeTagFromPerson(ReadOnlyPerson person, Tag tag) throws CommandException {
+    private void removeTagsFromPerson(ReadOnlyPerson person, List<Tag> tags) throws CommandException {
         Person untaggedPerson = new Person(person);
         UniqueTagList updatedTags = new UniqueTagList();
-        if (tag != null) {
+        if (!tags.isEmpty()) {
             updatedTags = new UniqueTagList(person.getTags());
-            updatedTags.remove(tag);
+            for (Tag t : tags) {
+                updatedTags.remove(t);
+            }
         }
         untaggedPerson.setTags(updatedTags.toSet());
 
