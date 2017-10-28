@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.io.IOException;
-
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;

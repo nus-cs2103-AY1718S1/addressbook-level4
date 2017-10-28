@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.io.IOException;
-
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
