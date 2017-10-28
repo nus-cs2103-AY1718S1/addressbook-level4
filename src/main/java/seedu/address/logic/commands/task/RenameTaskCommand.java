@@ -53,9 +53,9 @@ public class RenameTaskCommand extends UndoableCommand {
 
         ReadOnlyTask taskToRename = lastShownList.get(index.getZeroBased());
         Task renamedTask = new Task(taskToRename);
+        renamedTask.setHeader(newTaskHeader);
 
         try {
-            renamedTask.setHeader(newTaskHeader);
             model.updateTask(taskToRename, renamedTask);
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);

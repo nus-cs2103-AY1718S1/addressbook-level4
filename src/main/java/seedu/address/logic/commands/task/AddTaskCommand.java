@@ -22,10 +22,10 @@ public class AddTaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "new";
 
-    public static final String COMMAND_FORMAT = "add <header>\n"
-            + "add <header> by <deadline> \n"
-            + "add <header> from <start time> to <end time>"
-            + "add '<full text to be used as header>'";
+    public static final String COMMAND_FORMAT = "add [HEADER]\n"
+            + "add [HEADER] by [DEADLINE] \n"
+            + "add [HEADER] from [START TIME] to <[END TIME]>"
+            + "add '[full text to be used as header]'";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the address book. "
             + COMMAND_FORMAT + "\n"
