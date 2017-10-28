@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableList;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CopyCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -30,6 +31,7 @@ public class CommandIdentifier {
     public static final String MESSAGE_COMMAND_WORD_CONSTRAINTS = "The command argument should be one of the "
             + "following (or their aliases):\n"
             + AddCommand.COMMAND_WORD + ", "
+            + CalendarCommand.COMMAND_WORD + ", "
             + ClearCommand.COMMAND_WORD + ", "
             + CopyCommand.COMMAND_WORD + ", "
             + DeleteCommand.COMMAND_WORD + ", "
@@ -46,6 +48,7 @@ public class CommandIdentifier {
 
     public static final List<String> COMMAND_VALIDATION_LIST = ImmutableList.of(
             AddCommand.COMMAND_WORD, AddCommand.COMMAND_ALIAS,
+            CalendarCommand.COMMAND_WORD, CalendarCommand.COMMAND_ALIAS,
             ClearCommand.COMMAND_WORD, ClearCommand.COMMAND_ALIAS,
             CopyCommand.COMMAND_WORD, CopyCommand.COMMAND_ALIAS,
             DeleteCommand.COMMAND_WORD, DeleteCommand.COMMAND_ALIAS,
