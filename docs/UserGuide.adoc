@@ -57,7 +57,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-12-2018` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe hp/98765432 home/60773707 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-12-2018` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -71,7 +71,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Parameters can be in any order e.g. if the command specifies `n/NAME hp/HANDPHONE_NUMBER`, `hp/HANDPHONE_NUMBER n/NAME` is also acceptable.
 ====
 
 
@@ -97,16 +97,16 @@ Format: `help`
 === Adding a debtor: `add`
 
 Adds a debtor to the address book. Date borrowed for debtor is automatically +
-noted down. The `Deadline`, `Interest` and `Tag` fields are optional. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/Debt [t/TAG]...`
+noted down. The `Office phone`, `Deadline`, `Interest` and `Tag` fields are optional. +
+Format: `add n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [office/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...`
 
 [TIP]
 A debtor can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-11-2018`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pc/000001 d/1234 t/criminal`
+* `add n/John Doe hp/98765432 home/60773707 office/60073007 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-11-2018`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison hp/81234567 home/61018123 pc/000001 d/1234 t/criminal`
 
 === Listing all persons : `list`
 
@@ -126,7 +126,7 @@ Format: `whitelist`
 === Editing a person : `edit`
 
 Edits an existing debtor, blacklisted/whitelisted contact in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [t/TAG]...`
+Format: `edit [INDEX] n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [office/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -172,7 +172,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 === Increasing the debt of a debtor: `borrow`
 
 Increase the debt of a debtor by the amount entered. +
-Format: `borrow INDEX AMOUNT`
+Format: `borrow [INDEX] AMOUNT`
 
 ****
 * Increases the debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -194,7 +194,7 @@ Increases the debt of the 2nd person by $234.
 === Decreasing the debt of a person: `payback`
 
 Decrease the debt of a person by the amount entered. +
-Format: `payback INDEX AMOUNT`
+Format: `payback [INDEX] AMOUNT`
 
 ****
 * Decreases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -231,7 +231,7 @@ Resets the debt of the 1st person to zero and sets the date of repayment in his 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete [INDEX]`
 
 ****
 * Deletes the person at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -482,22 +482,22 @@ transferred to whitelist and date repaid is set to the date the command is execu
 * *Login* : `login USERNAME PASSWORD` +
 e.g. `login userAcc_123 pa$$_Word!@#&`
 * *Logout* : `logout`
-* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT dl/DEADLINE[t/TAG]...` +
+* *Add* : `add n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [office/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 dl/11-03-2017 t/friend t/colleague`
 * *Clear* : `clear`
-* *Borrow* : `borrow INDEX AMOUNT` +
+* *Borrow* : `borrow [INDEX] AMOUNT` +
 e.g. `borrow 1 500.50`
-* *Pay back* : `payback INDEX AMOUNT` +
+* *Pay back* : `payback [INDEX] AMOUNT` +
 e.g. `payback 1 500.50`
 * *Repaid* : `repaid INDEX` +
 e.g. `payback 1`
-* *Delete* : `delete INDEX` +
+* *Delete* : `delete [INDEX]` +
 e.g. `delete 3`
 * *Ban* : `ban INDEX` +
 e.g. `ban 3`
 * *Unban* : `unban INDEX` +
 e.g. `unban 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [dl/DEADLINE] [t/TAG]...` +
+* *Edit* : `edit [INDEX] n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [office/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -547,6 +547,8 @@ e.g. `sort debt`
 * `Logout` command (since v1.3)
 * Person's debts are automatically incremented according to the interest rate of their loan (since v1.3)
 
+* Replace `Phone` field with `Handphone`, `Home phone` and `Office phone` (since v1.4)
+
 == Features to be included by `V2.0`
 
 //[V1.4]
@@ -555,7 +557,6 @@ e.g. `sort debt`
 * A feature to export a person's contact in another format.
 * Profile pictures of clients shown next to their details.
 * Different appearance themes.
-* `Add`/`Edit` command allows user to save multiple contact numbers for each person.
 //[end of V1.4]
 //[V1.5]
 * `Help` command that displays screenshots of positive examples.
