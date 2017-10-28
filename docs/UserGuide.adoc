@@ -59,15 +59,15 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`, `h`, `assist` or `faq`
 
-Format: `help` or `h` +
+Format: `help` or `h` or `assist` or `faq` +
 Keyboard shortcut: kbd:[F1]
 
 === Adding a person: `add`, `a` or `+`
 
 Adds a person to Rolodex +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-        or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-        (press kbd:[Tab] after typing `add` for auto-completion)
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
+        or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [t/TAG]...` +
+        (press kbd:[Tab] after typing `add` for auto-completion) +
 Keyboard shortcut: kbd:[Ctrl+A]
 
 [TIP]
@@ -76,7 +76,7 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 r/Stole my house key t/criminal`
 
 // tag::list[]
 === Listing all persons : `list`, `l`, `show` or `display`
@@ -108,9 +108,9 @@ Examples:
 === Editing a person : `edit`, `e`, `change` or `modify`
 
 Edits an existing person in Rolodex. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-        or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-        (press kbd:[Tab] after typing `edit` for auto-completion)
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
+        or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
+        (press kbd:[Tab] after typing `edit` for auto-completion) +
 Keyboard shortcut: kbd:[Ctrl+E]
 
 ****
@@ -136,8 +136,8 @@ the 2nd person, or removes it otherwise.
 Finds persons in Rolodex. +
 Format: `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
         or `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
-        or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
-        (press kbd:[Tab] after typing `find` for auto-completion)
+        or `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]` +
+        (press kbd:[Tab] after typing `find` for auto-completion) +
 Keyboard shortcut: kbd:[Ctrl+F]
 
 ****
@@ -195,8 +195,8 @@ Returns an error (do not count as search arguments).
 === Deleting a person : `delete`, `d` or `-`
 
 Deletes the specified person from Rolodex. +
-Format: `delete INDEX` or `d INDEX`
-        (press kbd:[Tab] after typing `delete` for auto-completion)
+Format: `delete INDEX` or `d INDEX` +
+        (press kbd:[Tab] after typing `delete` for auto-completion) +
 Keyboard shortcut: kbd:[Ctrl+Shift+D]
 
 ****
@@ -217,8 +217,8 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select` or `s`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX` or `s INDEX`
-        (press kbd:[Tab] after typing `select` for auto-completion)
+Format: `select INDEX` or `s INDEX` +
+        (press kbd:[Tab] after typing `select` for auto-completion) +
 Keyboard shortcut: kbd:[Ctrl+S]
 
 ****
@@ -236,7 +236,7 @@ Selects the 2nd person in Rolodex.
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Adding a remark: `remark` or `note` or `rmk` _(Coming in V2.0)_
+=== Adding a remark: `remark` or `note` or `rmk` or `comment`
 
 Adds a remark to the specified person in Rolodex. +
 Format: `remark INDEX [r/REMARK]` or `remark INDEX [r/REMARK]`
@@ -361,7 +361,7 @@ Keyboard shortcut: kbd:[Ctrl+Shift+C]
 // tag::openNew[]
 === Opening an existing Rolodex storage file: `open`, `o`, `cd`, `ls`, `<`
 Reloads the application with data from a rolodex at the specified filepath. +
-Format: `open FILEPATH` or `o FILEPATH`
+Format: `open FILEPATH` or `o FILEPATH` +
 Keyboard Shortcut: kbd:[Ctrl+O]
 
 ****
