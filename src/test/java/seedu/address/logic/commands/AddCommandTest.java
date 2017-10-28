@@ -146,6 +146,11 @@ public class AddCommandTest {
         public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void sort(String field) {
+            fail("This method should not be called.");
+        }
     }
 
     /**
