@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.util.SampleDataUtil.getTagSet;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 
@@ -20,9 +23,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonDataContainsKeywordsPredicate;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.RolodexBuilder;
-import seedu.address.testutil.TypicalIndexes;
 
 public class ModelManagerTest {
     @Rule
@@ -76,8 +77,8 @@ public class ModelManagerTest {
     @Test
     public void removeTag() throws IllegalValueException, PersonNotFoundException {
 
-        Set<Tag> tagSet1 = SampleDataUtil.getTagSet("friends", "classmate");
-        Set<Tag> tagSet2 = SampleDataUtil.getTagSet("owesMoney", "classmate");
+        Set<Tag> tagSet1 = getTagSet("friends", "classmate");
+        Set<Tag> tagSet2 = getTagSet("owesMoney", "classmate");
 
         Person person1 = new Person(ALICE);
         person1.setTags(tagSet1);
@@ -93,8 +94,8 @@ public class ModelManagerTest {
         Tag tagToRemove = new Tag("classmate");
         modelManager.removeTag(tagToRemove);
 
-        Set<Tag> tagSet1New = SampleDataUtil.getTagSet("friends");
-        Set<Tag> tagSet2New = SampleDataUtil.getTagSet("owesMoney");
+        Set<Tag> tagSet1New = getTagSet("friends");
+        Set<Tag> tagSet2New = getTagSet("owesMoney");
 
         Person person1New = new Person(ALICE);
         person1.setTags(tagSet1New);
@@ -118,12 +119,12 @@ public class ModelManagerTest {
         ModelManager modelManager = new ModelManager(rolodex, userPrefs);
 
         // Alice has first index
-        Index expectedIndex = TypicalIndexes.INDEX_FIRST_PERSON;
+        Index expectedIndex = INDEX_FIRST_PERSON;
         Index actualIndex = modelManager.getIndex(ALICE);
         assertEquals(expectedIndex, actualIndex);
 
         // Benson has second index
-        expectedIndex = TypicalIndexes.INDEX_SECOND_PERSON;
+        expectedIndex = INDEX_SECOND_PERSON;
         actualIndex = modelManager.getIndex(BENSON);
         assertEquals(expectedIndex, actualIndex);
     }
