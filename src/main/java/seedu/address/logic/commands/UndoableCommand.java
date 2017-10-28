@@ -6,15 +6,22 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_WHITELISTED_PERSONS;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private ReadOnlyPerson selectedPerson;
+    private Index index;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -23,6 +30,36 @@ public abstract class UndoableCommand extends Command {
      */
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
+        if (model.getSelectedPerson() != null) {
+            this.selectedPerson = new Person(model.getSelectedPerson());
+            if (model.getAllPersons().size() > 0) {
+                // if the command is not "clear"
+                switch (model.getCurrentList()) {
+                case "blacklist":
+                    if (model.getFilteredBlacklistedPersonList().contains(selectedPerson)) {
+                        this.index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList()
+                                .indexOf(selectedPerson));
+                    } else {
+                        this.index = null;
+                    }
+                    break;
+                case "whitelist":
+                    if (model.getFilteredWhitelistedPersonList().contains(selectedPerson)) {
+                        this.index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList()
+                                .indexOf(selectedPerson));
+                    } else {
+                        this.index = null;
+                    }
+                    break;
+                default:
+                    if (model.getFilteredPersonList().contains(selectedPerson)) {
+                        this.index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(selectedPerson));
+                    } else {
+                        this.index = null;
+                    }
+                }
+            }
+        }
         this.previousAddressBook = new AddressBook(model.getAddressBook());
     }
 
@@ -31,18 +68,22 @@ public abstract class UndoableCommand extends Command {
      * was executed and updates the filtered person list to
      * show all persons.
      */
-    protected final void undo() {
+    protected final void undo() throws CommandException {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         updateCurrentDisplayedList(model.getCurrentList());
+        if (index != null) {
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+        }
     }
 
     /**
      * Executes the command and updates the filtered person
      * list to show all persons.
      */
-    protected final void redo() {
+    protected final void redo() throws CommandException {
         requireNonNull(model);
+        saveAddressBookSnapshot();
         try {
             executeUndoableCommand();
         } catch (CommandException ce) {

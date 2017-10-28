@@ -1,18 +1,22 @@
 package seedu.address.logic.commands;
 
+import static java.util.stream.Collectors.toCollection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
@@ -277,6 +281,22 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public ReadOnlyPerson getSelectedPerson() {
+            return null;
+        }
+
+        @Override
+        public String getCurrentList() {
+            return "list";
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            List<ReadOnlyPerson> list = Arrays.asList(ALICE);
+            return list.stream().collect(toCollection(FXCollections::observableArrayList));
+        }
     }
 
     /**
@@ -293,6 +313,21 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public ReadOnlyPerson getSelectedPerson() {
+            return null;
+        }
+
+        @Override
+        public String getCurrentList() {
+            return "list";
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            return personsAdded.stream().collect(toCollection(FXCollections::observableArrayList));
         }
     }
 
