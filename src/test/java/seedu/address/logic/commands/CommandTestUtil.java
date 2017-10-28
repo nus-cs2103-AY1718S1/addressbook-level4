@@ -36,6 +36,12 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
+    public static final String VALID_NAME_ACTIVITY = "Activity Alone";
+    public static final String VALID_NAME_BIKING = "Biking training";
+    public static final String VALID_DATE_ACTIVITY = "12-12-9999 00:00";
+    public static final String VALID_DATE_BIKING = "12-12-9999 00:01";
+
+
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
