@@ -5,6 +5,7 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -17,6 +18,7 @@ public abstract class Command {
     protected Model model;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
+    protected ListObserver listObserver;
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
@@ -43,6 +45,7 @@ public abstract class Command {
      */
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
+        this.listObserver = new ListObserver(model);
     }
 
     /**
@@ -60,7 +63,7 @@ public abstract class Command {
                 selectedPerson = model.getSelectedPerson();
             }
         } else {
-            List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+            List<ReadOnlyPerson> lastShownList = listObserver.getCurrentFilteredList();
 
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -20,8 +22,8 @@ public class BanCommand extends UndoableCommand {
             + ": Ban a person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
-    public static final String MESSAGE_BAN_PERSON_SUCCESS = "Added person to blacklist: %1$s";
-    public static final String MESSAGE_BAN_PERSON_FAILURE = "Person is already in blacklist!";
+    public static final String MESSAGE_BAN_PERSON_SUCCESS = "%1$s has been added to BLACKLIST";
+    public static final String MESSAGE_BAN_PERSON_FAILURE = "%1$s is already in BLACKLIST!";
 
     private final Index targetIndex;
 
@@ -31,9 +33,8 @@ public class BanCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
         String messagetoDisplay = MESSAGE_BAN_PERSON_SUCCESS;
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> lastShownList = listObserver.getCurrentFilteredList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -47,7 +48,11 @@ public class BanCommand extends UndoableCommand {
             model.addBlacklistedPerson(personToBan);
         }
 
-        return new CommandResult(String.format(messagetoDisplay, personToBan));
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(messagetoDisplay, personToBan.getName()));
     }
 
     @Override

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -19,7 +21,7 @@ public class DeleteCommand extends UndoableCommand {
             + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "%1$s has been deleted from the addressbook!";
 
     private final Index targetIndex;
 
@@ -42,7 +44,11 @@ public class DeleteCommand extends UndoableCommand {
             assert false : "The target person cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
     }
 
     @Override

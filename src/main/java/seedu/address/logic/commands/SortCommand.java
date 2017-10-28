@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 
@@ -11,9 +12,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class SortCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_SUCCESS = "Address book has been sorted by %1$s!";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the address book by specified ordering in "
-            + "intuitive order. If no ordering is specified, the address book is sorted by name.\n"
+    public static final String MESSAGE_SUCCESS = "List has been sorted by %1$s!";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the addressbook by specified ordering in "
+            + "intuitive order. If no ordering is specified, the addressbook is sorted by name.\n"
             + "Parameters: ORDERING (i.e. \"name\", \"debt\", \"deadline\" or \"cluster\")\n"
             + "Example: " + COMMAND_WORD + " debt";
     public static final String DEFAULT_ORDERING = "name";
@@ -36,7 +37,12 @@ public class SortCommand extends UndoableCommand {
         } catch (IllegalArgumentException ive) {
             throw new CommandException(ive.getMessage());
         }
-        return new CommandResult(String.format(MESSAGE_SUCCESS, order));
+
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(MESSAGE_SUCCESS, order));
     }
 
     @Override
