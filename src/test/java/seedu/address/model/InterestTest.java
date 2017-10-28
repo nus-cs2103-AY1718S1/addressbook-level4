@@ -78,6 +78,10 @@ public class InterestTest {
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput6));
         personToTest.setLastAccruedDate(lastAccruedDate);
         assertEquals(personToTest.checkLastAccruedDate(generateDateFromString(sampleDateInput6)), 1);
+
+        lastAccruedDate = (generateDateFromString(sampleDateInput6));
+        personToTest.setLastAccruedDate(lastAccruedDate);
+        assertEquals(personToTest.checkLastAccruedDate(generateDateFromString(sampleDateInput6)), 0);
     }
 
     @Test
