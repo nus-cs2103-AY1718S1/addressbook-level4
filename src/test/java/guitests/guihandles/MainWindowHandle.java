@@ -16,6 +16,7 @@ public class MainWindowHandle extends StageHandle {
     private final BrowserPanelHandle browserPanel;
     private final SearchBoxHandle searchField;
     private final SortMenuHandle sortMenu;
+    private final HelpOverlayHandle helpOverlay;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -32,6 +33,7 @@ public class MainWindowHandle extends StageHandle {
         }
         searchField = new SearchBoxHandle(getChildNode(SearchBoxHandle.SEARCH_FIELD_ID));
         sortMenu = new SortMenuHandle(getChildNode(SortMenuHandle.SORT_MENU_ID));
+        helpOverlay = new HelpOverlayHandle(getChildNode(HelpOverlayHandle.HELP_OVERLAY_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -64,5 +66,9 @@ public class MainWindowHandle extends StageHandle {
 
     public SortMenuHandle getSortMenu() {
         return sortMenu;
+    }
+
+    public HelpOverlayHandle getHelpOverlay() {
+        return helpOverlay;
     }
 }

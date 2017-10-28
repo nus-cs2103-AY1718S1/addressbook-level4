@@ -25,7 +25,6 @@ public class TutorialPanel extends UiPart<Region> {
 
     private Tutorial newTutorial;
     private MainWindow mainWindow;
-    private BrowserPanel browserPanel;
     private StackPane browserPlaceHolder;
     private boolean tutorialIntro = true;
 
@@ -44,11 +43,9 @@ public class TutorialPanel extends UiPart<Region> {
     @FXML
     private TextArea tutorialText;
 
-    public TutorialPanel(MainWindow mainWindow,
-                         BrowserPanel browserPanel, StackPane browserPlaceHolder) {
+    public TutorialPanel(MainWindow mainWindow, StackPane browserPlaceHolder) {
         super(FXML);
         this.mainWindow = mainWindow;
-        this.browserPanel = browserPanel;
         this.browserPlaceHolder = browserPlaceHolder;
         tutorialText.setText(TutorialMessages.INTRO_BEGIN);
         initTutorial();
@@ -101,7 +98,6 @@ public class TutorialPanel extends UiPart<Region> {
      */
     private void endTutorial() {
         mainWindow.unhighlightAll();
-        mainWindow.setCommandPrompt(TutorialMessages.PROMPT_DEFAULT);
         browserPlaceHolder.getChildren().remove(this.getRoot());
         raise(new SwitchToBrowserEvent());
     }

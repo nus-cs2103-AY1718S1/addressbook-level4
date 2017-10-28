@@ -7,11 +7,12 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -21,10 +22,14 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ListAllToggleStyle;
+import seedu.address.commons.events.ui.ListPinToggleStyleEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBrowserEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -49,7 +54,6 @@ public class MainWindow extends UiPart<Region> {
     private ResultDisplay resultDisplay;
     private CommandBox commandBox;
     private SortFindPanel sortFindPanel;
-    private PinnedPanel pinnedPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -57,16 +61,19 @@ public class MainWindow extends UiPart<Region> {
     private StackPane browserPlaceholder;
 
     @FXML
-    private GridPane helpOverlay;
+    private Label pinLabel;
+
+    @FXML
+    private Label allLabel;
+
+    @FXML
+    private ScrollPane helpOverlay;
 
     @FXML
     private MenuItem helpOverlayItem;
 
     @FXML
     private MenuItem helpOverlayExit;
-
-    @FXML
-    private StackPane pinListPlaceHolder;
 
     @FXML
     private HBox sortFindPanelPlaceholder;
@@ -152,9 +159,6 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        pinnedPanel = new PinnedPanel(logic.getFilteredPersonList());
-        pinListPlaceHolder.getChildren().add(pinnedPanel.getRoot());
-
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -173,7 +177,7 @@ public class MainWindow extends UiPart<Region> {
 
         browserPanel = new BrowserPanel();
         if (MainApp.isFirstTimeOpen()) {
-            TutorialPanel tutorialPanel = new TutorialPanel(this, browserPanel, browserPlaceholder);
+            TutorialPanel tutorialPanel = new TutorialPanel(this, browserPlaceholder);
             browserPlaceholder.getChildren().add(tutorialPanel.getRoot());
         } else {
             switchToBrowser();
@@ -259,6 +263,32 @@ public class MainWindow extends UiPart<Region> {
         helpOverlay.setVisible(false);
     }
 
+    /**
+     * Lists all Person in Bluebird.
+     */
+    @FXML
+    private void handleListAllClicked() {
+        listAllToggleStyle();
+        try {
+            logic.execute("list");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to list all using label");
+        }
+    }
+
+    /**
+     * Lists pinned Person in Bluebird.
+     */
+    @FXML
+    private void handleListPinnedClicked() {
+        listPinToggleStyle();
+        try {
+            logic.execute("listpin");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to list pinned using label");
+        }
+    }
+
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
@@ -279,6 +309,18 @@ public class MainWindow extends UiPart<Region> {
         switchToBrowser();
     }
 
+    @Subscribe
+    private void handleShowPinnedListEvent(ListPinToggleStyleEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        listPinToggleStyle();
+    }
+
+    @Subscribe
+    private void handleShowAllListEvent(ListAllToggleStyle event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        listAllToggleStyle();
+    }
+
     private void switchToBrowser() {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
     }
@@ -291,7 +333,6 @@ public class MainWindow extends UiPart<Region> {
         commandBox.unhighlight();
         resultDisplay.unhighlight();
         sortFindPanel.unhighlight();
-        pinnedPanel.unhighlight();
     }
 
     public void highlightCommandBox() {
@@ -314,15 +355,21 @@ public class MainWindow extends UiPart<Region> {
         personListPanel.highlight();
     }
 
-    public void highlightPinnedPanel() {
-        pinnedPanel.highlight();
-    }
-
     public void setCommandPrompt(String toPrompt) {
         commandBox.setPromptText(toPrompt);
     }
 
     public void setCommandText(String toInput) {
         commandBox.setCommandText(toInput);
+    }
+
+    private void listAllToggleStyle() {
+        pinLabel.setStyle("-fx-text-fill: #555555");
+        allLabel.setStyle("-fx-text-fill: white");
+    }
+
+    private void listPinToggleStyle() {
+        pinLabel.setStyle("-fx-text-fill: white");
+        allLabel.setStyle("-fx-text-fill: #555555");
     }
 }

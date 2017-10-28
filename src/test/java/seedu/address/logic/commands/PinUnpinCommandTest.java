@@ -83,7 +83,7 @@ public class PinUnpinCommandTest {
         model.unpinPerson(personToUnpin);
         UnpinCommand unpinCommand = prepareUnpinCommand(INDEX_FIRST_PERSON);
 
-        assertCommandFailure(unpinCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(unpinCommand, model, Messages.MESSAGE_PERSON_ALREADY_UNPINNED);
     }
 
     @Test

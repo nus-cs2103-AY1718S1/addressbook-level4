@@ -28,17 +28,11 @@ public class Tutorial {
 
         /* Steps for introduction to Bluebird */
         for (String introMessages : TutorialMessages.INTRO_LIST) {
-            tutorialSteps.add(new TutSteps(introMessages, TutorialMessages.PROMPT_DEFAULT));
-        }
-
-        /* Steps for commands usage */
-        for (int i = 0; i < TutorialMessages.PROMPT_NUM_STEPS; i++) {
-            tutorialSteps.add(new TutSteps(TutorialMessages.COMMAND_USAGE_LIST.get(i),
-                    TutorialMessages.COMMAND_PROMPT_LIST.get(i)));
+            tutorialSteps.add(new TutSteps(introMessages));
         }
 
         /* Steps for conclusion */
-        tutorialSteps.add(new TutSteps(TutorialMessages.CONCLUSION, TutorialMessages.PROMPT_DEFAULT));
+        tutorialSteps.add(new TutSteps(TutorialMessages.CONCLUSION));
     }
 
     /**
@@ -46,35 +40,26 @@ public class Tutorial {
      */
     public void executeNextStep() {
         TutSteps stepToExecute = tutorialSteps.get(currentStepNum);
+        mainWindow.unhighlightAll();
         switch (currentStepNum++) {
         case 0:
-            mainWindow.unhighlightAll();
             mainWindow.highlightCommandBox();
             break;
         case 1:
-            mainWindow.unhighlightAll();
             mainWindow.highlightResultDisplay();
             break;
         case 2:
-            mainWindow.unhighlightAll();
             mainWindow.highlightSortMenu();
             break;
         case 3:
-            mainWindow.unhighlightAll();
             mainWindow.highlightSearchBox();
             break;
         case 4:
-            mainWindow.unhighlightAll();
             mainWindow.highlightPersonListPanel();
             break;
-        case 5:
-            mainWindow.unhighlightAll();
-            mainWindow.highlightPinnedPanel();
-            break;
         default:
-            mainWindow.unhighlightAll();
+            break;
         }
-        mainWindow.setCommandPrompt(stepToExecute.getCommandPrompt());
         mainWindow.setCommandText("");
         tutorialText.setText(stepToExecute.getTextDisplay());
     }
@@ -100,18 +85,12 @@ public class Tutorial {
 class TutSteps {
 
     private String textDisplay;
-    private String commandPrompt = "";
 
-    public TutSteps(String textDisplay, String commandPrompt) {
+    public TutSteps(String textDisplay) {
         this.textDisplay = textDisplay;
-        this.commandPrompt = commandPrompt;
     }
 
     public String getTextDisplay() {
         return textDisplay;
-    }
-
-    public String getCommandPrompt() {
-        return commandPrompt;
     }
 }
