@@ -450,6 +450,11 @@ A list of keyboard shortcuts is provided link:#keyboard-shortcuts-2[here].
 .3+| Edit | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
           | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
           | *E.g.* `edit 2 n/James Lee e/jameslee@example.com`
+.5+| Remark | `remark INDEX r/REMARK`
+            | `note INDEX r/REMARK`
+            | `rmk INDEX r/REMARK`
+            | `comment INDEX r/REMARK`
+            | *E.g.* `remark 1 r/Loves to sing`
 .4+| Find | `find KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
           | `f KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
           | `search KEYWORD [MORE_KEYWORDS] [SORT_ARGUMENTS]`
