@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * Unmodifiable view of an address book
@@ -28,4 +29,11 @@ public interface ReadOnlyAddressBook {
      */
 
     ObservableList<ReadOnlyAliasToken> getAliasTokenList();
+
+    /**
+     * Returns an unmodifiable view of the tasks list.
+     * This list will not contain any duplicate tasks.
+     */
+
+    ObservableList<ReadOnlyTask> getTaskList();
 }

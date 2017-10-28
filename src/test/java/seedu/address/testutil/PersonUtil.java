@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
