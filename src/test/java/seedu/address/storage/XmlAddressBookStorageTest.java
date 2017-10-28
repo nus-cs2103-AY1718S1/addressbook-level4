@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.testutil.TypicalParcels.HOON;
 import static seedu.address.testutil.TypicalParcels.IDA;
+import static seedu.address.testutil.TypicalParcels.JOHN;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import java.io.IOException;
@@ -73,7 +74,7 @@ public class XmlAddressBookStorageTest {
         assertEquals(original, new AddressBook(readBack));
 
         //Modify data, overwrite exiting file, and read back
-        original.addParcel(new Parcel(HOON));
+        original.addParcel(new Parcel(JOHN));
         original.removeParcel(new Parcel(ALICE));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();

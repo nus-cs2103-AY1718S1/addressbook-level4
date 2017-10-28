@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_PENDING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
@@ -31,7 +32,7 @@ import seedu.address.model.util.SampleDataUtil;
 public class ParcelBuilder {
 
     public static final String DEFAULT_NAME = VALID_NAME_ALICE;
-    public static final String DEFAULT_PHONE = VALID_PHONE_ALICE;
+    public static final String DEFAULT_PHONE = VALID_PHONE_AMY; // to ensure uniqueness
     public static final String DEFAULT_EMAIL = VALID_EMAIL_ALICE;
     public static final String DEFAULT_ADDRESS = VALID_ADDRESS_ALICE;
     public static final String DEFAULT_TAGS = VALID_TAG_FROZEN;

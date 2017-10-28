@@ -7,6 +7,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_PARCELS_LISTED_OVERVIE
 import static seedu.address.testutil.TypicalParcels.CARL;
 import static seedu.address.testutil.TypicalParcels.ELLE;
 import static seedu.address.testutil.TypicalParcels.FIONA;
+import static seedu.address.testutil.TypicalParcels.GEORGE;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -67,10 +68,10 @@ public class FindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multipleParcelsFound() {
-        String expectedMessage = String.format(MESSAGE_PARCELS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA), Arrays.asList(ELLE, FIONA),
-                Arrays.asList(CARL));
+        String expectedMessage = String.format(MESSAGE_PARCELS_LISTED_OVERVIEW, 2);
+        FindCommand command = prepareCommand("Kunz Elle Best");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, GEORGE), Arrays.asList(ELLE, FIONA),
+                Arrays.asList(GEORGE));
     }
 
     /**
@@ -98,7 +99,7 @@ public class FindCommandTest {
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredParcelList());
         assertEquals(expectedAddressBook, model.getAddressBook());
-        assertEquals(expectedDeliveredList, model.getFilteredDeliveredParcelList());
+        assertEquals(expectedUndeliveredList, model.getFilteredUndeliveredParcelList());
         assertEquals(expectedDeliveredList, model.getFilteredDeliveredParcelList());
     }
 }

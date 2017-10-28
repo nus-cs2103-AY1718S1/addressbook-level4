@@ -1,6 +1,7 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
 import static seedu.address.logic.commands.DeleteTagCommand.MESSAGE_DELETE_TAG_SUCCESS;
 import static seedu.address.logic.commands.DeleteTagCommand.MESSAGE_INVALID_DELETE_TAG_NOT_FOUND;
 import static seedu.address.testutil.TestUtil.getLastIndex;
@@ -46,16 +47,8 @@ public class DeleteTagCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = String.format(MESSAGE_DELETE_TAG_SUCCESS, deletedTag);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: delete the last parcel in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
-        Index lastParcelIndex = getLastIndex(modelBeforeDeletingLast);
-        targetParcel = getParcel(modelBeforeDeletingLast, lastParcelIndex);
-
-        targetTags = targetParcel.getTags().iterator();
-
-        if (targetTags.hasNext()) {
-            targetTag = targetTags.next();
-        }
+        targetTag = new Tag(VALID_TAG_FLAMMABLE);
 
         assertCommandSuccess(targetTag);
 

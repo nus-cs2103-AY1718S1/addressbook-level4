@@ -44,12 +44,12 @@ public class AddCommandIntegrationTest {
         Parcel parcelInList = new Parcel(model.getAddressBook().getParcelList().get(0));
         assertCommandFailure(prepareCommand(parcelInList, model), model, AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
-        // Adding a parcel from a undelivered list
+        // Adding a parcel from a undelivered list -> fails
         Parcel parcelInUndeliveredList = new Parcel(model.getFilteredUndeliveredParcelList().get(0));
         assertCommandFailure(prepareCommand(parcelInUndeliveredList, model), model,
                 AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
-        // Adding a parcel from a delivered list
+        // Adding a parcel from a delivered list -> fails
         Parcel parcelInDeliveredList = new Parcel(model.getFilteredDeliveredParcelList().get(0));
         assertCommandFailure(prepareCommand(parcelInDeliveredList, model), model,
                 AddCommand.MESSAGE_DUPLICATE_PARCEL);

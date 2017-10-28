@@ -39,7 +39,6 @@ import seedu.address.model.parcel.exceptions.DuplicateParcelException;
  * A utility class containing a list of {@code Parcel} objects to be used in tests.
  */
 public class TypicalParcels {
-
     // Parcels that are PENDING.
     public static final String VALID_TRACKING_NUMBER_ALICE = "RR000111000SG";
     public static final String VALID_NAME_ALICE = "Alice Pauline";

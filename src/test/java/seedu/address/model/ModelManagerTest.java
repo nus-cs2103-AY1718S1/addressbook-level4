@@ -45,8 +45,8 @@ public class ModelManagerTest {
 
         // logic test
         modelManager.addAllParcels(parcels, parcelsAdded, duplicateParcels);
-        assertEquals(7, parcels.size());
-        assertEquals(5, parcelsAdded.size());
+        assertEquals(8, parcels.size());
+        assertEquals(6, parcelsAdded.size());
         assertEquals(2, duplicateParcels.size());
 
         // elements in parcels test
@@ -56,9 +56,9 @@ public class ModelManagerTest {
 
         // ensure that addressbook updated
         assertEquals(4, modelManager.getAddressBook().getTagList().size());
-        assertEquals(7, modelManager.getAddressBook().getParcelList().size());
+        assertEquals(8, modelManager.getAddressBook().getParcelList().size());
         assertEquals(2, modelManager.getFilteredDeliveredParcelList().size());
-        assertEquals(5, modelManager.getFilteredUndeliveredParcelList().size());
+        assertEquals(6, modelManager.getFilteredUndeliveredParcelList().size());
 
         assertEquals(modelManager.getActiveList(), modelManager.getFilteredUndeliveredParcelList());
         modelManager.setActiveList(true);
