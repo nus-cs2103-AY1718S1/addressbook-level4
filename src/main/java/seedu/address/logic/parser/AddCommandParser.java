@@ -57,7 +57,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Website website = ParserUtil.parseWebsite(argMultimap.getValue(PREFIX_WEBSITE)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, remark, website, tagList);
+            ReadOnlyPerson person = new Person(name, occupation, phone, email, address, remark, website, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
