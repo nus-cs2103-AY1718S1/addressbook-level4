@@ -162,6 +162,7 @@ public class AddressBookParser {
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new PaybackCommandParser().parse(arguments);
 
+        case NearbyCommand.COMMAND_WORD_ALIAS:
         case NearbyCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
             return new NearbyCommandParser().parse(arguments);
