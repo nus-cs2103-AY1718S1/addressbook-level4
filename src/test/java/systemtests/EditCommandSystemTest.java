@@ -20,8 +20,9 @@ import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_DELIVERING;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_COMPLETED;
+import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_DELIVERING;
+import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_PENDING;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FLAMMABLE;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FROZEN;
 import static seedu.address.logic.commands.CommandTestUtil.TRACKING_NUMBER_DESC_AMY;
@@ -38,8 +39,22 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
+import static seedu.address.testutil.TypicalParcels.ADDRESS_DESC_ALICE;
+import static seedu.address.testutil.TypicalParcels.ADDRESS_DESC_BENSON;
+import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.testutil.TypicalParcels.AMY;
+import static seedu.address.testutil.TypicalParcels.BENSON;
+import static seedu.address.testutil.TypicalParcels.DELIVERY_DATE_DESC_ALICE;
+import static seedu.address.testutil.TypicalParcels.DELIVERY_DATE_DESC_BENSON;
+import static seedu.address.testutil.TypicalParcels.EMAIL_DESC_ALICE;
+import static seedu.address.testutil.TypicalParcels.EMAIL_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalParcels.NAME_DESC_ALICE;
+import static seedu.address.testutil.TypicalParcels.NAME_DESC_BENSON;
+import static seedu.address.testutil.TypicalParcels.PHONE_DESC_ALICE;
+import static seedu.address.testutil.TypicalParcels.PHONE_DESC_BENSON;
+import static seedu.address.testutil.TypicalParcels.TRACKING_NUMBER_DESC_ALICE;
+import static seedu.address.testutil.TypicalParcels.TRACKING_NUMBER_DESC_BENSON;
 
 import org.junit.Test;
 
@@ -97,16 +112,16 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 getModel().getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased()), editedParcel);
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: edit a parcel with new values same as existing values -> edited
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_BOB + NAME_DESC_BOB
-                + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + DELIVERY_DATE_DESC_BOB + STATUS_DESC_COMPLETED
-                + TAG_DESC_FLAMMABLE + TAG_DESC_FROZEN;
-        assertCommandSuccess(command, index, BOB);
-        */
+        /* Case: edit a parcel with new values same as existing values -> edited */
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_BENSON + NAME_DESC_BENSON
+                + PHONE_DESC_BENSON + EMAIL_DESC_BENSON + ADDRESS_DESC_BENSON + DELIVERY_DATE_DESC_BENSON
+                + STATUS_DESC_PENDING + TAG_DESC_FROZEN + TAG_DESC_FLAMMABLE;
+        assertCommandSuccess(command, index, BENSON);
+
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PARCEL;
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TAG_DESC_FLAMMABLE;
-        ReadOnlyParcel parcelToEdit = getModel().getFilteredParcelList().get(index.getZeroBased());
+        ReadOnlyParcel parcelToEdit = getModel().getActiveList().get(index.getZeroBased());
         editedParcel = new ParcelBuilder(parcelToEdit).withTags(VALID_TAG_FLAMMABLE).build();
         assertCommandSuccess(command, index, editedParcel);
 
@@ -121,9 +136,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered parcel list, edit index within bounds of address book and parcel list -> edited */
         showParcelsWithName(KEYWORD_MATCHING_MEIER);
         index = INDEX_FIRST_PARCEL;
-        assertTrue(index.getZeroBased() < getModel().getFilteredParcelList().size());
+        assertTrue(index.getZeroBased() < getModel().getActiveList().size());
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + NAME_DESC_BOB;
-        parcelToEdit = getModel().getFilteredParcelList().get(index.getZeroBased());
+        parcelToEdit = getModel().getActiveList().get(index.getZeroBased());
         editedParcel = new ParcelBuilder(parcelToEdit).withName(VALID_NAME_BOB).build();
         assertCommandSuccess(command, index, editedParcel);
 
@@ -161,7 +176,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
-        invalidIndex = getModel().getFilteredParcelList().size() + 1;
+        invalidIndex = getModel().getActiveList().size() + 1;
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + NAME_DESC_BOB,
                 Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX);
 
@@ -209,7 +224,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         executeCommand(ParcelUtil.getAddCommand(AMY));
         assertTrue(getModel().getAddressBook().getParcelList().contains(AMY));
         index = INDEX_FIRST_PARCEL;
-        assertFalse(getModel().getFilteredParcelList().get(index.getZeroBased()).equals(AMY));
+        assertFalse(getModel().getActiveList().get(index.getZeroBased()).equals(AMY));
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TRACKING_NUMBER_DESC_AMY + NAME_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING
                 + TAG_DESC_FLAMMABLE;
