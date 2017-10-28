@@ -239,6 +239,18 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Switchmode mechanism
+
+The switchmode mechanism is facilitated by the ChangeModeCommand class which inherits from Command class. It allows the user switch between 2 sets of command for either addressbook or taskmanager.
+
+Suppose the user has just executed the ChangeMode using switch addressbook(ab) or taskmanager(tm).
+
+In any command mode, the execute() function of the LogicManager class is first called, which calls Model.getCommandMode() to check the current command mode and goes on to pass the command string and command mode string into the parseCommand() function of the AddressBookParser class. This, in turn, determines that the ChangeModeCommand feature is being evoked and calls the ChangeModeCommandParser to parse the string and compare with the current set of command: addressbook(ab) or taskmanager(tm). After validating the input with command mode prefix, ChangeModeCommand(input) is created and calles the excute() feature in ChangeModeCommand which then call Model.changeCommandMode(input) to change the current command mode and return a CommandResult object.
+
+A diagram is shown below to illustrate this mechanism.
+
+image::ChangeModeDiagram.png[width="800", height="500"]
+
 // tag::birthday[]
 === Add contact mechanism: birthday parameter
 
@@ -268,7 +280,7 @@ If the birthday parameter is not specified, the `AddCommand` will give an invali
 
 The detag mechanism is facilitated by the `DetagCommand` class which is inherited from the `UndoableCommand` class. It allows for the removal of existing tags from multiple contacts, i.e. detag. The minimum number of contacts that can be specified is 1 and the maximum number is the number of contacts in the current list.
 
-Suppose the user executes the command `detag` using the following code
+Suppose the user executes the command `detag` using the following code:
 ----
 `detag 1, 2 t/friends`
 ----
@@ -432,7 +444,7 @@ public class DeleteTaskCommand extends UndoableCommand {
 
 The FindTask mechanism is facilitated by the `FindTaskCommand` class which inherits from `Command` class. It allows the user to find tasks using descriptions. User can search using multiple descriptions too.
 
-Suppose the user has just executed the `FindTaskCommand` using `find finish cs2103`.
+Suppose the user has just executed the `FindTaskCommand` using `find finish cs2103 17-07-1995`.
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTaskCommand` feature is being evoked and calls the `FindTaskCommandParser` to parse the string and compare the descriptions. These are validated and formatted by the `TaskContainsKeywordsPredicate` and return as a `TaskContainsKeywordsPredicate` object to be used to call the `FindTaskCommand` class. The `LogicManager` then calls the `execute()` in the `FindTaskCommand` class which creates and return a `CommandResult` object.
 

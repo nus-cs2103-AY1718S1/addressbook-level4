@@ -158,18 +158,18 @@ __Constraints:__
 
 Whether you’re a social butterfly or a networking pro, sifting through contacts can be a tedious task. +
 
-To ease the process, use the find feature to filter people by name or tag: +
+To ease the process, use the find feature to filter people by name, tag or birthday: +
 
-Format: `find NAME TAG` +
+Format: `find NAME TAG BIRTHDAY` +
 
 Consequently: +
 
-* The Result Display says “NUMBER persons listed!” to show you the NUMBER of people whose names and tags could be matched to NAME and TAG. +
+* The Result Display says “NUMBER persons listed!” to show you the NUMBER of people whose names and tags could be matched to NAME, TAG and BIRTHDAY. +
 
 * The list of Contact Cards is filtered to display only the card(s) of the contact(s) who are found.
 
 [TIP]
-The search is case insensitive. e.g `hans` will match `Hans` and `friends` will match `Friends` +
+The search is case insensitive. e.g `hans` will match `Hans`, `friends` will match `Friends` and BIRTHDAY, in the format of DD-MM, will match DD-MM_YYYY. e.g `17-07` will match `17-07-1995` +
 
 [TIP]
 The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans` +
@@ -185,10 +185,12 @@ Returns `john` and `John Doe`
 Returns any person having names `Betsy`, `Tim`, or `John`
 * `find friends` +
 Returns any person having tags `friends` or `Friends`
+* `find 17-07` +
+Returns any person having birthday of `17-07`
 
 __Constraints:__
 
-* Only full words will be matched e.g `Han` will not match `Hans` and `friend` will not match `friends`
+* Only full words will be matched e.g `Han` will not match `Hans`, `friend` will not match `friends` and `1707` will not match `17-07`
 
 ==== Deleting contacts : `delete`
 
@@ -358,8 +360,8 @@ Whether it is a host of pending submissions, a get-together or a multiday progra
 
 Use prefixes:
 ****
-* `from` to denote the date in which the event begins
-* `to`, `on` or `by` to denote the date in which the task is due to be completed
+* `from` to denote the date in which the event begins.
+* `to`, `on` or `by` to denote the date in which the task is due to be completed.
 ****
 
 . The command follows: +
@@ -384,7 +386,7 @@ Examples:
 Sets the description to "recess week" start date to the next day and the deadline to the 15th of September in the current or upcoming year.
 
 * `add get groceries`
-Sets the description to "get groceries" leaving the other parameters blank
+Sets the description to "get groceries" leaving the other parameters blank.
 
 _Constraints_ +
 
@@ -392,10 +394,13 @@ _Constraints_ +
 * Dates MUST be preceded by one of the prefixes.
 ****
 
-==== Finding tasks by description: `find`
+==== Finding tasks by description or deadline: `find`
 
 To find people whose description contain any of the given keywords, use +
 Format: `find KEYWORD [MORE_KEYWORDS]`
+
+To find people by deadlines, use +
+Format: `find DD-MM-YYYY`
 
 Examples:
 
@@ -405,13 +410,17 @@ Returns `finish task tonight` and `finish task tomorrow`
 * `find finish task tonight` +
 Returns any task having descriptions `finish`, `task`, or `tonight`
 
+* `find 29-10-2017` +
+Returns any task having deadlines on `29-10-2017`
+
 __Constraints:__
 
 ****
-* The search is case insensitive. e.g `finish` will match `Finish`
-* The order of the keywords does not matter. e.g. `Finish task` will match `task finish`
-* Only the description is searched.
-* Only full words will be matched e.g `Finish` will not match `Finished`
+* The search is case insensitive. e.g `finish` will match `Finish`.
+* The order of the keywords does not matter. e.g. `Finish task` will match `task finish`.
+* Only the description and deadline is searched.
+* Only full words will be matched e.g `Finish` will not match `Finished`.
+* Only valid date will be matched e.g `291017` will not match `29-10-2017`.
 ****
 
 ==== Deleting tasks : `delete`
@@ -632,7 +641,7 @@ e.g. `detag 1, 2, 3 t/friends` +
 *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com` +
 *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake friends` +
+e.g. `find James Jake friends 1707` +
 *Select* : `select INDEX` +
 e.g.`select 2` +
 *List* : `list`
@@ -650,7 +659,7 @@ e.g. `edit 2 return books by the 8th of Dec` +
 *Archive* : `archive [INDEX]...` +
 e.g. `archive 3, 5` +
 *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `findtask finish task` +
+e.g. `findtask finish task 17-07-1995` +
 *Select* : `select INDEX` +
 e.g.`select 2` +
 *List* : `list`
