@@ -363,16 +363,22 @@ Format: `history` / `h` / `past
 === Sorting all entries : `sort`
 
 Synonyms/Aliases for the command: `arrange`, `organise` +
-Sorts list by name, tag or address. +
-That are represented by 1, 2 and 3 respectively +
-Format: `sort [NUMBER]`
+Sorts list by different types +
+such as `name`, `tag`, `company`, `priority` or `status`. +
+
+Format: `sort [TYPE]`
 
 Examples:
-* `sort 1`
 
-* `sort 2`
+* `sort name`
 
-* `sort 3`
+* `sort tag`
+
+* `sort company`
+
+* `sort priority`
+
+* `sort status`
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
