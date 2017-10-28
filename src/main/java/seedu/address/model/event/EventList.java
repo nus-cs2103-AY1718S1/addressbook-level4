@@ -3,18 +3,14 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TreeSet;
-
-import org.fxmisc.easybind.EasyBind;
-
-import com.sun.tools.corba.se.idl.constExpr.Times;
+import java.util.Observable;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.timeslot.Timeslot;
 
@@ -31,38 +27,38 @@ public class EventList implements Iterable<Event> {
             ObservableTreeMap<>();
     // used by asObservableList()
     private final ObservableTreeMap<Timeslot, ReadOnlyEvent> mappedTreeMap =
-            EasyBind.map(internalMap, (event) -> event);
+            ObservableTreeMap.map(internalMap, event -> event);
 
     /**
-     * Adds a event to the list.
+     * Adds a event to the tree map.
      */
     public void add(ReadOnlyEvent toAdd) {
         requireNonNull(toAdd);
-        Event event = new Event(toAdd);
-        internalMap.put(event.getTimeslot(), event);
+        internalMap.put(toAdd.getTimeslot(), new Event(toAdd));
     }
 
     /**
-     * Replaces the event {@code target} in the list with {@code editedEvent}.
+     * Replaces the event {@code target} in the tree map with {@code editedEvent}.
      *
-     * @throws EventNotFoundException if {@code target} could not be found in the list.
+     * @throws EventNotFoundException if {@code target} could not be found in the tree map.
      */
     public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws EventNotFoundException {
         requireNonNull(editedEvent);
 
-        if (internalMap.containsValue(target)) {
+        Event targetEvent = new Event(target);
+        if (internalMap.containsValue(targetEvent)) {
             throw new EventNotFoundException();
         }
 
-        internalMap.remove(target.getTimeslot());
-        internalMap.put(editedEvent.getTimeslot(), editedEvent);
+        internalMap.remove(targetEvent.getTimeslot());
+        internalMap.put(editedEvent.getTimeslot(), new Event(editedEvent));
     }
 
     /**
-     * Removes the equivalent event from the list.
+     * Removes the equivalent event from the tree map.
      *
-     * @throws EventNotFoundException if no such person could be found in the list.
+     * @throws EventNotFoundException if no such person could be found in the tree map.
      */
     public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
         requireNonNull(toRemove);
@@ -78,19 +74,27 @@ public class EventList implements Iterable<Event> {
         this.internalMap.putAll(replacement.internalMap);
     }
 
-    public void setEvents(List<? extends ReadOnlyEvent> persons) {
+    public void setEvents(List<? extends ReadOnlyEvent> events) {
         final EventList replacement = new EventList();
-        for (final ReadOnlyEvent person : persons) {
-            replacement.add(new Event(person));
+        for (final ReadOnlyEvent event : events) {
+            replacement.add(new Event(event));
         }
         setEvents(replacement);
     }
 
     /**
-     * Returns the backing list as an unmodifiable {@code ObservableTreeMap}.
+     * Returns the backing tree map as an {@code ObservableTreeMap}.
      */
     public ObservableTreeMap<Timeslot, ReadOnlyEvent> asObservableTreeMap() {
         return mappedTreeMap;
+    }
+
+    /**
+     * Returns the backing tree map as an {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyEvent> asObservableList() {
+        ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(mappedTreeMap.values()));
+        return FXCollections.unmodifiableObservableList(list);
     }
 
     @Override

@@ -13,8 +13,10 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventList;
+import seedu.address.model.event.ObservableTreeMap;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -246,7 +248,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Removes {@code key} from this {@code AddressBook}.
      *
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     * @throws EventNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
         if (events.remove(key)) {

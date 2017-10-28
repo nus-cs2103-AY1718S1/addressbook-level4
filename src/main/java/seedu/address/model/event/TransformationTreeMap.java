@@ -5,20 +5,20 @@ import java.util.function.Function;
 
 import javafx.collections.MapChangeListener;
 
-public class TransformationTreeMap<K,V> extends ObservableTreeMap<K, V> {
+public class TransformationTreeMap<K,V,U> extends ObservableTreeMap<K, U> {
 
     private ObservableTreeMap<? extends K, ? extends V> source;
     private MapChangeListener<K,V> sourceListener;
-    private Function<Map.Entry<? extends K,? extends V>, Map.Entry<? extends K, ? extends V>> mapper
+    private final Function<? super V, ? extends U> mapper;
 
-    public TransformationTreeMap(ObservableTreeMap<? extends K, ? extends V> source, Function<Map.Entry<? extends K,?
-            extends V>, Map.Entry<? extends K, ? extends V>> mapper) {
+    public TransformationTreeMap(ObservableTreeMap<? extends K, ? extends V> source, Function<? super V, ? extends U>
+            mapper) {
         if (source == null) {
             throw new NullPointerException();
         }
         this.source = source;
         this.mapper = mapper;
-        source.addListener(new TreeMapChangeListener<K, V>(getListener()));
+        source.addListener(new TreeMapChangeListener<>(getListener()));
 
     }
 
@@ -32,7 +32,7 @@ public class TransformationTreeMap<K,V> extends ObservableTreeMap<K, V> {
     }
 
     protected void sourceChanged(MapChangeListener.Change<? extends K, ? extends V> change) {
-        callObservers(new MapChangeListener.Change<K,V>(this) {
+        callObservers(new MapChangeListener.Change<K,U>(this) {
                 @Override
                 public boolean wasAdded() { return change.wasAdded(); }
 
@@ -43,15 +43,15 @@ public class TransformationTreeMap<K,V> extends ObservableTreeMap<K, V> {
                 public K getKey() { return change.getKey(); }
 
                 @Override
-                public V getValueAdded() { return change.getValueAdded(); }
+                public U getValueAdded() { return mapper.apply(change.getValueAdded()); }
 
                 @Override
-                public V getValueRemoved() { return change.getValueRemoved(); }
+                public U getValueRemoved() { return mapper.apply(change.getValueRemoved()); }
         });
     }
 
     @Override
-    public V get(K key) {
+    public U get(Object key) {
         return mapper.apply(getSource().get(key));
     }
 

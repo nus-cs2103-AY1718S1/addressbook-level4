@@ -1,6 +1,7 @@
 //@@author a0107442n
 package seedu.address.model.event;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
@@ -45,9 +46,9 @@ public class ObservableTreeMap<K, V> extends TreeMap<K, V> implements
         mapListenerHelper = MapListenerHelper.removeListener(mapListenerHelper, observer);
     }
 
-    public static <K,V> ObservableTreeMap<K, V> map (ObservableTreeMap<K, V>
-            sourceMap, Function<Map.Entry<? extends K, ? extends V>, Map.Entry<? extends K, ? extends V>> mapper) {
-        return new TransformationTreeMap<K,V>(sourceMap, mapper);
+    public static <K,V,U> ObservableTreeMap<K, U> map(ObservableTreeMap<K, V>
+            sourceMap, Function<V, U> mapper) {
+        return new TransformationTreeMap<K,V,U>(sourceMap, mapper);
     }
 
 }

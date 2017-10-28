@@ -1,7 +1,9 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.event.ObservableTreeMap;
 import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
