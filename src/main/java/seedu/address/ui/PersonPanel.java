@@ -114,7 +114,7 @@ public class PersonPanel extends UiPart<Region> {
 
                 //Update photo field in addressbook by simulating a command
                 try {
-                    logger.info("Person Panel register button for index "
+                    logger.fine("Person Panel register button for index "
                             + index.getZeroBased());
                     logic.execute("edit " + index.getZeroBased() + " ph/"
                             + file.toURI().toString());
@@ -165,11 +165,11 @@ public class PersonPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         Index index = event.getNewSelection().index;
         ReadOnlyPerson person = event.getNewSelection().person;
-        logger.info("Person Panel: stored index becomes " + index
+        logger.fine("Person Panel: stored index becomes " + index
                 .getZeroBased());
 
         registerImageSelectionButton(index);
-        logger.info(LogsCenter.getEventHandlingLogMessage
+        logger.fine(LogsCenter.getEventHandlingLogMessage
                 (event) + " for index " + index.getZeroBased());
         showPersonDetails(person);
     }
@@ -181,7 +181,7 @@ public class PersonPanel extends UiPart<Region> {
      */
     @Subscribe
     private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logger.fine(LogsCenter.getEventHandlingLogMessage(event));
         for (ReadOnlyPerson dataPerson : event.data.getPersonList()) {
             if (storedPerson != null && storedPerson.getName().equals(dataPerson.getName())) {
                 showPersonDetails(dataPerson);

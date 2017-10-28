@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.ModelManager;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.event.timeslot.Timeslot;
 
 /**
@@ -37,8 +38,11 @@ public class EventList implements Iterable<Event> {
     /**
      * Adds a event to the tree map.
      */
-    public void add(ReadOnlyEvent toAdd) {
+    public void add(ReadOnlyEvent toAdd) throws EventTimeClashException {
         requireNonNull(toAdd);
+        if (hasClashWith(new Event(toAdd))) {
+            throw new EventTimeClashException();
+        }
         internalMap.put(toAdd.getTimeslot(), new Event(toAdd));
     }
 
@@ -48,12 +52,16 @@ public class EventList implements Iterable<Event> {
      * @throws EventNotFoundException if {@code target} could not be found in the tree map.
      */
     public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-            throws EventNotFoundException {
+            throws EventNotFoundException, EventTimeClashException {
         requireNonNull(editedEvent);
 
         Event targetEvent = new Event(target);
         if (!internalMap.containsValue(targetEvent)) {
             throw new EventNotFoundException();
+        }
+
+        if (hasClashWith(new Event(editedEvent))) {
+            throw new EventTimeClashException();
         }
 
         internalMap.remove(targetEvent.getTimeslot());
@@ -79,13 +87,32 @@ public class EventList implements Iterable<Event> {
         this.internalMap.putAll(replacement.internalMap);
     }
 
-    public void setEvents(List<? extends ReadOnlyEvent> events) {
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws EventTimeClashException {
         final EventList replacement = new EventList();
         for (final ReadOnlyEvent event : events) {
-            replacement.add(new Event(event));
-            logger.info("EventList ------- Added event " + event.getAsText());
+            try {
+                replacement.add(new Event(event));
+            } catch (EventTimeClashException e) {
+                throw e;
+            }
         }
         setEvents(replacement);
+    }
+
+    /**
+     * Check if a given event has any time clash with any event in the EventList.
+     * @param event for checking
+     * @return true if there is a clashing event.
+     */
+    private boolean hasClashWith(Event event) {
+        Iterator<Event> iterator = this.iterator();
+        while (iterator.hasNext()) {
+            Event e = iterator.next();
+            if (e.clashesWith(event)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -100,7 +127,7 @@ public class EventList implements Iterable<Event> {
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
         ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(internalMap.values()));
-        logger.info("EventList --------- Got EventList with " + internalMap.size() + " events inside");
+//        logger.info("EventList --------- Got EventList with " + internalMap.size() + " events inside");
         return FXCollections.unmodifiableObservableList(list);
     }
 

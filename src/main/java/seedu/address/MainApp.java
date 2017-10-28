@@ -71,11 +71,6 @@ public class MainApp extends Application {
 
         model = initModelManager(storage, userPrefs);
 
-        logger.info("MainApp =========  EventList with " + model.getAddressBook().getEventList().size() + " events ");
-        logger.info("MainApp =========  PersonList with " + model.getAddressBook().getPersonList().size() + " " +
-                "persons" +
-                " ");
-
         logic = new LogicManager(model);
 
         ui = new UiManager(logic, config, userPrefs);

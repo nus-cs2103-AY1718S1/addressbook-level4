@@ -23,6 +23,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.event.timeslot.Timeslot;
 
 /**
@@ -87,14 +88,14 @@ public class EditEventCommand extends UndoableCommand {
         }
 
         ReadOnlyEvent eventToEdit = lastShownList.get(index.getZeroBased());
-        logger.info("event to edit is #" + index.getZeroBased()  + " " + eventToEdit.getAsText());
         Event editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
-        logger.info("event to change to is #" + index.getZeroBased()  + " " + editedEvent.getAsText());
 
         try {
             model.updateEvent(eventToEdit, editedEvent);
         } catch (EventNotFoundException pnfe) {
             throw new AssertionError("The target event cannot be missing");
+        } catch (EventTimeClashException etce) {
+            throw new AssertionError("The changed event should not have time clash with an existing event.");
         }
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));

@@ -197,11 +197,6 @@ public class CalendarView extends UiPart<Region> {
             ObservableList<ReadOnlyEvent> eventsThisWeek = eventList.stream().filter(event -> event.happensBefore
                     (endOfWeek)).collect(Collectors.toCollection(FXCollections::observableArrayList));
 
-            //In cases of updating events, remove the existing node first before adding a new one
-            if (calendarView.getChildren().contains(addedEvents.get(lastChangedEvent))) {
-                calendarView.getChildren().remove(addedEvents.get(lastChangedEvent));
-            }
-
             //Iteratively add the events
             for (ReadOnlyEvent event:eventsThisWeek) {
                 LocalDate date = event.getDate().toLocalDate();
@@ -219,9 +214,12 @@ public class CalendarView extends UiPart<Region> {
                 int rowIndex = (int) MINUTES.between(firstSlotStart, event.getStartTime()) / SLOT_LENGTH + 1;
                 int rowSpan = (((int) event.getDuration().toMinutes() + SLOT_LENGTH - 1) )/ SLOT_LENGTH;
 
-                logger.info("Event " + event.getTiming().toString() + " with duration " + event.getDuration().toMinutes() +
-                        " " +
-                        "row span = " + rowSpan);
+                //In cases of updating events, remove the existing node first before adding a new one
+                if (calendarView.getChildren().contains(addedEvents.get(lastChangedEvent))) {
+                    if(calendarView.getChildren().remove(addedEvents.get(lastChangedEvent))) {
+                        logger.info(lastChangedEvent + " removed.");
+                    }
+                }
 
                 calendarView.add(eventPane, columnIndex, rowIndex, 1, rowSpan);
                 addedEvents.put(event, eventPane);
@@ -236,6 +234,7 @@ public class CalendarView extends UiPart<Region> {
      */
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+        logger.info("LastChangedEvent is " + abce.data.getLastChangedEvent());
         initEvents(calendarView, abce.data.getEventList(), abce.data.getLastChangedEvent());
     }
 

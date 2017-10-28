@@ -18,6 +18,7 @@ import seedu.address.model.event.EventList;
 import seedu.address.model.event.ObservableTreeMap;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -74,12 +75,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// list overwrite operations
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
-        logger.info("AddressBook ------ Got persons list with " + persons.size() + " persons");
         this.persons.setPersons(persons);
     }
 
-    public void setEvents(List<? extends ReadOnlyEvent> events) {
-        logger.info("AddressBook ------ Got eventss list with " + events.size() + " events");
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws EventTimeClashException {
         this.events.setEvents(events);
     }
 
@@ -101,7 +100,11 @@ public class AddressBook implements ReadOnlyAddressBook {
             assert false : "AddressBooks should not have duplicate persons";
         }
 
-        setEvents(newData.getEventList());
+        try {
+            setEvents(newData.getEventList());
+        } catch (EventTimeClashException e) {
+            assert false : "AddressBooks should not have time-clashing events";
+        }
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
@@ -248,7 +251,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Adds an event to the address book.
      */
-    public void addEvent(ReadOnlyEvent e) {
+    public void addEvent(ReadOnlyEvent e) throws EventTimeClashException {
         Event newEvent = new Event(e);
         events.add(newEvent);
     }
@@ -259,8 +262,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws EventNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
+        lastChangedEvent = key;
         if (events.remove(key)) {
-            lastChangedEvent = key;
             return true;
         } else {
             throw new EventNotFoundException();
@@ -275,7 +278,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @throws EventNotFoundException if {@code target} could not be found in the list.
      */
     public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)
-            throws EventNotFoundException {
+            throws EventNotFoundException, EventTimeClashException {
         requireNonNull(editedReadOnlyEvent);
         Event editedEvent = new Event(editedReadOnlyEvent);
         // TODO: create master list for event tags
