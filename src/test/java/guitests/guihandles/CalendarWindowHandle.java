@@ -13,10 +13,11 @@ public class CalendarWindowHandle extends StageHandle {
 
     public static final String CALENDAR_WINDOW_TITLE = "Calendar";
 
+
     private static final String CALENDAR_WINDOW_BROWSER_ID = "#browser";
 
-    public CalendarWindowHandle(Stage helpWindowStage) {
-        super(helpWindowStage);
+    public CalendarWindowHandle(Stage 三tage) {
+        super(Stage);
     }
 
     /**

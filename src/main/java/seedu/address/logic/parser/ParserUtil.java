@@ -37,6 +37,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -69,7 +70,7 @@ public class ParserUtil {
      * Parses a {@code Optional<String> country} into an {@code Optional<Country>} if {@code country} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Country> parseCountry (Optional<String> country) throws IllegalValueException {
+    public static Optional<Country> parseCountry(Optional<String> country) throws IllegalValueException {
         requireNonNull(country);
         return country.isPresent() ? Optional.of(new Country(country.get())) : Optional.empty();
     }
@@ -119,12 +120,14 @@ public class ParserUtil {
     /**
      * Parses {@code commandWord} into an {@code CommandWord} and returns it.
      * Leading and trailing whitespaces will be trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static CommandIdentifier parseCommandIdentifier(String commandWord) throws IllegalValueException {
         requireNonNull(commandWord);
         return new CommandIdentifier(commandWord.trim());
     }
+
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
