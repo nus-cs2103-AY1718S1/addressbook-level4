@@ -35,10 +35,12 @@ public interface Model {
     void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
             DuplicatePersonException;
 
+    //@@author vivekscl
     /** Deletes given tag from every of the given persons */
     void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
             DuplicatePersonException;
 
+    //@@author vivekscl
     /** Adds given tag to every of the given persons */
     void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
             DuplicatePersonException;
@@ -62,6 +64,7 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    //@@author vivekscl
     /**
      * Uses the JaroWinklerDistance function from the Apache Commons library to find the closest matching name when
      * given keywords that are not found in the FilteredPersonList.

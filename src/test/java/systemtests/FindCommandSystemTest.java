@@ -156,6 +156,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
     }
 
+    //@@author vivekscl
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,
@@ -185,6 +186,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 
+    //@@author
     /**
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.

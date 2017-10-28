@@ -78,6 +78,7 @@ public class ModelManagerTest {
         assertEquals(expectedModel.getAddressBook().getPersonList(), actualModel.getAddressBook().getPersonList());
     }
 
+    //@@author vivekscl
     /*
      * Tests if the actual output of removeTag is equals to the expected
      * output when given valid target indexes and a valid tag to remove.
@@ -148,6 +149,7 @@ public class ModelManagerTest {
                 actualModel.getAddressBook().getPersonList().toString());
     }
 
+    //@@author
     @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

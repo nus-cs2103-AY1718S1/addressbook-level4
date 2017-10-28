@@ -25,6 +25,7 @@ allprojects {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 
+    //@@author vivekscl
     repositories {
         jcenter()
         mavenCentral()
@@ -60,6 +61,7 @@ allprojects {
         }
     }
 
+    //@@author vivekscl
     dependencies {
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
