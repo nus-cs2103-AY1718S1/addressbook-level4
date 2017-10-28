@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventList;
 import seedu.address.model.event.ObservableTreeMap;
@@ -33,6 +35,8 @@ import seedu.address.model.tag.UniqueTagList;
  * Duplicates are not allowed (by .equals comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
+
+    private static final Logger logger = LogsCenter.getLogger(AddressBook.class);
 
     private final UniquePersonList persons;
     private final EventList events;
@@ -68,10 +72,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// list overwrite operations
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
+        logger.info("AddressBook ------ Got persons list with " + persons.size() + " persons");
         this.persons.setPersons(persons);
     }
 
     public void setEvents(List<? extends ReadOnlyEvent> events) {
+        logger.info("AddressBook ------ Got eventss list with " + events.size() + " events");
         this.events.setEvents(events);
     }
 

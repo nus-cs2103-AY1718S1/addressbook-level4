@@ -32,7 +32,7 @@ public class EventList implements Iterable<Event> {
             ObservableTreeMap<>();
     // used by asObservableList()
     private final ObservableTreeMap<Timeslot, ReadOnlyEvent> mappedTreeMap =
-            ObservableTreeMap.map(internalMap, event -> event);
+            ObservableTreeMap.map(internalMap, (event) -> event);
 
     /**
      * Adds a event to the tree map.
@@ -99,7 +99,7 @@ public class EventList implements Iterable<Event> {
      * Returns the backing tree map as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
-        ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(mappedTreeMap.values()));
+        ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(internalMap.values()));
         logger.info("EventList --------- Got EventList with " + internalMap.size() + " events inside");
         return FXCollections.unmodifiableObservableList(list);
     }

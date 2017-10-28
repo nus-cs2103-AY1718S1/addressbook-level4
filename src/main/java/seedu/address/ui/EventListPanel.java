@@ -40,6 +40,7 @@ public class EventListPanel extends UiPart<Region> {
                 eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
         eventListView.setItems(mappedList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
+        logger.info("UI ------ Got eventList with " + eventList.size() + " events.");
         setEventHandlerForSelectionChangeEvent();
     }
 
