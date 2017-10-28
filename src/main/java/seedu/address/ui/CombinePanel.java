@@ -34,6 +34,7 @@ import seedu.address.logic.Logic;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
+import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
 
 /**
  * The UI component that is responsible for combining the web browser panel and the timetable panel.
@@ -301,6 +302,7 @@ public class CombinePanel extends UiPart<Region> {
 
         if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.MODULE)) {
             selectedModule = event.getNewSelection().lesson;
+            logic.setRemarkPredicate(new SelectedStickyNotePredicate(event.getNewSelection().lesson.getCode()));
             stickyNotesInit();
         }
     }
@@ -318,9 +320,10 @@ public class CombinePanel extends UiPart<Region> {
      * This method will initilize the data for sticky notes screen
      */
     public void noteDataInit() {
-        ObservableList<Remark> remarks = logic.getRemarkList();
+        ObservableList<Remark> remarks = logic.getFilteredRemarkList();
         int size = remarks.size();
         int count = 0;
+        int index = 1;
 
         noteData = new String[3][3];
         for (int i = 0; i < 3; i++) {
@@ -329,16 +332,9 @@ public class CombinePanel extends UiPart<Region> {
                     continue;
                 }
                 Remark remark = remarks.get(count);
-                while (selectedModule != null && !remark.moduleCode.equals(selectedModule.getCode())) {
-                    count++;
-                    if (count < size) {
-                        remark = remarks.get(count);
-                    } else {
-                        break;
-                    }
-                }
                 if (count < size) {
-                    noteData[i][j] = remark.moduleCode.fullCodeName + " : " + remark.value;
+                    noteData[i][j] = index + "." + remark.moduleCode.fullCodeName + " : " + remark.value;
+                    index++;
                     count++;
                 }
             }
@@ -358,7 +354,7 @@ public class CombinePanel extends UiPart<Region> {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String text = noteData[i][j];
-                if (text == null){
+                if (text == null) {
                     return;
                 }
                 int x = 120 + (int) (Math.random() * 255);

@@ -2,7 +2,6 @@ package seedu.address.model.module;
 
 import static java.util.Objects.requireNonNull;
 
-import com.sun.org.apache.regexp.internal.RE;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -10,9 +9,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Remark {
 
-    private final int REMARK_LENGTH_LIMIT = 50;
+    private static final int REMARK_LENGTH_LIMIT = 150;
     private static final String MESSAGE_REMARK_CONSTRAINTS =
-            "Remark can only be no more than 50 characters";
+            "Remark can only be no more than 150 characters";
 
     public final String value;
     public final Code moduleCode;

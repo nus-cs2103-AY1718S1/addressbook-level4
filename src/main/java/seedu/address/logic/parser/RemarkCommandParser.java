@@ -8,15 +8,18 @@ import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteRemarkCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new RemarkCommand object
  */
-public class RemarkCommandParser implements Parser<RemarkCommand> {
+public class RemarkCommandParser implements Parser<Command> {
 
     static final Pattern FIRST_INT_PATTERN = Pattern.compile("^(\\d+)");
+    static final Pattern DELETE_INDEX_PATTERN = Pattern.compile("-d\\s*(\\d+)");
 
     /**
      * Parses the given {@code String} of arguments in the context of the RemarkCommand
@@ -24,26 +27,30 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     @Override
-    public RemarkCommand parse(String args) throws ParseException {
+    public Command parse(String args) throws ParseException {
         requireNonNull(args);
         String trimmedArgs = args.trim();
         Index index;
         String remarkContent;
-        Matcher matcher = FIRST_INT_PATTERN.matcher(trimmedArgs);
+        Matcher matcherFirstInt = FIRST_INT_PATTERN.matcher(trimmedArgs);
+        Matcher matcherDeleteRmk = DELETE_INDEX_PATTERN.matcher(trimmedArgs);
 
         try {
-            if (matcher.find()) {
-                index = ParserUtil.parseIndex(matcher.group(0));
+            if (matcherFirstInt.find()) {
+                index = ParserUtil.parseIndex(matcherFirstInt.group(0));
+                remarkContent = trimmedArgs.substring(matcherFirstInt.group(0).length()).trim();
+                return new RemarkCommand(index, remarkContent);
+            } else if (matcherDeleteRmk.find()) {
+                index = ParserUtil.parseIndex(matcherDeleteRmk.group(1));
+                return new DeleteRemarkCommand(index);
             } else {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
             }
 
-            remarkContent = trimmedArgs.substring(matcher.group(0).length()).trim();
 
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
         }
 
-        return new RemarkCommand(index, remarkContent);
     }
 }

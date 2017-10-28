@@ -1,5 +1,10 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.model.ListingUnit.MODULE;
+
+import java.util.List;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -11,20 +16,17 @@ import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.DuplicateRemarkException;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.model.ListingUnit.MODULE;
-
-
+/**
+ * Add a remark to a module with specified index.
+ */
 public class RemarkCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "remark";
-    public static final String MESSAGE_SAMPLE_REMARK_INFORMATION = "The module CS2103T introduces the " +
-            "necessary conceptual and analytical tools for systematic and rigorous development of software systems.";
+    public static final String MESSAGE_SAMPLE_REMARK_INFORMATION = "The module CS2103T introduces the "
+            + "necessary conceptual and analytical tools for systematic and rigorous development of software systems.";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remark the module with some supplementary " +
-            "information.\n "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Remark the module with some supplementary "
+            + "information.\n "
             + "Parameters: INDEX (must be a positive integer) "
             + "[ADDITIONAL INFORMATION]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -32,6 +34,8 @@ public class RemarkCommand extends UndoableCommand {
 
     public static final String MESSAGE_REMARK_MODULE_SUCCESS = "Remarked Module: %1$s";
     public static final String MESSAGE_WRONG_LISTING_UNIT_FAILURE = "You can only remark a module";
+    public static final String DELETE_REMARK_KEYWORD = "-d";
+    public static final String CLEAR_REMARK_KEYWORD = "-c";
 
     private final String remarkContent;
     private final Index index;
@@ -49,6 +53,7 @@ public class RemarkCommand extends UndoableCommand {
     }
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
+
         List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {

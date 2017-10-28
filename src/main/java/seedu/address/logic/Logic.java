@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import java.util.HashMap;
+import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
@@ -36,5 +37,10 @@ public interface Logic {
     HashMap<String, String> getCommandKeywordColorMap();
 
     /** Returns an unmodifiable view of the list of remarks */
-    ObservableList<Remark> getRemarkList();
+    ObservableList<Remark> getFilteredRemarkList();
+
+    /**
+     * Updates the predicate of remark list.
+     */
+    void setRemarkPredicate(Predicate predicate);
 }
