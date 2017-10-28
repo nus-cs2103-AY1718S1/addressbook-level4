@@ -46,7 +46,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    public static void assertMeetingCardEquals(MeetingCardHandle expectedCard, MeetingCardHandle actualCard) {
+    public static void assertCardEquals(MeetingCardHandle expectedCard, MeetingCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getNameMeeting(), actualCard.getNameMeeting());
         assertEquals(expectedCard.getPlace(), actualCard.getPlace());
@@ -81,6 +81,25 @@ public class GuiTestAssert {
      */
     public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
         assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
+    }
+
+    /**
+     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(MeetingListPanelHandle meetingListPanelHandle, ReadOnlyMeeting... meetings) {
+        for (int i = 0; i < meetings.length; i++) {
+            assertCardDisplaysMeeting(meetings[i], meetingListPanelHandle.getMeetingCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(MeetingListPanelHandle meetingListPanelHandle,
+                                          List<ReadOnlyMeeting> meetings) {
+        assertListMatching(meetingListPanelHandle, meetings.toArray(new ReadOnlyMeeting[0]));
     }
 
     /**
