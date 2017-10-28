@@ -20,7 +20,6 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.schedule.Schedule;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -170,11 +169,11 @@ public class UniquePersonList implements Iterable<Person> {
         return checker1;
     }
 
-    public void addSchedule(Integer toAdd, TreeSet<Integer> timeSpan){
+    public void addSchedule(Integer toAdd, TreeSet<Integer> timeSpan) {
         internalList.get(toAdd).addSpanToSchedule(timeSpan);
     }
 
-    public void clearSchedule(Integer toClear, TreeSet<Integer> timeSpan){
+    public void clearSchedule(Integer toClear, TreeSet<Integer> timeSpan) {
         internalList.get(toClear).clearSpanForSchedule(timeSpan);
     }
 }

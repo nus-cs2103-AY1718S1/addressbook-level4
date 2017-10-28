@@ -2,6 +2,7 @@ package seedu.address.model.schedule;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+/* The object representing the time of the start of a 30-minute-span when a person is busy. */
 public class Time {
 
     private final Integer earliestTime = 600;
@@ -36,6 +37,6 @@ public class Time {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Time) // instanceof handles nulls
-                && (this.time.equals( ((Time) other).time)); // state check
+                && (this.time.equals(((Time) other).time)); // state check
     }
 }

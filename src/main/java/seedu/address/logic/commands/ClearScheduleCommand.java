@@ -27,13 +27,14 @@ public class ClearScheduleCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Clear a specific time slot, during which a person is supposed to be free.\n"
-            + "Parameters: INDEX (must be a positive integer); Day(From Monday to Saturday); start time " +
-            "(Should be expressed in standard 24 hours time, no more accurate than 30 minutes and no earlier " +
-            "than 0600 and no later than 2330\n"
-            + "Example: " + COMMAND_WORD + " 1" +
-            PREFIX_DAY + "Monday" +
-            PREFIX_START_TIME + "0700" +
-            PREFIX_END_TIME + "1430";
+            + "Parameters: INDEX (must be a positive integer); Day(From Monday to Saturday); start time "
+            + "(Should be expressed in standard 24 hours time, no more accurate than 30 minutes and no earlier "
+            + "than 0600 and no later than 2330\n"
+            + "Example: "
+            + COMMAND_WORD + " 1"
+            + PREFIX_DAY + "Monday"
+            + PREFIX_START_TIME + "0700"
+            + PREFIX_END_TIME + "1430";
 
     public static final String MESSAGE_CLEAR_SCHEDULE_PERSON_SUCCESS = "Schedule successfully cleared";
 
@@ -41,17 +42,17 @@ public class ClearScheduleCommand extends UndoableCommand {
 
     private Day day;
     private Time startTime;
-    private Time EndTime;
-    private TreeSet<Integer> TimeToClear;
+    private Time endTime;
+    private TreeSet<Integer> timeToClear;
 
     public ClearScheduleCommand(Index targetIndex, Day day, Time startTime, Time endTime)
             throws IllegalValueException {
         this.targetIndex = targetIndex;
         this.day = day;
         this.startTime = startTime;
-        this.EndTime = endTime;
+        this.endTime = endTime;
         Slot slot = new Slot(day, startTime, endTime);
-        TimeToClear = slot.getBusyTime();
+        timeToClear = slot.getBusyTime();
     }
 
 
@@ -67,7 +68,7 @@ public class ClearScheduleCommand extends UndoableCommand {
         ReadOnlyPerson personToClearSchedule = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.clearScheduleForPerson(targetIndex.getZeroBased(), TimeToClear);
+            model.clearScheduleForPerson(targetIndex.getZeroBased(), timeToClear);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
@@ -82,6 +83,6 @@ public class ClearScheduleCommand extends UndoableCommand {
                 && this.targetIndex.equals(((ClearScheduleCommand) other).targetIndex)
                 && this.day.equals(((ClearScheduleCommand) other).day)
                 && this.startTime.equals(((ClearScheduleCommand) other).startTime)
-                && this.EndTime.equals(((ClearScheduleCommand) other).EndTime)); // state check
+                && this.endTime.equals(((ClearScheduleCommand) other).endTime)); // state check
     }
 }

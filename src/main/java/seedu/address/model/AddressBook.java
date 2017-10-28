@@ -75,15 +75,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
 
-    //// person-level operations
-
-    /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
-     *
-     * @throws DuplicatePersonException if an equivalent person already exists.
-     */
 
     /* Given a time span, add it to the person's busy time slot so that this time span will not be considered when
        arranging a meeting.
@@ -98,6 +89,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void clearScheduleForPerson(Integer index, TreeSet<Integer> timeSpan) throws PersonNotFoundException {
         persons.clearSchedule(index, timeSpan);
     }
+
+    /**
+     * Adds a person to the address book.
+     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     *
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
 
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);

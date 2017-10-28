@@ -10,9 +10,9 @@ import java.util.TreeSet;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.schedule.Schedule;
 
 /**
  * Represents a Person in the address book.
@@ -50,7 +50,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getMrt(), source.getTags() );
+                source.getMrt(), source.getTags());
         initiateSchedule();
     }
 
@@ -145,14 +145,15 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Schedule getSchedule(){
+    public Schedule getSchedule() {
         return schedule.get();
     }
 
-    public ObjectProperty<Schedule> scheduleProperty(){
+    public ObjectProperty<Schedule> scheduleProperty() {
         return schedule;
     }
 
+    /* create an empty schedule object */
     public void initiateSchedule() {
         Schedule schedule = new Schedule();
         this.schedule = new SimpleObjectProperty<>(schedule);
@@ -162,12 +163,14 @@ public class Person implements ReadOnlyPerson {
         this.schedule.set(schedule);
     }
 
+    /* Add a time span to a person's schedule to indicate that he is busy at this time. */
     public void addSpanToSchedule(TreeSet<Integer> span) {
         for (Integer startTime : span) {
             getSchedule().addTime(startTime);
         }
     }
 
+    /* Clear a time span to a person's schedule to indicate that he is free at this time. */
     public void clearSpanForSchedule(TreeSet<Integer> span) {
         for (Integer startTime : span) {
             getSchedule().clearTime(startTime);
