@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SCH_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -63,12 +64,17 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            Birthday tempBirthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
-            HomeNumber tempHomeNumber = ParserUtil.parseHomeNumber(argMultimap.getValue(PREFIX_HOME_NUMBER)).get();
-            SchEmail tempSchEmail = ParserUtil.parseSchEmail(argMultimap.getValue(PREFIX_SCH_EMAIL)).get();
+            Optional<Birthday> tempBirthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY));
+            birthday = (tempBirthday.isPresent()) ? tempBirthday.get() : new Birthday(null);
 
-            ReadOnlyPerson person = new Person(name, phone, tempHomeNumber,
-                    email, tempSchEmail, website, address, tempBirthday, false, tagList);
+            Optional<HomeNumber> tempHomeNumber = ParserUtil.parseHomeNumber(argMultimap.getValue(PREFIX_HOME_NUMBER));
+            homeNumber = (tempHomeNumber.isPresent()) ? tempHomeNumber.get() : new HomeNumber(null);
+
+            Optional<SchEmail> tempSchEmail = ParserUtil.parseSchEmail(argMultimap.getValue(PREFIX_SCH_EMAIL));
+            schEmail = (tempSchEmail.isPresent()) ? tempSchEmail.get() : new SchEmail(null);
+
+            ReadOnlyPerson person = new Person(name, phone, homeNumber,
+                    email, schEmail, website, address, birthday, false, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
