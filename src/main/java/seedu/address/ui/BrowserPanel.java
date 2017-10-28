@@ -14,6 +14,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarRequestEvent;
+import seedu.address.commons.events.ui.ShowEmailRequestEvent;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -74,6 +75,13 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
+     * Opens the email window in the browser panel.
+     */
+    public void loadEmail() {
+        loadPage("https://www.google.com/gmail/");
+    }
+
+    /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
@@ -90,5 +98,11 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadCalendar();
+    }
+
+    @Subscribe
+    private void handleEmailRequestEvent(ShowEmailRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadEmail();
     }
 }
