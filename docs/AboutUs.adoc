@@ -21,7 +21,7 @@ Role: Lecturer
 
 === Khoo Wei Ping
 image::khooroko.jpeg[width="150", align="left"]
-{empty}[http://github.com/khooroko[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/khooroko[github]] [<<weiping#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Storage

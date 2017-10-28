@@ -61,6 +61,8 @@ public class TypicalPersons {
             .withPostalCode("040004").withEmail("anna@example.com").withDebt("45")
             .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
             .withAddress("4th street").build();
+
+    // Blacklisted persons.
     public static final ReadOnlyPerson JELENA = new PersonBuilder().withName("Jelena Neo")
             .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withEmail("alice@example.com")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("85355255").withInterest(Interest.NO_INTEREST_SET)
@@ -77,18 +79,20 @@ public class TypicalPersons {
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("87652533").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("cornelia@example.com").withAddress("10th street")
             .withPostalCode("111111").withDebt("1234567").build();
+
+    // Whitelisted persons. Debt has to be zero!
     public static final ReadOnlyPerson ARCHANA = new PersonBuilder().withName("Archana Pradeep")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("9482224").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("werner@example.com").withAddress("michegan ave")
-            .withPostalCode("111111").withDebt("1234567").build();
+            .withPostalCode("111111").withDebt("0").build();
     public static final ReadOnlyPerson SIRISHA = new PersonBuilder().withName("Lakshmi Sirisha")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("9482427").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("lydia@example.com").withAddress("little tokyo")
-            .withPostalCode("111111").withDebt("1234567").build();
+            .withPostalCode("111111").withDebt("0").build();
     public static final ReadOnlyPerson RUSHAN = new PersonBuilder().withName("Khor Ru Shan")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("9482442").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("anna@example.com").withAddress("4th street")
-            .withPostalCode("111111").withDebt("1234567").build();
+            .withPostalCode("111111").withDebt("0").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
@@ -123,16 +127,16 @@ public class TypicalPersons {
             try {
                 ab.addPerson(person);
             } catch (DuplicatePersonException e) {
-                assert false : "not possible";
+                assert false : "It is not possible to have a duplicate person added into the addressbook";
             }
         }
 
         for (ReadOnlyPerson person : getTypicalBlacklistedPersons()) {
-            try {
-                ab.addBlacklistedPerson(person);
-            } catch (DuplicatePersonException e) {
-                assert false : "not possible";
-            }
+            ab.addBlacklistedPerson(person);
+        }
+
+        for (ReadOnlyPerson person : getTypicalWhitelistedPersons()) {
+            ab.addWhitelistedPerson(person);
         }
         return ab;
     }
@@ -140,10 +144,14 @@ public class TypicalPersons {
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays
                 .asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA,
-                        GEORGE, JELENA, WEIPING, JAIVIGNESH, LAWRENCE, ARCHANA, SIRISHA, RUSHAN));
+                        JELENA, WEIPING, JAIVIGNESH, LAWRENCE, ARCHANA, SIRISHA, RUSHAN));
     }
 
     public static List<ReadOnlyPerson> getTypicalBlacklistedPersons() {
-        return new ArrayList<>(Arrays.asList(JELENA, WEIPING, JAIVIGNESH, LAWRENCE, ARCHANA, SIRISHA, RUSHAN));
+        return new ArrayList<>(Arrays.asList(JELENA, WEIPING, JAIVIGNESH, LAWRENCE));
+    }
+
+    public static List<ReadOnlyPerson> getTypicalWhitelistedPersons() {
+        return new ArrayList<>(Arrays.asList(ARCHANA, SIRISHA, RUSHAN));
     }
 }

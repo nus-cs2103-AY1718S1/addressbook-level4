@@ -148,18 +148,20 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerPartsForStartUp() {
         Platform.runLater(() -> {
             startUpPanel = new StartUpPanel();
+            infoPanelPlaceholder.getChildren().clear();
             infoPanelPlaceholder.getChildren().add(startUpPanel.getRoot());
 
             personListStartUpPanel = new PersonListStartUpPanel();
+            personListPanelPlaceholder.getChildren().clear();
             personListPanelPlaceholder.getChildren().add(personListStartUpPanel.getRoot());
 
             ResultDisplay resultDisplay = new ResultDisplay();
             resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
             CommandBox commandBox = new CommandBox(logic);
+            commandBoxPlaceholder.getChildren().clear();
             commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
         });
-
     }
     //@@author
 
@@ -174,12 +176,17 @@ public class MainWindow extends UiPart<Region> {
         case "blacklist":
             personListPanel = new PersonListPanel(logic.getFilteredBlacklistedPersonList());
             break;
-
+        case "whitelist":
+            personListPanel = new PersonListPanel(logic.getFilteredWhitelistedPersonList());
+            break;
         default:
             personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         }
 
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        infoPanel = new InfoPanel(logic);
+        infoPanelPlaceholder.getChildren().clear();
+        infoPanelPlaceholder.getChildren().add(infoPanel.getRoot());
     }
 
     void hide() {

@@ -22,6 +22,7 @@ This guide includes step-by-step instructions on how each command work, FAQs and
 The terms used in this guide are as follows: +
 
 * Blacklist - List of people who are banned +
+* Whitelist - List of people who have cleared their debts +
 * Index - The ordering of a contact in the list
 
 == Introduction
@@ -85,6 +86,11 @@ Examples:
 * `login batMan_111 (Batcave.327+-)`
 // end::login[]
 
+=== Logging out of the address book application : `logout`
+
+Logs out of the address book. +
+Format: `logout`
+
 === Viewing help : `help`
 
 Format: `help`
@@ -92,7 +98,7 @@ Format: `help`
 === Adding a debtor: `add`
 
 Adds a debtor to the address book. Date borrowed for debtor is automatically +
-noted down. As for Deadline, it is optional. +
+noted down. The `Deadline`, `Interest` and `Tag` fields are optional. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/Debt [t/TAG]...`
 
 [TIP]
@@ -113,6 +119,11 @@ Format: `list`
 Shows a list of all blacklisted persons in the address book. +
 Format: `blacklist`
 
+=== Listing all whitelisted persons : `whitelist`
+
+Shows a list of all whitelisted persons in the address book. +
+Format: `whitelist`
+
 === Editing a person : `edit`
 
 Edits an existing debtor, blacklisted/whitelisted contact in the address book. +
@@ -120,6 +131,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the currently selected person is edited instead.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * The date of debt borrowed cannot be edited.
@@ -133,6 +145,10 @@ Examples:
 Edits the phone number, postal code, and email address of the 1st person to be `91234567`, `333111`, and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `list` +
+`select 1` +
+`edit n/Peeta Pen` +
+Edits the name of the 1st person in the address book to be `Peeta Pen`.
 
 === Locating persons by name: `find`
 
@@ -161,7 +177,8 @@ Increase the debt of a debtor by the amount entered. +
 Format: `borrow INDEX AMOUNT`
 
 ****
-* Increases the debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* Increases the debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the debt of the currently selected person is increased instead.
 * `AMOUNT` has to be in dollars and cents. For example: `500.50` which represents $500.50.
 ****
 
@@ -171,6 +188,10 @@ Examples:
 Increases the debt of the 1st person by $500.
 * `borrow 2 1000.10` +
 Increases the debt of the 2nd person by $1000.10.
+* `list` +
+`select 2` +
+`borrow 234` +
+Increases the debt of the 2nd person by $234.
 
 === Decreasing the debt of a person: `payback`
 
@@ -178,7 +199,8 @@ Decrease the debt of a person by the amount entered. +
 Format: `payback INDEX AMOUNT`
 
 ****
-* Decrease the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+* Decreases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the debt of the currently selected person is decreased instead.
 * `AMOUNT` has to be in dollars and cents. For example: `600` which represents $600.
 * `AMOUNT` repaid cannot be more than the debt owed by the person at the specifiec `INDEX`
 ****
@@ -189,7 +211,25 @@ Examples:
 Decreases the debt of the 1st person by $500.
 * `payback 2 1000.10` +
 Decreases the debt of the 2nd person by $1000.10.
+* `list` +
+`select 3` +
+`payback 234` +
+Increases the debt of the 3rd person by $234.
 // end::borrowpayback[]
+
+=== Resetting the debt of a person: `repaid`
+
+Resets the debt of a person to zero and sets the date repaid field of that person. +
+Format: `repaid INDEX`
+
+****
+* Resets the debt of the person at the specified `INDEX` to zero. The index refers to the index number shown in the last person listing. The index must be a positive integer 1, 2, 3, …​
+****
+
+Examples:
+
+* `repaid 1` +
+Resets the debt of the 1st person to zero and sets the date of repayment in his record.
 
 === Deleting a person : `delete`
 
@@ -197,9 +237,8 @@ Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* Deletes the person at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* 1, 2, 3, ...
+* If no index is specified, the currently selected person is deleted instead.
 ****
 
 Examples:
@@ -210,6 +249,10 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+* `list` +
+`select 4` +
+`delete` +
+Deletes the 4th person in the address book.
 
 === Banning a debtor : `ban`
 
@@ -271,6 +314,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::nearby[]
 === Selecting a nearby person: `nearby`
 
 Selects the person identified by the index number used in the listing of nearby contacts of currently selected person, +
@@ -289,6 +333,7 @@ Examples:
 Selects the 2nd person in the address book.
 * `nearby 1` +
 Selects the 1st person in the nearby contacts listing of the previously selected person.
+// end::nearby[]
 
 === Listing entered commands : `history`
 
@@ -300,6 +345,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+// tag::sort[]
 === Sorting all contacts : `sort`
 
 Sorts all the contacts in the address book in specified order. If no order is specified, the contacts are sorted in ascending lexographical order. +
@@ -315,6 +361,7 @@ Examples:
 Sorts the contacts in the address book by name.
 * `sort cluster` +
 Sorts the contacts in the address book by their postal districts.
+// end::sort[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -376,6 +423,7 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+// tag::saveload[]
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -409,23 +457,43 @@ To quickly revert address book data to the state of last use:
 [none]
 * 2. Rename addressbook.xml-backup.xml to addressbook.xml.
 ====
+// end::saveload[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. +
+
+*Q*: What is the difference between `repaid` command and `payback` command? +
+*A*: `repaid` command completely clears a debtor's debt while `payback` clears a specified amount. In both cases, when the debt reaches zero, the person is
+transferred to whitelist and date repaid is set to the date the command is executed. +
+
+*Q*: If I `delete` someone from the `masterlist`, will he/she be deleted from the other lists as well? +
+*A*: Yes. +
+
+*Q*: Is it possible to send a blacklisted person to the `whitelist`? +
+*A*: No. You have to `unban` the person prior to sending him/her to the `whitelist`. +
+
+*Q*: When will a debtor's `debt` be accrued by his/her loan's interest rate? +
+*A*: As of now, the default date to accrue is on the first day of the month. +
+
+*Q*: If I execute the `sort` command in the `masterlist`, will the other lists be sorted as well? +
+*A*: Yes. +
 
 == Command Summary
 
-* *Login* `login USERNAME PASSWORD` +
+* *Login* : `login USERNAME PASSWORD` +
 e.g. `login userAcc_123 pa$$_Word!@#&`
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT dl/DEADLINE[t/TAG]...` +
+* *Logout* : `logout`
+* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT dl/DEADLINE[t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 dl/11-03-2017 t/friend t/colleague`
 * *Clear* : `clear`
 * *Borrow* : `borrow INDEX AMOUNT` +
 e.g. `borrow 1 500.50`
 * *Pay back* : `payback INDEX AMOUNT` +
 e.g. `payback 1 500.50`
+* *Repaid* : `repaid INDEX` +
+e.g. `payback 1`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Ban* : `ban INDEX` +
@@ -438,6 +506,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *List* : `list`
 * *Blacklist* : `blacklist`
+* *Whitelist* : `whitelist`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
@@ -472,20 +541,19 @@ e.g. `sort debt`
 * `Nearby` command (since v1.2)
 * `Borrow` command (since v1.2)
 * Display nearby contacts (since v1.2)
-* Interest field (since v1.2)
+* `Interest` field (since v1.2)
 
-* Sort by various fields (since v1.3)
+* `Sort` by various fields (since v1.3)
 * `Payback` command (since v1.3)
+* `Repaid` command (since v1.3)
+* `Whitelist` command (since v1.3)
+* `Logout` command (since v1.3)
+* Person's debts are automatically incremented according to the interest rate of their loan (since v1.3)
 
 == Features to be included by `V2.0`
 
-//[V1.3]
-* List of people who have cleared their debts.
-* A `Repaid` command to fully pay off a person's debt.
-* List of people who have overdue debts.
-* A person's debts are automatically incremented according to the interest rate of their loan.
-//[end of V1.3]
 //[V1.4]
+* List of people who have overdue debts.
 * A progress bar to indicate how much of the person's debt has been paid off.
 * A feature to export a person's contact in another format.
 * Profile pictures of clients shown next to their details.

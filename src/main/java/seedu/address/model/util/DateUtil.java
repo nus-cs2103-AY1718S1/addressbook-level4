@@ -3,6 +3,7 @@ package seedu.address.model.util;
 import static java.util.Objects.requireNonNull;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -14,6 +15,18 @@ public class DateUtil {
     public static final String DATE_FORMAT = "E',' dd MMM', Year' yyyy";
     // for input format of DD-MM-YYYY
     public static final String DATE_VALIDATION_REGEX = "([0-3][0-9](-))([0-1][0-9](-))(\\d{4})";
+    public static final int JAN = 1;
+    public static final int FEB = 2;
+    public static final int MAR = 3;
+    public static final int APR = 4;
+    public static final int MAY = 5;
+    public static final int JUN = 6;
+    public static final int JUL = 7;
+    public static final int AUG = 8;
+    public static final int SEP = 9;
+    public static final int OCT = 10;
+    public static final int NOV = 11;
+    public static final int DEC = 12;
 
     /**
      * Formats a Date class to a string value of format DAY, DD MM, 'Year' YYYY.
@@ -64,17 +77,17 @@ public class DateUtil {
             int year = Integer.parseInt(dateToValidate.substring(6, 10));
             boolean valid;
             switch (month) {
-            case 4:
-            case 6:
-            case 9:
-            case 11:
+            case APR:
+            case JUN:
+            case SEP:
+            case NOV:
                 if (day > 30) {
                     valid = false;
                 } else {
                     valid = true;
                 }
                 break;
-            case 2:
+            case FEB:
                 if (checkLeapYear(year)) {
                     if (day <= 29) {
                         valid = true;
@@ -132,44 +145,77 @@ public class DateUtil {
         }
     }
 
+    /**
+     * generate a date that is 1 month behind current date
+     */
+    public static Date generateOutdatedDebtDate(Date currentDate) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(currentDate);
+        cal.add(Calendar.MONTH, -1);
+        return cal.getTime();
+    }
+
+    /**
+     * Get the difference in number of months between the 2 dates.
+     * @param date1 is assumed to be AFTER date2.
+     * @return return difference. If there is no difference, return 0.
+     */
+    public static int getNumberOfMonthBetweenDates(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        // if date1 is only 1 year ahead of date2
+        if (cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR) == 1) {
+            return cal1.get(Calendar.MONTH) + 1
+                    + (11 - cal2.get(Calendar.MONTH));
+        } else if (cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR) > 1) {
+            return cal1.get(Calendar.MONTH) + 1
+                    + (11 - cal2.get(Calendar.MONTH))
+                    + (12 * (cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR) - 1));
+        } else {
+            return cal1.get(Calendar.MONTH) - cal2.get(Calendar.MONTH);
+        }
+    }
+
     public static int getMonthFromString(String month) {
         int monthToReturn;
         switch(month) {
         case "Jan":
-            monthToReturn = 1;
+            monthToReturn = JAN;
             break;
         case "Feb":
-            monthToReturn = 2;
+            monthToReturn = FEB;
             break;
         case "Mar":
-            monthToReturn = 3;
+            monthToReturn = MAR;
             break;
         case "Apr":
-            monthToReturn = 4;
+            monthToReturn = APR;
             break;
         case "May":
-            monthToReturn = 5;
+            monthToReturn = MAY;
             break;
         case "Jun":
-            monthToReturn = 6;
+            monthToReturn = JUN;
             break;
         case "Jul":
-            monthToReturn = 7;
+            monthToReturn = JUL;
             break;
         case "Aug":
-            monthToReturn = 8;
+            monthToReturn = AUG;
             break;
         case "Sep":
-            monthToReturn = 9;
+            monthToReturn = SEP;
             break;
         case "Oct":
-            monthToReturn = 10;
+            monthToReturn = OCT;
             break;
         case "Nov":
-            monthToReturn = 11;
+            monthToReturn = NOV;
             break;
         case "Dec":
-            monthToReturn = 12;
+            monthToReturn = DEC;
             break;
         default:
             monthToReturn = 0;

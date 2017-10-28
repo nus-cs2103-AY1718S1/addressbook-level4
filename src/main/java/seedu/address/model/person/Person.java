@@ -3,7 +3,9 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.util.DateUtil;
 
 /**
  * Represents a Person in the address book.
@@ -33,6 +36,8 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
 
     private boolean isBlacklisted = false;
+    private boolean isWhitelisted = false;
+    private Date lastAccruedDate; // the last time debt was updated by interest
 
     /**
      * Every field must be present and not null.
@@ -51,6 +56,7 @@ public class Person implements ReadOnlyPerson {
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
         this.deadline = new SimpleObjectProperty<>(deadline);
         this.dateRepaid = new SimpleObjectProperty<>(new DateRepaid());
+        this.lastAccruedDate = new Date();
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -64,7 +70,9 @@ public class Person implements ReadOnlyPerson {
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
-        this.isBlacklisted = source.getIsBlacklisted();
+        this.isBlacklisted = source.isBlacklisted();
+        this.isWhitelisted = source.isWhitelisted();
+        this.lastAccruedDate = source.getLastAccruedDate();
     }
 
     /**
@@ -256,7 +264,7 @@ public class Person implements ReadOnlyPerson {
      * Returns boolean status of a person's blacklist-status.
      */
     @Override
-    public boolean getIsBlacklisted() {
+    public boolean isBlacklisted() {
         return isBlacklisted;
     }
 
@@ -268,6 +276,21 @@ public class Person implements ReadOnlyPerson {
         this.isBlacklisted = isBlacklisted;
     }
 
+    /**
+     * Returns boolean status of a person's whitelist-status.
+     */
+    @Override
+    public boolean isWhitelisted() {
+        return isWhitelisted;
+    }
+
+    /**
+     * Sets boolean status of a person's whitelist-status using the value of {@param isWhitelisted}.
+     */
+    @Override
+    public void setIsWhitelisted(boolean isWhitelisted) {
+        this.isWhitelisted = isWhitelisted;
+    }
     //@@author
     /**
      * Sets date repaid of a person in the given {@code dateRepaid}.
@@ -285,6 +308,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public DateRepaid getDateRepaid() {
         return dateRepaid.get();
+    }
+
+    /**
+     * Sets date of last accrued date.
+     * @param lastAccruedDate must not be null.
+     */
+    public void setLastAccruedDate(Date lastAccruedDate) {
+        requireNonNull(lastAccruedDate);
+        this.lastAccruedDate = lastAccruedDate;
+    }
+
+    @Override
+    public Date getLastAccruedDate() {
+        return lastAccruedDate;
     }
 
     /**
@@ -313,6 +350,36 @@ public class Person implements ReadOnlyPerson {
     @Override
     public boolean isSameCluster(ReadOnlyPerson other) {
         return other.getCluster().equals(this.getCluster());
+    }
+
+    /**
+     * Calculates increase in debt based on interest rate and amount of months
+     */
+    @Override
+    public String calcAccruedAmount(int differenceInMonths) {
+        this.lastAccruedDate = new Date(); // update last accrued date
+        double principal = this.getDebt().toNumber();
+        double interestRate = (double) Integer.parseInt(this.getInterest().toString()) / 100;
+        double accruedInterest = principal * Math.pow((1 + interestRate), differenceInMonths) - principal;
+        return String.format("%.2f", accruedInterest);
+    }
+
+    /**
+     * Compares date of last accrued against current date.
+     * @return number of months the current date is ahead of last accrued date. Returns 0 if
+     * there is no need to increment debt.
+     */
+    @Override
+    public int checkUpdateDebt(Date currentDate) {
+        Calendar current = Calendar.getInstance();
+        current.setTime(currentDate);
+        Calendar lastAccrued = Calendar.getInstance();
+        lastAccrued.setTime(lastAccruedDate);
+        if (lastAccruedDate.before(currentDate) && (current.get(Calendar.MONTH) != lastAccrued.get(Calendar.MONTH))) {
+            return DateUtil.getNumberOfMonthBetweenDates(currentDate, lastAccruedDate);
+        } else {
+            return 0;
+        }
     }
 
     @Override

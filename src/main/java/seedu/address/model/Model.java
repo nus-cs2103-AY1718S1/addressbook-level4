@@ -21,7 +21,11 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_WHITELISTED_PERSONS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -38,14 +42,20 @@ public interface Model {
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
-    /** Deletes the given person from blacklist. */
-    void removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+    /** Deletes the given person from blacklist and returns the deleted person */
+    ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /** Removes the given person from whitelist and returns the updated person */
+    ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
-    /** Adds the given person into blacklist */
-    void addBlacklistedPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+    /** Adds the given person into blacklist and returns the added person*/
+    ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person);
+
+    /** Adds the given person into whitelist and returns the added person */
+    ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -63,6 +73,9 @@ public interface Model {
     /** Returns an unmodifiable view of the blacklisted filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList();
 
+    /** Returns an unmodifiable view of the whitelisted filtered person list */
+    ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
@@ -75,8 +88,25 @@ public interface Model {
      */
     void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /**
+     * Updates the filter of the filtered whitelisted person list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Retrieves the full list of persons nearby a particular person.
+     */
     ObservableList<ReadOnlyPerson> getNearbyPersons();
 
+    /**
+     * Retrieves the currently selected person.
+     */
+    ReadOnlyPerson getSelectedPerson();
+
+    /**
+     * Obtains and updates the list of persons that share the same cluster as {@param person}.
+     */
     void updateSelectedPerson(ReadOnlyPerson person);
 
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
@@ -87,6 +117,11 @@ public interface Model {
      * @throws IllegalValueException if username and password do not follow username and password requirements.
      */
     void authenticateUser(Username username, Password password) throws UserNotFoundException, IllegalValueException;
+
+    /**
+     * Logs user out
+     */
+    void logout();
 
     /**
      * Updates the list shown in Person List Panel to the requested list.
@@ -114,5 +149,8 @@ public interface Model {
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      * @throws IllegalValueException if {@code amount} that is repaid by the person is more than the debt owed.
      */
-    void deductDebtFromPerson(ReadOnlyPerson target, Debt amount) throws PersonNotFoundException, IllegalValueException;
+    ReadOnlyPerson deductDebtFromPerson(ReadOnlyPerson target, Debt amount)
+            throws PersonNotFoundException, IllegalValueException;
+
+    void updateDebtFromInterest(ReadOnlyPerson person, int differenceInMonths);
 }

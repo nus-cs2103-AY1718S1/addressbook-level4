@@ -960,9 +960,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |debt collector |sort my contacts by the amount owed |
 
-|`* * *` |debt collector |have a list of people who have cleared their debts |refer to their recorded info when they require my services again
-
-|`* * *` |debt collector |have link:#critical[critical] lists |quickly view which debtors I have to chase for repayment soon
+|`* * *` |debt collector |have a link:#whitelist[whitelist] |use that list for record keeping
 
 |`* * *` |debt collector |have a link:#blacklist[blacklist] |know who not to lend money to
 
@@ -1010,7 +1008,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |debt collector |create custom fields |store additional information for some contacts
 
-|`*` |debt collector |randomly generate a contact from the link:#cleared[cleared] list(clients who have paid their debts) |choose to chat up a random contact to talk them into getting a loan
+|`*` |debt collector |randomly generate a contact from the link:#whitelist[whitelist]|choose to chat up a random contact to talk them into getting a loan
 
 |`*` |debt collector |use a file upload feature |upload signed documents to a specific client record in the database
 
@@ -1198,11 +1196,11 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[[critical]]
-Critical
+[[whitelist]]
+Whitelist
 
 ....
-Requiring immediate attention of debt collectors
+A list of people who have cleared their debts
 ....
 
 [[blacklist]]
@@ -1238,13 +1236,6 @@ Log
 
 ....
 An official record of events
-....
-
-[[cleared]]
-Cleared
-
-....
-Refers to clients that have paid off all their debts (in this context)
 ....
 
 [appendix]

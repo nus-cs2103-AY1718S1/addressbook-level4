@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.Date;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -32,15 +33,17 @@ public interface ReadOnlyPerson {
     DateBorrow getDateBorrow();
     ObjectProperty<Deadline> deadlineProperty();
     Deadline getDeadline();
+
     ObjectProperty<DateRepaid> dateRepaidProperty();
     DateRepaid getDateRepaid();
+    Date getLastAccruedDate();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
     /**
      * Returns true if person is blacklisted.
      */
-    boolean getIsBlacklisted();
+    boolean isBlacklisted();
 
     /**
      * Accepts {@code boolean} as parameter.
@@ -50,9 +53,30 @@ public interface ReadOnlyPerson {
     void setIsBlacklisted(boolean isBlacklisted);
 
     /**
+     * Returns true if person is whitelisted.
+     */
+    boolean isWhitelisted();
+
+    /**
+     * {@param} is {@code boolean} value.
+     * Sets {@code boolean} variable as the value of {@param isWhitelisted}
+     */
+    void setIsWhitelisted(boolean isWhitelisted);
+
+    /**
      * Returns true if both are in same cluster.
      */
     boolean isSameCluster(ReadOnlyPerson other);
+
+    /**
+     * Calculates new debt of debtor based on current interest rate.
+     */
+    String calcAccruedAmount(int differenceInMonths);
+
+    /**
+     * Checks if person is due for an update on his/her debt.
+     */
+    int checkUpdateDebt(Date currentDate);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -66,7 +90,8 @@ public interface ReadOnlyPerson {
                 && other.getAddress().equals(this.getAddress()))
                 && other.getPostalCode().equals(this.getPostalCode())
                 && other.getCluster().equals(this.getCluster())
-                && (other.getIsBlacklisted() == (this.getIsBlacklisted()))
+                && (other.isBlacklisted() == (this.isBlacklisted()))
+                && (other.isWhitelisted() == (this.isWhitelisted()))
                 && other.getDebt().equals(this.getDebt())
                 && other.getInterest().equals(this.getInterest())
                 && other.getDateBorrow().equals(this.getDateBorrow())

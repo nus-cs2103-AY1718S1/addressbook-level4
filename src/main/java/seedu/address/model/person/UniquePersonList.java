@@ -50,6 +50,13 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Returns {@code ReadOnlyPerson} in list from given {@param index}.
+     */
+    public ReadOnlyPerson getReadOnlyPerson(int index) {
+        return mappedList.get(index);
+    }
+
+    /**
      * Adds a person to the list.
      *
      * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
@@ -123,6 +130,7 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    //@@author khooroko
     /**
      * Sorts the unique person list by the specified order.
      * @param order to sort the list by.
@@ -146,6 +154,7 @@ public class UniquePersonList implements Iterable<Person> {
         }
     }
 
+    //@@author
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

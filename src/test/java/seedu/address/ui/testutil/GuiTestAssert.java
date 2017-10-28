@@ -51,6 +51,7 @@ public class GuiTestAssert {
                 actualCard.getTags());
     }
 
+    //@@author khooroko
     /**
      * Asserts that {@code actualInfo} displays the details of {@code expectedPerson}.
      */
@@ -70,6 +71,7 @@ public class GuiTestAssert {
                 actualInfo.getTags());
     }
 
+    //@@author
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.

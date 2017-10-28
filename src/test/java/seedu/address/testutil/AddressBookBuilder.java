@@ -36,14 +36,18 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new blacklisted {@code Person} to the {@code AddressBook} that we are building.
      */
     public AddressBookBuilder withBlacklistedPerson(ReadOnlyPerson person) {
-        try {
-            addressBook.addBlacklistedPerson(person);
-        } catch (DuplicatePersonException dpe) {
-            throw new IllegalArgumentException("person is expected to be unique.");
-        }
+        addressBook.addBlacklistedPerson(person);
+        return this;
+    }
+
+    /**
+     * Adds a new whitelisted {@code Person} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withWhitelistedPerson(ReadOnlyPerson person) {
+        addressBook.addWhitelistedPerson(person);
         return this;
     }
 

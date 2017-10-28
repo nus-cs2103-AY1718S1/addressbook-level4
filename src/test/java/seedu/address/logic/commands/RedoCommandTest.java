@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -51,5 +52,58 @@ public class RedoCommandTest {
 
         // no command in redoStack
         assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void execute_redoCommandRemovesWhitelistedPersonAndUpdatesWhitelist_success()
+            throws Exception {
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.addWhitelistedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        expectedModel.setCurrentList("whitelist");
+        expectedModel.changeListTo("whitelist");
+
+        // Preparation done on actual model
+        RepaidCommand repaidCommand = new RepaidCommand(INDEX_FIRST_PERSON);
+        repaidCommand.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+
+        // Preparation done on actual model
+        model.setCurrentList("whitelist");
+        model.changeListTo("whitelist");
+
+        // Preparation done on actual model
+        UndoRedoStack undoRedoStack = prepareStack(
+                Collections.emptyList(), Arrays.asList(repaidCommand));
+        RedoCommand redoCommand = new RedoCommand();
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+
+        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void execute_redoCommandUnbansBlacklistedPersonAndUpdatesBlacklist_success()
+            throws Exception {
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.removeBlacklistedPerson(model
+                .getFilteredBlacklistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        expectedModel.setCurrentList("blacklist");
+        expectedModel.changeListTo("blacklist");
+
+        // Preparation done on actual model
+        UnbanCommand unbanCommand = new UnbanCommand(INDEX_FIRST_PERSON);
+        unbanCommand.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+
+        // Preparation done on actual model
+        model.setCurrentList("blacklist");
+        model.changeListTo("blacklist");
+
+        // Preparation done on actual model
+        UndoRedoStack undoRedoStack = prepareStack(
+                Collections.emptyList(), Arrays.asList(unbanCommand));
+        RedoCommand redoCommand = new RedoCommand();
+        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+
+        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
