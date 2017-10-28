@@ -16,27 +16,29 @@ import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
- * Marks task(s) identified using it's last displayed index in the task listing.
+ * Unmarks task(s) identified using it's last displayed indices in the task listing.
  */
-public class MarkTaskCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "mark";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the identified task(s) as done "
+public class UnmarkTaskCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "unmark";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unmarks the identified task(s) from done "
             + "by the index number used in the last task listing.\n"
             + "Parameters: INDEX START (must be a positive integer) ~ INDEX END(must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1" + " ~" + " 3";
 
-    public static final String MESSAGE_MARK_TASK_SUCCESS = "Marked Task(s): %1$s";
+    public static final String MESSAGE_UNMARK_TASK_SUCCESS = "Unmarked Task(s): %1$s";
     private static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
 
     private final List<Index> targetIndices = new ArrayList<>();
-    private ArrayList<ReadOnlyTask> tasksToMark;
+    private ArrayList<ReadOnlyTask> tasksToUnmark;
 
-    public MarkTaskCommand(Index targetIndex) {
+    public UnmarkTaskCommand(Index targetIndex) {
         this.targetIndices.add(targetIndex);
     }
 
-    public MarkTaskCommand(List<Index> indices) {
+    public UnmarkTaskCommand(List<Index> indices) {
         targetIndices.addAll(indices);
     }
 
@@ -44,7 +46,7 @@ public class MarkTaskCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
 
-        List<ReadOnlyTask> tasksToMark = new ArrayList<>();
+        List<ReadOnlyTask> tasksToUnmark = new ArrayList<>();
         int counter = 0;
         for (Index checkException : targetIndices) {
             List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
@@ -54,14 +56,14 @@ public class MarkTaskCommand extends UndoableCommand {
         }
 
         for (Index targetIndex : targetIndices) {
-            List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
-            ReadOnlyTask taskToMark = lastShownList.get(targetIndex.getZeroBased() - counter);
-            tasksToMark.add(taskToMark);
             counter++;
+            List<ReadOnlyTask> lastShownList = model.getFilteredTaskList();
+            ReadOnlyTask taskToUnmark = lastShownList.get(targetIndex.getZeroBased() - counter);
+            tasksToUnmark.add(taskToUnmark);
         }
 
         try {
-            model.markTasks(tasksToMark);
+            model.unmarkTasks(tasksToUnmark);
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (TaskNotFoundException tnfe) {
@@ -69,18 +71,18 @@ public class MarkTaskCommand extends UndoableCommand {
         }
 
         StringBuilder builder = new StringBuilder();
-        for (ReadOnlyTask toAppend : tasksToMark) {
+        for (ReadOnlyTask toAppend : tasksToUnmark) {
             builder.append("\n" + toAppend.toString());
         }
 
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, builder));
+        return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, builder));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof MarkTaskCommand // instanceof handles nulls
-                && this.targetIndices.equals(((MarkTaskCommand) other).targetIndices)); // state check
+                || (other instanceof UnmarkTaskCommand // instanceof handles nulls
+                && this.targetIndices.equals(((UnmarkTaskCommand) other).targetIndices)); // state check
     }
 }
