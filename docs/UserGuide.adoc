@@ -233,10 +233,10 @@ Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
 Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
 
 
-* `find t/friends` +
-Returns all persons with tag `friends`
-* `find t/friends lovers` +
-Returns all persons with tag `friends` and `lovers`
+* `find t/boss` +
+Returns all persons with tag `boss`
+* `find t/CEO boss` +
+Returns all persons with tag `CEO` and `boss`
 
 ==== Locating a person's address : `locate` [Since v1.2]
 
