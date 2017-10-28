@@ -67,6 +67,13 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
+     * Opens the Calendar window in the browser panel.
+     */
+    public void loadCalendar() {
+        loadPage("https://www.timeanddate.com/calendar/");
+    }
+
+    /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
@@ -77,13 +84,6 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
-    }
-
-    /**
-     * Opens the Calendar window.
-     */
-    private void loadCalendar() {
-        loadPage("https://www.timeanddate.com/calendar/");
     }
 
     @Subscribe
