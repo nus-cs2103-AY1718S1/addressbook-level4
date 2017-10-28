@@ -135,11 +135,6 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
 
-
-
-
-
-
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -206,12 +201,11 @@ public class MainWindow extends UiPart<Region> {
 
 
     /**
-     * Opens the Calendar window.
+     * Opens the Calendar window via accelerator.
      */
     @FXML
     public void handleCalendar() {
-        //browserPanel.loadCalendar();
-        browserPanel.loadPage("https://www.timeanddate.com/calendar/");
+        browserPanel.loadCalendar();
     }
 
 
