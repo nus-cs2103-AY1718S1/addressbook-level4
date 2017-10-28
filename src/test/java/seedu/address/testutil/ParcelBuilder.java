@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_PENDING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
+import static seedu.address.testutil.TypicalParcels.VALID_ADDRESS_ALICE;
 import static seedu.address.testutil.TypicalParcels.VALID_DELIVERY_DATE_ALICE;
 import static seedu.address.testutil.TypicalParcels.VALID_EMAIL_ALICE;
 import static seedu.address.testutil.TypicalParcels.VALID_NAME_ALICE;
@@ -32,7 +33,7 @@ public class ParcelBuilder {
     public static final String DEFAULT_NAME = VALID_NAME_ALICE;
     public static final String DEFAULT_PHONE = VALID_PHONE_ALICE;
     public static final String DEFAULT_EMAIL = VALID_EMAIL_ALICE;
-    public static final String DEFAULT_ADDRESS = VALID_TRACKING_NUMBER_ALICE;
+    public static final String DEFAULT_ADDRESS = VALID_ADDRESS_ALICE;
     public static final String DEFAULT_TAGS = VALID_TAG_FROZEN;
     public static final String DEFAULT_TRACKING_NUMBER = VALID_TRACKING_NUMBER_ALICE;
     public static final String DEFAULT_DELIVERY_DATE = VALID_DELIVERY_DATE_ALICE;

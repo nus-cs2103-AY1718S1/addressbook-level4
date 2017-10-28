@@ -193,7 +193,7 @@ public class TypicalParcels {
             .withDeliveryDate(VALID_DELIVERY_DATE_DANIEL).build();
     public static final ReadOnlyParcel ELLE = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_ELLE)
             .withName(VALID_NAME_ELLE).withPhone(VALID_PHONE_ELLE).withEmail(VALID_EMAIL_ELLE)
-            .withAddress(VALID_EMAIL_ELLE).withTags(VALID_TAG_HEAVY).withDeliveryDate(VALID_DELIVERY_DATE_ELLE).build();
+            .withAddress(VALID_ADDRESS_ELLE).withTags(VALID_TAG_HEAVY).withDeliveryDate(VALID_DELIVERY_DATE_ELLE).build();
     public static final ReadOnlyParcel FIONA = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_FIONA)
             .withName(VALID_NAME_FIONA).withPhone(VALID_PHONE_FIONA).withEmail(VALID_EMAIL_FIONA)
             .withAddress(VALID_ADDRESS_FIONA).withDeliveryDate(VALID_DELIVERY_DATE_FIONA)
