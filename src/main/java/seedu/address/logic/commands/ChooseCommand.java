@@ -34,7 +34,7 @@ public class ChooseCommand extends Command {
         EventsCenter.getInstance().post(new BrowserPanelSelectionChangedEvent(targetDisplay));
          */
 
-        if(targetDisplay.equals("meeting")) {
+        if (targetDisplay.equals("meeting")) {
             EventsCenter.getInstance().post(new ShowMeetingEvent());
         } else {
             EventsCenter.getInstance().post(new ShowBrowserEvent());

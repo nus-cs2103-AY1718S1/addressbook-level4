@@ -33,8 +33,6 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Meeting;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.ReadOnlyMeetingList;
 import seedu.address.model.person.InternalId;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
