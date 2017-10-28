@@ -28,15 +28,9 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
 
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <!--Label fx:id="homeNumber" styleClass="cell_small_label" text="\$homeNumber" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" /-->
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <!--Label fx:id="schEmail" styleClass="cell_small_label" text="\$schEmail"/>
-      <Label fx:id="website" styleClass="cell_small_label" text="\$website" />
-
-      <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" /-->
       <FlowPane fx:id="tags" />
+      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
     </VBox>
 
   </GridPane>
