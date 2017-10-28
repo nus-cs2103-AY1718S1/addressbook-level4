@@ -1,13 +1,14 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.RemarkChangedEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
-import seedu.address.model.module.exceptions.DuplicateLessonException;
 import seedu.address.model.module.exceptions.DuplicateRemarkException;
 
 import java.util.List;
@@ -65,6 +66,7 @@ public class RemarkCommand extends UndoableCommand {
             } catch (IllegalValueException e) {
                 throw new CommandException(e.getMessage());
             }
+            EventsCenter.getInstance().post(new RemarkChangedEvent());
             return new CommandResult(String.format(MESSAGE_REMARK_MODULE_SUCCESS, moduleToRemark.getCode()));
         } else {
             throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);

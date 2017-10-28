@@ -152,4 +152,7 @@ public interface Model {
     /** Get the current viewing panel attribute **/
     String getCurrentViewingAttribute();
 
+    /** Returns an unmodifiable view of the list of remarks */
+    ObservableList<Remark> getRemarkList();
+
 }

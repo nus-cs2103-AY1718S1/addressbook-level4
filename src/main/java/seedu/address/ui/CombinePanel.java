@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -29,10 +28,12 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.RemarkChangedEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 
 /**
  * The UI component that is responsible for combining the web browser panel and the timetable panel.
@@ -300,37 +301,31 @@ public class CombinePanel extends UiPart<Region> {
 
     /***************** Sticky Note *****************/
 
+    @Subscribe
+    private void handleRemarkChangedEvent(RemarkChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        stickyNotesInit();
+    }
+
     /**
      * This method will initilize the data for sticky notes screen
      */
     public void noteDataInit() {
-        String letters = " ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        ObservableList<Remark> remarks = logic.getRemarkList();
+        int size = remarks.size();
+        int count = 0;
+
         noteData = new String[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-               if (i == 1 && j == 2){
-                   return;
-               }
-                Random rdm = new Random();
-                int length = 0 + (int) (Math.random() * 50);
-                noteData[i][j] = generateString(rdm, letters, length);
+                if (count >= size) {
+                    continue;
+                }
+                Remark remark = remarks.get(count);
+                noteData[i][j] = remark.moduleCode.fullCodeName + " : " + remark.value;
+                count++;
             }
         }
-    }
-
-    /**
-     * This method will generate a random String
-     * @param rng
-     * @param characters
-     * @param length
-     * @return
-     */
-    public static String generateString(Random rng, String characters, int length) {
-        char[] text = new char[length];
-        for (int i = 0; i < length; i++) {
-            text[i] = characters.charAt(rng.nextInt(characters.length()));
-        }
-        return new String(text);
     }
 
     /**

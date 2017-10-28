@@ -29,6 +29,7 @@ import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 
 /**
  * The main LogicManager of the app.
@@ -68,6 +69,11 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
+    public ObservableList<Remark> getRemarkList() {
+        return model.getRemarkList();
+    }
+
+    @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }
@@ -94,4 +100,5 @@ public class LogicManager extends ComponentManager implements Logic {
         keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "#f94d00");
         return keywordColorMap;
     }
+
 }

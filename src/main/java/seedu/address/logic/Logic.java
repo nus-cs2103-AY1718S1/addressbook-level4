@@ -7,6 +7,7 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 
 
 /**
@@ -33,4 +34,7 @@ public interface Logic {
      * @return
      */
     HashMap<String, String> getCommandKeywordColorMap();
+
+    /** Returns an unmodifiable view of the list of remarks */
+    ObservableList<Remark> getRemarkList();
 }

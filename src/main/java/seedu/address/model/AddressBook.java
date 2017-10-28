@@ -67,6 +67,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.lecturers.setLectuers(lecturers);
     }
 
+    public void setRemarks(Set<Remark> remarks) {
+        this.remarks.setRemarks(remarks);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -79,6 +83,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         setLecturers(new HashSet<>(newData.getLecturerList()));
+        setRemarks(new HashSet<>(newData.getRemarkList()));
         syncMasterLecturerListWith(lessons);
     }
 

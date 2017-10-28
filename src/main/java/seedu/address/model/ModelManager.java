@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.ListingUnit.LOCATION;
 import static seedu.address.model.ListingUnit.MODULE;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -62,7 +63,6 @@ public class ModelManager extends ComponentManager implements Model {
         bookedList = new ArrayList<BookedSlot>();
         initializeBookedSlot();
         currentViewingAttribute = "default";
-
     }
 
     public ModelManager() {
@@ -234,6 +234,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public String getCurrentViewingAttribute() {
         return this.currentViewingAttribute;
+    }
+
+    @Override
+    public ObservableList<Remark> getRemarkList() {
+        return FXCollections.unmodifiableObservableList(addressBook.getRemarkList());
     }
 
     //=========== Filtered Module List Accessors =============================================================
