@@ -87,6 +87,12 @@ Examples:
 * `multiple ./data/personsToAdd.txt`
 * `multiple ./data/newStudentsToAdd.txt`
 
+image::MultipleCommand/TypeMultipleCommand.png[width="800]
+
+The message display box will display successful persons that are added.
+
+image::MultipleCommand/MultipleCommandSuccess.png[width="800]
+
 Person format in `.txt` file: `n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/AVATAR_FILE_PATH [t/TAG]...`
 
 [TIP]
@@ -99,6 +105,12 @@ n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/joh
 n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 r/criminal +
 n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 r/pretty
 ****
+
+[TIP]
+Multiple command is an undoable/redoable command
+
+image::MultipleCommand/UndoCommandSuccessAfterMultiple.png[width="800]
+
 // end::multiple[]
 
 === Export: `export`
@@ -154,6 +166,22 @@ e.g. `r/friends family` will return persons with tags that match both `friends` 
 * When finding email, any part of the email will be matched e.g. `mail` will match `@gmail.com` and `@hotmail.com`
 ****
 
+Searching for contacts with `friends` tag with the command `find r/friends`.
+
+image::FindCommand/TypeFindCommandOne.png[width="800"]
+
+The result of `find r/friends` will show all contacts with `friends` tag.
+
+image::FindCommand/FindCommandSuccessListOne.png[width="800"]
+
+Searching for contacts with `colleagues` and `friends` tags with the command `find r/colleagues friends`.
+
+image::FindCommand/TypeFindCommandTwo.png[width="800"]
+
+The result of `find r/colleagues friends` will show all contacts have both `colleagues` and `friends` tags.
+
+image::FindCommand/FindCommandSuccessTwo.png[width="800"]
+
 Examples:
 
 * `find n/John` +
@@ -169,6 +197,10 @@ Returns any person having names `Betsy`, `Tim`, or `John` or any person with `fr
 * `find n/Betsy Tim John r/friends e/@gmail.com` +
 Returns any person having names `Betsy`, `Tim`, or `John`, any person with `friends` tag
 and any person whose email contain `@gmail.com`
+
+[NOTE]
+Find command currently support finding of name, email and tags.
+
 // end::find[]
 
 === Deleting a person : `delete`
@@ -349,6 +381,17 @@ Examples:
 
 * `merge ./data/newFile.xml`
 * `merge ./data/otherClass.xml`
+
+image::MergeCommand/TypeMergeCommand.png[width="800"]
+
+Unique persons that are successfully merge into the address book will appear in the person card list.
+
+image::MergeCommand/MergeCommandSuccess.png[width="800"]
+
+[TIP]
+Merge command is an undoable/redoable command
+
+image::MergeCommand/UndoCommandSuccessAfterMerge.png[width="800"]
 
 // end::merge[]
 === Clearing all entries : `clear`
