@@ -1,14 +1,15 @@
 package guitests;
 
-import guitests.guihandles.CalendarWindowHandle;
-import guitests.guihandles.EmailWindowHandle;
+import static org.junit.Assert.assertFalse;
+
 import org.junit.Test;
+
+import guitests.guihandles.EmailWindowHandle;
 import seedu.address.logic.commands.CalendarCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EmailCommand;
 
 
-import static org.junit.Assert.assertFalse;
 
 
 public class EmailWindowTest extends AddressBookGuiTest {
