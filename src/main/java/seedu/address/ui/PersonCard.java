@@ -108,6 +108,13 @@ public class PersonCard extends UiPart<Region> {
     }
 
     /**
+     * To clear colors inside private ArrayList availableColorsLeft for testing
+     */
+    public ArrayList<String> changeAvailableColorsLeft(ArrayList<String> changeListOfColor) {
+        return this.availableColorsLeft = changeListOfColor;
+    }
+
+    /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
      */
