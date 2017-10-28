@@ -2,7 +2,9 @@
 <addressbook>
     <persons>
         <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
+        <handphone isPrivate="false">94822424</handphone>
+        <homePhone isPrivate="false">61111111</homePhone>
+        <officePhone isPrivate="false">60000001</officePhone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <postalCode isPrivate="false">004004</postalCode>
@@ -12,7 +14,9 @@
     </persons>
     <persons>
         <name>Ruth Mueller</name>
-        <phone isPrivate="false">87249245</phone>
+        <handphone isPrivate="false">94822324</handphone>
+        <homePhone isPrivate="false">61111211</homePhone>
+        <officePhone isPrivate="false">60002001</officePhone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
         <postalCode isPrivate="false">081081</postalCode>
@@ -22,7 +26,9 @@
     </persons>
     <persons>
         <name>Heinz Kurz</name>
-        <phone isPrivate="false">95352563</phone>
+        <handphone isPrivate="false">94822214</handphone>
+        <homePhone isPrivate="false">61333211</homePhone>
+        <officePhone isPrivate="false">60332001</officePhone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
         <postalCode isPrivate="false">055055</postalCode>
@@ -32,7 +38,9 @@
     </persons>
     <persons>
         <name>Cornelia Meier</name>
-        <phone isPrivate="false">87652533</phone>
+        <handphone isPrivate="false">84822244</handphone>
+        <homePhone isPrivate="false">61333441</homePhone>
+        <officePhone isPrivate="false">60334041</officePhone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
         <postalCode isPrivate="false">010010</postalCode>
@@ -42,7 +50,9 @@
     </persons>
     <persons>
         <name>Werner Meyer</name>
-        <phone isPrivate="false">9482224</phone>
+        <handphone isPrivate="false">97722244</handphone>
+        <homePhone isPrivate="false">61633541</homePhone>
+        <officePhone isPrivate="false">60334055</officePhone>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
         <postalCode isPrivate="false">673673</postalCode>
@@ -52,7 +62,9 @@
     </persons>
     <persons>
         <name>Lydia Kunz</name>
-        <phone isPrivate="false">9482427</phone>
+        <handphone isPrivate="false">97755664</handphone>
+        <homePhone isPrivate="false">61666641</homePhone>
+        <officePhone isPrivate="false">60333655</officePhone>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
         <postalCode isPrivate="false">777777</postalCode>
@@ -62,7 +74,9 @@
     </persons>
     <persons>
         <name>Anna Best</name>
-        <phone isPrivate="false">9482442</phone>
+        <handphone isPrivate="false">97225664</handphone>
+        <homePhone isPrivate="false">61736641</homePhone>
+        <officePhone isPrivate="false">60330755</officePhone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
         <postalCode isPrivate="false">004004</postalCode>
@@ -72,7 +86,9 @@
     </persons>
     <persons>
         <name>Stefan Meier</name>
-        <phone isPrivate="false">8482424</phone>
+        <handphone isPrivate="false">97222224</handphone>
+        <homePhone isPrivate="false">61888841</homePhone>
+        <officePhone isPrivate="false">60300855</officePhone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
         <postalCode isPrivate="false">730073</postalCode>
@@ -82,7 +98,9 @@
     </persons>
     <persons>
         <name>Martin Mueller</name>
-        <phone isPrivate="false">8482131</phone>
+        <handphone isPrivate="false">97212344</handphone>
+        <homePhone isPrivate="false">65328841</homePhone>
+        <officePhone isPrivate="false">60323355</officePhone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
         <postalCode isPrivate="false">789008</postalCode>
