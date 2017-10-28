@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -37,6 +38,9 @@ public interface Model {
     void addPersons(Collection<ReadOnlyPerson> persons);
 
     //@@author keithsoc
+    /** Sorts the persons in the address book based on the input {@code comparator} */
+    void sortPersons(Comparator<ReadOnlyPerson> comparator);
+
     /** Favorites or unfavorites the given person */
     void toggleFavoritePerson(ReadOnlyPerson target, String type)
             throws DuplicatePersonException, PersonNotFoundException;
@@ -62,5 +66,4 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
-
 }
