@@ -28,9 +28,12 @@ import seedu.address.model.module.Code;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.RemarkNotFoundException;
 import seedu.address.testutil.LessonBuilder;
 
 public class AddCommandTest {
@@ -206,6 +209,26 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredRemarkList(Predicate<Remark> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addRemark(Remark r) throws DuplicateRemarkException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteRemark(Remark target) throws RemarkNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateRemark(Remark target, Remark editedRemark) throws DuplicateRemarkException, RemarkNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void handleListingUnit() {
             fail("This method should not be called.");
         }
@@ -232,6 +255,11 @@ public class AddCommandTest {
 
         @Override
         public String getCurrentViewingAttribute() {
+            return null;
+        }
+
+        @Override
+        public ObservableList<Remark> getFilteredRemarkList() {
             return null;
         }
     }

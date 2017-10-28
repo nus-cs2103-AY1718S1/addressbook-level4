@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 
 public class AddressBookTest {
 
@@ -77,10 +78,12 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyLesson> lessons = FXCollections.observableArrayList();
         private final ObservableList<Lecturer> lecturers = FXCollections.observableArrayList();
+        private final ObservableList<Remark> remarks = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<? extends ReadOnlyLesson> lessons, Collection<? extends Lecturer> lecturers) {
             this.lessons.setAll(lessons);
             this.lecturers.setAll(lecturers);
+            this.remarks.setAll(remarks);
         }
 
         @Override
@@ -91,6 +94,11 @@ public class AddressBookTest {
         @Override
         public ObservableList<Lecturer> getLecturerList() {
             return lecturers;
+        }
+
+        @Override
+        public ObservableList<Remark> getRemarkList() {
+            return remarks;
         }
     }
 
