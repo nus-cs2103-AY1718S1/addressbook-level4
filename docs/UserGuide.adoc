@@ -25,29 +25,28 @@ By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin 
 
 === Welcome to ConTag!
 
-Contag is an efficient and feature-packed address book desktop application custom-built for PC, capable of tackling even the most demanding business users and busiest frequent travellers.
+Contag is an efficient and feature-packed address book desktop application custom-built for PC, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.
 
 === The ConTag Help System
 
-Fret not, we are here to help you navigate this address book.
+Fret not, we are here to help you navigate the application with ease.
 Our help system is designed to progressively provide all necessary information from beginner to expert.
 
-We understand that accommodating user preferences are key to ensuring a pleasant, efficient experience for all.
-Apart from comprehensive help coverage in this user guide, you can also choose to get concentrated help on specific menu items with `help` in the command line of Contag or pressing the `F1` key.
+Apart from comprehensive help coverage in this user guide, you can also choose to get concentrated help on specific areas with `help` in the command line of Contag or pressing the `F1` key.
 
 === Features and Capabilities Overview
-The following list is an overview of some of the features which ConTag offers for you:
+Key features you can expect:
 
-* Saving a comprehensive set of attributes of a contact in the address book to make each contact more meaningful
+* Saving comprehensive details of contacts in the address book to make each contact more meaningful
 
 * Locating contact's address via the integrated Google Maps
 
-* Creating a new schedule or activity with a contact
+* Creating a new schedule/activity with a contact
 
-* Sending email to multiple emails simultaneously
+* Sending email to multiple contacts easily
 
 === Authors and Contributors
-The intial version of the user guide was written by Team SE-EDU.
+The initial version of the user guide was written by Team SE-EDU.
 The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.
 
 == Getting Started
@@ -55,11 +54,10 @@ The current releases for ConTag are currently being orchestrated by a team of fo
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8 and below.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to your home folder of choice.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::UI_Map.PNG[width="790"]
@@ -69,7 +67,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/block 123, john street, #01-01, Singapore 407989` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John p/987654 e/john@e.com a/Blk 1, John St, #01-01, S407989` : +
+adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -77,8 +76,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Features
 
-[.lead]
- Command Format
+=== Command Format
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in *square brackets* are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -93,7 +91,9 @@ _e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend
 [TIP]
 Once you have familiarized yourself with the application, try typing a command's alias in place of the full command keyword to save more time!
 
-=== Viewing help : `help`
+=== Quick Help
+
+==== Viewing help : `help`
 
 => Alias: `h` <=
 
@@ -104,7 +104,7 @@ Format: `help [COMMAND_IDENTIFIER]`
 A command identifier includes all existing commands and their aliases.
 
 [NOTE]
-You need to close the all help windows before executing `help [COMMAND_IDENTIFIER]`.
+Close all help windows before executing `help [COMMAND_IDENTIFIER]`.
 
 Examples:
 
@@ -112,7 +112,9 @@ Examples:
 * `help add` (using command word)
 * `help a` (using alias)
 
-=== Adding a person: `add`
+=== Modifying contacts
+
+==== Adding a person: `add`
 
 => Alias: `a` <=
 
@@ -131,14 +133,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/1234567 t/criminal`
 
-=== Listing all persons : `list`
-
-=> Alias: `l` <=
-
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
+==== Editing a person : `edit`
 
 => Alias: `e` <=
 
@@ -163,7 +158,39 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Finding persons by any field : `find` [Since v1.2]
+==== Deleting person(s) : `delete`
+
+=> Alias: `d` <=
+
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX [UNIQUE INDEX]...`
+
+****
+* Deletes the people at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
+****
+
+Examples:
+
+* `list` +
+`delete 1 2` +
+Deletes the 1st and 2nd person in the address book.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+
+==== Clearing all entries : `clear`
+
+=> Alias: `c` <=
+
+Clears all entries from the address book. +
+Format: `clear`
+
+=== Key features
+
+==== Finding persons by any field : `find` [Since v1.2]
 
 => Alias: `f` <=
 
@@ -211,30 +238,7 @@ Returns all persons with tag `friends`
 * `find t/friends lovers` +
 Returns all persons with tag `friends` and `lovers`
 
-=== Deleting person(s) : `delete`
-
-=> Alias: `d` <=
-
-Deletes the specified person(s) from the address book. +
-Format: `delete INDEX [UNIQUE INDEX]...`
-
-****
-* Deletes the people at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-* If there is more than one index, the indices indicated must be different from each other.
-****
-
-Examples:
-
-* `list` +
-`delete 1 2` +
-Deletes the 1st and 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Locating a person's address : `locate` [Since v1.2]
+==== Locating a person's address : `locate` [Since v1.2]
 
 => Alias: `lc` <=
 
@@ -256,7 +260,7 @@ Locates the 2nd person's address in the address book.
 `locate 1` +
 Locates the 1st person's address in the results of the `find` command.
 
-=== Scheduling an activity: `schedule` [Since v1.3]
+==== Scheduling an activity: `schedule` [Since v1.3]
 
 => Alias: `sc` <=
 
@@ -276,7 +280,7 @@ Associates the specified schedule with the 1st and 3rd persons in the address bo
 `schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
 
-=== Getting email addresses : `copy` [Since v1.3]
+==== Getting email addresses : `copy` [Since v1.3]
 
 => Alias: `y` <=
 
@@ -297,7 +301,7 @@ Outputs the 1st person's email address in console: `johndoe@example.com`
 * `copy 1 4 5` +
 Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
 
-=== Opening calendar : `calendar` [Since v1.3]
+==== Opening calendar : `calendar` [Since v1.3]
 
 => Alias: `cl` <=
 
@@ -311,8 +315,17 @@ Opens up calendar browser in the address book. +
 * `cl` (using alias) +
 Opens up calendar browser in the address book.
 
+=== Other navigation commands
 
-=== Listing entered commands : `history`
+==== Listing all persons : `list`
+
+=> Alias: `l` <=
+
+Shows a list of all persons in the address book. +
+Format: `list`
+
+
+==== Listing entered commands : `history`
 
 => Alias: `his` <=
 
@@ -325,7 +338,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
 => Alias: `u` <=
 
@@ -353,7 +366,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
 => Alias: `r` <=
 
@@ -378,26 +391,19 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
-
-=> Alias: `c` <=
-
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
+==== Exiting the program : `exit`
 
 => Alias: `q` <=
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+=== Saving and transferring data
 
-Address book data is saved in the hard disk automatically after any command that modifies data. +
+Address book data is *saved in the hard disk automatically* after any command that modifies data. +
 There is no need to save manually.
 
-To transfer data to another Computer, install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+To *transfer data* to another Computer, install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
 
