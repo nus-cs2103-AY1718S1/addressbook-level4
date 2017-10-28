@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -27,7 +25,9 @@ public class Name {
      * @throws IllegalValueException if given name string is invalid.
      */
     public Name(String name) throws IllegalValueException {
-        if (name == null) throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+        if (name == null) {
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+        }
         String trimmedName = name.trim();
         if (!isValidName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
