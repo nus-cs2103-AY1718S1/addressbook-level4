@@ -6,9 +6,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEBT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDPHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OFFICE_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -37,8 +39,9 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_POSTAL_CODE, PREFIX_DEBT, PREFIX_INTEREST, PREFIX_DEADLINE, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_HANDPHONE, PREFIX_HOME_PHONE, PREFIX_OFFICE_PHONE,
+                        PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_POSTAL_CODE, PREFIX_DEBT, PREFIX_INTEREST, PREFIX_DEADLINE,
+                        PREFIX_TAG);
 
         Index index;
 
@@ -55,7 +58,12 @@ public class EditCommandParser implements Parser<EditCommand> {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
+            ParserUtil.parseHandphone(argMultimap.getValue(PREFIX_HANDPHONE))
+                    .ifPresent(editPersonDescriptor::setHandphone);
+            ParserUtil.parseHomePhone(argMultimap.getValue(PREFIX_HOME_PHONE))
+                    .ifPresent(editPersonDescriptor::setHomePhone);
+            ParserUtil.parseOfficePhone(argMultimap.getValue(PREFIX_OFFICE_PHONE))
+                    .ifPresent(editPersonDescriptor::setOfficePhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             ParserUtil.parsePostalCode(argMultimap.getValue(PREFIX_POSTAL_CODE))

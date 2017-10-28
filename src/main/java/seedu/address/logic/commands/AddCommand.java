@@ -5,9 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEBT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDPHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OFFICE_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -27,23 +29,27 @@ public class AddCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
+            + PREFIX_HANDPHONE + "HANDPHONE "
+            + PREFIX_HOME_PHONE + "HOME PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_POSTAL_CODE + "POSTAL CODE"
             + PREFIX_DEBT + "DEBT "
-            + PREFIX_INTEREST + "INTEREST "
-            + PREFIX_DEADLINE + "DEADLINE "
+            + PREFIX_INTEREST + "INTEREST (optional) "
+            + PREFIX_DEADLINE + "DEADLINE (optional) "
+            + PREFIX_OFFICE_PHONE + "OFFICE PHONE (optional) "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
+            + PREFIX_HANDPHONE + "98765432 "
+            + PREFIX_HOME_PHONE + "67776747 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_POSTAL_CODE + "123311 "
             + PREFIX_DEBT + "10000 "
             + PREFIX_INTEREST + "2 "
             + PREFIX_DEADLINE + "11-06-2018 "
+            + PREFIX_OFFICE_PHONE + "61112111 "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
