@@ -11,7 +11,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Occupation {
 
     public static final String MESSAGE_OCCUPATION_CONSTRAINTS =
-            "Person occupation should be 2 alphanumeric strings separated by ','";
+            "Person occupation should be 2 alphanumeric strings separated by ','" +
+                    " in the form of [COMPANY NAME] , [JOB TITLE]";
     public static final String OCCUPATION_VALIDATION_REGEX = "[\\w\\s]+\\,\\s[\\w\\s]+";
 
     public final String value;
