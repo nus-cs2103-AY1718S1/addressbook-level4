@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 public class WebsiteTest {
 
     @Test
@@ -31,5 +33,14 @@ public class WebsiteTest {
         assertTrue(Website.isValidWebsite("https://www.google.net"));
         assertTrue(Website.isValidWebsite("https://www.linkedin.com"));
         assertTrue(Website.isValidWebsite("https://www.facebook.net"));
+    }
+
+    @Test
+    public void testSymmetricHashCode() throws IllegalValueException {
+        // equals and hashCode check name field value
+        Website websiteX = new Website("https://www.facebook.com/alex");
+        Website websiteY = new Website("https://www.facebook.com/alex");
+        assertTrue(websiteX.equals(websiteY) && websiteY.equals(websiteX));
+        assertTrue(websiteX.hashCode() == websiteY.hashCode());
     }
 }
