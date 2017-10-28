@@ -11,7 +11,6 @@ import org.graphstream.graph.implementations.SingleNode;
 import org.graphstream.ui.view.Viewer;
 
 import javafx.collections.ObservableList;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
