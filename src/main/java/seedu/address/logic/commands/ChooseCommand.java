@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.JumpToBrowserListRequestEvent;
+import seedu.address.commons.events.ui.ShowBrowserEvent;
+import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
@@ -31,7 +33,13 @@ public class ChooseCommand extends Command {
         /** Old code
         EventsCenter.getInstance().post(new BrowserPanelSelectionChangedEvent(targetDisplay));
          */
-        EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+
+        if(targetDisplay.equals("meeting")) {
+            EventsCenter.getInstance().post(new ShowMeetingEvent());
+        } else {
+            EventsCenter.getInstance().post(new ShowBrowserEvent());
+            EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+        }
         return new CommandResult(MESSAGE_SUCCESS + targetDisplay);
     }
 }

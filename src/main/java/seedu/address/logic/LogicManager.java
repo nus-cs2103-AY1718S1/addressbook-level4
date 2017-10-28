@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -30,8 +31,13 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Meeting;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyMeetingList;
+import seedu.address.model.person.InternalId;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * The main LogicManager of the app.
@@ -121,5 +127,24 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public ObservableList<Meeting> getMeetingList() {
+        return model.getMeetingList().getMeetingList();
+    }
+
+    @Override
+    public ArrayList<String> getMeetingNames(Meeting meeting) {
+        ArrayList<String> nameList = new ArrayList<>();
+        try {
+            for (InternalId id : meeting.getListOfPersonsId()) {
+                nameList.add(model.getAddressBook().getPersonByInternalIndex(id.getId()).getName().fullName);
+            }
+            return nameList;
+        } catch (PersonNotFoundException e) {
+            logger.info(e.getMessage());
+            return nameList;
+        }
     }
 }
