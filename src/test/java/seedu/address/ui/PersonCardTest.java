@@ -68,6 +68,10 @@ public class PersonCardTest extends GuiUnitTest {
 
         //Check if tag color is removed from the arraylist of colors after being assigned to a tag
         assertFalse(personCard.getAvailableColorsLeft().contains(personCard.getAssignedTagColor()));
+
+        //Check that the arraylist of colors does not contain gray
+        assertTrue(!personCard.getAvailableColorsLeft().contains("GRAY"));
+
     }
 
     @Test
