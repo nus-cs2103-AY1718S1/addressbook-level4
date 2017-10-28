@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -17,8 +18,11 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.LessonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
-
+import seedu.address.model.module.Remark;
+import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
 
 
 /**

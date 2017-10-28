@@ -7,7 +7,10 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.module.Code;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
 
 /**
  * Selects a lesson identified using it's last displayed index from the address book.
@@ -36,6 +39,11 @@ public class SelectCommand extends Command {
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        }
+
+        if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.MODULE)) {
+            Code code = lastShownList.get(targetIndex.getZeroBased()).getCode();
+            model.updateFilteredRemarkList(new SelectedStickyNotePredicate(code));
         }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));

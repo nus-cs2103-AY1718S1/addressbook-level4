@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import java.util.HashMap;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -69,8 +70,13 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<Remark> getRemarkList() {
-        return model.getRemarkList();
+    public ObservableList<Remark> getFilteredRemarkList() {
+        return model.getFilteredRemarkList();
+    }
+
+    @Override
+    public void setRemarkPredicate(Predicate predicate) {
+        model.updateFilteredRemarkList(predicate);
     }
 
     @Override
@@ -82,22 +88,22 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public HashMap<String, String> getCommandKeywordColorMap() {
         HashMap<String, String> keywordColorMap = new HashMap<>();
-        keywordColorMap.put(AddCommand.COMMAND_WORD, "#662c91");
-        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "#ff2800");
-        keywordColorMap.put(EditCommand.COMMAND_WORD, "#208cd5");
-        keywordColorMap.put(ExitCommand.COMMAND_WORD, "#cf9904");
-        keywordColorMap.put(FindCommand.COMMAND_WORD, "#87255b");
-        keywordColorMap.put(HelpCommand.COMMAND_WORD, "#ad9672");
-        keywordColorMap.put(ListCommand.COMMAND_WORD, "#838469");
-        keywordColorMap.put(SelectCommand.COMMAND_WORD, "#49a0a0");
-        keywordColorMap.put(SortCommand.COMMAND_WORD, "#a0d6b4");
-        keywordColorMap.put(ClearCommand.COMMAND_WORD, "#746cc0");
-        keywordColorMap.put(UndoCommand.COMMAND_WORD, "#dbd7d2");
-        keywordColorMap.put(RedoCommand.COMMAND_WORD, "#0abab5");
-        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "#e89eb4");
-        keywordColorMap.put(HistoryCommand.COMMAND_WORD, "#ffcc00");
-        keywordColorMap.put(ViewCommand.COMMAND_WORD, "#6f7aea");
-        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "#f94d00");
+        keywordColorMap.put(AddCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(DeleteCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(EditCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ExitCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(FindCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(HelpCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ListCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(SelectCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(SortCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ClearCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(UndoCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(RedoCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(CustomiseCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(HistoryCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ViewCommand.COMMAND_WORD, "red");
+        keywordColorMap.put(ColorKeywordCommand.COMMAND_WORD, "red");
         return keywordColorMap;
     }
 

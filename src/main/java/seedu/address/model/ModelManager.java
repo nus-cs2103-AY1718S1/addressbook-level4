@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.model.module.BookedSlot;
@@ -42,6 +44,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyLesson> filteredLessons;
+    private final FilteredList<Remark> filteredRemarks;
     private final ArrayList<BookedSlot> bookedList;
     private ReadOnlyLesson currentViewingLesson;
     private String currentViewingAttribute;
@@ -57,6 +60,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredLessons = new FilteredList<>(this.addressBook.getLessonList());
+        filteredRemarks = new FilteredList<Remark>(this.addressBook.getRemarkList());
+        filteredRemarks.setPredicate(PREDICATE_SHOW_ALL_REMARKS);
         Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
         ListingUnit.setCurrentPredicate(predicate);
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
@@ -237,9 +242,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public ObservableList<Remark> getRemarkList() {
-        return FXCollections.unmodifiableObservableList(addressBook.getRemarkList());
+    public ObservableList<Remark> getFilteredRemarkList() {
+        return FXCollections.unmodifiableObservableList(filteredRemarks);
     }
+
+    @Override
+    public synchronized void deleteRemark(Remark target) throws RemarkNotFoundException {
+        addressBook.removeRemark(target);
+        indicateAddressBookChanged();
+    }
+
 
     //=========== Filtered Module List Accessors =============================================================
 
@@ -256,6 +268,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate) {
         requireNonNull(predicate);
         filteredLessons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredRemarkList(Predicate<Remark> predicate) {
+        requireNonNull(predicate);
+        filteredRemarks.setPredicate(predicate);
     }
 
     @Override

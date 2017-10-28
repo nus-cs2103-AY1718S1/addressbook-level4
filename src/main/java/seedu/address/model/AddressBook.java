@@ -216,6 +216,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws RemarkNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeRemark(Remark key) throws RemarkNotFoundException {
+        if (remarks.remove(key)) {
+            return true;
+        } else {
+            throw new RemarkNotFoundException();
+        }
+    }
+
+    /**
      * Sort the filtered lesson/module/location list regarding different listing unit.
      */
     public void sortLessons() {

@@ -10,6 +10,7 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.ReadOnlyLesson;
 import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.DuplicateRemarkException;
+import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
 import java.util.List;
 
@@ -31,7 +32,10 @@ public class RemarkCommand extends UndoableCommand {
             + MESSAGE_SAMPLE_REMARK_INFORMATION;
 
     public static final String MESSAGE_REMARK_MODULE_SUCCESS = "Remarked Module: %1$s";
+    public static final String MESSAGE_DELETE_REMARK_MODULE_SUCCESS = "Deleted remark: %1$s";
     public static final String MESSAGE_WRONG_LISTING_UNIT_FAILURE = "You can only remark a module";
+    public static final String DELETE_REMARK_KEYWORD = "-d";
+    public static final String CLEAR_REMARK_KEYWORD = "-c";
 
     private final String remarkContent;
     private final Index index;
@@ -49,6 +53,11 @@ public class RemarkCommand extends UndoableCommand {
     }
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
+
+        if (remarkContent.equals(DELETE_REMARK_KEYWORD)) {
+            return executeDeleteRemark();
+        }
+
         List<ReadOnlyLesson> lastShownList = model.getFilteredLessonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -71,5 +80,28 @@ public class RemarkCommand extends UndoableCommand {
         } else {
             throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
         }
+    }
+
+    public CommandResult executeDeleteRemark() throws CommandException {
+        List<Remark> lastShownList = model.getFilteredRemarkList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        }
+
+        Remark remarkToDelete = lastShownList.get(index.getZeroBased());
+
+        if (ListingUnit.getCurrentListingUnit().equals(MODULE)) {
+            try {
+                model.deleteRemark(remarkToDelete);
+            } catch (RemarkNotFoundException e) {
+                throw new CommandException(e.getMessage());
+            }
+            EventsCenter.getInstance().post(new RemarkChangedEvent());
+            return new CommandResult(String.format(MESSAGE_DELETE_REMARK_MODULE_SUCCESS, remarkToDelete));
+        } else {
+            throw new CommandException(MESSAGE_WRONG_LISTING_UNIT_FAILURE);
+        }
+
     }
 }

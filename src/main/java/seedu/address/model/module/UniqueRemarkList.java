@@ -104,6 +104,20 @@ public class UniqueRemarkList implements Iterable<Remark> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Removes the equivalent remark from the list.
+     *
+     * @throws RemarkNotFoundException if no such remark could be found in the list.
+     */
+    public boolean remove(Remark toRemove) throws RemarkNotFoundException {
+        requireNonNull(toRemove);
+        final boolean RemarkFoundAndDeleted = internalList.remove(toRemove);
+        if (!RemarkFoundAndDeleted) {
+            throw new RemarkNotFoundException();
+        }
+        return RemarkFoundAndDeleted;
+    }
+
     @Override
     public Iterator<Remark> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
