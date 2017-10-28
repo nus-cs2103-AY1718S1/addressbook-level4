@@ -43,16 +43,17 @@ public class PersonDetailPanelTest extends GuiUnitTest {
     /**
      * Asserts that {@code actualPerson} displays the details of {@code expectedPerson}.
      */
-    private void assertPanelDisplaysPerson(ReadOnlyPerson expectedPerson, PersonDetailPanelHandle actualPerson) {
+    private void assertPanelDisplaysPerson(ReadOnlyPerson expectedPerson, PersonDetailPanelHandle panel) {
         guiRobot.pauseForHuman();
 
-        assertEquals(expectedPerson.getName().toString(), actualPerson.getName());
-        assertEquals(PERSON_PHONE_ICON + expectedPerson.getPhone().toString(), actualPerson.getPhone());
-        assertEquals(PERSON_ADDRESS_ICON + expectedPerson.getAddress().toString(), actualPerson.getAddress());
-        assertEquals(PERSON_EMAIL_ICON + expectedPerson.getEmail().toString(), actualPerson.getEmail());
+        assertEquals(expectedPerson.getName().toString(), panel.getName());
+        assertEquals(PERSON_PHONE_ICON + expectedPerson.getPhone().toString(), panel.getPhone());
+        assertEquals(PERSON_ADDRESS_ICON + expectedPerson.getAddress().toString(), panel.getAddress());
+        assertEquals(PERSON_EMAIL_ICON + expectedPerson.getEmail().toString(), panel.getEmail());
+        assertEquals(expectedPerson.getRemark().toString(), panel.getRemark());
 
-        actualPerson.updateTags();
+        panel.updateTags();
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
-                actualPerson.getTags());
+                panel.getTags());
     }
 }
