@@ -30,10 +30,6 @@ public class ChooseCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        /** Old code
-        EventsCenter.getInstance().post(new BrowserPanelSelectionChangedEvent(targetDisplay));
-         */
-
         if (targetDisplay.equals("meeting")) {
             EventsCenter.getInstance().post(new ShowMeetingEvent());
         } else {
