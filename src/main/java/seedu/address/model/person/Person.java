@@ -210,7 +210,7 @@ public class Person implements ReadOnlyPerson {
     public String joinTagsToString() {
         Set<Tag> tags = getTags();
         StringBuilder sb = new StringBuilder();
-        for (Tag t : tags ) {
+        for (Tag t : tags) {
             sb.append(t.getStringTagName());
             sb.append(" ");
         }

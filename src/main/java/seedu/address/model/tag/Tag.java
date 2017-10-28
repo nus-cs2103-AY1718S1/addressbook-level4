@@ -77,6 +77,8 @@ public class Tag {
      * Returns the name of the tag in String
      * @return
      */
-    public String getStringTagName() { return tagName; }
+    public String getStringTagName() {
+        return tagName;
+    }
 
 }

@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.property.NameContainsKeywordsPredicate;
 import seedu.address.model.property.TagContainsKeywordsPredicate;
 
 /**
