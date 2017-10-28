@@ -2,15 +2,13 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
-/***
- * Indicate request to find a lesson
+/**
+ * An event indicates addressbook has changed.
  */
-
-public class FindLessonRequestEvent extends BaseEvent {
+public class RemarkChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
     }
-
 }

@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 
 
 /**
@@ -26,6 +27,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedLesson> lessons;
     @XmlElement
     private List<XmlAdaptedLecturer> lecturers;
+    @XmlElement
+    private List<XmlAdaptedRemark> remarks;
 
 
     /**
@@ -35,6 +38,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook() {
         lessons = new ArrayList<>();
         lecturers = new ArrayList<>();
+        remarks = new ArrayList<>();
     }
 
     /**
@@ -45,6 +49,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
 
         lessons.addAll(src.getLessonList().stream().map(XmlAdaptedLesson::new).collect(Collectors.toList()));
         lecturers.addAll(src.getLecturerList().stream().map(XmlAdaptedLecturer::new).collect(Collectors.toList()));
+        remarks.addAll(src.getRemarkList().stream().map(XmlAdaptedRemark::new).collect(Collectors.toList()));
     }
 
     @Override
@@ -73,6 +78,20 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(lecturers);
+    }
+
+    @Override
+    public ObservableList<Remark> getRemarkList() {
+        final ObservableList<Remark> remarks = this.remarks.stream().map(p -> {
+            try {
+                return p.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(remarks);
     }
 
 }
