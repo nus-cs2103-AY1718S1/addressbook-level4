@@ -72,9 +72,9 @@ public class AddCommandParserTest {
                 + WEBSITE_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple phones - last phone accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_AMY + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + WEBSITE_DESC_BOB  + TAG_DESC_FRIEND,
-                new AddCommand(expectedPerson));
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + OCCUPATION_DESC_BOB
+                + PHONE_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + WEBSITE_DESC_BOB
+                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // multiple emails - last email accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + OCCUPATION_DESC_BOB
@@ -157,7 +157,7 @@ public class AddCommandParserTest {
         // invalid occupation
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + INVALID_OCCUPATION_DESC
                 + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + WEBSITE_DESC_BOB + TAG_DESC_HUSBAND
-                + TAG_DESC_FRIEND, Name.MESSAGE_NAME_CONSTRAINTS);
+                + TAG_DESC_FRIEND, Occupation.MESSAGE_OCCUPATION_CONSTRAINTS);
 
         // invalid phone
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + OCCUPATION_DESC_BOB

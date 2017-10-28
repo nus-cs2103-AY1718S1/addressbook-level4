@@ -23,12 +23,16 @@ public class Occupation {
      * @throws IllegalValueException if given occupation string is invalid.
      */
     public Occupation(String occupation) throws IllegalValueException {
-        requireNonNull(occupation);
-        String trimmedOccupation = occupation.trim();
-        if (!isValidOccupation(trimmedOccupation)) {
-            throw new IllegalValueException(MESSAGE_OCCUPATION_CONSTRAINTS);
+        //requireNonNull(occupation);
+        if (occupation == null) {
+            this.value = "";
+        } else {
+            String trimmedOccupation = occupation.trim();
+            if (!isValidOccupation(trimmedOccupation)) {
+                throw new IllegalValueException(MESSAGE_OCCUPATION_CONSTRAINTS);
+            }
+            this.value = trimmedOccupation;
         }
-        this.value = trimmedOccupation;
     }
 
     /**
