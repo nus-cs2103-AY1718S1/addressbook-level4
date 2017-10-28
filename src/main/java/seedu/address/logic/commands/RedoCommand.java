@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.io.IOException;
+
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.logic.CommandHistory;

@@ -131,6 +131,7 @@ public class Person implements ReadOnlyPerson {
     public SchEmail getSchEmail() {
         return schEmail.get();
     }
+
     public void setWebsite(Website website) {
         this.website.set(requireNonNull(website));
     }

@@ -71,6 +71,20 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
+    @Test
+    public void execute_singleSubstring_personFound(){
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommand("ku el");
+        assertCommandSuccess(command,expectedMessage,Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    @Test
+    public void execute_singleCharacterSubstring_noPersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        FindCommand command = prepareCommand("k");
+        assertCommandSuccess(command,expectedMessage, Collections.emptyList());
+    }
+
     /**
      * Parses {@code userInput} into a {@code FindCommand}.
      */
