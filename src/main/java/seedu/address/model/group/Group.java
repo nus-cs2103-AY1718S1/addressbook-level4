@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Group {
 
     public static final String MESSAGE_GROUP_CONSTRAINTS =
-            "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Group names should only contain alphanumeric characters and spaces, and it should not be blank";
     /*
     * The first character of the group must not be a whitespace,
     * otherwise " " (a blank string) becomes a valid input.
@@ -38,7 +38,7 @@ public class Group {
      * Returns true if a given string is a valid group groupName.
      */
     public static boolean isValidGroupName(String test) {
-        return test.matches(GROUP_VALIDATION_REGEX);
+        return !test.equals("") && test.matches(GROUP_VALIDATION_REGEX);
     }
 
     @Override

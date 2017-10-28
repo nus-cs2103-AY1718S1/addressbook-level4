@@ -7,7 +7,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PICTURE_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PATH;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -18,10 +20,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.scene.control.TextFormatter;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AppointCommand;
-import seedu.address.logic.commands.ChangePictureCommand;
+import seedu.address.logic.commands.ChangePicCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -111,9 +112,11 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_changePicture() throws Exception {
-        ChangePictureCommand command = (ChangePictureCommand) parser.parseCommand(ChangePictureCommand.COMMAND_WORD);
-        assertTrue(command instanceof ChangePictureCommand);
+    public void parseCommand_changePic() throws Exception {
+        final String picturePath = VALID_PICTURE_PATH;
+        ChangePicCommand command = (ChangePicCommand) parser.parseCommand(ChangePicCommand.COMMAND_WORD + " "
+                    + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_PATH + " " + picturePath);
+        assertEquals(new ChangePicCommand(INDEX_FIRST_PERSON, picturePath), command);
     }
 
     @Test
