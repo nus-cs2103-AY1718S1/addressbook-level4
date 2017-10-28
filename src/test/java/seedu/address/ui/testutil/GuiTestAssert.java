@@ -5,10 +5,14 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.MeetingCardHandle;
+import guitests.guihandles.MeetingListPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -25,7 +29,6 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
-
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
@@ -36,6 +39,30 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+
+
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertMeetingCardEquals(MeetingCardHandle expectedCard, MeetingCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getNameMeeting(), actualCard.getNameMeeting());
+        assertEquals(expectedCard.getPlace(), actualCard.getPlace());
+        assertEquals(expectedCard.getPersonToMeet(), actualCard.getPersonToMeet());
+        assertEquals(expectedCard.getPhoneNum(), actualCard.getPhoneNum());
+        assertEquals(expectedCard.getDateTime(), actualCard.getDateTime());
+    }
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedMeeting}.
+     */
+    public static void assertCardDisplaysMeeting(ReadOnlyMeeting expectedMeeting, MeetingCardHandle actualCard) {
+        assertEquals(expectedMeeting.getName().fullName, actualCard.getNameMeeting());
+        assertEquals(expectedMeeting.getPersonPhone().phone, actualCard.getPhoneNum());
+        assertEquals(expectedMeeting.getPlace().value, actualCard.getPlace());
+        assertEquals(expectedMeeting.getDate().value, actualCard.getDateTime());
+        assertEquals(expectedMeeting.getPersonName().fullName, actualCard.getPersonToMeet());
     }
 
     /**
