@@ -43,10 +43,6 @@ public class CommandTestUtil {
     public static final String VALID_DELIVERY_DATE_BOB = "02-02-1990";
     public static final String VALID_DELIVERY_DATE_AMY_FULLSTOPS = "1.01.2001";
     public static final String VALID_DELIVERY_DATE_AMY_SLASHES = "01/1/2001";
-    public static final String VALID_STATUS_AMY = "deliVerIng"; // for case insenstivity
-    public static final String VALID_STATUS_BOB = "Completed"; // case insensitivity of Status
-    public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
     public static final String TRACKING_NUMBER_DESC_AMY = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_AMY;
     public static final String TRACKING_NUMBER_DESC_BOB = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_BOB;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -59,10 +55,25 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String DELIVERY_DATE_DESC_AMY = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_AMY;
     public static final String DELIVERY_DATE_DESC_BOB = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_BOB;
-    public static final String STATUS_DESC_AMY = " " + PREFIX_STATUS + VALID_STATUS_AMY;
-    public static final String STATUS_DESC_BOB = " " + PREFIX_STATUS + VALID_STATUS_BOB;
-    public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
-    public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+
+    public static final String VALID_STATUS_PENDING = "PENDING";
+    public static final String VALID_STATUS_DELIVERING = "DELIVERING";
+    public static final String VALID_STATUS_OVERDUE = "OVERDUE";
+    public static final String VALID_STATUS_COMPLETED = "COMPLETED";
+
+    public static final String STATUS_DESC_PENDING = " " + PREFIX_STATUS + VALID_STATUS_PENDING;
+    public static final String STATUS_DESC_DELIVERING = " " + PREFIX_STATUS + VALID_STATUS_DELIVERING;
+    public static final String STATUS_DESC_OVERDUE = " " + PREFIX_STATUS + VALID_STATUS_OVERDUE;
+    public static final String STATUS_DESC_COMPLETED = " " + PREFIX_STATUS + VALID_STATUS_COMPLETED;
+
+    public static final String VALID_TAG_FROZEN = "FROZEN";
+    public static final String VALID_TAG_FRAGILE = "FRAGILE";
+    public static final String VALID_TAG_FLAMMABLE = "FLAMMABLE";
+    public static final String VALID_TAG_HEAVY = "HEAVY";
+    public static final String TAG_DESC_FLAMMABLE = " " + PREFIX_TAG + VALID_TAG_FLAMMABLE;
+    public static final String TAG_DESC_FRAGILE = " " + PREFIX_TAG + VALID_TAG_FLAMMABLE;
+    public static final String TAG_DESC_FROZEN = " " + PREFIX_TAG + VALID_TAG_FROZEN;
+    public static final String TAG_DESC_HEAVY = " " + PREFIX_TAG + VALID_TAG_FLAMMABLE;
 
     public static final String INVALID_TRACKING_NUMBER_DESC = " " + PREFIX_TRACKING_NUMBER
             + "SS123456789RR"; // prefix and postfix are reversed
@@ -81,12 +92,12 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditParcelDescriptorBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
                 .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
+                .withTags(VALID_TAG_FLAMMABLE).build();
         DESC_BOB = new EditParcelDescriptorBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
                 .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_COMPLETED)
+                .withTags(VALID_TAG_FROZEN, VALID_TAG_FLAMMABLE).build();
     }
 
     /**
