@@ -8,7 +8,6 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.person.SortCommand;
 import seedu.address.model.Model;
 
-
 public class SortCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_SORT_COMMAND_FORMAT =
