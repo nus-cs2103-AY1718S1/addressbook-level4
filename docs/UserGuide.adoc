@@ -315,6 +315,20 @@ Opens up calendar browser in the address book. +
 * `cl` (using alias) +
 Opens up calendar browser in the address book.
 
+==== Opening calendar : `calendar` [Since v1.4]
+
+=> Alias: `em` <=
+
+Open a email browser that for sending of email. +
+Format: `email`
+
+Examples:
+
+Opens up email browser in the address book. +
+* `email` (using command word) +
+* `em` (using alias) +
+Opens up email browser in the address book.
+
 === Other navigation commands
 
 ==== Listing all persons : `list`
@@ -436,7 +450,9 @@ To *transfer data* to another Computer, install the app in the other computer an
 
 |link:#redoing-the-previously-undone-command-code-redo-code[Redo] |`r` |`redo` |
 
-|link:#opening-calendar-code-calendar-code-since-v1-3[Clear] |`cl` |`calendar` |
+|link:#opening-calendar-code-calendar-code-since-v1-3[Calendar] |`cl` |`calendar` |
+
+|link:#opening-email-code-email-code-since-v1-4[Email] |`em` |`email` |
 
 |link:#exiting-the-program-code-exit-code[Exit] |
 
