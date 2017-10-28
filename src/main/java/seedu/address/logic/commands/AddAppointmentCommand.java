@@ -27,7 +27,7 @@ public class AddAppointmentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appoint to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: " + PREFIX_NAME + "PERSON "
-            + PREFIX_DATE + "TIME"+ "\n"
+            + PREFIX_DATE + "TIME" + "\n"
             + "Example 1:" + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_DATE + "Next Monday 3pm";
