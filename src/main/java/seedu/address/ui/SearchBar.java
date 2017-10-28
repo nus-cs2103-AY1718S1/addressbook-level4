@@ -27,21 +27,6 @@ public class SearchBar extends UiPart<Region> {
     private Logic logic;
 
     @FXML
-    private CheckBox nameCheckBox;
-
-    @FXML
-    private CheckBox phoneCheckBox;
-
-    @FXML
-    private CheckBox emailCheckBox;
-
-    @FXML
-    private CheckBox addressCheckBox;
-
-    @FXML
-    private CheckBox tagsCheckBox;
-
-    @FXML
     private TextField nameField;
 
     @FXML
@@ -98,30 +83,38 @@ public class SearchBar extends UiPart<Region> {
 
     @FXML
     private void onSearchbarChanged() {
-        String commandString = "find ";
+        String commandString = "find_contain ";
 
-        if (nameCheckBox.isSelected() && !nameField.getText().equals("")) {
+        if (!nameField.getText().equals("")) {
             commandString += "n/" + nameField.getText() + " ";
         }
 
-        if (phoneCheckBox.isSelected() && !phoneField.getText().equals("")) {
+        if (!phoneField.getText().equals("")) {
             commandString += "p/" + phoneField.getText() + " ";
         }
 
-        if (emailCheckBox.isSelected() && !emailField.getText().equals("")) {
+        if (!emailField.getText().equals("")) {
             commandString += "e/" + emailField.getText() + " ";
         }
 
-        if (addressCheckBox.isSelected() && !addressField.getText().equals("")) {
+        if (!addressField.getText().equals("")) {
             commandString += "a/" + addressField.getText() + " ";
         }
 
-        if (tagsCheckBox.isSelected() && !tagsField.getText().equals("")) {
-            commandString += "t/" + tagsField.getText() + " ";
+        if (!tagsField.getText().equals("")) {
+            commandString += "r/" + tagsField.getText() + " ";
         }
 
-        if (commandString.equals("find ")) {
-            return;
+        if (commandString.equals("find_contain ")) {
+            try {
+                CommandResult commandResult = logic.execute("list");
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } catch (ParseException e) {
+                //wont happen
+            } catch (CommandException e) {
+                //wont happen
+            }
         } else {
             try {
                 CommandResult commandResult = logic.execute(commandString);
