@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -29,7 +27,7 @@ public class Birthday {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Birthday(String birthday) throws IllegalValueException {
-        if(birthday == null){
+        if (birthday == null) {
             this.value = BIRTHDAY_TEMPORARY;
         } else {
             String trimmedBirthday = birthday.trim();

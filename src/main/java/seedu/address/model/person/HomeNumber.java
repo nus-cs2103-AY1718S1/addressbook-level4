@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -24,7 +22,7 @@ public class HomeNumber {
      * @throws IllegalValueException if given home string is invalid.
      */
     public HomeNumber(String homeNumber) throws IllegalValueException {
-        if(homeNumber == null){
+        if (homeNumber == null) {
           this.value = HOME_NUMBER_TEMPORARY;
         } else {
             String trimmedHomeNumber = homeNumber.trim();

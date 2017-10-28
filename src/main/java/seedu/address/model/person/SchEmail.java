@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -23,7 +21,7 @@ public class SchEmail {
      * @throws IllegalValueException if given email address string is invalid.
      */
     public SchEmail(String schEmail) throws IllegalValueException {
-        if(schEmail == null){
+        if (schEmail == null) {
             this.value = SCH_EMAIL_TEMPORARY;
         } else {
             String trimmedSchEmail = schEmail.trim();
