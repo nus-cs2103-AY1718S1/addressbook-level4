@@ -8,9 +8,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
+import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.ModelManager;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.timeslot.Timeslot;
 
@@ -22,6 +25,8 @@ import seedu.address.model.event.timeslot.Timeslot;
  * @see Event#equals(Object)
  */
 public class EventList implements Iterable<Event> {
+
+    private static final Logger logger = LogsCenter.getLogger(EventList.class);
 
     private final ObservableTreeMap<Timeslot, Event> internalMap = new
             ObservableTreeMap<>();
@@ -78,6 +83,7 @@ public class EventList implements Iterable<Event> {
         final EventList replacement = new EventList();
         for (final ReadOnlyEvent event : events) {
             replacement.add(new Event(event));
+            logger.info("EventList ------- Added event " + event.getAsText());
         }
         setEvents(replacement);
     }
@@ -94,6 +100,7 @@ public class EventList implements Iterable<Event> {
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
         ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(mappedTreeMap.values()));
+        logger.info("EventList --------- Got EventList with " + internalMap.size() + " events inside");
         return FXCollections.unmodifiableObservableList(list);
     }
 

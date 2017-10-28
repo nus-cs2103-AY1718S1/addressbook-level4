@@ -183,7 +183,7 @@ public class PersonPanel extends UiPart<Region> {
     private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         for (ReadOnlyPerson dataPerson : event.data.getPersonList()) {
-            if (storedPerson.getName().equals(dataPerson.getName())) {
+            if (storedPerson != null && storedPerson.getName().equals(dataPerson.getName())) {
                 showPersonDetails(dataPerson);
                 storedPerson = dataPerson;
                 break;

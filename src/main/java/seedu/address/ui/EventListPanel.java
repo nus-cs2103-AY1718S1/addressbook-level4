@@ -17,9 +17,10 @@ import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 
+//@@author a0107442n
 /**
  * Panel containing the list of events.
- * //@@author yangshuang
+ *
  */
 public class EventListPanel extends UiPart<Region> {
     private static final String FXML = "EventListPanel.fxml";
