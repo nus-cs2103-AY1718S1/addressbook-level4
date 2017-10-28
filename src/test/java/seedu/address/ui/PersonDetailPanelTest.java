@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.PersonDetailPanelHandle;
-import seedu.address.commons.events.ui.ListClearedEvent;
+import seedu.address.commons.events.ui.ClearPersonDetailPanelRequestEvent;
 import seedu.address.commons.events.ui.PersonModifiedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -51,7 +51,7 @@ public class PersonDetailPanelTest extends GuiUnitTest {
         assertPanelDisplaysPerson(BOB, personDetailPanelHandle);
 
         // panel is empty when list is cleared
-        postNow(new ListClearedEvent());
+        postNow(new ClearPersonDetailPanelRequestEvent());
         assertPanelDisplaysNothing(personDetailPanelHandle);
     }
 

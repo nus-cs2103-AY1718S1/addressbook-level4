@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.ListClearedEvent;
+import seedu.address.commons.events.ui.ClearPersonDetailPanelRequestEvent;
 import seedu.address.commons.events.ui.PersonModifiedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -111,7 +111,7 @@ public class PersonDetailPanel extends UiPart<Region> {
      * Empties the panel when person list is cleared
      */
     @Subscribe
-    private void handlePersonListClearedEvent(ListClearedEvent event) {
+    private void handlePersonListClearedEvent(ClearPersonDetailPanelRequestEvent event) {
         showEmptyPanel();
     }
 }

@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ListClearedEvent;
+import seedu.address.commons.events.ui.ClearPersonDetailPanelRequestEvent;
 import seedu.address.model.Rolodex;
 
 /**
@@ -28,7 +28,7 @@ public class ClearCommand extends UndoableCommand {
         requireNonNull(model);
         model.resetData(new Rolodex());
 
-        EventsCenter.getInstance().post(new ListClearedEvent());
+        EventsCenter.getInstance().post(new ClearPersonDetailPanelRequestEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

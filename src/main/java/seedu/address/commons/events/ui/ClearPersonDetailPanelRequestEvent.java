@@ -3,9 +3,9 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates that the rolodex list is cleared
+ * Indicates a request to clear the person detail panel.
  */
-public class ListClearedEvent extends BaseEvent {
+public class ClearPersonDetailPanelRequestEvent extends BaseEvent {
 
     @Override
     public String toString() {
