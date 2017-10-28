@@ -32,23 +32,21 @@ public class ListObserver {
         }
     }
 
-    public void updateCurrentFilteredList(Predicate<ReadOnlyPerson> predicate) {
+    public int updateCurrentFilteredList(Predicate<ReadOnlyPerson> predicate) {
         String currentList = model.getCurrentList();
 
         switch (currentList) {
 
         case BlacklistCommand.COMMAND_WORD:
             model.changeListTo(BlacklistCommand.COMMAND_WORD);
-            model.updateFilteredBlacklistedPersonList(predicate);
-            break;
+            return model.updateFilteredBlacklistedPersonList(predicate);
 
         case WhitelistCommand.COMMAND_WORD:
             model.changeListTo(WhitelistCommand.COMMAND_WORD);
-            model.updateFilteredWhitelistedPersonList(predicate);
-            break;
+            return model.updateFilteredWhitelistedPersonList(predicate);
 
         default:
-            model.updateFilteredPersonList(predicate);
+            return model.updateFilteredPersonList(predicate);
         }
     }
 
