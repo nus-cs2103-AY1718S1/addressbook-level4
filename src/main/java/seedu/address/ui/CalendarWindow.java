@@ -1,24 +1,23 @@
 package seedu.address.ui;
 
-import com.calendarfx.model.Calendar;
-import com.calendarfx.model.CalendarEvent;
-import com.calendarfx.model.CalendarSource;
-import com.calendarfx.model.Entry;
-import com.calendarfx.model.Interval;
-import com.calendarfx.view.CalendarView;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.layout.Region;
-import seedu.address.model.person.ReadOnlyPerson;
-
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.List;
+
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.model.Interval;
+import com.calendarfx.view.CalendarView;
+
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
+
+import javafx.fxml.FXML;
+import javafx.scene.layout.Region;
+import seedu.address.model.person.ReadOnlyPerson;
 
 
 /**
@@ -50,11 +49,7 @@ public class CalendarWindow extends UiPart<Region> {
         CalendarSource calendarSource = new CalendarSource("Appointments");
 
         calendarSource.getCalendars().add(calendar);
-
-        
         calendarView.getCalendarSources().add(calendarSource);
-
-
         //Disabling views to make the calendar more simplistic
         calendarView.setShowAddCalendarButton(false);
         calendarView.setShowPageToolBarControls(false);
@@ -95,8 +90,8 @@ public class CalendarWindow extends UiPart<Region> {
     }
 
     public void setAppointments() {
-        for(ReadOnlyPerson person : personList) {
-            if(person.getAppointment().getDate() == null) {
+        for (ReadOnlyPerson person : personList) {
+            if (person.getAppointment().getDate() == null) {
                 continue;
             }
             LocalDateTime ldt = LocalDateTime.ofInstant(person.getAppointment().getDate().toInstant(),
