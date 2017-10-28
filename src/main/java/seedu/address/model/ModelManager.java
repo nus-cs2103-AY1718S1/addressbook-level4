@@ -256,11 +256,13 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addRemark(Remark r) throws DuplicateRemarkException {
         addressBook.addRemark(r);
+        indicateAddressBookChanged();
     }
 
     @Override
     public void updateRemark(Remark target, Remark editedRemark) throws DuplicateRemarkException, RemarkNotFoundException {
         addressBook.updateRemark(target, editedRemark);
+        indicateAddressBookChanged();
     }
 
     @Override

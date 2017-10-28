@@ -2,6 +2,7 @@ package seedu.address.model.module;
 
 import static java.util.Objects.requireNonNull;
 
+import com.sun.org.apache.regexp.internal.RE;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -46,8 +47,8 @@ public class Remark {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Group // instanceof handles nulls
-                && this.value.equals(((Group) other).value)); // state check
+                || (other instanceof Remark // instanceof handles nulls
+                && this.moduleCode.equals(((Remark) other).moduleCode)); // state check
     }
 
     @Override

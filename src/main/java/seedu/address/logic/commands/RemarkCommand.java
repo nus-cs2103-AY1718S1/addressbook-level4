@@ -13,7 +13,6 @@ import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.ListingUnit.LESSON;
 import static seedu.address.model.ListingUnit.MODULE;
 
 
@@ -61,12 +60,10 @@ public class RemarkCommand extends UndoableCommand {
             try {
                 Remark remark = new Remark(remarkContent, moduleToRemark.getCode());
                 model.addRemark(remark);
-            } catch (DuplicateLessonException pnfe) {
-                throw new CommandException(pnfe.getMessage());
             } catch (DuplicateRemarkException e) {
-                throw new CommandException(e.getMessage())
+                throw new CommandException(e.getMessage());
             } catch (IllegalValueException e) {
-                throw new CommandException(e.getMessage())
+                throw new CommandException(e.getMessage());
             }
             return new CommandResult(String.format(MESSAGE_REMARK_MODULE_SUCCESS, moduleToRemark.getCode()));
         } else {
