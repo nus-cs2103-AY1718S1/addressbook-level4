@@ -175,6 +175,21 @@ public class AddCommandParserTest {
                 + WEBSITE_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB,
                 new AddCommand(expectedPersonWithNoHomeNumber));
 
+        // creates a person with no birthday
+        Person expectedPersonWithNoBirthday = new PersonBuilder().withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withSchEmail(VALID_SCH_EMAIL_BOB)
+                .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+                .withWebsite(VALID_WEBSITE_BOB).withAddress(VALID_ADDRESS_BOB)
+                .withBirthday(Birthday.BIRTHDAY_TEMPORARY)
+                .build();
+
+        // missing birthday prefix
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB
+                        + PHONE_DESC_BOB + HOME_NUM_DESC_BOB
+                        + EMAIL_DESC_BOB + SCH_EMAIL_DESC_BOB
+                        + WEBSITE_DESC_BOB + ADDRESS_DESC_BOB,
+                new AddCommand(expectedPersonWithNoBirthday));
+
         // missing website prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                 + HOME_NUM_DESC_BOB + EMAIL_DESC_BOB + SCH_EMAIL_DESC_BOB
