@@ -625,6 +625,28 @@ Otherwise, users will be notified that specified tags are not used in address bo
 
 ---
 
+=== Command: `Search`
+
+`Search` lets users search for contacts in the address book by keywords in parameters of their details. +
+The feature is more powerful and useful than find which only searches by name.
+
+==== Implementation
+
+The keywords are generated as list of strings, which is then checked against the details of the persons
+in address book.
+
+The details are returned as strings, by the ReadOnlyPerson method in the person model. The list of searched
+people is then continually updated, before it is finally returned to the user
+
+
+==== Design Considerations
+
+**Aspect:** implementation of `Search` command over `Find`  +
+**Pros:** More powerful search tool +
+**Cons:** Unnecessary results may be returned for larger address books
+
+---
+
 == Documentation
 
 We use asciidoc for writing documentation.
