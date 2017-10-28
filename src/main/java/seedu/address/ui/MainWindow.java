@@ -155,7 +155,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        personPanel = new PersonPanel();
+        personPanel = new PersonPanel(logic);
         browserPlaceholder.getChildren().add(personPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());

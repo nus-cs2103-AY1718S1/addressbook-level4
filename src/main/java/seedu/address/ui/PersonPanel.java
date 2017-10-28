@@ -1,16 +1,12 @@
 //@@author A0155754X
 package seedu.address.ui;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.Subscribe;
 
-import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -18,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
@@ -26,7 +21,11 @@ import javafx.stage.FileChooser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -36,6 +35,8 @@ public class PersonPanel extends UiPart<Region> {
     private static final String FXML = "PersonPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private ReadOnlyPerson storedPerson;
+    private Index storedPersonIndex;
+    private Logic logic;
 
     @FXML
     private Rectangle defaultScreen;
@@ -80,9 +81,9 @@ public class PersonPanel extends UiPart<Region> {
     private ImageView imageView;
 
 
-    public PersonPanel() {
+    public PersonPanel(Logic logic) {
         super(FXML);
-        registerImageSelectionButton();
+        this.logic = logic;
         registerAsAnEventHandler(this);
     }
 
@@ -91,35 +92,35 @@ public class PersonPanel extends UiPart<Region> {
      * Register the image import button for click event.
      */
 
-    private void registerImageSelectionButton() {
+    private void registerImageSelectionButton(Index index, ReadOnlyPerson person) {
         //Set onClickListener for the image import button
-        photoSelectionButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new
-                EventHandler<MouseEvent>() {
+        photoSelectionButton.setOnAction(new
+                EventHandler<ActionEvent>() {
             @Override
-            public void handle(MouseEvent t) {
+            public void handle(ActionEvent t) {
                 FileChooser fileChooser = new FileChooser();
 
                 //Set extension filter
                 FileChooser.ExtensionFilter extFilterJpg = new FileChooser
                         .ExtensionFilter("JPG files (*.jpg)", "*.JPG");
-                //FileChooser.ExtensionFilter extFilterPNG = new FileChooser
-                // .ExtensionFilter ("PNG files (*.png)", "*.PNG");
-                fileChooser.getExtensionFilters().addAll(extFilterJpg);
+                FileChooser.ExtensionFilter extFilterJpeg = new FileChooser
+                        .ExtensionFilter("JPEG files (*.jpeg)", "*.JPEG");
+                FileChooser.ExtensionFilter extFilterPng = new FileChooser
+                        .ExtensionFilter ("PNG files (*.png)", "*.PNG");
+                fileChooser.getExtensionFilters().addAll(extFilterJpg,
+                        extFilterJpeg, extFilterPng);
 
                 //Show open file dialog
                 File file = fileChooser.showOpenDialog(((Node) t.getTarget())
                         .getScene().getWindow());
 
                 try {
-                    //EditCommand.EditPersonDescriptor descriptor = new
-                    //EditCommand.EditPersonDescriptor();
-                    //descriptor.setPhoto(person.getPhoto());
-                    //EditCommand command= new EditCommand(index, descriptor);
-                    BufferedImage bufferedImage = ImageIO.read(file);
-                    Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-                    photo.setImage(image);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    logger.info("Person Panel register button for index "
+                            + index.getZeroBased());
+                    logic.execute("edit " + index.getZeroBased() + " ph/"
+                            + file.toURI().toString());
+                } catch (CommandException | ParseException e) {
+                    raise(new NewResultAvailableEvent(e.getMessage(), true));
                 }
             }
         });
@@ -153,7 +154,6 @@ public class PersonPanel extends UiPart<Region> {
         photo.setImage(image);
 
         //@@author
-        storedPerson = person;
     }
 
     /**
@@ -163,9 +163,17 @@ public class PersonPanel extends UiPart<Region> {
      */
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showPersonDetails(event.getNewSelection().index, event.getNewSelection()
-                .person);
+        Index index = event.getNewSelection().index;
+        ReadOnlyPerson person = event.getNewSelection().person;
+        storedPerson = person;
+        storedPersonIndex = index;
+        logger.info("Person Panel: stored index becomes " + index
+                .getZeroBased());
+
+        registerImageSelectionButton(index, person);
+        logger.info(LogsCenter.getEventHandlingLogMessage
+                (event) + " for index " + index.getZeroBased());
+        showPersonDetails(index, person);
     }
 
     /**
@@ -178,7 +186,7 @@ public class PersonPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         for (ReadOnlyPerson dataPerson : event.data.getPersonList()) {
             if (storedPerson.getName().equals(dataPerson.getName())) {
-                showPersonDetails(null, dataPerson);
+                showPersonDetails(storedPersonIndex, dataPerson);
                 storedPerson = dataPerson;
                 break;
             }

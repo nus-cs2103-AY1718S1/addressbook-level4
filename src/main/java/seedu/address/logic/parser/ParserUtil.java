@@ -147,24 +147,35 @@ public class ParserUtil {
     public static Optional<Photo> parsePhoto(Optional<String> filePath)
             throws IllegalValueException {
         requireNonNull(filePath);
+
+        //Initialize file paths
         String originalFilePath;
         String destFilePath = null;
         if (filePath.isPresent()) {
             originalFilePath = filePath.get();
-            int lastDelimiterPosition = originalFilePath.lastIndexOf("/");
+
+            //File separator is '/' in Linux-based systems and '\' in
+            // Windows-based systems
+            String s = File.separator;
+
+            int lastDelimiterPosition = originalFilePath.lastIndexOf(s);
             String fileName = originalFilePath.substring
                     (lastDelimiterPosition + 1);
+
             if (lastDelimiterPosition == -1 || !fileName.matches
-                    ("[\\w\\/\\-\\_\\.\\h]+\\.jpg")) {
+                    ("[\\.\\\\\\/\\w].*\\.(jpg|png|jpeg)")) {
                 throw new IllegalValueException(Photo.MESSAGE_PHOTO_CONSTRAINTS);
             } else {
                 try {
-                    destFilePath = "src/main/resources/images/" + fileName;
+                    // Construct the destination file and copy the original
+                    // image file to this destination.
+                    destFilePath = "src" + s + "main" + s + "resources" + s
+                            + "images" + s + fileName;
                     File originalFile = new File(originalFilePath);
                     File destFile = new File(destFilePath);
                     FileUtil.copyFile(originalFile, destFile);
                 } catch (IOException e) {
-                    throw new RuntimeException("Invalid file path. "
+                    throw new IllegalValueException("Invalid file. "
                             + "Please try again.");
                 }
             }
@@ -185,7 +196,7 @@ public class ParserUtil {
                 : Optional.empty();
     }
 
-    //@@author a0107442n
+    //@@author
     /**
      * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
