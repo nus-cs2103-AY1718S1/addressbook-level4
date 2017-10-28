@@ -24,4 +24,11 @@ public class SearchBoxHandle extends NodeHandle<TextField> {
         guiRobot.pauseForHuman();
         guiRobot.type(KeyCode.ENTER);
     }
+
+    /**
+     * Returns the style of search box.
+     */
+    public String getStyle() {
+        return getRootNode().getStyle();
+    }
 }

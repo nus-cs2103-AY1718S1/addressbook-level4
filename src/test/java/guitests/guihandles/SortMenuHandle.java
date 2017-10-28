@@ -39,4 +39,11 @@ public class SortMenuHandle extends NodeHandle<MenuButton> {
             break;
         }
     }
+
+    /**
+     * Returns style of sort menu.
+     */
+    public String getStyle() {
+        return getRootNode().getStyle();
+    }
 }

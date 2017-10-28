@@ -355,10 +355,6 @@ public class MainWindow extends UiPart<Region> {
         personListPanel.highlight();
     }
 
-    public void setCommandPrompt(String toPrompt) {
-        commandBox.setPromptText(toPrompt);
-    }
-
     public void setCommandText(String toInput) {
         commandBox.setCommandText(toInput);
     }

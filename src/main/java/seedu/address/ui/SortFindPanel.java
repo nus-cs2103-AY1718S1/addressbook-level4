@@ -118,6 +118,14 @@ public class SortFindPanel extends UiPart<Region> {
         }
     }
 
+    public MenuButton getSortMenu() {
+        return sortMenu;
+    }
+
+    public TextField getSearchBox() {
+        return searchBox;
+    }
+
     public void highlightSortMenu() {
         sortMenu.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
     }

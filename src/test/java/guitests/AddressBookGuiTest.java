@@ -127,5 +127,4 @@ public abstract class AddressBookGuiTest {
         EventsCenter.clearSubscribers();
         FxToolkit.cleanupStages();
     }
-
 }

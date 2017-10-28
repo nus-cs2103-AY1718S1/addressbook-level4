@@ -58,10 +58,10 @@ public class ResultDisplay extends UiPart<Region> {
     }
 
     public void highlight() {
-        this.placeHolder.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
+        this.resultDisplay.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
     }
 
     public void unhighlight() {
-        this.placeHolder.setStyle("");
+        this.resultDisplay.setStyle("");
     }
 }
