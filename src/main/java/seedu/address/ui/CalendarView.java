@@ -67,7 +67,7 @@ public class CalendarView extends UiPart<Region> {
 
     private final GridPane calendarView;
 
-    private final HashMap<Coordinate, Node> addedEvents = new HashMap<>();
+    private final HashMap<ReadOnlyEvent, Node> addedEvents = new HashMap<>();
 
     private final Logger logger = LogsCenter.getLogger(CalendarView.class);
 
@@ -83,7 +83,7 @@ public class CalendarView extends UiPart<Region> {
         initDateHeader(calendarView);
         initDateTimeHeader(calendarView);
 
-        initEvents(calendarView, eventList);
+        initEvents(calendarView, eventList, null);
 
         ScrollPane scrollableCalendar = new ScrollPane(calendarView);
 
@@ -188,13 +188,21 @@ public class CalendarView extends UiPart<Region> {
      * @param calendarView gridPane of the calendar
      * @param eventList list of all events
      */
-    private void initEvents(GridPane calendarView, ObservableList<ReadOnlyEvent> eventList) {
+    private void initEvents(GridPane calendarView, ObservableList<ReadOnlyEvent> eventList, ReadOnlyEvent
+            lastChangedEvent) {
         String endOfThisWeek = CalendarView.endOfWeek.get().toString();
         String[] tokens = endOfThisWeek.split("-");
         try {
             Timeslot endOfWeek = new Timeslot(tokens[2] + "/" + tokens[1] + "/" + tokens[0] + " " + "2358-2359");
             ObservableList<ReadOnlyEvent> eventsThisWeek = eventList.stream().filter(event -> event.happensBefore
                     (endOfWeek)).collect(Collectors.toCollection(FXCollections::observableArrayList));
+
+            //In cases of updating events, remove the existing node first before adding a new one
+            if (calendarView.getChildren().contains(addedEvents.get(lastChangedEvent))) {
+                calendarView.getChildren().remove(addedEvents.get(lastChangedEvent));
+            }
+
+            //Iteratively add the events
             for (ReadOnlyEvent event:eventsThisWeek) {
                 LocalDate date = event.getDate().toLocalDate();
 
@@ -209,18 +217,14 @@ public class CalendarView extends UiPart<Region> {
 
                 int columnIndex = date.getDayOfWeek().getValue();
                 int rowIndex = (int) MINUTES.between(firstSlotStart, event.getStartTime()) / SLOT_LENGTH + 1;
-                int rowSpan = ((int) event.getDuration().toMinutes()) / SLOT_LENGTH;
+                int rowSpan = (((int) event.getDuration().toMinutes() + SLOT_LENGTH - 1) )/ SLOT_LENGTH;
 
-                logger.info("row index = " + rowIndex + " row span = " + rowSpan);
+                logger.info("Event " + event.getTiming().toString() + " with duration " + event.getDuration().toMinutes() +
+                        " " +
+                        "row span = " + rowSpan);
 
-                //If the respective position already contains an event, remove the event and add this one
-                Coordinate coordinate = new Coordinate(columnIndex, rowIndex);
-                if (addedEvents.containsKey(coordinate)) {
-                    calendarView.getChildren().remove(addedEvents.get(coordinate));
-                    addedEvents.remove(coordinate);
-                }
                 calendarView.add(eventPane, columnIndex, rowIndex, 1, rowSpan);
-                addedEvents.put(coordinate, eventPane);
+                addedEvents.put(event, eventPane);
             }
         } catch (IllegalValueException ive) {
             throw new RuntimeException("Calendar is not correctly initialized.");
@@ -232,7 +236,7 @@ public class CalendarView extends UiPart<Region> {
      */
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        initEvents(calendarView, abce.data.getEventList());
+        initEvents(calendarView, abce.data.getEventList(), abce.data.getLastChangedEvent());
     }
 
     // Utility method that checks if testSlot is "between" startSlot and endSlot

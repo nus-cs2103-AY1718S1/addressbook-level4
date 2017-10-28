@@ -44,6 +44,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList eventTags;
     private final UniqueRelList relation;
 
+    private ReadOnlyEvent lastChangedEvent;
+
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -258,6 +260,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
         if (events.remove(key)) {
+            lastChangedEvent = key;
             return true;
         } else {
             throw new EventNotFoundException();
@@ -281,6 +284,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         events.setEvent(target, editedEvent);
+        lastChangedEvent = target;
+    }
+
+    @Override
+    public ReadOnlyEvent getLastChangedEvent() {
+        return this.lastChangedEvent;
     }
 
     //// tag-level operations

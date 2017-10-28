@@ -1,6 +1,7 @@
 //@@author A0162268B
 package seedu.address.model.event;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -130,7 +131,7 @@ public class Event implements ReadOnlyEvent {
      * @return a Duration object.
      */
     public Duration getDuration() {
-        return Duration.ofMinutes((long) this.getTiming().getEnd() - this.getTiming().getStart());
+        return Duration.ofMinutes(MINUTES.between(this.getStartTime(), this.getEndTime()));
     }
 
     /**
@@ -140,6 +141,15 @@ public class Event implements ReadOnlyEvent {
     public LocalTime getStartTime() {
         int start = this.getTiming().getStart();
         return LocalTime.of(start/100, start%100);
+    }
+
+    /**
+     * Obtain the end time of the event.
+     * @return a LocalTime object.
+     */
+    public LocalTime getEndTime() {
+        int end = this.getTiming().getEnd();
+        return LocalTime.of(end/100, end%100);
     }
 
 

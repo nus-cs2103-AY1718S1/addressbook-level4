@@ -35,6 +35,11 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Relationship> getRelList();
 
+    /**
+     * Returns the last changed event.
+     */
+    ReadOnlyEvent getLastChangedEvent();
+
 
 
 
