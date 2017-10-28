@@ -56,7 +56,7 @@
         <phone>98765432</phone>
         <email>maryjane@example.com</email>
         <address>Mary street, block 123</address>
-        <dob>05 05 1990, #01-01</dob>
+        <dob>05 05 1990</dob>
         <lifeInsuranceId>ce003136-c8e2-4cdd-ae2d-860d203a9aa1</lifeInsuranceId>
     </persons>
     <persons>
