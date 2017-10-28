@@ -111,8 +111,6 @@ For example, tags can be used to indicate a particular behavior of a debtor. A d
 === Other contributions
 
 * Nag about code quality
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 
 == Project: PowerPointLabs
 
