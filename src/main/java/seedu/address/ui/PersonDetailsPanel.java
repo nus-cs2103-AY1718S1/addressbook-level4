@@ -47,6 +47,9 @@ public class PersonDetailsPanel extends UiPart<Region> {
     private Label addressLabel;
 
     @FXML
+    private Label addressLabelContinue;
+
+    @FXML
     private VBox eventsBox;
 
     @FXML
@@ -66,6 +69,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         phoneLabel.setText("");
         emailLabel.setText("");
         addressLabel.setText("");
+        addressLabelContinue.setText("");
     }
 
     @Subscribe
@@ -80,12 +84,35 @@ public class PersonDetailsPanel extends UiPart<Region> {
         }
         phoneLabel.setText(person.getPhone().toString());
         emailLabel.setText(person.getEmail().toString());
-        addressLabel.setText(person.getAddress().toString());
+
+        addressLabelContinue.setText("");
+        String[] address = person.getAddress().toString().split(" ");
+        StringBuffer firstBuffer = new StringBuffer();
+        int index = 0;
+        while (index < address.length && address[index].length() <= 32 - firstBuffer.length()) {
+            firstBuffer.append(address[index]);
+            firstBuffer.append(" ");
+            index++;
+        }
+        String firstAddress = firstBuffer.toString();
+        addressLabel.setText(firstAddress);
+        StringBuffer secondBuffer = new StringBuffer();
+        for (; index < address.length; index++) {
+            secondBuffer.append(address[index]);
+            secondBuffer.append(" ");
+        }
+        if (secondBuffer.length() != 0) {
+            String secondAddress = secondBuffer.toString();
+            addressLabelContinue.setText(secondAddress);
+        }
 
         eventsArea.setText("");
         StringBuffer stringBuffer = new StringBuffer();
+        int counter = 1;
         for (Event e: person.getEvents()) {
-            stringBuffer.append(e.getEventName().fullName + " -- " + e.getEventTime().toString() + "\n");
+            stringBuffer.append(counter + ". " + e.getEventName().fullName + " -- "
+                    + e.getEventTime().toString() + "\n");
+            counter++;
         }
         eventsArea.setText(stringBuffer.toString());
     }
@@ -102,12 +129,35 @@ public class PersonDetailsPanel extends UiPart<Region> {
         }
         phoneLabel.setText(person.getPhone().toString());
         emailLabel.setText(person.getEmail().toString());
-        addressLabel.setText(person.getAddress().toString());
+
+        addressLabelContinue.setText("");
+        String[] address = person.getAddress().toString().split(" ");
+        StringBuffer firstBuffer = new StringBuffer();
+        int index = 0;
+        while (index < address.length && address[index].length() <= 32 - firstBuffer.length()) {
+            firstBuffer.append(address[index]);
+            firstBuffer.append(" ");
+            index++;
+        }
+        String firstAddress = firstBuffer.toString();
+        addressLabel.setText(firstAddress);
+        StringBuffer secondBuffer = new StringBuffer();
+        for (; index < address.length; index++) {
+            secondBuffer.append(address[index]);
+            secondBuffer.append(" ");
+        }
+        if (secondBuffer.length() != 0) {
+            String secondAddress = secondBuffer.toString();
+            addressLabelContinue.setText(secondAddress);
+        }
 
         eventsArea.setText("");
         StringBuffer stringBuffer = new StringBuffer();
+        int counter = 1;
         for (Event e: person.getEvents()) {
-            stringBuffer.append(e.getEventName().fullName + " -- " + e.getEventTime().toString() + "\n");
+            stringBuffer.append(counter + ". " + e.getEventName().fullName + " -- "
+                    + e.getEventTime().toString() + "\n");
+            counter++;
         }
         eventsArea.setText(stringBuffer.toString());
     }
