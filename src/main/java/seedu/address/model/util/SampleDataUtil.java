@@ -1,5 +1,8 @@
 package seedu.address.model.util;
 
+import static seedu.address.model.util.DateUtil.formatDate;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateRepaid;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
@@ -79,21 +83,11 @@ public class SampleDataUtil {
             Person[] samplePersons = getSamplePersons();
             samplePersons[5].setIsBlacklisted(true);
             samplePersons[7].setIsBlacklisted(true);
+            samplePersons[6].setIsWhitelisted(true);
+            samplePersons[6].setDateRepaid(new DateRepaid(formatDate(new Date())));
 
             for (Person samplePerson : samplePersons) {
                 sampleAb.addPerson(samplePerson);
-                if (samplePerson.getDebt().toNumber() == 0.00) {
-                    sampleAb.addWhitelistedPerson(samplePerson);
-                }
-            }
-
-            for (ReadOnlyPerson person : sampleAb.getWhitelistedPersonList()) {
-                try {
-                    sampleAb.setDateRepaid(person);
-                } catch (PersonNotFoundException pnfe) {
-                    throw new AssertionError("This is not possible as we are iterating through a list of"
-                            + "people and this person is from list.");
-                }
             }
 
             return sampleAb;
