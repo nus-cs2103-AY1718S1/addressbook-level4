@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
@@ -128,8 +129,8 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        calendarView = new CalendarView();
-        calendarPlaceholder.getChildren().add(calendarView.getRoot());
+        CalendarWindow calendarWindow = new CalendarWindow(logic.getFilteredPersonList());
+        calendarPlaceholder.getChildren().add(calendarWindow.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
