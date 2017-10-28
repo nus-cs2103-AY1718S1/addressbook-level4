@@ -39,6 +39,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private HashMap<Tag, String> tagColours = new HashMap<>();
+    private UserPrefs colourPrefs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -51,6 +52,19 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        colourPrefs = userPrefs;
+        HashMap<String, String> stringColourMap = userPrefs.getColourMap();
+        if (stringColourMap != null) {
+            try {
+                for (HashMap.Entry<String, String> entry : stringColourMap.entrySet()) {
+                    tagColours.put(new Tag(entry.getKey()), entry.getValue());
+                }
+
+            } catch (IllegalValueException ive) {
+                //it shouldn't ever reach here
+            }
+        }
+        updateAllPersons(tagColours);
     }
 
     public ModelManager() {
@@ -125,9 +139,9 @@ public class ModelManager extends ComponentManager implements Model {
         for (Tag tag: tagList) {
             if (tagName.equals(tag.tagName)) {
                 tagColours.put(tag, colour);
-                updateAllPersons(tagColours);
                 indicateAddressBookChanged();
                 raise(new NewTagColourChangedEvent(addressBook.getPersonList()));
+                colourPrefs.updateColorMap(tagColours);
                 return;
             }
         }
@@ -141,7 +155,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateAllPersons(HashMap<Tag, String> allTagColours) {
         for (ReadOnlyPerson person: addressBook.getPersonList()) {
-            person.setTagHashMap(allTagColours);
+            colourPrefs.updateColorMap(allTagColours);
         }
     }
 
