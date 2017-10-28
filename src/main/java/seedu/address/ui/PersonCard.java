@@ -76,6 +76,7 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Init person tags with colour
      */
+    //@@author blaqkrow
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
@@ -90,7 +91,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
-
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

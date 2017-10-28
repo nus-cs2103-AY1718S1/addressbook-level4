@@ -1898,3 +1898,9 @@ List		2017-10-26T18:57:23.799
 
 Clear		2017-10-26T18:57:29.278
 
+Add	Jf4frg Doe Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Tags: [owesMoney][friends]	2017-10-27T12:53:18.730
+
+Add	John Doe Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Tags: [owesMoney][friends]	2017-10-27T14:22:57.311
+
+Add	Jolol Doe Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Tags: [owesMoney][friends]	2017-10-27T14:23:09.325
+

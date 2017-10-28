@@ -10,6 +10,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.OpenEmailClient;
 
+//@@author blaqkrow
 /**
  * The UI component that is responsible for emailing the selected person.
  */

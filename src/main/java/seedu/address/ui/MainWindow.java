@@ -40,7 +40,7 @@ public class MainWindow extends UiPart<Region> {
     private Stage primaryStage;
     private Logic logic;
     private Scene scene;
-
+    //@@author blaqkrow
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
@@ -102,6 +102,7 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane editTagTextfieldPlaceholder;
+    //@@author
     @FXML
     private VBox vBox;
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
@@ -164,7 +165,7 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
-
+    //@@author blaqkrow
     /**
      * Fills up all the placeholders of this window.
      */
@@ -208,6 +209,7 @@ public class MainWindow extends UiPart<Region> {
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
+    //@@author
 
     void hide() {
         primaryStage.hide();

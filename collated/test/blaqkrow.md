@@ -1,18 +1,6 @@
-package systemtests;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-
-//import static seedu.address.logic.commands.EmailCommand.MESSAGE_SUCCESS;
-//import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EmailCommand;
-import seedu.address.model.Model;
-//@@author blaqkrow
+# blaqkrow
+###### /java/systemtests/EmailCommandSystemTest.java
+``` java
 public class EmailCommandSystemTest extends AddressBookSystemTest {
 
     private static final String MESSAGE_INVALID_EMAIL_COMMAND_FORMAT =
@@ -116,3 +104,18 @@ public class EmailCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
     }
 }
+```
+###### /java/seedu/address/logic/LogicManagerTest.java
+``` java
+    @Test
+    public void execute_deleteCommandExecutionError_throwsCommandException() {
+        String deleteCommand = "delete 9";
+        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertHistoryCorrect(deleteCommand);
+    }
+    @Test
+    public void execute_emailCommandExecutionError_throwsCommandException() {
+        String emailCommand = "email 9";
+        assertCommandException(emailCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+```
