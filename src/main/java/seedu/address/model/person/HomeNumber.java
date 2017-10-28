@@ -14,6 +14,8 @@ public class HomeNumber {
     public static final String MESSAGE_HOME_NUMBER_CONSTRAINTS =
             "Home numbers can only contain numbers, and should be at least 3 digits long";
     public static final String HOME_NUMBER_VALIDATION_REGEX = "\\d{3,}";
+    public static final String HOME_NUMBER_TEMPORARY = "NIL";
+
     public final String value;
 
     /**
@@ -22,12 +24,15 @@ public class HomeNumber {
      * @throws IllegalValueException if given home string is invalid.
      */
     public HomeNumber(String homeNumber) throws IllegalValueException {
-        requireNonNull(homeNumber);
-        String trimmedHomeNumber = homeNumber.trim();
-        if (!isValidHomeNumber(trimmedHomeNumber)) {
-            throw new IllegalValueException(MESSAGE_HOME_NUMBER_CONSTRAINTS);
+        if(homeNumber == null){
+          this.value = HOME_NUMBER_TEMPORARY;
+        }else {
+            String trimmedHomeNumber = homeNumber.trim();
+            if (!isValidHomeNumber(trimmedHomeNumber)) {
+                throw new IllegalValueException(MESSAGE_HOME_NUMBER_CONSTRAINTS);
+            }
+            this.value = trimmedHomeNumber;
         }
-        this.value = trimmedHomeNumber;
     }
 
     /**
