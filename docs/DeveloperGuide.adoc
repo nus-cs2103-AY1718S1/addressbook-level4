@@ -550,7 +550,9 @@ MedNus is designed for power users. Thus, batch deletions are a welcome addition
 
 *How it is implemented* +
 
-In view of the link:https://en.wikipedia.org/wiki/Open/closed_principle/[open / closed principle], the Command class is open to extension but closed to modification. Thus, to implement this feature, a new `BatchCommand` class is extended from the Command class. +
+In view of the link:https://en.wikipedia.org/wiki/Open/closed_principle[open / closed principle],
+the Command class is open to extension but closed to modification. Its source code need not be edited for its behaviour to be extended in another object.
+Thus, to implement the batch deletion feature, a new `BatchCommand` class is extended from the Command class. +
 
 In summary, `BatchCommand` passes a set of tags to the Model Component which handles the actual deletions. Here's the constructor for the BatchCommand class. +
 
@@ -572,15 +574,16 @@ _Figure 2.1.3a : Sequence diagram for a `batch myTag` command in the Model Compo
 
 image::SDforBatchDeleteModel.png[width="800"]
 
-
 *Reasons for how it is implemented*
 
 One thing you'll notice is that coupling between the logic and model component is minimised into the sole function call +
 
  deletePersonsByTags(Set<Tag> tags)
 
-The seemingly roudabout sequence of function calls within the Model component was conceived in view of the link:https://en.wikipedia.org/wiki/Law_of_Demeter[Law of Demeter].
+Indeed, tracing the sequence diagrams will show you that each interaction is essentially a similar instruction.
+The seemingly unnecessary and roudabout sequence of function calls was actually conceived in view of the link:https://en.wikipedia.org/wiki/Law_of_Demeter[Law of Demeter].
 Objects ought not to "talk to strangers", or in other words, interact with objects more than one degree of separation away from them.
+This is justification for the "bureaucracy" between objects in the components.
 
 *Future enhancements*
 
