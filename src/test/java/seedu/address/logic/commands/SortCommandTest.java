@@ -29,15 +29,19 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class SortCommandTest {
     private Model model;
     private Model expectedModel;
-    private int firstValue;
-    private int secondValue;
-    private int thirdValue;
+    private String name;
+    private String tag;
+    private String company;
+    private String priority;
+    private String status;
 
     @Before
     public void setUp() {
-        firstValue = 1;
-        secondValue = 2;
-        thirdValue = 3;
+        name = "name";
+        tag = "tag";
+        company = "company";
+        priority = "priority";
+        status = "status";
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
     }
@@ -45,40 +49,33 @@ public class SortCommandTest {
     // Interaction with model
     @Test
     public void execute_listIsSorted_showsEverything() {
-        SortCommand command = prepareCommand(firstValue);
-        assertCommandSuccess(command, model, SortCommand.MESSAGE_SUCCESS[firstValue - 1], expectedModel);
+        SortCommand command = prepareCommand(name);
+        assertCommandSuccess(command, model, SortCommand.MESSAGE_SUCCESS + " name", expectedModel);
     }
 
     @Test
     public void execute_nameValue_listSorted() {
-        SortCommand command = prepareCommand(firstValue);
-        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS[firstValue - 1], Arrays.asList(ALICE, BENSON, CARL,
+        SortCommand command = prepareCommand(name);
+        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + " name", Arrays.asList(ALICE, BENSON, CARL,
                 DANIEL, ELLE, FIONA, GEORGE));
     }
 
     @Test
     public void execute_tagValue_listSorted() {
-        SortCommand command = prepareCommand(secondValue);
-        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS[secondValue - 1], Arrays.asList(ALICE, CARL, DANIEL,
+        SortCommand command = prepareCommand(tag);
+        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + " tag", Arrays.asList(ALICE, CARL, DANIEL,
                 ELLE, FIONA, GEORGE, BENSON));
     }
 
     @Test
-    public void execute_addValue_listSort() {
-        SortCommand command = prepareCommand(thirdValue);
-        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS[thirdValue - 1], Arrays.asList(DANIEL, ALICE, BENSON,
-                GEORGE, FIONA, ELLE, CARL));
-    }
-
-    @Test
     public void equals() {
-        final SortCommand userCommand = new SortCommand(firstValue);
+        final SortCommand userCommand = new SortCommand(name);
 
         // same object -> returns true
         assertTrue(userCommand.equals(userCommand));
 
         // same values -> returns equals
-        SortCommand firstSortCommand = new SortCommand(1);
+        SortCommand firstSortCommand = new SortCommand("name");
         assertTrue(userCommand.equals(firstSortCommand));
 
         // different types -> returns false
@@ -88,10 +85,10 @@ public class SortCommandTest {
         assertFalse(userCommand.equals(null));
 
         // different command -> returns false
-        assertFalse(userCommand.equals(new SortCommand(2)));
+        assertFalse(userCommand.equals(new SortCommand("tags")));
     }
 
-    private SortCommand prepareCommand(int type) {
+    private SortCommand prepareCommand(String type) {
         SortCommand sortCommand = new SortCommand(type);
         sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return sortCommand;
