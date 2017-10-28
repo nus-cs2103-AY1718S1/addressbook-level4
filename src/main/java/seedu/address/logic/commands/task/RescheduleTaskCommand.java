@@ -9,6 +9,7 @@ import java.util.Optional;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -38,8 +39,13 @@ public class RescheduleTaskCommand extends UndoableCommand {
     private Optional<LocalDateTime> newStartDateTime = Optional.empty();
     private Optional<LocalDateTime> newEndDateTime = Optional.empty();
 
+    /**
+     * Empty Constructor
+     */
+    public RescheduleTaskCommand() {}
+    
     public RescheduleTaskCommand(Index targetIndex, Optional<LocalDateTime> startTime,
-                                 Optional<LocalDateTime> endTime) {
+                                 Optional<LocalDateTime> endTime) throws IllegalValueException {
 
         requireNonNull(targetIndex);
         Optional<LocalDateTime> balancedEndTime = endTime;
