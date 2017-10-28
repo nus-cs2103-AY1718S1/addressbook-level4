@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
@@ -12,6 +13,7 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import seedu.address.model.person.ReadOnlyPerson;
 
 public class TabCompleteTextField extends TextField {
 
@@ -25,7 +27,6 @@ public class TabCompleteTextField extends TextField {
 
     public TabCompleteTextField() {
         super();
-        generateOptions();
         textProperty().addListener((unused1, unused2, unused3) -> generateSuggestions());
         focusedProperty().addListener((unused1, unused2, unused3) -> dropDownMenu.hide());
     }
@@ -48,9 +49,11 @@ public class TabCompleteTextField extends TextField {
         }
     }
 
-    private void generateOptions() {
-        options.add("family");
-        options.add("friends");
+    public void generateOptions(List<ReadOnlyPerson> persons) {
+        for (ReadOnlyPerson person : persons) {
+            options.addAll(Arrays.asList(person.getName().fullName.split("\\s+")));
+            person.getTags().stream().map(tag -> tag.tagName).forEachOrdered(options::add);
+        }
     }
 
 
