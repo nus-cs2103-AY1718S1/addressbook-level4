@@ -10,7 +10,8 @@
 <StackPane fx:id="detailsPanel" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
 <VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
     <children>
-        <Label fx:id="name" alignment="TOP_LEFT" prefHeight="80.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true" />
+        <Label fx:id="name" alignment="TOP_LEFT" prefHeight="50.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true" />
+        <FlowPane fx:id="tags" prefHeight="50.0" prefWidth="774.0" />
         <TextFlow prefHeight="50.0" prefWidth="100.0">
             <children>
                 <Text fx:id="phoneField" fill="gray" styleClass="window_small_label" text="Phone: " />
@@ -53,7 +54,6 @@
                 <Label fx:id="website" styleClass="window_small_label" text="\$website" />
             </children>
         </TextFlow>
-        <FlowPane fx:id="tags" prefHeight="100.0" prefWidth="774.0" />
     </children>
 </VBox>
 </StackPane>
