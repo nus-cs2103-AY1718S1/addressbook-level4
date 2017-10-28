@@ -28,8 +28,13 @@ public class PersonCard extends UiPart<Region> {
                     "BURLYWOOD",
                     "PALEVIOLETRED",
                     "CORNFLOWERBLUE",
-                    "CORAL"));
+                    "CORAL",
+                    "MOCCASIN",
+                    "SPRINGGREEN",
+                    "ORANGERED"));
     private static HashMap<String, String> currentTagColors = new HashMap<String, String>();
+
+    private static String assignedColor;
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -81,19 +86,34 @@ public class PersonCard extends UiPart<Region> {
      * @param tagName is the String name of the tag
      * @return the color associated to the tagName
      */
-    private static String obtainTagColors(String tagName) {
+    public static String obtainTagColors(String tagName) {
         if (!currentTagColors.containsKey(tagName)) {
             if (availableColorsLeft.size() != 0) {
                 Random rand = new Random();
                 int randIndex = rand.nextInt(availableColorsLeft.size());
+                assignedColor = availableColorsLeft.get(randIndex);
 
-                currentTagColors.put(tagName, availableColorsLeft.get(randIndex));
+                currentTagColors.put(tagName, assignedColor);
                 availableColorsLeft.remove(randIndex);
             } else {
                 currentTagColors.put(tagName, "GRAY");
             }
         }
         return currentTagColors.get(tagName);
+    }
+
+    /**
+     * To access private String assignedColor for testing
+     */
+    public String getAssignedTagColor() {
+        return this.assignedColor;
+    }
+
+    /**
+     * To access private ArrayList availableColorsLeft for testing
+     */
+    public ArrayList<String> getAvailableColorsLeft() {
+        return this.availableColorsLeft;
     }
 
     /**

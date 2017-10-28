@@ -28,6 +28,8 @@ public class PersonCardTest extends GuiUnitTest {
         personCard = new PersonCard(personWithTags, 2);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
+        //Check if tag color is removed from the arraylist of colors after being assigned to a tag
+        assertFalse(personCard.getAvailableColorsLeft().contains(personCard.getAssignedTagColor()));
 
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
@@ -39,6 +41,15 @@ public class PersonCardTest extends GuiUnitTest {
             personWithTags.setTags(ALICE.getTags());
         });
         assertCardDisplay(personCard, personWithTags, 2);
+    }
+
+    @Test
+    public void obtainTagColors() {
+        Person personWithTags = new PersonBuilder().build();
+        PersonCard personCard = new PersonCard(personWithTags, 2);
+
+        //Check if tag color is removed from the arraylist of colors after being assigned to a tag
+        assertFalse(personCard.getAvailableColorsLeft().contains(personCard.getAssignedTagColor()));
     }
 
     @Test
