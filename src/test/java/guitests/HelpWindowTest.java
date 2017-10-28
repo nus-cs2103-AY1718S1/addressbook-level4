@@ -31,7 +31,7 @@ public class HelpWindowTest extends AddressBookGuiTest {
 
         getCalendarView().click();
         getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowNotOpen();
+        assertHelpWindowOpen();
 
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
