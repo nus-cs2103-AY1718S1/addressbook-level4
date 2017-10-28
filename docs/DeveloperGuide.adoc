@@ -1089,17 +1089,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add multiple numbers to a contact |separate their mobile and home numbers
 
-|`* * *` |teacher |sort students by name and classes |find students easily [Coming in v2.0]
+|`* * *` |teacher |sort students by name and classes |find students easily
 
 |`* * *` |busy teacher |be able to see who are the underperforming students|find out who I should spend more time on [Coming in v2.0]
 
-|`* * *` |teacher |have contact information of students and parents|contact either of them [Coming in v2.0]
+|`* * *` |teacher |have contact information of students and parents|contact either of them
 
 |`* * *` |busy teacher |auto tag students according to their grades|get a quick overview of their progress [Coming in v2.0]
 
-|`* * *` |concerned teacher |display statistics for the current group of students in the list|analyse the individual groups' academic progress [Coming in v2.0]
+|`* * *` |concerned teacher |display statistics for the current group of students in the list|analyse the individual groups' academic progress
 
-|`* * *` |precise teacher |find out the 25th, 50th and 75th percentile scores for each class|get a better idea of students' academic progress [Coming in v2.0]
+|`* * *` |precise teacher |find out the 25th, 50th and 75th percentile scores for each class|get a better idea of students' academic progress
 
 |`* * *` |precise teacher |compare the grades statistics between any two groups of students|make a quick comparison [Coming in v2.0]
 

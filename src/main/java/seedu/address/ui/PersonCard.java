@@ -1,9 +1,6 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Random;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -17,6 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
+
     private static final String FXML = "PersonListCard.fxml";
     private static ArrayList<String> availableColorsLeft = new ArrayList<String>(
             Arrays.asList(
@@ -55,17 +53,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
     private Label formClass;
-    @FXML
-    private Label grades;
-    @FXML
-    private Label postalCode;
-    @FXML
-    private Label email;
-    @FXML
-    private Label remark;
     @FXML
     private FlowPane tags;
 
@@ -123,29 +111,9 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
         formClass.textProperty().bind(Bindings.convert(person.formClassProperty()));
-        grades.textProperty().bind(Bindings.convert(person.gradesProperty()));
-        postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            initialiseTags(person);
-        });
-    }
-
-    /**
-     * Initialise the {@code person} tags
-     *
-     * @param person Person to be assigned tag colour.
-     */
-    private void initialiseTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> {
-            Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
-            tags.getChildren().add(tagLabel);
-        });
+        tags.getChildren().clear();
+        initialiseTags(person);
     }
 
     @Override
@@ -164,5 +132,18 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * Initialise the {@code person} tags
+     *
+     * @param person Person to be assigned tag colour.
+     */
+    private void initialiseTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
     }
 }

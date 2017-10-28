@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.PersonCard;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in the Person List
  */
 public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
