@@ -224,7 +224,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateRemark(Remark target, Remark editedRemark) throws DuplicateRemarkException, RemarkNotFoundException {
+        public void updateRemark(Remark target, Remark editedRemark)
+                throws DuplicateRemarkException, RemarkNotFoundException {
             fail("This method should not be called.");
         }
 
