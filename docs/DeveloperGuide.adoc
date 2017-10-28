@@ -452,25 +452,38 @@ Each lesson is only allowed to be added into the `marked list` once, thus any fu
 
 The find mechanism is facilitated by predicates. Whenever find command is executed, in `FindCommandParser` will turn the paramater into a string list which will pass to the `FindCommand`.
 In `FindCommand` different find predicate will be called depends on what the current `ListingUnit` is and will update the predicate of `filteredList` with one of these three predicates.
-`LocationContainsKeywordPredicate` which find the lessons with name that contains the keyword, `ModuleContainsKeywordPredicate` which find lesson with module code that contains the keyword and
+`LocationContainsKeywordPredicate` which find the lessons with name that contains the keywords, `ModuleContainsKeywordPredicate` which find lesson with module code that contains the keyword and
+, `MarkedLessonContainsKeywordPredicate` which find the marked lessons with name that contains the keywords and
 finally `LessonContainsKeywordPredicate` which find lessons with any information they have that contains the keywords.
 
 [NOTE]
 `LocationContainsKeywordPredicate` will be used when the current `ListingUnit` is `LOCATION`. +
 `ModuleContainsKeywordPredicate` will be used when the current `ListingUnit` is `MODULE`. +
+`MarkedLessonContainsKeywordPredicate` will be used when the current `ListingUnit` is `LESSON` and `currentViewingPredicate` is `marked`.
 `LessonContainsKeywordPredicate` will be used when the current `ListingUnit` is `LESSON`.
 
 The following link:#sequence-diagram[sequence diagram] shows how the find operation works:
 
-image::SortCommandSeqDiagram.png[width="900"]
+image::FindCommandSeqDiagram.png[width="900"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
 The following link:#activity-diagram[activity diagram] summarize what happens when an user execute find command.
 
-image::sortCommandactivitydiagram.png[width="900"]
+image::FindCommandActivityDiagram.png[width="900"]
 
 ==== Design Considerations
+
+**Aspect:** Implementation of `FindCommand` +
+**Alternative 1 (current choice):** Find module/lesson/location base on the current `ListingUnit`. +
+**Pros:** Make more sense to implement this way as in ModU as user do not always view all lessons in `LessonListPanel`.
+It will not make sense for the user to find something that is not currently in `LessonListPanel`. +
+**Cons:** More work need to be done as implementing `FindCommand` this way would need to create multiple `Predicates` for different type of `ListCommand` attributes.
+**Alternative 2:** Find lesson based on the full list regardless which previous `ListCommand` attribute. +
+**Pros:** Less work. +
+**Cons:** Make no sense for user as the `FindCommand` will return something that is irrelevant for the user.
+ For example, the `LessonListingPanel` shows a list of modules and the user want to search for module "CS1010", the `FindCommand`
+ will return a list of "CS1010" lessons instead of the module the user is trying to look for. +
 
 // end::find[]
 
@@ -494,7 +507,7 @@ image::sortCommandactivitydiagram.png[width="900"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `FindCommand` +
+**Aspect:** Implementation of `SortCommand` +
 **Alternative 1 (current choice):** Sort the actual `internalList` in `UniqueLessonList`. +
 **Pros:** Easier for new developer to understand the operation of SortCommand execution as it is more intuitive. Prevent conflicting with other command execution which use the `internalList`. +
 **Cons:** More work as need to create different level of abstraction in model for a single method.
