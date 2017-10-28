@@ -8,6 +8,10 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.exceptions.UserNotFoundException;
+import seedu.address.logic.Password;
+import seedu.address.logic.Username;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.util.DateUtil;
@@ -23,32 +27,57 @@ public class InterestTest {
     private final String sampleDateInput6 = "20-05-2017";
 
     @Test
-    public void checkUpdateDebtTest() {
+    public void respondToLoginEvent() {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person personToTest = new PersonBuilder().withName("AA").withDebt("10000").withInterest("1").build();
+        Date lastAccruedDate = generateDateFromString(sampleDateInput2);
+        personToTest.setLastAccruedDate(lastAccruedDate);
+        try {
+            model.addPerson(personToTest);
+        } catch (DuplicatePersonException dpe) {
+            assert false : " Should not happen as personToAdd is unique to typical persons";
+        }
+        try {
+            Username username = new Username("loanShark97");
+            Password password = new Password("hitMeUp123");
+            model.authenticateUser(username, password); // raise login event.
+        } catch (IllegalValueException ive) {
+            assert false : "Username or password not valid.";
+        } catch (UserNotFoundException unfe) {
+            assert false : "User not found.";
+        }
+        // model should have handled login event and updated personToTest's debt
+        int personToTestIdx = model.getFilteredPersonList().size() - 1;
+        assertEquals("10936.85", model.getFilteredPersonList().get(personToTestIdx).getDebt().toString());
+    }
+
+    @Test
+    public void checkLastAccruedTest() {
         // personToTest has interest rate of 1% and debt of $10,000
         Person personToTest = new PersonBuilder().withDebt("10000").build();
         Date lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput1));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput1)), 1);
+        assertEquals(personToTest.checkLastAccruedDate(generateDateFromString(sampleDateInput1)), 1);
 
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput2));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput2)), 1);
+        assertEquals(personToTest.checkLastAccruedDate(generateDateFromString(sampleDateInput2)), 1);
 
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput3));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput3)), 1);
+        assertEquals(personToTest.checkLastAccruedDate(generateDateFromString(sampleDateInput3)), 1);
 
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput4));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput4)), 1);
+        assertEquals(personToTest.checkLastAccruedDate(generateDateFromString(sampleDateInput4)), 1);
 
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput5));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput5)), 1);
+        assertEquals(personToTest.checkLastAccruedDate(generateDateFromString(sampleDateInput5)), 1);
 
         lastAccruedDate = generateOutdatedDebtDate(generateDateFromString(sampleDateInput6));
         personToTest.setLastAccruedDate(lastAccruedDate);
-        assertEquals(personToTest.checkUpdateDebt(generateDateFromString(sampleDateInput6)), 1);
+        assertEquals(personToTest.checkLastAccruedDate(generateDateFromString(sampleDateInput6)), 1);
     }
 
     @Test
