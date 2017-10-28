@@ -23,7 +23,7 @@ public class HomeNumber {
      */
     public HomeNumber(String homeNumber) throws IllegalValueException {
         if (homeNumber == null) {
-          this.value = HOME_NUMBER_TEMPORARY;
+            this.value = HOME_NUMBER_TEMPORARY;
         } else {
             String trimmedHomeNumber = homeNumber.trim();
             if (!isValidHomeNumber(trimmedHomeNumber)) {
