@@ -23,12 +23,6 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
-        if ((!trimmedValue.equals("name")) || (!trimmedValue.equals("tag")) || (!trimmedValue.equals("company"))
-            || (!trimmedValue.equals("priority")) || (!trimmedValue.equals("status"))) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        }
-        //int type = Integer.parseInt(trimmedValue);
         return new SortCommand(trimmedValue);
     }
 
