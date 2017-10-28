@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
 import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.ObservableList;
@@ -26,7 +28,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import org.controlsfx.control.textfield.TextFields;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeFontSizeEvent;
 import seedu.address.commons.events.ui.ColorKeywordEvent;
@@ -38,6 +40,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.logic.parser.exceptions.ParseException;
+
 /**
  * The UI component that is responsible for receiving user command inputs.
  */

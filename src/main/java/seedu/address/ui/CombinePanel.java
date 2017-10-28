@@ -354,7 +354,7 @@ public class CombinePanel extends UiPart<Region> {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String text = noteData[i][j];
-                if (text == null){
+                if (text == null) {
                     return;
                 }
                 int x = 120 + (int) (Math.random() * 255);

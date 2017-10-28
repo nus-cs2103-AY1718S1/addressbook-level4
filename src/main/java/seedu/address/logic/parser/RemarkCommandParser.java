@@ -12,7 +12,6 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteRemarkCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import sun.net.www.ParseUtil;
 
 /**
  * Parses input arguments and creates a new RemarkCommand object
@@ -20,7 +19,7 @@ import sun.net.www.ParseUtil;
 public class RemarkCommandParser implements Parser<Command> {
 
     static final Pattern FIRST_INT_PATTERN = Pattern.compile("^(\\d+)");
-    static final Pattern DELETE_INDEX_PATTERN = Pattern.compile("-d\\s*（\\d+");
+    static final Pattern DELETE_INDEX_PATTERN = Pattern.compile("-d\\s*(\\d+)");
 
     /**
      * Parses the given {@code String} of arguments in the context of the RemarkCommand
@@ -42,7 +41,7 @@ public class RemarkCommandParser implements Parser<Command> {
                 remarkContent = trimmedArgs.substring(matcherFirstInt.group(0).length()).trim();
                 return new RemarkCommand(index, remarkContent);
             } else if (matcherDeleteRmk.find()) {
-                index = ParserUtil.parseIndex(matcherDeleteRmk.group(0));
+                index = ParserUtil.parseIndex(matcherDeleteRmk.group(1));
                 return new DeleteRemarkCommand(index);
             } else {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));

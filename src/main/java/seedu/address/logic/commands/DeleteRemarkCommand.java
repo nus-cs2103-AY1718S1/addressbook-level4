@@ -1,5 +1,11 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.RemarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE;
+import static seedu.address.model.ListingUnit.MODULE;
+
+import java.util.List;
+
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -9,12 +15,9 @@ import seedu.address.model.ListingUnit;
 import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.RemarkCommand.MESSAGE_WRONG_LISTING_UNIT_FAILURE;
-import static seedu.address.model.ListingUnit.MODULE;
-
+/**
+ * Deletes the remark with specified index.
+ */
 public class DeleteRemarkCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_REMARK_MODULE_SUCCESS = "Deleted remark: %1$s";

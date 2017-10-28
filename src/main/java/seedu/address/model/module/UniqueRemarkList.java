@@ -111,11 +111,11 @@ public class UniqueRemarkList implements Iterable<Remark> {
      */
     public boolean remove(Remark toRemove) throws RemarkNotFoundException {
         requireNonNull(toRemove);
-        final boolean RemarkFoundAndDeleted = internalList.remove(toRemove);
-        if (!RemarkFoundAndDeleted) {
+        final boolean remarkFoundAndDeleted = internalList.remove(toRemove);
+        if (!remarkFoundAndDeleted) {
             throw new RemarkNotFoundException();
         }
-        return RemarkFoundAndDeleted;
+        return remarkFoundAndDeleted;
     }
 
     @Override

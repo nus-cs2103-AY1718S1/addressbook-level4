@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.ObservableList;
 
 import seedu.address.model.lecturer.Lecturer;
@@ -253,7 +252,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Remark> getRemarkList() { return remarks.asObservableList(); }
+    public ObservableList<Remark> getRemarkList() {
+        return remarks.asObservableList();
+    }
 
     @Override
     public boolean equals(Object other) {

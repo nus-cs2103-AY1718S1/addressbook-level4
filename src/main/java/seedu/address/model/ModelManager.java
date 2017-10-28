@@ -5,21 +5,18 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.ListingUnit.LOCATION;
 import static seedu.address.model.ListingUnit.MODULE;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.RefreshPanelEvent;
 import seedu.address.model.module.BookedSlot;
@@ -283,7 +280,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void updateRemark(Remark target, Remark editedRemark) throws DuplicateRemarkException, RemarkNotFoundException {
+    public void updateRemark(Remark target, Remark editedRemark)
+            throws DuplicateRemarkException, RemarkNotFoundException {
         addressBook.updateRemark(target, editedRemark);
         indicateAddressBookChanged();
     }
