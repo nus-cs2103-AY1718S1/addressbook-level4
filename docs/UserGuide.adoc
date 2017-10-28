@@ -79,20 +79,26 @@ Format: `help`
 Adds a person to the address book +
 Format: `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]`
 
-[NOTE]
+[TIP]
 You can see the examples provided below to know more about what details should be inputted. +
+A person can have any number of tags (including 0). +
+Home number, school email, and birthday are optional fields
+that the user is not required to put in.
+
+[NOTE]
 Website should follow this format `https://www.anyName.com/anyContent` where anyName can only be alphanumeric and anyContent can be the exact url details of the website. +
 It is encouraged to have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in website input error. +
 Birthday should be in proper format of "dd/mm/yyyy" where all elements inputted for birthday are integers.
-
-
-[TIP]
-A person can have any number of tags (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432 h/65812321 e/johnd@example.com se/john@u.nus.edu w/https://www.facebook.com/johnDoe a/John street, block 123, #01-01 b/12/11/1972`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com p/98123414 h/65132100 se/betsy@u.nus.edu w/https://www.facebook.com/betsyCrowe a/Newgate Prison p/1234567 b/02/03/2000 t/criminal`
+
+Example of adding an individual without Birthday, School Email, Home Number:
+
+* `add n/Adam Bait t/friend e/adambait@example.com p/98123414 w/https://www.facebook.com/adamBait a/18 Taiseng p/1234567`
+
 
 === Accessing a person's website : `access`
 

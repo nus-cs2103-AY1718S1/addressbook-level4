@@ -43,9 +43,9 @@ public class EmailTest {
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
         // equals and hashCode check name field value
-        Email EmailX = new Email("PeterJack_1190@example.com");
-        Email EmailY = new Email("PeterJack_1190@example.com");
-        assertTrue(EmailX.equals(EmailY) && EmailY.equals(EmailX));
-        assertTrue(EmailX.hashCode() == EmailY.hashCode());
+        Email emailX = new Email("PeterJack_1190@example.com");
+        Email emailY = new Email("PeterJack_1190@example.com");
+        assertTrue(emailX.equals(emailY) && emailY.equals(emailX));
+        assertTrue(emailX.hashCode() == emailY.hashCode());
     }
 }

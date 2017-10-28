@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 public class HomeNumberTest {
 
     @Test
@@ -24,5 +26,14 @@ public class HomeNumberTest {
 
         // home number not filled in
         assertTrue(HomeNumber.isValidHomeNumber(HomeNumber.HOME_NUMBER_TEMPORARY));
+    }
+
+    @Test
+    public void testSymmetricHashCode() throws IllegalValueException {
+        // equals and hashCode check name field value
+        HomeNumber homeNumberX = new HomeNumber("93121534");
+        HomeNumber homeNumberY = new HomeNumber("93121534");
+        assertTrue(homeNumberX.equals(homeNumberY) && homeNumberY.equals(homeNumberX));
+        assertTrue(homeNumberX.hashCode() == homeNumberY.hashCode());
     }
 }
