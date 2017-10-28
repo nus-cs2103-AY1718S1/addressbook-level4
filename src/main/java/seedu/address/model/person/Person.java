@@ -21,6 +21,7 @@ import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Represents a Person in the address book.
@@ -207,8 +208,11 @@ public class Person implements ReadOnlyPerson {
      * Returns the set of tags joined into a string
      * @return
      */
-    public String joinTagsToString() {
+    public String joinTagsToString() throws TagNotFoundException {
         Set<Tag> tags = getTags();
+        if (tags == null) {
+            throw new TagNotFoundException();
+        }
         StringBuilder sb = new StringBuilder();
         for (Tag t : tags) {
             sb.append(t.getStringTagName());
