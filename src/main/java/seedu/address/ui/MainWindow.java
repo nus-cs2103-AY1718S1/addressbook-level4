@@ -176,7 +176,7 @@ public class MainWindow extends UiPart<Region> {
 
         //When calendar button is clicked, the browserPlaceHolder will switch
         // to the calendar view
-        calendarView = new CalendarView();
+        calendarView = new CalendarView(logic.getFilteredEventList());
         calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

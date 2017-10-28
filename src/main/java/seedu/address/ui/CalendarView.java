@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
+
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -7,13 +9,22 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import org.fxmisc.easybind.EasyBind;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -21,10 +32,17 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.timeslot.Timeslot;
 
 /**
  * The calendar view to show all the scheduled events.
@@ -40,23 +58,32 @@ public class CalendarView extends UiPart<Region> {
             .minusDays(today.get().getDayOfWeek().getValue() - 1);
     private static Supplier<LocalDate> endOfWeek = () -> startOfWeek.get()
             .plusDays(6);
+    private static int SLOT_LENGTH = 30;
     private final LocalTime firstSlotStart = LocalTime.of(7, 0);
-    private final Duration slotLength = Duration.ofMinutes(30);
-    private final LocalTime lastSlotStart = LocalTime.of(20, 59);
+    private final Duration slotLength = Duration.ofMinutes(SLOT_LENGTH);
+    private final LocalTime lastSlotStart = LocalTime.of(23, 59);
 
     private final List<TimeSlot> timeSlots = new ArrayList<>();
+
+    private final GridPane calendarView;
+
+    private final HashMap<Coordinate, Node> addedEvents = new HashMap<>();
+
+    private final Logger logger = LogsCenter.getLogger(CalendarView.class);
 
     @FXML
     private StackPane calendarViewPlaceHolder;
 
-    public CalendarView() {
+    public CalendarView(ObservableList<ReadOnlyEvent> eventList) {
         super(FXML);
 
-        GridPane calendarView = new GridPane();
+        calendarView = new GridPane();
 
         initSlots(calendarView);
         initDateHeader(calendarView);
         initDateTimeHeader(calendarView);
+
+        initEvents(calendarView, eventList);
 
         ScrollPane scrollableCalendar = new ScrollPane(calendarView);
 
@@ -155,6 +182,59 @@ public class CalendarView extends UiPart<Region> {
         }
     }
 
+    /**
+     * Select events that take place in the current week and place them on the calendar accordingly.
+     *
+     * @param calendarView gridPane of the calendar
+     * @param eventList list of all events
+     */
+    private void initEvents(GridPane calendarView, ObservableList<ReadOnlyEvent> eventList) {
+        String endOfThisWeek = CalendarView.endOfWeek.get().toString();
+        String[] tokens = endOfThisWeek.split("-");
+        try {
+            Timeslot endOfWeek = new Timeslot(tokens[2] + "/" + tokens[1] + "/" + tokens[0] + " " + "2358-2359");
+            ObservableList<ReadOnlyEvent> eventsThisWeek = eventList.stream().filter(event -> event.happensBefore
+                    (endOfWeek)).collect(Collectors.toCollection(FXCollections::observableArrayList));
+            for (ReadOnlyEvent event:eventsThisWeek) {
+                LocalDate date = event.getDate().toLocalDate();
+
+                Label eventTitle = new Label();
+                eventTitle.setWrapText(true);
+                eventTitle.setStyle( "-fx-alignment: CENTER; -fx-font-size: 12pt; -fx-text-style: bold;");
+                eventTitle.setText(event.getTitle().toString() + "\n");
+                StackPane eventPane = new StackPane();
+                eventPane.setMaxWidth(150.0);
+                eventPane.setStyle( "-fx-background-color: #FEDFE1; -fx-alignment: CENTER; -fx-border-color: white");
+                eventPane.getChildren().addAll(eventTitle);
+
+                int columnIndex = date.getDayOfWeek().getValue();
+                int rowIndex = (int) MINUTES.between(firstSlotStart, event.getStartTime()) / SLOT_LENGTH + 1;
+                int rowSpan = ((int) event.getDuration().toMinutes()) / SLOT_LENGTH;
+
+                logger.info("row index = " + rowIndex + " row span = " + rowSpan);
+
+                //If the respective position already contains an event, remove the event and add this one
+                Coordinate coordinate = new Coordinate(columnIndex, rowIndex);
+                if (addedEvents.containsKey(coordinate)) {
+                    calendarView.getChildren().remove(addedEvents.get(coordinate));
+                    addedEvents.remove(coordinate);
+                }
+                calendarView.add(eventPane, columnIndex, rowIndex, 1, rowSpan);
+                addedEvents.put(coordinate, eventPane);
+            }
+        } catch (IllegalValueException ive) {
+            throw new RuntimeException("Calendar is not correctly initialized.");
+        }
+    }
+
+    /**
+     * Upon receiving an AddressBookChangedEvent, update the event list accordingly.
+     */
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+        initEvents(calendarView, abce.data.getEventList());
+    }
+
     // Utility method that checks if testSlot is "between" startSlot and endSlot
     // Here "between" means in the visual sense in the grid: i.e. does the time slot
     // lie in the smallest rectangle in the grid containing startSlot and endSlot
@@ -205,8 +285,9 @@ public class CalendarView extends UiPart<Region> {
             this.duration = duration;
 
             view = new Region();
-            view.setMinSize(80, 20);
-            view.setPrefSize(120, 20);
+            view.setMinSize(80, 30);
+            view.setPrefSize(120, 30);
+            view.setMaxSize(150,40);
             view.getStyleClass().add("time-slot");
 
             selectedProperty().addListener((obs, wasSelected, isSelected) ->
@@ -246,5 +327,34 @@ public class CalendarView extends UiPart<Region> {
             return view;
         }
 
+    }
+
+    /**
+     * Class representing the coordinates on a gridpane.
+     */
+    private class Coordinate {
+        int x;
+        int y;
+
+        public Coordinate(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public int getX() {
+            return this.x;
+        }
+
+        public int getY() {
+            return this.y;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            return other == this
+                    || (other instanceof Coordinate)
+                    && this.x == ((Coordinate) other).getX()
+                    && this.y == ((Coordinate) other).getY();
+        }
     }
 }

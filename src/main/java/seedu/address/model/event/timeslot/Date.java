@@ -93,6 +93,10 @@ public class Date implements Comparable<Date> {
         }
     }
 
+    public LocalDate toLocalDate() {
+        return LocalDate.of(year, month,day);
+    }
+
     public int getDay() {
         return day;
     }

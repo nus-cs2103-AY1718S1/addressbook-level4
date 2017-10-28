@@ -9,7 +9,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -27,6 +29,8 @@ import seedu.address.model.event.timeslot.Timeslot;
  * Edits the details of an existing event in the address book.
  */
 public class EditEventCommand extends UndoableCommand {
+
+    private static final Logger logger = LogsCenter.getLogger(EditEventCommand.class);
 
     public static final String COMMAND_WORD = "eventedit";
 
@@ -83,7 +87,9 @@ public class EditEventCommand extends UndoableCommand {
         }
 
         ReadOnlyEvent eventToEdit = lastShownList.get(index.getZeroBased());
+        logger.info("event to edit is #" + index.getZeroBased()  + " " + eventToEdit.getAsText());
         Event editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
+        logger.info("event to change to is #" + index.getZeroBased()  + " " + editedEvent.getAsText());
 
         try {
             model.updateEvent(eventToEdit, editedEvent);

@@ -4,6 +4,8 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
@@ -113,6 +115,33 @@ public class Event implements ReadOnlyEvent {
     public void setDescription(Description description) {
         this.description.set(requireNonNull(description));
     }
+
+    /**
+     * Check if this event happens at an earlier time than the given timeslot.
+     * @return true if indeed earlier.
+     */
+    public boolean happensBefore(Timeslot slot) {
+        int comparison = this.getTimeslot().compareTo(slot);
+        return comparison < 0;
+    }
+
+    /**
+     * Obtain the duration of the event.
+     * @return a Duration object.
+     */
+    public Duration getDuration() {
+        return Duration.ofMinutes((long) this.getTiming().getEnd() - this.getTiming().getStart());
+    }
+
+    /**
+     * Obtain the start time of the event.
+     * @return a LocalTime object.
+     */
+    public LocalTime getStartTime() {
+        int start = this.getTiming().getStart();
+        return LocalTime.of(start/100, start%100);
+    }
+
 
     @Override
     public boolean equals(Object other) {

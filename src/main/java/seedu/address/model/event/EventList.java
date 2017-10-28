@@ -52,7 +52,7 @@ public class EventList implements Iterable<Event> {
         requireNonNull(editedEvent);
 
         Event targetEvent = new Event(target);
-        if (internalMap.containsValue(targetEvent)) {
+        if (!internalMap.containsValue(targetEvent)) {
             throw new EventNotFoundException();
         }
 

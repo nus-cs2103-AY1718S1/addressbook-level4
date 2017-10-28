@@ -45,6 +45,9 @@ public class EventListPanel extends UiPart<Region> {
         setEventHandlerForSelectionChangeEvent();
     }
 
+    /**
+     * Upon receiving an AddressBookChangedEvent, update the event list accordingly.
+     */
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         ObservableList<ReadOnlyEvent> eventList = abce.data.getEventList();
@@ -72,6 +75,7 @@ public class EventListPanel extends UiPart<Region> {
             eventListView.getSelectionModel().clearAndSelect(index);
         });
     }
+
 
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
