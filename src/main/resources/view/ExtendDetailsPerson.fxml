@@ -5,9 +5,8 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.shape.Line?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -16,18 +15,15 @@
             <Insets />
          </VBox.margin>
          <image>
-            <Image url="@../images/PEERSONAL_icon.png" />
+            <Image url="@../images/noPhoto.png" />
          </image>
       </ImageView>
-      <HBox prefHeight="24.0" prefWidth="300.0" spacing="5.0" translateY="30.0">
-         <children>
-            <Label fx:id="name" text="\$name" translateX="20.0" />
-         </children>
-      </HBox>
+      <Line endX="100.0" startX="-100.0" stroke="#176fb2" strokeWidth="2.0" translateY="35.0" />
+      <Label fx:id="name" text="\$name" textFill="WHITE" translateX="20.0" translateY="40.0" wrapText="true" />
       <ImageView fx:id="PhoneIcon" fitHeight="10.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" translateY="44.0" />
       <Label fx:id="phone" text="\$phone" translateX="20.0" translateY="30.0" />
-      <Label fx:id="address" text="\$address" translateX="20.0" translateY="30.0" />
-      <Label fx:id="email" text="\$email" translateX="20.0" translateY="30.0" />
+      <Label fx:id="address" prefWidth="300.0" text="\$address" translateX="20.0" translateY="30.0" wrapText="true" />
+      <Label fx:id="email" text="\$email" translateX="20.0" translateY="30.0" wrapText="true" />
       <Label fx:id="remark" text="\$remark" translateX="20.0" translateY="30.0" />
       <Label fx:id="birthday" text="\$birthday" translateX="20.0" translateY="30.0" />
       <Label fx:id="age" text="\$age" translateX="20.0" translateY="30.0" />
