@@ -19,6 +19,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowPersonListViewEvent;
+import seedu.address.commons.events.ui.ShowTagListViewEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -42,6 +44,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private TagListPanel tagListPanel;
     private RemarkListPanel remarkListPanel;
     private RemarkPanel remarkPanel;
     private Config config;
@@ -57,7 +60,7 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane personAndTagListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -138,7 +141,10 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        tagListPanel = new TagListPanel(logic.getTagList());
+        personAndTagListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        personAndTagListPanelPlaceholder.getChildren().add(tagListPanel.getRoot());
+        tagListPanel.setVisible(false);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -231,5 +237,19 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleShowPersonListEvent(ShowPersonListViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        personListPanel.setVisible(true);
+        tagListPanel.setVisible(false);
+    }
+
+    @Subscribe
+    private void handleShowTagListEvent(ShowTagListViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        personListPanel.setVisible(false);
+        tagListPanel.setVisible(true);
     }
 }
