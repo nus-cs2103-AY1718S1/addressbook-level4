@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ContactHub - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T11-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103T T11-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -23,7 +23,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for your ContactHub.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -33,20 +33,20 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`add`** `n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to ContactHub.
+* **`delete`** `3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#Commands[Commands] section below for details of each command.
 
-== Features
+== Commands
 
 ====
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items in square brackets are optional e.g `n/NAME [m/MOD]` can be used as `n/John Doe m/CS2101` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times e.g. `p/PHONE_NUMBER...` can be used as `p/12345678`, `p/12345678 p/87654321` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
@@ -54,48 +54,67 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person: `add` or `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER... b/BIRTHDAY e/EMAIL... a/ADDRESS [t/MOD]...` +
+Format: `a n/NAME p/PHONE_NUMBER... b/BIRTHDAY e/EMAIL... a/ADDRESS [t/MOD]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have multiple number of phone numbers and emails +
+A person can have any number of mods (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 b/10/10/1980 e/johnd@example.com a/John street, block 123, #01-01`
+* `a n/John Doe p/98765432 b/10/10/1980 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe m/CS2101 e/betsycrowe@example.com a/Newgate Prison p/1234567 b/18/08/1989 t/criminal`
+* `a n/Betsy Crowe m/CS2101 e/betsycrowe@example.com a/Newgate Prison p/1234567 b/18/08/1989 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` or `l`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` +
+Format: `l`
 
-=== Editing a person : `edit`
+=== Listing all mods : `listMod` or `lm` [Since v1.2]
+
+Shows a list of all mods in the address book. +
+Format: `listMod` +
+Format: `lt`
+
+=== Sorting all persons : `sort` or `s`
+
+Shows a list of all persons in the address book sorted in an alphabetical order. +
+Format: `sort` +
+Format: `z`
+
+=== Editing a person : `edit` or `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE]... [b/BIRTHDAY] [e/EMAIL]... [a/ADDRESS] [t/MOD]...` +
+Format: `e INDEX [n/NAME] [p/PHONE]... [b/BIRTHDAY] [e/EMAIL]... [a/ADDRESS] [t/MOD]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing mods, the existing mods of the person will be removed i.e adding of mods is not cumulative.
+* You can remove all the person's mods by typing `t/` without specifying any mods after it.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/91234567 b/09/09/1980 e/johndoe@example.com` or `e 1 p/91234567 b/09/09/1980 e/johndoe@example.com` +
+Edits the phone number, birthday and email address of the 1st person to be `91234567`, `09/09/1980` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` or `e 2 n/Betsy Crower m/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing mods.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` or `f`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+Format: `f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -107,15 +126,38 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `find John` +
+* `find John` or `f John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find Betsy Tim John` or `f Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+=== Locating persons by mods: `findMod` or `fm` [Since v1.2]
+
+Finds persons whose mods contain any of the given keywords. +
+Format: `findMod KEYWORD [MORE_KEYWORDS]` +
+Format: `t KEYWORD [MORE_KEYWORDS]` +
+
+****
+* The search is case insensitive. e.g `cs2103` will match `CS2103`
+* The order of the keywords does not matter. e.g. `CS2101 CS2103` will match `CS2103 CS2101`
+* Only the mods are searched.
+* Only full words will be matched e.g. `CS2103` will not match `CS2103T`
+* Mods matching at least one keyword will be returned (i.e. `OR` search). e.g. `CS2101 CS2103` will return
+  contacts with mods containing either 'CS2101', 'CS2103' or both
+****
+
+Examples:
+
+* `findMod CS2101` or `fm CS2101` +
+Returns `Alex Yeoh` and `Bernice Yu` with mods containing 'CS2101' inside
+* `findMod CS2101 CS2103` or `fm CS2101 CS2103` + +
+Returns any person having mods `CS2101` or `CS2103`
+
+=== Deleting a person : `delete` or `d`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` +
+Format: `d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -125,17 +167,18 @@ Format: `delete INDEX`
 
 Examples:
 
-* `list` +
-`delete 2` +
+* `list` or `l` +
+`delete 2` or `d 2` +
 Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+* `find Betsy` or `f Betsy` +
+`delete 1` or `d 1` +
+Deletes the 1st person in the results of the `find` or `f` command.
 
-=== Selecting a person : `select`
+=== Selecting a person : `select` or `sl`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` +
+Format: `s INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -145,17 +188,35 @@ Format: `select INDEX`
 
 Examples:
 
-* `list` +
-`select 2` +
+* `list` or `l` +
+`select 2` or `s 2` +
 Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* `find Betsy` or `f Betsy` +
+`select 1` or `s 1` +
+Selects the 1st person in the results of the `find` or `f` command.
 
-=== Listing entered commands : `history`
+=== Adding a photo to a Person: `addPhoto`
+
+Adds an image to the profile a Person in Contacthub. +
+Format: `addPhoto INDEX ap/photoUrl`
+
+****
+* Adds a photo to the Person of the specific `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index must be valid and a positive integer 1, 2, 3, ...
+* The URL of the photo stored in the internet must be valid.
+****
+
+Examples:
+
+* `addPhoto 1 p/https://www.facebook.com/AlexYeoh/photo1.jpg +
+Adds a photo of the given photo Url to the Person of index 1.
+
+=== Listing entered commands : `history` or `h`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` +
+Format: `h`
 
 [NOTE]
 ====
@@ -163,10 +224,11 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` or `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
+Format: `u`
 
 [NOTE]
 ====
@@ -175,57 +237,75 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+* `delete 1` or `d 1` +
+`list` or `l` +
+`undo` or `u` (reverses the `delete 1` or `d 1` command) +
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+* `select 1` or `s 1` +
+`list` or `l` +
+`undo` or `u` +
+The `undo` or `u` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+* `delete 1` or `d 1` +
+`clear` or `c` +
+`undo` or `u` (reverses the `clear` or `c` command) +
+`undo` or `u` (reverses the `delete 1` or `d 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` or `r`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+Reverses the most recent `undo` or `u` command. +
+Format: `redo` +
+Format: `r`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `delete 1` or `d 1`+
+`undo` or `u` (reverses the `delete 1` or `d 1` command) +
+`redo` or `r` (reapplies the `delete 1` or `d 1` command) +
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+* `delete 1` or `d 1` +
+`redo` or `r` +
+The `redo` or `r` command fails as there are no `undo` or `u` commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+* `delete 1` or `d 1` +
+`clear` or `c` +
+`undo` or `u` (reverses the `clear` or `c` command) +
+`undo` or `u` (reverses the `delete 1` or `d 1` command) +
+`redo` or `r` (reapplies the `delete 1` or `d 1` command) +
+`redo` or `r` (reapplies the `clear` or `c` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` or `c`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear` +
+Format: `c`
 
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` or `x`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` +
+Format: `x`
+
+=== Keyboard shortcuts [Since v1.2]
+
+Several keyboard keys have special operations when typing in command box. +
+
+* Escape: Clears the whole command box
+* Control: Relocates text cursor to the right completely
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+ContactHub data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+== Coming in v2.0
+
+=== Support for multiple phone numbers and emails
+=== Replacement of browser with extended details page
+=== Right-click functionality
+=== Note functionality
+=== Ability to add pictures for contacts
 
 == FAQ
 
@@ -234,19 +314,33 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
+* *Add* `add` or `a n/NAME p/PHONE_NUMBER... b/BIRTHDAY e/EMAIL... a/ADDRESS [t/MOD]...` +
+e.g. `add n/James Ho p/22224444 p/66669999 b/02/02/1992 e/jamesho@example.com e/jho@live.com a/123, Clementi Rd, 1234665 t/CS2101 t/colleague` +
+e.g. `a n/James Ho p/22224444 p/ 66669999 e/jamesho@example.com e/jho@live.com a/123, Clementi Rd, 1234665 t/CS2101 t/colleague` +
+* *Clear* : `clear` or `c`
 * *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
+e.g. `delete 3` +
+e.g. `d 3`
+* *Edit* : `edit` or `e INDEX [n/NAME] [p/PHONE_NUMBER]... [b/BIRTHDAY] [e/EMAIL]... [a/ADDRESS] [t/MOD]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com` +
+e.g. `e 2 n/James Lee e/jameslee@example.com`
+* *Find* : `find` or `f KEYWORD [MORE_KEYWORDS]` +
+e.g. `find James Jake` +
+e.g. `f James Jake`
+* *Find Mod* : `findMod` or `fm KEYWORD [MORE_KEYWORDS]` +
+e.g. `findMod CS2101 CS2103` +
+e.g. `fm CS2101 CS2103`
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *History* : `history` or `h`
+* *List* : `list` or `l`
+* *ListMod* : `listMod` or `lt`
+* *Redo* : `redo` or `r`
+* *Select* : `select` or `s INDEX` +
+e.g. `select 2` +
+e.g. `s 2`
+* *Sort* : `sort` or `sr`
+* *Undo* : `undo` or `u`
+
+=== Keyboard shortcuts
+* *Escape* : Clears the whole command box
+* *Control* : Relocates text cursor to the right completely

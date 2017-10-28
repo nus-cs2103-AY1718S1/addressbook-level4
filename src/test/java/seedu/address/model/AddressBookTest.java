@@ -16,9 +16,10 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.mod.Mod;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
 
 public class AddressBookTest {
 
@@ -50,7 +51,7 @@ public class AddressBookTest {
     public void resetData_withDuplicatePersons_throwsAssertionError() {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
-        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<Mod> newTags = new ArrayList<>(ALICE.getMods());
         AddressBookStub newData = new AddressBookStub(newPersons, newTags);
 
         thrown.expect(AssertionError.class);
@@ -70,15 +71,16 @@ public class AddressBookTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose persons and mods lists can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
-        private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<Mod> mods = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyTask> tasks = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Mod> mods) {
             this.persons.setAll(persons);
-            this.tags.setAll(tags);
+            this.mods.setAll(mods);
         }
 
         @Override
@@ -87,8 +89,11 @@ public class AddressBookTest {
         }
 
         @Override
-        public ObservableList<Tag> getTagList() {
-            return tags;
+        public ObservableList<ReadOnlyTask> getTaskList() { return tasks; }
+
+        @Override
+        public ObservableList<Mod> getTagList() {
+            return mods;
         }
     }
 

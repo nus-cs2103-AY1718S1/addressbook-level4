@@ -10,13 +10,17 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.mod.Mod;
+import seedu.address.model.mod.UniqueModList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.UniqueTaskList;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -25,7 +29,8 @@ import seedu.address.model.tag.UniqueTagList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
-    private final UniqueTagList tags;
+    private final UniqueTaskList tasks;
+    private final UniqueModList mods;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -36,13 +41,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
-        tags = new UniqueTagList();
+        tasks = new UniqueTaskList();
+        mods = new UniqueModList();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons and Mods in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -55,8 +61,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
-    public void setTags(Set<Tag> tags) {
-        this.tags.setTags(tags);
+    public void setTasks(List<? extends ReadOnlyTask> tasks) {
+        this.tasks.setTasks(tasks);
+    }
+
+    public void setTags(Set<Mod> mods) {
+        this.mods.setMods(mods);
     }
 
     /**
@@ -66,6 +76,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setTasks(newData.getTaskList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
@@ -78,23 +89,34 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Also checks the new person's mods and updates {@link #mods} with any new mods found,
+     * and updates the Mod objects in the person to point to those in {@link #mods}.
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
         syncMasterTagListWith(newPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // TODO: the mods master list will be updated even though the below line fails.
+        // This can cause the mods master list to have additional mods that are not modded to any person
         // in the person list.
         persons.add(newPerson);
     }
 
     /**
+     * Adds a person to the address book.
+     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     *
+     */
+    public void addTask(ReadOnlyTask t) {
+        Task newTask = new Task(t);
+        tasks.add(newTask);
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * {@code AddressBook}'s mod list will be updated with the mods of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *      another existing person in the list.
@@ -108,36 +130,49 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person editedPerson = new Person(editedReadOnlyPerson);
         syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // TODO: the mods master list will be updated even though the below line fails.
+        // This can cause the mods master list to have additional mods that are not modded to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
     }
 
     /**
-     * Ensures that every tag in this person:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
+     * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
+     *
+     * @throws TaskNotFoundException if {@code target} could not be found in the list.
+     */
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedReadOnlyTask)
+            throws TaskNotFoundException {
+        requireNonNull(editedReadOnlyTask);
+
+        Task editedTask = new Task(editedReadOnlyTask);
+        tasks.setTask(target, editedTask);
+    }
+
+    /**
+     * Ensures that every mod in this person:
+     *  - exists in the master list {@link #mods}
+     *  - points to a Mod object in the master list
      */
     private void syncMasterTagListWith(Person person) {
-        final UniqueTagList personTags = new UniqueTagList(person.getTags());
-        tags.mergeFrom(personTags);
+        final UniqueModList personTags = new UniqueModList(person.getMods());
+        mods.mergeFrom(personTags);
 
-        // Create map with values = tag object references in the master list
-        // used for checking person tag references
-        final Map<Tag, Tag> masterTagObjects = new HashMap<>();
-        tags.forEach(tag -> masterTagObjects.put(tag, tag));
+        // Create map with values = mod object references in the master list
+        // used for checking person mod references
+        final Map<Mod, Mod> masterTagObjects = new HashMap<>();
+        mods.forEach(mod -> masterTagObjects.put(mod, mod));
 
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
-        final Set<Tag> correctTagReferences = new HashSet<>();
-        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        // Rebuild the list of person mods to point to the relevant mods in the master mod list.
+        final Set<Mod> correctTagReferences = new HashSet<>();
+        personTags.forEach(mod -> correctTagReferences.add(masterTagObjects.get(mod)));
         person.setTags(correctTagReferences);
     }
 
     /**
-     * Ensures that every tag in these persons:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
+     * Ensures that every mod in these persons:
+     *  - exists in the master list {@link #mods}
+     *  - points to a Mod object in the master list
      *  @see #syncMasterTagListWith(Person)
      */
     private void syncMasterTagListWith(UniquePersonList persons) {
@@ -156,17 +191,43 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
-    //// tag-level operations
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws TaskNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeTask(ReadOnlyTask key) throws TaskNotFoundException {
+        if (tasks.remove(key)) {
+            return true;
+        } else {
+            throw new TaskNotFoundException();
+        }
+    }
 
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
+    /**
+     * Sorts the personList alphabetically
+     */
+    public void sortPersonListByName() {
+        persons.sortPersonListByName();
+    }
+
+    /**
+     * Sorts the taskList alphabetically
+     */
+    public void sortTaskListByName() {
+        tasks.sortTaskListByName();
+    }
+
+    //// mod-level operations
+
+    public void addMod(Mod t) throws UniqueModList.DuplicateModException {
+        mods.add(t);
     }
 
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + mods.asObservableList().size() +  " mods";
         // TODO: refine later
     }
 
@@ -176,8 +237,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public ObservableList<Tag> getTagList() {
-        return tags.asObservableList();
+    public ObservableList<ReadOnlyTask> getTaskList() {
+        return tasks.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Mod> getTagList() {
+        return mods.asObservableList();
     }
 
     @Override
@@ -185,12 +251,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.mods.equalsOrderInsensitive(((AddressBook) other).mods));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, mods);
     }
 }

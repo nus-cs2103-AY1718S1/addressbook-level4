@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -8,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -23,6 +26,7 @@ public class CommandBoxTest extends GuiUnitTest {
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
 
+    private CommandBox commandBoxForTest;
     private CommandBoxHandle commandBoxHandle;
 
     @Before
@@ -31,6 +35,7 @@ public class CommandBoxTest extends GuiUnitTest {
         Logic logic = new LogicManager(model);
 
         CommandBox commandBox = new CommandBox(logic);
+        commandBoxForTest = commandBox;
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
@@ -62,11 +67,43 @@ public class CommandBoxTest extends GuiUnitTest {
     public void commandBox_handleKeyPress() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
-        guiRobot.push(KeyCode.ESCAPE);
-        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
 
         guiRobot.push(KeyCode.A);
         assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+    }
+
+    @Test
+    public void handleKeyPress_escape() {
+        //empty command box
+        guiRobot.push(KeyCode.ESCAPE);
+        assertTrue("".equals(commandBoxHandle.getInput()));
+
+        //enter text in command box
+        guiRobot.write("Test");
+        //check if command box has correct input
+        assertTrue("Test".equals(commandBoxHandle.getInput()));
+        //push ESCAPE and check if command box is empty
+        guiRobot.push(KeyCode.ESCAPE);
+        assertFalse("Test".equals(commandBoxHandle.getInput()));
+        assertTrue("".equals(commandBoxHandle.getInput()));
+    }
+
+    @Test
+    public void handleKeyPress_control() {
+        //gets text field
+        TextField myTextField = commandBoxForTest.getCommandTextField();
+        //insert text for testing
+        guiRobot.write("Test");
+        assertTrue("Test".equals(myTextField.getText()));
+
+        //check if myTextField text cursor is same length as text in command box
+        assertTrue(myTextField.getCaretPosition() == commandBoxHandle.getInput().length());
+
+        //check if text cursor is flushed to the right after move left once and Control is pushed
+        guiRobot.push(KeyCode.LEFT);
+        guiRobot.push(KeyCode.CONTROL);
+        assertFalse(myTextField.getCaretPosition() == 3);
+        assertTrue(myTextField.getCaretPosition() == 4);
     }
 
     @Test

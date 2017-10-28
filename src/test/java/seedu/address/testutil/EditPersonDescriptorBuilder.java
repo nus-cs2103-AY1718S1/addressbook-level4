@@ -29,10 +29,11 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder(ReadOnlyPerson person) {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
-        descriptor.setPhone(person.getPhone());
-        descriptor.setEmail(person.getEmail());
+        descriptor.setPhones(person.getPhones());
+        descriptor.setBirthday(person.getBirthday());
+        descriptor.setEmails(person.getEmails());
         descriptor.setAddress(person.getAddress());
-        descriptor.setTags(person.getTags());
+        descriptor.setMods(person.getMods());
     }
 
     /**
@@ -50,11 +51,23 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withPhone(String phone) {
+    public EditPersonDescriptorBuilder withPhones(String... phones) {
         try {
-            ParserUtil.parsePhone(Optional.of(phone)).ifPresent(descriptor::setPhone);
+            descriptor.setPhones(ParserUtil.parsePhones(Arrays.asList(phones)));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone is expected to be unique.");
+            throw new IllegalArgumentException("phones are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
         }
         return this;
     }
@@ -62,9 +75,9 @@ public class EditPersonDescriptorBuilder {
     /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withEmail(String email) {
+    public EditPersonDescriptorBuilder withEmails(String ... emails) {
         try {
-            ParserUtil.parseEmail(Optional.of(email)).ifPresent(descriptor::setEmail);
+            descriptor.setEmails(ParserUtil.parseEmails(Arrays.asList(emails)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
@@ -84,14 +97,14 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * Parses the {@code mods} into a {@code Set<Mod>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
+    public EditPersonDescriptorBuilder withMods(String... mods) {
         try {
-            descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
+            descriptor.setMods(ParserUtil.parseMods(Arrays.asList(mods)));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tags are expected to be unique.");
+            throw new IllegalArgumentException("mods are expected to be unique.");
         }
         return this;
     }

@@ -3,55 +3,73 @@
     <persons>
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
+        <birthday isPrivate="false">14/05/1987</birthday>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <photo>images/defaultPhoto.png</photo>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
+        <birthday isPrivate="false">13/10/1991</birthday>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
+        <photo>images/defaultPhoto.png</photo>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
+        <birthday isPrivate="false">07/08/1981</birthday>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
+        <photo>images/defaultPhoto.png</photo>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
+        <birthday isPrivate="false">13/12/1996</birthday>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
+        <photo>images/defaultPhoto.png</photo>
     </persons>
     <persons>
         <name>Werner Meyer</name>
         <phone isPrivate="false">9482224</phone>
+        <birthday isPrivate="false">06/08/1989</birthday>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
+        <photo>images/defaultPhoto.png</photo>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
+        <birthday isPrivate="false">06/07/1980</birthday>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
+        <photo>images/defaultPhoto.png</photo>
     </persons>
     <persons>
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
+        <birthday isPrivate="false">11/11/1978</birthday>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
+        <photo>images/defaultPhoto.png</photo>
     </persons>
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
+        <birthday isPrivate="false">23/03/1993</birthday>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
+        <photo>images/defaultPhoto.png</photo>
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
+        <birthday isPrivate="false">10/05/1990</birthday>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
+        <photo>images/defaultPhoto.png</photo>
     </persons>
 </addressbook>

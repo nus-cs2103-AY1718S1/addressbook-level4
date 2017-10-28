@@ -4,16 +4,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.mod.UniqueModList;
 
-public class UniqueTagListTest {
+public class UniqueModListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        UniqueTagList uniqueTagList = new UniqueTagList();
+        UniqueModList uniqueModList = new UniqueModList();
         thrown.expect(UnsupportedOperationException.class);
-        uniqueTagList.asObservableList().remove(0);
+        uniqueModList.asObservableList().remove(0);
     }
 }

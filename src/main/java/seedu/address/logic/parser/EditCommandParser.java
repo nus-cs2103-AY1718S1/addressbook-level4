@@ -3,10 +3,11 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -18,7 +19,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.mod.Mod;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Phone;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -33,7 +36,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_BIRTHDAY, PREFIX_EMAIL,
+                        PREFIX_ADDRESS, PREFIX_MOD);
 
         Index index;
 
@@ -46,10 +50,12 @@ public class EditCommandParser implements Parser<EditCommand> {
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
-            ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
-            ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
+            parsePhonesForEdit(argMultimap.getAllValues(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhones);
+            ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY))
+                    .ifPresent(editPersonDescriptor::setBirthday);
+            parseEmailsForEdit(argMultimap.getAllValues(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmails);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
-            parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            parseTagsForEdit(argMultimap.getAllValues(PREFIX_MOD)).ifPresent(editPersonDescriptor::setMods);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -62,18 +68,48 @@ public class EditCommandParser implements Parser<EditCommand> {
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
+     * Parses {@code Collection<String> phones} into a {@code Set<Phone>} if {@code phones} is non-empty.
+     * If {@code phones} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Phone>} containing zero phones.
      */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
+    private Optional<Set<Phone>> parsePhonesForEdit(Collection<String> phones) throws IllegalValueException {
+        assert phones != null;
 
-        if (tags.isEmpty()) {
+        if (phones.isEmpty()) {
             return Optional.empty();
         }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
+        Collection<String> phoneSet = phones.size() == 1 && phones.contains("") ? Collections.emptySet() : phones;
+        return Optional.of(ParserUtil.parsePhones(phoneSet));
+    }
+
+    /**
+     * Parses {@code Collection<String> emails} into a {@code Set<Email>} if {@code emails} is non-empty.
+     * If {@code emails} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Email>} containing zero emails.
+     */
+    private Optional<Set<Email>> parseEmailsForEdit(Collection<String> emails) throws IllegalValueException {
+        assert emails != null;
+
+        if (emails.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> emailSet = emails.size() == 1 && emails.contains("") ? Collections.emptySet() : emails;
+        return Optional.of(ParserUtil.parseEmails(emailSet));
+    }
+
+    /**
+     * Parses {@code Collection<String> mods} into a {@code Set<Mod>} if {@code mods} is non-empty.
+     * If {@code mods} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Mod>} containing zero mods.
+     */
+    private Optional<Set<Mod>> parseTagsForEdit(Collection<String> mods) throws IllegalValueException {
+        assert mods != null;
+
+        if (mods.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> modSet = mods.size() == 1 && mods.contains("") ? Collections.emptySet() : mods;
+        return Optional.of(ParserUtil.parseMods(modSet));
     }
 
 }

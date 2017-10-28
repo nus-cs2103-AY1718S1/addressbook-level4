@@ -1,9 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="DarkTheme.css">
+    <link rel="stylesheet" href="DarkThemeCommands.css">
 </head>
 
 <body class="background">
+<!-- <img src="https://i.imgur.com/BduVh7O.png" draggable="false" alt="ContactHub Logo"> -->
+<h1>ContactHub Commands</h1>
+<ul>
+    <li><span class="command">add</span>: Adds a person to the address book.<br>
+        <span class="command">Format</span>: add n/NAME p/PHONE e/EMAIL a/ADDRESS [t/MOD]...<br></li>
+    <li><span class="command">edit</span>: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.<br>
+        <span class="command">Format</span>: edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/MOD]...<br></li>
+    <li><span class="command">find</span>: Finds persons whose names contain any of the given keywords.<br>
+        <span class="command">Format</span>: find KEYWORD [MORE_KEYWORDS]...<br></li>
+    <li><span class="command">findmod</span>: Finds mods whose names contain any of the given keywords.<br>
+        <span class="command">Format</span>: findmod KEYWORD [MORE_KEYWORDS]...<br></li>
+    <li><span class="command">listmod</span>: Shows a list of all persons in the address book.<br></li>
+    <li><span class="command">delete</span>: Deletes the specified person from the address book.<br>
+        <span class="command">Format</span>: delete INDEX<br></li>
+    <li><span class="command">select</span>: Selects the person identified by the index number used in the last person listing.<br>
+        <span class="command">Format</span>: select INDEX<br></li>
+    <li><span class="command">addphoto</span>: Adds a photo to a person in the address book using the index of the person in the latest listing.<br>
+        <span class="command">Format</span>: addphoto INDEX ap/IMAGE_URL<br></li>
+    <li><span class="command">help</span>: Opens the User Guide.<br></li>
+    <li><span class="command">list</span>: Shows a list of all persons in the address book.<br></li>
+    <li><span class="command">clear</span>: Clears all entries from the address book.<br></li>
+    <li><span class="command">undo</span>: Restores the address book to the state before the previous undoable command was executed.<br></li>
+    <li><span class="command">redo</span>: Reverses the most recent undo command.<br></li>
+    <li><span class="command">exit</span>: Exits the program.<br></li>
+</ul>
 </body>
 </html>
+

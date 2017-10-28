@@ -17,13 +17,13 @@ public class PersonCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        // no tags
+        // no mods
         Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
         PersonCard personCard = new PersonCard(personWithNoTags, 1);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithNoTags, 1);
 
-        // with tags
+        // with mods
         Person personWithTags = new PersonBuilder().build();
         personCard = new PersonCard(personWithTags, 2);
         uiPartRule.setUiPart(personCard);
@@ -33,9 +33,9 @@ public class PersonCardTest extends GuiUnitTest {
         guiRobot.interact(() -> {
             personWithTags.setName(ALICE.getName());
             personWithTags.setAddress(ALICE.getAddress());
-            personWithTags.setEmail(ALICE.getEmail());
-            personWithTags.setPhone(ALICE.getPhone());
-            personWithTags.setTags(ALICE.getTags());
+            personWithTags.setEmails(ALICE.getEmails());
+            personWithTags.setPhones(ALICE.getPhones());
+            personWithTags.setTags(ALICE.getMods());
         });
         assertCardDisplay(personCard, personWithTags, 2);
     }

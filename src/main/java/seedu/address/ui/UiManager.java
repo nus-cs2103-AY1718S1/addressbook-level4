@@ -25,7 +25,7 @@ public class UiManager extends ComponentManager implements Ui {
 
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
 
-    public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
+    public static final String FILE_OPS_ERROR_DIALOG_SMODE_TITLE = "File Op Error";
     public static final String FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE = "Could not save data";
     public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
 
@@ -72,7 +72,7 @@ public class UiManager extends ComponentManager implements Ui {
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
         final String content = details + ":\n" + cause.toString();
-        showAlertDialogAndWait(AlertType.ERROR, FILE_OPS_ERROR_DIALOG_STAGE_TITLE, description, content);
+        showAlertDialogAndWait(AlertType.ERROR, FILE_OPS_ERROR_DIALOG_SMODE_TITLE, description, content);
     }
 
     private Image getImage(String imagePath) {

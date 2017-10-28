@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= ContactHub - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T11-B2/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103T T11-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -68,7 +68,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103AUG2017-T11-B2/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103AUG2017-T11-B2/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -345,6 +345,153 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+
+// tag::findMod[]
+=== Find Mod mechanism
+
+The Find Mod mechanism is implemented using the `FindModCommand`, which resides inside `Logic`. It supports listing all the contacts in the address book associated with.
+
+When the user requests for contacts associated to a mod name(s), the list of contacts will be created and shown.
+
+`FindModCommand` inherits from Command and is implemented this way.
+[source,java]
+----
+public class FindModCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... findMod logic ...
+        }
+}
+----
+
+Suppose that the user has just launched ContactHub. The contact list will be arranged based on the add order at the beginning.
+
+image::ListCommand.png[width="300"]
+
+The user executes `FindModCommand`, the list will now show the contacts associated to the mod name(s) keyed in.
+
+image::FindModCommand.png[width="300"]
+
+The user can continue to add more mod names for the FindModCommand, and if any contacts contains any of the mod name(s) keyed in, they will show up
+
+[NOTE]
+Upon exiting ContactHub, the contact list will not be filtered for according to the last mod name(s) keyed in in the next launch.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `FindModCommand` +
+**Alternative 1 (current choice):** `FindModCommand` inherits from `Command`. +
+**Pros:** After filtering, the contact list remains will only show contacts associated to the mod name(s) keyed in. +
+**Cons:** The contact list cannot be saved after filtering. +
+**Alternative 2:** Implement undo/redo for `FilterCommand`. +
+**Pros:** The user can switch between the filtered contact list and the original contact list.  +
+**Cons:** `FindModCommand` must be extended from `UndoableCommand` and must remember to call `super.execute()`, or lose the ability to undo/redo.
+
+---
+
+**Aspect:** How findMod executes +
+**Alternative 1 (current choice):** Uses the Java Collections.stream() method to filter the contact list. +
+**Pros:** Easy to implement. +
+**Cons:** It is difficult to debug. +
+**Alternative 2:** Creates a new findMod algorithm. +
+**Pros:** It is easier to debug. +
+**Cons:** We must ensure that the algorithm's logic is right and efficient.
+// end::findMod[]
+
+// tag::sort[]
+=== Sort mechanism
+
+The sort mechanism is implemented using the `SortCommand`, which resides inside `Logic`. It supports sorting all the contacts in the address book in an alphabetical order.
+
+When the user requests for ContactHub to be sorted, the list is sorted by implementing the `sortPersonListByName()` method from `Model`.
+In the `sortPersonListByName()` method, the names of all persons in the internalList, which is an Observable List containing of Person, is compared using a comparator.
+
+`SortCommand` inherits from Command and is implemented this way.
+[source,java]
+----
+public class SortCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... sort logic ...
+    }
+}
+----
+
+The `sortPersonListByName()` method is implemented this way.
+[source,java]
+----
+public void sortPersonListByName() {
+        Collections.sort(internalList, Comparator.comparing(firstPerson -> firstPerson.getName().fullName));
+}
+----
+
+Suppose that the user has just launched ContactHub. The contact list will be arranged based on the add order at the beginning.
+
+image::ListCommand.png[width="300"]
+
+The user executes `SortCommand`, the list is now sorted alphabetically.
+
+image::SortCommand.png[width="300"]
+
+As the user continues to use the program, the contact list remains sorted in an alphabetical order.
+
+[NOTE]
+Upon exiting ContactHub, the contact list will not be sorted in the next subsequent launches.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** `SortCommand` inherits from `Command`. +
+**Pros:** After sorting, the contact list remains in an alphabetical order. +
+**Cons:** The contact list cannot be saved in the sorted order. +
+**Alternative 2:** Implement undo/redo for `SortCommand`. +
+**Pros:** The user can switch between the sorted contact list and the original contact list.  +
+**Cons:** `SortCommand` must be extended from `UndoableCommand` and must remember to call `super.execute()`, or lose the ability to undo/redo.
+
+---
+
+**Aspect:** How sort executes +
+**Alternative 1 (current choice):** Uses the Java Collections.sort() method to sort the contact list in an alphabetical order. +
+**Pros:** Easy to implement. +
+**Cons:** It is difficult to debug. +
+**Alternative 2:** Creates a new sort algorithm. +
+**Pros:** It is easier to debug. +
+**Cons:** We must ensure that the algorithm's logic is right and efficient.
+// end::sort[]
+
+=== Keyboard shortcuts
+
+The keyboard shortcut function is facilitated mainly by the `commandBox` class which resides in the `UI` component.
+ It provides the user several functions when typing in the command box using different key bindings of the keyboard.
+
+The `commandBox` class inherits the abstract class of `UIPart` which represents a distinct part of the `UI` like panels, windows and dialogs.
+The `commandBox` class also instantiates an object of `TextField` class which is a JavaFX FXML, an XML-based language for building a user interface.
+The `TextField` class inherits the `TextInputControl` class which is the base class for text inputs.
+
+Suppose the user wants to delete everything in the command box. The user then executes the escape key on the user's keyboard. The `commandBox` class
+ would then call the method setText() in the `TextInputControl` class, which is a superclass of `TextField` class, which
+then sets the text in the command box to be empty. Calling it multiple times would involve the same result.
+
+In future, there would be more keyboard shortcuts like displaying all the prefixes of the AddCommand in the command box
+ or keyboard shortcuts that would make a help guide appear.
+
+==== Design Considerations
+
+**Aspects:** Types of key bindings that relocates text cursor to the right. +
+**Alternative 1 (current choice):** Use Control key as key binding. +
+**Pros:** Easy key to execute when typing. +
+**Cons:** May be executed unintentionally when executing windows commands. +
+**Alternative 2:** Double click Right key as key binding. +
+**Pros:** Easier to understand and execute for users. +
+**Cons:** More difficult to implement.
+
+---
+
+**Aspects:** Data structure to support keyboard shortcuts. +
+**Alternative 1 (current choice):** Implements in `commandBox` class using methods from `TextField` class. +
+**Pros:** Easy to implement. +
+**Cons:** May be hard for new developers to understand since there is no keyboard shortcuts class.
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -363,6 +510,41 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Deselect Function (To be added)
+
+The implementation of this function is largely
+to facilitate the usage of the default panel (default.html called by BrowserPanel.java) as a quick reference
+for ContactHub commands. This was inspired by the IntelliJ default text when no files are selected in a project.
+
+The deselect function will be implemented through the clearSelection() method in the SelectionModel class. The initial planned implementation of this will be through the CLI but
+GUI support is also planned. We want the deselection to be intuitive and work exactly like the pre-existing selection function.
+
+Initially, a splash screen was considered to show the commands. However, this would not be ideal as users would not be able to return back to it. In addition, it would slow down the startup time for experienced users. For the purpose of deselection itself, there is not really any alternative and in the absence of a command reference default panel, there is little purpose for it.
+
+=== Google Maps Functionality
+
+The Google Maps Functionality is facilitated mainly by the `BrowserPanel` class which resides in the `UI` component.
+ It provides the user the Google Maps location of a contact's address just by selecting them.
+
+The `BrowserPanel` class inherits the abstract class of `UIPart` which represents a distinct part of the `UI` like panels, windows and dialogs.
+The `BrowserPanel` class also instantiates an object of `WebView` class which is a JavaFX FXML, an XML-based language for building a user interface.
+The `WebView` class provides access to the `WebEngine` which is the base class for loading Web pages, creating their document models, applying styles as necessary,
+and runs JavaScript on pages. It provides access to the document of the current page, amd enables the Java application and JavaScript code of the page to communicate.
+
+The HTML file "LocatedAddress.html" has been created to load whenever a contact has been selected. It also hold the Javascript function
+to allow pinpointing of the contact's address.
+
+document.goToLocation = function goToLocation(searchString) {
+                document.geocoder.geocode( {'address': searchString}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        //....load located address on Google Maps
+                    } else {
+                        alert("Geocode was not successful for the following reason: " + status);
+                    }
+                });
+            }
+Should the above function fail to load a location for the contact's address, an alert will be sent to indicate that there is an issue
 
 == Documentation
 
@@ -459,7 +641,7 @@ Here are the steps to create a new release.
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
+.  Mod the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
 === Managing Dependencies
@@ -467,251 +649,6 @@ Here are the steps to create a new release.
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
-
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == User Stories
@@ -729,7 +666,73 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |search for another user's contact number by the person's name |
+
+|`* * *` |user |be able to create contacts without filling out every detail |
+
+|`* * *` |user |add a home or office number |prevent the need of creating another person of same name
+
+|`* * *` |user |add multiple phone numbers or addresses to a person|
+
+|`* * *` |user |add multiple mods to a person |my contacts are more recognizable
+
+|`* * *` |user |have different coloured mods |differentiate my contacts easier
+
+|`* * *` |user |edit the contact once added |change my errors
+
+|`* *` |user |be able to interact with specific details for each person |
+
+|`* *` |user |send email to a person |communicate with that contact
+
+|`* *` |user |sort by first or last name |
+
+|`* *` |new user |have introduction page |see the basic functions
+
+|`* *` |user |have a better web function than Google search when i select a person|
+
+|`* *` |user |click on specific details for each person |see more feature of each detail
+
+|`* *` |user |right-click on the person |perform more functions for each person
+
+|`* *` |user |know which persons are mutual friends |
+
+|`* *` |calculated user |have statistics of selecting each person |know how often i select a person overtime
+
+|`* *` |user |favourite a person |have ease of access to that person
+
+|`* *` |user |import contacts from iCloud |
+
+|`* *` |user |have suggestions for persons |have ease of access base on the frequency of accessing the person
+
+|`* *` |user |have the list to be updated immediately when i type the letters one by one |
+
+|`* *` |user |have keyboard shortcuts |
+
+|`* *` |user |see the top 3 more searched persons at the top |have ease of access
+
+|`* *` |user |add birthdays to each person |
+
+|`* *` |user |search by mods |filter by mods only
+
+|`* *` |user |add notes to each person |remind myself of things related to the person
+
+|`* *` |new user |choose font size |
+
+|`* *` |user |add friends |able to contact or communicate with them better
+
+|`* *` |user |have the command message box to be better suited for history |
+
+|`* *` |user |have a display picture for each person |recognise each persone easier
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`*` |user |search the address of a person on Google Maps |
+
+|`*` |user |click on the person |see the details of the person more specifically
+
+|`*` |user |see the command format as soon as i type the command |
+
+|`*` |new user |not have example contacts |
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
@@ -739,7 +742,154 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `ContactHub` and the *Actor* is the `user`, unless specified otherwise)
+
+
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1.  User requests for help.
+2.  ContactHub shows the UserGuide to the user.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User adds a person to ContactHub
+2.  ContactHub adds the person to the list
+3.  ContactHub displays a successful added message with the person's details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format for add person is incorrect.
+[none]
+** 1a1. ContactHub shows an error message
+** 1a2. User adds a person to the ContactHub
++
+Steps 1a1-1a2 are repeated until the details are in the correct format.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: List
+
+*MSS*
+
+1. User requests to list persons
+2. ContactHub shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort
+
+*MSS*
+
+1. User requests to sort persons
+2. ContactHub shows a list of persons sorted alphabetically.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: ListMod
+
+*MSS*
+
+1. User requests to list all mods in the address book.
+2. ContactHub shows a list of mods in the address book.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1. User requests to list persons
+2. ContactHub shows a list of persons
+3. User requests to edit a specific person in the list
+4. User keys in the new details of the person
+5. ContactHub stores the new details of the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid
++
+[none]
+** 3a1. ContactHub shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: Find person(s)
+
+*MSS*
+
+1.  User requests to find a person(s)
+2.  ContactHub displays a list of person(s) with the same name
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. ContactHub does not contain the person.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find mod(s)
+
+*MSS*
+
+1.  User requests to find a person(s) with the searched mod name
+2.  ContactHub displays a list of person(s) with the mod name keyed in
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. ContactHub does not contain anyone with the mod.
++
+Use case ends.
 
 [discrete]
 === Use case: Delete person
@@ -747,9 +897,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ContactHub shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  ContactHub deletes the person
 +
 Use case ends.
 
@@ -763,11 +913,114 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ContactHub shows an error message.
 +
 Use case resumes at step 2.
 
-{More to be added}
+
+[discrete]
+=== Use case: Select person
+
+*MSS*
+
+1.  User requests to list persons
+2.  ContactHub shows a list of persons
+3.  User requests to select a person in the list
+4.  ContactHub opens a Google Search of that person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. ContactHub shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: History
+
+*MSS*
+
+1. User requests for command history
+2. ContactHub displays a list of command history
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. ContactHub does not have any command history.
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Undo
+
+*MSS*
+
+1. User requests for undo
+2. ContactHub undo the last undoable command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. ContactHub has no more undoable command
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1. User requests for redo
+2. ContactHub redo the last undoable command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. ContactHub has no more undoable command
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Clear
+
+*MSS*
+
+1. User requests to clear ContactHub
+2. ContactHub clears all the data
++
+Use case ends.
+
+
+[discrete]
+=== Use case: Exit
+
+*MSS*
+
+1. User requests to exit ContactHub
+2. ContactHub closes the program
++
+Use case ends.
+
+{more to be added}
 
 [appendix]
 == Non Functional Requirements
@@ -775,6 +1028,18 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  User has access to alphanumeric inputs to use command line interface.
+.  User has access to Internet to use Google search engine services.
+.  User is able to access instructions on how to use the app.
+.  User has access to a monitor in order to view the app.
+.  User has access to a working power source in order to power up the device running the application.
+.  Response time for any command should be within 5 seconds.
+.  The source code should be open source.
+.  Mean time to recovery must be 10 seconds maximum.
+.  Must be user friendly even for non IT-savvy, conforms to user standards.
+.  Conforms to coding standards.
+.  All data must be protectively marked and stored
+.  User must have basic English literacy.
 
 {More to be added}
 
@@ -795,19 +1060,17 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
+[[main-success-scenario]]
+Main Success Scenario (MSS)
 
-*Product Name*
+....
+The most straightforward interaction for a given use case, which assumes that nothing goes wrong.
+....
 
-Author: ...
+[[extensions]]
+Extensions
 
-Pros:
+....
+Extensions are "add-on"s to the MSS that describe exceptional/alternative flow of events.
+....
 
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
