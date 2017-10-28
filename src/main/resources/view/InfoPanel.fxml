@@ -29,8 +29,20 @@
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">
             <children>
-               <Text fx:id="phoneField" fill="gray" styleClass="window_small_label" text="HP: " />
-               <Label fx:id="phone" styleClass="window_small_label" text="\$phone" />
+               <Text fx:id="handphoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="handphone" styleClass="window_small_label" text="\$phone" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="homePhoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="homePhone" styleClass="window_small_label" text="\$phone" />
+            </children>
+         </TextFlow>
+         <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+               <Text fx:id="officePhoneField" fill="gray" styleClass="window_small_label" text="HP: " />
+               <Label fx:id="officePhone" styleClass="window_small_label" text="\$phone" />
             </children>
          </TextFlow>
          <TextFlow prefHeight="50.0" prefWidth="400.0">

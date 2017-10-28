@@ -29,7 +29,9 @@ public class InfoPanel extends UiPart<Region> {
 
     private static final String FXML = "InfoPanel.fxml";
     private static final String MESSAGE_INFO_ADDRESS_FIELD = "Address: ";
-    private static final String MESSAGE_INFO_PHONE_FIELD = "HP: ";
+    private static final String MESSAGE_INFO_HANDPHONE_FIELD = "HP: ";
+    private static final String MESSAGE_INFO_HOME_PHONE_FIELD = "Home: ";
+    private static final String MESSAGE_INFO_OFFICE_PHONE_FIELD = "Office: ";
     private static final String MESSAGE_INFO_EMAIL_FIELD = "Email: ";
     private static final String MESSAGE_INFO_POSTAL_CODE_FIELD = "S";
     private static final String MESSAGE_INFO_CLUSTER_FIELD = "General Location: ";
@@ -50,9 +52,17 @@ public class InfoPanel extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
-    private Text phoneField;
+    private Text handphoneField;
     @FXML
-    private Label phone;
+    private Label handphone;
+    @FXML
+    private Text homePhoneField;
+    @FXML
+    private Label homePhone;
+    @FXML
+    private Text officePhoneField;
+    @FXML
+    private Label officePhone;
     @FXML
     private Text addressField;
     @FXML
@@ -109,7 +119,9 @@ public class InfoPanel extends UiPart<Region> {
      * @param person the selected person to display the full info of.
      */
     public void loadPersonInfo(ReadOnlyPerson person) {
-        phoneField.setText(MESSAGE_INFO_PHONE_FIELD);
+        handphoneField.setText(MESSAGE_INFO_HANDPHONE_FIELD);
+        homePhoneField.setText(MESSAGE_INFO_HOME_PHONE_FIELD);
+        officePhoneField.setText(MESSAGE_INFO_OFFICE_PHONE_FIELD);
         addressField.setText(MESSAGE_INFO_ADDRESS_FIELD);
         emailField.setText(MESSAGE_INFO_EMAIL_FIELD);
         postalCodeField.setText(MESSAGE_INFO_POSTAL_CODE_FIELD);
@@ -138,7 +150,9 @@ public class InfoPanel extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
-        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        handphone.textProperty().bind(Bindings.convert(person.handphoneProperty()));
+        homePhone.textProperty().bind(Bindings.convert(person.homePhoneProperty()));
+        officePhone.textProperty().bind(Bindings.convert(person.officePhoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         postalCode.textProperty().bind(Bindings.convert(person.postalCodeProperty()));
         cluster.textProperty().bind(Bindings.convert(person.clusterProperty()));
@@ -208,7 +222,9 @@ public class InfoPanel extends UiPart<Region> {
 
         InfoPanel infoPanel = (InfoPanel) other;
         return name.getText().equals(infoPanel.name.getText())
-                && phone.getText().equals(infoPanel.phone.getText())
+                && handphone.getText().equals(infoPanel.handphone.getText())
+                && homePhone.getText().equals(infoPanel.homePhone.getText())
+                && officePhone.getText().equals(infoPanel.officePhone.getText())
                 && address.getText().equals(infoPanel.address.getText())
                 && postalCode.getText().equals(infoPanel.postalCode.getText())
                 && cluster.getText().equals(infoPanel.cluster.getText())
