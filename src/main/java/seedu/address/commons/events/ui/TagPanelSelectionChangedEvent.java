@@ -4,7 +4,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.TagCard;
 
 /**
- * Represents a selection change in the Person List Panel
+ * Represents a selection change in the Tag List Panel
  */
 public class TagPanelSelectionChangedEvent extends BaseEvent {
 
