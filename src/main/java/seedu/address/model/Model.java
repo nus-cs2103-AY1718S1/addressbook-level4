@@ -57,7 +57,7 @@ public interface Model {
     /**
      * Sorts person according to user input option
      */
-    void sortPerson(int type) throws InvalidSortTypeException;
+    void sortPerson(String type) throws InvalidSortTypeException;
 
     /**
      * Returns an unmodifiable view of the filtered person list
