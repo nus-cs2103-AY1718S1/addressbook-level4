@@ -27,16 +27,16 @@ public class SortCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         switch (field) {
-            case "name":
-            case "phone":
-            case "email":
-            case "address":
-            case "tag":
-            case "meeting":
-                model.sort(field);
-                break;
-            default:
-                throw new CommandException(MESSAGE_INVALID_FIELD);
+        case "name":
+        case "phone":
+        case "email":
+        case "address":
+        case "tag":
+        case "meeting":
+            model.sort(field);
+            break;
+        default:
+            throw new CommandException(MESSAGE_INVALID_FIELD);
         }
         return new CommandResult(MESSAGE_SORT_PERSON_SUCCESS);
     }

@@ -109,112 +109,115 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    /**
+     * Sorts the list by field.
+     */
     public void sort(String field) {
         switch (field) {
-            case "name":
-                Collections.sort(internalList, new Comparator<Person>() {
-                    public int compare(Person one, Person other) {
-                        String oneName = one.getName().toString().toLowerCase();
-                        String otherName = other.getName().toString().toLowerCase();
-                        return oneName.compareTo(otherName);
-                    }
-                });
-                break;
-            case "phone":
-                Collections.sort(internalList, new Comparator<Person>() {
-                    public int compare(Person one, Person other) {
-                        return one.getPhone().toString().compareTo(other.getPhone().toString());
-                    }
-                });
-                break;
-            case "email":
-                Collections.sort(internalList, new Comparator<Person>() {
-                    public int compare(Person one, Person other) {
-                        String oneEmail = one.getEmail().toString().toLowerCase();
-                        String otherEmail = other.getEmail().toString().toLowerCase();
-                        String noEmail = "no email";
-                        if (oneEmail.equals(noEmail)) {
-                            if (otherEmail.equals(noEmail)) {
-                                return 0;
-                            } else {
-                                return 1;
-                            }
-                        } else if (otherEmail.equals(noEmail)) {
-                            return -1;
+        case "name":
+            Collections.sort(internalList, new Comparator<Person>() {
+                public int compare(Person one, Person other) {
+                    String oneName = one.getName().toString().toLowerCase();
+                    String otherName = other.getName().toString().toLowerCase();
+                    return oneName.compareTo(otherName);
+                }
+            });
+            break;
+        case "phone":
+            Collections.sort(internalList, new Comparator<Person>() {
+                public int compare(Person one, Person other) {
+                    return one.getPhone().toString().compareTo(other.getPhone().toString());
+                }
+            });
+            break;
+        case "email":
+            Collections.sort(internalList, new Comparator<Person>() {
+                public int compare(Person one, Person other) {
+                    String oneEmail = one.getEmail().toString().toLowerCase();
+                    String otherEmail = other.getEmail().toString().toLowerCase();
+                    String noEmail = "no email";
+                    if (oneEmail.equals(noEmail)) {
+                        if (otherEmail.equals(noEmail)) {
+                            return 0;
                         } else {
-                            return oneEmail.compareTo(otherEmail);
+                            return 1;
                         }
+                    } else if (otherEmail.equals(noEmail)) {
+                        return -1;
+                    } else {
+                        return oneEmail.compareTo(otherEmail);
                     }
-                });
-                break;
-            case "address":
-                Collections.sort(internalList, new Comparator<Person>() {
-                    public int compare(Person one, Person other) {
-                        String oneAddress = one.getAddress().toString().toLowerCase();
-                        String otherAddress = other.getAddress().toString().toLowerCase();
-                        String noAddress = "no address";
-                        if (oneAddress.equals(noAddress)) {
-                            if (otherAddress.equals(noAddress)) {
-                                return 0;
-                            } else {
-                                return 1;
-                            }
-                        } else if (otherAddress.equals(noAddress)) {
-                            return -1;
+                }
+            });
+            break;
+        case "address":
+            Collections.sort(internalList, new Comparator<Person>() {
+                public int compare(Person one, Person other) {
+                    String oneAddress = one.getAddress().toString().toLowerCase();
+                    String otherAddress = other.getAddress().toString().toLowerCase();
+                    String noAddress = "no address";
+                    if (oneAddress.equals(noAddress)) {
+                        if (otherAddress.equals(noAddress)) {
+                            return 0;
                         } else {
-                            return oneAddress.compareTo(otherAddress);
+                            return 1;
+                        }
+                    } else if (otherAddress.equals(noAddress)) {
+                        return -1;
+                    } else {
+                        return oneAddress.compareTo(otherAddress);
+                    }
+                }
+            });
+            break;
+        case "tag":
+            Collections.sort(internalList, new Comparator<Person>() {
+                public int compare(Person one, Person other) {
+                    Set<Tag> oneTags = one.getTags();
+                    ArrayList<String> oneTagsString = new ArrayList<String>();
+                    for (Tag tag : oneTags) {
+                        oneTagsString.add(tag.toString().toLowerCase());
+                    }
+                    Collections.sort(oneTagsString);
+                    Set<Tag> otherTags = other.getTags();
+                    ArrayList<String> otherTagsString = new ArrayList<String>();
+                    for (Tag tag : otherTags) {
+                        otherTagsString.add(tag.toString().toLowerCase());
+                    }
+                    Collections.sort(otherTagsString);
+                    for (int i = 0; i < Math.min(oneTagsString.size(), otherTagsString.size()); i++) {
+                        if (!(oneTagsString.get(i).equals(otherTagsString.get(i)))) {
+                            return oneTagsString.get(i).compareTo(otherTagsString.get(i));
                         }
                     }
-                });
-                break;
-            case "tag":
-                Collections.sort(internalList, new Comparator<Person>() {
-                    public int compare(Person one, Person other) {
-                        Set<Tag> oneTags = one.getTags();
-                        ArrayList<String> oneTagsString = new ArrayList<String>();
-                        for (Tag tag : oneTags) {
-                            oneTagsString.add(tag.toString().toLowerCase());
-                        }
-                        Collections.sort(oneTagsString);
-                        Set<Tag> otherTags = other.getTags();
-                        ArrayList<String> otherTagsString = new ArrayList<String>();
-                        for (Tag tag : otherTags) {
-                            otherTagsString.add(tag.toString().toLowerCase());
-                        }
-                        Collections.sort(otherTagsString);
-                        for (int i = 0; i < Math.min(oneTagsString.size(), otherTagsString.size()); i++) {
-                            if (!(oneTagsString.get(i).equals(otherTagsString.get(i)))) {
-                                return oneTagsString.get(i).compareTo(otherTagsString.get(i));
-                            }
-                        }
-                        return 0;
+                    return 0;
+                }
+            });
+            break;
+        default:
+            // case "meeting"
+            Collections.sort(internalList, new Comparator<Person>() {
+                public int compare(Person one, Person other) {
+                    Set<Meeting> oneMeetings = one.getMeetings();
+                    ArrayList<String> oneMeetingsString = new ArrayList<String>();
+                    for (Meeting meeting : oneMeetings) {
+                        oneMeetingsString.add(meeting.toString().toLowerCase());
                     }
-                });
-                break;
-            default:
-                // case "meeting"
-                Collections.sort(internalList, new Comparator<Person>() {
-                    public int compare(Person one, Person other) {
-                        Set<Meeting> oneMeetings = one.getMeetings();
-                        ArrayList<String> oneMeetingsString = new ArrayList<String>();
-                        for (Meeting meeting : oneMeetings) {
-                            oneMeetingsString.add(meeting.toString().toLowerCase());
-                        }
-                        Collections.sort(oneMeetingsString);
-                        Set<Meeting> otherMeetings = other.getMeetings();
-                        ArrayList<String> otherMeetingsString = new ArrayList<String>();
-                        for (Meeting meeting : otherMeetings) {
-                            otherMeetingsString.add(meeting.toString().toLowerCase());
-                        }
-                        Collections.sort(otherMeetingsString);
-                        for (int i = 0; i < Math.min(oneMeetingsString.size(), otherMeetingsString.size()); i++) {
-                            if (!(oneMeetingsString.get(i).equals(otherMeetingsString.get(i)))) {
-                                return oneMeetingsString.get(i).compareTo(otherMeetingsString.get(i));
-                            }
-                        }
-                        return 0;
+                    Collections.sort(oneMeetingsString);
+                    Set<Meeting> otherMeetings = other.getMeetings();
+                    ArrayList<String> otherMeetingsString = new ArrayList<String>();
+                    for (Meeting meeting : otherMeetings) {
+                        otherMeetingsString.add(meeting.toString().toLowerCase());
                     }
-                });
+                    Collections.sort(otherMeetingsString);
+                    for (int i = 0; i < Math.min(oneMeetingsString.size(), otherMeetingsString.size()); i++) {
+                        if (!(oneMeetingsString.get(i).equals(otherMeetingsString.get(i)))) {
+                            return oneMeetingsString.get(i).compareTo(otherMeetingsString.get(i));
+                        }
+                    }
+                    return 0;
+                }
+            });
         }
     }
 
