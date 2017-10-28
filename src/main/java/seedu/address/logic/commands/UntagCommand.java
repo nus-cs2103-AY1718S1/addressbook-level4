@@ -10,6 +10,7 @@ import java.util.StringJoiner;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -40,9 +41,10 @@ public class UntagCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " -a friends/colleagues";
 
     public static final String MESSAGE_SUCCESS = "%d person(s) successfully untagged from %s:";
-    public static final String MESSAGE_SUCCESS_MULTIPLE_TAGS = "%s tag(s) successfully removed.";
-    public static final String MESSAGE_SUCCESS_ALL_TAGS = "All tags successfully removed.";
-    public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAGS = "%d person(s) do not have any tags specified:";
+    public static final String MESSAGE_SUCCESS_ALL_TAGS = "%d person(s) sucessfully untagged all:";
+    public static final String MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST = "%s tag(s) successfully removed.";
+    public static final String MESSAGE_SUCCESS_ALL_TAGS_IN_LIST = "All tags successfully removed.";
+    public static final String MESSAGE_PERSONS_DO_NOT_HAVE_TAGS = "%d person(s) do not have any of the specified tags:";
 
     public static final String MESSAGE_EMPTY_INDEX_LIST = "Please provide one or more indexes! \n%1$s";
     public static final String MESSAGE_EMPTY_TAG_LIST = "Please provide one or more tags! \n%1$s";
@@ -76,8 +78,8 @@ public class UntagCommand extends UndoableCommand {
             }
 
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            return (tags.isEmpty()) ? new CommandResult(MESSAGE_SUCCESS_ALL_TAGS)
-                    : new CommandResult(String.format(MESSAGE_SUCCESS_MULTIPLE_TAGS, tags.toString()));
+            return (tags.isEmpty()) ? new CommandResult(MESSAGE_SUCCESS_ALL_TAGS_IN_LIST)
+                    : new CommandResult(String.format(MESSAGE_SUCCESS_MULTIPLE_TAGS_IN_LIST, joinList(tags)));
         }
 
         for (Index targetIndex : targetIndexes) {
@@ -86,16 +88,26 @@ public class UntagCommand extends UndoableCommand {
             }
         }
 
-        ArrayList<ReadOnlyPerson> alreadyUntaggedPersons = new ArrayList<>();
-        ArrayList<ReadOnlyPerson> toBeUntaggedPersons = new ArrayList<>();
+        ArrayList<Name> toBeUntaggedPersonNames = new ArrayList<>();
+        if (tags.isEmpty()) {
+            for (Index targetIndex : targetIndexes) {
+                ReadOnlyPerson personToUntag = lastShownList.get(targetIndex.getZeroBased());
+                removeTagsFromPerson(personToUntag, tags);
+                toBeUntaggedPersonNames.add(personToUntag.getName());
+            }
+            return new CommandResult(String.format(MESSAGE_SUCCESS_ALL_TAGS, targetIndexes.size()) + " "
+                    + joinList(toBeUntaggedPersonNames));
+        }
+
+        ArrayList<Name> alreadyUntaggedPersonNames = new ArrayList<>();
         for (Index targetIndex : targetIndexes) {
             ReadOnlyPerson personToUntag = lastShownList.get(targetIndex.getZeroBased());
             if (Collections.disjoint(personToUntag.getTags(), tags)) {
-                alreadyUntaggedPersons.add(personToUntag);
+                alreadyUntaggedPersonNames.add(personToUntag.getName());
                 continue;
             }
             removeTagsFromPerson(personToUntag, tags);
-            toBeUntaggedPersons.add(personToUntag);
+            toBeUntaggedPersonNames.add(personToUntag.getName());
         }
 
         for (Tag tag : tags) {
@@ -103,23 +115,15 @@ public class UntagCommand extends UndoableCommand {
         }
 
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        StringJoiner toBeUntaggedJoiner = new StringJoiner(", ");
-        for (ReadOnlyPerson person : toBeUntaggedPersons) {
-            toBeUntaggedJoiner.add(person.getName().toString());
-        }
-        if (alreadyUntaggedPersons.size() > 0) {
-            StringJoiner alreadyUntaggedJoiner = new StringJoiner(", ");
-            for (ReadOnlyPerson person : alreadyUntaggedPersons) {
-                alreadyUntaggedJoiner.add(person.getName().toString());
-            }
+        if (alreadyUntaggedPersonNames.size() > 0) {
             return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    targetIndexes.size() - alreadyUntaggedPersons.size(), tags.toString()) + " "
-                    + toBeUntaggedJoiner.toString() + "\n"
-                    + String.format(MESSAGE_PERSONS_DO_NOT_HAVE_TAGS, alreadyUntaggedPersons.size()) + " "
-                    + alreadyUntaggedJoiner.toString());
+                    targetIndexes.size() - alreadyUntaggedPersonNames.size(), joinList(tags)) + " "
+                    + joinList(toBeUntaggedPersonNames) + "\n"
+                    + String.format(MESSAGE_PERSONS_DO_NOT_HAVE_TAGS, alreadyUntaggedPersonNames.size()) + " "
+                    + joinList(alreadyUntaggedPersonNames));
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS,
-                targetIndexes.size(), tags.toString()) + " " + toBeUntaggedJoiner.toString());
+                targetIndexes.size(), joinList(tags)) + " " + joinList(toBeUntaggedPersonNames));
     }
 
     @Override
@@ -154,6 +158,18 @@ public class UntagCommand extends UndoableCommand {
         } catch (PersonNotFoundException e) {
             throw new AssertionError("The target person cannot be missing");
         }
+    }
+
+    /**
+     * Join all list elements by commas
+     * @param list to be joined
+     */
+    private String joinList(List list) {
+        StringJoiner joiner = new StringJoiner(", ");
+        for (Object obj : list) {
+            joiner.add(obj.toString());
+        }
+        return joiner.toString();
     }
 
 }
