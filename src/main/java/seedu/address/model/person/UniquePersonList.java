@@ -50,7 +50,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Sorts the persons based on time
+     * Sorts the persons based on name
      *
      */
     public void sortPersons() {
