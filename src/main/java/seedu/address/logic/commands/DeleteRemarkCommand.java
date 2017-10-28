@@ -54,4 +54,11 @@ public class DeleteRemarkCommand extends UndoableCommand {
         }
 
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteRemarkCommand // instanceof handles nulls
+                && this.index.equals(((DeleteRemarkCommand) other).index)); // state check
+    }
 }

@@ -9,12 +9,14 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Remark {
 
-    private static final int REMARK_LENGTH_LIMIT = 150;
-    private static final String MESSAGE_REMARK_CONSTRAINTS =
+    public static final String MESSAGE_REMARK_CONSTRAINTS =
             "Remark can only be no more than 150 characters";
+
+    public static final int REMARK_LENGTH_LIMIT = 150;
 
     public final String value;
     public final Code moduleCode;
+
 
     /**
      * Validates given group number.
