@@ -214,6 +214,11 @@ public class MainWindow extends UiPart<Region> {
             resultDisplayPlaceholder.getStylesheets().clear();
             resultDisplayPlaceholder.getStylesheets().add("/view/DarkTheme.css");
             resultDisplayPlaceholder.getStylesheets().add("/view/DarkExtensions.css");
+            browserPlaceholder.getStylesheets().clear();
+            browserPlaceholder.getStylesheets().add("/view/DarkTheme.css");
+            browserPlaceholder.getStylesheets().add("/view/DarkExtensions.css");
+
+
         } else {
             sceneBox.getStylesheets().clear();
             sceneBox.getStylesheets().add("/view/LightTheme.css");
@@ -221,6 +226,9 @@ public class MainWindow extends UiPart<Region> {
             resultDisplayPlaceholder.getStylesheets().clear();
             resultDisplayPlaceholder.getStylesheets().add("/view/LightTheme.css");
             resultDisplayPlaceholder.getStylesheets().add("/view/LightExtensions.css");
+            browserPlaceholder.getStylesheets().clear();
+            browserPlaceholder.getStylesheets().add("/view/LightTheme.css");
+            browserPlaceholder.getStylesheets().add("/view/LightExtensions.css");
         }
     }
 

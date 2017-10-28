@@ -455,3 +455,23 @@
     -fx-text-fill: derive(#d4cbb3, 50%);
     -fx-text-alignment: center;
 }
+
+#stickyNote {
+    -fx-background-color: transparent;
+    -fx-padding:5px 5px 5px;
+    -fx-font:20px 'Gloria Hallelujah', cursive;
+    -fx-line-height:1.5;
+}
+
+#stickyNote .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#stickyNote .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+#stickyNote .scroll-pane .content{
+    -fx-background-color: transparent;
+}

@@ -365,13 +365,15 @@ public class CombinePanel extends UiPart<Region> {
                 int y = 120 + (int) (Math.random() * 255);
                 int z = 120 + (int) (Math.random() * 255);
 
+                TextArea ta = new TextArea(text);
+                ta.setWrapText(true);
+                ta.setEditable(false);
+
+
                 StackPane stackPane = new StackPane();
                 stackPane.setStyle("-fx-background-color: rgba(" + x + "," + y + ", " + z + ", 0.5);"
                         + "-fx-effect: dropshadow(gaussian, red, " + 20 + ", 0, 0, 0);"
                         + "-fx-background-insets: " + 10 + ";");
-                TextArea ta = new TextArea(text);
-                ta.setWrapText(true);
-                ta.setEditable(false);
                 ta.setId(STICKY_NOTE);
                 stackPane.getChildren().add(ta);
                 noteGrid.add(stackPane, j, i);
