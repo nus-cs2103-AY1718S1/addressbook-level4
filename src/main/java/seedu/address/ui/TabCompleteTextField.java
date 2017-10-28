@@ -43,11 +43,11 @@ public class TabCompleteTextField extends TextField {
      */
     private void generateSuggestions() {
         splitCommandWords();
-        if (lastWord.length() == 0) {
+        if (lastWord.length() == 0 || prefixWords.equals("")) {
             dropDownMenu.hide();
         } else {
             LinkedList<String> matchedWords = new LinkedList<>();
-            matchedWords.addAll(options.subSet(lastWord, lastWord + Character.MAX_VALUE));
+            matchedWords.addAll(options.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE));
             if (matchedWords.size() > 0) {
                 fillDropDown(matchedWords);
                 if (!dropDownMenu.isShowing()) {
@@ -88,7 +88,7 @@ public class TabCompleteTextField extends TextField {
      * @param matchedWords The list of matched words.
      */
     private void fillDropDown(List<String> matchedWords) {
-        List menuItems = dropDownMenu.getItems();
+        List<MenuItem> menuItems = dropDownMenu.getItems();
         menuItems.clear();
 
         int numEntries = Math.min(matchedWords.size(), MAX_ENTRIES);
