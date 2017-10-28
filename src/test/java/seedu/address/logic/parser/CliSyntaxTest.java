@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 
 import org.junit.Test;
 
@@ -19,14 +20,17 @@ public class CliSyntaxTest {
         assert isValidSortArgument(new SortArgument(PREFIX_PHONE.toString()));
         assert isValidSortArgument(new SortArgument(PREFIX_EMAIL.toString()));
         assert isValidSortArgument(new SortArgument(PREFIX_ADDRESS.toString()));
+        assert isValidSortArgument(new SortArgument(PREFIX_REMARK.toString()));
         assert isValidSortArgument(new SortArgument(PREFIX_NAME.concat(POSTFIX_ASCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_PHONE.concat(POSTFIX_ASCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_EMAIL.concat(POSTFIX_ASCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_ADDRESS.concat(POSTFIX_ASCENDING)));
+        assert isValidSortArgument(new SortArgument(PREFIX_REMARK.concat(POSTFIX_ASCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_NAME.concat(POSTFIX_DESCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_PHONE.concat(POSTFIX_DESCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_EMAIL.concat(POSTFIX_DESCENDING)));
         assert isValidSortArgument(new SortArgument(PREFIX_ADDRESS.concat(POSTFIX_DESCENDING)));
+        assert isValidSortArgument(new SortArgument(PREFIX_REMARK.concat(POSTFIX_DESCENDING)));
 
         assertFalse(isValidSortArgument(new SortArgument("\n")));
         assertFalse(isValidSortArgument(new SortArgument("abcd")));
