@@ -114,15 +114,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Returns the index of the given person
      */
     public Index getIndex(ReadOnlyPerson target) {
-        int index = 0;
-
-        for (ReadOnlyPerson person: sortedPersons) {
-            index++;
-            if (person.equals(target)) {
-                break;
-            }
-        }
-        return Index.fromOneBased(index);
+        return Index.fromZeroBased(sortedPersons.indexOf(target));
     }
 
     /**
