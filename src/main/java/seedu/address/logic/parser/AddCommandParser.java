@@ -42,8 +42,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
 
         Birthday birthday;
-        SchEmail schEmail;
         HomeNumber homeNumber;
+        SchEmail schEmail;
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_HOME_NUMBER,
@@ -63,9 +63,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
+            Birthday tempBirthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
             HomeNumber tempHomeNumber = ParserUtil.parseHomeNumber(argMultimap.getValue(PREFIX_HOME_NUMBER)).get();
             SchEmail tempSchEmail = ParserUtil.parseSchEmail(argMultimap.getValue(PREFIX_SCH_EMAIL)).get();
-            Birthday tempBirthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
 
             ReadOnlyPerson person = new Person(name, phone, tempHomeNumber,
                     email, tempSchEmail, website, address, tempBirthday, false, tagList);
