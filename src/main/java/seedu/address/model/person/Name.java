@@ -36,6 +36,17 @@ public class Name {
     }
 
     /**
+     * Provides a default name (" ") when field is empty.
+     *
+     * @throws IllegalValueException if given phone string is invalid.
+     */
+    public Name(int checkValue) throws IllegalValueException {
+        if (checkValue != 0) {
+            throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
+        }
+        this.fullName = " ";
+    }
+    /**
      * Returns true if a given string is a valid person name.
      */
     public static boolean isValidName(String test) {
