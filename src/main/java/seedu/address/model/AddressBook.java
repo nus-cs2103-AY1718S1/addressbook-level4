@@ -129,7 +129,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         person.setTags(correctTagReferences);
     }
-    
+
+    /**
+     * After a person has been removed/replaced in the list,
+     * check if the person's tags are still in use and remove them if they aren't
+     */
     private void cleanUpTagListAfterRemovalOf(Person person) {
         final UniqueTagList removedPersonTags = new UniqueTagList(person.getTags());
         for (Tag t : removedPersonTags) {
