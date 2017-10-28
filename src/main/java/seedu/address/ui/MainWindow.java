@@ -42,6 +42,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private TagListPanel tagListPanel;
     private RemarkListPanel remarkListPanel;
     private RemarkPanel remarkPanel;
     private Config config;
@@ -138,7 +139,10 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        tagListPanel = new TagListPanel(logic.getTagList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        personListPanelPlaceholder.getChildren().add(tagListPanel.getRoot());
+        tagListPanel.setVisible(false);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

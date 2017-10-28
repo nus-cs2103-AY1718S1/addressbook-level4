@@ -139,6 +139,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Tag> getTagList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void sortByDataFieldFirst(String dataField) {
             fail("This method should not be called.");
         }

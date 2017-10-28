@@ -41,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final SortedList<ReadOnlyPerson> sortedFilteredPersons;
+    private final SortedList<Tag> tags;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -52,6 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.tags = new SortedList<Tag>(this.addressBook.getTagList());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedFilteredPersons = new SortedList<>(filteredPersons);
         // Sort contacts by favourite status, then name, then phone, then email, then address
@@ -117,6 +119,11 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<Tag> getTagList() {
+        return FXCollections.unmodifiableObservableList(tags);
     }
 
     @Override

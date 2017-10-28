@@ -48,6 +48,11 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
+    /** Returns an unmodifiable view of the tag list */
+    ObservableList<Tag> getTagList();
+
+    void sortByDataFieldFirst(String dataField);
+    
     /**
      * Removes given tag from specified index
      * @param tag
@@ -55,8 +60,6 @@ public interface Model {
      * @throws PersonNotFoundException
      * @throws DuplicatePersonException
      */
-    void sortByDataFieldFirst(String dataField);
-
     void removeTag(Set<Tag> tag, Set<Index> index) throws PersonNotFoundException, DuplicatePersonException;
 
     /**
