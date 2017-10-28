@@ -1,6 +1,9 @@
 package seedu.address.model.person;
 
+import java.io.File;
+
 import javafx.scene.image.Image;
+import seedu.address.MainApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -22,8 +25,12 @@ public class ProfilePicture {
      */
     public ProfilePicture(String fileName) throws IllegalValueException {
         try {
-            new Image(PATH_TO_IMAGE_FOLDER + fileName);
-            this.value = PATH_TO_IMAGE_FOLDER + fileName;
+            if (!(fileName.contains("/") || fileName.contains("\\"))) {
+                this.value = PATH_TO_IMAGE_FOLDER + fileName;
+            } else {
+                File file = new File(fileName);
+                this.value = file.toURI().toString();
+            }
         } catch (Exception e) {
             throw new IllegalValueException(MESSAGE_FILENAME_CONSTRAINTS);
         }
