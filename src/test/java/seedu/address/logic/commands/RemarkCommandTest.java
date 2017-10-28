@@ -26,7 +26,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.testutil.PersonBuilder;
 
 /**
@@ -130,11 +129,6 @@ public class RemarkCommandTest {
 
         // different descriptor -> false
         assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
-    }
-
-    @Test
-    public void duplicatePersonsException() throws DuplicatePersonException {
-        
     }
 
     /**
