@@ -25,15 +25,14 @@ By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin 
 
 === Welcome to ConTag!
 
-Contag is specially designed for heavy business user or frequent traveller.
-
+Contag is specially designed for heavy business user or frequent traveller. Here's everything you need to know about Contag before launching Contag.Of course, you can also just browse through this guide but there are tips and tricks that are not essential (you get along without them) but which are handy, neat and can speed up the process of nagivating ConTag.
 
 === Authors and Contributors
-The intial version of the user guide was written by Team SE-EDU. The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.    
+The intial version of the user guide was written by Team SE-EDU. The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.
 
 === The ConTag Help System
 
-Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book. You can also get help on specific menu items by keying in `help` in the command line of Contag or pressing the `F1` key.
+Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book.Contag also comes with a built-in help system. You can also get help on specific menu items by keying in `help` in the command line of Contag or simply presssing `F1` key.
 
 === Features and Capabilities Overview
 The following list is a  overview of some of the features and capabilities which ConTag offers you:
@@ -105,6 +104,7 @@ Examples:
 * `help a` (using alias)
 
 
+=== Adding a person
 === Adding a person: `add`
 
 Alias: `a`
@@ -137,6 +137,9 @@ Alias: `e`
 
 Edits an existing person in the address book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
+
+[NOTE]
+Ensure that you have input the correct prefix [n/NAME] , [p/PHONE] , [e/EMAIL]  , [a/ADDRESS] ,  [t/TAG]
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -394,7 +397,7 @@ To transfer my data to another Computer,iInstall the app in the other computer a
 [width="59%",cols="5%,<2%,<50%,<42%",options="header",]
 |=======================================================================
 |Commands Words |Commands Alias |Format|Example
-|`Add`] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
+|`Add`  link:#adding-a-person[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 
 |`Edit` | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
