@@ -349,6 +349,7 @@ public class CombinePanel extends UiPart<Region> {
      * This method will initialize StickyNote screen
      */
     public void stickyNotesInit() {
+        noteGrid.getChildren().clear();
         noteDataInit();
         //noteGrid.setGridLinesVisible(true);
         noteGrid.setHgap(20); //horizontal gap in pixels => that's what you are asking for
