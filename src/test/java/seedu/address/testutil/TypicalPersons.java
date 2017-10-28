@@ -98,6 +98,26 @@ public class TypicalPersons {
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
+    // Person with no homeNumber
+    public static final ReadOnlyPerson ERNEST = new PersonBuilder().withName("Ernest")
+            .withPhone(VALID_PHONE_BOB)
+            .withEmail(VALID_EMAIL_BOB).withSchEmail(VALID_SCH_EMAIL_BOB).withWebsite(VALID_WEBSITE_BOB)
+            .withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
+    // Person with no birthday
+    public static final ReadOnlyPerson EVELYN = new PersonBuilder().withName("Evelyn").withPhone(VALID_PHONE_BOB)
+            .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+            .withSchEmail(VALID_SCH_EMAIL_BOB).withWebsite(VALID_WEBSITE_BOB)
+            .withAddress(VALID_ADDRESS_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
+    // Person with no School Email
+    public static final ReadOnlyPerson EDITH = new PersonBuilder().withName("Edith").withPhone(VALID_PHONE_BOB)
+            .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+            .withWebsite(VALID_WEBSITE_BOB).withAddress(VALID_ADDRESS_BOB)
+            .withBirthday(VALID_BIRTHDAY_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
+
+
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalPersons() {} // prevents instantiation

@@ -48,6 +48,7 @@ import static seedu.address.logic.commands.CommandTestUtil.WEBSITE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.WEBSITE_DESC_BOB;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalPersons.EDITH;
 
 import org.junit.Test;
 
@@ -149,10 +150,18 @@ public class AddCommandParserTest {
                 + HOME_NUM_DESC_BOB + VALID_EMAIL_BOB + SCH_EMAIL_DESC_BOB
                 + WEBSITE_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB, expectedMessage);
 
+        // creates a person with no school email
+        Person expectedPersonWithNoSchEmail = new PersonBuilder().withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withSchEmail("NIL")
+                .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+                .withWebsite(VALID_WEBSITE_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
+                .build();
+
         // missing schEmail prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + HOME_NUM_DESC_BOB + EMAIL_DESC_BOB + VALID_SCH_EMAIL_BOB
-                + WEBSITE_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB, expectedMessage);
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
+                + HOME_NUM_DESC_BOB + EMAIL_DESC_BOB
+                + WEBSITE_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB,
+                new AddCommand(expectedPersonWithNoSchEmail));
 
         // missing website prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
