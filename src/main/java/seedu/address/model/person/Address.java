@@ -26,7 +26,7 @@ public class Address {
      * The default Address constructor when address is not specified by the user
      */
     private Address() {
-        value = "<Unspecified address>";
+        value = "Unspecified address";
     }
 
     /**

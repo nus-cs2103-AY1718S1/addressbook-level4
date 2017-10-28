@@ -142,6 +142,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the default remark when remark is not specified by the user
+     */
+    public PersonBuilder withUnspecifiedRemark() {
+        this.person.setRemark(Remark.UNSPECIFIED);
+        return this;
+    }
+
     public Person build() {
         return this.person;
     }

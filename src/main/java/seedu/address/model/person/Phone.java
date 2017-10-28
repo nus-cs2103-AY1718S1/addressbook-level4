@@ -20,7 +20,7 @@ public class Phone {
      * The default Phone constructor when phone is not specified by the user
      */
     private Phone() {
-        value = "<Unspecified phone number>";
+        value = "Unspecified phone number";
     }
 
     /**
@@ -31,7 +31,7 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
+        if (!isValidPhone(trimmedPhone) && !"Unspecified phone number".equals(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
         this.value = trimmedPhone;

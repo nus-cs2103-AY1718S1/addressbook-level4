@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.tag.Tag;
 
@@ -65,7 +66,7 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
-     * If {@code phone} is not present, {@code String <Unspecified phone number>} is given
+     * If {@code phone} is not present, {@code String Unspecified phone number} is given
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parseAddPhone(Optional<String> phone) throws IllegalValueException {
@@ -84,7 +85,7 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
-     * If {@code address} is not present, {@code String <Unspecified address>} is given
+     * If {@code address} is not present, {@code String Unspecified address} is given
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddAddress(Optional<String> address) throws IllegalValueException {
@@ -103,12 +104,31 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
-     * If {@code email} is not present, {@code String <Unspecified email>} is given
+     * If {@code email} is not present, {@code String Unspecified email} is given
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseAddEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.of(Email.UNSPECIFIED);
+    }
+
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * If {@code remark} is not present, {@code String Unspecified remark} is given
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseAddRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.of(Remark.UNSPECIFIED);
     }
 
     /**
