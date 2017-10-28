@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -49,7 +50,7 @@
                         </Label>
                      </children>
                      <VBox.margin>
-                        <Insets top="60.0" />
+                        <Insets top="45.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox prefHeight="80.0" prefWidth="200.0">
@@ -140,11 +141,12 @@
             </GridPane>
             <VBox fx:id="eventsBox" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
-                  <Label style="-fx-font-size: 32px;" text="Events: " />
+                  <Label style="-fx-font-size: 32px;" text="Events: ">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin></Label>
+                  <TextArea fx:id="eventsArea" editable="false" opacity="0.6" prefWidth="200.0" style="-fx-font-size: 20px; -fx-font-family: fantasy; -fx-border-color: #003366; -fx-border-width: 8;" />
                </children>
-               <padding>
-                  <Insets left="20.0" />
-               </padding>
             </VBox>
          </children>
       </GridPane>
