@@ -14,11 +14,7 @@ Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4
 
 *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
 
-=== Enhancement Added:
-* Login
-* Borrow command
-* Payback command
-
+=== Enhancement Added: Login/Logout
 ==== External behavior
 
 ---
@@ -26,7 +22,7 @@ Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4
 
 include::../UserGuide.adoc[tag=login]
 
-include::../UserGuide.adoc[tag=borrowpayback]
+include::../UserGuide.adoc[tag=logout]
 
 #End of Extract#
 
@@ -34,7 +30,40 @@ include::../UserGuide.adoc[tag=borrowpayback]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Debtor's personal information will be stored in the address book. Hence, there is a need to limit access of the address book to debt collectors only.
+
+Only `help`, `exit` and `login` commands can be entered before login. Users can open a help window using the `help` command to look for further information on how to login if they need to. Users should also be able to exit the app without being logged in.
+
+It also makes sense for the user to be able to log out of the app without closing the app.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Borrow/Payback command
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=borrow]
+
+include::../UserGuide.adoc[tag=payback]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Should there be a need to adjust the debt of a person, the debt collector can use the `borrow` command to increase the debt by a specified amount  and the `payback` command to deduct a specified amount.
+If the debt collector uses the `edit` command to update the debt of a person, he/she has to manually calculate the new total debt before entering the new debt into the address book.
+The `borrow` and `payback` command eliminates this hassle by doing the math for the user.
 
 ==== Implementation
 
@@ -42,6 +71,34 @@ include::../UserGuide.adoc[tag=borrowpayback]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=borrowCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Filter command
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Tags can be a way of adding additional information to a contact. The `filter` command provides debt collectors a way to group debtors according to these  additional information for various purposes.
+
+For example, tags can be used to indicate a particular behavior of a debtor. A debt collection agency  can filter debtors by the `violent` tag to get a list of debtors that are violent. Manpower can then be planned accordingly to ensure that debt collectors go in pairs to collect debts from debtors listed in the 'violent' list for safety reasons.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
 
 #End of Extract#
 
