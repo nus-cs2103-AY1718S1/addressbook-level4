@@ -21,5 +21,8 @@ public class HomeNumberTest {
         assertTrue(HomeNumber.isValidHomeNumber("911")); // exactly 3 numbers
         assertTrue(HomeNumber.isValidHomeNumber("93121534"));
         assertTrue(HomeNumber.isValidHomeNumber("124293842033123")); // long phone numbers
+
+        // home number not filled in
+        assertTrue(HomeNumber.isValidHomeNumber(HomeNumber.HOME_NUMBER_TEMPORARY));
     }
 }

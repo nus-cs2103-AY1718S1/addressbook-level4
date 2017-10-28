@@ -39,7 +39,8 @@ public class HomeNumber {
      * Returns true if a given string is a valid person phone number.
      */
     public static boolean isValidHomeNumber(String test) {
-        return test.matches(HOME_NUMBER_VALIDATION_REGEX);
+        return test.matches(HOME_NUMBER_VALIDATION_REGEX)
+                || test.matches(HOME_NUMBER_TEMPORARY);
     }
 
     @Override
