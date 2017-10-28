@@ -6,7 +6,6 @@ import guitests.GuiRobot;
 import javafx.stage.Stage;
 
 
-
 /**
  * A handle to the {@code HelpWindow} of the application.
  */

@@ -17,7 +17,7 @@ public class CalendarWindowHandle extends StageHandle {
     private static final String CALENDAR_WINDOW_BROWSER_ID = "#browser";
 
     public CalendarWindowHandle(Stage stage) {
-        super(Stage);
+        super(stage);
     }
 
     /**
