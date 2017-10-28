@@ -60,7 +60,6 @@ public class Tutorial {
         default:
             break;
         }
-        mainWindow.setCommandText("");
         tutorialText.setText(stepToExecute.getTextDisplay());
     }
 

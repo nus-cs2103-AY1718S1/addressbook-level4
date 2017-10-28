@@ -355,10 +355,6 @@ public class MainWindow extends UiPart<Region> {
         personListPanel.highlight();
     }
 
-    public void setCommandText(String toInput) {
-        commandBox.setCommandText(toInput);
-    }
-
     private void listAllToggleStyle() {
         pinLabel.setStyle("-fx-text-fill: #555555");
         allLabel.setStyle("-fx-text-fill: white");

@@ -37,7 +37,7 @@ public class TutorialMessages {
 
     /* Command usage messages */
     public static final String USAGE_BEGIN = "Let's try out the different commands of Bluebird! Press F2 to view "
-            + "the list of commands and type them on the command box to execute it."
+            + "the list of commands and enter the commands on the command box to execute it."
             + " A parameter in [ ] means it is optional.";
 
     /* Concluding message */
