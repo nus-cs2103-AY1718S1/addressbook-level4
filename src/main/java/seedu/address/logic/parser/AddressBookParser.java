@@ -124,7 +124,7 @@ public class AddressBookParser {
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommandParser().parse(arguments);
-            
+
         case TagsCommand.COMMAND_WORD:
         case TagsCommand.COMMAND_ALIAS:
             return new TagsCommand();

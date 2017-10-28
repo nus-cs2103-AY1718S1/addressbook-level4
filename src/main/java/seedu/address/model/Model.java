@@ -52,7 +52,7 @@ public interface Model {
     ObservableList<Tag> getTagList();
 
     void sortByDataFieldFirst(String dataField);
-    
+
     /**
      * Removes given tag from specified index
      * @param tag

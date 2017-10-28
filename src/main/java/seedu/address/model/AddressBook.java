@@ -131,6 +131,16 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Ensures that every tag in these persons:
+     *  - exists in the master list {@link #tags}
+     *  - points to a Tag object in the master list
+     *  @see #syncMasterTagListWith(Person)
+     */
+    private void syncMasterTagListWith(UniquePersonList persons) {
+        persons.forEach(this::syncMasterTagListWith);
+    }
+
+    /**
      * After a person has been removed/replaced in the list,
      * check if the person's tags are still in use and remove them if they aren't
      */
@@ -148,16 +158,6 @@ public class AddressBook implements ReadOnlyAddressBook {
                 tags.remove(t);
             }
         }
-    }
-
-    /**
-     * Ensures that every tag in these persons:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Person)
-     */
-    private void syncMasterTagListWith(UniquePersonList persons) {
-        persons.forEach(this::syncMasterTagListWith);
     }
 
     /**
