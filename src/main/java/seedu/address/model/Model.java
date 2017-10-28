@@ -28,6 +28,8 @@ public interface Model {
 
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
 
+    Predicate<ReadOnlyTask> PREDICATE_SHOW_ALL_TASKS = unused -> true;
+
     /**
      * Clears existing backing model and replaces with the provided new data.
      */
