@@ -27,13 +27,14 @@ public class AddScheduleCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Add a specific time slot when a person is busy.\n"
-            + "Parameters: INDEX (must be a positive integer); Day(From Monday to Saturday); start time " +
-            "(Should be expressed in standard 24 hours time, no more accurate than 30 minutes and no earlier " +
-            "than 0600 and no later than 2330\n"
-            + "Example: " + COMMAND_WORD + " 1" +
-            PREFIX_DAY + "Monday" +
-            PREFIX_START_TIME + "0700" +
-            PREFIX_END_TIME + "1430";
+            + "Parameters: INDEX (must be a positive integer); Day(From Monday to Saturday); start time "
+            + "(Should be expressed in standard 24 hours time, no more accurate than 30 minutes and no earlier "
+            + "than 0600 and no later than 2330\n"
+            + "Example: "
+            + COMMAND_WORD + " 1"
+            + PREFIX_DAY + "Monday"
+            + PREFIX_START_TIME + "0700"
+            + PREFIX_END_TIME + "1430";
 
     public static final String MESSAGE_ADD_SCHEDULE_PERSON_SUCCESS = "Schedule successfully added";
 
@@ -41,17 +42,17 @@ public class AddScheduleCommand extends UndoableCommand {
 
     private Day day;
     private Time startTime;
-    private Time EndTime;
-    private TreeSet<Integer> TimeToAdd;
+    private Time endTime;
+    private TreeSet<Integer> timeToAdd;
 
     public AddScheduleCommand(Index targetIndex, Day day, Time startTime, Time endTime)
             throws IllegalValueException {
         this.targetIndex = targetIndex;
         this.day = day;
         this.startTime = startTime;
-        this.EndTime = endTime;
+        this.endTime = endTime;
         Slot slot = new Slot(day, startTime, endTime);
-        TimeToAdd = slot.getBusyTime();
+        timeToAdd = slot.getBusyTime();
     }
 
 
@@ -67,7 +68,7 @@ public class AddScheduleCommand extends UndoableCommand {
         ReadOnlyPerson personToAddSchedule = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.addScheduleToPerson(targetIndex.getZeroBased(), TimeToAdd);
+            model.addScheduleToPerson(targetIndex.getZeroBased(), timeToAdd);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
@@ -80,7 +81,8 @@ public class AddScheduleCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof AddScheduleCommand // instanceof handles nulls
                 && this.targetIndex.equals(((AddScheduleCommand) other).targetIndex)
+                && this.day.equals(((AddScheduleCommand) other).day)
                 && this.startTime.equals(((AddScheduleCommand) other).startTime)
-                && this.EndTime.equals(((AddScheduleCommand) other).EndTime)); // state check
+                && this.endTime.equals(((AddScheduleCommand) other).endTime)); // state check
     }
 }

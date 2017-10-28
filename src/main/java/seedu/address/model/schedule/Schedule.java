@@ -1,8 +1,8 @@
 package seedu.address.model.schedule;
 
-import java.util.TreeSet;
-
 import static java.util.Objects.requireNonNull;
+
+import java.util.TreeSet;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
@@ -11,17 +11,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Schedule {
 
-
-    public static final String MESSAGE_SCHEDULE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public TreeSet<Integer> busyTime;
+    private TreeSet<Integer> busyTime;
 
     /**
      * Validates given phone number.
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
-
     public Schedule() {
         busyTime = new TreeSet<Integer>();
     }
@@ -30,9 +26,18 @@ public class Schedule {
         this.busyTime = busyTime;
     }
 
-    public void addTime(Integer startTime){
-        if(!busyTime.contains(startTime)){
+    /**
+     * Add a slot of time with the unit of 30min based on the startTime.
+     */
+    public void addTime(Integer startTime) {
+        if (!busyTime.contains(startTime)) {
             busyTime.add(startTime);
+        }
+    }
+
+    public void clearTime(Integer startTime) {
+        if (busyTime.contains(startTime)) {
+            busyTime.remove(startTime);
         }
     }
 

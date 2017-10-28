@@ -1,8 +1,8 @@
 package seedu.address.model.schedule;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import java.util.TreeSet;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Slot {
 

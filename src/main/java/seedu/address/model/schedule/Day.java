@@ -1,26 +1,25 @@
 package seedu.address.model.schedule;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddScheduleCommand;
 
 public class Day {
 
     private final Integer day;
 
     public Day(String dayToAdd) throws IllegalValueException {
-        if(dayToAdd.equals("Monday")){
+        if (dayToAdd.equals("Monday")) {
             day = 1;
-        } else if(dayToAdd.equals("Tuesday")){
+        } else if (dayToAdd.equals("Tuesday")) {
             day = 2;
-        } else if(dayToAdd.equals("Wednesday")){
+        } else if (dayToAdd.equals("Wednesday")) {
             day = 3;
-        } else if(dayToAdd.equals("Thursday")){
+        } else if (dayToAdd.equals("Thursday")) {
             day = 4;
-        } else if(dayToAdd.equals("Friday")){
+        } else if (dayToAdd.equals("Friday")) {
             day = 5;
-        } else if(dayToAdd.equals("Saturday")){
+        } else if (dayToAdd.equals("Saturday")) {
             day = 6;
-        } else if(dayToAdd.equals("Sunday")){
+        } else if (dayToAdd.equals("Sunday")) {
             day = 7;
         } else {
             throw new IllegalValueException("Not a proper day");

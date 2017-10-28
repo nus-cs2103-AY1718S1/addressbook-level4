@@ -4,7 +4,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Time {
 
-    private final Integer earliestTime = 0600;
+    private final Integer earliestTime = 600;
     private final Integer latestTime = 2330;
 
     private Integer time;
@@ -36,6 +36,6 @@ public class Time {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Time) // instanceof handles nulls
-                && (this.time == ((Time) other).time); // state check
+                && (this.time.equals( ((Time) other).time)); // state check
     }
 }
