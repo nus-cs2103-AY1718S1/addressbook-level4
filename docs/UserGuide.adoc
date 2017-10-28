@@ -25,28 +25,30 @@ By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin 
 
 === Welcome to ConTag!
 
-Contag is specially designed for heavy business user or frequent traveller.
-
-
-=== Authors and Contributors
-The intial version of the user guide was written by Team SE-EDU. The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.    
+Contag is an efficient and feature-packed address book desktop application custom-built for PC, capable of tackling even the most demanding business users and busiest frequent travellers.
 
 === The ConTag Help System
 
-Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book. You can also get help on specific menu items by keying in `help` in the command line of Contag or pressing the `F1` key.
+Fret not, we are here to help you navigate this address book.
+Our help system is designed to progressively provide all necessary information from beginner to expert.
+
+We understand that accommodating user preferences are key to ensuring a pleasant, efficient experience for all.
+Apart from comprehensive help coverage in this user guide, you can also choose to get concentrated help on specific menu items with `help` in the command line of Contag or pressing the `F1` key.
 
 === Features and Capabilities Overview
-The following list is a  overview of some of the features and capabilities which ConTag offers you:
+The following list is an overview of some of the features which ConTag offers for you:
 
-* Saving all the attributes of a person's contact in the address book for easier manageability
+* Saving a comprehensive set of attributes of a contact in the address book to make each contact more meaningful
 
-* Locating the address of your contact via the integrated google map
+* Locating contact's address via the integrated Google Maps
 
 * Creating a new schedule or activity with a contact
 
-* Sending email to multiply emails simultaneously
+* Sending email to multiple emails simultaneously
 
-
+=== Authors and Contributors
+The intial version of the user guide was written by Team SE-EDU.
+The current releases for ConTag are currently being orchestrated by a team of four, Aw Wen Hao , Calvin Tantio, Cheng Jin Ting, Chung Tin Long.
 
 == Getting Started
 
@@ -75,15 +77,22 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Features
 
-====
-*Command Format*
+[.lead]
+ Command Format
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items in *square brackets* are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be optionally used multiple times or not at all:
+
+_e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc._
+
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 * Command words can be replaced by their specified aliases e.g. `delete INDEX` is the same as `d INDEX`.
-====
+
+
+[TIP]
+Once you have familiarized yourself with the application, try typing a command's alias in place of the full command keyword to save more time!
+
 
 === Viewing help : `help`
 
@@ -268,7 +277,7 @@ Associates the specified schedule with the 1st person in the results of the `fin
 
 === Getting email addresses : `copy` [Since v1.3]
 
-Alias: `c`
+Alias: `y`
 
 Outputs to console the email addresses of all person(s) selected by index number(s). +
 Format: `copy INDEX [UNIQUE INDEX]...`
@@ -370,7 +379,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Alias: `x`
+Alias: `c`
 
 Clears all entries from the address book. +
 Format: `clear`
