@@ -15,7 +15,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
 
 
-Welcome to the ConTag's Developer Guide! Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
+Welcome to the ConTag's Developer Guide! Contag is an efficient and feature-packed address book desktop application custom-built for PC, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.Regardlless if you are a beginner user or expert developer, this guide brings to you all the necessary information you will need to navigate around the  ConTag with ease.This guide provides a comprehensive covergae of the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
 
 == Setting up
 
@@ -1101,6 +1101,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |check my calendar|update of new events
 
+|`* *` |user |send email|make immediate business communication
+
 |`* *` |user |see my contacts' social media profile pictures |identify them more easily
 
 |`* *` |user |write down remarks for a contact |record specific information about the contact
@@ -1124,16 +1126,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Contag` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Add remark
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ConTag shows a list of persons
 3.  User requests to add remark to a specific person in the list
-4.  AddressBook successfully adds remark to contact
+4.  ConTag successfully adds remark to contact
 +
 Use case ends.
 
@@ -1147,7 +1149,7 @@ Use case ends.
 * 3a. The given index or format is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConTagshows an error message.
 +
 Use case resumes at step 2.
 
@@ -1155,9 +1157,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ConTag shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  ConTag deletes the person
 +
 Use case ends.
 
@@ -1171,31 +1173,31 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConTag shows an error message.
 +
 Use case resumes at step 2.
 
 === Use case: Rename existing tag
-#Pre-condition :The identitifed tag exists in Addressbook
+#Pre-condition :The identitifed tag exists in  ConTag
 **MSS**
 
 1. User requests to list persons
-2. AddressBook shows a list of persons
+2. ConTagshows a list of persons
 3. User requests to rename the tag and key in the new input
-4. AddressBook prompts user to confirm the changes
+4. ConTagprompts user to confirm the changes
 5. User confirms changes
-6. AddressBook successfully replaces the name of the existing tag to the newer version
+6. ConTag successfully replaces the name of the existing tag to the newer version
 +
 Use case ends.
 
 === Use case: Search by phone
-#Pre-condition :The identitifed phone exist in AddressBook
+#Pre-condition :The identitifed phone exist in ConTag
 **MSS**
 
 1. User requests to list persons
-2. AddressBook shows a list of persons
+2. ConTag shows a list of persons
 3. User requests to search for phone number by inputting 4 or 8 digits
-4. AddressBook successfully find the persons with matching phone numbers
+4. ConTag successfully find the persons with matching phone numbers
 +
 Use case ends.
 
@@ -1209,7 +1211,7 @@ Use case ends.
 * 3a. The given phone number is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConTag shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1247,6 +1249,13 @@ A contact detail that is not meant to be shared with others
 ....
 
 
+[[CI]]
+CI
+
+....
+Continuous Integration (CI) is the process of automating the build and testing of code every time a team member commits changes to version contron
+....
+
 [[gradle]]
 Gradle
 
@@ -1254,6 +1263,34 @@ Gradle
 Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven
 ....
 
+[[JUnit]]
+JUnit
+
+....
+JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks
+....
+
+[[JavaFX]]
+JavaFX
+
+....
+JavaFX is a software platform for creating and delivering desktop applications, as well as rich internet applications (RIAs) that can run across a wide variety of devices
+....
+
+
+[GUI]
+GUI
+
+....
+A graphical user interface (GUI) is a human-computer interface that uses windows, icons and menus and which can be manipulated by a mouse (and often to a limited extent by a keyboard as well).
+....
+
+[[xml]]
+xml
+
+....
+XML is a file extension for an Extensible Markup Language (XML) file format used to create common information formats and share both the format and the data on the World Wide Web, intranets, and elsewhere using standard ASCII text
+....
 
 [appendix]
 == Product Survey
