@@ -53,6 +53,7 @@ public class ModelManager extends ComponentManager implements Model {
     private ReadOnlyPerson selectedPerson;
 
     private String currentList;
+    private Predicate<ReadOnlyPerson> currentPredicate;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -72,6 +73,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.userPrefs = userPrefs;
 
         this.currentList = "list";
+        this.currentPredicate = PREDICATE_SHOW_ALL_PERSONS;
     }
 
     public ModelManager() {
@@ -125,7 +127,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         ReadOnlyPerson removedBlacklistedPerson = addressBook.removeBlacklistedPerson(target);
-        changeListTo(BlacklistCommand.COMMAND_WORD);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         indicateAddressBookChanged();
         return removedBlacklistedPerson;
@@ -160,8 +161,16 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public synchronized ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) {
-        ReadOnlyPerson newBlacklistPerson = addressBook.addBlacklistedPerson(person);
-        changeListTo(BlacklistCommand.COMMAND_WORD);
+        ReadOnlyPerson newBlacklistPerson = person;
+
+        if (person.isWhitelisted()) {
+            try {
+                newBlacklistPerson = addressBook.removeWhitelistedPerson(newBlacklistPerson);
+            } catch (PersonNotFoundException e) {
+                assert false : "This person cannot be missing from addressbook";
+            }
+        }
+        addressBook.addBlacklistedPerson(newBlacklistPerson);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
         indicateAddressBookChanged();
         return newBlacklistPerson;
@@ -349,6 +358,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
         setCurrentList("blacklist");
         syncBlacklist();
+        filteredBlacklistedPersons.setPredicate(currentPredicate);
         return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
     }
 
@@ -360,13 +370,16 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
         setCurrentList("whitelist");
         syncWhitelist();
+        filteredWhitelistedPersons.setPredicate(currentPredicate);
         return FXCollections.unmodifiableObservableList(filteredWhitelistedPersons);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+    public int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
+        currentPredicate = predicate;
         filteredPersons.setPredicate(predicate);
+        return filteredPersons.size();
     }
 
     /**
@@ -374,9 +387,11 @@ public class ModelManager extends ComponentManager implements Model {
      * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
      */
     @Override
-    public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+    public int updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
+        currentPredicate = predicate;
         filteredBlacklistedPersons.setPredicate(predicate);
+        return filteredBlacklistedPersons.size();
     }
 
     /**
@@ -384,9 +399,11 @@ public class ModelManager extends ComponentManager implements Model {
      * Filters {@code filteredWhitelistedPersons} according to given {@param predicate}
      */
     @Override
-    public void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+    public int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
+        currentPredicate = predicate;
         filteredWhitelistedPersons.setPredicate(predicate);
+        return filteredWhitelistedPersons.size();
     }
 
     /**
