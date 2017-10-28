@@ -106,6 +106,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         Person editedPerson = new Person(editedReadOnlyPerson);
         persons.setPerson(target, editedPerson);
         syncMasterTagListWith(editedPerson);
+        Person removedPerson = new Person(target);
+        cleanUpTagListAfterRemovalOf(removedPerson);
     }
 
     /**
@@ -127,6 +129,22 @@ public class AddressBook implements ReadOnlyAddressBook {
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         person.setTags(correctTagReferences);
     }
+    
+    private void cleanUpTagListAfterRemovalOf(Person person) {
+        final UniqueTagList removedPersonTags = new UniqueTagList(person.getTags());
+        for (Tag t : removedPersonTags) {
+            boolean tagExists = false;
+            for (ReadOnlyPerson p : persons) {
+                if (p.getTags().contains(t)) {
+                    tagExists = true;
+                    break;
+                }
+            }
+            if (!tagExists) {
+                tags.remove(t);
+            }
+        }
+    }
 
     /**
      * Ensures that every tag in these persons:
@@ -144,6 +162,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            Person removedPerson = new Person(key);
+            cleanUpTagListAfterRemovalOf(removedPerson);
             return true;
         } else {
             throw new PersonNotFoundException();
