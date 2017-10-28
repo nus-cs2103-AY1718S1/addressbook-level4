@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -14,11 +15,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.email.Email;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,8 +35,9 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer
+                .tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -42,11 +46,14 @@ public class AddCommandParser implements Parser<AddCommand> {
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+            Country country = new Country(phone.getCountryCode());
+            Set<Email> emails = ParserUtil.parseEmails(argMultimap.getAllValues(PREFIX_EMAIL));
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            // add command does not allow adding schedule straight away
+            Set<Schedule> schedule = new HashSet<Schedule>();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
+            ReadOnlyPerson person = new Person(name, phone, country, emails, address, schedule, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
@@ -61,5 +68,5 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-
 }
+

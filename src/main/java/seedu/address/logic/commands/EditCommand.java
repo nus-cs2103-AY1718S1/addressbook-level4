@@ -17,13 +17,15 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
+import seedu.address.model.person.Country;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.email.Email;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,18 +35,19 @@ public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String COMMAND_ALIAS = "e";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
+            + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_PHONE + "PHONE] " // country is derived from phone internally
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + MESSAGE_GET_MORE_HELP;
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -97,11 +100,18 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        Country updatedCountry = personToEdit.getCountry();
+        if (!updatedPhone.equals(personToEdit.getPhone())) {
+            // if phone was changed, country should be updated accordingly
+            updatedCountry = new Country(updatedPhone.getCountryCode());
+        }
+        Set<Email> updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmails());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Set<Schedule> updatedSchedule = personToEdit.getSchedules(); //ScheduleCommand does not allow editing schedule
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedCountry, updatedEmail, updatedAddress,
+                updatedSchedule, updatedTags);
     }
 
     @Override
@@ -129,7 +139,8 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
-        private Email email;
+        private Country country;
+        private Set<Email> emails;
         private Address address;
         private Set<Tag> tags;
 
@@ -138,7 +149,8 @@ public class EditCommand extends UndoableCommand {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
-            this.email = toCopy.email;
+            this.country = toCopy.country;
+            this.emails = toCopy.emails;
             this.address = toCopy.address;
             this.tags = toCopy.tags;
         }
@@ -147,7 +159,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.country, this.emails, this.address,
+                    this.tags);
         }
 
         public void setName(Name name) {
@@ -166,12 +179,20 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setCountry(Country country) {
+            this.country = country;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<Country> getCountry() {
+            return Optional.ofNullable(country);
+        }
+
+        public void setEmails(Set<Email> emails) {
+            this.emails = emails;
+        }
+
+        public Optional<Set<Email>> getEmail() {
+            return Optional.ofNullable(emails);
         }
 
         public void setAddress(Address address) {

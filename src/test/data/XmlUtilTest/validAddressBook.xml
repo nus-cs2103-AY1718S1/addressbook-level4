@@ -3,55 +3,82 @@
     <persons>
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
+        <country isPrivate="false">65</country>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <scheduleDate></scheduleDate>
+        <activity></activity>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
+        <country isPrivate="false">65</country>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
+        <scheduleDate></scheduleDate>
+        <activity></activity>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
+        <country isPrivate="false">65</country>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
+        <scheduleDate></scheduleDate>
+        <activity></activity>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
+        <country isPrivate="false">65</country>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
+        <scheduleDate></scheduleDate>
+        <activity></activity>
     </persons>
     <persons>
         <name>Werner Meyer</name>
         <phone isPrivate="false">9482224</phone>
+        <country isPrivate="false">65</country>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
+        <scheduleDate></scheduleDate>
+        <activity></activity>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
-        <email isPrivate="false">lydia@example.com</email>
+        <country isPrivate="false">65</country>
+        <emails isPrivate="false">lydia@example.com</emails>
         <address isPrivate="false">little tokyo</address>
+        <scheduleDate></scheduleDate>
+        <activity></activity>
     </persons>
     <persons>
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
-        <email isPrivate="false">anna@example.com</email>
+        <country isPrivate="false">65</country>
+        <emails isPrivate="false">anna@example.com</emails>
         <address isPrivate="false">4th street</address>
+        <scheduleDate></scheduleDate>
+        <activity></activity>
     </persons>
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
-        <email isPrivate="false">stefan@example.com</email>
+        <country isPrivate="false">232</country>
+        <emails isPrivate="false">stefan@example.com</emails>
         <address isPrivate="false">little india</address>
+        <scheduleDate></scheduleDate>
+        <activity></activity>
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
-        <email isPrivate="false">hans@example.com</email>
+        <country isPrivate="false">1721</country>
+        <emails isPrivate="false">hans@example.com</emails>
         <address isPrivate="false">chicago ave</address>
+        <scheduleDate></scheduleDate>
+        <activity></activity>
     </persons>
 </addressbook>
