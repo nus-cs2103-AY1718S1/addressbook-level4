@@ -139,6 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
         for (Tag tag: tagList) {
             if (tagName.equals(tag.tagName)) {
                 tagColours.put(tag, colour);
+                updateAllPersons(tagColours);
                 indicateAddressBookChanged();
                 raise(new NewTagColourChangedEvent(addressBook.getPersonList()));
                 colourPrefs.updateColorMap(tagColours);
@@ -155,7 +156,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateAllPersons(HashMap<Tag, String> allTagColours) {
         for (ReadOnlyPerson person: addressBook.getPersonList()) {
-            colourPrefs.updateColorMap(allTagColours);
+            person.setTagHashMap(allTagColours);
         }
     }
 
