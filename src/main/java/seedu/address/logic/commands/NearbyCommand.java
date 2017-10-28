@@ -46,7 +46,10 @@ public class NearbyCommand extends Command {
 
         model.updateSelectedPerson(nearbyList.get(targetIndex.getZeroBased()));
         EventsCenter.getInstance().post(new JumpToNearbyListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
 
