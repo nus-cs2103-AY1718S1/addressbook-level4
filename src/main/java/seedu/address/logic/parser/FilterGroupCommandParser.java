@@ -12,6 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 public class FilterGroupCommandParser implements Parser<FilterGroupCommand> {
 
+    //@@author grantcm
     @Override
     public FilterGroupCommand parse (String userInput) throws ParseException {
         String trimmedArgs = userInput.trim();
@@ -22,4 +23,5 @@ public class FilterGroupCommandParser implements Parser<FilterGroupCommand> {
 
         return new FilterGroupCommand(trimmedArgs);
     }
+    //@@author
 }

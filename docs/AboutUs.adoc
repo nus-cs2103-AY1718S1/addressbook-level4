@@ -14,7 +14,7 @@ Role: In charge of Storage
 '''
 
 === https://github.com/grantcm[Grant Miller]
-image::grantcm.png[width="150", align="left"]
+image::Grant.png[width="150", align="left"]
 
 Role: Integration, Code Quality, Testing
 

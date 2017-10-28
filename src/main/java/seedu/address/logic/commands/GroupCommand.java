@@ -34,6 +34,7 @@ public class GroupCommand extends UndoableCommand {
         this.args = args;
     }
 
+    //@@author grantcm
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         String groupName = args.get(0);
@@ -84,4 +85,5 @@ public class GroupCommand extends UndoableCommand {
             }
         }
     }
+    //@@author
 }

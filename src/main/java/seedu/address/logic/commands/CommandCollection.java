@@ -11,6 +11,7 @@ import java.util.stream.Stream;
  */
 public class CommandCollection {
 
+    //@@author grantcm
     private static Set<String> commandSet = Stream.of(
         AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
         EditCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD, FindCommand.COMMAND_WORD,
@@ -41,4 +42,6 @@ public class CommandCollection {
     public Set<String> getCommandSet() {
         return commandSet;
     }
+
+    //@@author
 }

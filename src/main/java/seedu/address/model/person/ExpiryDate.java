@@ -72,12 +72,8 @@ public class ExpiryDate {
             return true;
         } else if (this.value == null) {
             // to prevent NullPointerException from expiry date
-            if (((ExpiryDate) other).value == null) {
-                // both objects have null expiry date
-                return true;
-            } else {
-                return false;
-            }
+            // both objects have null expiry date
+            return ((ExpiryDate) other).value == null;
         } else {
             // date must not be null
             return this.value.equals(((ExpiryDate) other).value);

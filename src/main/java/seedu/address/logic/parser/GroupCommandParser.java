@@ -15,12 +15,12 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 public class GroupCommandParser implements Parser<GroupCommand> {
 
+    //@@author grantcm
     /**
      * Parses the given {@code String} of arguments in the context of the GroupCommand
      * and returns an GroupCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-
     public GroupCommand parse(String userInput) throws ParseException {
         String trimmedArgs = userInput.trim();
         if (trimmedArgs.isEmpty()) {
@@ -45,4 +45,5 @@ public class GroupCommandParser implements Parser<GroupCommand> {
 
         return nameList;
     }
+    //@@author
 }

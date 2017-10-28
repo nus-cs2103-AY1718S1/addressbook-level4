@@ -232,9 +232,11 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author grantcm
     @Subscribe
     private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         commandBox.handleCommandInputChanged("filter " + event.getNewSelection().group.groupName);
     }
+    //@@author
 }
