@@ -13,7 +13,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ClearPersonDetailPanelRequestEvent;
-import seedu.address.commons.events.ui.PersonModifiedEvent;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.util.Avatar;
@@ -99,17 +99,14 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Updates the panel when the selected person's details change
+     * Updates the panel when the details of the selected person is changed
      */
     @Subscribe
-    private void handlePersonDetailsChangedEvent(PersonModifiedEvent event) {
+    private void handlePersonDetailsChangedEvent(PersonEditedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        showPersonDetails(event.getModifiedPerson());
+        showPersonDetails(event.editedPerson);
     }
 
-    /**
-     * Empties the panel when person list is cleared
-     */
     @Subscribe
     private void handlePersonListClearedEvent(ClearPersonDetailPanelRequestEvent event) {
         showEmptyPanel();

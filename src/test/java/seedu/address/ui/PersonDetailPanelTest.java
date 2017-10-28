@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.ui.PersonDetailPanel.PERSON_ADDRESS_ICON;
@@ -15,7 +16,7 @@ import org.junit.Test;
 
 import guitests.guihandles.PersonDetailPanelHandle;
 import seedu.address.commons.events.ui.ClearPersonDetailPanelRequestEvent;
-import seedu.address.commons.events.ui.PersonModifiedEvent;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -44,11 +45,8 @@ public class PersonDetailPanelTest extends GuiUnitTest {
         assertPanelDisplaysPerson(BOB, personDetailPanelHandle);
 
         // changes made to person reflect on panel
-        postNow(new PersonModifiedEvent(ALICE));
+        postNow(new PersonEditedEvent(ALICE, INDEX_FIRST_PERSON));
         assertPanelDisplaysPerson(ALICE, personDetailPanelHandle);
-
-        postNow(new PersonModifiedEvent(BOB));
-        assertPanelDisplaysPerson(BOB, personDetailPanelHandle);
 
         // panel is empty when list is cleared
         postNow(new ClearPersonDetailPanelRequestEvent());
