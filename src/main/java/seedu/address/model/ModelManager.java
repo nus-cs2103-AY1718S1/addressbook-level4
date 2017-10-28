@@ -91,6 +91,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException {
+        addressBook.clearScheduleForPerson(index, schedule);
+    }
+
+    @Override
     public UserPrefs getUserPrefs() {
         return userPrefs;
     }

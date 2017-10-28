@@ -8,11 +8,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.schedule.Schedule;
@@ -168,6 +165,12 @@ public class Person implements ReadOnlyPerson {
     public void addSpanToSchedule(TreeSet<Integer> span) {
         for (Integer startTime : span) {
             getSchedule().addTime(startTime);
+        }
+    }
+
+    public void clearSpanForSchedule(TreeSet<Integer> span) {
+        for (Integer startTime : span) {
+            getSchedule().clearTime(startTime);
         }
     }
 

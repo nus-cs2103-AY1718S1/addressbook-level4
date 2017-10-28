@@ -34,6 +34,8 @@ public interface Model {
 
     void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
 
+    void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
