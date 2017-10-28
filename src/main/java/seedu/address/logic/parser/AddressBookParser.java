@@ -112,9 +112,15 @@ public class AddressBookParser {
                 || commandWord.equalsIgnoreCase(UndoCommand.COMMAND_WORDVAR_2)) {
             return new UndoCommand();
 
+        } else if (commandWord.equalsIgnoreCase(UndoCommand.COMMAND_WORDVAR_3)) {
+            return new UndoCommandParser().parse(arguments);
+
         } else if (commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_1)
                 || commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_2)) {
             return new RedoCommand();
+
+        } else if (commandWord.equalsIgnoreCase(RedoCommand.COMMAND_WORDVAR_3)) {
+            return new RedoCommandParser().parse(arguments);
 
         } else if (commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_1)
                 || commandWord.equalsIgnoreCase(FavouriteCommand.COMMAND_WORD_2)) {
