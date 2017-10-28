@@ -115,8 +115,7 @@ public class FileUtil {
         if (unixMatcher.matches() && File.separator.equals("\\")
             || windowsMatcher.matches() && File.separator.equals("/")) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

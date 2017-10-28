@@ -11,7 +11,6 @@ import seedu.address.model.property.Property;
 import seedu.address.model.property.UniquePropertyMap;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * A read-only immutable interface for a Person in the addressBook.
