@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -42,6 +43,14 @@ public class EventListPanel extends UiPart<Region> {
         eventListView.setCellFactory(listView -> new EventListViewCell());
         logger.info("UI ------ Got eventList with " + eventList.size() + " events.");
         setEventHandlerForSelectionChangeEvent();
+    }
+
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+        ObservableList<ReadOnlyEvent> eventList = abce.data.getEventList();
+        ObservableList<EventCard> mappedList = EasyBind.map(
+                eventList, (event) -> new EventCard(event, eventList.indexOf(event) + 1));
+        eventListView.setItems(mappedList);
     }
 
     private void setEventHandlerForSelectionChangeEvent() {
