@@ -36,5 +36,8 @@ public class SchEmailTest {
         assertTrue(SchEmail.isValidSchEmail("_user_@_e_x_a_m_p_l_e_.com_"));    // underscores
         assertTrue(SchEmail.isValidSchEmail("peter_jack@very_very_very_long_example.com"));   // long domain name
         assertTrue(SchEmail.isValidSchEmail("if.you.dream.it_you.can.do.it@example.com"));    // long local part
+
+        // school email not filled in
+        assertTrue(SchEmail.isValidSchEmail(SchEmail.SCH_EMAIL_TEMPORARY));
     }
 }

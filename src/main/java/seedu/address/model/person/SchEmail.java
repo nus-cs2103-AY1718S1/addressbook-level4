@@ -38,7 +38,8 @@ public class SchEmail {
      * Returns if a given string is a valid person email.
      */
     public static boolean isValidSchEmail(String test) {
-        return test.matches(SCH_EMAIL_VALIDATION_REGEX);
+        return test.matches(SCH_EMAIL_VALIDATION_REGEX)
+                || test.matches(SCH_EMAIL_TEMPORARY);
     }
 
     @Override
