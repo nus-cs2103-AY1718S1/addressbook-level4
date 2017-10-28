@@ -18,6 +18,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.alias.Keyword;
+import seedu.address.model.alias.Representation;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -30,6 +32,8 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_KEYWORD = "a";
+    private static final String INVALID_REPRESENTATION = "";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -37,6 +41,8 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_KEYWORD = "wfm";
+    private static final String VALID_REPRESENTATION = "Works For Me";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -186,5 +192,56 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseKeyword_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseKeyword(null);
+    }
+
+    @Test
+    public void parseKeyword_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseKeyword(Optional.of(INVALID_KEYWORD));
+    }
+
+    @Test
+    public void parseKeyword_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseKeyword(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseKeyword_validValue_returnsKeyword() throws Exception {
+        Keyword expectedKeyword = new Keyword(VALID_KEYWORD);
+        Optional<Keyword> actualKeyword = ParserUtil.parseKeyword(Optional.of(VALID_KEYWORD));
+
+        assertEquals(expectedKeyword, actualKeyword.get());
+    }
+
+    @Test
+    public void parseRepresentation_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRepresentation(null);
+    }
+
+    @Test
+    public void parseRepresentation_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseRepresentation(Optional.of(INVALID_REPRESENTATION));
+    }
+
+    @Test
+    public void parseRepresentation_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRepresentation(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseRepresentation_validValue_returnsRepresentation() throws Exception {
+        Representation expectedRepresentation = new Representation(VALID_REPRESENTATION);
+        Optional<Representation> actualRepresentation =
+                ParserUtil.parseRepresentation(Optional.of(VALID_REPRESENTATION));
+
+        assertEquals(expectedRepresentation, actualRepresentation.get());
     }
 }

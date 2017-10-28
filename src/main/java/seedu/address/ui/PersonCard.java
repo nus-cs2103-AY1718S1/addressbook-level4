@@ -1,9 +1,14 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -15,6 +20,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static List<String> colors = new ArrayList<String>();
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -42,13 +49,27 @@ public class PersonCard extends UiPart<Region> {
     private Label remark;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView pinImage;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initPin(person);
         bindListeners(person);
+        /* add colors to colors list*/
+        colors.add("aqua");
+        colors.add("cadetblue");
+        colors.add("cornflowerblue");
+        colors.add("dodgerblue");
+        colors.add("lightskyblue");
+        colors.add("mediumblue");
+        colors.add("royalblue");
+        colors.add("steelblue");
+        colors.add("slateblue");
+        colors.add("teal");
     }
 
     /**
@@ -63,12 +84,48 @@ public class PersonCard extends UiPart<Region> {
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
+        });
+        person.pinProperty().addListener((observable, oldValue, newValue) -> {
+            if (person.isPinned()) {
+                pinImage.setImage(new Image("/images/pin.png"));
+            } else {
+                pinImage.setImage(null);
+            }
         });
     }
 
+    /**
+     * * Initialises the tags for {@code Person}
+     * with the color properties.
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    private static String getColorForTag(String tagValue) {
+        if (!tagColors.containsKey(tagValue) && !colors.isEmpty()) {
+            tagColors.put(tagValue, colors.get(0));
+            colors.add(colors.get(0)); // keeps the loop
+            colors.remove(0);
+        }
+
+        return tagColors.get(tagValue);
+    }
+
+    /**
+     * Sets the image for pinned person
+     */
+    private void initPin(ReadOnlyPerson person) {
+        if (person.isPinned()) {
+            pinImage.setImage(new Image("/images/pin.png"));
+        } else {
+            pinImage.setImage(null);
+        }
     }
 
     @Override

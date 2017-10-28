@@ -1,5 +1,7 @@
 package seedu.address;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_NOT_HIDDEN;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -40,7 +42,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 3, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -51,10 +53,11 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    private final String sortByName = "name";
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing Bluebird ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -67,6 +70,8 @@ public class MainApp extends Application {
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
+        model.sortList(sortByName);
+        model.updateFilteredPersonList(PREDICATE_SHOW_NOT_HIDDEN);
 
         logic = new LogicManager(model);
 
@@ -183,13 +188,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting Bluebird " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping Bluebird ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

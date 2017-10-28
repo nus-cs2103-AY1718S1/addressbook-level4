@@ -8,28 +8,27 @@ https://coveralls.io/repos/github/CS2103AUG2017-T15-B4/main?branch=master[image:
 https://www.codacy.com/app/deep4k/main/dashboard[image:https://api.codacy.com/project/badge/Grade/e465693d0a7549f9bc73ed44344ebd5c[Codacy Badge]]
 
 ifdef::env-github[]
-image::docs/images/bluebird_window.png[width="600"]
+image::docs/images/Ui.png[width="750"]
 endif::[]
 
 ifndef::env-github[]
-image::images/bluebird_window.png[width="600"]
+image::images/Ui.png[width="750"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
+* Bluebird is a desktop based organisational tool designed for the working parent on the go.
+* Bluebird helps both you and your child manage important contacts, tasks and schedules.
+* Bluebird has an in built Child Mode which prevents your child from deleting vital information.
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
 == Acknowledgements
 
-* Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
+* Some parts of Bluebird were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 
 * Built upon the addressbook-level 4 application by _SE-EDU_ team , for National University of Singapore(NUS) module CS2103.

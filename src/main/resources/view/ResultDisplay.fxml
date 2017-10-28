@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8"
-    xmlns:fx="http://javafx.com/fxml/1">
-  <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display"/>
+<StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display">
+      <StackPane.margin>
+         <Insets right="70.0" />
+      </StackPane.margin>
+   </TextArea>
+   <ImageView fx:id="imageDisplay" fitHeight="53.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+      <StackPane.margin>
+         <Insets right="10.0" />
+      </StackPane.margin>
+   </ImageView>
 </StackPane>

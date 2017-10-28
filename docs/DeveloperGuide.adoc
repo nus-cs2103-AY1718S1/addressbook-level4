@@ -10,9 +10,17 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-T15-B4/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B4/main/tree/master
 
 By: `Team T15-B4`      Since: `Sep 2017`      Licence: `MIT`
+
+== Overview
+
+Bluebird is a Java-based address book and task organisation software application. With concise and clear
+descriptions, our developer guide aims to provide an inside look as to how the Bluebird team created the software, should
+any fellow developers be interested to contribute to our application. In addition, with diagrams to illustrate
+the architectural flow of how components interact with one another and beginner-friendly explanations, our developer
+guide aims to also serve as an avenue for beginners to software application building.
 
 == Setting up
 
@@ -146,6 +154,9 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+==== Model-View-Controller (MVC) pattern
+Model View Components
+
 === UI component
 
 image::UiClassDiagram.png[width="800"]
@@ -213,6 +224,38 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+=== Software Design Principles
+Intro
+
+==== Single Responsibility Principle (SRP)
+
+==== Open-Closed Principle (OCP)
+****
+Open-Closed Principle (OCP): A module should be open for extension but closed for modification. That is, modules should be written so that they can be extended, without requiring them to be modified.
+****
+
+
+When different classes interact with one another, coupling is inevitable and and interaction will naturally lead to increased coupling. Bluebird applies OCP in order to reduce coupling and increase cohesion. +
+As shown in Figure 2.7.2.1, if a new command is added to Bluebird, there is no need to modify the `Command` class, the new command can simply just inherit from
+`Command`.
+
+image::OCPLogic.png[width="800"]
+
+
+==== Liskov Substitution Principle (LSP)
+
+ Liskov Substitution Principle (LSP): Derived classes must be substitutable for their base classes.
+
+Bluebird applies the Liskov Substitution Principle to avoid breaking the functionality of the code.
+An example of this can be seen below:
+
+image::LSP-CommandClass.png[width="500"]
+
+The `UndoableCommand` class follows the Liskov Substitution Principle.
+
+
+==== Dependency Inversion Principle (DIP)
 
 == Implementation
 
@@ -363,6 +406,153 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+[discrete]
+=== Since v1.1
+
+// tag::sort[]
+=== Sorting of contacts
+
+The sort command sorts the `People` in `AddressBook` based on their `Name`, `Phone`, `Email` or `Address`. The sort command is also an `UndoableCommand` and users can undo the sort if they wish to.
+`SortCommand` inherits from `UndoableCommand` which inherits from `Command` and the logic is
+shown in Figure 3.4.1 below.
+
+image::sortLogicDiagram.png[width="700"]
+Figure 3.4.1: Logic of SortCommand
+
+There will be a `SortCommandParser` as well to parse out the `KEYWORD` which is either name, phone, email
+or address. This will ensure that users type in the right `KEYWORD` to sort the list however they want.
+
+==== Sorting by name
+
+Suppose a user wants to sort by name, the user will type `sort name` into the command box. This will then be processed by `LogicManager` which executes the command and `AddressBookParser` will
+parse the command accordingly. A `SortCommand` will be returned to the `LogicManager` which will then execute it. Finally, the result of the execution will be returned and displayed
+on the `ResultDisplay` Ui for the user. The sequence diagram for this scenario is shown in Figure 3.4.2 below.
+
+image::sortSD.png[width="800"]
+Figure 3.4.2: Sequence diagram for sorting by name
+
+When `SortCommand` executes,
+
+. It will first call the sortList() method in `ModelManager`
+. Then, it will call the sortList() method in `AddressBook`
+. Finally, it will call the sort() method to sort the internal list in `UniquePersonList`
+
+The sequence diagram for executeUndoableCommand() is given in Figure 3.4.3 below.
+
+image::sortExecuteSD.png[width="750"]
+Figure 3.4.3: Sequence diagram for SortCommand executeUndoableCommand()
+
+
+==== Design Considerations
+
+**Aspect:** Which details to sort +
+**Alternative 1 (current choice):** List of contacts will be able to be sorted by name, phone, email or address +
+**Pros:** This gives users freedom to select how they want it to be sorted by +
+**Cons:** Some users may not find the need to sort by phone, email or address +
+**Alternative 2:** List of contacts will be sorted by name only +
+**Pros:** Majority of users will only sort by name when they want to view their list of contacts +
+**Cons:** For the minority that may want to sort using other details, they do not have the option to do so +
+
+**Aspect:** To sort automatically by name every time Bluebird starts or not +
+**Alternative 1 (current choice):** List of contacts will be sorted by name automatically everytime Bluebird starts +
+**Pros:** Users do not have to sort every single time they add a new contact +
+**Cons:** Some users may only want to sort by other details other than name, therefore they have to sort every time they run Bluebird +
+**Alternative 2:** Not automatically sort +
+**Pros:** This gives users freedom to select how they want their list to be sorted +
+**Cons:** Forgetful users may not be able to find their contact if they forget to sort by name when they add a new contact +
+// end::sort[]
+
+[discrete]
+=== Since v1.2
+
+//  tag::find[]
+=== Enhanced find
+
+The enhanced find feature is implemented by comparing every `Person` 's `Name`, `Phone`, `Email`,
+`Address`, and `Tag` with the keyword provided by the user. The user need not have to type the keywords
+in full and partial keywords will still be able to find the person (e.g find jos will return Josephine).
+
+==== Design Considerations
+
+**Aspect:** Defining how accurate the find command will be +
+**Alternative 1 (current choice):** The person will be found if their names, phone, email or tags start with the
+ keywords typed by the user. The address on the other hand can be found if any part of it contains
+ the keyword. In addition, partial keywords will be able to match the person. +
+**Pros:** If the person's name, phone, email or tags can be found as long as it contains any of the keywords,
+the user may end up with a list full of person they did not want (e.g find br will return Brandon and also Abraham). Hence,
+it is better to find a person if their names start with keywords.
+For the address, users generally tend to type only the street name, hence it is better to find address as long as it contains
+any of the keywords. +
+**Cons:** By finding using partial keywords, users may also end up with a list of people they did not want. +
+**Alternative 2:** The person will be found only if the user type out the details of the person they want in full (e.g
+find Josephine, or find Blk 231, Sembawang Close 221 #02-232, S750231). +
+**Pros:** It is the most accurate way to find the exact person the user wants. +
+**Cons:** The user may forget certain details of the person and be unable to find him.
+//  end::find[]
+
+//  tag::alias[]
+=== Alias / Unalias
+
+The alias and unalias features are implemented by comparing creating a new AliasToken model which contains all created aliases,
+this model is checked against user input in the parser and converts any alias keywords to their representations before other
+commands are parsed. Each AliasToken consists of a keyword (the main alias) and representation (what it means) and they can
+be used for both commands or shortcuts. For example : alias k/disappear s/hide , this makes the hide command
+to work with AliasToken keyword disappear. Unaliasing the AliasToken keyword token simply removes the AliasToken.
+
+==== Design Considerations
+
+**Aspect:** Defining how accurate the alias command will be +
+**Alternative 1 (current choice):** Aliases are parsed based on their keywords which are stored in a UniqueAliasTokenList.
+ All user input will parse for aliases first before dispatching to command parser, including parsing of both the command
+ word as well as the command arguments. +
+**Pros:** If the alias keyword is valid, it can be used as both a command alias and a shortcut alias. The user has the choice
+to choose any word to alias if they desire to do so. +
+**Cons:** It may take longer to parse user input. +
+**Alternative 2:** The alias is only checked for commands words in the parser, without the implementation of a
+ model. +
+**Pros:** The parsing of user input is more straightforward and quicker. +
+**Cons:** The user is very restricted on what to alias and cannot have aliases for shortcut words.
+//  end::alias[]
+
+// tag::delete[]
+=== Enhanced Delete
+
+The enhanced delete feature allows for multiple indices to be accepted by the parser. This is done by splitting the inputs into multiple string tokens,
+each containing the index of the person to be deleted. A list is then used to store all the indices of the personsToDelete.
+This enhancement is then achieved by iterating through the list and deleting the desired persons using the ModelManager.
+
+==== Design Considerations
+
+**Aspect:** Defining how accurate the delete command will be +
+**Alternative 1 (current choice):** Indices are parsed into a list containing all the index of persons to be deleted. +
+A loop is then used to iterate through the list to delete the persons requested by the user. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** The use of a loop will increase the time for the code to run. +
+**Alternative 2:** The indices are deleted one by one, without using a list. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** It has to display the result repeatedly after every every person is deleted successfully. +
+// end::delete[]
+
+// tag::hide[]
+=== Hide
+
+The hide feature allows for multiple indices to be accepted by the parser. This is done similar to the enhanced delete
+feature, where inputs are split into multiple string tokens, each containing the index of the person to be hidden.
+A list, listhidden, is then used to store all the indices of the person(s) to be hidden. Unhide is then done to revert
+the previously hidden indices from the list storing all hidden persons.
+
+==== Design Considerations
+
+**Aspect**: Defining how accurate the hide command will be +
+** Alternative 1 (current choice):** Indicse are parsed into a list containing all the index of person to be deleted. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** The use of a loop will increase the time for the code to run. +
+**Alternative 2**: The indices are deleted one by one, without using a list. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** User has to repeatedly type the command multiple times, and application has to display the result repeatedly
+after every person is hidden successfully.
+// end::hide[]
 
 == Documentation
 
@@ -787,9 +977,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  BlueBird shows a list of persons
+2.  Bluebird shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  BlueBird deletes the person
+4.  Bluebird deletes the person
 +
 Use case ends.
 
@@ -803,23 +993,23 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. BlueBird shows an error message.
+** 3a1. Bluebird shows an error message.
 +
 Use case resumes at step 2.
 
 [discrete]
 === Use case: Select person
 
-*Precondition: Person in question should be saved with 'add' in BlueBird*
+*Precondition: Person in question should be saved with 'add' in Bluebird*
 
 *Guarantees: Person in question will be displayed with all fields visible*
 
 *MSS*
 
 1.  User requests to 'find' a specific person by name
-2.  BlueBird shows a list of persons with name entered
+2.  Bluebird shows a list of persons with name entered
 3.  User selects the index of specific person
-4.  BlueBird shows full contact details of person
+4.  Bluebird shows full contact details of person
 +
 Use case ends.
 
@@ -829,7 +1019,7 @@ Use case ends.
 * 3a. The given index is invalid
 +
 [none]
-** 3a1. BlueBird shows an error message
+** 3a1. Bluebird shows an error message
 +
 Use case resumes at step 2.
 
@@ -841,7 +1031,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to see command history
-2.  BlueBird lists the commands entered in reverse order
+2.  Bluebird lists the commands entered in reverse order
 3.  User views previous commands
 +
 Use case ends.
@@ -861,7 +1051,7 @@ Use case ends.
 *MSS*
 
 1.  User enters 'help' command
-2.  BlueBird displays the User Guide on a new window
+2.  Bluebird displays the User Guide on a new window
 +
 Use case ends.
 
@@ -884,15 +1074,15 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to find one or more person(s) in BlueBird
-2.  BlueBird shows a list of persons with the name(s) specified by user
+1.  User requests to find one or more person(s) in Bluebird
+2.  Bluebird shows a list of persons with the name(s) specified by user
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. BlueBird found 0 person with the name
+* 2a. Bluebird found 0 person with the name
 +
 Use case ends.
 
@@ -902,7 +1092,7 @@ Use case ends.
 *MSS*
 
 1.  User input command to add person
-2.  BlueBird adds the person and displays message for successfully adding a person along with the person's details
+2.  Bluebird adds the person and displays message for successfully adding a person along with the person's details
 +
 Use case ends.
 
@@ -912,14 +1102,14 @@ Use case ends.
 * 1a. User input command wrongly
 +
 [none]
-** 1a1. BlueBird shows an invalid format message and displays the right format to user
+** 1a1. Bluebird shows an invalid format message and displays the right format to user
 +
 Use case resumes at step 1.
 
-* 1b. User tries to add a person already present in BlueBird
+* 1b. User tries to add a person already present in Bluebird
 +
 [none]
-** 1b1. BlueBird shows duplicate person error message
+** 1b1. Bluebird shows duplicate person error message
 +
 Use case resumes at step 1.
 
@@ -929,14 +1119,14 @@ Use case resumes at step 1.
 *MSS*
 
 1.  User requests for a list of person(s) with a specified tag
-2.  BlueBird shows a list of person(s) with the tag specified by user
+2.  Bluebird shows a list of person(s) with the tag specified by user
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. BlueBird found 0 person with specified tag
+* 2a. Bluebird found 0 person with specified tag
 +
 Use case ends.
 
@@ -946,9 +1136,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to hide a contact with the command: hide
-2.  BlueBird displays message for successfully hiding contact(s) from view
+2.  Bluebird displays message for successfully hiding contact(s) from view
 3.  User requests to display list of hidden contact(s) with command: hiddenList
-4.  BlueBird shows the list of hidden contact(s)
+4.  Bluebird shows the list of hidden contact(s)
 +
 Use Case ends.
 
@@ -980,12 +1170,12 @@ Use case ends.
 [discrete]
 === Use case: Sort Contacts by Tag
 
-*Precondition: Some contacts in user's BlueBird memory has to already have tags under their contact details.*
+*Precondition: Some contacts in user's Bluebird memory has to already have tags under their contact details.*
 
 *MSS*
 
 1.  User requests to sort contacts by command: sort exampleOfTag1 exampleOfTag2
-2.  BlueBird displays contacts that have the respective tag(s) under contact details as initially edited by user
+2.  Bluebird displays contacts that have the respective tag(s) under contact details as initially edited by user
 +
 Use case ends.
 
@@ -995,9 +1185,9 @@ Use case ends.
 *MSS*
 
 1.  User requests to delete multiple contacts with command: delete >1
-2.  BlueBird prompts user to enter multiple names to delete: delete name1 name2 .. etc
+2.  Bluebird prompts user to enter multiple names to delete: delete name1 name2 .. etc
 3.  User inputs command to delete multiple contacts
-4.  BlueBird displays message for successfully removing contact(s) from memory
+4.  Bluebird displays message for successfully removing contact(s) from memory
 +
 Use case ends.
 
@@ -1007,10 +1197,10 @@ Use case ends.
 * 2a. If there is no such contact or if user inputs the spelling of the name incorrectly
 +
 [none]
-** 2a1. BlueBird will check which name is non-existent (due to incorrect spelling or actually non-existent)
+** 2a1. Bluebird will check which name is non-existent (due to incorrect spelling or actually non-existent)
 +
 [none]
-** 2a2. BlueBird will prompt user to check accuracy of that particular contact name and re-enter if necessary
+** 2a2. Bluebird will prompt user to check accuracy of that particular contact name and re-enter if necessary
 +
 [none]
 ** 2a3. If not, enter null
@@ -1022,23 +1212,23 @@ Use case ends.
 
 *MSS*
 
-1. User starts BlueBird
+1. User starts Bluebird
 2. User request to deletes the wrong person from List
-3. BlueBird removes person
+3. Bluebird removes person
 4. User request to undo his action
-5. BlueBird reverses the delete command
+5. Bluebird reverses the delete command
 6. User decides to delete person again, redo action
-7. BlueBird reapplies delete command
+7. Bluebird reapplies delete command
 +
 Use case ends
 
 *Extensions*
 
 [none]
-* 2a. User requests person that is not inside the BlueBird
+* 2a. User requests person that is not inside the Bluebird
 +
 [none]
-** 2a1. BlueBird displays error message
+** 2a1. Bluebird displays error message
 +
 Use case resumes at step 1.
 
@@ -1047,12 +1237,12 @@ Use case resumes at step 1.
 
 *MSS*
 
-1. User requests to add a person into BlueBird
-2. BlueBird adds new person into List
+1. User requests to add a person into Bluebird
+2. Bluebird adds new person into List
 3. User requests to edit a person
-4. User provides index of person to be edited to BlueBird
-5. BlueBird returns person's details for user to edit
-6. BlueBird stores new details under person
+4. User provides index of person to be edited to Bluebird
+5. Bluebird returns person's details for user to edit
+6. Bluebird stores new details under person
 +
 Use case ends.
 
@@ -1062,20 +1252,20 @@ Use case ends.
 * 1a. User input command wrongly
 +
 [none]
-** 1a1. BlueBird shows an error message
+** 1a1. Bluebird shows an error message
 +
 Use case resumes at step 1.
-* 1b. User added a person already present in BlueBird
+* 1b. User added a person already present in Bluebird
 +
 [none]
-** 1b1. BlueBird shows duplicate person error message
+** 1b1. Bluebird shows duplicate person error message
 +
 Use case resumes at step 1.
 
 * 4a. User provided index that is larger than size of last updated list
 +
 [none]
-** 4a1. BlueBird shows undoable command error message
+** 4a1. Bluebird shows undoable command error message
 +
 Use case resumes at step 4.
 
@@ -1084,11 +1274,11 @@ Use case resumes at step 4.
 
 *MSS*
 
-1. User has a file of contacts from BlueBird
-2. User opens BlueBird on a different device
+1. User has a file of contacts from Bluebird
+2. User opens Bluebird on a different device
 3. User loads file of contacts onto new device
-4. BlueBird updates list
-5. User has a List of persons from previous BlueBird
+4. Bluebird updates list
+5. User has a List of persons from previous Bluebird
 +
 Use case ends.
 
@@ -1099,8 +1289,8 @@ Use case ends.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
-   able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with above average typing speed (80 words per minute) for regular English text (i.e. not code, not system admin commands) should be
+   able to accomplish most of the tasks faster using commands than using the mouse to click and select the command they want.
 .  System should be able to respond in 0.5s.
 .  The software should work without requiring an installer.
 .  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases
