@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
@@ -28,7 +27,7 @@ public class CommandBox extends UiPart<Region> {
     private ListElementPointer historySnapshot;
 
     @FXML
-    private TextField commandTextField;
+    private TabCompleteTextField commandTextField;
 
     public CommandBox(Logic logic) {
         super(FXML);
@@ -55,6 +54,10 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case TAB:
+            keyEvent.consume();;
+            commandTextField.completeFirst();
+            break;
         default:
             // let JavaFx handle the keypress
         }
@@ -70,7 +73,7 @@ public class CommandBox extends UiPart<Region> {
             return;
         }
 
-        replaceText(historySnapshot.previous());
+        commandTextField.replaceText(historySnapshot.previous());
     }
 
     /**
@@ -83,16 +86,7 @@ public class CommandBox extends UiPart<Region> {
             return;
         }
 
-        replaceText(historySnapshot.next());
-    }
-
-    /**
-     * Sets {@code CommandBox}'s text field with {@code text} and
-     * positions the caret to the end of the {@code text}.
-     */
-    private void replaceText(String text) {
-        commandTextField.setText(text);
-        commandTextField.positionCaret(commandTextField.getText().length());
+        commandTextField.replaceText(historySnapshot.next());
     }
 
     /**
@@ -105,7 +99,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             historySnapshot.next();
             // process result of the command
-            commandTextField.setText("");
+            commandTextField.replaceText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 
