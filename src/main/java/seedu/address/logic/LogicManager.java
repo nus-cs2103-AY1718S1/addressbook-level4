@@ -25,6 +25,13 @@ import seedu.address.logic.parser.person.RemarkCommandParser;
 import seedu.address.logic.parser.person.SelectCommandParser;
 import seedu.address.logic.parser.person.SortCommandParser;
 import seedu.address.logic.parser.person.UnpinCommandParser;
+import seedu.address.logic.parser.task.AddTaskCommandParser;
+import seedu.address.logic.parser.task.DeleteTaskCommandParser;
+import seedu.address.logic.parser.task.FindTaskCommandParser;
+import seedu.address.logic.parser.task.MarkTaskCommandParser;
+import seedu.address.logic.parser.task.RenameTaskCommandParser;
+import seedu.address.logic.parser.task.RescheduleTaskCommandParser;
+import seedu.address.logic.parser.task.UnmarkTaskCommandParser;
 import seedu.address.model.Model;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -83,7 +90,13 @@ public class LogicManager extends ComponentManager implements Logic {
         addressBookParser.registerCommandParser(new SelectCommandParser());
         addressBookParser.registerCommandParser(new PinCommandParser());
         addressBookParser.registerCommandParser(new UnpinCommandParser());
-        addressBookParser.registerCommandParser(new AddCommandParser());
+        addressBookParser.registerCommandParser(new AddTaskCommandParser());
+        addressBookParser.registerCommandParser(new DeleteTaskCommandParser());
+        addressBookParser.registerCommandParser(new FindTaskCommandParser());
+        addressBookParser.registerCommandParser(new MarkTaskCommandParser());
+        addressBookParser.registerCommandParser(new UnmarkTaskCommandParser());
+        addressBookParser.registerCommandParser(new RenameTaskCommandParser());
+        addressBookParser.registerCommandParser(new RescheduleTaskCommandParser());
     }
 
     /**
