@@ -27,10 +27,10 @@ public class AddAppointmentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appoint to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: " + PREFIX_NAME + "PERSON "
-            + PREFIX_DATE + Appointment.DATE_FORMAT + "\n"
+            + PREFIX_DATE + "TIME"+ "\n"
             + "Example 1:" + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe"
-            + PREFIX_DATE + "2017/01/01 17:20";
+            + PREFIX_NAME + "John Doe "
+            + PREFIX_DATE + "Next Monday 3pm";
 
     public static final String MESSAGE_SUCCESS = "New appointment added. ";
     public static final String INVALID_PERSON = "This person is not in your address book";
