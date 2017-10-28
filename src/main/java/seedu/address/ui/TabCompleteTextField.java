@@ -1,6 +1,5 @@
 package seedu.address.ui;
 
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,9 +14,13 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * This class enables auto-completion feature as a drop down menu from the command box.
+ */
 public class TabCompleteTextField extends TextField {
 
-    private final int MAX_ENTRIES = 5;
+    private static final int MAX_ENTRIES = 5;
+
     private final SortedSet<String> options = new TreeSet<>();
     private final ContextMenu dropDownMenu = new ContextMenu();
 
@@ -27,10 +30,17 @@ public class TabCompleteTextField extends TextField {
 
     public TabCompleteTextField() {
         super();
+        // calls generateSuggestions() whenever there is a change to the text of the command box.
         textProperty().addListener((unused1, unused2, unused3) -> generateSuggestions());
+        // hides the drop down menu whenever the focus in not on the command box
         focusedProperty().addListener((unused1, unused2, unused3) -> dropDownMenu.hide());
     }
 
+    /**
+     * Generates a list of suggestions according to the prefix of the lastWord.
+     * Shows the drop down menu if the menu is not empty.
+     * Hides the menu otherwise.
+     */
     private void generateSuggestions() {
         splitCommandWords();
         if (lastWord.length() == 0) {
@@ -49,6 +59,11 @@ public class TabCompleteTextField extends TextField {
         }
     }
 
+    /**
+     * Generate options for Auto-Completion from
+     * the names and tags of persons from a list.
+     * @param persons a list of person
+     */
     public void generateOptions(List<ReadOnlyPerson> persons) {
         for (ReadOnlyPerson person : persons) {
             options.addAll(Arrays.asList(person.getName().fullName.split("\\s+")));
@@ -56,7 +71,11 @@ public class TabCompleteTextField extends TextField {
         }
     }
 
-
+    /**
+     * Splits the command in the command box into
+     * two parts by the last occurrence of space.
+     * Store them into prefixWords and lastWord respectively.
+     */
     private void splitCommandWords() {
         String text = getText();
         int lastSpace = text.lastIndexOf(" ");
@@ -66,7 +85,7 @@ public class TabCompleteTextField extends TextField {
 
     /**
      * Fill the dropDownMenu with the matched words up to MAX_ENTRIES.
-     * @param matchedWords The list of matching words.
+     * @param matchedWords The list of matched words.
      */
     private void fillDropDown(List<String> matchedWords) {
         List menuItems = dropDownMenu.getItems();
@@ -76,6 +95,7 @@ public class TabCompleteTextField extends TextField {
         for (int i = 0; i < numEntries; i++) {
             final String suggestion = prefixWords + matchedWords.get(i);
             MenuItem item = new CustomMenuItem(new Label(suggestion), true);
+            // Complete the word with the chosen suggestion when Enter is pressed.
             item.setOnAction((unused) -> complete(item));
             menuItems.add(item);
         }

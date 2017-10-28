@@ -48,7 +48,6 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:
@@ -56,6 +55,7 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         case TAB:
+            // Auto-complete using the first entry of the drop down menu
             keyEvent.consume();;
             commandTextField.completeFirst();
             break;
