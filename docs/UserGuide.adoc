@@ -425,7 +425,7 @@ To transfer my data to another Computer,iInstall the app in the other computer a
 
 |link:#opening-calendar-code-calendar-code-since-v1-3[Clear] |`cl` |`calendar` |
 
-|link:#exiting-the-program-code-exit-code[Exit] | 
+|link:#exiting-the-program-code-exit-code[Exit] |
 
 |=======================================================================
 
