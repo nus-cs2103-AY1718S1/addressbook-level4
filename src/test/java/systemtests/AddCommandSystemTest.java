@@ -41,7 +41,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_DELIVERI
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FLAMMABLE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.ModelManager.deliveredPredicate;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.testutil.TypicalParcels.AMY;
@@ -93,7 +93,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: undo adding Amy to the list -> Amy deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, model, expectedResultMessage);
+        assertCommandSuccess
+                (command, model, expectedResultMessage);
 
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
@@ -122,7 +123,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         // AddressBook#addParcel(ReadOnlyParcel)
         command = AddCommand.COMMAND_WORD + TRACKING_NUMBER_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY
                 + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY
-                + STATUS_DESC_DELIVERING +  " " + PREFIX_TAG.getPrefix() + "friends";
+                + STATUS_DESC_DELIVERING +  " " + TAG_DESC_FROZEN;
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
         /*
@@ -372,6 +373,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, ReadOnlyParcel toAdd) {
         Model expectedModel = getModel();
+
         try {
             expectedModel.addParcel(toAdd);
         } catch (DuplicateParcelException dpe) {

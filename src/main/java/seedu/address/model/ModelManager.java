@@ -42,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
     private FilteredList<ReadOnlyParcel> filteredDeliveredParcels;
     private FilteredList<ReadOnlyParcel> filteredUndeliveredParcels;
     private FilteredList<ReadOnlyParcel> activeFilteredList;
+    public static Predicate<ReadOnlyParcel> deliveredPredicate = p -> p.getStatus().equals(Status.COMPLETED);
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -61,8 +62,8 @@ public class ModelManager extends ComponentManager implements Model {
     private void updatedDeliveredAndUndeliveredList() {
         boolean isActiveDelivered = activeFilteredList == filteredDeliveredParcels;
 
-        filteredDeliveredParcels = filteredParcels.filtered(p -> p.getStatus().equals(Status.COMPLETED));
-        filteredUndeliveredParcels = filteredParcels.filtered(p -> !p.getStatus().equals(Status.COMPLETED));
+        filteredDeliveredParcels = filteredParcels.filtered(deliveredPredicate);
+        filteredUndeliveredParcels = filteredParcels.filtered(deliveredPredicate.negate());
 
         setActiveList(isActiveDelivered);
     }
