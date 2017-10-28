@@ -48,7 +48,6 @@ import static seedu.address.logic.commands.CommandTestUtil.WEBSITE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.WEBSITE_DESC_BOB;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalPersons.EDITH;
 
 import org.junit.Test;
 
