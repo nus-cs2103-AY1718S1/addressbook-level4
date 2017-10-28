@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toCollection;
 
 import java.util.Iterator;
 import java.util.List;
@@ -160,6 +161,20 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableBlacklist() {
+        return FXCollections.unmodifiableObservableList(mappedList.stream().filter(person -> person.isBlacklisted()).collect(toCollection(FXCollections::observableArrayList)));
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableWhitelist() {
+        return FXCollections.unmodifiableObservableList(mappedList.stream().filter(person -> person.isWhitelisted()).collect(toCollection(FXCollections::observableArrayList)));
     }
 
     @Override
