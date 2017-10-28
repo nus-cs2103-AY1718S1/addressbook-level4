@@ -3,6 +3,8 @@ package seedu.address.ui;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -41,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     private Label birthday;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView portrait;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
@@ -64,6 +68,16 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
+
+    }
+
+    /**
+     * Add the picture to portrait field
+     * @param filePath the picture file
+     */
+    private void loadPortrait(String filePath) {
+        Image portrait = new Image(filePath);
+        this.portrait.setImage(portrait);
     }
 
     private void initTags(ReadOnlyPerson person) {
