@@ -104,12 +104,6 @@ public class UniquePersonList implements Iterable<Person> {
      *
      */
     public void sortPersonList(String type) throws InvalidSortTypeException {
-
-        if ((!type.equals("name")) || (!type.equals("tag")) || (!type.equals("company"))
-            || (!type.equals("priority")) || (!type.equals("status"))) {
-            throw new InvalidSortTypeException(
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        }
         final Comparator<Person> sortByName = (
                 Person a, Person b) -> a.getName().toString().compareToIgnoreCase(b.getName().toString());
         final Comparator<Person> sortByTags = (Person a, Person b) -> a.getTags().toString().compareToIgnoreCase((b
@@ -137,7 +131,9 @@ public class UniquePersonList implements Iterable<Person> {
             internalList.sort(sortByStatus);
             break;
         default:
-            System.out.printf("Sorting type entered not found!\n");
+            //System.out.printf("Sorting type entered not found!\n");
+            throw new InvalidSortTypeException(
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
     }
 
