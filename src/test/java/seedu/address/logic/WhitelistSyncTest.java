@@ -76,7 +76,8 @@ public class WhitelistSyncTest {
     @Test
     public void execute_banCommandRemovesPersonFromWhitelist_success() throws Exception {
 
-        ReadOnlyPerson toBeBlacklistedPerson = model.getFilteredWhitelistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ReadOnlyPerson toBeBlacklistedPerson = model.getFilteredWhitelistedPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased());
         Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(toBeBlacklistedPerson));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());

@@ -58,7 +58,8 @@ public class BanCommandTest {
         expectedModel.addBlacklistedPerson(personToBan);
 
         assertCommandSuccess(banCommand, model, expectedMessage, expectedModel);
-        assertTrue(personToBan.getAsText().equals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
+        assertTrue(personToBan.getAsText().equals(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
     }
 
     @Test
