@@ -109,7 +109,7 @@ public class AddressBookTest {
 
         @Override
         public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
-            return persons.stream().filter(person -> person.isBlacklisted())
+            return persons.stream().filter(person -> person.isWhitelisted())
                     .collect(Collectors.toCollection(FXCollections::observableArrayList));
         }
 
