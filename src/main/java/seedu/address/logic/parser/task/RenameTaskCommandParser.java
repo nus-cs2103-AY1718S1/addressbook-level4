@@ -28,6 +28,11 @@ public class RenameTaskCommandParser implements Parser<RenameTaskCommand> {
     public RenameTaskCommand parse(String args) throws ParseException {
         final Matcher matcher = RENAME_ARGS_FORMAT.matcher(args.trim());
 
+        if (!matcher.matches()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameTaskCommand.MESSAGE_USAGE));
+        }
+
         final String inputName = matcher.group("name").trim();
         final String inputIndex = matcher.group("targetIndex");
 

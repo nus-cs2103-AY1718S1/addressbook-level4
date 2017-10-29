@@ -44,7 +44,7 @@ public class UnmarkTaskCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
+    requireNonNull(model);
 
         List<ReadOnlyTask> tasksToUnmark = new ArrayList<>();
         int counter = 0;

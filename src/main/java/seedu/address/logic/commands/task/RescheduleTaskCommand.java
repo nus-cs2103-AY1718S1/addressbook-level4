@@ -42,8 +42,9 @@ public class RescheduleTaskCommand extends UndoableCommand {
     /**
      * Empty Constructor
      */
-    public RescheduleTaskCommand() {}
-    
+    public RescheduleTaskCommand() {
+    }
+
     public RescheduleTaskCommand(Index targetIndex, Optional<LocalDateTime> startTime,
                                  Optional<LocalDateTime> endTime) throws IllegalValueException {
 

@@ -47,6 +47,8 @@ public class RescheduleTaskCommandParser implements Parser<RescheduleTaskCommand
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RescheduleTaskCommand.MESSAGE_USAGE));
         }
 
+        matcher.reset();
+        matcher.find();
         Index index;
         try {
             index = ParserUtil.parseIndex(matcher.group(0));
@@ -55,8 +57,6 @@ public class RescheduleTaskCommandParser implements Parser<RescheduleTaskCommand
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, RescheduleTaskCommand.MESSAGE_USAGE));
         }
         try {
-            matcher.reset();
-            matcher.find();
             BiConsumer<String, String> consumer = (matchedGroup, token) -> {
                 String time = matchedGroup.substring(token.length(), matchedGroup.length());
                 if (DateTimeParserUtil.containsTime(time)) {

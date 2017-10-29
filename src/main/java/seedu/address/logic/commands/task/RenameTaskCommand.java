@@ -28,7 +28,7 @@ public class RenameTaskCommand extends UndoableCommand {
             + "[New header]"
             + "Example: " + COMMAND_WORD + " 2 Football training";
 
-    public static final String MESSAGE_RENAME_TASK_SUCCESS = "Renamed Person: %1$s";
+    public static final String MESSAGE_RENAME_TASK_SUCCESS = "Renamed Task: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task header already exists in the address book.";
 
     private final Index index;
