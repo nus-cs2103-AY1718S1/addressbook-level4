@@ -48,7 +48,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String commandWord = matcher.group("commandWord");
         String arguments = matcher.group("arguments");
 
-        String[] keywords = arguments.split("\\s+");
+        String[] keywords = arguments.split("\\s", 0);
 
         switch(commandWord) {
 
