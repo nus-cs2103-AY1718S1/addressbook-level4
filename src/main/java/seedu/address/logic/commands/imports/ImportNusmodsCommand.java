@@ -71,6 +71,8 @@ public class ImportNusmodsCommand extends ImportCommand {
 
     // A counter for how many examinations have been added to the application as events.
     private int eventsAdded;
+    // Signals whether we fail to add any examination.
+    private boolean failToAdd;
 
     /**
      * Only checks the academic year and semester information in the constructor. If the query part (module information)
@@ -81,6 +83,7 @@ public class ImportNusmodsCommand extends ImportCommand {
         this.url = url;
         matchSemesterInformation();
         eventsAdded = 0;
+        failToAdd = false;
     }
 
     @Override
@@ -110,13 +113,14 @@ public class ImportNusmodsCommand extends ImportCommand {
                     model.addEvent(e);
                     incrementEventsAddedCount();
                 } catch (DuplicateEventException e1) {
+                    failToAdd = true;
                     logger.info(String.format(EXAM_EVENT_EXIST_DUPLICATE, module.getModuleCode()));
                 }
             });
         }
 
         String successMessage = String.format(MESSAGE_SUCCESS, eventsAdded);
-        if (eventsAdded != modules.size()) {
+        if (failToAdd) {
             return new CommandResult(successMessage + SOME_EXAMS_NOT_ADDED);
         } else {
             return new CommandResult(successMessage);
@@ -184,7 +188,7 @@ public class ImportNusmodsCommand extends ImportCommand {
 
         try {
             Name eventName = new Name(String.format(EXAM_EVENT_NAME, module.getModuleCode()));
-            DateTime eventDatetime = new DateTime("");
+            DateTime eventDatetime = new DateTime(module.getExamDate());
             Address eventAddress = new Address(EXAM_EVENT_DEFAULT_ADDRESS);
             return Optional.of(new Event(eventName, eventDatetime, eventAddress));
         } catch (IllegalValueException | PropertyNotFoundException e) {
