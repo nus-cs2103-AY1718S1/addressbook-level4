@@ -407,7 +407,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-[discrete]
+[d]
 === Since v1.1
 
 // tag::sort[]
@@ -463,7 +463,7 @@ Figure 4.4.3: Sequence diagram for SortCommand executeUndoableCommand()
 **Cons:** Forgetful users may not be able to find their contact if they forget to sort by name when they add a new contact +
 // end::sort[]
 
-[discrete]
+[d]
 === Since v1.2
 
 //  tag::find[]
@@ -555,7 +555,7 @@ after every person is hidden successfully.
 // end::hide[]
 
 // tag::pinunpin[]
-[discrete]
+[d]
 === Since v1.3
 
 === Pin / Unpin
@@ -574,7 +574,7 @@ variable change to `true`. Similarly, the variable can be changed from `true` to
 **Cons:** It may not be noticeable if the person already has many `Tag` on them.
 // end::pinunpin[]
 
-[discret]
+[d]
 === Since v1.4
 
 === First time tutorial
