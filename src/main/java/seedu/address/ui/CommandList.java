@@ -17,7 +17,7 @@ import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.logic.parser.CliSyntax;
 
 /**
- * Contains a list of Command Line Interface (CLI) command words.
+ * Contains a list of commonly used Command Line Interface (CLI) commands.
  */
 public class CommandList {
 
