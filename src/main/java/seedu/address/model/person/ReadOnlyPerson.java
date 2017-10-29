@@ -24,6 +24,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Note> noteProperty();
     Note getNote();
+    ObjectProperty<LastUpdated> lastUpdatedProperty();
+    LastUpdated getLastUpdated();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<UniqueMeetingList> meetingProperty();

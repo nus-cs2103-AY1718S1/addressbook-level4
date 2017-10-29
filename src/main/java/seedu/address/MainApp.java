@@ -19,6 +19,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.google.OAuth;
+import seedu.address.google.SyncTable;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
@@ -52,6 +53,7 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
     protected OAuth oauth;
+    protected SyncTable syncTable;
 
 
     @Override
@@ -65,18 +67,23 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
-        oauth = new OAuth();
 
         initLogging(config);
 
+        syncTable = new SyncTable();
+        oauth = new OAuth(syncTable);
+
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, syncTable);
 
         ui = new UiManager(logic, config, userPrefs);
 
+
+
         initEventsCenter();
     }
+
 
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();

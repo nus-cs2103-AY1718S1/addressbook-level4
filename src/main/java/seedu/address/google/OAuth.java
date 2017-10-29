@@ -2,9 +2,7 @@ package seedu.address.google;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -19,16 +17,12 @@ import com.google.api.client.util.store.DataStoreFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.PeopleServiceScopes;
-import com.google.api.services.people.v1.model.Address;
-import com.google.api.services.people.v1.model.EmailAddress;
-import com.google.api.services.people.v1.model.Name;
-import com.google.api.services.people.v1.model.Person;
-import com.google.api.services.people.v1.model.PhoneNumber;
+
 import com.google.common.eventbus.Subscribe;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.model.AuthorizationEvent;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.google.Synchronise;
 
 /**
  * Command-line sample for the Google OAuth2 API described at <a
@@ -63,8 +57,13 @@ public class OAuth {
 
     private static com.google.api.services.people.v1.PeopleService client;
 
-    public OAuth() {
+    private static Synchronise sync;
+
+    private static SyncTable syncTable;
+
+    public OAuth(SyncTable syncTable) {
         registerAsAnEventHandler(this);
+        this.syncTable = syncTable;
     }
 
     protected void registerAsAnEventHandler(Object handler) {
@@ -95,29 +94,7 @@ public class OAuth {
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
-    /**Uploads AddressBook contacts to Google Contacts
-     * TODO: Prevent adding of duplicates
-     */
-    private static void exportContacts (List<ReadOnlyPerson> personList) throws IOException {
-        for (ReadOnlyPerson person : personList) {
-            Person contactToCreate = new Person();
-            List<Name> name = new ArrayList<Name>();
-            List<EmailAddress> email = new ArrayList<EmailAddress>();
-            List<Address> address = new ArrayList<Address>();
-            List<PhoneNumber> phone = new ArrayList<PhoneNumber>();
-            name.add(new Name().setGivenName(person.getName().fullName));
-            email.add(new EmailAddress().setValue(person.getEmail().value));
-            address.add(new Address().setFormattedValue(person.getAddress().value));
-            phone.add(new PhoneNumber().setValue(person.getPhone().value));
 
-            contactToCreate.setNames(name)
-                            .setEmailAddresses(email)
-                            .setAddresses(address)
-                            .setPhoneNumbers(phone);
-
-            Person createdContact = client.people().createContact(contactToCreate).execute();
-        }
-    }
 
     @Subscribe
     private static void handleAuthorizationEvent(AuthorizationEvent event) throws Throwable {
@@ -135,7 +112,10 @@ public class OAuth {
                 client = new PeopleService.Builder(
                         httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
 
-                exportContacts(event.getPersonList());
+                sync = new Synchronise(client, syncTable);
+                sync.execute(event.getPersonList());
+//                exportContacts(event.getPersonList());
+//                importContacts();
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             } catch (Throwable t) {

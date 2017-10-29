@@ -2,9 +2,11 @@ package seedu.address.logic;
 
 import java.util.logging.Logger;
 
+import com.sun.corba.se.impl.orbutil.concurrent.Sync;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.google.SyncTable;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -23,12 +25,14 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private final SyncTable syncTable;
 
-    public LogicManager(Model model) {
+    public LogicManager(Model model, SyncTable syncTable) {
         this.model = model;
         this.history = new CommandHistory();
         this.addressBookParser = new AddressBookParser();
         this.undoRedoStack = new UndoRedoStack();
+        this.syncTable = syncTable;
     }
 
     @Override
@@ -37,6 +41,7 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
+            command.setSyncTable(syncTable);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;

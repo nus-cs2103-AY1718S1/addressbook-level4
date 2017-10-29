@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -16,15 +17,10 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.google.SyncTable;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.meeting.Meeting;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Note;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.*;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -80,6 +76,18 @@ public class EditCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+
+        Instant time = Instant.now();
+
+        editedPerson.setLastUpdated(new LastUpdated(time.toString()));
+
+
+        if (syncTable.containsKey(personToEdit)) {
+            String key =  syncTable.get(personToEdit);
+            syncTable.remove(personToEdit);
+            syncTable.put(editedPerson, key);
+
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);

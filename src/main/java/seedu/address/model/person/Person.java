@@ -27,6 +27,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Note> note;
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<UniqueMeetingList> meetings;
+    private ObjectProperty<LastUpdated> lastUpdated;
 
     /**
      * Every field must be present and not null.
@@ -122,6 +123,20 @@ public class Person implements ReadOnlyPerson {
     public Note getNote() {
         return note.get();
     };
+
+    @Override
+    public ObjectProperty<LastUpdated> lastUpdatedProperty() {
+        return lastUpdated;
+    }
+
+    @Override
+    public LastUpdated getLastUpdated() {
+        return lastUpdated.get();
+    }
+
+    public void setLastUpdated (LastUpdated lastUpdated) {
+        this.lastUpdated.set(lastUpdated);
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
