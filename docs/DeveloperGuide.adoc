@@ -12,7 +12,29 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W-11 B4`      Since: `Sep 2017`      Licence: `MIT`
+
+== Contributing to Unify
+
+=== Who we are
+Unify is an open source Command Line Interface (CLI) AddressBook.
+We aim to offer a an efficient solution for contact management for computing students through the command line.
+
+=== How to contribute
+Looking to contribute to Unify? You have come to the right place! This developer guide provides information for
+both experienced and first-time contributors.
+
+==== First Time Contributors
+First time contributing to an open source project? Welcome to the community - we appreciate your enthusiasm! +
+
+* For starters, do read our Setting up guide to familiarize yourself with Unify
+* If you are ready to contribute, make a pull request (pr) on our main repository.
+** First time making a pr? There's a great guide for beginners over https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github[here]
+* Lastly, if you have any questions, feel free to https://github.com/CS2103AUG2017-W11-B4/main/issues[make an issue] or <<ContactUs#, contact us>> directly.
+
+==== Experienced Developers
+Thank you for taking the time to look at our project. While we have worked on this extensively, do let us know what can be improved!
+Your experience and contribution will be invaluable in improving Unify for our valued users.
 
 == Setting up
 
