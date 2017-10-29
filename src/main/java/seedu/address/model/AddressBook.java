@@ -68,9 +68,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
-    public void setLifeInsurances(Map<UUID, ? extends ReadOnlyInsurance> insurances)
-        throws DuplicateInsuranceException{
-            this.lifeInsuranceMap.setInsurances((insurances));
+    public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
+        this.lifeInsuranceMap.setInsurances((insurances));
     }
 
     /**
@@ -91,14 +90,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setLifeInsurances(newData.getLifeInsuranceMap());
         } catch (DuplicateInsuranceException e) {
-            assert false: "AddressBooks should not have duplicate insurances";
+            assert false : "AddressBooks should not have duplicate insurances";
         }
 
         try {
             syncMasterLifeInsuranceMapWith(persons);
             syncMasterPersonListWith(lifeInsuranceMap);
         } catch (InsuranceNotFoundException e) {
-            assert false: "AddressBooks should not contain id that doesn't match to an insurance";
+            assert false : "AddressBooks should not contain id that doesn't match to an insurance";
         }
     }
 
@@ -230,7 +229,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Ensures that every person in the insurance map:
      *  - contains the correct life insurance corresponds to its id from the master map
      */
-    public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException{
+    public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
         persons.forEach((ThrowingConsumer<Person>) person -> {
             List<UUID> idList = person.getLifeInsuranceIds();
             if (!idList.isEmpty()) {

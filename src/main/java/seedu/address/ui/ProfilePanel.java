@@ -96,7 +96,7 @@ public class ProfilePanel extends UiPart<Region> {
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         ReadOnlyPerson person = event.getPerson().orElse(null);
-        if(person == null) {
+        if (person == null) {
             loadPersonPage(event.getPersonName());
         } else {
             loadPersonPage(event.getPerson().get());

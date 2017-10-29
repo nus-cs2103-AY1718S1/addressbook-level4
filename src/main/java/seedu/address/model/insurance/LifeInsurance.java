@@ -102,6 +102,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
                 switch (role) {
                 case OWNER:
                     this.owner = new SimpleObjectProperty<>(new InsurancePerson(person));
+                    break;
                 case INSURED:
                     this.insured = new SimpleObjectProperty<>(new InsurancePerson(person));
                     break;

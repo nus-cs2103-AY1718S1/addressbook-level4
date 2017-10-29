@@ -6,7 +6,6 @@ import java.util.UUID;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Represents an insurance.
