@@ -6,16 +6,25 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.commons.util.UrlUtil;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.person.exceptions.DuplicateEventException;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.DateTime;
+import seedu.address.model.property.Name;
+import seedu.address.model.property.exceptions.PropertyNotFoundException;
 
 /**
  * Imports data from the URL of a NUSMods timetable.
@@ -28,6 +37,7 @@ public class ImportNusmodsCommand extends ImportCommand {
             + ": Imports data from NUSMods timetable URL.\n"
             + "Examples:\n"
             + COMMAND_WORD + " --nusmods https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01";
+
     private static final String INVALID_URL = "The URL provided is not from NUSMods website. \n%1$s";
     private static final String YEAR_INVALID =
             "Maybe you modify the part regarding academic year and semester.";
@@ -38,16 +48,29 @@ public class ImportNusmodsCommand extends ImportCommand {
     private static final String INVALID_ENCODING = "The URL encoding is not supported. Please use UTF-8.";
     private static final String MODULE_INFO_JSON_URL_FORMAT =
             "http://api.nusmods.com/%1$s-%2$s/%3$s/modules/%4$s.json";
-    private static final String UNABLE_FETCH_MODULE_INFO = "Unable to fetch the information of module %1$s";
+    private static final String UNABLE_FETCH_MODULE_INFO = "Unable to fetch the information of module %1$s.";
+    private static final String EXAM_EVENT_NAME = "%1$s Examination";
+    private static final String UNABLE_CREATE_EXAM_EVENT = "Unable to create exam event for %1$s.";
+    private static final String EXAM_EVENT_DEFAULT_ADDRESS = "NUS";
+    private static final String EXAM_EVENT_EXIST_DUPLICATE =
+            "The examination event for %1$s already exists in the application.";
+    private static final String MESSAGE_SUCCESS = "%1$s examinations have been added as events.";
+    private static final String SOME_EXAMS_NOT_ADDED =
+            "\nHowever, some examination were not added since they already exist in the application";
 
     // Semester should be a one-digit number from 1 to 4, year must be after 2000.
     private static final Pattern URL_SEMESTER_INFO_FORMAT  =
             Pattern.compile("/timetable/(?<year1>20\\d{2})[-](?<year2>20\\d{2})/sem(?<semester>[1-4])");
 
+    private static final Logger logger = LogsCenter.getLogger(ImportNusmodsCommand.class);
+
     private URL url;
     private int yearStart;
     private int yearEnd;
     private int semester;
+
+    // A counter for how many examinations have been added to the application as events.
+    private int eventsAdded;
 
     /**
      * Only checks the academic year and semester information in the constructor. If the query part (module information)
@@ -57,10 +80,12 @@ public class ImportNusmodsCommand extends ImportCommand {
         super(url.toString(), ImportType.NUSMODS);
         this.url = url;
         matchSemesterInformation();
+        eventsAdded = 0;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
+        // Get all the module codes.
         Set<String> modules;
         try {
             modules = fetchModuleCodes();
@@ -68,6 +93,7 @@ public class ImportNusmodsCommand extends ImportCommand {
             throw new CommandException(String.format(INVALID_URL, INVALID_ENCODING));
         }
 
+        // Retrieve information of all modules from NUSMods JSON API.
         Set<ModuleInfo> moduleInfo = new HashSet<>();
         for (String moduleCode: modules) {
             try {
@@ -77,7 +103,24 @@ public class ImportNusmodsCommand extends ImportCommand {
             }
         }
 
-        return null;
+        // Add an event for the final examination of each module.
+        for (ModuleInfo module: moduleInfo) {
+            addExamEvent(module).ifPresent(e -> {
+                try {
+                    model.addEvent(e);
+                    incrementEventsAddedCount();
+                } catch (DuplicateEventException e1) {
+                    logger.info(String.format(EXAM_EVENT_EXIST_DUPLICATE, module.getModuleCode()));
+                }
+            });
+        }
+
+        String successMessage = String.format(MESSAGE_SUCCESS, eventsAdded);
+        if (eventsAdded != modules.size()) {
+            return new CommandResult(successMessage + SOME_EXAMS_NOT_ADDED);
+        } else {
+            return new CommandResult(successMessage);
+        }
     }
 
     /**
@@ -131,10 +174,25 @@ public class ImportNusmodsCommand extends ImportCommand {
     /**
      * Creates an {@link Event} representing the final examination according to information from {@link ModuleInfo}.
      *
-     * @return an {@link Optional<Event>} that is present only if the given module has a final examination (some
+     * @return an {@link Optional<ReadOnlyEvent>} that is present only if the given module has a final examination (some
      * modules at NUS are 100% continuous-assessment, like CFG1010).
      */
-    private Optional<Event> addExamEvent(ModuleInfo module) throws CommandException {
-        return null;
+    private Optional<ReadOnlyEvent> addExamEvent(ModuleInfo module) throws CommandException {
+        if (module.getExamDate() == null) {
+            return Optional.empty();
+        }
+
+        try {
+            Name eventName = new Name(String.format(EXAM_EVENT_NAME, module.getModuleCode()));
+            DateTime eventDatetime = new DateTime("");
+            Address eventAddress = new Address(EXAM_EVENT_DEFAULT_ADDRESS);
+            return Optional.of(new Event(eventName, eventDatetime, eventAddress));
+        } catch (IllegalValueException | PropertyNotFoundException e) {
+            throw new CommandException(String.format(UNABLE_CREATE_EXAM_EVENT, module.getModuleCode()));
+        }
+    }
+
+    private void incrementEventsAddedCount() {
+        eventsAdded++;
     }
 }

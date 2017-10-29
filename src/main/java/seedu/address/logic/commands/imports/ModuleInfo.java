@@ -15,6 +15,10 @@ public class ModuleInfo {
     private int moduleCredit;
     private Date examDate;
 
+    public String getModuleCode() {
+        return moduleCode;
+    }
+
     public Date getExamDate() {
         return examDate;
     }
