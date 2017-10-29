@@ -20,13 +20,13 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
      */
     public UploadPhotoCommand parse(String args) throws ParseException {
         try {
-            String[] argsArr = args.split(" ");
+            String[] argsArr = args.trim().split(" ");
 
-            String indexString = argsArr[1];
+            String indexString = argsArr[0];
             String filePath = "";
-            System.out.println(argsArr.length);
-            if(argsArr.length>2){
-                filePath = argsArr[2];
+//            System.out.println(argsArr[1]);
+            if(argsArr.length>1){
+                filePath = argsArr[1];
             }
            // System.out.println(indexString + " " + filePath);
             Index index = ParserUtil.parseIndex(indexString);

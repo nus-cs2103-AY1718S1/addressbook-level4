@@ -81,8 +81,8 @@ public class PersonCard extends UiPart<Region> {
 
         Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
         if(Files.exists(path)) {
-            System.out.println("Hi i am "+person.getName().toString());
-            System.out.println("Valid filepath");
+//            System.out.println("Hi i am "+person.getName().toString());
+//            System.out.println("Valid filepath");
             File  filePic = new File( "src/main/photos/" + person.getEmail().toString() + ".png");
             Image image = new Image(filePic.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
@@ -90,8 +90,8 @@ public class PersonCard extends UiPart<Region> {
             File  fileDefault = new File("src/main/photos/default.jpeg");
             Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
-            System.out.println("Hi i am "+person.getName().toString());
-            System.out.println("My filepath is "+ fileDefault.getPath());
+//            System.out.println("Hi i am "+person.getName().toString());
+//            System.out.println("My filepath is "+ fileDefault.getPath());
         }
 
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
@@ -111,7 +111,7 @@ public class PersonCard extends UiPart<Region> {
         if(Files.exists(path)) {
             Image image = new Image(file.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
-            System.out.println("Photo changed " + person.getName().fullName);
+         //   System.out.println("Photo changed " + person.getName().fullName);
         }
 
     }

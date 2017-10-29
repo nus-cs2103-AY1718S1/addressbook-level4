@@ -69,7 +69,7 @@ public class UploadPhotoCommand extends UndoableCommand {
             imageFile = saveFile(imageFile, personToUploadImage.getEmail());
             EventsCenter.getInstance().post(new PhotoChangeEvent());
         } else {
-            return new CommandResult(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
+            throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
         }
 
         // ReadOnlyPerson editedPerson = lastShownList.get(targetIndex.getZeroBased());
