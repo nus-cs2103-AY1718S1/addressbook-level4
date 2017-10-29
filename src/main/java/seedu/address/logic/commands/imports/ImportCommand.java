@@ -38,4 +38,21 @@ public abstract class ImportCommand extends Command {
         TO_ENUM_IMPORT_TYPE.put("xml", ImportType.XML);
         TO_ENUM_IMPORT_TYPE.put("script", ImportType.SCRIPT);
     }
+
+    protected String path;
+
+    private ImportType importType;
+
+    public ImportCommand(String path, ImportType importType) {
+        this.path = path;
+        this.importType = importType;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ImportCommand // instanceof handles nulls
+                && importType.equals(((ImportCommand) other).importType)
+                && path.equals(((ImportCommand) other).path));
+    }
 }
