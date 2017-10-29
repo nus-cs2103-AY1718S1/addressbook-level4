@@ -109,7 +109,7 @@ public class AddressBookParserTest {
         FindCommand command = (FindCommand) parser.parseCommand(
                 //@@author Affalen
                 FindCommand.COMMAND_WORD + " " + "n/" + keywords.stream().collect(Collectors.joining(" ")));
-                //@@author
+        //@@author
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
