@@ -434,12 +434,6 @@ Format: `login u/private p/password`
 Logout of a Private Database +
 Format: `logout`
 
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
-
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
