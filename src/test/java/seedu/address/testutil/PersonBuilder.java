@@ -9,10 +9,12 @@ import seedu.address.model.person.DateBorrow;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Handphone;
+import seedu.address.model.person.HomePhone;
 import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OfficePhone;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
@@ -24,7 +26,9 @@ import seedu.address.model.util.SampleDataUtil;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
+    public static final String DEFAULT_HANDPHONE = "85355255";
+    public static final String DEFAULT_HOME_PHONE = "65355255";
+    public static final String DEFAULT_OFFICE_PHONE = "60005255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_POSTAL_CODE = "600123";
@@ -40,7 +44,9 @@ public class PersonBuilder {
     public PersonBuilder() {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
-            Phone defaultPhone = new Phone(DEFAULT_PHONE);
+            Handphone defaultHandphone = new Handphone(DEFAULT_HANDPHONE);
+            HomePhone defaultHomePhone = new HomePhone(DEFAULT_HOME_PHONE);
+            OfficePhone defaultOfficePhone = new OfficePhone(DEFAULT_OFFICE_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             PostalCode defaultPostalCode = new PostalCode(DEFAULT_POSTAL_CODE);
@@ -48,8 +54,8 @@ public class PersonBuilder {
             Interest defaultInterest = new Interest(DEFAULT_INTEREST);
             Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultPostalCode,
-                    defaultDebt, defaultInterest, defaultDeadline, defaultTags);
+            this.person = new Person(defaultName, defaultHandphone, defaultHomePhone, defaultOfficePhone, defaultEmail,
+                    defaultAddress, defaultPostalCode, defaultDebt, defaultInterest, defaultDeadline, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -112,13 +118,37 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Handphone} of the {@code Person} that we are building.
      */
-    public PersonBuilder withPhone(String phone) {
+    public PersonBuilder withHandphone(String handphone) {
         try {
-            this.person.setPhone(new Phone(phone));
+            this.person.setHandphone(new Handphone(handphone));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone is expected to be unique.");
+            throw new IllegalArgumentException("handphone is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code HomePhone} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withHomePhone(String homePhone) {
+        try {
+            this.person.setHomePhone(new HomePhone(homePhone));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("home phone is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code OfficePhone} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withOfficePhone(String officePhone) {
+        try {
+            this.person.setOfficePhone(new OfficePhone(officePhone));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("office phone is expected to be unique.");
         }
         return this;
     }

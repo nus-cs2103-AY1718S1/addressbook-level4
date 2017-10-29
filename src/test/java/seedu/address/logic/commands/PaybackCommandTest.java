@@ -40,7 +40,6 @@ public class PaybackCommandTest {
 
     @Test
     public void execute_successfulPayback() {
-        Index firstPerson = Index.fromOneBased(1);
         ReadOnlyPerson personWhoPayback = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
                 + String.format(PaybackCommand.MESSAGE_PAYBACK_SUCCESS,
@@ -49,9 +48,7 @@ public class PaybackCommandTest {
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
             expectedModel.deductDebtFromPerson(personWhoPayback, new Debt(VALID_DEBT_FIGURE));
 
-            PaybackCommand paybackCommand = new PaybackCommand(firstPerson, new Debt(VALID_DEBT_FIGURE));
-            paybackCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
+            PaybackCommand paybackCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(VALID_DEBT_FIGURE));
             assertCommandSuccess(paybackCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -72,9 +69,7 @@ public class PaybackCommandTest {
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
             expectedModel.deductDebtFromPerson(personWhoPayback, new Debt(VALID_DEBT_FIGURE));
 
-            PaybackCommand paybackCommand = new PaybackCommand(new Debt(VALID_DEBT_FIGURE));
-            paybackCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
+            PaybackCommand paybackCommand = prepareCommand(null, new Debt(VALID_DEBT_FIGURE));
             assertCommandSuccess(paybackCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -86,11 +81,8 @@ public class PaybackCommandTest {
     //@@author jelneo
     @Test
     public void execute_unsuccessfulPayback_dueToInvalidFigure() {
-        Index firstPerson = Index.fromOneBased(1);
         try {
-            PaybackCommand paybackCommand = new PaybackCommand(firstPerson, new Debt(INVALID_DEBT_FIGURE));
-            paybackCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
+            PaybackCommand paybackCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(INVALID_DEBT_FIGURE));
             assertCommandFailure(paybackCommand, model, MESSAGE_INVALID_FORMAT);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -99,11 +91,8 @@ public class PaybackCommandTest {
 
     @Test
     public void execute_unsuccessfulPayback_dueToAmountExceedingDebtOwed() {
-        Index firstPerson = Index.fromOneBased(1);
         try {
-            PaybackCommand paybackCommand = new PaybackCommand(firstPerson, new Debt(ENORMOUS_DEBT_FIGURE));
-            paybackCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
+            PaybackCommand paybackCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(ENORMOUS_DEBT_FIGURE));
             assertCommandFailure(paybackCommand, model, PaybackCommand.MESSAGE_PAYBACK_FAILURE);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -138,4 +127,17 @@ public class PaybackCommandTest {
         }
     }
 
+    /**
+     * Prepares a {@code PaybackCommand}.
+     */
+    private PaybackCommand prepareCommand(Index index, Debt debt) {
+        PaybackCommand command = null;
+        if (index == null) {
+            command = new PaybackCommand(debt);
+        } else {
+            command = new PaybackCommand(index, debt);
+        }
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
 }

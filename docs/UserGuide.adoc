@@ -23,7 +23,8 @@ The terms used in this guide are as follows: +
 
 * Blacklist - List of people who are banned +
 * Whitelist - List of people who have cleared their debts +
-* Index - The ordering of a contact in the list
+* Index - The ordering of a contact in the list +
+* Cluster - The general location of a person based on [https://www.ura.gov.sg/realEstateIIWeb/resources/misc/list_of_postal_districts.htm[postal districts]]
 
 == Introduction
 
@@ -57,7 +58,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-12-2018` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe hp/98765432 home/60773707 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-12-2018` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -71,10 +72,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Parameters can be in any order e.g. if the command specifies `n/NAME hp/HANDPHONE_NUMBER`, `hp/HANDPHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-
+// tag::login[]
 === Logging into the address book application : `login`
 
 Logs into the address book. +
@@ -84,11 +85,14 @@ Examples:
 
 * `login userAcc_123 pa$$_Word!@#&`
 * `login batMan_111 (Batcave.327+-)`
+// end::login[]
 
+// tag::logout[]
 === Logging out of the address book application : `logout`
 
 Logs out of the address book. +
 Format: `logout`
+// end::logout[]
 
 === Viewing help : `help`
 
@@ -97,16 +101,16 @@ Format: `help`
 === Adding a debtor: `add`
 
 Adds a debtor to the address book. Date borrowed for debtor is automatically +
-noted down. The `Deadline`, `Interest` and `Tag` fields are optional. +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/Debt [t/TAG]...`
+noted down. The `Office phone`, `Deadline`, `Interest` and `Tag` fields are optional. +
+Format: `add n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [op/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...`
 
 [TIP]
 A debtor can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-11-2018`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 pc/000001 d/1234 t/criminal`
+* `add n/John Doe hp/98765432 home/60773707 op/60073007 e/johnd@example.com a/John street, block 123, #01-01 pc/321123 d/123 dl/11-11-2018`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison hp/81234567 home/61018123 pc/000001 d/1234 t/criminal`
 
 === Listing all persons : `list`
 
@@ -126,12 +130,12 @@ Format: `whitelist`
 === Editing a person : `edit`
 
 Edits an existing debtor, blacklisted/whitelisted contact in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [t/TAG]...`
+Format: `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [op/OFFICE_PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [d/DEBT] [dl/DEADLINE] [int/INTEREST] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * If no index is specified, the currently selected person is edited instead.
-* At least one of the optional fields must be provided.
+* At least one of the optional fields, other than `INDEX`, must be provided.
 * Existing values will be updated to the input values.
 * The date of debt borrowed cannot be edited.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -169,10 +173,11 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::borrow[]
 === Increasing the debt of a debtor: `borrow`
 
 Increase the debt of a debtor by the amount entered. +
-Format: `borrow INDEX AMOUNT`
+Format: `borrow [INDEX] AMOUNT`
 
 ****
 * Increases the debt of the debtor at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -190,11 +195,13 @@ Increases the debt of the 2nd person by $1000.10.
 `select 2` +
 `borrow 234` +
 Increases the debt of the 2nd person by $234.
+// end::borrow[]
 
+// tag::payback[]
 === Decreasing the debt of a person: `payback`
 
 Decrease the debt of a person by the amount entered. +
-Format: `payback INDEX AMOUNT`
+Format: `payback [INDEX] AMOUNT`
 
 ****
 * Decreases the debt of the person at the specified `INDEX` by `AMOUNT`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -213,6 +220,7 @@ Decreases the debt of the 2nd person by $1000.10.
 `select 3` +
 `payback 234` +
 Increases the debt of the 3rd person by $234.
+// end::payback[]
 
 === Resetting the debt of a person: `repaid`
 
@@ -231,7 +239,7 @@ Resets the debt of the 1st person to zero and sets the date of repayment in his 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete [INDEX]`
 
 ****
 * Deletes the person at the specified `INDEX`. The index refers to the index number shown in the most recent listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -346,10 +354,11 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Sorting all contacts : `sort`
 
 Sorts all the contacts in the address book in specified order. If no order is specified, the contacts are sorted in ascending lexographical order. +
-Format: `sort ORDERING`
+Format: `sort [ORDERING]`
 
 ****
 * Valid orderings are: `name`, `cluster`, `deadline` and `debt`.
+* If no ordering is specified, the address book will be sorted by name.
 ****
 
 Examples:
@@ -359,6 +368,25 @@ Sorts the contacts in the address book by name.
 * `sort cluster` +
 Sorts the contacts in the address book by their postal districts.
 // end::sort[]
+
+// tag::filter[]
+=== Filter contacts by tags : `filter`
+
+Filter contacts in the address book according to the tags specified. +
+Format: `filter TAG1 TAG2 ...`
+
+****
+* Contacts which contain at least one of the tags specified will be shown in the list.
+** e.g. A person in the address book, Alex, has two tags: `friendly` and `cooperative`. When the command `filter friendly` is entered, Alex will be shown in the filtered list.
+****
+
+Examples:
+
+* `filter friendly` +
+Displays contacts with the `friendly` tag.
+* `filter tricky violent dishonest` +
+Displays contacts who have at least one of these three tags: `tricky`, `violent`, `dishonest`.
+// end::filter[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -482,22 +510,22 @@ transferred to whitelist and date repaid is set to the date the command is execu
 * *Login* : `login USERNAME PASSWORD` +
 e.g. `login userAcc_123 pa$$_Word!@#&`
 * *Logout* : `logout`
-* *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL CODE d/DEBT dl/DEADLINE[t/TAG]...` +
+* *Add* : `add n/NAME hp/HANDPHONE_NUMBER home/HOME_PHONE_NUMBER e/EMAIL a/ADDRESS pc/POSTAL_CODE d/DEBT [op/OFFICE_PHONE_NUMBER] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd pc/123466 d/123 dl/11-03-2017 t/friend t/colleague`
 * *Clear* : `clear`
-* *Borrow* : `borrow INDEX AMOUNT` +
+* *Borrow* : `borrow [INDEX] AMOUNT` +
 e.g. `borrow 1 500.50`
-* *Pay back* : `payback INDEX AMOUNT` +
+* *Pay back* : `payback [INDEX] AMOUNT` +
 e.g. `payback 1 500.50`
 * *Repaid* : `repaid INDEX` +
 e.g. `payback 1`
-* *Delete* : `delete INDEX` +
+* *Delete* : `delete [INDEX]` +
 e.g. `delete 3`
 * *Ban* : `ban INDEX` +
 e.g. `ban 3`
 * *Unban* : `unban INDEX` +
 e.g. `unban 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL CODE] [d/DEBT] [dl/DEADLINE] [t/TAG]...` +
+* *Edit* : `edit [INDEX] [n/NAME] [hp/HANDPHONE_NUMBER] [home/HOME_PHONE_NUMBER] [op/OFFICE_PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [pc/POSTAL_CODE] [d/DEBT] [dl/DEADLINE] [int/INTEREST] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -509,8 +537,10 @@ e.g. `find James Jake`
 e.g.`select 2`
 * *History* : `history`
 * *Nearby* : `nearby`
-* *Sort* : `sort ORDERING` +
+* *Sort* : `sort [ORDERING]` +
 e.g. `sort debt`
+* *Filter* : `filter TAG1 TAG2 ...` +
+e.g `filter friendly cooperative`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
@@ -547,6 +577,9 @@ e.g. `sort debt`
 * `Logout` command (since v1.3)
 * Person's debts are automatically incremented according to the interest rate of their loan (since v1.3)
 
+* Filter contacts by tags (since v1.4)
+* Replace `Phone` field with `Handphone`, `Home phone` and `Office phone` (since v1.4)
+
 == Features to be included by `V2.0`
 
 //[V1.4]
@@ -555,13 +588,11 @@ e.g. `sort debt`
 * A feature to export a person's contact in another format.
 * Profile pictures of clients shown next to their details.
 * Different appearance themes.
-* `Add`/`Edit` command allows user to save multiple contact numbers for each person.
 //[end of V1.4]
 //[V1.5]
 * `Help` command that displays screenshots of positive examples.
 * Able to view the last login time.
 * Able to impose different periods of ban on a specified person in the blacklist
-* A feature to filter commands by tags.
 //[end of V1.5]
 * Two FA authentication for login and every other important actions.
 * Validity checks on client's personal information.

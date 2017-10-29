@@ -40,7 +40,6 @@ public class BorrowCommandTest {
 
     @Test
     public void execute_successfulBorrowing() {
-        Index firstPerson = Index.fromOneBased(1);
         ReadOnlyPerson personWhoBorrowed = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
                 + String.format(BorrowCommand.MESSAGE_BORROW_SUCCESS,
@@ -49,8 +48,7 @@ public class BorrowCommandTest {
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
             expectedModel.addDebtToPerson(personWhoBorrowed, new Debt(VALID_DEBT_FIGURE));
 
-            BorrowCommand borrowCommand = new BorrowCommand(firstPerson, new Debt(VALID_DEBT_FIGURE));
-            borrowCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+            BorrowCommand borrowCommand = prepareCommand(INDEX_FIRST_PERSON, new Debt(VALID_DEBT_FIGURE));
 
             assertCommandSuccess(borrowCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
@@ -81,9 +79,7 @@ public class BorrowCommandTest {
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
             expectedModel.addDebtToPerson(personWhoBorrowed, new Debt(VALID_DEBT_FIGURE));
 
-            BorrowCommand borrowCommand = new BorrowCommand(new Debt(VALID_DEBT_FIGURE));
-            borrowCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-
+            BorrowCommand borrowCommand = prepareCommand(null, new Debt(VALID_DEBT_FIGURE));
             assertCommandSuccess(borrowCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
@@ -119,5 +115,19 @@ public class BorrowCommandTest {
         } catch (IllegalValueException ive) {
             ive.printStackTrace();
         }
+    }
+
+    /**
+     * Prepares a {@code BorrowCommand}.
+     */
+    private BorrowCommand prepareCommand(Index index, Debt debt) {
+        BorrowCommand command = null;
+        if (index == null) {
+            command = new BorrowCommand(debt);
+        } else {
+            command = new BorrowCommand(index, debt);
+        }
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
     }
 }

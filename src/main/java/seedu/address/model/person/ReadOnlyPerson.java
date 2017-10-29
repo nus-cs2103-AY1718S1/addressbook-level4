@@ -15,8 +15,12 @@ public interface ReadOnlyPerson {
 
     ObjectProperty<Name> nameProperty();
     Name getName();
-    ObjectProperty<Phone> phoneProperty();
-    Phone getPhone();
+    ObjectProperty<Handphone> handphoneProperty();
+    Handphone getHandphone();
+    ObjectProperty<HomePhone> homePhoneProperty();
+    HomePhone getHomePhone();
+    ObjectProperty<OfficePhone> officePhoneProperty();
+    OfficePhone getOfficePhone();
     ObjectProperty<Email> emailProperty();
     Email getEmail();
     ObjectProperty<Address> addressProperty();
@@ -87,7 +91,7 @@ public interface ReadOnlyPerson {
     /**
      * Checks if person is due for an update on his/her debt.
      */
-    int checkUpdateDebt(Date currentDate);
+    int checkLastAccruedDate(Date currentDate);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -96,7 +100,9 @@ public interface ReadOnlyPerson {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
-                && other.getPhone().equals(this.getPhone())
+                && other.getHandphone().equals(this.getHandphone())
+                && other.getHomePhone().equals(this.getHomePhone())
+                && other.getOfficePhone().equals(this.getOfficePhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()))
                 && other.getPostalCode().equals(this.getPostalCode())
@@ -117,8 +123,12 @@ public interface ReadOnlyPerson {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" Phone: ")
-                .append(getPhone())
+                .append(" HP: ")
+                .append(getHandphone())
+                .append(" Home: ")
+                .append(getHomePhone())
+                .append(" Office: ")
+                .append(getOfficePhone())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
@@ -131,7 +141,6 @@ public interface ReadOnlyPerson {
                 .append(getDebt())
                 .append(" Interest: ")
                 .append(getInterest())
-                .append("Date borrowed: ")
                 .append(" Date borrowed: ")
                 .append(getDateBorrow())
                 .append(" Deadline: ")

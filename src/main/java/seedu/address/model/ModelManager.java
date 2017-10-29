@@ -544,8 +544,8 @@ public class ModelManager extends ComponentManager implements Model {
         if (event.getLoginStatus() == true) {
             for (ReadOnlyPerson person : allPersons) {
                 if (!person.getInterest().value.equals("No interest set.")
-                        && (person.checkUpdateDebt(new Date()) != 0)) {
-                    updateDebtFromInterest(person, person.checkUpdateDebt(new Date()));
+                        && (person.checkLastAccruedDate(new Date()) != 0)) {
+                    updateDebtFromInterest(person, person.checkLastAccruedDate(new Date()));
                 }
             }
         }
