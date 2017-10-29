@@ -14,7 +14,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 
 /**
@@ -38,6 +40,7 @@ public class GroupListPanel extends UiPart<Region> {
                 groupList, (group) -> new GroupCard(group, groupList.indexOf(group) + 1));
         groupListView.setItems(mappedList);
         groupListView.setCellFactory(listView -> new GroupListPanel.PersonListViewCell());
+        setEventHandlerForSelectionChangeEvent();
     }
 
     /**
@@ -50,6 +53,15 @@ public class GroupListPanel extends UiPart<Region> {
         });
     }
 
+    private void setEventHandlerForSelectionChangeEvent() {
+        groupListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in group list panel changed to : '" + newValue + "'");
+                        raise(new GroupPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

@@ -14,6 +14,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NewTagColourChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -26,6 +27,7 @@ public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
     private HashMap<String, String> colourMap;
+    private ObservableList<ReadOnlyPerson> personList;
 
     @FXML
     private ListView<PersonCard> personListView;
@@ -33,6 +35,7 @@ public class PersonListPanel extends UiPart<Region> {
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList, HashMap<String, String> colourMap) {
         super(FXML);
         this.colourMap = colourMap;
+        this.personList = personList;
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
@@ -64,6 +67,15 @@ public class PersonListPanel extends UiPart<Region> {
             personListView.getSelectionModel().clearAndSelect(index);
         });
     }
+
+    @Subscribe
+    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setConnections(personList.filtered(person -> event.getNewSelection().group.getGroupMembers().contains(person)));
+
+
+    }
+
 
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
