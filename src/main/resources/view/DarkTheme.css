@@ -133,6 +133,13 @@
     -fx-text-fill: #010504;
 }
 
+.cell_text_label {
+    -fx-padding: 0 0 0 15;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 10px;
+    -fx-text-fill: #010504;
+}
+
 .anchor-pane {
      -fx-background-color: derive(#1d1d1d, 20%);
 }
