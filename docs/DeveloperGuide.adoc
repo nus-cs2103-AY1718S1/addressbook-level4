@@ -353,6 +353,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::ListingUnit[]
 === ListingUnit mechanism
 
 `ListingUnit` is a enumeration class which has enumeration type `LESSON`, `MODULE` and `LOCATION`. It records the current listing element type of the lesson list panel. It has static method `getCurrentListingUnit` and `setCurrentListingUnit`. By which we can conveniently record the current listing type and get the current listing type at any time.
@@ -383,15 +384,15 @@ As a result, when implement the redo mechanism, we can obtain the `currentPredic
 ==== Design Considerations
 
 **Aspect:** Implementation of `ListingUnit` +
-**Alternative 1 (current choice):**  Construct a enumeration class `ListingUnit` and record current listing type and predicates.
+**Alternative 1 (current choice):**  Construct a enumeration class `ListingUnit` and record current listing type and predicates. +
 **Pros:** It makes the implementation of many other features easier. +
 **Cons:** In testing, `ListingUnit` class carry data from one test to another even when we want each test to be independent of the others. +
 **Alternative 2 (previous choice):** Use a variable in model manager to keep record of currentListingUnit +
 **Pros:** No need for extra enumeration class. +
 **Cons:** In order to access the variable in other components, the variable must be declared static. But we cannot define static abstract method in interface.
+// end::ListingUnit[]
 
-// end::list[]
-
+// tag::list/view[]
 === List/View mechanism
 The list and view mechanisms are similar and both are facilitated by `ListingUnit` and `Predicate`.
 When user list by different attributes, the static variable `currentListingUnit` will be reset to either `MODULE` or `LOCATION`.
@@ -414,13 +415,16 @@ The following sequence diagram shows how the view command works:
 ==== Design Considerations
 
 **Aspect:** Implementation of `List` and `View` +
-**Alternative 1 (current choice):**  set different predicates to the `filteredList` and hide irrelevant information in the panel.
+**Alternative 1 (current choice):**  set different predicates to the `filteredList` and hide irrelevant information in the panel. +
 **Pros:** Easy to understand and do not use extra space to store different kinds of lists(For example, location list). +
 **Cons:** Overhead of setting predicates repeatedly. +
 **Alternative 2 (previous choice):** Store lesson list, unique module list and unique location list separately. and switch to different panel list and view command is called. +
 **Pros:** More well-organized structure. +
 **Cons:** Much harder to implement and overhead of switching to different panels instead of using one.
 
+// end::list/view[]
+
+// tag::mark/unmark[]
 === Mark/Unmark mechanism
 
 The mark mechanism is facilitated by an extra attribute `isMarked` of `Lesson` class. `isMarked` is a boolean attribute which indicates if the given lesson is in the marked list.
@@ -446,6 +450,8 @@ Each lesson is only allowed to be added into the `marked list` once, thus any fu
 **Alternative 2 (previous choice):** Store an extra marked lesson list. +
 **Pros:** We do not need to filter out the marked lessons each time. +
 **Cons:** Inefficient storage, many lessons might be stored multiple times.
+
+// end::mark/remark[]
 
 // tag::find[]
 === Find mechanism
@@ -487,13 +493,38 @@ It will not make sense for the user to find something that is not currently in `
 
 // end::find[]
 
+// tag::remark[]
+===  Remark mechanism
+
+The remark mechanism is facilitated by `UniqueRemarkList`. Each time we add or delete a remark, the UniqueRemarkList is updated and changes are saved into storage.
+A filtered list is used to show remarks related to a specified module when a module is selected.
+
+[NOTE]
+Only module can be remarked, therefore user can use remark if and only if current listing element is module.
+
+Although delete remark is a separate command, it shares the same parser as Remark Command, according to different syntax, RemarkCommand Parser will either return a `RemarkCommand` or a `DeleteRemarkCommand`.
+Adding a remark has the syntax `remark INDEX CONTENT` while deleting a remark has the syntax `remark -d INDEX`.
+
+[NOTE]
+Both adding a remark and deleting a remark used an index while the meaning of the index is different.
+The index in `remark INDEX CONTENT` is the index of the module in the module list we want to add remark to.
+While the index in `remark -d INDEX` is the index of the remark we want to delete.
+
+==== Design Considerations
+
+**Aspect:** Implementation of DeleteRemarkCommand +
+**Alternative 1 (current choice):** Use the same parser for RemarkCommand and DeleteRemarkCommand. +
+**Pros:** The prefix of the command input for both of the commands is remark, it is more user-friendly since we summarise the two commands related to remark under the same prefix.
+**Cons:** The parser has to choose to parse the input into one of the two commands according to the syntax.
+// end::remark[]
+
 // tag::sort[]
 === Sort mechanism
 
 The sort mechanism is facilitated by link:#event-bus[`Event Bus`]. Whenever sort command is executed, in `SortCommand` it will raise a `SortListRequestEvent` via `EventCenter` which there is an listerner in `PersonListPanel` which will conduct the sorting list according to the attribute type of `list` command which was executed previously.
 
 [NOTE]
-If the previous attribute type of `list` command is address, the list will be sorted by person's address lexicographically, such sorting will also be applied for attribute email and phone. If there is no attribute in the execution of previous `list` command, the list will be sorted by person's name lexicographically by default.
+If the previous attribute type of `list` command is location, the list will be sorted by person's address lexicographically, such sorting will also be applied for attribute email and phone. If there is no attribute in the execution of previous `list` command, the list will be sorted by person's name lexicographically by default.
 
 The following link:#sequence-diagram[sequence diagram] shows how the sort operation works:
 
