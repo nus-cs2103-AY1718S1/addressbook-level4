@@ -185,8 +185,8 @@ public class ImportNusmodsCommand extends ImportCommand {
     /**
      * Creates an {@link Event} representing the final examination according to information from {@link ModuleInfo}.
      *
-     * @return an {@link Optional<ReadOnlyEvent>} that is present only if the given module has a final examination (some
-     * modules at NUS are 100% continuous-assessment, like CFG1010).
+     * @return an {@link Optional} that is present with an {@link Event} only if the given module has a final
+     * examination (some modules at NUS are 100% continuous-assessment, like CFG1010).
      */
     private Optional<ReadOnlyEvent> addExamEvent(ModuleInfo module) throws CommandException {
         if (module.getExamDate() == null) {
