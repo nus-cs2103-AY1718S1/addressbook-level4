@@ -23,7 +23,7 @@ public class UrlUtil {
     /**
      * Fetches all GET parameters from a given {@link URL} object. It is assumed that there is no GET parameter with
      * the same key in the {@code url}. If there is, only the last one (among those parameters with the same name)
-     * will be included in the returned {@link Map}.
+     * will be included in the returned {@link Map}. See also {@link #fetchUrlParameterKeys(URL)}.
      *
      * @param url is a given {@link URL} object.
      *
@@ -48,7 +48,7 @@ public class UrlUtil {
     /**
      * Fetches the keys all GET parameters from a given {@link URL} object. It is assumed that there is no GET parameter
      * with the same key in the {@code url}. If there is, only the last one (among those parameters with the same name)
-     * will be included in the returned {@link Set}.
+     * will be included in the returned {@link Set}. See also {@link #fetchUrlParameters(URL)}.
      *
      * @param url is a given {@link URL} object.
      *

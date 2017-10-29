@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -86,17 +87,19 @@ public class CommandTestUtil {
     public static final String VALID_CONFIG_ADD_PROPERTY = " --add-property ";
     public static final String VALID_NEW_PROPERTY = " s/b f/birthday m/something r/[^\\s].*";
     public static final String VALID_NEW_PROPERTY_NO_REGEX = " s/m f/major";
-    public static final String VALID_CONFIG_IMPORT_CALENDER = " --import-calendar ";
-    public static final String VALID_CONFIG_URL = " https://www.url.com/";
+
 
     public static final String INVALID_CONFIG_TYPE = " --some-config-type-unknown ";
     public static final String INVALID_CONFIG_VALUE = " unknown value(s)";
     public static final String INVALID_TAG_COLOR = " bee";
     public static final String INVALID_NEW_PROPERTY = " s/b r/[^\\s].*";
-    public static final String INVALID_URL = " https://123,tg/";
+
 
     public static final String INVALID_IMPORT_TYPE = " --some-import-type-unknown ";
     public static final String INVALID_IMPORT_PATH = " unknown path";
+
+    public static final String VALID_URL = "https://www.google.com.sg/contacts?day=monday";
+    public static final String INVALID_URL_COMMA = " https://123,tg/";
 
     static {
         PropertyManager.initializePropertyManager();
