@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.BanCommand;
 import seedu.address.logic.commands.BorrowCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -62,6 +63,33 @@ public class WhitelistSyncTest {
         // Preparation done on actual model
         DeleteCommand deleteCommand = prepareDeleteCommand(index);
         deleteCommand.execute();
+
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
+
+        // Operation to be done on actual model
+        WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
+
+        assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_banCommandRemovesPersonFromWhitelist_success() throws Exception {
+
+        ReadOnlyPerson toBeBlacklistedPerson = model.getFilteredWhitelistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(toBeBlacklistedPerson));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
+        // To make sure person does not exist in whitelist anymore
+        toBeBlacklistedPerson = expectedModel.removeWhitelistedPerson(toBeBlacklistedPerson);
+        expectedModel.addBlacklistedPerson(toBeBlacklistedPerson);
+        expectedModel.setCurrentListName("whitelist");
+        expectedModel.changeListTo("whitelist");
+
+        // Preparation done on actual model
+        BanCommand banCommand = prepareBanCommand(index);
+        banCommand.execute();
 
         String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
@@ -447,5 +475,14 @@ public class WhitelistSyncTest {
         DeleteCommand deleteCommand = new DeleteCommand(index);
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
+    }
+
+    /**
+     * Returns a {@code BanCommand} with the parameter {@code index}.
+     */
+    private BanCommand prepareBanCommand(Index index) {
+        BanCommand banCommand = new BanCommand(index);
+        banCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return banCommand;
     }
 }
