@@ -92,7 +92,7 @@ public class PersonInfo extends UiPart<Region> {
         addressHeader.setText("Address:");
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         birthdayHeader.setText("Birthday: ");
-        birthday.setText("TBD");
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         tagsHeader.setText("Tags:");
         initTags(person);
     }
