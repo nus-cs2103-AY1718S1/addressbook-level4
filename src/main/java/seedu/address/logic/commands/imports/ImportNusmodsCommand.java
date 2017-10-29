@@ -1,9 +1,14 @@
 package seedu.address.logic.commands.imports;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import seedu.address.commons.util.UrlUtil;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -26,6 +31,7 @@ public class ImportNusmodsCommand extends ImportCommand {
             "The start/end year of the same academic year must offset by 1";
     private static final String SEMESTER_INVALID =
             "Semester number must be an integer from 1 to 4. Use 3/4 for Special Terms Part 1/2.";
+    private static final String INVALID_ENCODING = "The URL encoding is not supported. Please use UTF-8.";
 
     // Semester should be a one-digit number from 1 to 4, year must be after 2000.
     private static final Pattern URL_SEMESTER_INFO_FORMAT  =
@@ -48,6 +54,13 @@ public class ImportNusmodsCommand extends ImportCommand {
 
     @Override
     public CommandResult execute() throws CommandException {
+        Set<String> modules;
+        try {
+             modules = fetchModuleCodes();
+        } catch (UnsupportedEncodingException e) {
+            throw new CommandException(String.format(INVALID_URL, INVALID_ENCODING));
+        }
+
         return null;
     }
 
@@ -77,5 +90,13 @@ public class ImportNusmodsCommand extends ImportCommand {
         if (semester <= 0 || semester >= 5) {
             throw  new ParseException(String.format(INVALID_URL, SEMESTER_INVALID));
         }
+    }
+
+    /**
+     * Returns all the module codes embedded in the {@link #url} field.
+     */
+    private Set<String> fetchModuleCodes() throws UnsupportedEncodingException {
+        Set<String> keys = UrlUtil.fetchUrlParameterKeys(url);
+        return keys.stream().map(key -> key.substring(0, key.indexOf("["))).collect(Collectors.toSet());
     }
 }

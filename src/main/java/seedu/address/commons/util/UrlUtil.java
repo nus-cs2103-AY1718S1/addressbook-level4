@@ -4,11 +4,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
 
@@ -61,13 +63,8 @@ public class UrlUtil {
             return Collections.emptySet();
         }
 
-        Set<String> keys = new HashSet<>();
-        for (String pair: query.split("&")) {
-            int index = pair.indexOf("=");
-            keys.add(pair.substring(0, pair.indexOf("=")));
-        }
-
-        return keys;
+        String[] pairs = query.split("&");
+        return Arrays.stream(pairs).map(pair -> pair.substring(0, pair.indexOf("="))).collect(Collectors.toSet());
     }
 
     private static String urlDecode(String url) throws UnsupportedEncodingException {
