@@ -43,7 +43,7 @@
   </GridPane>
    <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
       <image>
-         <Image url="/images/default_pic" />
+         <Image url="/images/default_pic.png" />
       </image>
    </ImageView>
 </HBox>

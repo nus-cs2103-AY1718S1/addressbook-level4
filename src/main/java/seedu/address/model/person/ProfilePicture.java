@@ -28,8 +28,6 @@ public class ProfilePicture {
             this.value = fileName;
         } catch (IllegalArgumentException iae) {
             throw new IllegalValueException(MESSAGE_FILENAME_CONSTRAINTS);
-        } catch (NullPointerException npe) {
-            throw new IllegalValueException(MESSAGE_FILENAME_CONSTRAINTS);
         }
     }
 

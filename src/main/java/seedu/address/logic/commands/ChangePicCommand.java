@@ -25,7 +25,7 @@ public class ChangePicCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes the profile picture of the person identified "
             + "by the index number used in the last person listing to the one located at PICTURE_PATH.\n"
-            + "To reset to default picture, choose 'default_pic' as the path"
+            + "To reset to default picture, choose 'default_pic.png' as the path"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_PATH + "PICTURE_PATH\n"
             + "Example: " + COMMAND_WORD + " 1 "
