@@ -10,17 +10,19 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRACKING_NUMBER;
+import static seedu.address.model.ModelManager.getDeliveredPredicate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.parcel.NameContainsKeywordsPredicate;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
 import seedu.address.testutil.EditParcelDescriptorBuilder;
 
@@ -153,20 +155,17 @@ public class CommandTestUtil {
      */
     public static void showFirstParcelInActiveListOnly(Model model) {
         List<ReadOnlyParcel> parcels = model.getAddressBook().getParcelList();
-        ReadOnlyParcel parcel = parcels.get(0);
+        Predicate<ReadOnlyParcel> predicate = (model.getActiveList().equals(model.getFilteredUndeliveredParcelList()))
+                ? getDeliveredPredicate().negate() : getDeliveredPredicate();
 
-        for (ReadOnlyParcel p : parcels) {
-            if (!p.getStatus().equals(Status.COMPLETED)) {
-                parcel = p;
-                break;
-            }
+        // find the first parcel in the master list that meets the active list predicate
+        Optional<ReadOnlyParcel> firstParcelOptional = parcels.stream().filter(predicate).findFirst();
+
+        if (!firstParcelOptional.isPresent()) {
+            throw new NullPointerException("No parcels in active list");
         }
 
-        if (parcel.getStatus().equals(Status.COMPLETED)) {
-            throw new NullPointerException("No parcels with COMPLETED status");
-        }
-
-        final String[] splitName = parcel.getName().fullName.split("\\s+");
+        final String[] splitName = firstParcelOptional.get().getName().fullName.split("\\s+");
         model.updateFilteredParcelList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredParcelList().size() == 1;
