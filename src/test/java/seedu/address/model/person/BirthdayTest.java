@@ -28,7 +28,7 @@ public class BirthdayTest {
 
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
-        // equals and hashCode check name field value
+        // equals and hashCode check birthday field value
         Birthday birthdayX = new Birthday("14/01/1986");
         Birthday birthdayY = new Birthday("14/01/1986");
         assertTrue(birthdayX.equals(birthdayY) && birthdayY.equals(birthdayX));

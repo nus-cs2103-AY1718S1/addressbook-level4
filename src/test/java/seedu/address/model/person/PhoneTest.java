@@ -27,7 +27,7 @@ public class PhoneTest {
 
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
-        // equals and hashCode check name field value
+        // equals and hashCode check phone field value
         Phone phoneX = new Phone("93121534");
         Phone phoneY = new Phone("93121534");
         assertTrue(phoneX.equals(phoneY) && phoneY.equals(phoneX));

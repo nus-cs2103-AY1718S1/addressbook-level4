@@ -37,7 +37,7 @@ public class WebsiteTest {
 
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
-        // equals and hashCode check name field value
+        // equals and hashCode check website field value
         Website websiteX = new Website("https://www.facebook.com/alex");
         Website websiteY = new Website("https://www.facebook.com/alex");
         assertTrue(websiteX.equals(websiteY) && websiteY.equals(websiteX));

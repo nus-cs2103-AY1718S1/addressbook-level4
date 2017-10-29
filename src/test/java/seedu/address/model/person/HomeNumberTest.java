@@ -30,7 +30,7 @@ public class HomeNumberTest {
 
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
-        // equals and hashCode check name field value
+        // equals and hashCode check home number field value
         HomeNumber homeNumberX = new HomeNumber("93121534");
         HomeNumber homeNumberY = new HomeNumber("93121534");
         assertTrue(homeNumberX.equals(homeNumberY) && homeNumberY.equals(homeNumberX));

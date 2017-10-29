@@ -23,7 +23,7 @@ public class AddressTest {
 
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
-        // equals and hashCode check name field value
+        // equals and hashCode check address field value
         Address addressX = new Address("Blk 456, Den Road, #01-355");
         Address addressY = new Address("Blk 456, Den Road, #01-355");
         assertTrue(addressX.equals(addressY) && addressY.equals(addressX));

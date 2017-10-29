@@ -45,7 +45,7 @@ public class SchEmailTest {
 
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
-        // equals and hashCode check name field value
+        // equals and hashCode check school email field value
         SchEmail schEmailX = new SchEmail("PeterJack_1190@example.com");
         SchEmail schEmailY = new SchEmail("PeterJack_1190@example.com");
         assertTrue(schEmailX.equals(schEmailY) && schEmailY.equals(schEmailX));
