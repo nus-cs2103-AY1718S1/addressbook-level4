@@ -273,7 +273,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         }
 
         assertCommandSuccess(command, expectedModel,
-                ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName()), expectedSelectedCardIndex);
+                ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                        + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName()),
+                expectedSelectedCardIndex);
     }
 
     /**

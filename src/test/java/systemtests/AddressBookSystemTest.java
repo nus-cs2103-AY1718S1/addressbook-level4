@@ -148,8 +148,7 @@ public abstract class AddressBookSystemTest {
      * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
      * and the person list panel displays the persons in the model correctly.
      */
-    protected void
-    assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
+    protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());

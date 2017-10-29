@@ -78,22 +78,22 @@ public interface Model {
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
      * @return size of current displayed filtered list.
+     * @throws NullPointerException if {@code predicate} is null.
      */
     int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
      * Updates the filter of the filtered blacklisted person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
      * @return size of current displayed filtered list.
+     * @throws NullPointerException if {@code predicate} is null.
      */
     int updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
      * Updates the filter of the filtered whitelisted person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
      * @return size of current displayed filtered list.
+     * @throws NullPointerException if {@code predicate} is null.
      */
     int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate);
 
