@@ -107,6 +107,7 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
+        //@@author Juxarius
         Set<Tag> updatedTags = personToEdit.getTags();
 
         if (editPersonDescriptor.getTagsToDel().isPresent()) {
@@ -124,6 +125,7 @@ public class EditCommand extends UndoableCommand {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedDateOfBirth, updatedTags);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -224,6 +226,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tags);
         }
 
+        //@@author Juxarius
         public void setTagsToDel(Set<Tag> tagsToDel) {
             this.tagsToDel = tagsToDel;
         }
@@ -231,6 +234,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Set<Tag>> getTagsToDel() {
             return Optional.ofNullable(tagsToDel);
         }
+        //@@author
 
         @Override
         public boolean equals(Object other) {
