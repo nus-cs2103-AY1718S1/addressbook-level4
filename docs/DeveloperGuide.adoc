@@ -1,4 +1,4 @@
-﻿= AddressBook Level 4 - Developer Guide
+﻿= H.M.U v1.3 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F10-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-F10-B2`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -364,6 +364,62 @@ loadLocationPage adds the person's address info after the searching URL of Googl
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+=== Change Password Mechanism
+The Change Password mechanism resides inside `LogicManager`.
+It supports the changing of password which requires the previous username
+and password. The command will not be inherited from `UndoableCommand`. This
+is due to security reasons and users will not be able to `undo` their password
+change. Users have to change the password again through the command `changepw`.
+
+As `ChangePasswordCommand` does not inherit from `UndoableCommand`, it will
+inherit from `Command` instead. The following diagram shows the inheritance
+diagram for commands:
+
+image::ChangePasswordCommandInheritance.png[width="800"]
+
+As you can see from the diagram, `ChangePasswordCommand` does not inherit from `UndoableCommand`
+just like `find` and `undo`.
+
+Below is the sequence diagram of the `ChangePasswordCommand`.
+
+image::ChangePasswordSequenceDiagram.png[width="800"]
+
+Firstly, the `changepw` command is typed into the Command Line. This starts up the `LogicManager` which
+then parses the command using `AddressBookParser`. It then executes using `model`, which retrieves
+the `UserPrefs`. It then changes the password in the `preferences.json` file after hashing it using
+SHA-256 in the `changePassword()` method.
+
+==== Design Considerations
+*Aspect:* To hash or not to hash passwords
+
+*Alternative 1 (current choice):* Hash the password
+
+*Pros:* Added level of security as password is hashed.
+
+*Cons:* Slightly more troublesome to implement hashing algorithm.
+
+*Alternative 2*: Don't hash the password
+
+*Pros:* Straightforward
+
+*Cons:* Less security
+
+*Aspect:* To include username or not to include in `changepw`
+
+*Alternative 1 (current choice):* Require correct username to change password
+
+*Pros:* For future development, where many users can use a single app using different
+usernames.
+
+*Cons:* User might forget username.
+
+*Alternative 2*: Does not require username to change password
+
+*Pros:* Very straightforward (`changepw oldpassword newpassword`)
+
+*Cons:* Might have to change a lot of components if want to add a username in
+the later part of the project.
 
 === Logging
 

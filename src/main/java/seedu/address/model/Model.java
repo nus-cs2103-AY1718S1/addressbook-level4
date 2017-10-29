@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import java.util.TreeSet;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -20,11 +21,19 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    /** Returns the User Preferences */
+    UserPrefs getUserPrefs();
+
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+
+    void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
+
+    void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

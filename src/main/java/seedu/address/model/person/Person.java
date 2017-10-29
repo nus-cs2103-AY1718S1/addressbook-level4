@@ -6,9 +6,11 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,20 +24,25 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Mrt> mrt;
 
     private ObjectProperty<UniqueTagList> tags;
+
+    private ObjectProperty<Schedule> schedule;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Mrt mrt, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.mrt = new SimpleObjectProperty<>(mrt);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        initiateSchedule();
     }
 
     /**
@@ -43,7 +50,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getMrt(), source.getTags());
+        initiateSchedule();
     }
 
     public void setName(Name name) {
@@ -102,6 +110,20 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    public void setMrt(Mrt mrt) {
+        this.mrt.set(requireNonNull(mrt));
+    }
+
+    @Override
+    public ObjectProperty<Mrt> mrtProperty() {
+        return mrt;
+    }
+
+    @Override
+    public Mrt getMrt() {
+        return mrt.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -120,6 +142,39 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    @Override
+    public Schedule getSchedule() {
+        return schedule.get();
+    }
+
+    public ObjectProperty<Schedule> scheduleProperty() {
+        return schedule;
+    }
+
+    /* create an empty schedule object */
+    public void initiateSchedule() {
+        Schedule schedule = new Schedule();
+        this.schedule = new SimpleObjectProperty<>(schedule);
+    }
+
+    public void setSchedule(Schedule schedule){
+        this.schedule.set(schedule);
+    }
+
+    /* Add a time span to a person's schedule to indicate that he is busy at this time. */
+    public void addSpanToSchedule(TreeSet<Integer> span) {
+        for (Integer startTime : span) {
+            getSchedule().addTime(startTime);
+        }
+    }
+
+    /* Clear a time span to a person's schedule to indicate that he is free at this time. */
+    public void clearSpanForSchedule(TreeSet<Integer> span) {
+        for (Integer startTime : span) {
+            getSchedule().clearTime(startTime);
+        }
     }
 
     @Override

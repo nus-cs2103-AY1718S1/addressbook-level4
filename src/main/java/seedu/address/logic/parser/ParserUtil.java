@@ -12,8 +12,11 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Mrt;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.schedule.Day;
+import seedu.address.model.schedule.Time;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -80,6 +83,15 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> Mrt} into an {@code Optional<Mrt>} if {@code mrt} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Mrt> parseMrt(Optional<String> mrt) throws IllegalValueException {
+        requireNonNull(mrt);
+        return mrt.isPresent() ? Optional.of(new Mrt(mrt.get())) : Optional.empty();
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
@@ -89,5 +101,23 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> Day} into an {@code Optional<Day>} if {@code day} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Day> parseDay(Optional<String> day) throws IllegalValueException {
+        requireNonNull(day);
+        return day.isPresent() ? Optional.of(new Day(day.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> Time} into an {@code Optional<Time>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Time> parseTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(new Time(time.get())) : Optional.empty();
     }
 }

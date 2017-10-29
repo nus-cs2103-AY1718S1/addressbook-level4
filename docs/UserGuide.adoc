@@ -1,4 +1,4 @@
-= H.M.U v1.1 - User Guide
+= H.M.U v1.3 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -28,6 +28,8 @@ This app will not work with earlier versions of Java 8.
 +
 image::Ui.png[width="790"]
 +
+.  By default, the user will not have a password. To set one, use this command : *`changepw admin__desiredpassword`,
+where 2 whitespaces separates `admin` and `desiredpassword`.
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -63,18 +65,49 @@ Option 1: Format: `help` +
 Option 2.1: Menu -> File -> Help +
 Option 2.2: Menu -> File -> `F1`
 
+=== Changing password : `changepw`
+Changes a user's password needed to access H.M.U v1.2 +
+Format: `changepw username old_password new_password` +
+
+Examples:
+
+* `changepw admin password newpassword`
+* `changepw admin tom harry`
+* `changepw admin !@# !!!!`
+
+=== Changing password : `changeuser`
+Changes a user's username needed to access H.M.U v1.2 +
+Format: `changepw old_username new_username password` +
+
+Examples:
+
+* `changeuser admin user password`
+
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS m/MRT [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 m/Kranji`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 m/Tanah Merah t/criminal`
+
+=== Adding a person: `addSchedule`
+
+Adds a busy time span to a person to the address book +
+Format: `addSchedule index d/BUSY_DAY st/START_TIME et/END_TIME
+
+[TIP]
+A person can have any number of busy time spans as long as the start time is no earlier than 0600 and the end time is no later than 2330. (including 0)
+
+Examples:
+
+* `addSchedule 2 d/Monday st/0800 et/1030
+* `addSchedule 4 d/Friday st/1300 et/1500
 
 === Listing all persons : `list`
 
@@ -84,7 +117,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [m/MRT] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -140,6 +173,57 @@ Examples:
 Returns `john` and `John Doe` whose addresses contain the word 'stadium'.
 * `findByAddress stadium pier` +
 Returns any person having addresses containing `stadium` or `pier`
+
+=== Locating persons by phone: `findByPhone`
+
+Finds persons whose phone contain any of the given keywords. +
+Format: `findByPhone KEYWORD [MORE_KEYWORDS]`
+
+
+Examples:
+
+* `findByPhone 12345678` +
+Returns `john` and `John Doe` whose phone number is '12345678'.
+
+=== Locating persons by email: `findByEmail`
+
+Finds persons whose addresses contain any of the given keywords. +
+Format: `findByEmail KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `m@emsp.com` will match `M@EMsP.COM`
+* The order of the keywords does not matter.
+* Only the email is searched.
+* Only full words will be matched e.g. `hans@gmail.com` will not match `hans@mail.com`
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
+****
+
+Examples:
+
+* `findByEmail bob@gmail.com` +
+Returns Bob whose email matches the searched email.
+* `findByEmail bob@gmail.com grant@mail.com` +
+Returns any person having email addresses of `bob@gmail.com` or `grant@mail.com`
+
+=== Locating persons by tags: `findByTags`
+
+Finds persons whose addresses contain any of the given keywords. +
+Format: `findByTag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case sensitive. e.g `friends` will not match `Friends`
+* The order of the keywords does not matter.
+* Only the tags are searched.
+* Only full words will be matched e.g. `friend` will not match `friendly`
+* Persons matching at least one keyword will be returned (i.e. `OR` search)
+****
+
+Examples:
+
+* `findByTag friend' +
+Returns Persons with the tag 'friend'.
+* `findByTag owesMoney friend` +
+Returns any person having tags of `owesMoney` or `friend`
 
 === Deleting a person : `delete`
 
@@ -289,12 +373,12 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS m/MRT [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 m/Clementi t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [m/MRT] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -305,9 +389,21 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Change Password* : `changepw username old_password new_password`
 
 == Coming Soon in v2.0
 Customizable Toolbar +
-Password Support +
+Password Support (Available in v1.2) +
+More User-Friendly Login (Available in v1.3) +
+Change Password (Available in v1.2) +
+More User-Friendly Change Password +
 Google Maps Support (Available in v1.1) +
-Contact's photo support
+Contact's photo support +
+Search by Address (Available in v1.2) +
+Add Closest MRT Station to Contacts (Available in v1.2) +
+Search Contacts by Phone Number(Available in v1.2) +
+Scheduling (Available in v1.3) +
+Closest Meet-up Point +
+Search by Email (Available in v1.3) +
+Search by Phone Number (Available in v1.3) +
+
