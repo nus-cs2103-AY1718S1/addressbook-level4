@@ -23,9 +23,12 @@ import seedu.address.model.module.BookedSlot;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.RemarkNotFoundException;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
@@ -38,6 +41,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyLesson> filteredLessons;
+    private final FilteredList<Remark> filteredRemarks;
     private final ArrayList<BookedSlot> bookedList;
     private ReadOnlyLesson currentViewingLesson;
     private String currentViewingAttribute;
@@ -53,13 +57,14 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredLessons = new FilteredList<>(this.addressBook.getLessonList());
+        filteredRemarks = new FilteredList<Remark>(this.addressBook.getRemarkList());
+        filteredRemarks.setPredicate(PREDICATE_SHOW_ALL_REMARKS);
         Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
         ListingUnit.setCurrentPredicate(predicate);
         filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
         bookedList = new ArrayList<BookedSlot>();
         initializeBookedSlot();
         currentViewingAttribute = "default";
-
     }
 
     public ModelManager() {
@@ -233,6 +238,18 @@ public class ModelManager extends ComponentManager implements Model {
         return this.currentViewingAttribute;
     }
 
+    @Override
+    public ObservableList<Remark> getFilteredRemarkList() {
+        return FXCollections.unmodifiableObservableList(filteredRemarks);
+    }
+
+    @Override
+    public synchronized void deleteRemark(Remark target) throws RemarkNotFoundException {
+        addressBook.removeRemark(target);
+        indicateAddressBookChanged();
+    }
+
+
     //=========== Filtered Module List Accessors =============================================================
 
     /**
@@ -248,6 +265,25 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate) {
         requireNonNull(predicate);
         filteredLessons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredRemarkList(Predicate<Remark> predicate) {
+        requireNonNull(predicate);
+        filteredRemarks.setPredicate(predicate);
+    }
+
+    @Override
+    public void addRemark(Remark r) throws DuplicateRemarkException {
+        addressBook.addRemark(r);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateRemark(Remark target, Remark editedRemark)
+            throws DuplicateRemarkException, RemarkNotFoundException {
+        addressBook.updateRemark(target, editedRemark);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -288,7 +324,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredLessons.equals(other.filteredLessons);
+                && filteredLessons.equals(other.filteredLessons)
+                && filteredRemarks.equals(other.filteredRemarks);
     }
 
 

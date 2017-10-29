@@ -9,9 +9,12 @@ import seedu.address.model.module.BookedSlot;
 import seedu.address.model.module.Code;
 import seedu.address.model.module.Location;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 import seedu.address.model.module.exceptions.DuplicateBookedSlotException;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
 /**
  * The API of the Model component.
@@ -21,6 +24,11 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<ReadOnlyLesson> PREDICATE_SHOW_ALL_LESSONS = unused -> true;
+
+    /**
+     * {@code Predicate} that always evaluate to true
+     */
+    Predicate<Remark> PREDICATE_SHOW_ALL_REMARKS = unused -> true;
 
     /**
      * Get a hash set of all the distinct locations
@@ -115,6 +123,31 @@ public interface Model {
     void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate);
 
     /**
+     * Updates the filter of the filtered remark list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredRemarkList(Predicate<Remark> predicate);
+
+    /**
+     * Adds the given remark.
+     * @throws DuplicateRemarkException
+     */
+    void addRemark(Remark r) throws DuplicateRemarkException;
+
+    /**
+     * Deletes the given remark.
+     */
+    void deleteRemark(Remark target) throws RemarkNotFoundException;
+
+    /**
+     * Update the given remark.
+     * @throws DuplicateRemarkException
+     * @throws RemarkNotFoundException
+     */
+    void updateRemark(Remark target, Remark editedRemark) throws DuplicateRemarkException, RemarkNotFoundException;
+
+    /**
      * handle different ListingUnit after redo and undo
      */
     void handleListingUnit();
@@ -135,5 +168,8 @@ public interface Model {
 
     /** Get the current viewing panel attribute **/
     String getCurrentViewingAttribute();
+
+    /** Returns an unmodifiable view of the list of remarks */
+    ObservableList<Remark> getFilteredRemarkList();
 
 }

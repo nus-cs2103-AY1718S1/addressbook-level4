@@ -76,6 +76,7 @@ public class TypicalLessons {
             .withTimeSlot(VALID_TIMESLOT_CS2101).withLecturers(VALID_LECTURER_CS2101).build();
 
     public static final String KEYWORD_MATCHING_MA1101R = "MA1101R"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_LT27 = "LT27"; // A keyword that matches MEIER
 
     private TypicalLessons() {} // prevents instantiation
 

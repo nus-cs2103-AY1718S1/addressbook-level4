@@ -15,9 +15,13 @@ import seedu.address.model.lecturer.Lecturer;
 import seedu.address.model.lecturer.UniqueLecturerList;
 import seedu.address.model.module.Lesson;
 import seedu.address.model.module.ReadOnlyLesson;
+import seedu.address.model.module.Remark;
 import seedu.address.model.module.UniqueLessonList;
+import seedu.address.model.module.UniqueRemarkList;
 import seedu.address.model.module.exceptions.DuplicateLessonException;
+import seedu.address.model.module.exceptions.DuplicateRemarkException;
 import seedu.address.model.module.exceptions.LessonNotFoundException;
+import seedu.address.model.module.exceptions.RemarkNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -27,6 +31,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniqueLessonList lessons;
     private final UniqueLecturerList lecturers;
+    private final UniqueRemarkList remarks;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -38,6 +43,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         lessons = new UniqueLessonList();
         lecturers = new UniqueLecturerList();
+        remarks = new UniqueRemarkList();
     }
 
     public AddressBook() {}
@@ -60,6 +66,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.lecturers.setLectuers(lecturers);
     }
 
+    public void setRemarks(Set<Remark> remarks) {
+        this.remarks.setRemarks(remarks);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -67,11 +77,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setLessons(newData.getLessonList());
+            setLecturers(new HashSet<>(newData.getLecturerList()));
+            setRemarks(new HashSet<>(newData.getRemarkList()));
         } catch (DuplicateLessonException e) {
             assert false : "AddressBooks should not have duplicate lessons";
         }
 
         setLecturers(new HashSet<>(newData.getLecturerList()));
+        setRemarks(new HashSet<>(newData.getRemarkList()));
         syncMasterLecturerListWith(lessons);
     }
 
@@ -79,7 +92,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a lesson to the address book.
-     * Also checks the new lesson's lecturers and updates {@link #lecturers} with any new lecturers found,
+     * Also checks the new lesson's lecturers and Ls {@link #lecturers} with any new lecturers found,
      * and updates the lecturer objects in the lesson to point to those in {@link #lecturers}.
      *
      * @throws DuplicateLessonException if an equivalent lesson already exists.
@@ -193,6 +206,28 @@ public class AddressBook implements ReadOnlyAddressBook {
         lecturers.add(t);
     }
 
+    //// remark-level operations
+    public void addRemark(Remark r) throws DuplicateRemarkException {
+        remarks.add(r);
+    }
+
+    public void updateRemark(Remark target, Remark editedRemark) throws
+            DuplicateRemarkException, RemarkNotFoundException {
+        remarks.setRemark(target, editedRemark);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws RemarkNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeRemark(Remark key) throws RemarkNotFoundException {
+        if (remarks.remove(key)) {
+            return true;
+        } else {
+            throw new RemarkNotFoundException();
+        }
+    }
+
     /**
      * Sort the filtered lesson/module/location list regarding different listing unit.
      */
@@ -216,6 +251,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<Lecturer> getLecturerList() {
         return lecturers.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Remark> getRemarkList() {
+        return remarks.asObservableList();
     }
 
     @Override
