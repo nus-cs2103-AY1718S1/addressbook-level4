@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tooltip;
@@ -49,6 +50,8 @@ public class CalendarPanel extends UiPart<Region> {
 
     private DatePicker datePicker;
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
     @FXML
     private StackPane calendarPane;
 
@@ -71,6 +74,7 @@ public class CalendarPanel extends UiPart<Region> {
         popupContent.setPrefHeight(calendarPane.getPrefHeight());
         popupContent.setPrefWidth(calendarPane.getPrefWidth());
         calendarPane.getChildren().add(popupContent);
+        //selectDate(popupContent, "30-10-2017");
     }
 
     /**
@@ -99,7 +103,6 @@ public class CalendarPanel extends UiPart<Region> {
             @Override
             public void handle(ActionEvent event) {
                 LocalDate date = datePicker.getValue();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 String dateString = date.format(formatter);
                 String birthdayString = dateString.substring(0, 5);
                 logger.info("Date selected: " + dateString);
@@ -155,12 +158,11 @@ public class CalendarPanel extends UiPart<Region> {
                         int bCount = 0;
                         int dCount = 0;
                         StringBuilder colour = new StringBuilder();
-                        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
                         for (ReadOnlyPerson person: personList) {
                             try {
                                 if (MonthDay.from(item).equals
-                                        (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), format)))) {
+                                        (MonthDay.from(LocalDate.parse(person.getBirthday().toString(), formatter)))) {
                                     if (bCount == 0) {
                                         bCount++;
                                         s.append(person.getName() + "'s Birthday");
@@ -183,18 +185,20 @@ public class CalendarPanel extends UiPart<Region> {
                         for (ReadOnlyTask task: taskList) {
                             String taskDate = "";
                             try {
-                                Date deadline = ParserUtil.parseDate(task.getDeadline().date);
-                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                taskDate = dateFormat.format(deadline);
+                                if (!task.getDeadline().isEmpty()) {
+                                    Date deadline = ParserUtil.parseDate(task.getDeadline().date);
+                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                    taskDate = dateFormat.format(deadline);
+                                }
                             } catch (IllegalValueException e) {
                                 e.printStackTrace();
                             }
                             String finalTaskDate = taskDate;
                             try {
                                 //ensure that Deadline/Startdate is valid, after computer is invented
-                                assert LocalDate.parse(finalTaskDate, format).getYear()
+                                assert LocalDate.parse(finalTaskDate, formatter).getYear()
                                         >= (LocalDate.now().getYear() - 100);
-                                if (item.equals(LocalDate.parse(finalTaskDate, format))) {
+                                if (item.equals(LocalDate.parse(finalTaskDate, formatter))) {
                                     if ((bCount == 0) && (dCount == 0)) {
                                         dCount++;
                                         s.append(dCount + " Deadline");
@@ -230,6 +234,25 @@ public class CalendarPanel extends UiPart<Region> {
             }
         };
         return dayCellFactory;
+    }
+
+    /**
+     * Select the date on calendar
+     * @param date
+     */
+    /*private void selectDate(DatePickerContent content, String date) {
+        ObservableList<Node> dateCellList = content.getChildren();
+        LocalDate localDate = LocalDate.parse(date, formatter);
+
+        logger.info("day of month: " + localDate.getDayOfMonth());
+        for (Node cell: dateCellList) {
+            logger.info("cell id: " + cell.getId());
+            if (cell.getId().equals(localDate.getDayOfMonth())) {
+                datePicker.setValue(localDate);
+                logger.info("date picked: " + localDate);
+                break;
+            }
+        }
     }
 
     // TODO: 26/10/17 implement event in the calendar, such that binding of dates is possible
