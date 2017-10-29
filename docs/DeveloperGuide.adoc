@@ -556,23 +556,40 @@ MedNus is designed for power users. Thus, batch deletions are a welcome addition
 
 *How it is implemented* +
 
-An additional command class is implemented in the logic component. Its constructor is as follows: +
+In view of the link:https://en.wikipedia.org/wiki/Open/closed_principle[open / closed principle],
+the Command class is open to extension but closed to modification. Its source code need not be edited for its behaviour to be extended in another object.
+Thus, to implement the batch deletion feature, a new `BatchCommand` class is extended from the Command class. +
+
+In summary, `BatchCommand` passes a set of tags to the Model Component which handles the actual deletions. Here's the constructor for the BatchCommand class. +
 
  BatchCommand(Set<Tag> tagsToDelete)
 
-This command passes a set of tags to the model component. The model component will handle the necessary deletion
-operations. To support this, an additional method is defined in the Model interface for implementation. +
+The sequence diagram for using this Command class within the Logic Component is given below. +
+
+_Figure 2.1.3a : Sequence diagram for a `batch myTag` command in the Logic Component_
+
+image::SDforBatchDeleteLogic.png[width="800"]
+
+The model component will handle the actual deletion operations. To support this, an additional method is defined in the Model interface for implementation by the ModelManager class. +
 
  void deletePersonsByTags(Set<Tag> tags)
 
-It causes the associated addressBook attribute to iterate through each person and delete it if any of the target tags are found.
+See the sequence diagram below to better understand the full range of interactions involved. +
+
+_Figure 2.1.3a : Sequence diagram for a `batch myTag` command in the Model Component_
+
+image::SDforBatchDeleteModel.png[width="800"]
 
 *Reasons for how it is implemented*
 
-Coupling between the logic and model component is minimised into the sole function call +
+One thing you'll notice is that coupling between the logic and model component is minimised into the sole function call +
+
  deletePersonsByTags(Set<Tag> tags)
-This is for simplicity as much as it is for ease of implementation. Future batch operations ought to be implemented
-in a similar fashion – whereby only one point of interaction occurs between components.
+
+Indeed, tracing the sequence diagrams will show you that each interaction is essentially a similar instruction.
+The seemingly unnecessary and roudabout sequence of function calls was actually conceived in view of the link:https://en.wikipedia.org/wiki/Law_of_Demeter[Law of Demeter].
+Objects ought not to "talk to strangers", or in other words, interact with objects more than one degree of separation away from them.
+This is justification for the "bureaucracy" between objects in the components.
 
 *Future enhancements*
 
