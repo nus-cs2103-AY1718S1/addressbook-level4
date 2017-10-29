@@ -407,7 +407,9 @@ e.g. `tag friends classmates`
 * *Import* : `import FILENAME.vcf`
 * *Export* : `export`
 * *Upload Photo* : `photo INDEX` +
-e.g. `photo 3`
+e.g. `photo 3` OR +
+`photo INDEX FILEPATH` +
+e.g. `photo 3 C:\Users\Pictures\photo.jpg`
 
 == Command Shortcuts Summary
 
@@ -432,4 +434,6 @@ e.g.`select 2`
 * *Import* : `im FILENAME.vcf`
 * *Export* : `ex`
 * *Upload Photo* : `p INDEX` +
-e.g. `p 3`
+e.g. `p 3` OR +
+`photo INDEX FILEPATH` +
+e.g. `photo 3 C:\Users\Pictures\photo.jpg`
