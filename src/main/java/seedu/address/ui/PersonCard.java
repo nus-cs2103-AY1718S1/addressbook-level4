@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -38,9 +39,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private ImageView pinIcon;
     @FXML
-    private Label name;
+    private Text name;
     @FXML
-    private Label id;
+    private Text id;
     @FXML
     private FlowPane tags;
 
