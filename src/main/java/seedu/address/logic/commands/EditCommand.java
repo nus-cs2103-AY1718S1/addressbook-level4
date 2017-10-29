@@ -35,6 +35,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.DateUtil;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -127,6 +128,16 @@ public class EditCommand extends UndoableCommand {
             editedPerson.setIsWhitelisted(true);
             editedPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
         }
+        if (!editedPerson.getDeadline().value.equals(Deadline.NO_DEADLINE_SET)) {
+            Date editedPersonDeadline = DateUtil.convertStringToDate(editedPerson.getDeadline().valueToDisplay);
+            Date currentDate = new Date();
+            if (personToEdit.hasOverdueDebt() && currentDate.before(editedPersonDeadline)) {
+                editedPerson.setHasOverdueDebt(false);
+            }
+            if (!personToEdit.hasOverdueDebt() && editedPersonDeadline.before(currentDate)) {
+                editedPerson.setHasOverdueDebt(true);
+            }
+        }
         return editedPerson;
     }
 
@@ -160,6 +171,7 @@ public class EditCommand extends UndoableCommand {
         personCreated.setDateRepaid(personToEdit.getDateRepaid());
         personCreated.setIsBlacklisted(personToEdit.isBlacklisted());
         personCreated.setIsWhitelisted(personToEdit.isWhitelisted());
+        personCreated.setHasOverdueDebt(personToEdit.hasOverdueDebt());
         return personCreated;
     }
 

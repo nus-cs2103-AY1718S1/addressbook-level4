@@ -179,7 +179,7 @@ public class MainWindow extends UiPart<Region> {
         case "whitelist":
             personListPanel = new PersonListPanel(logic.getFilteredWhitelistedPersonList());
             break;
-        case "overdue":
+        case "overduelist":
             personListPanel = new PersonListPanel(logic.getFilteredOverduePersonList());
             break;
         default:

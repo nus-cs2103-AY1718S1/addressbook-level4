@@ -33,6 +33,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.NearbyCommand;
+import seedu.address.logic.commands.OverdueListCommand;
 import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RepaidCommand;
@@ -190,6 +191,12 @@ public class AddressBookParserTest {
     public void parseCommand_whitelist() throws Exception {
         assertTrue(parser.parseCommand(WhitelistCommand.COMMAND_WORD) instanceof WhitelistCommand);
         assertTrue(parser.parseCommand(WhitelistCommand.COMMAND_WORD + " 3") instanceof WhitelistCommand);
+    }
+
+    @Test
+    public void parseCommand_OverdueList() throws Exception {
+        assertTrue(parser.parseCommand(OverdueListCommand.COMMAND_WORD) instanceof OverdueListCommand);
+        assertTrue(parser.parseCommand(OverdueListCommand.COMMAND_WORD + " 3") instanceof OverdueListCommand);
     }
 
     @Test

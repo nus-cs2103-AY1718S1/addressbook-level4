@@ -24,6 +24,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.commands.LogoutCommand;
 import seedu.address.logic.commands.NearbyCommand;
+import seedu.address.logic.commands.OverdueListCommand;
 import seedu.address.logic.commands.PaybackCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RepaidCommand;
@@ -76,8 +77,13 @@ public class AddressBookParser {
 
         case WhitelistCommand.COMMAND_WORD_ALIAS:
         case WhitelistCommand.COMMAND_WORD:
-            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
-            return new WhitelistCommand();
+                logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+                return new WhitelistCommand();
+
+        case OverdueListCommand.COMMAND_WORD_ALIAS:
+        case OverdueListCommand.COMMAND_WORD:
+             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+             return new OverdueListCommand();
 
         case BanCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");

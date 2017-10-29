@@ -149,6 +149,20 @@ public class ModelManager extends ComponentManager implements Model {
         return whitelistedPerson;
     }
 
+    /**
+     * Deletes a specific person from overdue debt list in the AddressBook.
+     * @param target to be removed from overdue list.
+     * @return removedOverdueDebtPerson
+     * @throws PersonNotFoundException if no person is found.
+     */
+    @Override
+    public synchronized ReadOnlyPerson removeOverdueDebtPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        ReadOnlyPerson overdueDebtPerson = addressBook.removeOverdueDebtPerson(target);
+        updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS);
+        indicateAddressBookChanged();
+        return overdueDebtPerson;
+    }
+
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
@@ -202,6 +216,20 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
         indicateAddressBookChanged();
         return whitelistedPerson;
+    }
+
+    /**
+     * Adds a specific person to overdue list in the AddressBook.
+     * @param person to be updated.
+     * @return overdueDebtPerson
+     * @throws DuplicatePersonException if this operation causes a contact to be a duplicate of another.
+     */
+    @Override
+    public synchronized ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson person) {
+        ReadOnlyPerson overdueDebtPerson = addressBook.addOverdueDebtPerson(person);
+        updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS);
+        indicateAddressBookChanged();
+        return overdueDebtPerson;
     }
 
     @Override
@@ -390,7 +418,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredOverduePersonList() {
-        setCurrentListName("overdue");
+        setCurrentListName("overduelist");
         syncOverdueList();
         filteredOverduePersons.setPredicate(currentPredicate);
         return FXCollections.unmodifiableObservableList(filteredOverduePersons);

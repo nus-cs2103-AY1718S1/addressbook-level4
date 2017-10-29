@@ -51,6 +51,9 @@ public interface Model {
     /** Removes the given person from whitelist and returns the updated person */
     ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    /** Removes the given person from overdue list and returns the updated person */
+    ReadOnlyPerson removeOverdueDebtPerson(ReadOnlyPerson target) throws PersonNotFoundException;
+
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
@@ -59,6 +62,9 @@ public interface Model {
 
     /** Adds the given person into whitelist and returns the added person */
     ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson person);
+
+    /** Adds the given person into overdue list and returns the added person */
+    ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson person);
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.

@@ -124,6 +124,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson person) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -158,6 +164,12 @@ public class AddCommandTest {
 
         @Override
         public ReadOnlyPerson removeWhitelistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ReadOnlyPerson removeOverdueDebtPerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
             return null;
         }
