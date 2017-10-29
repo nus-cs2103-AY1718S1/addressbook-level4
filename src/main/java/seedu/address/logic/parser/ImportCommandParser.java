@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +23,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     /* Regular expressions for validation. */
     private static final Pattern IMPORT_COMMAND_FORMAT = Pattern.compile("--(?<importType>\\S+)\\s+(?<path>.+)");
-    private static final Pattern IMPORT_NUSMODS_FORMAT = Pattern.compile("https?://(www.)?nusmods.com/\\S*");
+    private static final Pattern IMPORT_NUSMODS_FORMAT =
+            Pattern.compile("https?://(www.)?nusmods.com/timetable/\\S*");
     private static final String ARG_BEGIN_WITH = "--";
     private static final String IMPORT_DEFAULT_TYPE = "--xml ";
 
@@ -98,6 +101,11 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                     ImportNusmodsCommand.MESSAGE_USAGE));
         }
 
-        return new ImportNusmodsCommand(path);
+        try {
+            return new ImportNusmodsCommand(new URL(path));
+        } catch (MalformedURLException e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ImportNusmodsCommand.MESSAGE_USAGE));
+        }
     }
 }
