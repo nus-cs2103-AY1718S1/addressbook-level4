@@ -17,7 +17,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.storage.PhotoStorage;
 
 /***/
-public class AddPhotoCommand extends UndoableCommand {
+public class AddPhotoCommand extends Command {
     public static final String COMMAND_WORD = "addphoto";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": adds a photo to the person identified by the index number used in the last person listing.\n"
@@ -36,17 +36,19 @@ public class AddPhotoCommand extends UndoableCommand {
         this.photo = photo;
     }
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException, IOException {
+    public CommandResult execute() throws CommandException, IOException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        try {
-            PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getName().hashCode());
-            photo.resetFilePath(rewrite.setNewFilePath());
-        } catch(IOException e) {
-            throw new CommandException(e.getMessage());
+        if(!photo.getFilePath().equals("")) {
+            try {
+                PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getName().hashCode());
+                photo.resetFilePath(rewrite.setNewFilePath());
+            } catch (IOException e) {
+                throw new CommandException(e.getMessage());
+            }
         }
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getRemark(), personToEdit.getBirthday(),
