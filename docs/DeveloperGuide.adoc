@@ -346,10 +346,10 @@ The following activity diagram in _Figure 3.1.10_ below summarizes what happens 
 image::UndoRedoActivityDiagram.png[width="200"]
 _Figure 3.1.10 : UndoRedoStack Activity Diagram_
 
-==== Design Considerations
+==== Design Considerations for `UndoableCommand`
 
 **Aspect:** Implementation of `UndoableCommand` +
-**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
 **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
 **Cons:** Hard for new developers to understand the template pattern. +
 **Alternative 2:** Just override `execute()` +
@@ -614,6 +614,19 @@ _Figure 3.4.3d : Find by address [a/ADDRESS]_
 image::FindCommand_Tag.PNG[width="300"]
 _Figure 3.4.3e : Find by tag [t/TAG]_
 
+==== Design Considerations for `FindCommand`
+---
+
+**Aspect:** Enhancement of `FindCommand` +
+**Alternative 1 (current choice)**: Searching for contact based on the `prefix` of search field given. +
+**Pros:** To brings about greater convenience for the user during the searching process. User no longer not restricted to find contact by name soley. +
+**Cons:** User have to be know the various `prefixes` in order to be able to search for the contract via the attribute of the contact. +
+**Alternative 2:** Searching for contact without having the need to input prefix +
+**Pros:** Easier for users to find a contact without the hassle to have full knowledge of the various `prefixes`. Might be more intuitive for user. +
+**Cons:** Have to look through all the attribute of contact thus slowing down FindCommand. +
+
+---
+
 //tag::CopyCommand[]
 === Copy email address to clipboard [Since v1.2]
 
@@ -658,6 +671,9 @@ _Figure 3.5.4_ below shows an applied use of this command in an e-mail applicati
 image::CopyCommand_browser_result.PNG[width="300"]
 _Figures 3.5.4: Applied use of command in email application_
 
+==== Design Considerations for `CopyCommand`
+
+---
 
 Why it is implemented that way
 
@@ -668,6 +684,8 @@ Alternatives considered
 It is possible to provide the same output text in the console message to user, which was the first iteration of this feature. However, since the resultant string was only meant to be copied either way, this implementation would cause the user to perform one more action per email address output request, as they would have to manually copy the output to their system clipboard.
 
 Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
+
+---
 
 === Logging
 
