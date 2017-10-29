@@ -1,3 +1,5 @@
+//@@author duyson98
+
 package seedu.address.logic.commands;
 
 import java.util.StringJoiner;
@@ -5,7 +7,6 @@ import java.util.StringJoiner;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.TagContainsKeywordPredicate;
 
-//@@author duyson98
 /**
  * Lists all contacts having a certain tag in the address book.
  */

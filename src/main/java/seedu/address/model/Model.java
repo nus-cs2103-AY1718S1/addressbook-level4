@@ -64,6 +64,7 @@ public interface Model {
      */
     Boolean checkIfPersonListEmpty(ArrayList<ReadOnlyPerson> contactList);
 
+    //@@author duyson98
     //// reminder-level operations
 
     /** Deletes the given reminder. */
@@ -98,6 +99,7 @@ public interface Model {
      * Returns true if is empty
      */
     Boolean checkIfReminderListEmpty(ArrayList<ReadOnlyReminder> reminderList);
+    //@@author
 
     /**
      * Sort contact list in alphabetical order

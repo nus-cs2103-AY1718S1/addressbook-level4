@@ -118,6 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author duyson98
     //// reminder-level operations
 
     @Override
@@ -154,6 +155,7 @@ public class ModelManager extends ComponentManager implements Model {
             addressBook.updateReminder(oldReminder, newReminder);
         }
     }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -172,6 +174,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author duyson98
     //=========== Filtered Reminder List Accessors =============================================================
 
     /**
@@ -209,6 +212,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredReminders.equals(other.filteredReminders);
     }
+    //@@author
 
     @Override
     public Boolean checkIfPersonListEmpty(ArrayList<ReadOnlyPerson> contactList) {
@@ -218,6 +222,7 @@ public class ModelManager extends ComponentManager implements Model {
         return false;
     }
 
+    //@@author duyson98
     @Override
     public Boolean checkIfReminderListEmpty(ArrayList<ReadOnlyReminder> contactList) {
         if (filteredReminders.isEmpty()) {
@@ -225,6 +230,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         return false;
     }
+    //@@author
 
     //@@author inGall
     /**

@@ -367,6 +367,7 @@
     -fx-font-size: 11;
 }
 
+/* @@author duyson98 */
 #personListHeading {
     -fx-background-color: deepskyblue;
     -fx-border-color: white;
@@ -395,3 +396,4 @@
     -fx-font-size: 50;
     -fx-text-fill: white;
 }
+/* @@author */

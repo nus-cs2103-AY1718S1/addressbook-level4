@@ -101,11 +101,13 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
+    //@@author duyson98
     @Test
     public void parseCommand_retrieve() throws Exception {
         RetrieveCommand command = (RetrieveCommand) parser.parseCommand(RetrieveCommand.COMMAND_WORD + " " + "friends");
         assertEquals(new RetrieveCommand(new TagContainsKeywordPredicate(new Tag("friends"))), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_help() throws Exception {
@@ -139,6 +141,7 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author duyson98
     @Test
     public void parseCommand_tag() throws Exception {
         TagCommand command = (TagCommand) parser.parseCommand(TagCommand.COMMAND_WORD + " "
@@ -148,6 +151,7 @@ public class AddressBookParserTest {
         assertEquals(new TagCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON),
                 new Tag("friends")), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
