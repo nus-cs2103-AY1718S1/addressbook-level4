@@ -72,48 +72,6 @@ public class UniqueLifeInsuranceMap {
         internalMap.forEach(action);
     }
 
-    /**
-     * Replaces the insurance {@code target} in the map with {@code editedInsurance}.
-     *
-     * @throws DuplicateInsuranceException if the replacement is equivalent to another existing
-     * life insurance in the map.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     */
-    /*
-    public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedPerson);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new PersonNotFoundException();
-        }
-
-        if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {
-            throw new DuplicatePersonException();
-        }
-
-        internalList.set(index, new Person(editedPerson));
-        sortPersons();
-    }
-    */
-
-    /**
-     * Removes the equivalent person from the list.
-     *
-     * @throws InsuranceNotFoundException if no such person could be found in the list.
-     */
-    /*
-    public boolean remove(ReadOnlyPerson toRemove) throws PersonNotFoundException {
-        requireNonNull(toRemove);
-        final boolean personFoundAndDeleted = internalList.remove(toRemove);
-        if (!personFoundAndDeleted) {
-            throw new PersonNotFoundException();
-        }
-        return personFoundAndDeleted;
-    }
-    */
-
     public void setInsurances(UniqueLifeInsuranceMap replacement) {
         this.internalMap.clear();
         this.internalMap.putAll(replacement.internalMap);
@@ -126,13 +84,6 @@ public class UniqueLifeInsuranceMap {
         }
         setInsurances(replacement);
     }
-
-    /*
-    public void resolvePersonsNotInMasterList() {
-        internalMap.forEach((id, insurance) -> {
-        });
-    }
-    */
 
     /**
      * Returns the backing map as an unmodifiable {@code ObservableList}.
