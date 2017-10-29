@@ -5,7 +5,10 @@ import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_GRAD_SC
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_QUOTED_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTDATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_PAPER;
@@ -28,8 +31,10 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.tasks.AddTaskCommand;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Task;
+import seedu.address.model.task.TaskDates;
 import seedu.address.testutil.TaskBuilder;
 
 public class AddTaskCommandParserTest {
@@ -47,9 +52,9 @@ public class AddTaskCommandParserTest {
                 new AddTaskCommand(expectedTask));
 
         //multiple deadlines (with different prefix) - last deadline accepted
-        assertParseSuccess(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
-                + DEADLINE_DESC_GRAD_SCHOOL + DEADLINE_DESC_INTERNSHIP
-                + TAG_DESC_URGENT, new AddTaskCommand(expectedTask));
+//        assertParseSuccess(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
+//                + DEADLINE_DESC_GRAD_SCHOOL + DEADLINE_DESC_INTERNSHIP
+        //+ TAG_DESC_URGENT, new AddTaskCommand(expectedTask));
 
         // multiple tags - all accepted
         Task expectedTaskWithMultipleTags = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
@@ -133,23 +138,26 @@ public class AddTaskCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // invalid description
-        assertParseFailure(parser, INVALID_DESCRIPTION + VALID_STARTDATE_INTERNSHIP
-                + VALID_DEADLINE_INTERNSHIP + VALID_TAG_URGENT, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_DESCRIPTION + STARTDATE_DESC_INTERNSHIP
+                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
 
-        // invalid start date - invalid format
-
-        // invalid start date - not enough information
+        // invalid start date
+        assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + INVALID_STARTDATE_DESC
+                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT, TaskDates.MESSAGE_DATE_CONSTRAINTS);
 
         // invalid start date - after deadline
+        //assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + );
 
         // invalid deadline - invalid format
-
-        // invalid deadline - not enough information
-
-        // invalid deadline - before start date
+        assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
+                + INVALID_DEADLINE_DESC + TAG_DESC_URGENT, TaskDates.MESSAGE_DATE_CONSTRAINTS);
 
         // invalid tag
+        assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
+                + DEADLINE_DESC_INTERNSHIP + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
+        assertParseFailure(parser, INVALID_DESCRIPTION + INVALID_STARTDATE_DESC + DEADLINE_DESC_INTERNSHIP
+                + TAG_DESC_URGENT, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
     }
 }
