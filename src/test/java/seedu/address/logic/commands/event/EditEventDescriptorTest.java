@@ -10,7 +10,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_VENUE_EVENT2;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 
 public class EditEventDescriptorTest {

@@ -24,7 +24,6 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.event.EditEventCommand.EditEventDescriptor;
-import seedu.address.logic.parser.event.EditEventParser;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.testutil.EditEventDescriptorBuilder;
 

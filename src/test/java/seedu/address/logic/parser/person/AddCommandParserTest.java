@@ -32,7 +32,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.person.AddCommand;
-import seedu.address.logic.parser.person.AddCommandParser;
 import seedu.address.model.person.Person;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.tag.Tag;
