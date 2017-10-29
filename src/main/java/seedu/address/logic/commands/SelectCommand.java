@@ -5,6 +5,7 @@ import java.util.List;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -22,7 +23,7 @@ public class SelectCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
+    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %2$s at Index %1$s";
 
     private final Index targetIndex;
 
@@ -39,9 +40,13 @@ public class SelectCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        String name = person.getName().toString();
 
+        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(person.getWebsite().toString()));
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased(), name));
     }
 
     @Override
