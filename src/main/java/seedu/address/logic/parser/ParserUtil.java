@@ -74,7 +74,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
-        requireNonNull(name);
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
     }
 
@@ -83,7 +82,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
     }
 
@@ -92,7 +90,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
-        requireNonNull(birthday);
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
@@ -101,7 +98,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
     }
 
@@ -110,7 +106,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
