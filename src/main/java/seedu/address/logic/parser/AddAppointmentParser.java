@@ -13,6 +13,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author Eric
 /**
  * Parse input arguments and creates a new AddAppointmentCommand Object
  */
@@ -41,13 +42,23 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
 
         String[] args = userInput.split(" ");
         try {
-
             Index index = Index.fromOneBased(Integer.parseInt(args[1]));
+            if ("d/off".equals(args[2])) {
+                return new AddAppointmentCommand(index);
+            }
             com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
             List<DateGroup> groups = parser.parse(argumentMultimap.getValue(PREFIX_DATE).get());
             Calendar calendar = Calendar.getInstance();
             if (groups.size() == 0) {
                 throw new ParseException("Please be more specific with your appointment time");
+            }
+
+            //If there is a start and end time that is parsed
+            if (groups.get(0).getDates().size() == 2) {
+                calendar.setTime(groups.get(0).getDates().get(0));
+                Calendar calendarEnd = Calendar.getInstance();
+                calendarEnd.setTime(groups.get(0).getDates().get(1));
+                return new AddAppointmentCommand(index, calendar, calendarEnd);
             }
             calendar.setTime(groups.get(0).getDates().get(0));
             return new AddAppointmentCommand(index, calendar);

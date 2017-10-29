@@ -48,7 +48,8 @@ public class TypicalPersons {
             .withBloodType("B").withTags("Test3").withAppointment("Fiona Kunz").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street")
-            .withBloodType("AB-").withAppointment("George Best").build();
+            .withBloodType("AB-")
+            .withAppointment("George Best", "2018/01/02 00:00", "2018/01/02 00:00").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")

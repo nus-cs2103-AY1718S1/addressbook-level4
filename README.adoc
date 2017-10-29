@@ -42,6 +42,8 @@ _Marco Jakob_.
 
 * AddressBook-Level4 project created by https://github.com/se-edu/[SE-EDU] initiative
 
-* Credits to Joestalmach for the date parsing NLP library
+* Credits to http://natty.joestelmach.com/[Joestalmach] for the date parsing NLP library
+
+* Special thanks to http://dlsc.com/products/calendarfx/[Dirk Lemmermann] for his decision to open source his beautiful calendar software
 
 == Licence : link:LICENSE[MIT]

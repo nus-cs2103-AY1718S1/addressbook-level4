@@ -15,22 +15,22 @@ import seedu.address.model.person.Appointment;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
-
+//@@author Eric
 /**
  * Command to add appointment to a person in addressBook
  */
 public class AddAppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "appointment";
-    public static final String COMMAND_ALIAS = "apt";
+    public static final String COMMAND_ALIAS = "appt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appoint to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: " + PREFIX_NAME + "PERSON "
-            + PREFIX_DATE + Appointment.DATE_FORMAT + "\n"
+            + PREFIX_DATE + "TIME" + "\n"
             + "Example 1:" + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe"
-            + PREFIX_DATE + "2017/01/01 17:20";
+            + PREFIX_NAME + "John Doe "
+            + PREFIX_DATE + "Next Monday 3pm";
 
     public static final String MESSAGE_SUCCESS = "New appointment added. ";
     public static final String INVALID_PERSON = "This person is not in your address book";
@@ -39,44 +39,75 @@ public class AddAppointmentCommand extends Command {
 
     private final Index index;
     private final Calendar date;
+    private final Calendar endDate;
+
 
     public AddAppointmentCommand() {
         date = null;
         index = null;
+        endDate = null;
+    }
+
+    public AddAppointmentCommand(Index index) {
+        this.index = index;
+        this.date = null;
+        endDate = null;
     }
 
     public AddAppointmentCommand(Index index, Calendar date) {
         this.index = index;
         this.date = date;
+        this.endDate = null;
+    }
+
+    public AddAppointmentCommand(Index index, Calendar date, Calendar endDate) {
+        this.index = index;
+        this.date = date;
+        this.endDate = endDate;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
 
-        if (date == null || index == null) {
+
+        if (date == null && index == null) {
             model.listAppointment();
             return new CommandResult("Rearranged contacts to show upcoming appointments.");
         }
-        requireNonNull(date);
-        requireNonNull(index);
 
-        if (!isDateValid()) {
-            return new CommandResult(INVALID_DATE);
-        }
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         ReadOnlyPerson personToAddAppointment = lastShownList.get(index.getZeroBased());
-        Appointment appointment = new Appointment(personToAddAppointment.getName().toString(), date);
+
+        Appointment appointment;
+        requireNonNull(index);
+        if (date == null) {
+            appointment = new Appointment(personToAddAppointment.getName().toString());
+        } else if (date != null && endDate == null) {
+            appointment = new Appointment(personToAddAppointment.getName().toString(), date);
+        } else {
+            appointment = new Appointment(personToAddAppointment.getName().toString(), date, endDate);
+        }
+
+        if (date != null && !isDateValid()) {
+            return new CommandResult(INVALID_DATE);
+        }
+
         try {
             model.addAppointment(appointment);
         } catch (PersonNotFoundException e) {
             return new CommandResult(INVALID_PERSON);
         }
-        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName().toString()
+        if (date == null) {
+            return new CommandResult("Appointment with " + personToAddAppointment.getName().toString()
+                    + " set to off.");
+        }
+        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName()
                 + " on "
                 +  appointment.getDate().toString());
     }

@@ -40,6 +40,8 @@ public class XmlAdaptedPerson {
     private String bloodType;
     @XmlElement
     private String appointmentDate;
+    @XmlElement
+    private String appointmentEndDate;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -73,6 +75,11 @@ public class XmlAdaptedPerson {
         } else {
             appointmentDate = null;
         }
+        if (source.getAppointment().getEndDate() != null) {
+            appointmentEndDate = Appointment.DATE_FORMATTER.format(source.getAppointment().getEndDate());
+        } else {
+            appointmentEndDate = null;
+        }
     }
 
     /**
@@ -94,18 +101,25 @@ public class XmlAdaptedPerson {
         final Remark remark = new Remark(this.remark);
         final Appointment appointment;
         // if there is previously an appointment date, the constructor with appointment date is called
-        if (appointmentDate != null) {
-            Calendar calendar = Calendar.getInstance();
-            try {
+        try {
+            if (appointmentDate != null && appointmentEndDate != null) {
+                Calendar calendar = Calendar.getInstance();
+                Calendar endCalendar = Calendar.getInstance();
                 calendar.setTime(Appointment.DATE_FORMATTER.parse(this.appointmentDate));
-            } catch (ParseException e) {
-                e.printStackTrace();
+                endCalendar.setTime(Appointment.DATE_FORMATTER.parse(this.appointmentEndDate));
+                appointment = new Appointment(name.toString(), calendar, endCalendar);
+            } else if (appointmentDate != null) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(Appointment.DATE_FORMATTER.parse(this.appointmentDate));
+                appointment = new Appointment(name.toString(), calendar);
+            } else {
+                appointment = new Appointment(name.toString());
             }
-            appointment = new Appointment(name.toString(), calendar);
-        } else {
-            appointment = new Appointment(name.toString());
+            return new Person(name, phone, email, address, bloodType, tags, remark, appointment);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new Person(name, phone, email, address, bloodType, tags, remark, new Appointment(name.toString()));
         }
-        return new Person(name, phone, email, address, bloodType, tags, remark, appointment);
 
     }
 }

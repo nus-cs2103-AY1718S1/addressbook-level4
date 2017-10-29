@@ -9,17 +9,17 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
 It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: +
-[https://github.com[Functional code]] +
-[https://github.com[Test code]] {give links to collated code files}
+link:main/Eric.md[Functional code] +
+link:test/Eric.md[Test code] +
 
-=== Enhancement Added: Colored Tag
+=== Enhancement Added: Setting Tag Color
 
 ==== External behavior
 
 ---
 #Start of Extract [from: User Guide]#
 
-
+include::../UserGuide.adoc[tag=color]
 
 #End of Extract#
 
@@ -27,21 +27,47 @@ It is written in Java, and has about 6 kLoC.
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Different tags can be differentiated easily when there are different colors.
+We allow our users to assign any color they want to a tag to allow more customization.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
+
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `tagcolored`
+=== Enhancement Added: Setting Appointment
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
 
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=appointment]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+We allow our users to set appointment timing with their contacts. The use of natural language eases the use of the
+address book.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=appointment]
+
+#End of Extract#
+
+---
 === Other contributions
 
 * UI command output changes

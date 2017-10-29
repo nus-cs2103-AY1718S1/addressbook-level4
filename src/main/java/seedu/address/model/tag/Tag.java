@@ -24,6 +24,7 @@ public class Tag {
     public final String tagName;
     private String tagColor;
 
+    //@@author Eric
     /**
      * Validates given tag name.
      *
@@ -43,9 +44,12 @@ public class Tag {
         return this.tagColor;
     }
 
+
     public void setColor(String color) {
         tagColor = color;
     }
+
+
     public void setRandomColor() {
         float r = random.nextFloat();
         float g = random.nextFloat();
@@ -55,9 +59,11 @@ public class Tag {
         tagColor = colorInHexString;
     }
 
+
     public void setOffColor() {
         tagColor = "grey";
     }
+    //@@author
 
     /**
      * Returns true if a given string is a valid tag name.
@@ -85,6 +91,7 @@ public class Tag {
         return '[' + tagName + ']';
     }
 
+    //@@author Eric
     /**
      * Converts a color to hexadecimal string
      *

@@ -14,7 +14,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-
+//@@author Jeremy
 /**
  * Adds/Remove a remark from a person identified using it's last displayed index from the address book.
  */

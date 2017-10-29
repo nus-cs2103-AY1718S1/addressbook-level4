@@ -90,8 +90,9 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Eric
     /**
-     * On/Off tag colors for AddressBook
+     * Sets tag color for a particular tag
      * Updates UI by refreshing personListPanel
      */
     @Override
@@ -100,7 +101,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.setTags(tag, tagString, color);
         indicateAddressBookChanged();
     }
-
+    //@@author
     /**
      * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
      *
@@ -123,6 +124,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author Eric
     /**
      * Adds appointment for a contact in address book
      */
@@ -145,6 +147,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(list);
     }
 
+    //@@author Jeremy
     /**
      * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
      * in increasing chronological order
@@ -173,6 +176,7 @@ public class ModelManager extends ComponentManager implements Model {
         ObservableList<ReadOnlyPerson> list = addressBook.getPersonListReversed();
         return FXCollections.unmodifiableObservableList(list);
     }
+    //@@author
 
     /**
      * Gets a list of duplicate names

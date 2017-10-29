@@ -76,6 +76,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    //@@author Jeremy
     /**
      * Handles KeyPress Commands that are not keyed with Shift button held down
      */
@@ -113,6 +114,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+
     /**
      * Handles KeyPress Commands that are keyed with Shift button held down
      */
@@ -134,6 +136,7 @@ public class CommandBox extends UiPart<Region> {
         default:
         }
     }
+
 
     /**
      * Deletes the word or a chunk of blank spaces on the left.
@@ -164,6 +167,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
+
     /**
      * Deletes chunk in the situation where caret is at the far right
      */
@@ -191,6 +195,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setText(answer);
     }
 
+
     /**
      * Checks if caret is at either ends
      */
@@ -199,6 +204,7 @@ public class CommandBox extends UiPart<Region> {
         boolean atFarRight = (originalCaretPosition == commandTextField.getText().length());
         return atFarLeft || atFarRight;
     }
+
 
     /**
      * Shifts the caret left to the left of the first character of the next word
@@ -223,6 +229,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(newCaretPosition);
     }
 
+
     /**
      * Shifts the caret right to the right of the last character of the next word
      * <p>
@@ -246,6 +253,7 @@ public class CommandBox extends UiPart<Region> {
         newCaretPosition = shiftRightIgnoringWords(newCaretPosition, maxAchievablePosition);
         commandTextField.positionCaret(newCaretPosition);
     }
+
 
     /**
      * Shifts the caret left, ignoring all empty spaces
@@ -272,6 +280,7 @@ public class CommandBox extends UiPart<Region> {
         return caretHolder;
     }
 
+
     /**
      * Shifts the caret right, ignoring all empty spaces
      * <p>
@@ -297,6 +306,7 @@ public class CommandBox extends UiPart<Region> {
         return caretHolder;
     }
 
+
     /**
      * Shifts the caret left, ignoring all char
      * <p>
@@ -321,6 +331,7 @@ public class CommandBox extends UiPart<Region> {
         }
         return caretHolder;
     }
+
 
     /**
      * Shifts the caret right, ignoring all char
@@ -550,6 +561,7 @@ public class CommandBox extends UiPart<Region> {
         String currentInput = commandTextField.getText();
         return currentInput.contains(PREFIX_NAME.getPrefix());
     }
+    //@@author
 
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
@@ -639,6 +651,7 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author Jeremy
     /**
      * Gets the text field for testing purposes
      */

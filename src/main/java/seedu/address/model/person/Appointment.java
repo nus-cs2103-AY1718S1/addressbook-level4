@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+//@@author Eric
 /**
  *  Appointment class to hold all the appointment information of an appointment
  *  */
@@ -19,6 +20,9 @@ public class Appointment {
     private Date date;
 
 
+
+    private Date endDate;
+
     public Appointment(String person) {
         this.personString = person;
     }
@@ -29,6 +33,14 @@ public class Appointment {
         this.date = date;
     }
 
+    public Appointment(String person, Calendar calendar, Calendar calendarEnd) {
+        requireNonNull(calendar);
+        Date date = calendar.getTime();
+        this.personString = person;
+        this.date = date;
+        this.endDate = calendarEnd.getTime();
+    }
+
     public String getPersonName() {
         return this.personString;
     }
@@ -37,6 +49,9 @@ public class Appointment {
         return this.date;
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
     @Override
     public String toString() {
         if (date != null) {
@@ -49,7 +64,8 @@ public class Appointment {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Bloodtype // instanceof handles nulls
-                && this.personString.equals(((Appointment) other).personString));
+                || (other instanceof Appointment // instanceof handles nulls
+                && this.personString.equals(((Appointment) other).personString)
+                && this.getDate().toInstant().equals(((Appointment) other).getDate().toInstant()));
     }
 }

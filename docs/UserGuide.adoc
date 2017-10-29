@@ -113,7 +113,8 @@ Both capital letters and small letters are can be entered.
 
 <<<
 
-=== List
+// tag::list[]
+=== Listing Contacts: `list`
 
 You have a variety of ways to list your contacts. +
 Click <<MedNus Features, here>> for a tabulated version of all available listing options. +
@@ -141,6 +142,7 @@ You can use `list ascending` to show a list of contacts sorted by name in ascend
 You can use `list descending` to show a list of contacts sorted by name in descending order. +
 *Format:* `list descending` +
 *Shorthand Format:* `l dsc`
+// end::list[]
 
 === Listing persons by blood type : `bloodtype` [Since v1.2]
 
@@ -298,14 +300,15 @@ You can reverse the most recent `undo` command. +
 image::redoexample.png[width="700"]
     Figure 10: Redo Command Usage Diagram
 
+// end::undoredo[]
+
 === Clearing all entries : `clear`
 
 You can clear all entries in the address book. +
 *Format:* `clear` +
 *Shorthand Format:* `c`
 
-<<<
-
+// tag::color[]
 === Set Tag Color Mode : `tagcolor`
 
 You can set random colors to all tags OR remove colors. +
@@ -321,6 +324,11 @@ You can see all available colors in the following
 https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[link] +
 Color name input can be in english or hexadecimal form.
 
+// end::color[]
+
+
+
+// tag::appointment[]
 === Set appointment: `appointment`
 
 You can set an appointment to a specific contact at a given index. +
@@ -331,7 +339,7 @@ However, please include at least the hour and a day that can be specified.
 
 
 *Format:* `appointment INDEX d/TIME` +
-*Shorthand format:* `apt INDEX d/TIME`
+*Shorthand format:* `appt INDEX d/TIME`
 
 *Example:*
 
@@ -340,12 +348,17 @@ image::aptexample.png[width="500"]
 
 You can sort list by appointment dates. +
 *Format:* `appointment` +
-*Shorthand format:* `apt`
+*Shorthand format:* `appt`
 
 [NOTE]
 You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
 
+To remove appointment,
 
+*Format:* `appointment INDEX d/off` +
+*Shorthand format:* `appt INDEX d/off`
+
+// end::appointment[]
 
 === Adding/Removing Remarks to a person : `remark`
 
