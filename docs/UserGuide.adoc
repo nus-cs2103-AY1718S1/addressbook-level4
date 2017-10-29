@@ -73,7 +73,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 Command Name: `help` +
 Shorthand Alias: `hp` +
-Function: displays the *User Guide* +
+Function: Displays the *User Guide* +
 Format: `help`
 ====
 
@@ -90,7 +90,7 @@ _Figure 4.1.1_
 ====
 Command Name: `add` +
 Shorthand Alias: `a` +
-Function: adds a person to *DummyName* +
+Function: Adds a person to *DummyName* +
 Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [m/MEETING]...` +
 [TIP]
 A person can have any number of tags (including 0)
@@ -280,7 +280,6 @@ Can also remove all instances of a tag from your *DummyName*. +
 Format: `deletetag INDEX TAG` +
 ====
 
-_Coming in v1.3_ +
 If you want to delete a single tag from a contact in your *DummyName*: +
 
 .  Locate the contact you want to delete a tag from and the index of the contact. +
@@ -318,7 +317,7 @@ _Figure 4.7.4_
 ====
 Command Name: `find` +
 Shorthand Alias: `f` +
-Function : finds persons whose names contain any of the given keywords. +
+Function : Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 ====
 
@@ -340,7 +339,7 @@ _Figure 4.8.1_
 image:find_2.png[] +
 _Figure 4.8.2_
 
-Here are some other ways you can do with `find`:
+Here are some other commands you can do with `find`:
 
 * `find Betsy Tim John` +
 Lists any person having names `Betsy`, `Tim`, or `John`
@@ -355,7 +354,7 @@ Lists any person whose name starts with `j`
 ====
 Command Name: `filter` +
 Shorthand Alias: `ft` +
-Function: finds persons who are tagged with any of the given tags from the existing list of persons. +
+Function: Finds persons who are tagged with any of the given tags from the existing list of persons. +
 Format: `filter TAG [MORE_TAGS]`
 ====
 
@@ -385,7 +384,7 @@ _Figure 4.9.3_
 image:filter_4.png[] +
 _Figure 4.9.4_
 
-Here are some other ways you can do with `filter`:
+Here are some other commands you can do with `filter`:
 
 * `filter family` +
 Lists any person having the `family` tag
@@ -394,16 +393,46 @@ Lists any person tagged with `family` or `friends`
 * `ft fa*` +
 Lists any person tagged with any tags matching `fa*` such as `family` but not `friends`
 
+=== Sorting contact list: `sort`
+
+====
+Command Name: `sort` +
+Shorthand Alias: `s` +
+Function: Sorts the contact list in alphabetical order of a `FIELD` +
+Format: `sort FIELD`
+[NOTE]
+Only one `FIELD` (`NAME`, `PHONE`, `ADDRESS`, `EMAIL`, `TAG`, `MEETING`) can be used at a time.
+[NOTE]
+For fields with multiple entries (`TAG`, `MEETING`), the order is detemined by using the entry which comes first alphabetically for each contact.
+====
+
+If you would like to sort your contact list:
+
+.  Type in the `FIELD` you would like to sort your contact list by (Figure 4.10.1) +
+`>> sort name`  +
+image:sort_1.png[600] +
+_Figure 4.10.1_
+.  Press `Enter` and your contact list will be sorted (Figure 4.10.2).
+image:sort_2.png[600] +
+_Figure 4.10.2_
+
+Here are some other ways to sort your contact list:
+
+* `sort phone` +
+Sorts the contact list by phone number.
+* `s tag` +
+Sorts the contact list by tag.
+* `sort meeting` +
+Sorts the contact list by meeting time.
 
 
->>>>>>> master
 
 === Selecting a person : `select`
 
 ====
 Command Name: `select` +
 Shorthand Alias: `sl` +
-Function: `Select a contact with the specified `INDEX`` +
+Function: Select a contact with the specified `INDEX` +
 Format: `select INDEX`
 
 [TIP]
@@ -414,13 +443,13 @@ The index *must be a positive integer* `1, 2, 3, ...`
 
 You can select a contact from the displayed list by:
 
-. Typing (Figure 4.10.1) +
+. Typing (Figure 4.11.1) +
 `>>select 1` +
 image:select1.png[select1, 600] +
-_Figure 4.10.1_
-. Pressing Enter. Your choice should now be selected (Figure 4.10.2) +
+_Figure 4.11.1_
+. Pressing Enter. Your choice should now be selected (Figure 4.11.2) +
 image:select2.png[select2, 600] +
-_Figure 4.10.2_
+_Figure 4.11.2_
 
 Here is another way to select a contact:
 
@@ -456,13 +485,13 @@ Notes can be blank to delete existing notes, i.e. `note n/`
 If you want to add a note for a DummyName contact:
 
 .   Locate the index of the contact +
-.   Type in your desired INDEX and NOTE (Figure 4.11.1) +
+.   Type in your desired INDEX and NOTE (Figure 4.12.1) +
 `>> note 1 n/This is an important note` +
 image:note1.png[note1, 600] +
-_Figure 4.11.1_
-. Press `Enter`. Your note should now be displayed as the last row in your contact's details (Figure 4.11.2) +
+_Figure 4.12.1_
+. Press `Enter`. Your note should now be displayed as the last row in your contact's details (Figure 4.12.2) +
 image:note2.png[note2, 600, 40] +
-_Figure 4.11.2_
+_Figure 4.12.2_
 
 Here are some other ways to change your DummyName contact's note:
 
@@ -485,13 +514,13 @@ Format: `backup`
 
 You may want to be safe and backup often when using *DummyName*:
 
-. Type in `backup`. (Figure 4.12.1) +
+. Type in `backup`. (Figure 4.13.1) +
 `>> backup` +
 image:Backup_1.png[600] +
-_Figure 4.12.1_ +
-. Press `Enter` and you should see a message indicating the successful backup of your data. (Figure 4.12.2) +
+_Figure 4.13.1_ +
+. Press `Enter` and you should see a message indicating the successful backup of your data. (Figure 4.13.2) +
 image:Backup_2.png[600] +
-_Figure 4.12.2_ +
+_Figure 4.13.2_ +
 
 [NOTE]
 Your data is automatically backed up every time you close the app.
@@ -507,24 +536,24 @@ Format: `restore`
 
 You encounter an unforeseen circumstance and want to revert to a backup file: +
 
-. Execute the `backup` command to save the current data. (Figure 4.13.1) +
+. Execute the `backup` command to save the current data. (Figure 4.14.1) +
 `>> backup` +
 image:Restore_1.png[600] +
-_Figure 4.13.1_ +
+_Figure 4.14.1_ +
 
-. Enter the `clear` command to simulate a lost of data. (Figure 4.13.2) +
+. Enter the `clear` command to simulate a lost of data. (Figure 4.14.2) +
 `>> clear` +
 image:Restore_2.png[600] +
-_Figure 4.13.2_ +
+_Figure 4.14.2_ +
 
-. Type in `restore` command. (Figure 4.13.3) +
+. Type in `restore` command. (Figure 4.14.3) +
 `>> restore` +
 image:Restore_3.png[600] +
-_Figure 4.13.3_ +
+_Figure 4.14.3_ +
 
-. Press `Enter` and you should see that the backup data is restored. (Figure 4.13.4) +
+. Press `Enter` and you should see that the backup data is restored. (Figure 4.14.4) +
 image:Restore_4.png[600] +
-_Figure 4.13.4_ +
+_Figure 4.14.4_ +
 
 [NOTE]
 An error message will be shown if you do not already have a backup file in the default file path. (Figure 4.13.5)
@@ -545,29 +574,29 @@ A browser is necessary for logging in to Google
 
 You can easily synchronise your DummyName contacts with Google Contacts through the following steps:
 
-.   Type (Figure 4.14.1) +
+.   Type (Figure 4.15.1) +
 `>> sync` +
 image:sync1.png[sync1, 600] +
-_Figure 4.14.1_ +
-.   Press `Enter`. Your default browser should open a login window (Figure 4.14.2) +
+_Figure 4.15.1_ +
+.   Press `Enter`. Your default browser should open a login window (Figure 4.15.2) +
 image:sync2.png[sync2, 600] +
-_Figure 4.14.2_
-.   Enter your login details and press Next (Figure 4.14.3) +
+_Figure 4.15.2_
+.   Enter your login details and press Next (Figure 4.15.3) +
 image:sync3.png[sync3, 600] +
-_Figure 4.14.3_
-.   Allow DummyName to access your Google Contacts information (Figure 4.14.4) +
+_Figure 4.15.3_
+.   Allow DummyName to access your Google Contacts information (Figure 4.15.4) +
 image:sync4.png[sync4, 600] +
-_Figure 4.14.4_
-.   Your contacts are now synchronised. Figure (4.14.5)
+_Figure 4.15.4_
+.   Your contacts are now synchronised. Figure (4.15.5)
 image:sync5.png[sync5, 600] +
-_Figure 4.14.5_
+_Figure 4.15.5_
 
 === Listing entered commands : `history`
 
 ====
 Command Name: `history` +
 Shorthand Alias: `hx` +
-Function: lists all the commands that you have entered in reverse chronological order. +
+Function: Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 [NOTE]
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
@@ -575,10 +604,10 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 If you want to view the list of commands entered: +
 
-.  Type in (Figure 4.15.1) +
+.  Type in (Figure 4.16.1) +
 `>> history` +
 image:history.png[] +
-_Figure 4.15.1_
+_Figure 4.16.1_
 .  Press `Enter` and the lists of commands that you entered before would show up.
 
 // tag::undoredo[]
@@ -598,57 +627,57 @@ _Undoable_ commands: those commands that modify the address book's content. They
 
 When you `delete` a contact by accident: +
 
-. Remove the first contact. (Figure 4.16.1) +
+. Remove the first contact. (Figure 4.17.1) +
 `>> delete 1` +
 image:Undo_1.png[600] +
-_Figure 4.16.1_ +
+_Figure 4.17.1_ +
 
-. Type in the `undo` command. (Figure 4.16.2) +
+. Type in the `undo` command. (Figure 4.17.2) +
 `>> undo` +
 image:Undo_2.png[600] +
-_Figure 4.16.2_ +
+_Figure 4.17.2_ +
 
-. Press `Enter` and you should see that the effects of `delete 1` has been reverted. (Figure 4.16.3) +
+. Press `Enter` and you should see that the effects of `delete 1` has been reverted. (Figure 4.17.3) +
 image:Undo_3.png[600] +
-_Figure 4.16.3_ +
+_Figure 4.17.3_ +
 
 The following are more examples to help you better understand the `undo` command:
 
 * Failure to `undo` as there are no undoable commands executed previously.
 . Restart the application.
-. Select the first contact. (Figure 4.16.4) +
+. Select the first contact. (Figure 4.17.4) +
 `>> select 1` +
 image:Undo_4.png[600] +
-_Figure 4.16.4_ +
-. List all the contacts. (Figure 4.16.5) +
+_Figure 4.17.4_ +
+. List all the contacts. (Figure 4.17.5) +
 `>> list` +
 image:Undo_5.png[600] +
-_Figure 4.16.5_ +
-. Type in `undo` and you will see an error message. (Figure 4.16.6) +
+_Figure 4.17.5_ +
+. Type in `undo` and you will see an error message. (Figure 4.17.6) +
 `>> undo` +
 image:Undo_6.png[600] +
-_Figure 4.16.6_ +
+_Figure 4.17.6_ +
 
 * Attempting to `undo` multiple commands.
-. Delete the first contact. (Figure 4.16.7) +
+. Delete the first contact. (Figure 4.17.7) +
 `>> delete 1` +
 image:Undo_7.png[600] +
-_Figure 4.16.7_ +
-. Clear out all the contacts. (Figure 4.16.8) +
+_Figure 4.17.7_ +
+. Clear out all the contacts. (Figure 4.17.8) +
 `>> clear`
 image:Undo_8.png[600] +
-_Figure 4.16.8_ +
-. Type in the shorthand alias for `undo` (Figure 4.16.9) +
+_Figure 4.17.8_ +
+. Type in the shorthand alias for `undo` (Figure 4.17.9) +
 `>> u` +
 image:Undo_9.png[600] +
-_Figure 4.16.9_ +
-. Press `Enter` and you should see that the `clear` command is reverted. (Figure 4.16.10)+
+_Figure 4.17.9_ +
+. Press `Enter` and you should see that the `clear` command is reverted. (Figure 4.17.10)+
 image:Undo_10.png[600] +
- _Figure 4.16.10_ +
-. Type in `undo` and you should see that the `delete 1` command is reverted as well. (Figure 4.16.11)+
+ _Figure 4.17.10_ +
+. Type in `undo` and you should see that the `delete 1` command is reverted as well. (Figure 4.17.11)+
 `>> undo` +
 image:Undo_11.png[600] +
-_Figure 4.16.11_ +
+_Figure 4.17.11_ +
 
 === Redoing the previously undone command : `redo`
 
@@ -661,64 +690,64 @@ Format: `redo`
 
 You `delete` a contact and `undo` the `delete` by mistake: +
 
-. Type in the command to delete the first contact. (Figure 4.17.1) +
+. Type in the command to delete the first contact. (Figure 4.18.1) +
 `>> delete 1` +
 image:Redo_1.png[600] +
-_Figure 4.17.1_ +
-. Press `Enter` and the contact is removed. (Figure 4.17.2)+
+_Figure 4.18.1_ +
+. Press `Enter` and the contact is removed. (Figure 4.18.2)+
 image:Redo_2.png[600] +
-. Type in `undo` by mistake. (Figure 4.17.3) +
+. Type in `undo` by mistake. (Figure 4.18.3) +
 `>> undo` +
 image:Redo_3.png[600] +
-_Figure 4.17.3_ +
-. Enter the command `redo` to revert the `undo` command. (Figure 4.17.4) +
+_Figure 4.18.3_ +
+. Enter the command `redo` to revert the `undo` command. (Figure 4.18.4) +
 `>> redo` +
 image:Redo_4.png[600] +
-_Figure 4.17.4_ +
-. Press `Enter` and you shoud see that the `undo` command has been reverted and the contact remains deleted. Refer to _Fig_ to see that you have obtained the correct results. (Figure 4.17.5) +
+_Figure 4.18.4_ +
+. Press `Enter` and you shoud see that the `undo` command has been reverted and the contact remains deleted. Refer to _Fig_ to see that you have obtained the correct results. (Figure 4.18.5) +
 image:Redo_5.png[600] +
-_Figure 4.17.5_ +
+_Figure 4.18.5_ +
 
 The following are more examples to help you better understand the `redo` command.
 
 * Failure to `redo` as there are no `undo` commands executed previously:
-. Select a contact to delete. (Figure 4.17.6) +
+. Select a contact to delete. (Figure 4.18.6) +
 `>> delete 1`
 image:Redo_6.png[600] +
-_Figure 4.17.6_ +
-. Type in the `redo` command. (Figure 4.17.7)+
+_Figure 4.18.6_ +
+. Type in the `redo` command. (Figure 4.18.7)+
 `>> redo`
 image:Redo_7.png[600] +
-_Figure 4.17.7_ +
-. Press `Enter` and you should see an error message. (Figure 4.17.8) +
+_Figure 4.18.7_ +
+. Press `Enter` and you should see an error message. (Figure 4.18.8) +
 image:Redo_8.png[600] +
-_Figure 4.17.8_ +
+_Figure 4.18.8_ +
 
 * Attempting to `redo` multiple commands:
-. Select a contact to delete. (Figure 4.17.9) +
+. Select a contact to delete. (Figure 4.18.9) +
 `>> delete 1`
 image:Redo_9.png[600] +
-_Figure 4.17.9_ +
-. Remove all the contacts by `clear` command. (Figure 4.17.10) +
+_Figure 4.18.9_ +
+. Remove all the contacts by `clear` command. (Figure 4.18.10) +
 `>> clear`
 image:Redo_10.png[600] +
-_Figure 4.17.10_ +
-. Type in `undo` to revert the `clear` command. (Figure 4.17.11) +
+_Figure 4.18.10_ +
+. Type in `undo` to revert the `clear` command. (Figure 4.18.11) +
 `>> undo` +
 image:Redo_11.png[600] +
-_Figure 4.17.11_ +
-. Type in `undo` to revert the `delete 1` command. (Figure 4.17.12) +
+_Figure 4.18.11_ +
+. Type in `undo` to revert the `delete 1` command. (Figure 4.18.12) +
 `>> undo` +
 image:Redo_12.png[600] +
-_Figure 4.17.12_ +
-. Type in `redo` to reapply the `delete 1` command. (Figure 4.17.13) +
+_Figure 4.18.12_ +
+. Type in `redo` to reapply the `delete 1` command. (Figure 4.18.13) +
 `>> redo` +
 image:Redo_13.png[600] +
-_Figure 4.17.13_ +
-. Type in `redo` to reapply the `clear` command. (Figure 4.17.14) +
+_Figure 4.18.13_ +
+. Type in `redo` to reapply the `clear` command. (Figure 4.18.14) +
 `>> redo` +
 image:Redo_14.png[600] +
-_Figure 4.17.14_ +
+_Figure 4.18.14_ +
 // end::undoredo[]
 
 === Clearing all entries : `clear`
@@ -733,13 +762,13 @@ Format: `clear`
 
 You can also clear all DummyName contacts. To do so,
 
-.   Type (Figure 4.18.1) +
+.   Type (Figure 4.19.1) +
 `>> clear` +
 image:clear1.png[clear1, 600] +
-_Figure 4.18.1_
-.   Press `Enter`. Your contacts should now be cleared (Figure 4.18.2) +
+_Figure 4.19.1_
+.   Press `Enter`. Your contacts should now be cleared (Figure 4.19.2) +
 image:clear2.png[clear2, 600] +
-_Figure 4.18.2_
+_Figure 4.19.2_
 
 Another example of clearing your contacts:
 
@@ -750,7 +779,7 @@ Another example of clearing your contacts:
 ====
 Command Name: `resize` +
 Shorthand Alias: `rs` +
-Function: resizes the main window to the specified width and height in pixels +
+Function: Resizes the main window to the specified width and height in pixels +
 Format: `resize WIDTH HEIGHT`
 [NOTE]
 Restriction on WIDTH and HEIGHT: `WIDTH < = width of the screen display`, `HEIGHT < = height of the screen display`
@@ -760,10 +789,10 @@ You *CANNOT* `undo` a `resize` command
 
 If you want to resize your main window to 1280 * 720: +
 
-.  Type in (Figure 4.19.1) +
+.  Type in (Figure 4.20.1) +
 `>> resize 1280 720` +
 image:resize.png[] +
-_Figure 4.19.1_
+_Figure 4.20.1_
 .  Press `Enter` and the main window would be resized to 1280 * 720.
 
 === Exiting the program : `exit`
@@ -777,10 +806,10 @@ Format: `exit`
 
 If you want to close the app:
 
-. Type in the command. (Figure 4.20.1) +
+. Type in the command. (Figure 4.21.1) +
 `>> exit` +
 image:Exit_1.png[600] +
-_Figure 4.20.1_ +
+_Figure 4.21.1_ +
 . Press `Enter` and you will see that *DummyName* is closed. +
 
 Do not worry about losing your contacts as they will be saved automatically.
