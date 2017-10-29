@@ -6,6 +6,7 @@ import static seedu.address.model.ListingUnit.MODULE;
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.RemarkChangedEvent;
 import seedu.address.commons.events.ui.ViewedLessonEvent;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ListingUnit;
@@ -31,6 +32,7 @@ public class ClearCommand extends UndoableCommand {
         model.resetData(new AddressBook());
         model.updateFilteredLessonList(predicate);
         EventsCenter.getInstance().post(new ViewedLessonEvent());
+        EventsCenter.getInstance().post(new RemarkChangedEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

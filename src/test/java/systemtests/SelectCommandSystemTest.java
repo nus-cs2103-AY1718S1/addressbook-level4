@@ -6,7 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_LESSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_LT27;
-import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
 
 import org.junit.Test;
 

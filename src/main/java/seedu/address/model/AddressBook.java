@@ -77,6 +77,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setLessons(newData.getLessonList());
+            setLecturers(new HashSet<>(newData.getLecturerList()));
+            setRemarks(new HashSet<>(newData.getRemarkList()));
         } catch (DuplicateLessonException e) {
             assert false : "AddressBooks should not have duplicate lessons";
         }
