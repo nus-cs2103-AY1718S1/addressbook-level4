@@ -46,7 +46,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
     private static Stage primaryStage;
-    private static Stage publicStage;
+
     private static Logic logic;
     private static Config config;
     private static UserPrefs prefs;
@@ -66,8 +66,17 @@ public class UiManager extends ComponentManager implements Ui {
     // From here, use the commented code is you want the full feature.
     // i left it commented as i didnt  have time to make it pass the tests
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage ) {
 
+//        try{
+//        stop();}
+//        catch(Exception e)
+//        {
+//        logger.info("first time starting");
+//
+//        }
+//        primaryStage = new Stage();
+//
 
         primaryStage.setTitle(config.getAppTitle());
         try {
@@ -84,7 +93,6 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void restart(String userName) {
-        logger.info("0");
         stop();
         primaryStage = new Stage();
 
