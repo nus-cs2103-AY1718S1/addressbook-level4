@@ -35,7 +35,7 @@
                       </minWidth>
                     </Label>
                     <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
-                        <ImageView fitHeight="49.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id = "portrait" fitHeight="78.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true" />
                   </children>
                </HBox>
                <FlowPane fx:id="tags" />

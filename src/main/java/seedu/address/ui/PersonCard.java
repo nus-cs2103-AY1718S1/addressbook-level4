@@ -76,7 +76,9 @@ public class PersonCard extends UiPart<Region> {
      * @param filePath the picture file
      */
     private void loadPortrait(String filePath) {
-        Image portrait = new Image(filePath);
+        String url = "/images/" + filePath;
+        Image portrait = new Image(url);
+
         this.portrait.setImage(portrait);
     }
 
