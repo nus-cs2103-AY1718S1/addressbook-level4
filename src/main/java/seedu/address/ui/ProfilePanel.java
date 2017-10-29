@@ -23,8 +23,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class ProfilePanel extends UiPart<Region> {
 
     public static final String DEFAULT_MESSAGE = "Ain't Nobody here but us chickens!";
-    public static final String PERSON_DOES_NOT_EXIST_MESSAGE = "This person does not exist in Lisa.\n"
-            + "Would you like to add him/her?";
+    public static final String PERSON_DOES_NOT_EXIST_MESSAGE = "This person does not exist in Lisa.";
     private static final String FXML = "ProfilePanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());

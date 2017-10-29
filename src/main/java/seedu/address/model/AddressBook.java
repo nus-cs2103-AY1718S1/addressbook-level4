@@ -69,7 +69,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
-        this.lifeInsuranceMap.setInsurances((insurances));
+        this.lifeInsuranceMap.setInsurances(insurances);
     }
 
     /**
@@ -92,9 +92,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicateInsuranceException e) {
             assert false : "AddressBooks should not have duplicate insurances";
         }
+        syncMasterLifeInsuranceMapWith(persons);
 
         try {
-            syncMasterLifeInsuranceMapWith(persons);
             syncMasterPersonListWith(lifeInsuranceMap);
         } catch (InsuranceNotFoundException e) {
             assert false : "AddressBooks should not contain id that doesn't match to an insurance";
@@ -185,28 +185,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Ensures that every insurance id in this person:
-     *  - exists in the master map {@link #lifeInsuranceMap}
-     *  - points to a LifeInsurance object in the master map
-     *  - links to its owner, insured, and beneficiary person if they exist in Lisa
-     */
-    /*
-    public void syncMasterLifeInsuranceMapWith(Person person) throws InsuranceNotFoundException {
-        List<UUID> idList = person.getLifeInsuranceIds();
-        if (!idList.isEmpty()) {
-            idList.forEach((ThrowingConsumer<UUID>) id -> {
-                LifeInsurance lf = lifeInsuranceMap.get(id);
-                lf.setInsuranceRole(person);
-            });
-        }
-    }
-    */
-
-    /**
      * Ensures that every insurance in the master map:
      *  - links to its owner, insured, and beneficiary {@code Person} if they exist in master person list respectively
      */
-    public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) throws InsuranceNotFoundException {
+    public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
         lifeInsuranceMap.forEach((id, insurance) -> {
             String owner = insurance.getOwner().getName();
             String insured = insurance.getInsured().getName();
@@ -226,8 +208,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Ensures that every person in the insurance map:
-     *  - contains the correct life insurance corresponds to its id from the master map
+     * Ensures that every person in the master list:
+     *  - contains the correct life insurance corresponding to its id from the master map
      */
     public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
         persons.forEach((ThrowingConsumer<Person>) person -> {
