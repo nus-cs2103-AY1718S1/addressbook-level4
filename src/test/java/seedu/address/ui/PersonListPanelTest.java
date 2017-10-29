@@ -57,6 +57,7 @@ public class PersonListPanelTest extends GuiUnitTest {
         assertCardEquals(expectedCard, selectedCard);
     }
 
+    //@@author Alim95
     @Test
     public void personListPanelHighlight() {
         personListPanel.highlight();

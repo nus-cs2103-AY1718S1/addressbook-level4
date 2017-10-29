@@ -103,6 +103,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     // ================ Person-level operations ==============================
 
+    //@@author Alim95
     /**
      * Sorts the list.
      */
@@ -110,6 +111,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.sort(toSort);
     }
 
+    //@@author
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
@@ -204,6 +206,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author Alim95
     /**
      * Pins (@code toPin) in this {@code AddressBook}.
      *
@@ -218,17 +221,18 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Pins (@code toPin) from this {@code AddressBook}.
+     * Unpins (@code toUnpin) from this {@code AddressBook}.
      *
-     * @throws PersonNotFoundException if the {@code toPin} is not in this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code toUnpin} is not in this {@code AddressBook}.
      */
-    public boolean unpinPerson(ReadOnlyPerson toPin) throws PersonNotFoundException {
-        if (persons.unpin(toPin)) {
+    public boolean unpinPerson(ReadOnlyPerson toUnpin) throws PersonNotFoundException {
+        if (persons.unpin(toUnpin)) {
             return true;
         } else {
             throw new PersonNotFoundException();
         }
     }
+    //@@author
 
     // ================ Tag-level operations ==============================
 

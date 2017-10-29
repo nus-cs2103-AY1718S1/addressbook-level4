@@ -38,9 +38,11 @@ public interface ReadOnlyPerson {
 
     boolean isPrivate();
 
+    //@@author Alim95
     ObjectProperty<Boolean> pinProperty();
 
     boolean isPinned();
+    //@@author
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
