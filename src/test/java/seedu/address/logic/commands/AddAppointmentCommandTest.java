@@ -18,6 +18,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Appointment;
 
+//@@author Eric
 public class AddAppointmentCommandTest {
 
     @Rule

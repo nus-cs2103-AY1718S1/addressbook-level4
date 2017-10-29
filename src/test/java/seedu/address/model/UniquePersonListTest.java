@@ -46,6 +46,7 @@ public class UniquePersonListTest {
         uniquePersonList.remove(TypicalPersons.ALICE);
     }
 
+    //@@author Eric
     @Test
     public void addAppointmentReturnsCorrectPerson() throws DuplicatePersonException, PersonNotFoundException {
 
@@ -97,4 +98,5 @@ public class UniquePersonListTest {
         assertEquals(sortedList.get(1).getName(), TypicalPersons.ALICE.getName());
 
     }
+    //@@author
 }

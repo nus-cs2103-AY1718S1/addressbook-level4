@@ -19,7 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.ReadOnlyPerson;
 
-
+//@@author Eric
 /**
  * The Browser Panel of the App.
  */

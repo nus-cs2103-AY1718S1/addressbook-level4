@@ -339,6 +339,7 @@ and three characters input, inclusive of "+" or "-", at maximum (e.g "AB-"). +
 The reason that ascii is used as the regex is to allowed "+" and "-" to be entered as inputs to take into account +
 the Rh factor of blood types.
 
+// tag::appointment[]
 === *Enhancement: Set appointment* +
 
 *Reason for implementation* +
@@ -372,6 +373,11 @@ the implementation of that, we have decided that the Person class should have ap
 
 We would like to allow users to use natural language to set appointments instead of the current rigid format. For any
 enhancements for parsing, it should be done in the AddAppointmentParser class.
+
+// end::appointment[]
+
+=== *Enhancement: Set tag color*
+
 
 === *Enhancement: List based on Tags* +
 

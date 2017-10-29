@@ -13,6 +13,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author Eric
 /**
  * Parse input arguments and creates a new AddAppointmentCommand Object
  */

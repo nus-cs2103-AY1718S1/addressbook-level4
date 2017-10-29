@@ -44,6 +44,7 @@ public class UniqueTagListTest {
         uniqueTagList.asObservableList().remove(0);
     }
 
+    //@@author Eric
     @Test
     public void tagsTests() throws IllegalValueException {
         UniqueTagList uniqueTagList = new UniqueTagList();
@@ -121,6 +122,7 @@ public class UniqueTagListTest {
         }
 
     }
+    //@@author
 
     //@@author Jeremy
     @Test

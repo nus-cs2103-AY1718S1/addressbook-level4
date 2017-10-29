@@ -58,17 +58,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    //@@author Eric
     public void setTags(Set<Tag> tags, String tagString, String color) {
         this.tags.setTags(tags, tagString, color);
     }
 
+    //@@author
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
 
+    //@@author Eric
     public void addAppointment(Appointment appointment) throws PersonNotFoundException {
         persons.addAppointment(appointment);
     }
+    //@@author
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.

@@ -1,5 +1,5 @@
 # Jeremy
-###### /java/seedu/address/commons/core/GuiSettingsTest.java
+###### \java\seedu\address\commons\core\GuiSettingsTest.java
 ``` java
 public class GuiSettingsTest {
 
@@ -23,7 +23,7 @@ public class GuiSettingsTest {
 
 }
 ```
-###### /java/seedu/address/commons/core/MessageTest.java
+###### \java\seedu\address\commons\core\MessageTest.java
 ``` java
 public class MessageTest {
 
@@ -38,7 +38,7 @@ public class MessageTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListAscendingNameCommandTest.java
+###### \java\seedu\address\logic\commands\ListAscendingNameCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListAscendingNameCommand.
@@ -64,7 +64,7 @@ public class ListAscendingNameCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListByTagCommandTest.java
+###### \java\seedu\address\logic\commands\ListByTagCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code ListByTagCommand}.
@@ -141,7 +141,7 @@ public class ListByTagCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ListDescendingNameCommandTest.java
+###### \java\seedu\address\logic\commands\ListDescendingNameCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListDescendingNameCommand.
@@ -168,7 +168,7 @@ public class ListDescendingNameCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ListIntegrationTest.java
+###### \java\seedu\address\logic\commands\ListIntegrationTest.java
 ``` java
 public class ListIntegrationTest {
     private Model model;
@@ -243,7 +243,7 @@ public class ListIntegrationTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ListReverseCommandTest.java
+###### \java\seedu\address\logic\commands\ListReverseCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListReverseCommand.
@@ -269,7 +269,7 @@ public class ListReverseCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemarkCommandTest.java
+###### \java\seedu\address\logic\commands\RemarkCommandTest.java
 ``` java
 public class RemarkCommandTest {
 
@@ -421,7 +421,7 @@ public class RemarkCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/LogicManagerTest.java
+###### \java\seedu\address\logic\LogicManagerTest.java
 ``` java
     @Test
     public void executeValidListByTagTest() {
@@ -532,7 +532,7 @@ public class RemarkCommandTest {
         assertCommandSuccess(reverseCommand, ListFailureCommand.MESSAGE_FAILURE, model);
     }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
         //missing phone
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withEmail(VALID_EMAIL_AMY)
@@ -570,7 +570,7 @@ public class RemarkCommandTest {
                 .withPhone(NON_COMPULSORY_PHONE_AMY).withRemark(NON_COMPULSORY_REMARK).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY, new AddCommand(expectedPerson));
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommandRemarkCommandWordReturnsRemarkCommand() throws Exception {
@@ -587,7 +587,7 @@ public class RemarkCommandTest {
         assertNotEquals(new RemarkCommand(index, new Remark("")), testRemarkCommand);
     }
 ```
-###### /java/seedu/address/logic/parser/ListByBloodtypeCommandParserTest.java
+###### \java\seedu\address\logic\parser\ListByBloodtypeCommandParserTest.java
 ``` java
 public class ListByBloodtypeCommandParserTest {
 
@@ -612,7 +612,7 @@ public class ListByBloodtypeCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseRemarkNullThrowsNullPointerException() throws Exception {
@@ -633,7 +633,7 @@ public class ListByBloodtypeCommandParserTest {
         assertEquals(expectedRemark, actualRemark.get());
     }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParserTest.java
+###### \java\seedu\address\logic\parser\RemarkCommandParserTest.java
 ``` java
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
@@ -701,7 +701,7 @@ public class RemarkCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ToggleTagColorParserTest.java
+###### \java\seedu\address\logic\parser\ToggleTagColorParserTest.java
 ``` java
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -730,7 +730,7 @@ public class RemarkCommandParserTest {
         parser.parse("Test");
     }
 ```
-###### /java/seedu/address/model/person/PersonTest.java
+###### \java\seedu\address\model\person\PersonTest.java
 ``` java
 public class PersonTest {
 
@@ -764,7 +764,7 @@ public class PersonTest {
 
 }
 ```
-###### /java/seedu/address/model/person/RemarkTest.java
+###### \java\seedu\address\model\person\RemarkTest.java
 ``` java
 public class RemarkTest {
 
@@ -796,7 +796,7 @@ public class RemarkTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/TagContainsKeywordsPredicateTest.java
+###### \java\seedu\address\model\person\TagContainsKeywordsPredicateTest.java
 ``` java
 public class TagContainsKeywordsPredicateTest {
 
@@ -862,7 +862,7 @@ public class TagContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/UniqueTagListTest.java
+###### \java\seedu\address\model\UniqueTagListTest.java
 ``` java
     @Test
     public void testThrowDuplicateTagError() throws Exception {
@@ -875,7 +875,7 @@ public class TagContainsKeywordsPredicateTest {
 
     }
 ```
-###### /java/seedu/address/model/UniqueTagListTest.java
+###### \java\seedu\address\model\UniqueTagListTest.java
 ``` java
     @Test
     public void testEquals() {
@@ -904,7 +904,7 @@ public class TagContainsKeywordsPredicateTest {
         assertFalse(uniqueTagList.equals(uniqueTagListThree));
     }
 ```
-###### /java/seedu/address/storage/JsonUserPrefsStorageTest.java
+###### \java\seedu\address\storage\JsonUserPrefsStorageTest.java
 ``` java
     @Test
     public void testUserPrefsGetAddressBookName() {
@@ -952,7 +952,7 @@ public class TagContainsKeywordsPredicateTest {
         assertTrue(firstHashCode == thirdHashCode);
     }
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
@@ -966,7 +966,7 @@ public class TagContainsKeywordsPredicateTest {
         return this;
     }
 ```
-###### /java/seedu/address/ui/CommandBoxTest.java
+###### \java\seedu\address\ui\CommandBoxTest.java
 ``` java
     @Test
     public void handleKeyPressEscape() {
@@ -2009,7 +2009,7 @@ public class TagContainsKeywordsPredicateTest {
 
     }
 ```
-###### /java/systemtests/AddCommandSystemTest.java
+###### \java\systemtests\AddCommandSystemTest.java
 ``` java
         /* Case: missing remark -> success */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
