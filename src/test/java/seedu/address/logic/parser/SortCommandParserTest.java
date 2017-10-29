@@ -6,6 +6,9 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
+/**
+ * Parses input arguments and creates a new SortCommand object
+ */
 import seedu.address.logic.commands.SortCommand;
 
 public class SortCommandParserTest {
