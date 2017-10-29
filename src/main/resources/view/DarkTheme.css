@@ -107,16 +107,15 @@
 }
 
 .list-cell:hover {
-    -fx-background-color: #191919;
+    -fx-background-color: derive(#1d1d1d, 60%);
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #191919;
+    -fx-background-color: derive(#1d1d1d, 60%);
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #000000;
-    -fx-border-width: 0.5;
+    -fx-border-color: transparent;
 }
 
 .list-cell .label {
@@ -214,6 +213,7 @@
 
 .menu-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: #1d1d1d;
 }
 
 .menu-bar .label {
@@ -227,35 +227,30 @@
     -fx-background-color: black;
 }
 
-/*
- * Metro style Push Button
- * Author: Pedro Duque Vieira
- * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
- */
 .button {
-    -fx-padding: 5 22 5 22;
-    -fx-border-color: #e2e2e2;
-    -fx-border-width: 2;
+    -fx-padding: 5 15 5 15;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
     -fx-background-radius: 0;
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: transparent;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: derive(#1d1d1d, 60%);
 }
 
 .button:pressed, .button:default:hover:pressed {
-    -fx-background-color: white;
+    -fx-background-color: derive(#1d1d1d, 60%);
     -fx-text-fill: #1d1d1d;
 }
 
 .button:focused {
-    -fx-border-color: white, white;
-    -fx-border-width: 1, 1;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
     -fx-border-style: solid, segments(1, 1);
     -fx-border-radius: 0, 0;
     -fx-border-insets: 1 1 1 1, 0;
@@ -263,7 +258,7 @@
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: transparent;
     -fx-text-fill: white;
 }
 
@@ -340,13 +335,17 @@
     -fx-border-width: 0;
 }
 
+#commandBoxPlaceholder {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
 }
 
 #commandTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-color: derive(#1d1d1d, 20%);
     -fx-background-insets: 0;
     -fx-border-color: #1d1d1d;
     -fx-border-insets: 0;
@@ -384,12 +383,16 @@
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
+    -fx-background-color: derive(#1d1d1d, 20%);
     -fx-background-radius: 0;
 }
 
 #resultDisplay {
     -fx-border-color: #1d1d1d;
+}
+
+#resultDisplayPlaceholder {
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 #tags {
