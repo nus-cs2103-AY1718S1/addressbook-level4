@@ -1,21 +1,6 @@
-package seedu.address.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
-import java.util.List;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Birthday;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-
-//@@author inGall
+# inGall
+###### \java\seedu\address\logic\commands\BirthdayCommand.java
+``` java
 /**
  * Changes the remark of an existing person in the address book.
  */
@@ -103,3 +88,4 @@ public class BirthdayCommand extends UndoableCommand {
                 && birthday.equals(e.birthday);
     }
 }
+```
