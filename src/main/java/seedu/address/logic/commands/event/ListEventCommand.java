@@ -27,4 +27,3 @@ public class ListEventCommand extends Command {
         return new CommandResult(MESSAGE_EVENT_SUCCESS);
     }
 }
-
