@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -35,6 +37,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private HBox cardPane2;
+    @FXML
     private Label name;
     @FXML
     private Label id;
@@ -45,8 +49,6 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private Label birthday;
-    @FXML
     private FlowPane tags;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
@@ -54,6 +56,7 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         initFavouriteLabel(person);
+        initBirthdayLabel(person);
         initTags(person);
         bindListeners(person);
     }
@@ -68,7 +71,8 @@ public class PersonCard extends UiPart<Region> {
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.favouriteProperty().addListener((observable, oldValue, newValue) -> initFavouriteLabel(person));
-        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        //birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+        person.birthdayProperty().addListener((observable, oldValue, newValue) -> initBirthdayLabel(person));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -88,6 +92,63 @@ public class PersonCard extends UiPart<Region> {
             favouriteLabel.setStyle("-fx-background-color: cornflowerblue");
         }
         cardPane.getChildren().add(favouriteLabel);
+    }
+
+    /**
+     * Binds the birthday string together for each contact to display in a better format
+     * so that it is clearer for the user.
+     */
+    private void initBirthdayLabel(ReadOnlyPerson person) {
+        String initialBirthday = person.getBirthday().getBirthdayNumber();
+        String birthdayToDisplay = "-";
+
+        if (initialBirthday.length() >= 4) {
+            birthdayToDisplay = generateBirthdayMsg(initialBirthday);
+        }
+
+        Label birthdayLabel = new Label(birthdayToDisplay);
+        cardPane2.getChildren().add(birthdayLabel);
+
+    }
+
+    /**
+     * Returns the birthday in the format needed for display.
+     */
+    private String generateBirthdayMsg (String initialBirthday) {
+        HashMap<String, String> findSelectedMonth = initializeMonthHashMap();
+        List<String> splitDates = new ArrayList<>();
+        String birthdayToDisplay;
+
+        for (int start = 0; start < 4; start += 2) {
+            splitDates.add(initialBirthday.substring(start, start + 2));
+        }
+
+        birthdayToDisplay = splitDates.get(0) + " " + findSelectedMonth.get(splitDates.get(1))
+                + " " + initialBirthday.substring(4, initialBirthday.length());
+
+        return birthdayToDisplay;
+    }
+
+    /**
+     * Initialize a @HashMap for every integer to the correct month.
+     */
+    private HashMap<String, String> initializeMonthHashMap () {
+
+        HashMap<String, String> monthFormat = new HashMap<>();
+        monthFormat.put("01", "Jan");
+        monthFormat.put("02", "Feb");
+        monthFormat.put("03", "Mar");
+        monthFormat.put("04", "Apr");
+        monthFormat.put("05", "May");
+        monthFormat.put("06", "Jun");
+        monthFormat.put("07", "Jul");
+        monthFormat.put("08", "Aug");
+        monthFormat.put("09", "Sep");
+        monthFormat.put("10", "Oct");
+        monthFormat.put("11", "Nov");
+        monthFormat.put("12", "Dec");
+
+        return monthFormat;
     }
 
     /**
