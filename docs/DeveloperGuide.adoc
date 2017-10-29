@@ -368,7 +368,7 @@ The Add Task mechanism is facilitated by the `AddTaskCommand` class which inheri
 Suppose the user has just executed the `add` command using:
 
 ----
-`add CS assignment from 15-10-2017 to 20-10-2017`.
+`add CS assignment from 15-10-2017 to tomorrow`.
 ----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `AddTask` feature is being evoked and calls the `AddTaskCommandParser` to parse the String and separate it into three components: `Description`, `StartDate` and `Deadline`. These are validated and formatted by the `Task` class and returned as a `Task` object to be used to call the `AddTaskCommand` class. The `LogicManager` then calls the `executeUndoableFunction()` in the `AddTaskCommand` class which creates and returns a `CommandResult` object.
@@ -497,7 +497,7 @@ The SelectTask mechanism is facilitated by the `SelectTaskCommand` class which i
 Suppose the user has just executed the `SelectTaskCommand` using:
 
 ----
-`select`.
+`select 2`
 ----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `SelectTaskCommand` feature is being evoked and calls the `SelectTaskCommandParser` to parse the string and check if the index is valid. After validation the `SelectTaskCommand` class is been called. The `LogicManager` then calls the `execute()` in the `SelectTaskCommand` class which calls `EventCenter` with the parameter of `JumpToTaskListRequestEvent` class to highlight selected task card in Ui at target index. Then `execute()` creates and return a `CommandResult` object.
