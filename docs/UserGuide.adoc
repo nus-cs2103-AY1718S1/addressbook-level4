@@ -300,8 +300,8 @@ Removes the alias command 'disappear'. Next instances of disappear will no longe
 Removes the alias shortcut 'ph'. Next instances of ph will no longer translate to Public Holiday.
 // end::unalias[]
 
-// tag::pin[]
-=== Pin a person
+// tag::pinunpin[]
+=== Pin a person : `pin`
 
 Pins a person to a pin panel for easy access. +
 Format: `pin` `INDEX`
@@ -311,19 +311,18 @@ Format: `pin` `INDEX`
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
-// end::pin[]
 
-// tag::unpin[]
-=== Unpin a person
+=== Unpin a person: `unpin`
 
-Unpins a person from the pin panel. +
+Unpins a person from the list +
 Format: `unpin` `INDEX`
 
 ****
 * Unpins the person at the specified `INDEX`.
-* The index refers to the index number shown in the pinned person listing.
+* The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
+// end::pinunpin[]
 
 === Deleting person(s) : `delete`
 

@@ -554,10 +554,10 @@ the previously hidden indices from the list storing all hidden persons.
 after every person is hidden successfully.
 // end::hide[]
 
-// tag::pinunpin[]
 [d]
 === Since v1.3
 
+// tag::pinunpin[]
 === Pin / Unpin
 The pin and unpin command allows the user to pin and unpin important `Person` for easy access. The `Person` class has
 a boolean variable called `isPinned` that is set to `false` by default. Only when the `pin` command is executed will the
@@ -577,11 +577,8 @@ variable change to `true`. Similarly, the variable can be changed from `true` to
 [d]
 === Since v1.4
 
+// tag::tutorial[]
 === First time tutorial
-Currently when new users launch Bluebird for the first time, they will be lost as to what Bluebird has to offer and also
-what different UI panels mean. Therefore, there is a need to provide first time users of Bluebird
-a step-by-step tutorial on how Bluebird works.
-
 The first time tutorial will be launched when users start the Bluebird app for the very first time. To
 detect that Bluebird is launched for the first time, a boolean variable `firstTimeOpen` in `MainApp` is used.
 It is set to `false` by default and will only be set to `true` when Bluebird detects that `addressbook.xml` is not found.
@@ -652,6 +649,7 @@ public class TutorialPanel extends UiPart<Region> {
     }
 }
 ----
+// end::tutorial[]
 
 ==== Design Considerations
 
