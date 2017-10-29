@@ -1,7 +1,6 @@
 package seedu.address.logic.autocomplete.parser;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
