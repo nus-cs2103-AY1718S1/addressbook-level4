@@ -3,6 +3,8 @@ package seedu.address.logic.commands.imports;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +15,7 @@ import seedu.address.commons.util.UrlUtil;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Event;
 
 /**
  * Imports data from the URL of a NUSMods timetable.
@@ -35,6 +38,7 @@ public class ImportNusmodsCommand extends ImportCommand {
     private static final String INVALID_ENCODING = "The URL encoding is not supported. Please use UTF-8.";
     private static final String MODULE_INFO_JSON_URL_FORMAT =
             "http://api.nusmods.com/%1$s-%2$s/%3$s/modules/%4$s.json";
+    private static final String UNABLE_FETCH_MODULE_INFO = "Unable to fetch the information of module %1$s";
 
     // Semester should be a one-digit number from 1 to 4, year must be after 2000.
     private static final Pattern URL_SEMESTER_INFO_FORMAT  =
@@ -62,6 +66,15 @@ public class ImportNusmodsCommand extends ImportCommand {
             modules = fetchModuleCodes();
         } catch (UnsupportedEncodingException e) {
             throw new CommandException(String.format(INVALID_URL, INVALID_ENCODING));
+        }
+
+        Set<ModuleInfo> moduleInfo = new HashSet<>();
+        for (String moduleCode: modules) {
+            try {
+                moduleInfo.add(getModuleInfo(moduleCode));
+            } catch (IOException e) {
+                throw new CommandException(String.format(UNABLE_FETCH_MODULE_INFO, moduleCode));
+            }
         }
 
         return null;
@@ -104,8 +117,24 @@ public class ImportNusmodsCommand extends ImportCommand {
         return keys.stream().map(key -> key.substring(0, key.indexOf("["))).collect(Collectors.toSet());
     }
 
+    /**
+     * Gets the module information from NUSMods API and convert to a {@link ModuleInfo} class.
+     *
+     * @see <a href="https://github.com/nusmodifications/nusmods-api#get-acadyearsemestermodulesmodulecodejson">
+     *     NUSMods API official documentation</a>
+     */
     private ModuleInfo getModuleInfo(String moduleCode) throws IOException {
         URL url = new URL(String.format(MODULE_INFO_JSON_URL_FORMAT, yearStart, yearEnd, semester, moduleCode));
         return JsonUtil.fromJsonUrl(url, ModuleInfo.class);
+    }
+
+    /**
+     * Creates an {@link Event} representing the final examination according to information from {@link ModuleInfo}.
+     *
+     * @return an {@link Optional<Event>} that is present only if the given module has a final examination (some
+     * modules at NUS are 100% continuous-assessment, like CFG1010).
+     */
+    private Optional<Event> addExamEvent(ModuleInfo module) throws CommandException {
+        return null;
     }
 }

@@ -44,7 +44,8 @@ public class Config {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof Config)) { //this handles null as well.
+        if (!(other instanceof Config)) {
+            // This handles null as well.
             return false;
         }
 
