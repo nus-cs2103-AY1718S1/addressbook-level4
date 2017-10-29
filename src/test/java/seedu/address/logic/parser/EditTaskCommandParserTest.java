@@ -88,11 +88,10 @@ public class EditTaskCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_STARTDATE_DESC + VALID_DEADLINE_INTERNSHIP,
                 TaskDates.MESSAGE_DATE_CONSTRAINTS);
 
-        //TODO: Make command accept the last date not the first one
         // valid start date followed by invalid start date. The test case for invalid start date followed by valid start
         // date is tested at {@code parse_invalidValueFollowedByValidValue_success()}
-      //  assertParseFailure(parser, "1" + VALID_STARTDATE_INTERNSHIP + INVALID_STARTDATE_DESC,
-      //          TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + STARTDATE_DESC_INTERNSHIP + INVALID_STARTDATE_DESC,
+                TaskDates.MESSAGE_DATE_CONSTRAINTS);
 
         // invalid description containing deadline prefix, without quotes
         // TODO: Make it throw Date constraint message
@@ -162,6 +161,25 @@ public class EditTaskCommandParserTest {
         // tags
         userInput = targetIndex.getOneBased() + TAG_DESC_NOT_URGENT;
         descriptor = new EditTaskDescriptorBuilder().withTags(VALID_TAG_NOT_URGENT).build();
+        expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_invalidValueFollowedByValidValue_success() {
+        // no other valid values specified
+        Index targetIndex = INDEX_FIRST_TASK;
+        String userInput = targetIndex.getOneBased() + INVALID_STARTDATE_DESC + STARTDATE_DESC_INTERNSHIP;
+        EditTaskDescriptor descriptor = new EditTaskDescriptorBuilder().withStartDate(VALID_STARTDATE_INTERNSHIP)
+                .build();
+        EditTaskCommand expectedCommand = new EditTaskCommand(targetIndex, descriptor);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // other valid values specified
+        userInput = targetIndex.getOneBased() + DEADLINE_DESC_INTERNSHIP + INVALID_STARTDATE_DESC
+                + TAG_DESC_NOT_URGENT + STARTDATE_DESC_INTERNSHIP;
+        descriptor = new EditTaskDescriptorBuilder().withStartDate(VALID_STARTDATE_INTERNSHIP)
+                .withDeadline(VALID_DEADLINE_INTERNSHIP).withTags(VALID_TAG_NOT_URGENT).build();
         expectedCommand = new EditTaskCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

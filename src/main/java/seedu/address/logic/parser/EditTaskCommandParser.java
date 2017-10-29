@@ -90,6 +90,7 @@ public class EditTaskCommandParser implements Parser {
         if (dates.isEmpty()) {
             return Optional.empty();
         }
+
         return dates.size() == 1 && dates.contains("") ?
                 Optional.of(new StartDate("", SUFFIX_NO_RECUR_INTERVAL))
                 : ParserUtil.parseStartDate(Optional.of(dates.get(dates.size() - 1)));
