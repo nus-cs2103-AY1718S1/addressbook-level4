@@ -189,8 +189,8 @@ public abstract class AddressBookSystemTest {
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl.toString().substring(0,40), getBrowserPanel().getLoadedUrl().toString()
-                .substring(0,40));
+        assertEquals(expectedUrl.toString().substring(0, 40), getBrowserPanel().getLoadedUrl().toString()
+                .substring(0, 40));
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
@@ -247,7 +247,8 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel()
+                    .getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

@@ -46,7 +46,7 @@ public class BrowserPanelTest extends GuiUnitTest {
 
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl.toString().substring(0,40), browserPanelHandle.getLoadedUrl().toString()
-                .substring(0,40));
+        assertEquals(expectedPersonUrl.toString().substring(0, 40), browserPanelHandle.getLoadedUrl().toString()
+                .substring(0, 40));
     }
 }
