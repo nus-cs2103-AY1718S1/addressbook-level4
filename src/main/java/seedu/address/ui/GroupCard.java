@@ -56,6 +56,7 @@ public class GroupCard extends UiPart<Region> {
             Label memberName = new Label(person.getName().fullName);
             memberName.setStyle("-fx-background-color: black");
             members.setHgap(4);
+            members.setVgap(7);
             members.getChildren().add(memberName);
         });
     }
