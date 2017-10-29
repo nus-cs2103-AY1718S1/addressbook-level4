@@ -67,6 +67,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             return checkXmlImport(path);
         case SCRIPT:
             return checkScriptImport(path);
+        case NUSMODS:
+            return checkNusmodsImport(path);
         default:
             System.err.println("Unknown ImportType. Should never come to here.");
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMPORT_TYPE_NOT_FOUND));
@@ -78,6 +80,10 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
     private ImportCommand checkScriptImport(String path) {
+        return null;
+    }
+
+    private ImportCommand checkNusmodsImport(String path) {
         return null;
     }
 }

@@ -29,7 +29,7 @@ public abstract class ImportCommand extends Command {
      * Different types of sub-commands within {@link ImportCommand}.
      */
     public enum ImportType {
-        XML, SCRIPT
+        XML, SCRIPT, NUSMODS
     }
 
     public static final HashMap<String, ImportType> TO_ENUM_IMPORT_TYPE = new HashMap<>();
@@ -37,6 +37,7 @@ public abstract class ImportCommand extends Command {
     static {
         TO_ENUM_IMPORT_TYPE.put("xml", ImportType.XML);
         TO_ENUM_IMPORT_TYPE.put("script", ImportType.SCRIPT);
+        TO_ENUM_IMPORT_TYPE.put("nusmods", ImportType.NUSMODS);
     }
 
     protected String path;
