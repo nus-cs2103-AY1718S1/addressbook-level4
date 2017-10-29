@@ -603,6 +603,7 @@ At the end of the tutorial, there will be a `SwitchToBrowserEvent` raised by `Tu
 which will be posted to `EventsCenter` and handled by `MainWindow`. Figure 4.10.3 below shows the sequence of event.
 
 image::tutorialEventCenter.png[width="800"]
+Figure 4.10.3: Sequence diagram for event handling of SwitchToBrowserEvent
 
 The code snippet below shows how `TutorialPanel` is added in place of `BrowserPanel` in the
 `MainWindow` when Bluebird is launched for the first time. A `SwitchToBrowserEvent` will be raised
