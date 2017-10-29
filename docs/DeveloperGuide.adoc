@@ -522,16 +522,20 @@ in these types of emergencies.
 
 *How it is implemented* +
 
+image::SDforListByBloodtypeCommandLogic.png[width="800"]
+
+The sequence diagram for ListByBloodtypeCommand class within the Logic Component is as shown above.
+
 A ListByBloodtypeCommand class is created with one constructor with input from ListByBloodtypeCommandParser. +
 
 ....
-new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate("B+"));
+new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate("A"));
 ....
 
 A ListByBloodtypeCommandParser is created with one constructor.
 
 ....
-new ListByBloodtypeCommandParser("B+");
+new ListByBloodtypeCommandParser("A");
 ....
 
 The first constructor takes the input from ListByBloodtypeParser and compares blood types with people listed in +
