@@ -1,5 +1,6 @@
-:image::CoverPage.png[width="790"]
-
++
+image::CoverPage.png[width="790"]
++
 
 = Gentleman's Guide (V1.3) - User Guide
 :toc:
