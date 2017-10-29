@@ -23,6 +23,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private static final String POSTAL_CODE_FIELD_ID = "#postalCode";
     private static final String CLUSTER_FIELD_ID = "#cluster";
     private static final String DEBT_FIELD_ID = "#debt";
+    private static final String TOTAL_DEBT_FIELD_ID = "#totalDebt";
     private static final String INTEREST_FIELD_ID = "#interest";
     private static final String DATE_BORROW_FIELD_ID = "#dateBorrow";
     private static final String DEADLINE_FIELD_ID = "#deadline";
@@ -34,6 +35,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private static final String POSTAL_CODE_FIELD_FIELD_ID = "#postalCodeField";
     private static final String CLUSTER_FIELD_FIELD_ID = "#clusterField";
     private static final String DEBT_FIELD_FIELD_ID = "#debtField";
+    private static final String TOTAL_DEBT_FIELD_FIELD_ID = "#totalDebtField";
     private static final String INTEREST_FIELD_FIELD_ID = "#interestField";
     private static final String DATE_BORROW_FIELD_FIELD_ID = "#dateBorrowField";
     private static final String DEADLINE_FIELD_FIELD_ID = "#deadlineField";
@@ -46,6 +48,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private final Label postalCodeLabel;
     private final Label clusterLabel;
     private final Label debtLabel;
+    private final Label totalDebtLabel;
     private final Label interestLabel;
     private final Label dateBorrowLabel;
     private final Label deadlineLabel;
@@ -57,6 +60,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private final Text postalCodeText;
     private final Text clusterText;
     private final Text debtText;
+    private final Text totalDebtText;
     private final Text interestText;
     private final Text dateBorrowText;
     private final Text deadlineText;
@@ -69,6 +73,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private String lastRememberedPostalCode;
     private String lastRememberedCluster;
     private String lastRememberedDebt;
+    private String lastRememberedtotalDebt;
     private String lastRememberedInterest;
     private String lastRememberedDateBorrow;
     private String lastRememberedDeadline;
@@ -87,6 +92,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.postalCodeLabel = getChildNode(POSTAL_CODE_FIELD_ID);
         this.clusterLabel = getChildNode(CLUSTER_FIELD_ID);
         this.debtLabel = getChildNode(DEBT_FIELD_ID);
+        this.totalDebtLabel = getChildNode(TOTAL_DEBT_FIELD_ID);
         this.interestLabel = getChildNode(INTEREST_FIELD_ID);
         this.dateBorrowLabel = getChildNode(DATE_BORROW_FIELD_ID);
         this.deadlineLabel = getChildNode(DEADLINE_FIELD_ID);
@@ -105,6 +111,7 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         this.postalCodeText = getChildNode(POSTAL_CODE_FIELD_FIELD_ID);
         this.clusterText = getChildNode(CLUSTER_FIELD_FIELD_ID);
         this.debtText = getChildNode(DEBT_FIELD_FIELD_ID);
+        this.totalDebtText = getChildNode(TOTAL_DEBT_FIELD_FIELD_ID);
         this.interestText = getChildNode(INTEREST_FIELD_FIELD_ID);
         this.dateBorrowText = getChildNode(DATE_BORROW_FIELD_FIELD_ID);
         this.deadlineText = getChildNode(DEADLINE_FIELD_FIELD_ID);
@@ -133,6 +140,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     }
 
     public String getDebt() {
+        return debtLabel.getText();
+    }
+
+    public String getTotalDebt() {
         return debtLabel.getText();
     }
 
@@ -181,6 +192,10 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     }
 
     public String getDebtField() {
+        return debtText.getText();
+    }
+
+    public String getTotalDebtField() {
         return debtText.getText();
     }
 
