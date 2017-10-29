@@ -23,7 +23,7 @@
                      <children>
                         <StackPane>
                            <children>
-                              <Circle fill="#545f6b" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Circle fill="#545f6b" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
                               <Text fx:id="id" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="1." textAlignment="CENTER" wrappingWidth="39.0">
                                  <font>
                                     <Font size="16.0" />
