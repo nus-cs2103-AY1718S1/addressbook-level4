@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.event;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,6 +13,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.stub.ModelStub;

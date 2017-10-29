@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.event;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
