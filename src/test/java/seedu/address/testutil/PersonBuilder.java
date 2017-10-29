@@ -135,6 +135,20 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author jelneo
+    /**
+     * Sets the {@code totalDebt} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withTotalDebt(String debt) {
+        try {
+            this.person.setTotalDebt(new Debt(debt));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("debt is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
+
     /**
      * Sets the {@code Interest} of the {@code Person} that we are building.
      */
