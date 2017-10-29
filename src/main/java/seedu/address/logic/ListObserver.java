@@ -109,6 +109,9 @@ public class ListObserver {
         return index;
     }
 
+    /**
+     * @return {@code Index} of {@param person} in current displayed list.
+     */
     public Index getIndexofPersonInCurrentList(ReadOnlyPerson person) {
         Index index;
 

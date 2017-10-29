@@ -291,7 +291,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public String getCurrentList() {
+        public String getCurrentListName() {
             return "list";
         }
 
@@ -324,7 +324,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public String getCurrentList() {
+        public String getCurrentListName() {
             return "list";
         }
 
