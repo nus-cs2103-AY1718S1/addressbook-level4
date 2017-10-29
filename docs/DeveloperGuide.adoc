@@ -524,7 +524,7 @@ For example, the user input might be `t-add 1 2 3 college friend`.
 After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to add), in the example `t-add 1 2 3 college friend`, will be passed to and parsed by `TagAddCommandParser`.
 Different from the previous limitation on the choice of word for `tag`, which is `Alnum`, we allow multiple words `tagName` as well, such as `college friend`.
 The change of `tagName` format requires a new algorithm for parsing in the `TagAddCommandParser`.
-The key is to differentiate between indices and tag name. The parser algorithm would first split the input string into parts by space as delimiter. +
+The key is to differentiate between indices and tagName. The parser algorithm would first split the input string into parts by space as delimiter. +
 It would then determine whether a part is a word or a number, the parser keeps track of the last recognized number. After processing the entire user input, the parser would treat all parts after the last recognized number as indices and those after it as `tagName`.
 In this case, as `3` is the last part that is numeric, `1 2 3` is treated as indices and `college friend` is treated as `tagName`. +
 The `TagAddCommandParser` returns `TagAddCommand` after execution, which will be further processed by `logic` component.
@@ -1271,6 +1271,13 @@ Alnum
 
 ....
 A regular expression that matches all numbers and letters
+....
+
+[[tagName]]
+tagName
+
+....
+Name of a tag
 ....
 
 [[index]]
