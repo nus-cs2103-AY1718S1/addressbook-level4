@@ -11,6 +11,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.UniqueMeetingList;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -48,6 +50,22 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<Meeting> getMeetingList() {
+        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
+        UniqueMeetingList meetingList = new UniqueMeetingList();
+        for (ReadOnlyPerson person : personList) {
+            for (Meeting meeting : person.getMeetings()) {
+                try {
+                    meetingList.add(meeting);
+                } catch (UniqueMeetingList.DuplicateMeetingException e) {
+                    logger.info("Should not happen");
+                }
+            }
+        }
+        return meetingList.asObservableList();
     }
 
     @Override

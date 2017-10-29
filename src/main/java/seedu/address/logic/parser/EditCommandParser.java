@@ -20,6 +20,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.meeting.Meeting;
+import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -53,7 +54,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-            parseMeetingsForEdit(argMultimap.getAllValues(PREFIX_MEETING)).ifPresent(editPersonDescriptor::setMeetings);
+            parseMeetingsForEdit(argMultimap.getAllValues(PREFIX_MEETING), editPersonDescriptor.getName())
+                    .ifPresent(editPersonDescriptor::setMeetings);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -85,7 +87,7 @@ public class EditCommandParser implements Parser<EditCommand> {
      * If {@code meetings} contain only one element which is an empty string, it will be parsed into a
      * {@code Set<Meeting>} containing zero tags.
      */
-    private Optional<Set<Meeting>> parseMeetingsForEdit(Collection<String> meetings) throws IllegalValueException {
+    private Optional<Set<Meeting>> parseMeetingsForEdit(Collection<String> meetings, Optional<Name> name) throws IllegalValueException {
         assert meetings != null;
 
         if (meetings.isEmpty()) {
@@ -93,6 +95,6 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         Collection<String> meetingSet = meetings.size() == 1
                 && meetings.contains("") ? Collections.emptySet() : meetings;
-        return Optional.of(ParserUtil.parseMeetings(meetingSet));
+        return Optional.of(ParserUtil.parseMeetings(meetingSet, name.get()));
     }
 }

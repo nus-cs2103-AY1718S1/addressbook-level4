@@ -92,11 +92,11 @@ public class ParserUtil {
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
-    public static Set<Meeting> parseMeetings(Collection<String> meetings) throws IllegalValueException {
+    public static Set<Meeting> parseMeetings(Collection<String> meetings, Name name) throws IllegalValueException {
         requireNonNull(meetings);
         final Set<Meeting> meetingSet = new HashSet<>();
         for (String meetingName : meetings) {
-            meetingSet.add(new Meeting(meetingName));
+            meetingSet.add(new Meeting(meetingName, name));
         }
         return meetingSet;
     }

@@ -6,7 +6,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.person.Name;
 
 /**
  * Represents a Meeting in the address book.
@@ -18,13 +21,17 @@ public class Meeting {
 
     public final LocalDateTime date;
     public final String value;
+    public final Name name;
+    private ObjectProperty<Name> displayName;
 
     /**
      * Validates given tag name.
      *
      * @throws IllegalValueException if the given tag name string is invalid.
      */
-    public Meeting(String time) throws IllegalValueException {
+    public Meeting(String time, Name name) throws IllegalValueException {
+        this.name = name;
+        this.displayName = new SimpleObjectProperty<>(name);
         requireNonNull(time);
         String trimmedTime = time.trim();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -35,6 +42,14 @@ public class Meeting {
         } catch (DateTimeParseException dtpe) {
             throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
         }
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public ObjectProperty<Name> nameProperty() {
+        return displayName;
     }
 
     @Override
