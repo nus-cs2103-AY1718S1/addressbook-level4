@@ -34,6 +34,8 @@ public class XmlAdaptedPersonNoParticipation {
     private String address;
     @XmlElement(required = true)
     private String birthday;
+    @XmlElement(required = true)
+    private String portraitPath;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -56,6 +58,7 @@ public class XmlAdaptedPersonNoParticipation {
         email = source.getEmail().value;
         address = source.getAddress().value;
         birthday = source.getBirthday().value;
+        portraitPath = source.getPortraitPath().filePath;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -77,7 +80,7 @@ public class XmlAdaptedPersonNoParticipation {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Birthday birthday = new Birthday(this.birthday);
-        final PortraitPath path = new PortraitPath(PortraitPath.DEFAULT_PORTRAIT_PATH);
+        final PortraitPath path = new PortraitPath(this.portraitPath);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Event> emptyParticipation = new HashSet<Event>();
         return new Person(name, phone, email, address, birthday, path, tags, emptyParticipation);

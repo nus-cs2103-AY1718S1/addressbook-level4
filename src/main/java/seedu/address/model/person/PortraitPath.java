@@ -18,7 +18,7 @@ public class PortraitPath {
 
     public static final String DEFAULT_PORTRAIT_PATH = "sample.png";
 
-    private final String filePath;
+    public final String filePath;
 
     public PortraitPath(String filePath) throws IllegalValueException {
         requireNonNull(filePath);
