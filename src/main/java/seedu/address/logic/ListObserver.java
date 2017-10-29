@@ -24,6 +24,10 @@ public class ListObserver {
         this.model = model;
     }
 
+    /**
+     * Monitors current displayed list on person list panel.
+     * @return updated version of the current displayed list.
+     */
     public List<ReadOnlyPerson> getCurrentFilteredList() {
         String currentList = model.getCurrentListName();
 
@@ -40,6 +44,11 @@ public class ListObserver {
         }
     }
 
+    /**
+     * Monitors current displayed list on person list panel.
+     * Updates the current displayed list with {@param predicate}
+     * @return updated version of the current displayed list.
+     */
     public int updateCurrentFilteredList(Predicate<ReadOnlyPerson> predicate) {
         String currentList = model.getCurrentListName();
 
@@ -58,6 +67,10 @@ public class ListObserver {
         }
     }
 
+    /**
+     * Monitors current displayed list on person list panel.
+     * @return name of current displayed list.
+     */
     public String getCurrentListName() {
         String currentList = model.getCurrentListName();
 

@@ -386,6 +386,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Obtains the latest list of blacklisted persons from masterlist and adds to {@code filteredBlacklistedPersons}
      * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
+     * @return size of current displayed filtered list.
      */
     @Override
     public int updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
@@ -398,6 +399,7 @@ public class ModelManager extends ComponentManager implements Model {
     /**
      * Obtains the latest list of whitelisted persons from masterlist and adds to {@code filteredWhitelistedPersons}
      * Filters {@code filteredWhitelistedPersons} according to given {@param predicate}
+     * @return size of current displayed filtered list.
      */
     @Override
     public int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
