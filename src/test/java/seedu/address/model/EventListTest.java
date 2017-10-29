@@ -6,6 +6,8 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.model.event.EventList;
 
+//@@author a0107442n
+
 public class EventListTest {
 
     @Rule

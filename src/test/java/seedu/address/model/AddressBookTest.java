@@ -110,6 +110,9 @@ public class AddressBookTest {
         public ObservableList<ReadOnlyEvent> getEventList() {
             return events;
         }
+
+        @Override
+        public ReadOnlyEvent getLastChangedEvent() { return null;}
     }
 
 }

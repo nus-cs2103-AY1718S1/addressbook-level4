@@ -157,4 +157,27 @@ public class EditEventCommandTest {
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
     }
+
+    //@@author a0107442n
+
+    @Test
+    public void execute_eventTimeClashUnfilteredList_failure() {
+        Event firstEvent = new Event(model.getFilteredEventList().get(INDEX_FIRST_EVENT.getOneBased()));
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(firstEvent).build();
+        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT, descriptor);
+
+        assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_TIME_CLASH);
+    }
+
+    @Test
+    public void execute_eventTimeClashFilteredList_failure() {
+        showFirstEventOnly(model);
+
+        //edit event in filtered list to clash with an existing event in address book
+        ReadOnlyEvent eventInList = model.getAddressBook().getEventList().get(INDEX_FIRST_EVENT.getOneBased());
+        EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT, new EditEventDescriptorBuilder
+                (eventInList).build());
+
+        assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_TIME_CLASH);
+    }
 }
