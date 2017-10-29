@@ -59,7 +59,7 @@
          <children>
             <StackPane fx:id="editNamePlaceholder" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Name:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -72,7 +72,7 @@
             <StackPane fx:id="editNameTextfieldPlaceholder" alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editPhonePlaceholder" layoutX="10.0" layoutY="10.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Phone:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -82,7 +82,7 @@
             <StackPane fx:id="editPhoneTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editEmailPlaceholder" layoutX="10.0" layoutY="139.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Email:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -92,7 +92,7 @@
             <StackPane fx:id="editEmailTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="174.0" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editAddressPlaceholder" layoutX="10.0" layoutY="268.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Address:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -102,7 +102,7 @@
             <StackPane fx:id="editAddressTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="303.0" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editTagPlaceholder" layoutX="10.0" layoutY="397.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Tags:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
