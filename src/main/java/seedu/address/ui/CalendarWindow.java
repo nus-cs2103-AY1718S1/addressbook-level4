@@ -92,6 +92,8 @@ public class CalendarWindow extends UiPart<Region> {
     public void setAppointments() {
         for (ReadOnlyPerson person : personList) {
             if (person.getAppointment().getDate() == null) {
+                List<Entry<?>> result = calendar.findEntries(person.getName().toString());
+                calendar.removeEntries(result);
                 continue;
             }
             LocalDateTime ldt = LocalDateTime.ofInstant(person.getAppointment().getDate().toInstant(),
