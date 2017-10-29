@@ -6,6 +6,8 @@ import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_MONTHLY
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_WEEKLY;
 import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -28,6 +30,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.StartDate;
+import seedu.address.model.task.Task;
 import seedu.address.model.task.TaskDates;
 
 /**
@@ -118,9 +121,10 @@ public class ParserUtil {
      * Parses a {@code Optional<String> DESCRIPTION} into an {@code Optional<Description>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Description parseDescription(String description) throws IllegalValueException {
+    public static Optional<Description> parseDescription(String description) throws IllegalValueException {
         requireNonNull(description);
-        return new Description(description.replace("\"", ""));
+        return description.isEmpty() ? Optional.empty()
+                : Optional.of(new Description(description.replace("\"", "")));
     }
 
     /**
@@ -129,7 +133,11 @@ public class ParserUtil {
      */
     public static Optional<StartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())),
+        if (date.isPresent() && !TaskDates.getDottedFormat(date.get()).isEmpty()) {
+            return Optional.of(new StartDate(TaskDates.formatDate(parseDottedDate(date.get())),
+                    parseRecurInterval(date.get())));
+        }
+        return (date.isPresent() && !date.get().isEmpty()) ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())),
                 parseRecurInterval(date.get()))) : Optional.empty();
     }
 
@@ -139,7 +147,11 @@ public class ParserUtil {
      */
     public static Optional<Deadline> parseDeadline(Optional<String> date) throws IllegalValueException {
         requireNonNull(date);
-        return date.isPresent() ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())),
+        if (date.isPresent() && !TaskDates.getDottedFormat(date.get()).isEmpty()) {
+            return Optional.of(new Deadline(TaskDates.formatDate(parseDottedDate(date.get())),
+                    parseRecurInterval(date.get())));
+        }
+        return (date.isPresent() && !date.get().isEmpty()) ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())),
                 parseRecurInterval(date.get()))) : Optional.empty();
     }
 
@@ -150,12 +162,20 @@ public class ParserUtil {
      * @throws IllegalValueException if string cannot be parsed.
      */
     public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {
-        List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput);
-        if (dateGroup.isEmpty()) {
+        List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput.trim());
+        if (dateGroup.isEmpty() | !TaskDates.isDateValid(naturalLanguageInput)) {
             throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
         }
         List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
         return dates.get(dates.size() - 1);
+    }
+
+    public static Date parseDottedDate(String inputDate) throws IllegalValueException {
+        try {
+            return new SimpleDateFormat(TaskDates.getDottedFormat(inputDate)).parse(inputDate);
+        } catch (ParseException p) {
+            throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        }
     }
 
     /**

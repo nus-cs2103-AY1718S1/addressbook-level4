@@ -16,7 +16,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERN
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_PAPER;
@@ -60,7 +60,7 @@ public class AddTaskCommandParserTest {
                 new AddTaskCommand(expectedTaskWithMultipleTags));
 
         // prefix repeated in description - correct prefix accepted
-        Task expectedTaskWithPrefixInDesc = new TaskBuilder().withDescription(VALID_DESCRIPTION_PAPER)
+        Task expectedTaskWithPrefixInDesc = new TaskBuilder().withDescription(UNQUOTED_DESCRIPTION_PAPER)
                 .withStartDate(VALID_STARTDATE_PAPER).withDeadline(VALID_DEADLINE_PAPER)
                 .withTags(VALID_TAG_URGENT).build();
         assertParseSuccess(parser, DESCRIPTION_QUOTED_PAPER + STARTDATE_DESC_PAPER + DEADLINE_DESC_PAPER
@@ -88,7 +88,7 @@ public class AddTaskCommandParserTest {
                 + DEADLINE_DESC_GRAD_SCHOOL, new AddTaskCommand(expectedTask));
 
         // no deadline, deadline prefix in description with quotes - no deadline accepted
-        expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_PAPER).withStartDate(VALID_STARTDATE_PAPER)
+        expectedTask = new TaskBuilder().withDescription(UNQUOTED_DESCRIPTION_PAPER).withStartDate(VALID_STARTDATE_PAPER)
                 .withDeadline("").withTags(VALID_TAG_URGENT).build();
         assertParseSuccess(parser, DESCRIPTION_QUOTED_PAPER + STARTDATE_DESC_PAPER + TAG_DESC_URGENT,
                 new AddTaskCommand(expectedTask));
@@ -101,7 +101,7 @@ public class AddTaskCommandParserTest {
                 new AddTaskCommand(expectedTask));
 
         // no start date and deadline, deadline prefix in description with quotes - no deadline accepted
-        expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_PAPER).withStartDate("")
+        expectedTask = new TaskBuilder().withDescription(UNQUOTED_DESCRIPTION_PAPER).withStartDate("")
                 .withDeadline("").withTags(VALID_TAG_URGENT).build();
         assertParseSuccess(parser, DESCRIPTION_QUOTED_PAPER + TAG_DESC_URGENT,
                 new AddTaskCommand(expectedTask));
@@ -113,7 +113,7 @@ public class AddTaskCommandParserTest {
         assertParseSuccess(parser, VALID_DESCRIPTION_INTERNSHIP, new AddTaskCommand(expectedTask));
 
         // no optional field, deadline prefix in description with quotes - no deadline accepted
-        expectedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_PAPER).withStartDate("")
+        expectedTask = new TaskBuilder().withDescription(UNQUOTED_DESCRIPTION_PAPER).withStartDate("")
                 .withDeadline("").withTags().build();
         assertParseSuccess(parser, DESCRIPTION_QUOTED_PAPER, new AddTaskCommand(expectedTask));
     }

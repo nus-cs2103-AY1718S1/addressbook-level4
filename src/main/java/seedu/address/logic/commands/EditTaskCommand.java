@@ -1,18 +1,21 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.Task;
@@ -24,23 +27,23 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 public class EditTaskCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "edittask";
+    public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + "DESCRIPTION] "
-            + "[" + PREFIX_START_DATE + "START DATE] "
-            + "[" + PREFIX_DEADLINE + "DEADLINE] "
+            + "[" + PREFIX_STARTDATE + "START DATE] "
+            + "[" + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + "DEADLINE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_START_DATE + "20-10-2017 "
-            + PREFIX_DEADLINE + "25-10-2017";
+            + PREFIX_STARTDATE + "20-10-2017 "
+            + PREFIX_DEADLINE_BY + "25-10-2017";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This task already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists in the address book.";
 
     private final Index index;
     private final EditTaskCommand.EditTaskDescriptor editTaskDescriptor;
@@ -71,9 +74,9 @@ public class EditTaskCommand extends UndoableCommand {
         try {
             model.updateTask(taskToEdit, editedTask);
         } catch (DuplicateTaskException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (TaskNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target task cannot be missing");
         }
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
@@ -90,8 +93,9 @@ public class EditTaskCommand extends UndoableCommand {
         Description updatedDescription = editTaskDescriptor.getDescription().orElse(taskToEdit.getDescription());
         StartDate updatedStartDate = editTaskDescriptor.getStartDate().orElse(taskToEdit.getStartDate());
         Deadline updatedDeadline = editTaskDescriptor.getDeadline().orElse(taskToEdit.getDeadline());
+        Set<Tag> updatedTags = editTaskDescriptor.getTags().orElse(taskToEdit.getTags());
 
-        return new Task(updatedDescription, updatedStartDate, updatedDeadline);
+        return new Task(updatedDescription, updatedStartDate, updatedDeadline, updatedTags);
     }
 
     @Override
@@ -120,6 +124,7 @@ public class EditTaskCommand extends UndoableCommand {
         private Description description;
         private StartDate startDate;
         private Deadline deadline;
+        private Set<Tag> tags;
 
         public EditTaskDescriptor() {}
 
@@ -127,13 +132,14 @@ public class EditTaskCommand extends UndoableCommand {
             this.description = toCopy.description;
             this.startDate = toCopy.startDate;
             this.deadline = toCopy.deadline;
+            this.tags = toCopy.tags;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.description, this.startDate, this.deadline);
+            return CollectionUtil.isAnyNonNull(this.description, this.startDate, this.deadline, this.tags);
         }
 
         public void setDescription(Description description) {
@@ -160,6 +166,14 @@ public class EditTaskCommand extends UndoableCommand {
             return Optional.ofNullable(deadline);
         }
 
+        public void setTags(Set<Tag> tags) {
+            this.tags = tags;
+        }
+
+        public Optional<Set<Tag>> getTags() {
+            return Optional.ofNullable(tags);
+        }
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -177,7 +191,8 @@ public class EditTaskCommand extends UndoableCommand {
 
             return getDescription().equals(e.getDescription())
                     && getStartDate().equals(e.getStartDate())
-                    && getDeadline().equals(e.getDeadline());
+                    && getDeadline().equals(e.getDeadline())
+                    && getTags().equals(e.getTags());
         }
     }
 }

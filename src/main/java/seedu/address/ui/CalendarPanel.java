@@ -163,9 +163,11 @@ public class CalendarPanel extends UiPart<Region> {
                             String finalTaskDate = "";
                             String taskDate = "";
                             try {
-                                Date deadline = ParserUtil.parseDate(task.getDeadline().date);
-                                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                                taskDate = dateFormat.format(deadline);
+                                if (!task.getDeadline().isEmpty()) {
+                                    Date deadline = ParserUtil.parseDate(task.getDeadline().date);
+                                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                                    taskDate = dateFormat.format(deadline);
+                                }
                             } catch (IllegalValueException e) {
                                 e.printStackTrace();
                             }

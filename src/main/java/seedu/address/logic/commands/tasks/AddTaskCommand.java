@@ -2,8 +2,7 @@ package seedu.address.logic.commands.tasks;
 
 import static java.util.Objects.requireNonNull;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_TO;
-//import static seedu.address.logic.parser.CliSyntax.PREFIX_SINGLEEVENTDATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -25,7 +24,7 @@ public class AddTaskCommand extends UndoableCommand {
             + "Parameters: "
             + "DESCRIPTION "
             + PREFIX_STARTDATE + " START DATE "
-            + PREFIX_DEADLINE_TO + " DEADLINE DATE "
+            + PREFIX_DEADLINE_BY + " DEADLINE DATE "
             + PREFIX_TAG + "TAG";
 
     public static final String MESSAGE_SUCCESS = "Task has been added: %1$s";

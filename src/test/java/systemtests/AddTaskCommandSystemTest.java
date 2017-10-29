@@ -4,28 +4,41 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.ChangeModeCommand.MESSAGE_CHANGE_MODE_SUCCESS;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTDATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
+import static seedu.address.testutil.TypicalTasks.BUY_PRESENTS;
 import static seedu.address.testutil.TypicalTasks.GRAD_SCHOOL;
+import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.INTERNSHIP;
+import static seedu.address.testutil.TypicalTasks.SUBMISSION;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.Model;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.TaskDates;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TaskUtil;
@@ -96,17 +109,45 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(GRAD_SCHOOL);
 
         /* Case: add a task, missing task dates -> added */
-        //assertCommandSuccess(BUY_PRESENTS);
+        assertCommandSuccess(BUY_PRESENTS);
 
         /* Case: add a task, missing start date -> added */
-        // assertCommandSuccess(SUBMISSION);
+         assertCommandSuccess(SUBMISSION);
 
         /* Case: add a task, missing deadline -> added */
-        // assertCommandSuccess(GYM);
+         assertCommandSuccess(GYM);
 
         /* Case: missing description -> rejected */
         command = AddTaskCommand.COMMAND_WORD + " " + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
+
+        /* Case: invalid keyword -> rejected */
+        command = "adds " + TaskUtil.getTaskDetails(toAdd);
+        assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
+
+        /* Case: invalid description -> rejected */
+        command = AddTaskCommand.COMMAND_WORD + INVALID_DESCRIPTION + STARTDATE_DESC_INTERNSHIP
+                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
+        assertCommandFailure(command, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
+
+        /* Case: invalid unquoted description containing deadline prefix -> rejected for invalid deadline */
+        command = AddTaskCommand.COMMAND_WORD + " " + UNQUOTED_DESCRIPTION_PAPER + STARTDATE_DESC_PAPER;
+        assertCommandFailure(command, TaskDates.MESSAGE_DATE_CONSTRAINTS);
+
+        /* Case: invalid start date -> rejected */
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + INVALID_STARTDATE_DESC
+                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
+        assertCommandFailure(command, TaskDates.MESSAGE_DATE_CONSTRAINTS);
+
+        /* Case: invalid deadline -> rejected */
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
+                + INVALID_DEADLINE_DESC + TAG_DESC_URGENT;
+        assertCommandFailure(command, TaskDates.MESSAGE_DATE_CONSTRAINTS);
+
+        /* Case: invalid tag -> rejected */
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
+                + DEADLINE_DESC_INTERNSHIP + INVALID_TAG_DESC;
+        assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
     /**
@@ -149,7 +190,7 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedTaskCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
@@ -168,7 +209,7 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedTaskCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_TO;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -27,6 +26,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.TaskContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EditTaskDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -69,7 +69,7 @@ public class CommandTestUtil {
 
     public static final String VALID_DESCRIPTION_INTERNSHIP = " " + "Apply for Google internship" + " ";
     public static final String VALID_DESCRIPTION_GRAD_SCHOOL = " " + "Graduate school applications" + " ";
-    public static final String VALID_DESCRIPTION_PAPER = "Finish paper on team behaviour";
+    public static final String UNQUOTED_DESCRIPTION_PAPER = "Finish paper on team behaviour";
     public static final String VALID_STARTDATE_INTERNSHIP = "Mon, Oct 23, '17";
     public static final String VALID_STARTDATE_GRAD_SCHOOL = "Tue, Oct 24, '17";
     public static final String VALID_DEADLINE_INTERNSHIP = "Wed, Oct 25, '17";
@@ -77,23 +77,32 @@ public class CommandTestUtil {
     public static final String VALID_STARTDATE_PAPER = "Fri, Oct 20, '17";
     public static final String VALID_DEADLINE_PAPER = "Wed, Oct 25, '17";
     public static final String VALID_TAG_URGENT = "urgent";
+    public static final String VALID_TAG_NOT_URGENT = "notUrgent";
     public static final String VALID_TAG_GROUP = "projectGroup";
 
     public static final String INVALID_DESCRIPTION = " " + "///??::!!";
-    public static final String INVALID_DATE_FORMAT = "12.02.2012";
+    public static final String INVALID_DOTTED_DATE = "13.02.2012";
+    public static final String INVALID_DASHED_DATE = "13-02-2015";
 
-    public static final String DESCRIPTION_QUOTED_PAPER = " " + "\"" + VALID_DESCRIPTION_PAPER + "\"";
+    public static final String DESCRIPTION_QUOTED_PAPER = " " + "\"" + UNQUOTED_DESCRIPTION_PAPER + "\"";
     public static final String STARTDATE_DESC_INTERNSHIP = " " + PREFIX_STARTDATE + " " + VALID_STARTDATE_INTERNSHIP;
     public static final String STARTDATE_DESC_GRAD_SCHOOL = " " + PREFIX_STARTDATE + " " + VALID_STARTDATE_GRAD_SCHOOL;
     public static final String STARTDATE_DESC_PAPER = " " + PREFIX_STARTDATE + " " + VALID_STARTDATE_PAPER;
-    public static final String DEADLINE_DESC_INTERNSHIP = " " + PREFIX_DEADLINE_TO + " " + VALID_DEADLINE_INTERNSHIP;
+    public static final String DEADLINE_DESC_INTERNSHIP = " " + PREFIX_DEADLINE_ON + " " + VALID_DEADLINE_INTERNSHIP;
     public static final String DEADLINE_DESC_GRAD_SCHOOL = " " + PREFIX_DEADLINE_BY + " " + VALID_DEADLINE_GRAD_SCHOOL;
     public static final String DEADLINE_DESC_PAPER = " " + PREFIX_DEADLINE_ON + " " + VALID_DEADLINE_PAPER;
-    public static final String TAG_DESC_URGENT = " " + PREFIX_TAG + " " + VALID_TAG_URGENT;
-    public static final String TAG_DESC_GROUP = " " + PREFIX_TAG + " " + VALID_TAG_GROUP;
+    public static final String TAG_DESC_URGENT = " " + PREFIX_TAG + VALID_TAG_URGENT;
+    public static final String TAG_DESC_GROUP = " " + PREFIX_TAG + VALID_TAG_GROUP;
+    public static final String TAG_DESC_NOT_URGENT = " " + PREFIX_TAG + VALID_TAG_NOT_URGENT;
+
+    public static final String INVALID_STARTDATE_DESC = " " + PREFIX_STARTDATE + " " + INVALID_DOTTED_DATE;
+    public static final String INVALID_DEADLINE_DESC = " " + PREFIX_DEADLINE_ON + " " + INVALID_DOTTED_DATE;
+
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditTaskCommand.EditTaskDescriptor DESC_INTERNSHIP;
+    public static final EditTaskCommand.EditTaskDescriptor DESC_PAPER;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -102,6 +111,12 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_INTERNSHIP = new EditTaskDescriptorBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
+                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP)
+                .withTags(VALID_TAG_URGENT).build();
+        DESC_PAPER = new EditTaskDescriptorBuilder().withDescription(UNQUOTED_DESCRIPTION_PAPER)
+                .withStartDate(VALID_STARTDATE_PAPER).withDeadline(VALID_DEADLINE_PAPER)
+                .withTags(VALID_TAG_URGENT, VALID_TAG_GROUP).build();
     }
 
     /**
@@ -159,7 +174,7 @@ public class CommandTestUtil {
     public static void showFirstTaskOnly(Model model) {
         ReadOnlyTask task = model.getAddressBook().getTaskList().get(0);
         final String[] splitDescription = task.getDescription().taskDescription.split("\\s+");
-        model.updateFilteredTaskList(new TaskContainsKeywordsPredicate(Arrays.asList(splitDescription[2])));
+        model.updateFilteredTaskList(new TaskContainsKeywordsPredicate(Arrays.asList(splitDescription[3])));
 
         assert model.getFilteredTaskList().size() == 1;
     }
