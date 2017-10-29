@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
@@ -64,7 +65,11 @@ public class UniqueLifeInsuranceMap {
         if (!containsKey(key)) {
             throw new InsuranceNotFoundException();
         }
-        internalMap.get(key);
+        return internalMap.get(key);
+    }
+
+    public void forEach(BiConsumer<UUID, LifeInsurance> action) {
+        internalMap.forEach(action);
     }
 
     /**
@@ -121,6 +126,13 @@ public class UniqueLifeInsuranceMap {
         }
         setInsurances(replacement);
     }
+
+    /*
+    public void resolvePersonsNotInMasterList() {
+        internalMap.forEach((id, insurance) -> {
+        });
+    }
+    */
 
     /**
      * Returns the backing map as an unmodifiable {@code ObservableList}.
