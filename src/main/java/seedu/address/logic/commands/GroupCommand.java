@@ -6,20 +6,20 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
 import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.commands.AddCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 public class GroupCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "group";
     public static final String MESSAGE_SUCCESS = "New group added: %1$s, with %2$s member(s)";
+    public static final String MESSAGE_DUPLICATE_GROUP = "This group already exists in the address book";
 
     /**
      * Shows message usage for Group Command
@@ -53,8 +53,12 @@ public class GroupCommand extends UndoableCommand {
             ReadOnlyPerson personToAdd = lastShownList.get(index.getZeroBased());
             groupMembers.add(personToAdd);
         }
-
-        Group newGroup = new Group(groupName, groupMembers);
+        ReadOnlyGroup newGroup = new Group(groupName, groupMembers);
+        try {
+            model.addGroup(newGroup);
+        } catch (DuplicateGroupException dge) {
+            throw new CommandException(MESSAGE_DUPLICATE_GROUP);
+        }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, groupName, groupMembers.size()));
     }

@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -54,6 +56,11 @@ public interface Model {
      * Adds the given person
      */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /**
+     * Adds the given group
+     */
+    void addGroup(ReadOnlyGroup group) throws DuplicateGroupException;
 
     /**
      * Pins the given person
