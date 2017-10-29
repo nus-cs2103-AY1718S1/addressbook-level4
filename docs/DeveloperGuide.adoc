@@ -308,7 +308,11 @@ The current detag mechanism does not support multiple tag removal, i.e. remove 2
 
 The FindTag mechanism is facilitated by the `FindCommand` class which inherits from `Command` class. It allows the user to find persons using tags. Users can search using multiple tags too.
 
-Suppose the user has just executed the `FindCommand` using `find friends`.
+Suppose the user has just executed the `FindCommand` using:
+
+----
+`find friends`
+----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindCommand` feature is being evoked and calls the `FindCommandParser` to parse the string and compare the tags. These are validated and formatted by the `TagContainsKeywordsPredicate` and returned as a `TagContainsKeywordsPredicate` object to be used to call the `FindCommand` class. The `LogicManager` then calls the `execute()` in the `FindCommand` class which creates and returns a `CommandResult` object.
 
@@ -342,7 +346,11 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 The Tag mechanism is a specialised form of the edit feature that allows users to tag multiple contacts with multiple tags.
 The mechanism is facilitated by the TagCommand class which inherits from the UndoableCommand class, indicating that it can be undone.
 
-Suppose the user has just executed the `TagCommand` using `tag 1,2 t/friend t/classmate`.
+Suppose the user has just executed the `TagCommand` using:
+
+----
+`tag 1,2 t/friend t/classmate`.
+----
 
 At first the `execute()` function of the `Logic Manager` is called, which passes the command string to the `parseCommand()` function of the `AddressBookParser` class. This determines that the `TagCommand` feature is being evoked
 and calls the `TagCommandParser` class.
@@ -357,7 +365,11 @@ The Storage and UI are subsequently updated with the new information.
 
 The Add Task mechanism is facilitated by the `AddTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the addition of new tasks to the application with a starting date and a deadline. Both dates are optional and may be omitted.
 
-Suppose the user has just executed the `add` command using `add CS assignment from 15-10-2017 to 20-10-2017`.
+Suppose the user has just executed the `add` command using:
+
+----
+`add CS assignment from 15-10-2017 to 20-10-2017`.
+----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `AddTask` feature is being evoked and calls the `AddTaskCommandParser` to parse the String and separate it into three components: `Description`, `StartDate` and `Deadline`. These are validated and formatted by the `Task` class and returned as a `Task` object to be used to call the `AddTaskCommand` class. The `LogicManager` then calls the `executeUndoableFunction()` in the `AddTaskCommand` class which creates and returns a `CommandResult` object.
 
@@ -417,7 +429,11 @@ Limits possibilities of adding new prefixes and making the format more flexible 
 
 The Delete Task mechanism is facilitated by the `DeleteTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the removal of a task at a specified index.
 
-Suppose the user has just executed the `delete` command using `delete 2`.
+Suppose the user has just executed the `delete` command using:
+
+----
+`delete 2`.
+----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `Delete` feature is being evoked and calls the `DeleteTaskCommandParser` to parse the index and validate that the index provided is not out of bounds and returns a new task object to call the `DeleteTaskCommand` class. The `LogicManager` then calls the `executeUndoableFunction()` in the `DeleteTaskCommand` class which creates and return a `CommandResult` object.
 
@@ -444,7 +460,11 @@ public class DeleteTaskCommand extends UndoableCommand {
 
 The FindTask mechanism is facilitated by the `FindTaskCommand` class which inherits from `Command` class. It allows the user to find tasks using descriptions. User can search using multiple descriptions too.
 
-Suppose the user has just executed the `FindTaskCommand` using `find finish cs2103 17-07-1995`.
+Suppose the user has just executed the `FindTaskCommand` using:
+
+----
+`find finish cs2103 17-07-1995`.
+----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTaskCommand` feature is being evoked and calls the `FindTaskCommandParser` to parse the string and compare the descriptions. These are validated and formatted by the `TaskContainsKeywordsPredicate` and return as a `TaskContainsKeywordsPredicate` object to be used to call the `FindTaskCommand` class. The `LogicManager` then calls the `execute()` in the `FindTaskCommand` class which creates and return a `CommandResult` object.
 
@@ -462,7 +482,11 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 
 The ListTask mechanism is facilitated by the `ListTaskCommand` class which inherits from `Command` class. It allows the user to list out all the current tasks.
 
-Suppose the user has just executed the `ListTaskCommand` using `list`.
+Suppose the user has just executed the `ListTaskCommand` using:
+
+----
+`list`.
+----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `ListTaskCommand` feature is being evoked and calls the `execute()` in the `ListTaskCommand` class which update the current list to show all tasks creates and return a `CommandResult` object.
 
@@ -470,7 +494,11 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 
 The SelectTask mechanism is facilitated by the `SelectTaskCommand` class which inherits from `Command` class. It allows the user to select the task at specific index.
 
-Suppose the user has just executed the `SelectTaskCommand` using `select`.
+Suppose the user has just executed the `SelectTaskCommand` using:
+
+----
+`select`.
+----
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `SelectTaskCommand` feature is being evoked and calls the `SelectTaskCommandParser` to parse the string and check if the index is valid. After validation the `SelectTaskCommand` class is been called. The `LogicManager` then calls the `execute()` in the `SelectTaskCommand` class which calls `EventCenter` with the parameter of `JumpToTaskListRequestEvent` class to highlight selected task card in Ui at target index. Then `execute()` creates and return a `CommandResult` object.
 
