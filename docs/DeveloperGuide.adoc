@@ -388,10 +388,6 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== Tutorial
-
-image::tutorialImplementationSequenceDiagram.png[width="800"]
-
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -411,7 +407,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-[discrete]
+[d]
 === Since v1.1
 
 // tag::sort[]
@@ -422,7 +418,7 @@ The sort command sorts the `People` in `AddressBook` based on their `Name`, `Pho
 shown in Figure 3.4.1 below.
 
 image::sortLogicDiagram.png[width="700"]
-Figure 3.4.1: Logic of SortCommand
+Figure 4.4.1: Logic of SortCommand
 
 There will be a `SortCommandParser` as well to parse out the `KEYWORD` which is either name, phone, email
 or address. This will ensure that users type in the right `KEYWORD` to sort the list however they want.
@@ -434,7 +430,7 @@ parse the command accordingly. A `SortCommand` will be returned to the `LogicMan
 on the `ResultDisplay` Ui for the user. The sequence diagram for this scenario is shown in Figure 3.4.2 below.
 
 image::sortSD.png[width="800"]
-Figure 3.4.2: Sequence diagram for sorting by name
+Figure 4.4.2: Sequence diagram for sorting by name
 
 When `SortCommand` executes,
 
@@ -445,7 +441,7 @@ When `SortCommand` executes,
 The sequence diagram for executeUndoableCommand() is given in Figure 3.4.3 below.
 
 image::sortExecuteSD.png[width="750"]
-Figure 3.4.3: Sequence diagram for SortCommand executeUndoableCommand()
+Figure 4.4.3: Sequence diagram for SortCommand executeUndoableCommand()
 
 
 ==== Design Considerations
@@ -467,7 +463,7 @@ Figure 3.4.3: Sequence diagram for SortCommand executeUndoableCommand()
 **Cons:** Forgetful users may not be able to find their contact if they forget to sort by name when they add a new contact +
 // end::sort[]
 
-[discrete]
+[d]
 === Since v1.2
 
 //  tag::find[]
@@ -558,6 +554,115 @@ the previously hidden indices from the list storing all hidden persons.
 **Cons:** User has to repeatedly type the command multiple times, and application has to display the result repeatedly
 after every person is hidden successfully.
 // end::hide[]
+
+[d]
+=== Since v1.3
+
+// tag::pinunpin[]
+=== Pin / Unpin
+The pin and unpin command allows the user to pin and unpin important `Person` for easy access. The `Person` class has
+a boolean variable called `isPinned` that is set to `false` by default. Only when the `pin` command is executed will the
+variable change to `true`. Similarly, the variable can be changed from `true` to `false` when `unpin` command is executed.
+
+==== Design Considerations
+
+**Aspect**: How pinned person will be displayed on the UI +
+** Alternative 1 (current choice):** A pinned person will have a star symbol next to their name if they are pinned +
+**Pros:** It is easy to see and the Ui is clean +
+**Cons:** It is harder to implement as a new `ObjectProperty` has to be added to the `PersonCard` to update the UI of it +
+**Alternative 2**: The pinned person will just have a `Tag` that says `pinned` +
+**Pros:** It is easier to implement because a new `Tag` called `pinned` can just be added to the `Person` +
+**Cons:** It may not be noticeable if the person already has many `Tag` on them.
+// end::pinunpin[]
+
+[d]
+=== Since v1.4
+
+// tag::tutorial[]
+=== First time tutorial
+The first time tutorial will be launched when users start the Bluebird app for the very first time. To
+detect that Bluebird is launched for the first time, a boolean variable `firstTimeOpen` in `MainApp` is used.
+It is set to `false` by default and will only be set to `true` when Bluebird detects that `addressbook.xml` is not found.
+When `firstTimeOpen` is detected as `true` by the `MainWindow`, `TutorialPanel` will be added into the browser place holder
+instead of `BrowserPanel`. `TutorialPanel` will be removed and `BrowserPanel` will be added back at the end of the tutorial.
+Figure 4.10.1 shows the sequence of events that happens.
+
+image::FinalTutSD.png[width="800"]
+Figure 4.10.1: Sequence diagram for first time tutorial
+
+In the reference frame "carry out tutorial", the tutorial will be looped until the end of tutorial. Users can choose
+to click next, back or skip tutorial at any point of the tutorial. The sequence of events that happens in
+"carry out tutorial" is shown in figure 4.10.2 below.
+
+image::sdCarryOutTut.png[width="800"]
+Figure 4.10.2: Sequence diagram for refrence frame "carry out tutorial"
+
+At the end of the tutorial, there will be a `SwitchToBrowserEvent` raised by `TutorialPanel`
+which will be posted to `EventsCenter` and handled by `MainWindow`. Figure 4.10.3 below shows the sequence of event.
+
+image::tutorialEventCenter.png[width="800"]
+Figure 4.10.3: Sequence diagram for event handling of SwitchToBrowserEvent
+
+The code snippet below shows how `TutorialPanel` is added in place of `BrowserPanel` in the
+`MainWindow` when Bluebird is launched for the first time. A `SwitchToBrowserEvent` will be raised
+by `TutorialPanel` at the end of the tutorial and handled in `MainWindow`.
+
+[source,java]
+----
+public class MainWindow extends UiPart<Region> {
+    ...
+    void fillInnerParts() {
+    ...
+    browserPanel = new BrowserPanel();
+        if (MainApp.isFirstTimeOpen()) {
+            TutorialPanel tutorialPanel =
+             new TutorialPanel(this, browserPlaceholder);
+            browserPlaceholder.getChildren().add(tutorialPanel.getRoot());
+        } else {
+            switchToBrowser();
+        }
+    ...
+}
+
+@Subscribe
+private void handleSwitchToBrowserEvent(SwitchToBrowserEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    switchToBrowser();
+}
+
+private void switchToBrowser() {
+    browserPlaceholder.getChildren().add(browserPanel.getRoot());
+}
+
+
+----
+
+The code snippet below shows how `TutorialPanel` is removed and `BrowserPanel` is added after
+the end of tutorial. The `SwitchToBrowserEvent` is handled in `MainWindow`.
+
+[source,java]
+----
+public class TutorialPanel extends UiPart<Region> {
+    private void endTutorial() {
+        mainWindow.unhighlightAll();
+        browserPlaceHolder.getChildren().remove(this.getRoot());
+        raise(new SwitchToBrowserEvent());
+    }
+}
+----
+// end::tutorial[]
+
+==== Design Considerations
+
+**Aspect**: What to include in the tutorial +
+** Alternative 1 (current choice):** Introduce the different UI panels in Bluebird and to give a brief
+ overview of the features Bluebird has. Allow user to explore and try out the different commands by themselves +
+**Pros:** Users will decide which feature to try out by themselves and learn how Bluebird works +
+**Cons:** By being brief and letting users try it out for themselves, users will not know the expected outcome of
+ different commands +
+**Alternative 2**: By spoon-feeding users and introduce each features one by one +
+**Pros:** This is the most comprehensive way to teach users of all the features Bluebird has to offer +
+**Cons:** The tutorial will be lengthy and users may just skip it without learning of different features
 
 == Documentation
 
