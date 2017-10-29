@@ -29,6 +29,7 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import javafx.scene.input.KeyCode;
 import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -114,6 +115,23 @@ public abstract class AddressBookSystemTest {
 
         waitUntilBrowserLoaded(getBrowserPanel());
     }
+
+    //@@author newlater
+    /**
+     * Presses Tab and executes {@code command} in the application's {@code CommandBox}.
+     * Method returns after UI components have been updated.
+     */
+    protected void pressAndExecuteCommand(String command, KeyCode... keyPresses) {
+        rememberStates();
+        // Injects a fixed clock before executing a command so that the time stamp shown in the status bar
+        // after each command is predictable and also different from the previous command.
+        clockRule.setInjectedClockToCurrentTime();
+
+        mainWindowHandle.getCommandBox().pressAndRun(command, keyPresses);
+
+        waitUntilBrowserLoaded(getBrowserPanel());
+    }
+    //@@author
 
     /**
      * Displays all persons in the address book.
