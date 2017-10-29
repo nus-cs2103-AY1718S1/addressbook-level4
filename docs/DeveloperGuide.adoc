@@ -558,6 +558,25 @@ the previously hidden indices from the list storing all hidden persons.
 after every person is hidden successfully.
 // end::hide[]
 
+[discrete]
+=== Since v1.3
+
+=== Pin / Unpin
+The pin and unpin command allows the user to pin and unpin important `Person` for easy access. The `Person` class has
+a boolean variable called `isPinned` that is set to `false` by default. Only when the `pin` command is executed will the
+variable change to `true`. Similarly, the variable can be changed from `true` to `false` when `unpin` command is executed.
+
+==== Design Considerations
+
+**Aspect**: How pinned person will be displayed on the UI +
+** Alternative 1 (current choice):** A pinned person will have a star symbol next to their name if they are pinned +
+**Pros:** It is easy to see and the Ui is clean +
+**Cons:** It is harder to implement as a new `ObjectProperty` has to be added to the `PersonCard` to update the UI of it +
+**Alternative 2**: The pinned person will just have a `Tag` that says `pinned` +
+**Pros:** It is easier to implement because a new `Tag` called `pinned` can just be added to the `Person` +
+**Cons:** It may not be noticeable if the person already has many `Tag` on them.
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
