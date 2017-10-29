@@ -84,7 +84,7 @@ public class PersonCard extends UiPart<Region> {
         if (colourMap.containsKey(tag.tagName)) {
             tagLabel.setStyle("-fx-background-color: " + colourMap.get(tag.tagName));
         } else {
-            tagLabel.setStyle("-fx-background-color: blue");
+            tagLabel.setStyle(null);
         }
     }
 

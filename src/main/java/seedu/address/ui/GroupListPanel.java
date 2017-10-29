@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.NewTagColourChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.ReadOnlyPerson;
 
 import java.util.HashMap;
@@ -21,37 +22,24 @@ public class GroupListPanel extends UiPart<Region> {
 
     private static final String FXML = "GroupListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(GroupListPanel.class);
-    private HashMap<String, String> colourMap;
 
     @javafx.fxml.FXML
-    private ListView<PersonCard> groupListView;
+    private ListView<GroupCard> groupListView;
 
-    public GroupListPanel(ObservableList<ReadOnlyPerson> personList, HashMap<String, String> colourMap) {
+    public GroupListPanel(ObservableList<ReadOnlyGroup> groupList) {
         super(FXML);
-        this.colourMap = colourMap;
-        setConnections(personList);
+        setConnections(groupList);
         registerAsAnEventHandler(this);
     }
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
-        ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1, colourMap));
+    private void setConnections(ObservableList<ReadOnlyGroup> groupList) {
+        ObservableList<GroupCard> mappedList = EasyBind.map(
+                groupList, (group) -> new GroupCard(group, groupList.indexOf(group) + 1));
         groupListView.setItems(mappedList);
         groupListView.setCellFactory(listView -> new GroupListPanel.PersonListViewCell());
-        setEventHandlerForSelectionChangeEvent();
-    }
-
-    private void setEventHandlerForSelectionChangeEvent() {
-       groupListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
-                    }
-                });
     }
 
     /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
+     * Scrolls to the {@code GroupCard} at the {@code index} and selects it.
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
@@ -66,27 +54,20 @@ public class GroupListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
-    @Subscribe
-    private void handleNewTagColourChangedEvent(NewTagColourChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        setConnections(event.getPersonsList());
-    }
-
-
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
-    class PersonListViewCell extends ListCell<PersonCard> {
+    class PersonListViewCell extends ListCell<GroupCard> {
 
         @Override
-        protected void updateItem(PersonCard person, boolean empty) {
-            super.updateItem(person, empty);
+        protected void updateItem(GroupCard group, boolean empty) {
+            super.updateItem(group, empty);
 
-            if (empty || person == null) {
+            if (empty || group == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(person.getRoot());
+                setGraphic(group.getRoot());
             }
         }
     }

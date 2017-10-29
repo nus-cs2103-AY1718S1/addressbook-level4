@@ -40,6 +40,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyGroup> filteredGroups;
     private HashMap<Tag, String> tagColours = new HashMap<>();
     private UserPrefs colourPrefs;
 
@@ -54,6 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredGroups = new FilteredList<>(this.addressBook.getGroupList());
         colourPrefs = userPrefs;
         HashMap<String, String> stringColourMap = userPrefs.getColourMap();
         if (stringColourMap != null) {
@@ -107,6 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
         addressBook.addGroup(group);
+        indicateAddressBookChanged();
     }
 
     @Override
@@ -207,6 +210,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
+    }
+
+    @Override
+    public ObservableList<ReadOnlyGroup> getGroupList() {
+        return FXCollections.unmodifiableObservableList(filteredGroups);
     }
 
     @Override

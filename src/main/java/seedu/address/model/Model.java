@@ -97,6 +97,11 @@ public interface Model {
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
     /**
+     * Returns an unmodifiable view of the filtered group list
+     */
+    ObservableList<ReadOnlyGroup> getGroupList();
+
+    /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      *
      * @throws NullPointerException if {@code predicate} is null.
