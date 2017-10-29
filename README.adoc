@@ -23,7 +23,7 @@ At the Heart of our Design is the idea that every man wants to be a Gentleman. E
 
 == Want to experience elegance at its finest?
 
-* [Download the latest release] (https://github.com/CS2103AUG2017-T09-B1/main/releases)
+* https://github.com/CS2103AUG2017-T09-B1/main/releases[Download the latest release] 
 
 == Site Map
 
