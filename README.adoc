@@ -3,7 +3,7 @@ ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 https://travis-ci.org/CS2103-W13-B4/main[image:https://travis-ci.org/CS2103AUG2017-W13-B4/main.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/junming403/main[image:https://ci.appveyor.com/api/projects/status/bn7hhsjs91qvhfvd?svg=true
+https://ci.appveyor.com/project/junming403/main[image:https://ci.appveyor.com/api/projects/status/bn7hhsjs91qvhfvd?svg=true[Build Status]]
 [Build status]]
 
 ifdef::env-github[]
