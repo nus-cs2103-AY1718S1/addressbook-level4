@@ -47,7 +47,7 @@ public class CommandBoxHelper extends UiPart<Region> {
             commandString = commandText.getText();
             firstChar = commandText.getText().charAt(0);
         } catch (Exception e) {
-            logger.info("Invalid String or String is empty: " + e.toString());
+            logger.info("Invalid String or String is empty");
             logger.info("Hiding command helper");
             return false;
         }
