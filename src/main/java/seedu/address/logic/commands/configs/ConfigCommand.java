@@ -23,7 +23,7 @@ public abstract class ConfigCommand extends Command {
      * Different types of sub-commands within {@link ConfigCommand}.
      */
     public enum ConfigType {
-        ADD_PROPERTY, IMPORT_CALENDAR, TAG_COLOR
+        ADD_PROPERTY, TAG_COLOR
     }
 
     public static final HashMap<String, ConfigType> TO_ENUM_CONFIG_TYPE = new HashMap<>();
@@ -31,7 +31,6 @@ public abstract class ConfigCommand extends Command {
     static {
         TO_ENUM_CONFIG_TYPE.put("add-property", ConfigType.ADD_PROPERTY);
         TO_ENUM_CONFIG_TYPE.put("set-tag-color", ConfigType.TAG_COLOR);
-        TO_ENUM_CONFIG_TYPE.put("import-calendar", ConfigType.IMPORT_CALENDAR);
     }
 
     protected String configValue;
