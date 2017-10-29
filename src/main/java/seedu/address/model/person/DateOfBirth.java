@@ -17,7 +17,8 @@ import seedu.address.logic.parser.exceptions.EmptyFieldException;
 public class DateOfBirth {
 
     public static final String MESSAGE_DOB_CONSTRAINTS =
-            "Please enter in Day Month Year format where month can be a number or the name.";
+            "Please enter in Day Month Year format where the month can be a number or the name" +
+                    " and the year can be input in 2-digit or 4-digit format.";
     public static final String MESSAGE_INVALID_MONTH = "Month input is invalid.";
     public static final String MESSAGE_INVALID_DAY = "Day input is invalid.";
     public static final String MESSAGE_INVALID_YEAR = "Year input is invalid.";
@@ -26,7 +27,7 @@ public class DateOfBirth {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String DOB_VALIDATION_REGEX = "\\p{Alnum}+[\\s-./]\\p{Alnum}+([\\s-./]\\p{Alnum}*)?";
+    public static final String DOB_VALIDATION_REGEX = "\\d+[\\s-./,]\\p{Alnum}+[\\s-./,]\\d+.*";
 
     public static final String[] MONTH_NAME_SHORT = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -66,8 +67,8 @@ public class DateOfBirth {
      * Parses input dob string
      */
     private LocalDate dateFormatter(String dob) throws IllegalValueException {
-        List<String> arguments = Arrays.asList(dob.split("[\\s-/.]"));
-        if (arguments.size() > 3 || arguments.size() < 2) {
+        List<String> arguments = Arrays.asList(dob.split("[\\s-/.,]"));
+        if (arguments.size() < 2) {
             throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
         }
         String day = arguments.get(0);
@@ -100,6 +101,9 @@ public class DateOfBirth {
     }
 
     private String getValidDay(String day) throws IllegalValueException {
+        if (Integer.parseInt(day) > 31) {
+            throw new IllegalValueException(MESSAGE_INVALID_DAY);
+        }
         if (day.length() == 1) {
             return "0" + day;
         } else if (day.length() == 2) {
