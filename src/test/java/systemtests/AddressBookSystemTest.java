@@ -82,7 +82,7 @@ public abstract class AddressBookSystemTest {
     }
 
     public ParcelListPanelHandle getParcelListPanel() {
-        return mainWindowHandle.getParcelListPanel();
+        return mainWindowHandle.getActiveParcelListPanel();
     }
 
     public MainMenuHandle getMainMenu() {

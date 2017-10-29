@@ -16,6 +16,7 @@ import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.ParcelListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+import guitests.guihandles.TabPaneHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
@@ -72,7 +73,11 @@ public abstract class AddressBookGuiTest {
     }
 
     protected ParcelListPanelHandle getParcelListPanel() {
-        return mainWindowHandle.getParcelListPanel();
+        return mainWindowHandle.getActiveParcelListPanel();
+    }
+
+    protected TabPaneHandle getTabPane() {
+        return mainWindowHandle.getTabPane();
     }
 
     protected MainMenuHandle getMainMenu() {
