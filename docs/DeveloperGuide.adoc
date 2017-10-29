@@ -1,4 +1,4 @@
-= About ConTag's Developer Guide
+= ConTag - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,10 +12,45 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
 
+{empty} +
+
+image::contag_logo_ugdg.png[align="center"]
+
+{empty} +
+
 By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
 
-Welcome to the ConTag's Developer Guide! Contag is an efficient and feature-packed address book desktop application custom-built for PC, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.Regardlless if you are a beginner user or expert developer, this guide brings to you all the necessary information you will need to navigate around the  ConTag with ease.This guide provides a comprehensive covergae of the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
+Welcome to the ConTag's Developer Guide! Whether you are a beginner or an expert developer, if you are looking to improve and customise our ConTag application, this is the perfect place to get you started.
+
+This comprehensive guide brings you all the necessary information you need to navigate around ConTag with ease, which includes:
+
+* Step by step guide to set up your project
+* Design and implementation of ConTag features
+* *(NOT SURE WHETHER TO INCLUDE THE REST)*
+
+=== Overview of ConTag
+
+ConTag was initially developed to be an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers.
+
+*(ANY MORE THINGS TO ADD HERE? It has the following capanilities:??)*
+
+=== How to Use the Developer Guide
+
+The developer guide contains quite a number of information, so it can be quite intimidating. However, you do not have to read the developer guide in a linear order. Instead, you can use the linked content list at the top of this guide to navigate towards specific issues as needed.
+
+This guide has been organised in a manner that mimics how you would go about developing your features. It starts with setting up your project to documenting your features implementation details, before ending off with additional information, such as User Stories and Glossary.
+
+Finally, as you read the developer guide, you will see these two icons:
+
+[NOTE]
+This symbol indicates something to take note of.
+
+[TIP]
+This symbol indicates a tip to help you.
+
+*(NOT SURE WHETHER TO MENTION THAT APPENDIX A IS CATERED TOWARDS BEGINNER DEVELOPER TO GET THEM STARTED)*
 
 == Setting up
 
@@ -42,7 +77,9 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 This application is written in JAVA. +
 All example codes in the guide uses JAVA langugae
 
-=== Setting up the project in your computer
+*JavaFX? XML?*
+
+=== Setting up the Project in Your Computer
 
 Before you start coding, follow these steps to set up the project in Intellij IDEA:
 
@@ -58,7 +95,7 @@ Before you start coding, follow these steps to set up the project in Intellij ID
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verifying the Setup
 
 To make sure that the application runs as expected after setting up, do the following:
 
@@ -80,11 +117,11 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
+==== Updating documentation to match your fork [to be deleted?]
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Setting up CI [to be deleted?]
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
@@ -98,9 +135,11 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 When you are ready to start coding,
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+2. [?] Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
+
+*Write something here*
 
 === Architecture
 
