@@ -37,13 +37,6 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
-     * Returns {@code ObservableList} of all objects in list.
-     */
-    public ObservableList<Person> getInternalList() {
-        return internalList;
-    }
-
-    /**
      * Returns index of {@code ReadOnlyPerson} in list.
      */
     public int getIndexOf(ReadOnlyPerson key) {
