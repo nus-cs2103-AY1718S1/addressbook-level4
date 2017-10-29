@@ -28,6 +28,14 @@ public class MainWindowHandle extends StageHandle {
         return tabPane.getActiveParcelList();
     }
 
+    public ParcelListPanelHandle getDeliveredListPanel() {
+        return tabPane.getDeliveredParcelListPanel();
+    }
+
+    public ParcelListPanelHandle getUndeliveredListPanel() {
+        return tabPane.getUndeliveredParcelListPanel();
+    }
+
     public TabPaneHandle getTabPane() {
         return tabPane;
     }

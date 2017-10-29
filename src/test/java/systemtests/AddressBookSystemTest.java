@@ -85,6 +85,14 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getActiveParcelListPanel();
     }
 
+    public ParcelListPanelHandle getDeliveredParcelListPanel() {
+        return mainWindowHandle.getDeliveredListPanel();
+    }
+
+    public ParcelListPanelHandle getUndeliveredParcelListPanel() {
+        return mainWindowHandle.getUndeliveredListPanel();
+    }
+
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
     }
@@ -152,6 +160,8 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedModel, getModel());
         assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
         assertListMatching(getParcelListPanel(), expectedModel.getActiveList());
+        assertListMatching(getDeliveredParcelListPanel(), expectedModel.getFilteredDeliveredParcelList());
+        assertListMatching(getUndeliveredParcelListPanel(), expectedModel.getFilteredUndeliveredParcelList());
     }
 
     /**
