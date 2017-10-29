@@ -15,6 +15,7 @@ import seedu.address.model.group.ReadOnlyGroup;
 public class GroupCard extends UiPart<Region> {
 
     private static final String FXML = "GroupListCard.fxml";
+    private static final int TAG_LIMIT = 3;
 
     public final ReadOnlyGroup group;
 
@@ -52,13 +53,19 @@ public class GroupCard extends UiPart<Region> {
      * @param group
      */
     private void initMembers(ReadOnlyGroup group) {
-        group.getGroupMembers().forEach(person ->  {
-            Label memberName = new Label(person.getName().fullName);
-            memberName.setStyle("-fx-background-color: black");
-            members.setHgap(4);
-            members.setVgap(7);
-            members.getChildren().add(memberName);
+        group.getGroupMembers().forEach(person -> {
+            if (members.getChildren().size() < TAG_LIMIT) {
+                Label memberName = new Label(person.getName().fullName);
+                memberName.setStyle("-fx-background-color: blue");
+                members.getChildren().add(memberName);
+            }
         });
+
+        if(group.getGroupMembers().size() > TAG_LIMIT) {
+            members.getChildren().add(new Label("+" + (group.getGroupMembers().size() - TAG_LIMIT)));
+        }
+        members.setHgap(4);
+        members.setVgap(7);
     }
 
     @Override
