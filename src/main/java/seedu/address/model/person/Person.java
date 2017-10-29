@@ -21,7 +21,9 @@ import seedu.address.model.util.DateUtil;
 public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
-    private ObjectProperty<Phone> phone;
+    private ObjectProperty<Handphone> handphone;
+    private ObjectProperty<HomePhone> homePhone;
+    private ObjectProperty<OfficePhone> officePhone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<PostalCode> postalCode;
@@ -41,11 +43,14 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode,
-                  Debt debt, Interest interest, Deadline deadline, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, postalCode, debt, interest, deadline, tags);
+    public Person(Name name, Phone handphone, Phone homePhone, Phone officePhone, Email email, Address address,
+                  PostalCode postalCode, Debt debt, Interest interest, Deadline deadline, Set<Tag> tags) {
+        requireAllNonNull(name, handphone, homePhone, officePhone, email, address, postalCode, debt, interest, deadline,
+                tags);
         this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
+        this.handphone = new SimpleObjectProperty<>((Handphone) handphone);
+        this.homePhone = new SimpleObjectProperty<>((HomePhone) homePhone);
+        this.officePhone = new SimpleObjectProperty<>((OfficePhone) officePhone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.postalCode = new SimpleObjectProperty<>(postalCode);
@@ -64,8 +69,9 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
-                source.getDebt(), source.getInterest(), source.getDeadline(), source.getTags());
+        this(source.getName(), source.getHandphone(), source.getHomePhone(), source.getOfficePhone(), source.getEmail(),
+                source.getAddress(), source.getPostalCode(), source.getDebt(), source.getInterest(),
+                source.getDeadline(), source.getTags());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
@@ -93,21 +99,57 @@ public class Person implements ReadOnlyPerson {
     }
 
     /**
-     * Sets phone number of a person to the given Phone.
+     * Sets handphone number of a person to the given Phone.
      * @param phone must not be null.
      */
-    public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
+    public void setHandphone(Phone phone) {
+        this.handphone.set(requireNonNull((Handphone) phone));
     }
 
     @Override
-    public ObjectProperty<Phone> phoneProperty() {
-        return phone;
+    public ObjectProperty<Handphone> handphoneProperty() {
+        return handphone;
     }
 
     @Override
-    public Phone getPhone() {
-        return phone.get();
+    public Handphone getHandphone() {
+        return handphone.get();
+    }
+
+    /**
+     * Sets home phone number of a person to the given Phone.
+     * @param phone must not be null.
+     */
+    public void setHomePhone(Phone phone) {
+        this.homePhone.set(requireNonNull((HomePhone) phone));
+    }
+
+    @Override
+    public ObjectProperty<HomePhone> homePhoneProperty() {
+        return homePhone;
+    }
+
+    @Override
+    public HomePhone getHomePhone() {
+        return homePhone.get();
+    }
+
+    /**
+     * Sets office phone number of a person to the given Phone.
+     * @param phone must not be null.
+     */
+    public void setOfficePhone(Phone phone) {
+        this.officePhone.set(requireNonNull((OfficePhone) phone));
+    }
+
+    @Override
+    public ObjectProperty<OfficePhone> officePhoneProperty() {
+        return officePhone;
+    }
+
+    @Override
+    public OfficePhone getOfficePhone() {
+        return officePhone.get();
     }
 
     /**
@@ -387,7 +429,8 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, postalCode, debt, interest, deadline, tags);
+        return Objects.hash(name, handphone, homePhone, officePhone, email, address, postalCode, debt, interest,
+                deadline, tags);
     }
 
     @Override

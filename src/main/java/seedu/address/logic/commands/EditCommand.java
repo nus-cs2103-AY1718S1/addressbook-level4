@@ -5,9 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEBT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDPHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OFFICE_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -26,8 +28,11 @@ import seedu.address.model.person.DateRepaid;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Handphone;
+import seedu.address.model.person.HomePhone;
 import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OfficePhone;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
@@ -47,10 +52,12 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing or of the currently selected person if no"
             + "index is specified. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (optional, must be a positive integer if present)\n"
+            + "Existing values will be overwritten by the input values. At least one field must be present.\n"
+            + "Parameters: [INDEX]\n"
             + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_HANDPHONE + "HANDPHONE] "
+            + "[" + PREFIX_HOME_PHONE + "HOME PHONE] "
+            + "[" + PREFIX_OFFICE_PHONE + "OFFICE PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_POSTAL_CODE + "POSTAL CODE] "
@@ -59,7 +66,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_DEADLINE + "DEADLINE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example 1: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
+            + PREFIX_HANDPHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com\n"
             + "Example 2: " + COMMAND_WORD
             + PREFIX_POSTAL_CODE + " " + "123456";
@@ -139,7 +146,9 @@ public class EditCommand extends UndoableCommand {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Handphone updatedHandphone = editPersonDescriptor.getHandphone().orElse(personToEdit.getHandphone());
+        HomePhone updatedHomePhone = editPersonDescriptor.getHomePhone().orElse(personToEdit.getHomePhone());
+        OfficePhone updatedOfficePhone = editPersonDescriptor.getOfficePhone().orElse(personToEdit.getOfficePhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         PostalCode updatedPostalCode = editPersonDescriptor.getPostalCode().orElse(personToEdit.getPostalCode());
@@ -153,8 +162,9 @@ public class EditCommand extends UndoableCommand {
         }
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        Person personCreated = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
-                updatedDebt, updatedInterest, updatedDeadline, updatedTags);
+        Person personCreated = new Person(updatedName, updatedHandphone, updatedHomePhone, updatedOfficePhone,
+                updatedEmail, updatedAddress, updatedPostalCode, updatedDebt, updatedInterest, updatedDeadline,
+                updatedTags);
 
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
         personCreated.setDateRepaid(personToEdit.getDateRepaid());
@@ -178,7 +188,9 @@ public class EditCommand extends UndoableCommand {
      */
     public static class EditPersonDescriptor {
         private Name name;
-        private Phone phone;
+        private Handphone handphone;
+        private HomePhone homePhone;
+        private OfficePhone officePhone;
         private Email email;
         private Address address;
         private PostalCode postalCode;
@@ -191,7 +203,9 @@ public class EditCommand extends UndoableCommand {
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
-            this.phone = toCopy.phone;
+            this.handphone = toCopy.handphone;
+            this.homePhone = toCopy.homePhone;
+            this.officePhone = toCopy.officePhone;
             this.email = toCopy.email;
             this.address = toCopy.address;
             this.postalCode = toCopy.postalCode;
@@ -205,8 +219,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.postalCode,
-            this.debt, this.interest, this.deadline, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.handphone, this.homePhone, this.officePhone,
+                    this.email, this.address, this.postalCode, this.debt, this.interest, this.deadline, this.tags);
         }
 
         public void setName(Name name) {
@@ -217,12 +231,28 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(name);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setHandphone(Phone phone) {
+            this.handphone = (Handphone) phone;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<Handphone> getHandphone() {
+            return Optional.ofNullable(handphone);
+        }
+
+        public void setHomePhone(Phone phone) {
+            this.homePhone = (HomePhone) phone;
+        }
+
+        public Optional<HomePhone> getHomePhone() {
+            return Optional.ofNullable(homePhone);
+        }
+
+        public void setOfficePhone(Phone phone) {
+            this.officePhone = (OfficePhone) phone;
+        }
+
+        public Optional<OfficePhone> getOfficePhone() {
+            return Optional.ofNullable(officePhone);
         }
 
         public void setEmail(Email email) {
@@ -256,6 +286,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Debt> getDebt() {
             return Optional.ofNullable(debt);
         }
+
         public void setInterest(Interest interest) {
             this.interest = interest;
         }
@@ -296,7 +327,9 @@ public class EditCommand extends UndoableCommand {
             EditPersonDescriptor e = (EditPersonDescriptor) other;
 
             return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
+                    && getHandphone().equals(e.getHandphone())
+                    && getHomePhone().equals(e.getHomePhone())
+                    && getOfficePhone().equals(e.getOfficePhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getPostalCode().equals(e.getPostalCode())

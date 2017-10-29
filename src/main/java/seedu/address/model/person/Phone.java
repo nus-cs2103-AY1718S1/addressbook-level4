@@ -8,23 +8,23 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Person's phone number in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
-public class Phone {
-
+public abstract class Phone {
 
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
+            "Phone numbers can only contain numbers, and should be exactly 8 digits long";
+    public static final String NO_OFFICE_PHONE_SET = "Not available";
+    public static final String PHONE_VALIDATION_REGEX = "\\d{8}";
     public final String value;
 
     /**
-     * Validates given phone number.
+     * Validates given phone number. Only office phone is optional.
      *
      * @throws IllegalValueException if given phone string is invalid.
      */
-    public Phone(String phone) throws IllegalValueException {
+    protected Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        if (!isValidPhone(trimmedPhone)) {
+        if (!trimmedPhone.equals(NO_OFFICE_PHONE_SET) && !isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
         this.value = trimmedPhone;
@@ -33,7 +33,7 @@ public class Phone {
     /**
      * Returns true if a given string is a valid person phone number.
      */
-    public static boolean isValidPhone(String test) {
+    static boolean isValidPhone(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);
     }
 
