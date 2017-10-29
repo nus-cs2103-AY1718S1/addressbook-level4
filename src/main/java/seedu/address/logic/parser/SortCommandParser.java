@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -20,12 +19,11 @@ public class SortCommandParser implements Parser<SortCommand> {
     public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
         String trimmedValue = args.trim();
-        if (!StringUtil.isUnsignedInteger(trimmedValue)) {
+        if (trimmedValue.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
-        int type = Integer.parseInt(trimmedValue);
-        return new SortCommand(type);
+        return new SortCommand(trimmedValue);
     }
 
 }
