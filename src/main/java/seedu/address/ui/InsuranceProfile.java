@@ -41,7 +41,7 @@ public class InsuranceProfile extends UiPart<Region> {
     public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
         super(FXML);
         this.insurance = insurance;
-        index.setText(displayIndex + ". ");
+        index.setText(displayIndex + ".");
         owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
         insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
         beneficiary.setOnMouseClicked(e ->
