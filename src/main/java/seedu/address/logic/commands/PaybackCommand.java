@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -54,7 +56,12 @@ public class PaybackCommand extends UndoableCommand {
             throw new CommandException(ive.getMessage());
         }
 
-        return new CommandResult(String.format(MESSAGE_PAYBACK_SUCCESS, personThatPaidBack.getName(), amount));
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList
+                + String.format(MESSAGE_PAYBACK_SUCCESS, personThatPaidBack.getName(), amount));
     }
 
     @Override

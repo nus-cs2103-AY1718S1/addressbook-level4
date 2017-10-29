@@ -58,6 +58,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -295,7 +296,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         }
 
         assertCommandSuccess(command, expectedModel,
-                String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson), expectedSelectedCardIndex);
+                ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                        + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName()),
+                expectedSelectedCardIndex);
     }
 
     /**

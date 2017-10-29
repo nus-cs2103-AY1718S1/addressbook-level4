@@ -52,7 +52,7 @@ public class ModelManagerTest {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         UserPrefs userPrefs = new UserPrefs();
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        modelManager.deleteTag(new Tag("friends"));
+        modelManager.deleteTag(new Tag("friendly"));
 
         // friend tag should be deleted -> returns false
         AddressBook oldAddressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();

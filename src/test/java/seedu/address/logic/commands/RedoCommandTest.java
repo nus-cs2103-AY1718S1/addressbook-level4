@@ -59,8 +59,7 @@ public class RedoCommandTest {
             throws Exception {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.addWhitelistedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
@@ -68,7 +67,7 @@ public class RedoCommandTest {
         repaidCommand.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
 
         // Preparation done on actual model
-        model.setCurrentList("whitelist");
+        model.setCurrentListName("whitelist");
         model.changeListTo("whitelist");
 
         // Preparation done on actual model
@@ -87,7 +86,7 @@ public class RedoCommandTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.removeBlacklistedPerson(model
                 .getFilteredBlacklistedPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        expectedModel.setCurrentList("blacklist");
+        expectedModel.setCurrentListName("blacklist");
         expectedModel.changeListTo("blacklist");
 
         // Preparation done on actual model
@@ -95,7 +94,7 @@ public class RedoCommandTest {
         unbanCommand.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
 
         // Preparation done on actual model
-        model.setCurrentList("blacklist");
+        model.setCurrentListName("blacklist");
         model.changeListTo("blacklist");
 
         // Preparation done on actual model

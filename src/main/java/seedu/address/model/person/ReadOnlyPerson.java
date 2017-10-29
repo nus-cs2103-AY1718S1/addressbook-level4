@@ -80,7 +80,7 @@ public interface ReadOnlyPerson {
     /**
      * Checks if person is due for an update on his/her debt.
      */
-    int checkUpdateDebt(Date currentDate);
+    int checkLastAccruedDate(Date currentDate);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

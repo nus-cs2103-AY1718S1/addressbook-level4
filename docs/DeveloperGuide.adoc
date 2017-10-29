@@ -412,6 +412,7 @@ Outcome: prefix `" "` will be mapped to `1 500` in `argMultimap`. Index and amou
 
 // tag::backup[]
 === Backup storage mechanism
+
 The backup storage mechanism is facilitated by the `StorageManager`. It backs up the address book data automatically each time the application starts up, if there is existing data available. The backup file is saved in the same location as the main file as `addressbook.xml-backup.xml`.
 
 image::BackupAddressBookSequenceDiagram.png[width="800"]
@@ -543,7 +544,7 @@ public UniquePersonList getBlacklistedPersons() {
 
 Although this way of implementation seems inefficient, it supports robust synchronisation among the various other lists. For example, if a person is deleted from the masterlist, he will also be deleted from the blacklist. Likewise for various other commands that changes the `ReadOnlyPerson` object. Thus, it is efficient in this aspect. Moreover, this implementation sets the groundwork for future implementations of various other lists.
 
-==== Design Constraints:
+==== Design Considerations:
 
 **Aspect:** Other commands still work in Blacklist mode(`Add`, `Delete` command). +
 **Alternative 1 (current choice):** Inform user in user guide to use only specific commands for that list. +
@@ -552,8 +553,82 @@ Although this way of implementation seems inefficient, it supports robust synchr
 **Alternative 2:** Restrict other command usages in certain lists. +
 **Pros:** Users will never make a mistake sending the wrong person to the wrong list. +
 **Cons:** Implementation is complicated and thus implementation has to revisited whenever new commands are introduced.
-
 // end::list[]
+
+// tag::cluster[]
+=== Cluster mechanism
+
+As a debt collector that operates in all parts of Singapore, it would boost efficiency in deciding debt collection trips
+if the contacts can be effectively grouped by link:cluster[clusters]. It is determined based on the postal code provided
+upon adding a `Person` into the address book. This can be seen in the constructors of the `Person` class and the
+`Cluster` class.
+[source, java]
+----
+public Person(Name name, Phone phone, Email email, Address address, PostalCode postalCode,
+              Debt debt, Interest interest, Deadline deadline, Set<Tag> tags) {
+    requireAllNonNull(name, phone, email, address, postalCode, debt, interest, deadline, tags);
+    // assignment of other fields omitted for brevity
+    this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode));
+}
+----
+[source, java]
+----
+public Cluster(PostalCode postalCode) {
+    requireNonNull(postalCode);
+    if (!isValidPostalCode(postalCode.toString())) {
+        throw new AssertionError(MESSAGE_POSTAL_CODE_CONSTRAINTS);
+    }
+    String cluster = getCluster(postalCode.toString());
+    clusterNumber = Integer.parseInt(cluster.substring(0, 2));
+    this.value = cluster.substring(4);
+}
+----
+The `getCluster` method resides in the `ClusterUtil` class, and returns the name of the postal district based on the
+first two numbers of the postal code that is passed into the method. The postal districts are retrieved from [https://www.ura.gov.sg/realEstateIIWeb/resources/misc/list_of_postal_districts.htm[URA]].
+The district number is stored as part of the `String` for ease of sorting by location.
+Part of the code from `ClusterUtil` for retrieving the `cluster` from a postal code starting with `01` is shown below:
+[source, java]
+----
+public class ClusterUtil {
+
+    public static final String CLUSTER_POSTAL_DISTRICT_01 = "01. Raffles Place, Cecil, Marina, People's Park";
+    // declaration of other postal districts omitted for brevity
+    public static final String CLUSTER_POSTAL_DISTRICT_UNKNOWN = "99. Unknown";
+
+    public static String getCluster(String postalCode) {
+        requireNonNull(postalCode);
+        int postalSector = Integer.parseInt(postalCode.substring(0, 2));
+        switch (postalSector) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+            return CLUSTER_POSTAL_DISTRICT_01;
+        // cases for all other valid postal districts omitted for brevity
+        default:
+            return CLUSTER_POSTAL_DISTRICT_UNKNOWN;
+        }
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Grouping of contacts. +
+**Alternative 1 (current choice):** Create a field that contains the name and district number of the postal districts, based on postal code. +
+**Pros:** Easy to implement and extend, requires minimal user input. +
+**Cons:** Requires developer to update `ClusterUtil` whenever a new postal district is drawn by the government, and
+requires users to reset their contacts' `cluster` via deletion and addition or via editing their `postal codes`. +
+**Alternative 2:** Import contacts' location and find their proximity from one another using Google Maps API. +
+**Pros:** Higher precision of geographical location and proximity. +
+**Cons:** Tedious to implement proximity. Either takes up too much time in generating nearby contacts or too much space
+ in storing them. +
+**Alternative 3:** Assign general location to each contact upon addition into the address book or via editing. +
+**Pros:** Easy to implement. +
+**Cons:** Tedious for users. They also have to ensure that they do not make spelling mistakes.
+// end::cluster[]
 
 === Logging
 
@@ -968,7 +1043,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |debt collector |have an automated interest calculator |have my debtors' debts updated automatically every month
 
-|`* * *` |debt collector |group my debtors by location |plan my visit schedules easily
+|`* * *` |debt collector |group my debtors by link:#cluster[clusters] |plan my visit schedules easily
 
 |`* * *` |debt collector |have a debt field |store the amount of debt each Person has
 
@@ -1194,6 +1269,13 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[cluster]]
+Cluster
+
+....
+General location based on postal districts
 ....
 
 [[whitelist]]

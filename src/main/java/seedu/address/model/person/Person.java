@@ -3,7 +3,6 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
@@ -412,12 +411,8 @@ public class Person implements ReadOnlyPerson {
      * there is no need to increment debt.
      */
     @Override
-    public int checkUpdateDebt(Date currentDate) {
-        Calendar current = Calendar.getInstance();
-        current.setTime(currentDate);
-        Calendar lastAccrued = Calendar.getInstance();
-        lastAccrued.setTime(lastAccruedDate);
-        if (lastAccruedDate.before(currentDate) && (current.get(Calendar.MONTH) != lastAccrued.get(Calendar.MONTH))) {
+    public int checkLastAccruedDate(Date currentDate) {
+        if (lastAccruedDate.before(currentDate)) {
             return DateUtil.getNumberOfMonthBetweenDates(currentDate, lastAccruedDate);
         } else {
             return 0;

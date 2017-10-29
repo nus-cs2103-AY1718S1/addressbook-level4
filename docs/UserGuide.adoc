@@ -23,7 +23,8 @@ The terms used in this guide are as follows: +
 
 * Blacklist - List of people who are banned +
 * Whitelist - List of people who have cleared their debts +
-* Index - The ordering of a contact in the list
+* Index - The ordering of a contact in the list +
+* Cluster - The general location of a person based on [https://www.ura.gov.sg/realEstateIIWeb/resources/misc/list_of_postal_districts.htm[postal districts]]
 
 == Introduction
 
@@ -74,7 +75,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME hp/HANDPHONE_NUMBER`, `hp/HANDPHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-
+// tag::login[]
 === Logging into the address book application : `login`
 
 Logs into the address book. +
@@ -84,11 +85,14 @@ Examples:
 
 * `login userAcc_123 pa$$_Word!@#&`
 * `login batMan_111 (Batcave.327+-)`
+// end::login[]
 
+// tag::logout[]
 === Logging out of the address book application : `logout`
 
 Logs out of the address book. +
 Format: `logout`
+// end::logout[]
 
 === Viewing help : `help`
 
@@ -169,6 +173,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::borrow[]
 === Increasing the debt of a debtor: `borrow`
 
 Increase the debt of a debtor by the amount entered. +
@@ -190,7 +195,9 @@ Increases the debt of the 2nd person by $1000.10.
 `select 2` +
 `borrow 234` +
 Increases the debt of the 2nd person by $234.
+// end::borrow[]
 
+// tag::payback[]
 === Decreasing the debt of a person: `payback`
 
 Decrease the debt of a person by the amount entered. +
@@ -213,6 +220,7 @@ Decreases the debt of the 2nd person by $1000.10.
 `select 3` +
 `payback 234` +
 Increases the debt of the 3rd person by $234.
+// end::payback[]
 
 === Resetting the debt of a person: `repaid`
 
@@ -360,6 +368,25 @@ Sorts the contacts in the address book by name.
 * `sort cluster` +
 Sorts the contacts in the address book by their postal districts.
 // end::sort[]
+
+// tag::filter[]
+=== Filter contacts by tags : `filter`
+
+Filter contacts in the address book according to the tags specified. +
+Format: `filter TAG1 TAG2 ...`
+
+****
+* Contacts which contain at least one of the tags specified will be shown in the list.
+** e.g. A person in the address book, Alex, has two tags: `friendly` and `cooperative`. When the command `filter friendly` is entered, Alex will be shown in the filtered list.
+****
+
+Examples:
+
+* `filter friendly` +
+Displays contacts with the `friendly` tag.
+* `filter tricky violent dishonest` +
+Displays contacts who have at least one of these three tags: `tricky`, `violent`, `dishonest`.
+// end::filter[]
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -512,6 +539,8 @@ e.g.`select 2`
 * *Nearby* : `nearby`
 * *Sort* : `sort [ORDERING]` +
 e.g. `sort debt`
+* *Filter* : `filter TAG1 TAG2 ...` +
+e.g `filter friendly cooperative`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
@@ -548,6 +577,7 @@ e.g. `sort debt`
 * `Logout` command (since v1.3)
 * Person's debts are automatically incremented according to the interest rate of their loan (since v1.3)
 
+* Filter contacts by tags (since v1.4)
 * Replace `Phone` field with `Handphone`, `Home phone` and `Office phone` (since v1.4)
 
 == Features to be included by `V2.0`
@@ -563,7 +593,6 @@ e.g. `sort debt`
 * `Help` command that displays screenshots of positive examples.
 * Able to view the last login time.
 * Able to impose different periods of ban on a specified person in the blacklist
-* A feature to filter commands by tags.
 //[end of V1.5]
 * Two FA authentication for login and every other important actions.
 * Validity checks on client's personal information.

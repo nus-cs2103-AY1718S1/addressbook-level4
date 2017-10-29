@@ -34,10 +34,10 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /** Returns the name of current displayed list */
-    String getCurrentList();
+    String getCurrentListName();
 
     /** Sets the name of current displayed list */
-    void setCurrentList(String currentList);
+    void setCurrentListName(String currentList);
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;
@@ -78,21 +78,24 @@ public interface Model {
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * @return size of current displayed filtered list.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+    int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
      * Updates the filter of the filtered blacklisted person list to filter by the given {@code predicate}.
+     * @return size of current displayed filtered list.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate);
+    int updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
      * Updates the filter of the filtered whitelisted person list to filter by the given {@code predicate}.
+     * @return size of current displayed filtered list.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate);
+    int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
      * Retrieves the full list of persons nearby a particular person.
