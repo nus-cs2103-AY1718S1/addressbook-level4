@@ -80,7 +80,7 @@ public class UiManager extends ComponentManager implements Ui {
         }
 
     }
-
+    //@@author cqhchan
     @Override
     public void restart(String userName) {
         stop();
@@ -175,6 +175,7 @@ public class UiManager extends ComponentManager implements Ui {
 
         return new ModelManager(initialData, userPrefs);
     }
+    //@@author
 
 
     @Override
