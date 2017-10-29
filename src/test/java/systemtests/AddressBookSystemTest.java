@@ -21,6 +21,7 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.ExtendedPersonCardHandle;
+import guitests.guihandles.GraphPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -85,6 +86,10 @@ public abstract class AddressBookSystemTest {
 
     public ExtendedPersonCardHandle getExtendedPersonCard() {
         return mainWindowHandle.getExtendedPersonCard();
+    }
+
+    public GraphPanelHandle getGraphPanel() {
+        return mainWindowHandle.getGraphPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
