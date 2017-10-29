@@ -14,6 +14,8 @@ import seedu.address.commons.util.StringUtil;
 
 import seedu.address.model.meeting.DateTime;
 import seedu.address.model.meeting.NameMeeting;
+import seedu.address.model.meeting.PersonToMeet;
+import seedu.address.model.meeting.PhoneNum;
 import seedu.address.model.meeting.Place;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -109,6 +111,24 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<PersonToMeet>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<PersonToMeet> parsePersonToMeet(Optional<String> personName) throws IllegalValueException {
+        requireNonNull(personName);
+        return personName.isPresent() ? Optional.of(new PersonToMeet(personName.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<PhoneNum> parsePhoneNum(Optional<String> phoneNum) throws IllegalValueException {
+        requireNonNull(phoneNum);
+        return phoneNum.isPresent() ? Optional.of(new PhoneNum(phoneNum.get())) : Optional.empty();
     }
 
     /**

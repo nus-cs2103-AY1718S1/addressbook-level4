@@ -1,12 +1,31 @@
 package seedu.address.testutil;
 
+import seedu.address.model.AddressBook;
 import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
+import seedu.address.model.meeting.exceptions.MeetingClashException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_ACTIVITY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_ACTIVITY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSONTOMEET_ACTIVITY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSONTOMEET_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONENUM_ACTIVITY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONENUM_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PLACE_ACTIVITY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PLACE_BIKING;
 
 public class TypicalMeetings {
-    public static final ReadOnlyMeeting ACTIVITY = new MeetingBuilder().withNameMeeting("Activity")
+    public static final ReadOnlyMeeting AGEING = new MeetingBuilder().withNameMeeting("Ageing")
             .withDateTime("01-01-2018 00:00").withPersonToMeet("Alice Tan")
             .withPhoneNum("85355255").withPlace("Vivocity").build();
-    public static final ReadOnlyMeeting BIKING = new MeetingBuilder().withNameMeeting("Biking")
+    public static final ReadOnlyMeeting BREEDING = new MeetingBuilder().withNameMeeting("Breeding")
             .withDateTime("01-01-2018 00:01").withPersonToMeet("John Tan")
             .withPhoneNum("97788542").withPlace("West Coast Park").build();
     public static final ReadOnlyMeeting CYCLING = new MeetingBuilder().withNameMeeting("Cycling")
@@ -34,11 +53,11 @@ public class TypicalMeetings {
             .withPhoneNum("81234567").withPlace("JEM").build();
 
     // Manually added - Meeting's details found in {@code CommandTestUtil}
-    public static final ReadOnlyMeeting AMY = new MeetingBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final ReadOnlyMeeting BOB = new MeetingBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
+    public static final ReadOnlyMeeting ACTIVITY = new MeetingBuilder().withNameMeeting(VALID_NAME_ACTIVITY).withPhoneNum(VALID_PHONENUM_ACTIVITY)
+            .withPlace(VALID_PLACE_ACTIVITY).withDateTime(VALID_DATE_ACTIVITY).withPersonToMeet(VALID_PERSONTOMEET_ACTIVITY).build();
+    public static final ReadOnlyMeeting BIKING = new MeetingBuilder().withNameMeeting(VALID_NAME_BIKING).withPhoneNum(VALID_PHONENUM_BIKING)
+            .withPlace(VALID_PLACE_BIKING).withDateTime(VALID_DATE_BIKING).withPersonToMeet(VALID_PERSONTOMEET_BIKING).build();
+
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
@@ -53,13 +72,17 @@ public class TypicalMeetings {
             try {
                 ab.addMeeting(meeting);
             } catch (DuplicateMeetingException e) {
-                assert false : "not possible";
+                assert false : "duplicate not possible";
+            } catch (MeetingBeforeCurrDateException mbcde) {
+                assert false : "mbcde not possible";
+            } catch (MeetingClashException mce) {
+                assert false : "mce not possible";
             }
         }
         return ab;
     }
 
     public static List<ReadOnlyMeeting> getTypicalMeetings() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(AGEING, BREEDING, CYCLING, DIVING, EATING, FENCING, GARDENING));
     }
 }

@@ -1,12 +1,28 @@
 package seedu.address.logic.commands;
 
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_ACTIVITY;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSONTOMEET_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONENUM_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PLACE_BIKING;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstMeetingOnly;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_MEETING;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_MEETING;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.EditMeetingCommand.EditMeetingDescriptor;
-
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -16,13 +32,6 @@ import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.testutil.EditMeetingDescriptorBuilder;
 import seedu.address.testutil.MeetingBuilder;
 
-import org.junit.Test;
-
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class EditMeetingCommandTest {
 
@@ -32,14 +41,14 @@ public class EditMeetingCommandTest {
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Meeting editedMeeting = new MeetingBuilder().build();
         EditMeetingDescriptor descriptor = new EditMeetingDescriptorBuilder(editedMeeting).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_MEETING, descriptor);
+        EditMeetingCommand editMeetingCommand = prepareCommand(INDEX_FIRST_MEETING, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting);
+        String expectedMessage = String.format(EditMeetingCommand.MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateMeeting(model.getFilteredMeetingList().get(0), editedMeeting);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editMeetingCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -48,31 +57,34 @@ public class EditMeetingCommandTest {
         ReadOnlyMeeting lastMeeting = model.getFilteredMeetingList().get(indexLastMeeting.getZeroBased());
 
         MeetingBuilder meetingInList = new MeetingBuilder(lastMeeting);
-        Meeting editedMeeting = meetingInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        Meeting editedMeeting = meetingInList.withNameMeeting(VALID_NAME_BIKING).withPhoneNum(VALID_PHONENUM_BIKING)
+                .withDateTime(VALID_DATE_BIKING).withPersonToMeet(VALID_PERSONTOMEET_BIKING).withPlace(VALID_PLACE_BIKING)
                 .build();
 
-        EditMeetingDescriptor descriptor = new EditMeetingDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
-        EditCommand editCommand = prepareCommand(indexLastMeeting, descriptor);
+        EditMeetingDescriptor descriptor = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING)
+                .withPhoneNum(VALID_PHONENUM_BIKING).withPlace(VALID_PLACE_BIKING).withDate(VALID_DATE_BIKING)
+                .build();
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting);
+        EditMeetingCommand editMeetingCommand = prepareCommand(indexLastMeeting, descriptor);
+
+        String expectedMessage = String.format(EditMeetingCommand.MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateMeeting(lastMeeting, editedMeeting);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editMeetingCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_MEETING, new EditMeetingDescriptor());
+        EditMeetingCommand editMeetingCommand = prepareCommand(INDEX_FIRST_MEETING, new EditMeetingDescriptor());
         ReadOnlyMeeting editedMeeting = model.getFilteredMeetingList().get(INDEX_FIRST_MEETING.getZeroBased());
 
         String expectedMessage = String.format(EditMeetingCommand.MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editMeetingCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -80,25 +92,25 @@ public class EditMeetingCommandTest {
         showFirstMeetingOnly(model);
 
         ReadOnlyMeeting meetingInFilteredList = model.getFilteredMeetingList().get(INDEX_FIRST_MEETING.getZeroBased());
-        Meeting editedMeeting = new MeetingBuilder(meetingInFilteredList).withName(VALID_NAME_BOB).build();
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_MEETING,
-                new EditMeetingDescriptorBuilder().withName(VALID_NAME_BOB).build());
+        Meeting editedMeeting = new MeetingBuilder(meetingInFilteredList).withNameMeeting(VALID_NAME_BIKING).build();
+        EditMeetingCommand editMeetingCommand = prepareCommand(INDEX_FIRST_MEETING,
+                new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING).build());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting);
+        String expectedMessage = String.format(EditMeetingCommand.MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updateMeeting(model.getFilteredMeetingList().get(0), editedMeeting);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editMeetingCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_duplicateMeetingUnfilteredList_failure() {
         Meeting firstMeeting = new Meeting(model.getFilteredMeetingList().get(INDEX_FIRST_MEETING.getZeroBased()));
         EditMeetingDescriptor descriptor = new EditMeetingDescriptorBuilder(firstMeeting).build();
-        EditCommand editCommand = prepareCommand(INDEX_SECOND_MEETING, descriptor);
+        EditMeetingCommand editMeetingCommand = prepareCommand(INDEX_SECOND_MEETING, descriptor);
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_MEETING);
+        assertCommandFailure(editMeetingCommand, model, EditMeetingCommand.MESSAGE_DUPLICATE_MEETING);
     }
 
     @Test
@@ -107,19 +119,19 @@ public class EditMeetingCommandTest {
 
         // edit meeting in filtered list into a duplicate in address book
         ReadOnlyMeeting meetingInList = model.getAddressBook().getMeetingList().get(INDEX_SECOND_MEETING.getZeroBased());
-        EditCommand editCommand = prepareCommand(INDEX_FIRST_MEETING,
+        EditMeetingCommand editMeetingCommand = prepareCommand(INDEX_FIRST_MEETING,
                 new EditMeetingDescriptorBuilder(meetingInList).build());
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_MEETING);
+        assertCommandFailure(editMeetingCommand, model, EditMeetingCommand.MESSAGE_DUPLICATE_MEETING);
     }
 
     @Test
     public void execute_invalidMeetingIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredMeetingList().size() + 1);
-        EditMeetingDescriptor descriptor = new EditMeetingDescriptorBuilder().withName(VALID_NAME_BOB).build();
-        EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
+        EditMeetingDescriptor descriptor = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING).build();
+        EditMeetingCommand editMeetingCommand = prepareCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
+        assertCommandFailure(editMeetingCommand, model, Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
     }
 
     /**
@@ -133,19 +145,19 @@ public class EditMeetingCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getMeetingList().size());
 
-        EditCommand editCommand = prepareCommand(outOfBoundIndex,
-                new EditMeetingDescriptorBuilder().withName(VALID_NAME_BOB).build());
+        EditMeetingCommand editMeetingCommand = prepareCommand(outOfBoundIndex,
+                new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING).build());
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
+        assertCommandFailure(editMeetingCommand, model, Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_MEETING, DESC_AMY);
+        final EditMeetingCommand standardCommand = new EditMeetingCommand(INDEX_FIRST_MEETING, DESC_ACTIVITY);
 
         // same values -> returns true
-        EditMeetingDescriptor copyDescriptor = new EditMeetingDescriptor(DESC_AMY);
-        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_MEETING, copyDescriptor);
+        EditMeetingDescriptor copyDescriptor = new EditMeetingDescriptor(DESC_ACTIVITY);
+        EditMeetingCommand commandWithSameValues = new EditMeetingCommand(INDEX_FIRST_MEETING, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -158,18 +170,18 @@ public class EditMeetingCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_MEETING, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditMeetingCommand(INDEX_SECOND_MEETING, DESC_ACTIVITY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_MEETING, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditMeetingCommand(INDEX_FIRST_MEETING, DESC_BIKING)));
     }
 
     /**
-     * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
+     * Returns an {@code EditMeetingCommand} with parameters {@code index} and {@code descriptor}
      */
-    private EditCommand prepareCommand(Index index, EditMeetingDescriptor descriptor) {
-        EditCommand editCommand = new EditCommand(index, descriptor);
-        editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return editCommand;
+    private EditMeetingCommand prepareCommand(Index index, EditMeetingDescriptor descriptor) {
+        EditMeetingCommand editMeetingCommand = new EditMeetingCommand(index, descriptor);
+        editMeetingCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return editMeetingCommand;
     }
 }
