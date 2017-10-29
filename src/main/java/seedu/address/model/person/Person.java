@@ -28,6 +28,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<PostalCode> postalCode;
     private ObjectProperty<Cluster> cluster;
     private ObjectProperty<Debt> debt;
+    private ObjectProperty<Debt> totalDebt;
     private ObjectProperty<Interest> interest;
     private ObjectProperty<DateBorrow> dateBorrow;
     private ObjectProperty<Deadline> deadline;
@@ -52,6 +53,7 @@ public class Person implements ReadOnlyPerson {
         this.postalCode = new SimpleObjectProperty<>(postalCode);
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode));
         this.debt = new SimpleObjectProperty<>(debt);
+        this.totalDebt = new SimpleObjectProperty<>(debt);
         this.interest = new SimpleObjectProperty<>(interest);
         this.dateBorrow = new SimpleObjectProperty<>(new DateBorrow());
         this.deadline = new SimpleObjectProperty<>(deadline);
@@ -67,6 +69,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getPostalCode(),
                 source.getDebt(), source.getInterest(), source.getDeadline(), source.getTags());
+        this.totalDebt = new SimpleObjectProperty<>(source.getTotalDebt());
         this.dateBorrow = new SimpleObjectProperty<>(source.getDateBorrow());
         this.dateRepaid = new SimpleObjectProperty<>(source.getDateRepaid());
         this.cluster = new SimpleObjectProperty<>(new Cluster(postalCode.get()));
@@ -203,7 +206,6 @@ public class Person implements ReadOnlyPerson {
         return interest.get();
     }
 
-    //@@author lawwman
     /**
      * Sets current debt of a person to the given Debt.
      * @param debt must not be null.
@@ -240,8 +242,6 @@ public class Person implements ReadOnlyPerson {
         return dateBorrow.get();
     }
 
-    //@@author lawwman
-
     /**
      * Sets associated deadline of a person to the given Deadline.
      * @param deadline must not be null.
@@ -259,6 +259,40 @@ public class Person implements ReadOnlyPerson {
     public Deadline getDeadline() {
         return deadline.get();
     }
+
+    /**
+     * Sets date of last accrued date.
+     * @param lastAccruedDate must not be null.
+     */
+    public void setLastAccruedDate(Date lastAccruedDate) {
+        requireNonNull(lastAccruedDate);
+        this.lastAccruedDate = lastAccruedDate;
+    }
+
+    @Override
+    public Date getLastAccruedDate() {
+        return lastAccruedDate;
+    }
+
+    //@@author jelneo
+    /**
+     * Sets total debt of a person to the given Debt.
+     * @param debt must not be null.
+     */
+    public void setTotalDebt(Debt debt) {
+        this.totalDebt.set(requireNonNull(debt));
+    }
+
+    @Override
+    public ObjectProperty<Debt> totalDebtProperty() {
+        return totalDebt;
+    }
+
+    @Override
+    public Debt getTotalDebt() {
+        return totalDebt.get();
+    }
+    //@@author
 
     /**
      * Returns boolean status of a person's blacklist-status.
@@ -291,7 +325,7 @@ public class Person implements ReadOnlyPerson {
     public void setIsWhitelisted(boolean isWhitelisted) {
         this.isWhitelisted = isWhitelisted;
     }
-    //@@author
+
     /**
      * Sets date repaid of a person in the given {@code dateRepaid}.
      * @param dateRepaid must not be null.
@@ -308,20 +342,6 @@ public class Person implements ReadOnlyPerson {
     @Override
     public DateRepaid getDateRepaid() {
         return dateRepaid.get();
-    }
-
-    /**
-     * Sets date of last accrued date.
-     * @param lastAccruedDate must not be null.
-     */
-    public void setLastAccruedDate(Date lastAccruedDate) {
-        requireNonNull(lastAccruedDate);
-        this.lastAccruedDate = lastAccruedDate;
-    }
-
-    @Override
-    public Date getLastAccruedDate() {
-        return lastAccruedDate;
     }
 
     /**
