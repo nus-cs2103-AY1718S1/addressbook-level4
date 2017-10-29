@@ -5,7 +5,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: stylesheets
 
 The Gentleman's Guide was developed from AddressBook - Level 4 by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-It was then modified and enhanced by the https://github.com/CS2103AUG2017-T09-B1/main[CS2103T T09-B1] team.
+It was then modified and enhanced by the https://github.com/CS2103AUG2017-T09-B1[CS2103T T09-B1] team.
 
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
