@@ -141,6 +141,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author duyson98
     //// reminder-level operations
 
     /**
@@ -192,6 +193,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new ReminderNotFoundException();
         }
     }
+    //@@author
 
     //// tag-level operations
 
@@ -231,6 +233,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    //@@author duyson98
     /**
      * Ensures that every tag in this reminder:
      *  - exists in the master list {@link #tags}
@@ -260,6 +263,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void syncMasterTagListWith(UniqueReminderList reminders) {
         reminders.forEach(this::syncMasterTagListWith);
     }
+    //@@author
 
     //// util methods
 

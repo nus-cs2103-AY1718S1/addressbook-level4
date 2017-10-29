@@ -1,3 +1,5 @@
+//@@author duyson98
+
 package seedu.address.model.reminder;
 
 import static java.util.Objects.requireNonNull;
