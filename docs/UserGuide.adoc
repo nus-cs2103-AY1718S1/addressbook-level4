@@ -75,7 +75,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-
+// tag::login[]
 === Logging into the address book application : `login`
 
 Logs into the address book. +
@@ -85,11 +85,14 @@ Examples:
 
 * `login userAcc_123 pa$$_Word!@#&`
 * `login batMan_111 (Batcave.327+-)`
+// end::login[]
 
+// tag::logout[]
 === Logging out of the address book application : `logout`
 
 Logs out of the address book. +
 Format: `logout`
+// end::logout[]
 
 === Viewing help : `help`
 
@@ -170,6 +173,7 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::borrow[]
 === Increasing the debt of a debtor: `borrow`
 
 Increase the debt of a debtor by the amount entered. +
@@ -191,7 +195,9 @@ Increases the debt of the 2nd person by $1000.10.
 `select 2` +
 `borrow 234` +
 Increases the debt of the 2nd person by $234.
+// end::borrow[]
 
+// tag::payback[]
 === Decreasing the debt of a person: `payback`
 
 Decrease the debt of a person by the amount entered. +
@@ -214,6 +220,7 @@ Decreases the debt of the 2nd person by $1000.10.
 `select 3` +
 `payback 234` +
 Increases the debt of the 3rd person by $234.
+// end::payback[]
 
 === Resetting the debt of a person: `repaid`
 
