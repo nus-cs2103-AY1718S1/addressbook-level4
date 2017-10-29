@@ -57,6 +57,8 @@ public class XmlAdaptedPerson {
     private String dateRepaid;
     @XmlElement (required = true)
     private String lastAccruedDate;
+    @XmlElement (required = true)
+    private String hasOverdueDebt;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -87,6 +89,11 @@ public class XmlAdaptedPerson {
         deadline = source.getDeadline().value;
         dateRepaid = source.getDateRepaid().value;
         lastAccruedDate = DateUtil.formatDate(source.getLastAccruedDate());
+        if (source.hasOverdueDebt()) {
+            hasOverdueDebt = "true";
+        } else {
+            hasOverdueDebt = "false";
+        }
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -122,6 +129,11 @@ public class XmlAdaptedPerson {
         adaptedPerson.setDateBorrow(dateBorrow);
         adaptedPerson.setDateRepaid(dateRepaid);
         adaptedPerson.setLastAccruedDate(lastAccruedDate);
+        if (this.hasOverdueDebt.equals("true")) {
+            adaptedPerson.setHasOverdueDebt(true);
+        } else {
+            adaptedPerson.setHasOverdueDebt(false);
+        }
         return adaptedPerson;
     }
 }

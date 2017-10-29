@@ -33,6 +33,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
+import seedu.address.model.util.DateUtil;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -546,6 +547,13 @@ public class ModelManager extends ComponentManager implements Model {
                 if (!person.getInterest().value.equals("No interest set.")
                         && (person.checkLastAccruedDate(new Date()) != 0)) {
                     updateDebtFromInterest(person, person.checkLastAccruedDate(new Date()));
+                }
+                if (!person.getDeadline().value.equals("No deadline set.")) {
+                    Date deadline = DateUtil.convertStringToDate(person.getDeadline().valueToDisplay);
+                    if (deadline.before(new Date())) {
+                        logger.info("overdue debt");
+                        addOverdueDebtPerson(person);
+                    }
                 }
             }
         }
