@@ -27,6 +27,9 @@ public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_WHITELISTED_PERSONS = unused -> true;
 
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_OVERDUE_PERSONS = unused -> true;
+
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
 
@@ -76,6 +79,9 @@ public interface Model {
     /** Returns an unmodifiable view of the whitelisted filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList();
 
+    /** Returns an unmodifiable view of the filtered person list with overdue debt */
+    ObservableList<ReadOnlyPerson> getFilteredOverduePersonList();
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @return size of current displayed filtered list.
@@ -96,6 +102,13 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    /**
+     * Updates the filter of the filtered person list with overdue debt to filter by the given {@code predicate}.
+     * @return size of current displayed filtered list.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    int updateFilteredOverduePersonList(Predicate<ReadOnlyPerson> predicate);
 
     /**
      * Retrieves the full list of persons nearby a particular person.

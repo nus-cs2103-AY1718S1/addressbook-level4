@@ -64,6 +64,17 @@ public interface ReadOnlyPerson {
     void setIsWhitelisted(boolean isWhitelisted);
 
     /**
+     * Returns true if person has overdue debt.
+     */
+    boolean hasOverdueDebt();
+
+    /**
+     * {@param} is {@code boolean} value.
+     * Sets {@code boolean} variable as the value of {@param hasOverdueDebt}
+     */
+    void setHasOverdueDebt(boolean hasOverdueDebt);
+
+    /**
      * Returns true if both are in same cluster.
      */
     boolean isSameCluster(ReadOnlyPerson other);
@@ -92,6 +103,7 @@ public interface ReadOnlyPerson {
                 && other.getCluster().equals(this.getCluster())
                 && (other.isBlacklisted() == (this.isBlacklisted()))
                 && (other.isWhitelisted() == (this.isWhitelisted()))
+                && (other.hasOverdueDebt() == (this.hasOverdueDebt()))
                 && other.getDebt().equals(this.getDebt())
                 && other.getInterest().equals(this.getInterest())
                 && other.getDateBorrow().equals(this.getDateBorrow())

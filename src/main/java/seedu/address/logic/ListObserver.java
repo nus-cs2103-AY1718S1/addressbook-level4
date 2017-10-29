@@ -18,6 +18,7 @@ public class ListObserver {
     public static final String MASTERLIST_NAME_DISPLAY_FORMAT = "MASTERLIST:\n";
     public static final String BLACKLIST_NAME_DISPLAY_FORMAT = "BLACKLIST:\n";
     public static final String WHITELIST_NAME_DISPLAY_FORMAT = "WHITELIST:\n";
+    public static final String OVERDUELIST_NAME_DISPLAY_FORMAT = "OVERDUELIST:\n";
 
     private Model model;
 

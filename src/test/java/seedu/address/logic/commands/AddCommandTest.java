@@ -198,6 +198,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyPerson> getFilteredOverduePersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
             return 0;
@@ -211,6 +217,12 @@ public class AddCommandTest {
 
         @Override
         public int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+            return 0;
+        }
+
+        @Override
+        public int updateFilteredOverduePersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
             return 0;
         }

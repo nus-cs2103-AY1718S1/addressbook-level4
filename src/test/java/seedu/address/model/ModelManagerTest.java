@@ -46,6 +46,13 @@ public class ModelManagerTest {
         modelManager.getFilteredWhitelistedPersonList().remove(0);
     }
 
+    @Test
+    public void getFilteredOverduePersonList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getFilteredOverduePersonList().remove(0);
+    }
+
     // No existing command that calls deleteTag method. Testing will be done here for now.
     @Test
     public void deleteTag() throws PersonNotFoundException, IllegalValueException, TagNotFoundException {

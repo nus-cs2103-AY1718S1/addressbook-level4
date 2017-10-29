@@ -140,6 +140,26 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * Adds a person to the overdue debt list in the address book.
+     * @return ReadOnly newOverduePerson
+     */
+    public ReadOnlyPerson addOverdueDebtPerson(ReadOnlyPerson p) {
+        int index;
+        index = persons.getIndexOf(p);
+
+        Person newOverduePerson = new Person(p);
+        newOverduePerson.setHasOverdueDebt(true);
+        try {
+            updatePerson(p, newOverduePerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+        return persons.getReadOnlyPerson(index);
+    }
+
+    /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
@@ -408,6 +428,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
         return persons.asObservableWhitelist();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getOverduePersonList() {
+        return persons.asObservableOverdueList();
     }
 
     @Override

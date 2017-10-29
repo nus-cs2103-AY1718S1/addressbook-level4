@@ -172,6 +172,14 @@ public class UniquePersonList implements Iterable<Person> {
                 .filter(person -> person.isWhitelisted()).collect(toCollection(FXCollections::observableArrayList)));
     }
 
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyPerson> asObservableOverdueList() {
+        return FXCollections.unmodifiableObservableList(mappedList.stream()
+                .filter(person -> person.hasOverdueDebt()).collect(toCollection(FXCollections::observableArrayList)));
+    }
+
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();

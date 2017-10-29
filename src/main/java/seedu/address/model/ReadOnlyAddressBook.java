@@ -28,6 +28,12 @@ public interface ReadOnlyAddressBook {
     ObservableList<ReadOnlyPerson> getWhitelistedPersonList();
 
     /**
+     * Returns an unmodifiable view of the list of persons with overdue debt.
+     * This list will not contain any duplicate persons.
+     */
+    ObservableList<ReadOnlyPerson> getOverduePersonList();
+
+    /**
      * Returns an unmodifiable view of the tags list.
      * This list will not contain any duplicate tags.
      */
