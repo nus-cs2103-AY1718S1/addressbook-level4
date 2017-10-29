@@ -3,13 +3,18 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.UniqueReminderList;
 
 /**
  * Represents an Event in the address book.
@@ -20,6 +25,7 @@ public class Event implements ReadOnlyEvent {
     private ObjectProperty<Name> name;
     private ObjectProperty<DateTime> time;
     private ObjectProperty<Address> venue;
+    private ObjectProperty<UniqueReminderList> reminders;
 
     /**
      * Every field must be present and not null.
@@ -29,6 +35,11 @@ public class Event implements ReadOnlyEvent {
         this.name = new SimpleObjectProperty<>(name);
         this.time = new SimpleObjectProperty<>(time);
         this.venue = new SimpleObjectProperty<>(venue);
+
+        Set<Reminder> reminders = new HashSet<>();
+
+        // ensuring every instance of Event has an empty list of reminders in it.
+        this.reminders = new SimpleObjectProperty<>();
     }
 
     /**
@@ -77,6 +88,19 @@ public class Event implements ReadOnlyEvent {
     @Override
     public Address getVenue() {
         return venue.get();
+    }
+
+    @Override
+    public ObjectProperty<UniqueReminderList> reminderProperty() {
+        return reminders;
+    }
+    /**
+     * Returns an immutable property set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Reminder> getReminder() {
+        return Collections.unmodifiableSet(reminders.get().toSet());
     }
 
 

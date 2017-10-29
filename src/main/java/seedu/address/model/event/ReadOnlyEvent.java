@@ -4,6 +4,8 @@ import javafx.beans.property.ObjectProperty;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.UniqueReminderList;
 
 /**
  * A read-only immutable interface for an Event in the addressbook.
@@ -18,6 +20,8 @@ public interface ReadOnlyEvent {
     DateTime getTime();
     ObjectProperty<Address> venueProperty();
     Address getVenue();
+    ObjectProperty<UniqueReminderList> reminderProperty();
+    Reminder getReminder();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

@@ -54,16 +54,6 @@ public class UniqueReminderList implements Iterable<Reminder> {
     }
 
     /**
-     * Sorts the reminders based on time
-     *
-     */
-    public void sortReminders() {
-        DateTimeFormatter sdf = DateTimeFormatter.ofPattern("ddMMyyyy HH:mm");
-        internalList.sort((e1, e2) -> (LocalDateTime.parse(e1.getTime().toString(), sdf)
-                .compareTo(LocalDateTime.parse(e2.getTime().toString(), sdf))));
-    }
-
-    /**
      * Replaces the reminder {@code target} in the list with {@code editedReminder}.
      *
      * @throws DuplicateReminderException if the replacement is equivalent to another existing reminder in the list.

@@ -8,25 +8,22 @@ import java.util.Objects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.event.Event;
-import seedu.address.model.property.DateTime;
 
 /**
  * Represents an Reminder in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Reminder implements ReadOnlyReminder {
-    private ObjectProperty<DateTime> time;
     private ObjectProperty<String> message;
     private ObjectProperty<Event> event;
 
     /**
      * Every field must be present and not null.
      */
-    public Reminder(DateTime time, String message, Event event) {
-        requireAllNonNull(time, message, event);
-        this.time = new SimpleObjectProperty<>(time);
-        this.message = new SimpleObjectProperty<>(message);
+    public Reminder(Event event, String message) {
+        requireAllNonNull(message, event);
         this.event = new SimpleObjectProperty<>(event);
+        this.message = new SimpleObjectProperty<>(message);
     }
     public Reminder() {
     }
@@ -35,7 +32,7 @@ public class Reminder implements ReadOnlyReminder {
      * Creates a copy of the given ReadOnlyReminder.
      */
     public Reminder(ReadOnlyReminder source) {
-        this(source.getTime(), source.getMessage(), source.getEvent());
+        this( source.getEvent(), source.getMessage());
     }
     @Override
     public ObjectProperty<Event> eventProperty() {
@@ -44,18 +41,6 @@ public class Reminder implements ReadOnlyReminder {
     @Override
     public Event getEvent() {
         return event.get();
-    }
-
-    public void setDateTime(DateTime time) {
-        this.time.set(requireNonNull(time));
-    }
-    @Override
-    public DateTime getTime() {
-        return time.get();
-    }
-    @Override
-    public ObjectProperty<DateTime> dateTimeProperty() {
-        return time;
     }
 
     public void setMessage(String message) {
@@ -72,7 +57,6 @@ public class Reminder implements ReadOnlyReminder {
         return message.get();
     }
 
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -83,7 +67,7 @@ public class Reminder implements ReadOnlyReminder {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(time, message);
+        return Objects.hash(event, message);
     }
 
     @Override
