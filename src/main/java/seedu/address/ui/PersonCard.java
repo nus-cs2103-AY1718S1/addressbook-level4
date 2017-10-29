@@ -1,4 +1,5 @@
 package seedu.address.ui;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -96,9 +97,13 @@ public class PersonCard extends UiPart<Region> {
     }
     /** Checks if the user has added any photo to the specific contact*/
     private void setImage(ReadOnlyPerson person) {
-        String url = person.getPhoto().getUrl();
-        if (!url.equals("")) { //if url is not empty, sets the image that overrides the default photo.
-            Image image = new Image(url);
+        String url = person.getPhoto().getFilePath(); //gets the filepath directly from the resources folder.
+        if (url.equals("")) {
+            Image image = new Image(getClass().getResource("/images/noPhoto.png").toExternalForm());
+            imageView.setImage(image);
+        } else {
+            File storedImage = new File(url);
+            Image image = new Image(storedImage.toURI().toString());
             imageView.setImage(image);
         }
     }
