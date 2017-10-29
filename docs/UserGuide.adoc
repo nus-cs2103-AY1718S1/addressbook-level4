@@ -339,7 +339,7 @@ However, please include at least the hour and a day that can be specified.
 
 
 *Format:* `appointment INDEX d/TIME` +
-*Shorthand format:* `apt INDEX d/TIME`
+*Shorthand format:* `appt INDEX d/TIME`
 
 *Example:*
 
@@ -348,7 +348,7 @@ image::aptexample.png[width="500"]
 
 You can sort list by appointment dates. +
 *Format:* `appointment` +
-*Shorthand format:* `apt`
+*Shorthand format:* `appt`
 
 [NOTE]
 You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
@@ -356,7 +356,7 @@ You can only set dates that are after current time. (i.e. You cannot set a time 
 To remove appointment,
 
 *Format:* `appointment INDEX d/off` +
-*Shorthand format:* `apt INDEX d/off`
+*Shorthand format:* `appt INDEX d/off`
 
 // end::appointment[]
 
