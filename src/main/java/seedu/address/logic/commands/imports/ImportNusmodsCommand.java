@@ -39,7 +39,7 @@ public class ImportNusmodsCommand extends ImportCommand {
             + "Examples:\n"
             + COMMAND_WORD + " --nusmods https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01";
 
-    private static final String INVALID_URL = "The URL provided is not from NUSMods website. \n%1$s";
+    public static final String INVALID_URL = "The URL provided is not from NUSMods website. \n%1$s";
     private static final String YEAR_INVALID =
             "Maybe you modify the part regarding academic year and semester.";
     private static final String YEAR_OFFSET_BY_ONE =
@@ -142,7 +142,7 @@ public class ImportNusmodsCommand extends ImportCommand {
     private void matchSemesterInformation() throws ParseException {
         Matcher matcher = URL_SEMESTER_INFO_FORMAT.matcher(url.getPath());
         if (!matcher.matches()) {
-            throw  new ParseException(INVALID_URL);
+            throw  new ParseException(String.format(INVALID_URL, ""));
         }
 
         try {
