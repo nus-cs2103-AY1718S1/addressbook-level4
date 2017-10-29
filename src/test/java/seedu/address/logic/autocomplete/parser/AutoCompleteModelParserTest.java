@@ -48,7 +48,7 @@ public class AutoCompleteModelParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private AutoCompleteModelParser parser;
+    private AutoCompleteByPrefixModelParser parser;
     private ModelStubWithRequiredMethods mockModel;
 
     @Before
@@ -60,7 +60,7 @@ public class AutoCompleteModelParserTest {
         } catch (DuplicatePersonException ex) {
             fail("This exception should not be thrown.");
         }
-        parser = new AutoCompleteModelParser(mockModel);
+        parser = new AutoCompleteByPrefixModelParser(mockModel);
     }
 
     @Test

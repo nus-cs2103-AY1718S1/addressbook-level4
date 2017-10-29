@@ -47,4 +47,11 @@ public class AutoCompleteUtils {
                 : prefixIndex + 3; // +3 as offset for whitespace and prefix
     }
 
+    /**
+     *
+     */
+    public static String getCommandWordInStub(String stub) {
+        return stub.split(" ")[0];
+    }
+
 }
