@@ -112,13 +112,8 @@ public class FileUtil {
         Matcher unixMatcher = UNIX_NAME_SEPARATOR_FORMAT.matcher(filePath);
         Matcher windowsMatcher = WINDOWS_NAME_SEPARATOR_FORMAT.matcher(filePath);
 
-        if (unixMatcher.matches() && File.separator.equals("\\")
-            || windowsMatcher.matches() && File.separator.equals("/")) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return unixMatcher.matches() && File.separator.equals("\\")
+                || windowsMatcher.matches() && File.separator.equals("/");
     }
 
     /**

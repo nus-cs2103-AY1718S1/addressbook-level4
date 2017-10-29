@@ -3,7 +3,7 @@ package seedu.address.testutil;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
+import seedu.address.logic.commands.event.EditEventCommand.EditEventDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;

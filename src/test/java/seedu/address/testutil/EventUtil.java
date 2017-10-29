@@ -4,7 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.model.event.ReadOnlyEvent;
 
 /**

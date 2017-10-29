@@ -5,11 +5,8 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_CONFIG_TYPE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_CONFIG_VALUE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NEW_PROPERTY;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_COLOR;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_URL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_ADD_PROPERTY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_IMPORT_CALENDER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_TAG_COLOR;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_CONFIG_URL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NEW_PROPERTY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NEW_PROPERTY_NO_REGEX;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PREDEFINED_COLOR;
@@ -27,7 +24,6 @@ import org.junit.Test;
 import seedu.address.logic.commands.configs.AddPropertyCommand;
 import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
-import seedu.address.logic.commands.configs.ImportCalenderCommand;
 
 public class ConfigCommandParserTest {
     private ConfigCommandParser parser = new ConfigCommandParser();
@@ -47,10 +43,6 @@ public class ConfigCommandParserTest {
         expected = new AddPropertyCommand(VALID_NEW_PROPERTY_NO_REGEX.trim(), "m",
                 "major", String.format(DEFAULT_MESSAGE, "major"), DEFAULT_REGEX);
         assertParseSuccess(parser, VALID_CONFIG_ADD_PROPERTY + VALID_NEW_PROPERTY_NO_REGEX, expected);
-
-        // Test for ImportCalenderCommand
-        expected = new ImportCalenderCommand("https://www.url.com/");
-        assertParseSuccess(parser, VALID_CONFIG_IMPORT_CALENDER + VALID_CONFIG_URL, expected);
     }
 
     @Test
@@ -75,11 +67,5 @@ public class ConfigCommandParserTest {
     public void parse_invalidNewProperty_expectException() {
         assertParseFailure(parser, VALID_CONFIG_ADD_PROPERTY + INVALID_NEW_PROPERTY,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPropertyCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_invalidUrl_expectException() {
-        assertParseFailure(parser, VALID_CONFIG_IMPORT_CALENDER + INVALID_URL,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
     }
 }
