@@ -87,8 +87,9 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + DEBT_DESC_BOB + " " + INTEREST_DESC_BOB + " " + DEADLINE_DESC_BOB + "  " + TAG_DESC_HUSBAND + " ";
         Person editedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withPostalCode(VALID_POSTAL_CODE_BOB)
-                .withDebt(VALID_DEBT_BOB).withInterest(VALID_INTEREST_BOB).withDeadline(VALID_DEADLINE_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+                .withDebt(VALID_DEBT_BOB)
+                .withTotalDebt(getPersonFromAddressBook(model, index).getTotalDebt().toString())
+                .withInterest(VALID_INTEREST_BOB).withDeadline(VALID_DEADLINE_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertCommandSuccess(command, index, editedPerson);
 
         /* Case: undo editing the last person in the list -> last person restored */
@@ -107,7 +108,12 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + INTEREST_DESC_BOB + DEADLINE_DESC_BOB
                 + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, index, BOB);
+        /* In the initial state of the address book, Alice was the first person in the list.
+         * Although Alice's details was edited to Bob's in lines 86 to 88, the totalDebt for Alice remains unchanged.
+         * Hence, there is a need to set totalDebt of BOB to be the same as Alice's*/
+        Person bob = new Person(BOB);
+        bob.setTotalDebt(getPersonFromAddressBook(model, index).getTotalDebt());
+        assertCommandSuccess(command, index, bob);
 
         /* Case: edit some fields -> edited */
         index = INDEX_FIRST_PERSON;
@@ -154,20 +160,23 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // info panel is updated to reflect the new person's name
-        assertCommandSuccess(command, index, AMY, index);
+        /* Although all other information changes, the total debt remains unchanged*/
+        Person amy = new Person(AMY);
+        amy.setTotalDebt(getPersonFromAddressBook(model, index).getTotalDebt());
+        assertCommandSuccess(command, index, amy, index);
 
         /* Case: missing index -> edited */
         command = EditCommand.COMMAND_WORD + " " + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + INTEREST_DESC_BOB
                 + DEADLINE_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
-        assertCommandSuccess(command, index, BOB, index);
+        assertCommandSuccess(command, index, bob, index);
 
         /* Re-edit to previous state */
         selectPerson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY + INTEREST_DESC_AMY
                 + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, index, AMY, index);
+        assertCommandSuccess(command, index, amy, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
 
@@ -239,6 +248,13 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB + DEBT_DESC_BOB + INTEREST_DESC_BOB
                 + DEADLINE_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_PERSON);
+    }
+
+    /**
+     * Returns the {@ReadOnlyPerson} at the specified index of tha address book
+     */
+    private ReadOnlyPerson getPersonFromAddressBook(Model model, Index index) {
+       return model.getAddressBook().getPersonList().get(index.getZeroBased());
     }
 
     /**
