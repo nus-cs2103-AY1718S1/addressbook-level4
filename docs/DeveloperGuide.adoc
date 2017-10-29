@@ -521,6 +521,7 @@ to choose any word to alias if they desire to do so. +
 The enhanced delete feature allows for multiple indices to be accepted by the parser. This is done by splitting the inputs into multiple string tokens,
 each containing the index of the person to be deleted. A list is then used to store all the indices of the personsToDelete.
 This enhancement is then achieved by iterating through the list and deleting the desired persons using the ModelManager.
+The enhanced delete also allows for the user to input a range of indices of persons to be deleted.
 
 ==== Design Considerations
 

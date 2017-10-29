@@ -94,12 +94,12 @@ navigate our user interface with ease.
 
 == Command Summary
 
-* *Add* : `add` `n/NAME` `p/PHONE_NUMBER` `e/EMAIL` `a/ADDRESS` `[t/TAG]` `...` +
+* *Add* : `add` `n/NAME` `[p/PHONE_NUMBER]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]` `...` +
 e.g. `add` `n/James Ho` `p/22224444` `e/jamesho@example.com` `a/123, Clementi Rd, 1234665` `t/friend` `t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete` `INDEX` +
 e.g. `delete` `3`
-* *Multi-Delete* : `delete` `INDEX` `[MORE INDEX]` ... +
+* *Multi-Delete* : `delete` `INDEX` `[2nd INDEX]` `[INDEX RANGE]` `...` +
 e.g. `delete` `4` `7`
 * *Edit* : `edit` `INDEX` `[n/NAME]` `[p/PHONE_NUMBER]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]` `...` +
 e.g. `edit` `2` `n/James Lee` `e/jameslee@example.com`
@@ -143,23 +143,32 @@ acceptable.
 
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a person to the address book based on the fields declared by user +
+Format: `add n/NAME` `[p/PHONE_NUMBER]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]...`
 
-[TIP]
-A person can have any number of tags (including 0)
+****
+* A person can have any number of tags (including 0). +
+* Only `n/NAME` field has to be added, the rest are optional. +
+* Fields can be updated in the future using the `EDIT` command. +
+****
 
 Examples:
 
 * `add` `n/John Doe` `p/98765432` `e/johnd@example.com` `a/John street, block 123, #01-01`
+* `add` `n/Johnny Dow`
+* `add` `n/Carl Green` `p/91234765`
 * `add` `n/Betsy Crowe` `t/friend` `e/betsycrowe@example.com` `a/Newgate Prison` `p/1234567` `t/criminal`
+// end::add[]
 
+// tag::list[]
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
+// end::list[]
 
 // tag::sort[]
 === Sorts the list : `sort`
@@ -180,10 +189,11 @@ Sorts the list in alphabetical order of their name.
 Sorts the list in numerical order of their phone.
 // end::sort[]
 
+// tag::edit[]
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit` `INDEX` `[n/NAME]` `[p/PHONE]` `[e/EMAIL]` `[a/ADDRESS`] `[t/TAG]` `...`
+Format: `edit` `INDEX` `[n/NAME]` `[p/PHONE]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -199,6 +209,10 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit` `2` `n/Betsy Crower` `t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `add` `n/Michael Leblum` +
+`edit` `1` `p/90189056` `t/friend` +
+Adds a phone number `90189056` and tag `friend` to previously empty fields for person `Michael Leblum`.
+// end::edit[]
 
 // tag::find[]
 === Locating persons by the person's details: `find`
@@ -328,7 +342,7 @@ Format: `unpin` `INDEX`
 === Deleting person(s) : `delete`
 
 Deletes the specified person(s) from the address book. +
-Format: `delete` `INDEX` `[MORE_INDEX]`
+Format: `delete` `INDEX` `2nd INDEX` `INDEX RANGE`
 
 ****
 * Deletes the person at the specified `INDEX` or the specified `INDEX RANGE`.
@@ -342,8 +356,8 @@ Format: `delete` `INDEX` `[MORE_INDEX]`
 Examples:
 
 * `list` +
-`delete` `2` `3` `4` +
-Deletes the 2nd, 3rd and 4th person in the address book.
+`delete` `2` `3` `4~7`+
+Deletes the 2nd, 3rd and the 4th to 7th (*both inclusive*) person in the address book.
 * `find` `Betsy` +
 `delete` `1` +
 Deletes the 1st person in the results of the `find` command.
