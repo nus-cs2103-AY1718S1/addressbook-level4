@@ -40,10 +40,12 @@ public class ToggleTagColorParserTest {
     }
     //@@author
 
+    //@@author Eric
     @Test
     public void parseMoreThanTwoWords() throws Exception {
         ToggleTagColorParser parser = new ToggleTagColorParser();
         thrown.expect(ParseException.class);
         parser.parse("This is longer than what is accepted");
     }
+    //@@author
 }

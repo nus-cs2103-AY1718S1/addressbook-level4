@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+//@@author Eric
 /**
  *  Appointment class to hold all the appointment information of an appointment
  *  */
@@ -49,7 +50,8 @@ public class Appointment {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Bloodtype // instanceof handles nulls
-                && this.personString.equals(((Appointment) other).personString));
+                || (other instanceof Appointment // instanceof handles nulls
+                && this.personString.equals(((Appointment) other).personString)
+                && this.getDate().toInstant().equals(((Appointment) other).getDate().toInstant()));
     }
 }

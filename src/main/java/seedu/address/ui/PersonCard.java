@@ -62,11 +62,13 @@ public class PersonCard extends UiPart<Region> {
 
     }
 
+    //@@author Eric
     private void setStyle(int displayedIndex) {
         appointment.setStyle("-fx-font-weight: bold");
         color = displayedIndex % 2 == 0 ? PANE_COLOR_EVEN : PANE_COLOR_ODD;
         cardPane.setStyle("-fx-background-color: " + color);
     }
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties

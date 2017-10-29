@@ -1,5 +1,5 @@
 # Jeremy
-###### /java/seedu/address/logic/commands/ListAscendingNameCommand.java
+###### \java\seedu\address\logic\commands\ListAscendingNameCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book in ascending order by name
@@ -26,7 +26,7 @@ public class ListAscendingNameCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ListByTagCommand.java
+###### \java\seedu\address\logic\commands\ListByTagCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose tag contains any of the argument keywords.
@@ -63,7 +63,7 @@ public class ListByTagCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListDescendingNameCommand.java
+###### \java\seedu\address\logic\commands\ListDescendingNameCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book in descending order by name
@@ -90,7 +90,7 @@ public class ListDescendingNameCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ListFailureCommand.java
+###### \java\seedu\address\logic\commands\ListFailureCommand.java
 ``` java
 /**
  * Prints failure message if invalid arguments are passed after a list command
@@ -123,7 +123,7 @@ public class ListFailureCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ListReverseCommand.java
+###### \java\seedu\address\logic\commands\ListReverseCommand.java
 ``` java
 /**
  * Reverses existing displayed list
@@ -149,7 +149,7 @@ public class ListReverseCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemarkCommand.java
+###### \java\seedu\address\logic\commands\RemarkCommand.java
 ``` java
 /**
  * Adds/Remove a remark from a person identified using it's last displayed index from the address book.
@@ -238,7 +238,7 @@ public class RemarkCommand extends UndoableCommand {
 
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParser.java
+###### \java\seedu\address\logic\parser\AddCommandParser.java
 ``` java
             Phone phone = (!arePrefixesPresent(argMultimap, PREFIX_PHONE))
                     ? new Phone("000") : ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
@@ -252,7 +252,7 @@ public class RemarkCommand extends UndoableCommand {
             Remark remark = (!arePrefixesPresent(argMultimap, PREFIX_REMARK))
                     ? new Remark("") : ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).get();
 ```
-###### /java/seedu/address/logic/parser/AddressBookParser.java
+###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
     /**
      * Returns the correct list feature based on word after list
@@ -291,7 +291,7 @@ public class RemarkCommand extends UndoableCommand {
         return returnThisCommand;
     }
 ```
-###### /java/seedu/address/logic/parser/ListByTagCommandParser.java
+###### \java\seedu\address\logic\parser\ListByTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ListByTagCommand object
@@ -319,7 +319,7 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
@@ -330,7 +330,7 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
         return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/logic/parser/RemarkCommandParser.java
+###### \java\seedu\address\logic\parser\RemarkCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemarkCommand object
@@ -374,7 +374,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
 
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public ObservableList<ReadOnlyPerson> getPersonListSortByNameAscending() {
         return persons.asObservableListSortedByNameAsc();
@@ -388,7 +388,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         return persons.asObservableListReversed();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * @return an unmodifiable view of the list of ReadOnlyPerson that has nonNull name,
@@ -419,7 +419,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         return FXCollections.unmodifiableObservableList(list);
     }
 ```
-###### /java/seedu/address/model/person/Remark.java
+###### \java\seedu\address\model\person\Remark.java
 ``` java
 /**
  * Represents a Person's remark in the address book.
@@ -457,7 +457,7 @@ public class Remark {
 
 }
 ```
-###### /java/seedu/address/model/person/TagContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\TagContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches any of the tag keywords given.
@@ -490,7 +490,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * @return the list as an unmodifiable list and sorted by name in ascending order
@@ -522,14 +522,14 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
     }
 ```
-###### /java/seedu/address/storage/XmlAddressBookStorage.java
+###### \java\seedu\address\storage\XmlAddressBookStorage.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -538,7 +538,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
 }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Handles KeyPress Commands that are not keyed with Shift button held down
@@ -1025,7 +1025,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         return currentInput.contains(PREFIX_NAME.getPrefix());
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Gets the text field for testing purposes
@@ -1035,7 +1035,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 }
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
     <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
         <padding>
@@ -1049,7 +1049,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     <StackPane fx:id="statusbarPlaceholder" prefHeight="13.0" prefWidth="692.0" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
-###### /resources/view/MedNusTheme.css
+###### \resources\view\MedNusTheme.css
 ``` css
 background {
     -fx-background-color: red;

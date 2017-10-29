@@ -20,7 +20,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Appointment;
 import seedu.address.testutil.TypicalPersons;
 
-
+//@@author Eric
 public class AddAppointmentParserTest {
 
     @Rule

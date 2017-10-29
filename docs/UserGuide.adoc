@@ -308,8 +308,7 @@ You can clear all entries in the address book. +
 *Format:* `clear` +
 *Shorthand Format:* `c`
 
-<<<
-
+// tag::color[]
 === Set Tag Color Mode : `tagcolor`
 
 You can set random colors to all tags OR remove colors. +
@@ -325,6 +324,11 @@ You can see all available colors in the following
 https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[link] +
 Color name input can be in english or hexadecimal form.
 
+// end::color[]
+
+
+
+// tag::appointment[]
 === Set appointment: `appointment`
 
 You can set an appointment to a specific contact at a given index. +
@@ -349,7 +353,12 @@ You can sort list by appointment dates. +
 [NOTE]
 You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
 
+To remove appointment,
 
+*Format:* `appointment INDEX d/off` +
+*Shorthand format:* `apt INDEX d/off`
+
+// end::appointment[]
 
 === Adding/Removing Remarks to a person : `remark`
 
