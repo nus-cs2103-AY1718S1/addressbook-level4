@@ -35,7 +35,7 @@ public class PhotoStorage {
             ImageIO.write(imageReader, "jpg", fileWriter);
             return newFilePath;
         } catch(IOException e) {
-            throw new IOException("unable to write to local resource folder");           
+            throw new IOException("unable to write to local resource folder");
         }
     }
 }
