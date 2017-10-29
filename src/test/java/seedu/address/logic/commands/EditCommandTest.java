@@ -6,19 +6,18 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelOnly;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstParcelInActiveListOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.Messages;
@@ -68,17 +67,17 @@ public class EditCommandTest {
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Index indexLastParcel = Index.fromOneBased(model.getFilteredParcelList().size());
-        ReadOnlyParcel lastParcel = model.getFilteredParcelList().get(indexLastParcel.getZeroBased());
+        Index indexLastParcel = Index.fromOneBased(model.getActiveList().size());
+        ReadOnlyParcel lastParcel = model.getActiveList().get(indexLastParcel.getZeroBased());
 
         ParcelBuilder parcelInList = new ParcelBuilder(lastParcel);
         Parcel editedParcel = parcelInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
-                .withStatus(VALID_STATUS_BOB).build();
+                .withTags(VALID_TAG_FROZEN).withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
+                .withStatus(VALID_STATUS_COMPLETED).build();
 
         EditCommand.EditParcelDescriptor descriptor = new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
-                .withStatus(VALID_STATUS_BOB).build();
+                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_FROZEN).withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
+                .withStatus(VALID_STATUS_COMPLETED).build();
         EditCommand editCommand = prepareCommand(indexLastParcel, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PARCEL_SUCCESS, editedParcel);
@@ -88,6 +87,7 @@ public class EditCommandTest {
         expectedModel.maintainSorted();
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+
     }
 
     @Test
@@ -105,9 +105,9 @@ public class EditCommandTest {
 
     @Test
     public void execute_filteredList_success() throws Exception {
-        showFirstParcelOnly(model);
+        showFirstParcelInActiveListOnly(model);
 
-        ReadOnlyParcel parcelInFilteredList = model.getFilteredParcelList().get(INDEX_FIRST_PARCEL.getZeroBased());
+        ReadOnlyParcel parcelInFilteredList = model.getActiveList().get(INDEX_FIRST_PARCEL.getZeroBased());
         Parcel editedParcel = new ParcelBuilder(parcelInFilteredList).withName(VALID_NAME_BOB).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PARCEL,
                 new EditParcelDescriptorBuilder().withName(VALID_NAME_BOB).build());
@@ -132,7 +132,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_duplicateParcelFilteredList_failure() {
-        showFirstParcelOnly(model);
+        showFirstParcelInActiveListOnly(model);
 
         // edit parcel in filtered list into a duplicate in address book
         ReadOnlyParcel parcelInList = model.getAddressBook().getParcelList().get(INDEX_SECOND_PARCEL.getZeroBased());
@@ -158,8 +158,9 @@ public class EditCommandTest {
      */
     @Test
     public void execute_invalidParcelIndexFilteredList_failure() {
-        showFirstParcelOnly(model);
+        showFirstParcelInActiveListOnly(model);
         Index outOfBoundIndex = INDEX_SECOND_PARCEL;
+
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getParcelList().size());
 

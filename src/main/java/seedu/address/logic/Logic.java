@@ -22,6 +22,15 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of parcels */
     ObservableList<ReadOnlyParcel> getFilteredParcelList();
 
+    /** Returns an unmodifiable view of the filtered list of parcels with Status COMPLETE */
+    ObservableList<ReadOnlyParcel> getDeliveredParcelList();
+
+    /** Returns an unmodifiable view of the filtered list of parcels with Status not COMPLETE */
+    ObservableList<ReadOnlyParcel> getUndeliveredParcelList();
+
+    /** Returns an unmodifiable view of the filtered list of parcels with Status not COMPLETE */
+    void setActiveList(boolean isDelivered);
+
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
 }
