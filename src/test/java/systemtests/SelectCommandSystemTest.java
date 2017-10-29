@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DISPLAYED_INDE
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_LESSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_LESSON;
+import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_LT27;
 import static seedu.address.testutil.TypicalLessons.KEYWORD_MATCHING_MA1101R;
 
 import org.junit.Test;
@@ -14,6 +15,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.ListingUnit;
 import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends AddressBookSystemTest {
@@ -23,6 +25,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
          * -> selected
          */
 
+        ListingUnit.setCurrentListingUnit(ListingUnit.LOCATION);
 
         String command = "   " + SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_LESSON.getOneBased() + "   ";
         assertCommandSuccess(command, INDEX_FIRST_LESSON);
@@ -57,7 +60,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered lesson list, select index within bounds of address book but out of bounds of lesson list
          * -> rejected
          */
-        showLessonsWithName(KEYWORD_MATCHING_MA1101R);
+        showLessonsWithName(KEYWORD_MATCHING_LT27);
         invalidIndex = getModel().getAddressBook().getLessonList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_DISPLAYED_INDEX);
 

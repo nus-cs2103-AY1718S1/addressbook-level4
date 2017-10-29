@@ -127,8 +127,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         selectLesson(index);
         command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + CODE_DESC_MA1101R + CLASSTYPE_DESC_MA1101R
                 + VENUE_DESC_MA1101R + GROUP_DESC_MA1101R + LECTURER_DESC_MA1101R;
-        // this can be misleading: card selection actually remains unchanged but the
-        // browser's url is updated to reflect the new lesson's name
+        // this can be misleading: card selection actually remains unchanged.
         assertCommandSuccess(command, index, TYPICAL_MA1101R, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
@@ -260,11 +259,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
-        }
+        assertSelectedCardUnchanged();
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
