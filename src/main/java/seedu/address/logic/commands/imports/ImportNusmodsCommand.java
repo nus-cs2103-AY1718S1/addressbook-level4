@@ -54,9 +54,9 @@ public class ImportNusmodsCommand extends ImportCommand {
     private static final String EXAM_EVENT_DEFAULT_ADDRESS = "NUS";
     private static final String EXAM_EVENT_EXIST_DUPLICATE =
             "The examination event for %1$s already exists in the application.";
-    private static final String MESSAGE_SUCCESS = "%1$s examinations have been added as events.";
+    private static final String MESSAGE_SUCCESS = "%1$d examinations have been added as events.";
     private static final String SOME_EXAMS_NOT_ADDED =
-            "\nHowever, some examination were not added since they already exist in the application";
+            "\nHowever, some examination were not added since they already exist in the application.";
 
     // Semester should be a one-digit number from 1 to 4, year must be after 2000.
     private static final Pattern URL_SEMESTER_INFO_FORMAT  =
