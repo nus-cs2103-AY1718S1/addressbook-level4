@@ -1,8 +1,10 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.event;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import seedu.address.commons.events.ui.SwitchToEventsListEvent;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 
 /**
  * Lists all events in the address book to the user.

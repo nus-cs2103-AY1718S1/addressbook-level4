@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import java.util.stream.Stream;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddEventCommand;
+import seedu.address.logic.commands.event.AddEventCommand;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.ArgumentTokenizer;
 import seedu.address.logic.parser.Parser;

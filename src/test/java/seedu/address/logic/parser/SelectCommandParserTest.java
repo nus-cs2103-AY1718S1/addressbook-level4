@@ -7,7 +7,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.logic.parser.person.SelectCommandParser;
 
 /**
