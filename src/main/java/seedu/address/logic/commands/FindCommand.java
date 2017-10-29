@@ -25,7 +25,7 @@ public class FindCommand extends Command {
     public static final String PREFIX_FIND_BY_NAME = "";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons who are matched\n"
-            + "Parameters: KEYWORD [OPTION] ARGUMENTS...\n"
+            + "Format: KEYWORD [OPTION] ARGUMENTS...\n"
             + "\tDefault: " + COMMAND_WORD + " ARGUMENT [ARGUMENTS]\n"
             + "\t\tFinds all persons whose names contain any of the specified keywords (case-sensitive)"
             + "\t\tand displays them as a list with index numbers.\n"
