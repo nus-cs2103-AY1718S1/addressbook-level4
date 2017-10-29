@@ -385,6 +385,11 @@ list.
              }
          };
 
+_Figure 2.1.2a : Sequence diagram for `add appointment` Model Component_
+
+image::SDforAppointment.png[width="800"]
+
+
 *Reasons for how it is implemented*
 
 The reason for two constructors is so that the person can be initialized with or without an appointment. As of version
