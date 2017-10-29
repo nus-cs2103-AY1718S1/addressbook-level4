@@ -60,11 +60,12 @@ public class Calendar {
 
         // Create calendarTitle and buttons to change current month
         calendarTitle = new Text();
-        Button previousMonth = new Button("<<");
+        Button previousMonth = new Button("<");
         previousMonth.setOnAction(e -> previousMonth());
-        Button nextMonth = new Button(">>");
+        Button nextMonth = new Button(">");
         nextMonth.setOnAction(e -> nextMonth());
         HBox titleBar = new HBox(previousMonth, calendarTitle, nextMonth);
+        titleBar.setSpacing(5);
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth);
