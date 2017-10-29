@@ -20,7 +20,7 @@ public class SortCommand extends Command {
             + "Parameters: TYPE (must be either 'name', 'phone, or 'email')\n"
             + "Example: " + COMMAND_WORD + " name";
 
-    public static final String MESSAGE_SORT_SUCCESS = "Sorted all persons by %s";
+    public static final String MESSAGE_SORT_SUCCESS = "Sorted all persons by %s.";
 
     private String sortType;
 

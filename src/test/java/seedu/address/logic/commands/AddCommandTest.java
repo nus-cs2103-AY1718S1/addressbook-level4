@@ -158,7 +158,13 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
-        public void sort(String sortType) throws DuplicatePersonException {//this method is intentionally left empty
+        public void sort(String sortType) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        public Predicate<ReadOnlyPerson> getPredicateForTags(String arg) {
+            fail("This method should not be called.");
+            return null;
         }
     }
 
