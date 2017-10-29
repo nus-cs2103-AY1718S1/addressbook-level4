@@ -181,7 +181,7 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardAddress = getPersonListPanel().getHandleToSelectedCard().getAddress();
+        String selectedCardAddress = getPersonListPanel().getHandleToSelectedCard().getAddress().toString();
         URL expectedUrl;
         try {
             expectedUrl = new URL(GOOGLE_MAP_URL_PREFIX + selectedCardAddress.toString()
@@ -189,8 +189,8 @@ public abstract class AddressBookSystemTest {
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-        assertEquals(expectedUrl.toString().substring(0,50), getBrowserPanel().getLoadedUrl().toString()
-                .substring(0,50));
+        assertEquals(expectedUrl.toString().substring(0,40), getBrowserPanel().getLoadedUrl().toString()
+                .substring(0,40));
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 

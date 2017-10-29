@@ -1,8 +1,6 @@
 package seedu.address.model.person;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Represents a Photo in the address book.
