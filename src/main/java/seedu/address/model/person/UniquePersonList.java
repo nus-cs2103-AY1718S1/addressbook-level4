@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -166,5 +167,13 @@ public class UniquePersonList implements Iterable<Person> {
             setPersons(this);
         }
         return checker1;
+    }
+
+    public void addSchedule(Integer toAdd, TreeSet<Integer> timeSpan) {
+        internalList.get(toAdd).addSpanToSchedule(timeSpan);
+    }
+
+    public void clearSchedule(Integer toClear, TreeSet<Integer> timeSpan) {
+        internalList.get(toClear).clearSpanForSchedule(timeSpan);
     }
 }

@@ -3,10 +3,13 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MRT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -38,7 +41,13 @@ public class CommandTestUtil {
     public static final String VALID_MRT_BOB = "Bedok";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_DAY_AMY = "Friday";
+    public static final String VALID_START_TIME_AMY = "0730";
+    public static final String VALID_END_TIME_AMY = "1000";
 
+    public static final String DAY_DESC_AMY = " " + PREFIX_DAY + VALID_DAY_AMY;
+    public static final String START_TIME_DESC_AMY = " " + PREFIX_START_TIME + VALID_START_TIME_AMY;
+    public static final String END_TIME_DESC_AMY = " " + PREFIX_END_TIME + VALID_END_TIME_AMY;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;

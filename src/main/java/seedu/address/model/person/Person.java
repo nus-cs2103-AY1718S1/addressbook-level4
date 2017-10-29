@@ -6,9 +6,11 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -26,6 +28,8 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<UniqueTagList> tags;
 
+    private ObjectProperty<Schedule> schedule;
+
     /**
      * Every field must be present and not null.
      */
@@ -38,6 +42,7 @@ public class Person implements ReadOnlyPerson {
         this.mrt = new SimpleObjectProperty<>(mrt);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        initiateSchedule();
     }
 
     /**
@@ -46,6 +51,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getMrt(), source.getTags());
+        initiateSchedule();
     }
 
     public void setName(Name name) {
@@ -113,6 +119,7 @@ public class Person implements ReadOnlyPerson {
         return mrt;
     }
 
+    @Override
     public Mrt getMrt() {
         return mrt.get();
     }
@@ -135,6 +142,48 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    @Override
+    public Schedule getSchedule() {
+        return schedule.get();
+    }
+
+    public ObjectProperty<Schedule> scheduleProperty() {
+        return schedule;
+    }
+
+    /**
+     * Create an empty schedule object
+     */
+    public void initiateSchedule() {
+        Schedule schedule = new Schedule();
+        this.schedule = new SimpleObjectProperty<>(schedule);
+    }
+
+    /**
+     * Set the person's schedule based on a given schedule.
+     */
+    public void setSchedule(Schedule schedule) {
+        this.schedule.set(schedule);
+    }
+
+    /**
+     * Add a time span to a person's schedule to indicate that he is busy at this time.
+     */
+    public void addSpanToSchedule(TreeSet<Integer> span) {
+        for (Integer startTime : span) {
+            getSchedule().addTime(startTime);
+        }
+    }
+
+    /**
+     *Clear a time span to a person's schedule to indicate that he is free at this time.
+     */
+    public void clearSpanForSchedule(TreeSet<Integer> span) {
+        for (Integer startTime : span) {
+            getSchedule().clearTime(startTime);
+        }
     }
 
     @Override
