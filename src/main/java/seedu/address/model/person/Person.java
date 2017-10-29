@@ -71,7 +71,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         requireAllNonNull(name, phone, email, address, tags, customFields);
         this.name = new SimpleObjectProperty<>(name);
         this.primaryPhone = new SimpleObjectProperty<>(phone);
-        this.uniquePhoneList = new SimpleObjectProperty<>(new UniquePhoneList(phone));
+        this.uniquePhoneList = new SimpleObjectProperty<>(new UniquePhoneList());
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
@@ -103,6 +103,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         requireAllNonNull(name, phone, email, address, tags, customFields);
         this.name = new SimpleObjectProperty<>(name);
         this.primaryPhone = new SimpleObjectProperty<>(phone);
+        this.uniquePhoneList = new SimpleObjectProperty<>(new UniquePhoneList());
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.photo = new SimpleObjectProperty<>(photo);
