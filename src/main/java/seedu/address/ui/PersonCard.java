@@ -68,7 +68,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
-
+        loadPortrait(person.getPortraitPath().filePath);
     }
 
     /**
