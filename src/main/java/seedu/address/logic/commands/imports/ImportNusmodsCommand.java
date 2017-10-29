@@ -1,5 +1,6 @@
 package seedu.address.logic.commands.imports;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import seedu.address.commons.util.JsonUtil;
 import seedu.address.commons.util.UrlUtil;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -31,6 +33,8 @@ public class ImportNusmodsCommand extends ImportCommand {
     private static final String SEMESTER_INVALID =
             "Semester number must be an integer from 1 to 4. Use 3/4 for Special Terms Part 1/2.";
     private static final String INVALID_ENCODING = "The URL encoding is not supported. Please use UTF-8.";
+    private static final String MODULE_INFO_JSON_URL_FORMAT =
+            "http://api.nusmods.com/%1$s-%2$s/%3$s/modules/%4$s.json";
 
     // Semester should be a one-digit number from 1 to 4, year must be after 2000.
     private static final Pattern URL_SEMESTER_INFO_FORMAT  =
@@ -98,5 +102,10 @@ public class ImportNusmodsCommand extends ImportCommand {
     private Set<String> fetchModuleCodes() throws UnsupportedEncodingException {
         Set<String> keys = UrlUtil.fetchUrlParameterKeys(url);
         return keys.stream().map(key -> key.substring(0, key.indexOf("["))).collect(Collectors.toSet());
+    }
+
+    private ModuleInfo getModuleInfo(String moduleCode) throws IOException {
+        URL url = new URL(String.format(MODULE_INFO_JSON_URL_FORMAT, yearStart, yearEnd, semester, moduleCode));
+        return JsonUtil.fromJsonUrl(url, ModuleInfo.class);
     }
 }
