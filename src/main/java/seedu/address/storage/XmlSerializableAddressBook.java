@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -48,8 +49,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
         lifeInsuranceMap = src.getLifeInsuranceMap().entrySet().stream()
-            .collect(Collectors.toMap(
-                e -> e.getKey(),
+            .collect(Collectors.<Map.Entry<UUID, ReadOnlyInsurance>, String, XmlAdaptedLifeInsurance>toMap(
+                e -> e.getKey().toString(),
                 e -> new XmlAdaptedLifeInsurance(e.getValue())
             ));
     }
@@ -83,10 +84,10 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
-    public Map<String, ReadOnlyInsurance> getLifeInsuranceMap() {
-        final Map<String, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
-            .collect(Collectors.<Map.Entry<String, XmlAdaptedLifeInsurance>, String, ReadOnlyInsurance>toMap(
-                i -> i.getKey(), i -> {
+    public Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap() {
+        final Map<UUID, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
+            .collect(Collectors.<Map.Entry<String, XmlAdaptedLifeInsurance>, UUID, ReadOnlyInsurance>toMap(
+                i -> UUID.fromString(i.getKey()), i -> {
                     try {
                         return i.getValue().toModelType();
                     } catch (IllegalValueException e) {

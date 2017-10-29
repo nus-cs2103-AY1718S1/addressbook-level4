@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.util.Map;
+import java.util.UUID;
 
 import javafx.collections.ObservableList;
 
@@ -29,6 +30,6 @@ public interface ReadOnlyAddressBook {
      * Returns an unmodifiable view of the life insurances map.
      * This map will not contain any duplicate insurances.
      */
-    Map<String, ReadOnlyInsurance> getLifeInsuranceMap();
+    Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap();
 
 }
