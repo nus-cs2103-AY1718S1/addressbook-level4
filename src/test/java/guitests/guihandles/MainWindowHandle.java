@@ -13,6 +13,7 @@ public class MainWindowHandle extends StageHandle {
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final ExtendedPersonCardHandle extendedPersonCard;
+    private final GraphPanelHandle graphPanel;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -20,6 +21,7 @@ public class MainWindowHandle extends StageHandle {
         personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
         extendedPersonCard = new ExtendedPersonCardHandle(getChildNode(ExtendedPersonCardHandle
                 .EXTENDED_PERSON_CARD_ID));
+        graphPanel = new GraphPanelHandle(getChildNode(GraphPanelHandle.GRAPH_DISPLAY_ID));
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
@@ -49,4 +51,7 @@ public class MainWindowHandle extends StageHandle {
     public ExtendedPersonCardHandle getExtendedPersonCard() {
         return extendedPersonCard;
     }
+
+    public GraphPanelHandle getGraphPanel() {
+        return graphPanel; }
 }
