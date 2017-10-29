@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.StringProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -22,6 +23,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class ProfilePanel extends UiPart<Region> {
 
     public static final String DEFAULT_MESSAGE = "Ain't Nobody here but us chickens!";
+    public static final String PERSON_DOES_NOT_EXIST_MESSAGE = "This person does not exist in Lisa.\n"
+            + "Would you like to add him/her?";
     private static final String FXML = "ProfilePanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -60,6 +63,12 @@ public class ProfilePanel extends UiPart<Region> {
         bindListeners(person);
     }
 
+    private void loadPersonPage(StringProperty name) {
+        this.name.textProperty().bind(Bindings.convert(name));
+        this.address.textProperty().unbind();
+        this.address.setText(PERSON_DOES_NOT_EXIST_MESSAGE);
+    }
+
     /**
      * Load default page with empty fields and default message
      */
@@ -86,8 +95,12 @@ public class ProfilePanel extends UiPart<Region> {
     @Subscribe
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getPerson());
-
+        ReadOnlyPerson person = event.getPerson().orElse(null);
+        if(person == null) {
+            loadPersonPage(event.getPersonName());
+        } else {
+            loadPersonPage(event.getPerson().get());
+        }
         raise(new SwitchPanelRequestEvent());
     }
 }
