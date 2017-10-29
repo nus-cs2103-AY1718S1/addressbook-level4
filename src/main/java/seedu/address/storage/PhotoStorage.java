@@ -8,8 +8,8 @@ import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 /**
- * Represents the conversion of a local filepath inside the user's hard drive 
- * into a new filepath that is local to the jar file of PEERSONAL. 
+ * Represents the conversion of a local filepath inside the user's hard drive
+ * into a new filepath that is local to the jar file of PEERSONAL.
  * Guarantees : The newly written filepath must exist if ImageIO.write is successful
  */
 public class PhotoStorage {
@@ -27,7 +27,7 @@ public class PhotoStorage {
     }
 
     public String setNewFilePath() throws IOException {
-        String newFilePath= "src\\main\\resources\\displaypictures\\" + uniqueFileName + ".jpg"; 
+        String newFilePath= "src\\main\\resources\\displaypictures\\" + uniqueFileName + ".jpg";
         try {
             fileReader = new File(filePath);
             fileWriter = new File(newFilePath);
@@ -35,8 +35,7 @@ public class PhotoStorage {
             ImageIO.write(imageReader, "jpg", fileWriter);
             return newFilePath;
         } catch(IOException e) {
-            throw new IOException("unable to write to local resource folder");            
+            throw new IOException("unable to write to local resource folder");           
         }
     }
-    
 }

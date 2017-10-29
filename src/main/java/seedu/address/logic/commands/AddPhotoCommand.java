@@ -16,8 +16,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.storage.PhotoStorage;
 
-/** 
- * Adds a photo to the specified contact. 
+/**
+ * Adds a photo to the specified contact.
  * Incorrect formats of AddPhotoCommand will throw different exceptions.
  * */
 public class AddPhotoCommand extends Command {

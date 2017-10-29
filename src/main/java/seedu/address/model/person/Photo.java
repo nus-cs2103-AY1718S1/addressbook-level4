@@ -15,8 +15,6 @@ public class Photo {
     private static final String DEFAULT_FILEPATH = "";
     private String filepath;
     private String url;
-    private String backupFilePath;
-    private boolean isBackUp = false;
     public Photo(String filepath) throws IllegalArgumentException {
         //this is to setup the default photo for contacts after it is added.
         if (filepath.equals(DEFAULT_FILEPATH)) {
@@ -26,31 +24,15 @@ public class Photo {
             File file = new File(filepath);
             if (isValidFilePath(file)) {
                 this.filepath = filepath;
-               /* try {
-                    String localUrl = file.toURI().toURL().toString();
-                    this.url = localUrl;
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }*/
             } else {
                  throw new IllegalArgumentException(URL_VALIDATION);
             }
         }
-        
     }
 
     public boolean isValidFilePath(File file) {
         return file.exists();
     }
-    
-    public boolean isInStorage() {
-        File targetFile = new File(filepath);
-        if(targetFile!=null) {
-            return true;
-        } else {
-            return false;
-        }
-    } 
     //the filepath of the image
     public String getFilePath() {
         return filepath;
@@ -59,9 +41,8 @@ public class Photo {
     public String getUrl() {
         return this.url;
     }
-    /** It is guaranteed that the new filepath exists inside the resources folder */ 
+    /** It is guaranteed that the new filepath exists inside the resources folder */
     public void resetFilePath(String filepath) {
         this.filepath = filepath; 
     }
-    
 }
