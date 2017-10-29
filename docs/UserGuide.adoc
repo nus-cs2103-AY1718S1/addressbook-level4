@@ -119,7 +119,7 @@ Examples:
 => Alias: `a` <=
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/OTHER EMAIL]... a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL]... a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0).
@@ -424,7 +424,7 @@ To *transfer data* to another Computer, install the app in the other computer an
 [width="59%",cols="5%,<2%,<50%,<42%",options="header",]
 |=======================================================================
 |Commands Words |Commands Alias |Format|Example
-|link:#adding-a-person-code-add-code[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
+|link:#adding-a-person-code-add-code[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL] a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 
 |link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
