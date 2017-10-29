@@ -22,7 +22,9 @@ public interface Model {
      */
     Predicate<ReadOnlyParcel> PREDICATE_SHOW_ALL_PARCELS = unused -> true;
 
+    //@@author kennard123661
     void setActiveList(boolean isDelivered);
+    //@@author
 
     /**
      * Clears existing backing model and replaces with the provided new data.
@@ -58,6 +60,7 @@ public interface Model {
      */
     void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded, List<ReadOnlyParcel>
             duplicateParcels);
+    //@@author
 
     /**
      * Replaces the given parcel {@code target} with {@code editedParcel}.
@@ -74,6 +77,7 @@ public interface Model {
      */
     ObservableList<ReadOnlyParcel> getFilteredParcelList();
 
+    //@@author kennard123661
     /**
      * Returns an unmodifiable view of the filtered parcel list
      */
@@ -85,6 +89,7 @@ public interface Model {
      * Returns an unmodifiable view of the filtered parcel list
      */
     ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList();
+    //@@author
 
     /**
      * Updates the filter of the filtered parcel list to filter by the given {@code predicate}.

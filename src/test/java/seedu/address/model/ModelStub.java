@@ -66,6 +66,7 @@ public class ModelStub implements Model {
         return null;
     }
 
+    //@@author kennard123661
     @Override
     public ObservableList<ReadOnlyParcel> getFilteredDeliveredParcelList() {
         fail("This method should not be called.");
@@ -83,6 +84,7 @@ public class ModelStub implements Model {
         fail("This method should not be called.");
         return null;
     }
+    //@@author
 
     @Override
     public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {

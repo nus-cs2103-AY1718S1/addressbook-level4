@@ -19,6 +19,7 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
+    //@@author kennard123661
     /** Returns an unmodifiable view of the filtered list of parcels */
     ObservableList<ReadOnlyParcel> getFilteredParcelList();
 
@@ -30,6 +31,7 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of parcels with Status not COMPLETE */
     void setActiveList(boolean isDelivered);
+    //@@author
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

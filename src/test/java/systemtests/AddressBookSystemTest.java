@@ -81,6 +81,7 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getCommandBox();
     }
 
+    //@@author kennard123661
     public ParcelListPanelHandle getParcelListPanel() {
         return mainWindowHandle.getActiveParcelListPanel();
     }
@@ -92,6 +93,7 @@ public abstract class AddressBookSystemTest {
     public ParcelListPanelHandle getUndeliveredParcelListPanel() {
         return mainWindowHandle.getUndeliveredListPanel();
     }
+    //@@author
 
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();

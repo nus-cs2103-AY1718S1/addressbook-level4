@@ -47,6 +47,7 @@ public class ParcelListPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author kennard123661
     private void setConnections(ObservableList<ReadOnlyParcel> uncompletedParcels,
                                 ObservableList<ReadOnlyParcel> completedParcels) {
         ObservableList<ParcelCard> mappedList = EasyBind.map(
@@ -109,6 +110,7 @@ public class ParcelListPanel extends UiPart<Region> {
             }
         });
     }
+    //@@author
 
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
@@ -122,9 +124,11 @@ public class ParcelListPanel extends UiPart<Region> {
         tabPanePlaceholder.getSelectionModel().select(event.targetIndex);
     }
 
+    //@@author kennard123661
     public void handleTabSelection(Index selectedIndex) {
         EventsCenter.getInstance().post(new JumpToTabRequestEvent(selectedIndex));
     }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code ParcelCard}.

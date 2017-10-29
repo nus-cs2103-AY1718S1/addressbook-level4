@@ -63,6 +63,7 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
+    //@@author kennard123661
     /**
      * Updates Delivered and UndeliveredParcelList and resets the Active List to the correct reference
      */
@@ -80,6 +81,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void setActiveList(boolean isDelivered) {
         activeFilteredList = isDelivered ? filteredDeliveredParcels : filteredUndeliveredParcels;
     }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
@@ -183,6 +185,7 @@ public class ModelManager extends ComponentManager implements Model {
         return FXCollections.unmodifiableObservableList(filteredParcels);
     }
 
+    //@@author kennard123661
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
      * {@code addressBook}
@@ -209,6 +212,7 @@ public class ModelManager extends ComponentManager implements Model {
     public ObservableList<ReadOnlyParcel> getFilteredUndeliveredParcelList() {
         return FXCollections.unmodifiableObservableList(filteredUndeliveredParcels);
     }
+    //@@author
 
     @Override
     public void updateFilteredParcelList(Predicate<ReadOnlyParcel> predicate) {
