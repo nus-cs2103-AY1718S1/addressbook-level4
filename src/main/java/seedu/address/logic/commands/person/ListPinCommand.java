@@ -1,7 +1,7 @@
 package seedu.address.logic.commands.person;
 
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.ListPinToggleStyleEvent;
+import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.person.PersonIsPinnedPredicate;
@@ -18,7 +18,7 @@ public class ListPinCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(new PersonIsPinnedPredicate());
-        EventsCenter.getInstance().post(new ListPinToggleStyleEvent());
+        EventsCenter.getInstance().post(new ToggleListPinStyleEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

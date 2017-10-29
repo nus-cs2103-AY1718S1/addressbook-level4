@@ -22,10 +22,11 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
-import seedu.address.commons.events.ui.ListAllToggleStyle;
-import seedu.address.commons.events.ui.ListPinToggleStyleEvent;
+import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
+import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.SwitchToBrowserEvent;
+import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -59,6 +60,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane browserPlaceholder;
+
+    @FXML
+    private Label sortedByLabel;
 
     @FXML
     private Label pinLabel;
@@ -310,15 +314,21 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleShowPinnedListEvent(ListPinToggleStyleEvent event) {
+    private void handleShowPinnedListEvent(ToggleListPinStyleEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         listPinToggleStyle();
     }
 
     @Subscribe
-    private void handleShowAllListEvent(ListAllToggleStyle event) {
+    private void handleShowAllListEvent(ToggleListAllStyleEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         listAllToggleStyle();
+    }
+
+    @Subscribe
+    private void handleSortByLabelEvent(ToggleSortByLabelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        sortedByLabel.setText(event.toString());
     }
 
     private void switchToBrowser() {

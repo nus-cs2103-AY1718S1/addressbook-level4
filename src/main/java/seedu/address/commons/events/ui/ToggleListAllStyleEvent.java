@@ -5,7 +5,7 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * An event requesting to toggle the style of All tab.
  */
-public class ListAllToggleStyle extends BaseEvent {
+public class ToggleListAllStyleEvent extends BaseEvent {
 
     @Override
     public String toString() {
