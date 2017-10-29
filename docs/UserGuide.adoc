@@ -1,3 +1,5 @@
+=
+image::CoverPage.png[width="790"]
 = Gentleman's Guide (V1.3) - User Guide
 :toc:
 :toc-title:
@@ -13,8 +15,6 @@ endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B1/main
 
 By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
-
-image::CoverPage.png[width="790"]
 
 == Introduction
 
