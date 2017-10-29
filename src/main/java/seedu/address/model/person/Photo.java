@@ -43,4 +43,18 @@ public class Photo {
     public void resetFilePath(String filepath) {
         this.filepath = filepath;
     }
+    @Override
+    public String toString() {
+        return filepath;
+    }
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Photo // instanceof handles nulls
+                && this.filepath.equals(((Photo) other).filepath)); // state check
+    }
+    @Override
+    public int hashCode() {
+        return filepath.hashCode();
+    }
 }

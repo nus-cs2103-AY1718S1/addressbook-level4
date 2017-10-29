@@ -20,7 +20,7 @@ import seedu.address.storage.PhotoStorage;
  * Adds a photo to the specified contact.
  * Incorrect formats of AddPhotoCommand will throw different exceptions.
  * */
-public class AddPhotoCommand extends Command {
+public class AddPhotoCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "addphoto";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": adds a photo to the person identified by the index number used in the last person listing.\n"
@@ -40,7 +40,7 @@ public class AddPhotoCommand extends Command {
         this.photo = photo;
     }
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -51,7 +51,7 @@ public class AddPhotoCommand extends Command {
         } else if (!photo.getFilePath().equals("")) {
             try {
                 //produces a new filepath and rewrites the new filepath to the photo object held by the contact
-                PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getName().hashCode());
+                PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getPhoto().hashCode());
                 photo.resetFilePath(rewrite.setNewFilePath());
             } catch (IOException e) {
                 throw new CommandException(e.getMessage());
