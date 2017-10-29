@@ -12,7 +12,8 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
-
+    private String displayPicturesPath = "displaypictures";
+    
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
     }
@@ -75,4 +76,7 @@ public class UserPrefs {
         return sb.toString();
     }
 
+    public String getDisplayPicturesPath() {
+        return displayPicturesPath;
+    }
 }
