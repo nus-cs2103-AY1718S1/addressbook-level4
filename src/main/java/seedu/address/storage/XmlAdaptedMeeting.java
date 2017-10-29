@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlValue;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -11,10 +12,10 @@ import seedu.address.model.person.Name;
  */
 public class XmlAdaptedMeeting {
 
-    @XmlValue
+    @XmlElement
     private String meetingName;
-    @XmlValue
-    private Name userName;
+    @XmlElement
+    private String userName;
 
     /**
      * Constructs an XmlAdaptedMeeting.
@@ -29,7 +30,7 @@ public class XmlAdaptedMeeting {
      */
     public XmlAdaptedMeeting(Meeting source) {
         meetingName = source.value;
-        userName = source.getName();
+        userName = source.getName().toString();
     }
 
     /**
@@ -38,7 +39,7 @@ public class XmlAdaptedMeeting {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Meeting toModelType() throws IllegalValueException {
-        return new Meeting(meetingName, userName);
+        return new Meeting(meetingName, new Name(userName));
     }
 
 }

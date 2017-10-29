@@ -61,7 +61,7 @@ public class LogicManager extends ComponentManager implements Logic {
                 try {
                     meetingList.add(meeting);
                 } catch (UniqueMeetingList.DuplicateMeetingException e) {
-                    logger.info("Should not happen");
+                    throw new AssertionError("Meetings should all be unique" + e);
                 }
             }
         }

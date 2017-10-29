@@ -56,7 +56,8 @@ public class Meeting {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Meeting // instanceof handles nulls
-                && this.date.equals(((Meeting) other).date)); // state check
+                && this.date.equals(((Meeting) other).date)
+                && this.name.toString().equals(((Meeting) other).name.toString())); // state check
     }
 
     @Override

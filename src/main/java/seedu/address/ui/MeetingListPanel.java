@@ -23,7 +23,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class MeetingListPanel extends UiPart<Region> {
     private static final String FXML = "MeetingListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
+    private final Logger logger = LogsCenter.getLogger(MeetingListPanel.class);
 
     @FXML
     private ListView<MeetingCard> meetingListView;
@@ -38,7 +38,7 @@ public class MeetingListPanel extends UiPart<Region> {
         ObservableList<MeetingCard> mappedList = EasyBind.map(
                 meetingList, (meeting) -> new MeetingCard(meeting, meetingList.indexOf(meeting) + 1));
         meetingListView.setItems(mappedList);
-        meetingListView.setCellFactory(listView -> new MeetingListPanel.MeetingListViewCell());
+        meetingListView.setCellFactory(listView -> new MeetingListViewCell());
     //    setEventHandlerForSelectionChangeEvent();
     }
 
