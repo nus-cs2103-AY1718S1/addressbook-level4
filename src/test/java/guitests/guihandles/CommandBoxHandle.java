@@ -43,4 +43,11 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
     public ObservableList<String> getStyleClass() {
         return getRootNode().getStyleClass();
     }
+
+    /**
+     * Returns the style of TextField.
+     */
+    public String getStyle() {
+        return getRootNode().getStyle();
+    }
 }

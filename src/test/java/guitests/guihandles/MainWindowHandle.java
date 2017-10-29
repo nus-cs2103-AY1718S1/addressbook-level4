@@ -1,6 +1,7 @@
 package guitests.guihandles;
 
 import javafx.stage.Stage;
+import seedu.address.TestApp;
 
 /**
  * Provides a handle for {@code MainWindow}.
@@ -13,8 +14,9 @@ public class MainWindowHandle extends StageHandle {
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final BrowserPanelHandle browserPanel;
-    private final SearchFieldHandle searchField;
+    private final SearchBoxHandle searchField;
     private final SortMenuHandle sortMenu;
+    private final HelpOverlayHandle helpOverlay;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -24,9 +26,14 @@ public class MainWindowHandle extends StageHandle {
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-        browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
-        searchField = new SearchFieldHandle(getChildNode(SearchFieldHandle.SEARCH_FIELD_ID));
+        if (!TestApp.isFirstTimeOpen()) {
+            browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+        } else {
+            browserPanel = null;
+        }
+        searchField = new SearchBoxHandle(getChildNode(SearchBoxHandle.SEARCH_FIELD_ID));
         sortMenu = new SortMenuHandle(getChildNode(SortMenuHandle.SORT_MENU_ID));
+        helpOverlay = new HelpOverlayHandle(getChildNode(HelpOverlayHandle.HELP_OVERLAY_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -53,11 +60,15 @@ public class MainWindowHandle extends StageHandle {
         return browserPanel;
     }
 
-    public SearchFieldHandle getSearchField() {
+    public SearchBoxHandle getSearchField() {
         return searchField;
     }
 
     public SortMenuHandle getSortMenu() {
         return sortMenu;
+    }
+
+    public HelpOverlayHandle getHelpOverlay() {
+        return helpOverlay;
     }
 }

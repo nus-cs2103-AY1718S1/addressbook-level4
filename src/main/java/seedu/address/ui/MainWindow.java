@@ -7,22 +7,30 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchToBrowserEvent;
+import seedu.address.commons.events.ui.ToggleListAllStyleEvent;
+import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
+import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -44,6 +52,9 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private ResultDisplay resultDisplay;
+    private CommandBox commandBox;
+    private SortFindPanel sortFindPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -51,16 +62,22 @@ public class MainWindow extends UiPart<Region> {
     private StackPane browserPlaceholder;
 
     @FXML
-    private GridPane helpOverlay;
+    private Label sortedByLabel;
+
+    @FXML
+    private Label pinLabel;
+
+    @FXML
+    private Label allLabel;
+
+    @FXML
+    private ScrollPane helpOverlay;
 
     @FXML
     private MenuItem helpOverlayItem;
 
     @FXML
     private MenuItem helpOverlayExit;
-
-    @FXML
-    private StackPane pinListPlaceHolder;
 
     @FXML
     private HBox sortFindPanelPlaceholder;
@@ -146,27 +163,29 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-        PinnedPanel pinnedPanel = new PinnedPanel(logic.getFilteredPersonList());
-        pinListPlaceHolder.getChildren().add(pinnedPanel.getRoot());
-
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                 logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        SortFindPanel sortFindPanel = new SortFindPanel(logic);
+        sortFindPanel = new SortFindPanel(logic);
         sortFindPanelPlaceholder.getChildren().add(sortFindPanel.getRoot());
+
+        browserPanel = new BrowserPanel();
+        if (MainApp.isFirstTimeOpen()) {
+            TutorialPanel tutorialPanel = new TutorialPanel(this, browserPlaceholder);
+            browserPlaceholder.getChildren().add(tutorialPanel.getRoot());
+        } else {
+            switchToBrowser();
+        }
     }
 
     void hide() {
@@ -248,6 +267,32 @@ public class MainWindow extends UiPart<Region> {
         helpOverlay.setVisible(false);
     }
 
+    /**
+     * Lists all Person in Bluebird.
+     */
+    @FXML
+    private void handleListAllClicked() {
+        listAllToggleStyle();
+        try {
+            logic.execute("list");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to list all using label");
+        }
+    }
+
+    /**
+     * Lists pinned Person in Bluebird.
+     */
+    @FXML
+    private void handleListPinnedClicked() {
+        listPinToggleStyle();
+        try {
+            logic.execute("listpin");
+        } catch (CommandException | ParseException e) {
+            logger.warning("Failed to list pinned using label");
+        }
+    }
+
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
@@ -260,5 +305,73 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleSwitchToBrowserEvent(SwitchToBrowserEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchToBrowser();
+    }
+
+    @Subscribe
+    private void handleShowPinnedListEvent(ToggleListPinStyleEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        listPinToggleStyle();
+    }
+
+    @Subscribe
+    private void handleShowAllListEvent(ToggleListAllStyleEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        listAllToggleStyle();
+    }
+
+    @Subscribe
+    private void handleSortByLabelEvent(ToggleSortByLabelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        sortedByLabel.setText(event.toString());
+    }
+
+    private void switchToBrowser() {
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+    }
+
+    /**
+     * Unhighlights all the UIs during tutorial.
+     */
+    public void unhighlightAll() {
+        personListPanel.unhighlight();
+        commandBox.unhighlight();
+        resultDisplay.unhighlight();
+        sortFindPanel.unhighlight();
+    }
+
+    public void highlightCommandBox() {
+        commandBox.highlight();
+    }
+
+    public void highlightResultDisplay() {
+        resultDisplay.highlight();
+    }
+
+    public void highlightSortMenu() {
+        sortFindPanel.highlightSortMenu();
+    }
+
+    public void highlightSearchBox() {
+        sortFindPanel.highlightSearchBox();
+    }
+
+    public void highlightPersonListPanel() {
+        personListPanel.highlight();
+    }
+
+    private void listAllToggleStyle() {
+        pinLabel.setStyle("-fx-text-fill: #555555");
+        allLabel.setStyle("-fx-text-fill: white");
+    }
+
+    private void listPinToggleStyle() {
+        pinLabel.setStyle("-fx-text-fill: white");
+        allLabel.setStyle("-fx-text-fill: #555555");
     }
 }

@@ -85,4 +85,11 @@ public class PersonListPanel extends UiPart<Region> {
         }
     }
 
+    public void highlight() {
+        this.personListView.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
+    }
+
+    public void unhighlight() {
+        this.personListView.setStyle("");
+    }
 }

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands.person;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ToggleSortByLabelEvent;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
 
@@ -26,6 +28,7 @@ public class SortCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
         model.sortList(toSort);
+        EventsCenter.getInstance().post(new ToggleSortByLabelEvent(toSort));
         return new CommandResult(String.format(MESSAGE_SUCCESS, toSort));
     }
 
