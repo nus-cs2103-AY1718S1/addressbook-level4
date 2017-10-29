@@ -1,5 +1,6 @@
 package seedu.address.logic.autocomplete;
 
+//@@author john19950730
 /** Utility class that contains commonly used methods in AutoComplete feature */
 public class AutoCompleteUtils {
 

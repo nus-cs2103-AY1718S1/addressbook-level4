@@ -58,6 +58,7 @@ public class AutoCompleteWordInNameParser implements AutoCompleteParser {
         return splitStub[splitStub.length - 1];
     }
 
+    //@@author john19950730
     /**
      * Updates the possible matches list by flattening out the list of all names in the address book
      */

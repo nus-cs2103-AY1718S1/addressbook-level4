@@ -37,6 +37,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
+//@@author john19950730
 public class AutoCompleteByPrefixModelParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -229,6 +230,7 @@ public class AutoCompleteByPrefixModelParserTest {
         parser = null;
     }
 
+    //@@author
     /**
      * A Model stub that allows calling of certain methods used in the test,
      * including some required accessors and addPerson
@@ -275,6 +277,7 @@ public class AutoCompleteByPrefixModelParserTest {
                     .collect(Collectors.toList());
         }
 
+        //@@author john19950730
         @Override
         public List<String> getAllTagsInAddressBook() {
             //generate a unique tag list first
@@ -292,6 +295,7 @@ public class AutoCompleteByPrefixModelParserTest {
                     .collect(Collectors.toList());
         }
 
+        //@@author
         @Override
         public List<String> getAllRemarksInAddressBook() {
             return personsAdded.stream()

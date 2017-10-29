@@ -101,6 +101,7 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.next());
     }
 
+    //@@author john19950730
     /**
      * Autocompletes the command in the textbox from incomplete input,
      * and if command is already complete change to next possible command
@@ -125,6 +126,7 @@ public class CommandBox extends UiPart<Region> {
         }
     }
 
+    //@@author
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and
      * positions the caret to the end of the {@code text}.
@@ -134,6 +136,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.positionCaret(commandTextField.getText().length());
     }
 
+    //@@author john19950730
     /**
      * Sets {@code CommandBox}'s text field with {@code text},
      * selects all text beyond previous caret position,
@@ -155,6 +158,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.selectRange(anchor, caretPosition);
     }
 
+    //@@author
     /**
      * Handles the Enter button pressed event.
      */
@@ -188,6 +192,7 @@ public class CommandBox extends UiPart<Region> {
         historySnapshot.add("");
     }
 
+    //@@author john19950730
     /**
      * Initializes or reinitializes the autocomplete snapshot.
      */
@@ -202,6 +207,7 @@ public class CommandBox extends UiPart<Region> {
         isAutoCompletePossibilitiesUpToDate = true;
     }
 
+    //@@author
     /**
      * Sets the command box style to use the default style.
      */

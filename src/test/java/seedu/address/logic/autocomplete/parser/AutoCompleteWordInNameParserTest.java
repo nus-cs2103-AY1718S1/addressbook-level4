@@ -49,6 +49,7 @@ public class AutoCompleteWordInNameParserTest {
         parser = new AutoCompleteWordInNameParser(mockModel);
     }
 
+    //@@author john19950730
     @Test
     public void testParsePossibilities() {
         // multiple matches
@@ -76,6 +77,7 @@ public class AutoCompleteWordInNameParserTest {
                 Arrays.asList(preamble));
     }
 
+    //@@author
     @After
     public void cleanUpMockModel() {
         mockModel = null;

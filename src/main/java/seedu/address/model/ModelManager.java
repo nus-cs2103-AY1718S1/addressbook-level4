@@ -65,6 +65,7 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
+    //@@author john19950730
     @Override
     public List<String> getAllNamesInAddressBook() {
         ObservableList<ReadOnlyPerson> listOfPersons = addressBook.getPersonList();
@@ -115,6 +116,7 @@ public class ModelManager extends ComponentManager implements Model {
                 .collect(Collectors.toList());
     }
 
+    //@@author
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));

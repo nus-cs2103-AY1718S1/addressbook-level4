@@ -49,6 +49,7 @@ public class AutoCompleteTagParserTest {
         parser = new AutoCompleteTagParser(mockModel);
     }
 
+    //@@author john19950730
     @Test
     public void testParsePossibilities() {
         // multiple matches
@@ -70,6 +71,7 @@ public class AutoCompleteTagParserTest {
                 Arrays.asList(preamble));
     }
 
+    //@@author
     @After
     public void cleanUpMockModel() {
         mockModel = null;

@@ -13,6 +13,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 
+//@@author john19950730
 public class AutoCompleteCommandParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

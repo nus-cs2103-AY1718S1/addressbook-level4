@@ -16,6 +16,7 @@ import seedu.address.logic.autocomplete.AutoCompleteUtils;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
 
+//@@author john19950730
 /** Parses the possible names that the user might have been trying to type,
  *  based on the names currently present in the address book. */
 public class AutoCompleteByPrefixModelParser implements AutoCompleteParser {

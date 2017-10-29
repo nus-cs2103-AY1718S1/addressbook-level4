@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import seedu.address.logic.autocomplete.AutoCompleteUtils;
 import seedu.address.model.Model;
 
+//@@author john19950730
 /** Represents a parser that specifically parses only tags based on last word of incomplete user input. */
 public class AutoCompleteTagParser implements AutoCompleteParser {
 
