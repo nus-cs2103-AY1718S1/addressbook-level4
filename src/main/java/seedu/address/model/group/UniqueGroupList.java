@@ -1,17 +1,27 @@
 package seedu.address.model.group;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.fxmisc.easybind.EasyBind;
-import seedu.address.model.group.exceptions.DuplicateGroupException;
-import seedu.address.model.group.exceptions.GroupNotFoundException;
-import seedu.address.model.person.UniquePersonList;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
+import org.fxmisc.easybind.EasyBind;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
+import seedu.address.model.person.UniquePersonList;
+
+/**
+ * A list of groups that enforces uniqueness between its elements and does not allow nulls.
+ *
+ * Supports a minimal set of list operations.
+ *
+ * @see Group#equals(Object)
+ * @see CollectionUtil#elementsAreUnique(Collection)
+ */
 public class UniqueGroupList implements Iterable<Group> {
 
     private final ObservableList<Group> internalList = FXCollections.observableArrayList();

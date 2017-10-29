@@ -1,6 +1,10 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+import java.util.logging.Logger;
+
 import com.google.common.eventbus.Subscribe;
+
 import javafx.beans.binding.Bindings;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -10,22 +14,23 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
-import java.util.HashMap;
-import java.util.logging.Logger;
-
+/**
+ * Shows the Person's full contact information
+ */
 public class PersonInfo extends UiPart<Region> {
 
     private static final String FXML = "PersonInfoPanel.fxml";
 
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     private static final Color[] colors = {Color.BLUE, Color.BROWN, Color.GREEN, Color.RED, Color.YELLOW, Color.PURPLE,
-            Color.ORANGE, Color.CHOCOLATE, Color.AQUAMARINE, Color.INDIGO, Color.GRAY};
+        Color.ORANGE, Color.CHOCOLATE, Color.AQUAMARINE, Color.INDIGO, Color.GRAY};
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private HashMap<String, String> colourMap;
 
@@ -66,6 +71,9 @@ public class PersonInfo extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loads default welcome page
+     */
     private void loadDefaultPage() {
         circle.setRadius(70);
         initial.setText("C");

@@ -1,7 +1,7 @@
 package seedu.address.model;
 
-import java.util.Objects;
 import java.util.HashMap;
+import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.model.tag.Tag;
@@ -57,9 +57,13 @@ public class UserPrefs {
         this.colourMap = colourMap;
     }
 
-    public void updateColorMap(HashMap<Tag, String> newMap){
+    /**
+     * updates colormap with the new hashmap
+     * @param newMap
+     */
+    public void updateColorMap(HashMap<Tag, String> newMap) {
         colourMap.clear();
-        for (HashMap.Entry<Tag,String> newEntry : newMap.entrySet()) {
+        for (HashMap.Entry<Tag, String> newEntry : newMap.entrySet()) {
             colourMap.put(newEntry.getKey().tagName, newEntry.getValue());
         }
     }

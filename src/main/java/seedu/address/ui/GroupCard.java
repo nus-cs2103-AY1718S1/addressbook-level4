@@ -35,14 +35,22 @@ public class GroupCard extends UiPart<Region> {
         bindListeners(group);
     }
 
+    /**
+     * Binds the individual UI elements to observe their respective {@code Group} properties
+     * so that they will be notified of any changes.
+     */
     private void bindListeners(ReadOnlyGroup group) {
-        groupName.setText(group.getGroupName().fullName);
+        groupName.textProperty().bind(Bindings.convert(group.nameProperty()));
         group.membersProperty().addListener(((observable, oldValue, newValue) -> {
             members.getChildren().clear();
             initMembers(group);
         }));
     }
 
+    /**
+     * Initialises all members of the group into labels in flow pane
+     * @param group
+     */
     private void initMembers(ReadOnlyGroup group) {
         group.getGroupMembers().forEach(person ->  {
             Label memberName = new Label(person.getName().fullName);

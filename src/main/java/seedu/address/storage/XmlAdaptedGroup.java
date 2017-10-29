@@ -1,15 +1,15 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import javax.xml.bind.annotation.XmlElement;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * JAXB-friendly version of the Group.
@@ -47,11 +47,11 @@ public class XmlAdaptedGroup {
      * @throws IllegalValueException if there were any data constraints violated in the adapted group
      */
     public Group toModelType() throws IllegalValueException {
-       final GroupName groupName = new GroupName(this.name);
-       final List<ReadOnlyPerson> groupMembers = new ArrayList<>();
-       for(XmlAdaptedPerson person: this.persons) {
-           groupMembers.add(person.toModelType());
-       }
-       return new Group(groupName, groupMembers);
+        final GroupName groupName = new GroupName(this.name);
+        final List<ReadOnlyPerson> groupMembers = new ArrayList<>();
+        for (XmlAdaptedPerson person: this.persons) {
+            groupMembers.add(person.toModelType());
+        }
+        return new Group(groupName, groupMembers);
     }
 }

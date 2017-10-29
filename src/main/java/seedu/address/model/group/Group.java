@@ -1,13 +1,16 @@
 package seedu.address.model.group;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.commons.core.index.Index;
-import seedu.address.model.person.ReadOnlyPerson;
-
 import java.util.List;
 import java.util.Objects;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.person.ReadOnlyPerson;
+
+/**
+ * Represents a group in the address book
+ * Guarantees: details are present and not null, field values are validated.
+ */
 public class Group implements ReadOnlyGroup {
 
     private ObjectProperty<GroupName> groupName;

@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,7 +14,6 @@ import javafx.scene.text.Text;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
-import java.util.HashMap;
 
 
 /**
@@ -22,6 +23,9 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
     private static final String PIN_ICON = "/images/pinned_icon.png";
+
+    public final ReadOnlyPerson person;
+
     private HashMap<String, String> colourMap;
 
     /**
@@ -31,8 +35,6 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
-    public final ReadOnlyPerson person;
 
     @FXML
     private HBox cardPane;
@@ -61,7 +63,7 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty())); 
+        name.textProperty().bind(Bindings.convert(person.nameProperty()));
         pinIcon.setImage(setPinIcon(person));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();

@@ -1,9 +1,12 @@
 package seedu.address.model.group;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Represents a group's name in the address book
+ */
 public class GroupName {
     public static final String MESSAGE_NAME_CONSTRAINTS =
             "Person names should only contain alphanumeric characters and spaces, and it should not be blank";

@@ -1,10 +1,14 @@
 package seedu.address.model.group;
 
+import java.util.List;
+
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.person.ReadOnlyPerson;
 
-import java.util.List;
-
+/**
+ * A read-only immutable interface for a Group in the addressbook.
+ * Implementations should guarantee: details are present and not null, field values are validated.
+ */
 public interface ReadOnlyGroup {
     ObjectProperty<GroupName> nameProperty();
     GroupName getGroupName();

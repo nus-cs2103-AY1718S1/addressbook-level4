@@ -67,7 +67,7 @@ public class ParserUtil {
         return listOfIndex;
     }
 
-   /**
+    /**
      * Parses {@code oneBasedIndex} into an {@code Index[]} and returns it. Leading and trailing whitespaces will be
      * trimmed.
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
@@ -184,7 +184,7 @@ public class ParserUtil {
         throw new IllegalValueException(MESSAGE_INVALID_ARGUMENTS);
     }
 
-   /**
+    /**
      * Parses a String argument for tag. Leading and trailing whitespaces will be removed
      */
     public static String parseTag(String tag) {
