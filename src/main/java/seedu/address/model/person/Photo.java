@@ -43,7 +43,6 @@ public class Photo {
     }
     /** It is guaranteed that the new filepath exists inside the resources folder */
     public void resetFilePath(String filepath) {
-        this.filepath = filepath; 
+        this.filepath = filepath;
     }
-    
 }
