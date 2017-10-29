@@ -221,12 +221,12 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Pins (@code toPin) from this {@code AddressBook}.
+     * Unpins (@code toUnpin) from this {@code AddressBook}.
      *
-     * @throws PersonNotFoundException if the {@code toPin} is not in this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code toUnpin} is not in this {@code AddressBook}.
      */
-    public boolean unpinPerson(ReadOnlyPerson toPin) throws PersonNotFoundException {
-        if (persons.unpin(toPin)) {
+    public boolean unpinPerson(ReadOnlyPerson toUnpin) throws PersonNotFoundException {
+        if (persons.unpin(toUnpin)) {
             return true;
         } else {
             throw new PersonNotFoundException();
