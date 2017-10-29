@@ -71,6 +71,15 @@ public class ModelManager extends ComponentManager implements Model {
         filteredWhitelistedPersons = new FilteredList<>(this.addressBook.getWhitelistedPersonList());
         filteredBlacklistedPersons = new FilteredList<>(this.addressBook.getBlacklistedPersonList());
         filteredOverduePersons = new FilteredList<>(this.addressBook.getOverduePersonList());
+        for (ReadOnlyPerson person : allPersons) {
+
+            if (!person.getDeadline().value.equals("No deadline set.")) {
+                Date deadline = DateUtil.convertStringToDate(person.getDeadline().valueToDisplay);
+                if (deadline.before(new Date())) {
+                    addOverdueDebtPerson(person);
+                }
+            }
+        }
 
         this.userPrefs = userPrefs;
 
@@ -281,7 +290,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Reads the masterlist and updates the overdue list accordingly.
      */
     public void syncOverdueList() {
-        filteredWhitelistedPersons = new FilteredList<>(this.addressBook.getOverduePersonList());
+        filteredOverduePersons = new FilteredList<>(this.addressBook.getOverduePersonList());
     }
 
     //@@author jelneo
@@ -548,15 +557,7 @@ public class ModelManager extends ComponentManager implements Model {
                         && (person.checkLastAccruedDate(new Date()) != 0)) {
                     updateDebtFromInterest(person, person.checkLastAccruedDate(new Date()));
                 }
-                if (!person.getDeadline().value.equals("No deadline set.")) {
-                    Date deadline = DateUtil.convertStringToDate(person.getDeadline().valueToDisplay);
-                    if (deadline.before(new Date())) {
-                        logger.info("overdue debt");
-                        addOverdueDebtPerson(person);
-                    }
-                }
             }
         }
     }
-
 }

@@ -106,6 +106,13 @@ public class TypicalPersons {
             .withEmail("anna@example.com").withAddress("4th street").withHomePhone("63333303")
             .withPostalCode("111111").withDebt("0").withOfficePhone("60000030").build();
 
+    // Overduelist persons.
+    public static final ReadOnlyPerson KENNARD = new PersonBuilder().withName("Kennard")
+            .withDeadline("11-11-2015").withHandphone("94823442").withInterest(Interest.NO_INTEREST_SET)
+            .withEmail("anna@example.com").withAddress("5th street").withHomePhone("63333303")
+            .withPostalCode("111112").withDebt("4").withOfficePhone("60000030")
+            .withDateBorrow("11-11-2014").build();
+
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withHandphone("84842424")
             .withEmail("stefan@example.com").withAddress("little india").withDebt("560")
@@ -154,13 +161,17 @@ public class TypicalPersons {
         for (ReadOnlyPerson person : getTypicalWhitelistedPersons()) {
             ab.addWhitelistedPerson(person);
         }
+
+        for (ReadOnlyPerson person : getTypicalOverdueListPersons()) {
+            ab.addOverdueDebtPerson(person);
+        }
         return ab;
     }
 
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays
                 .asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE,
-                        JELENA, WEIPING, JAIVIGNESH, LAWRENCE, ARCHANA, SIRISHA, RUSHAN));
+                        JELENA, WEIPING, JAIVIGNESH, LAWRENCE, ARCHANA, SIRISHA, RUSHAN, KENNARD));
     }
 
     public static List<ReadOnlyPerson> getTypicalBlacklistedPersons() {
@@ -169,5 +180,9 @@ public class TypicalPersons {
 
     public static List<ReadOnlyPerson> getTypicalWhitelistedPersons() {
         return new ArrayList<>(Arrays.asList(ARCHANA, SIRISHA, RUSHAN));
+    }
+
+    public static List<ReadOnlyPerson> getTypicalOverdueListPersons() {
+        return new ArrayList<>(Arrays.asList(KENNARD));
     }
 }

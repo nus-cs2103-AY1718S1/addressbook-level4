@@ -179,6 +179,17 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered overdue list to show only the first person in the {@code model}'s address book.
+     */
+    public static void showFirstOverdueDebtPersonOnly(Model model) {
+        ReadOnlyPerson person = model.getAddressBook().getOverduePersonList().get(0);
+        final String[] splitName = person.getName().fullName.split(ONE_OR_MORE_SPACES_REGEX);
+        model.updateFilteredOverduePersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assert model.getFilteredOverduePersonList().size() == 1;
+    }
+
+    /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
