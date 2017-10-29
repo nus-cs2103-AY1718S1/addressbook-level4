@@ -589,7 +589,7 @@ When `firstTimeOpen` is detected as `true` by the `MainWindow`, `TutorialPanel` 
 instead of `BrowserPanel`. `TutorialPanel` will be removed and `BrowserPanel` will be added back at the end of the tutorial.
 Figure 4.10.1 shows the sequence of events that happens.
 
-image::finalTutSD.png[width="800"]
+image::FinalTutSD.png[width="800"]
 Figure 4.10.1: Sequence diagram for first time tutorial
 
 In the reference frame "carry out tutorial", the tutorial will be looped until the end of tutorial. Users can choose
