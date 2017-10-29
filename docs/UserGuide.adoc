@@ -1,8 +1,9 @@
-= Gentleman's Guide
+=    
 :toc:
 :toc-title:
 :toc-placement: preamble
 :sectnums:
+:imagesDir: images
 :stylesDir: stylesheets
 :experimental:
 ifdef::env-github[]
