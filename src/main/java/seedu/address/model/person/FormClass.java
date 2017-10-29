@@ -28,7 +28,7 @@ public class FormClass {
         if (!isValidFormClass(trimmedFormClass)) {
             throw new IllegalValueException(MESSAGE_FORMCLASS_CONSTRAINTS);
         }
-        this.value = trimmedFormClass;
+        this.value = trimmedFormClass.toUpperCase();
     }
 
     /**
