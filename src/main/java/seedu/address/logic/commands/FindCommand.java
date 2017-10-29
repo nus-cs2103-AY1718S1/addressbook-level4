@@ -18,8 +18,8 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " p/12345678 \n"
             + "Example: " + COMMAND_WORD + " a/138 Clementi Road \n"
             + "Example: " + COMMAND_WORD + " t/[Friends] \n"
-            + "Example: " + COMMAND_WORD + " r/[Likes coffee] \n"
-            + "Example: " + COMMAND_WORD + " b/[21-10-1995] \n";
+            + "Example: " + COMMAND_WORD + " r/Likes coffee \n"
+            + "Example: " + COMMAND_WORD + " b/21-10-1995 \n";
 
     private Predicate predicate;
     public FindCommand(Predicate predicate) {

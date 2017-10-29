@@ -394,7 +394,7 @@ image::FindCommandSequenceDiagram.png[width="800"]
 **Aspect:** Accepting different types of user input. +
 **Alternative 1 (current choice):** Using a `commandWord` and `arguments` regex to distinguish user inputs. +
 **Pros:** It is easy to add new parameters and debug. +
-**Cons:** Only able to find one contact at a time e.g. `find n/Alice Bob` does not work.  +
+**Cons:** Inconvenient for users as they have to use a specific `commandWord` for a specific parameter.  +
 **Alternative 2:** Accept any type of user input after `find`. +
 **Pros:** More user-friendly as there are fewer requirements for user input. +
 **Cons:** Difficult to implement because it is tedious to distinguish the user input as several parameters are `String` parameters.
