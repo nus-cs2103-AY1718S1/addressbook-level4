@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/Alim95.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/Alim95.md[Test code]]
 
 === Enhancement Added: Sort
 
@@ -133,7 +133,11 @@ include::../DeveloperGuide.adoc[tag=pinunpin]
 
 === Other contributions
 
-* Updated the UI of Bluebird (Pull requests https://github.com[#14], https://github.com[#58], https://github.com[#73], https://github.com[#118]
-, https://github.com[#134], https://github.com[#143], https://github.com[#144], https://github.com[#205], https://github.com[#208])
-* Updated a help overlay for Bluebird (Pull requests https://github.com[#189], https://github.com[#208])
+* Updated the UI of Bluebird
+(Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/14[#14], https://github.com/CS2103AUG2017-T15-B4/main/pull/58[#58],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/73[#73], https://github.com/CS2103AUG2017-T15-B4/main/pull/118[#118],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/134[#134], https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#143],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/144[#144], https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
+* Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
 
