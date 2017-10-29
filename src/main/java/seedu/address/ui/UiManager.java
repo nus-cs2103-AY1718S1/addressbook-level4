@@ -66,17 +66,7 @@ public class UiManager extends ComponentManager implements Ui {
     // From here, use the commented code is you want the full feature.
     // i left it commented as i didnt  have time to make it pass the tests
     @Override
-    public void start(Stage primaryStage ) {
-
-//        try{
-//        stop();}
-//        catch(Exception e)
-//        {
-//        logger.info("first time starting");
-//
-//        }
-//        primaryStage = new Stage();
-//
+    public void start(Stage primaryStage) {
 
         primaryStage.setTitle(config.getAppTitle());
         try {
