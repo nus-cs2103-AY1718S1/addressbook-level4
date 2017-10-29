@@ -36,15 +36,6 @@
     -fx-font-size: 18pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
-    -fx-background-color: transparent;
-    -fx-opacity: 1;
-}
-
-.particular-person:hover {
-    -fx-font-size: 18pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: #d06651;
-    -fx-background-color: gray;
     -fx-opacity: 1;
 }
 
@@ -137,6 +128,18 @@
 .list-cell:filled:selected #cardPane {
     -fx-border-color: #3e7b91;
     -fx-border-width: 1;
+}
+
+.list-cell:filled:selected #insuranceCardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+
+.list-cell:filled #insuranceCardPane .particular-person:hover {
+    -fx-font-size: 18pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: #d06651;
+    -fx-opacity: 1;
 }
 
 .list-cell .label {
