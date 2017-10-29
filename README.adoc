@@ -15,15 +15,13 @@ ifndef::env-github[]
 image::images/Gentleman's Guide.jpeg[width="800"]
 endif::[]
 
-Looking way of keeping track of your contacts? Unsastified with ugly clunky designs currently avaliable?  
-
-Look no further with the Gentleman's Guide. With a superb user interface and sleek, professional touch, Gentleman's Guide provides you with a contact book that even James Bond would love, shaken not stirred.
-
-At the Heart of our Design is the idea that every man wants to be a Gentleman. Emcompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he neededs, when he needs it. Nothing more, nothing less
-
-== Want to experience elegance at its finest?
-
-* https://github.com/CS2103AUG2017-T09-B1/main/releases[Download the latest release] 
+* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
+* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
+* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
+** A more sophisticated GUI that includes a list  panel and an in-built Browser.
+** More test cases, including automated GUI testing.
+** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
 
 == Site Map
 
