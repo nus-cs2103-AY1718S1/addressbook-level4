@@ -58,13 +58,14 @@ public class ParserUtil {
         ArrayList<Index> listOfIndex = new ArrayList<>();
         String trimmedIndex = manyIndex.trim();
         String[] indexes = trimmedIndex.split("\\s+");
-        for (String index: indexes) {
+        for (String index : indexes) {
             if (!StringUtil.isNonZeroUnsignedInteger(index)) {
                 throw new IllegalValueException(MESSAGE_INVALID_INDEX);
             }
             listOfIndex.add(Index.fromOneBased(Integer.parseInt(index)));
         }
         return listOfIndex;
+    }
 
    /**
      * Parses {@code oneBasedIndex} into an {@code Index[]} and returns it. Leading and trailing whitespaces will be
@@ -181,6 +182,7 @@ public class ParserUtil {
             return splitArgs;
         }
         throw new IllegalValueException(MESSAGE_INVALID_ARGUMENTS);
+    }
 
    /**
      * Parses a String argument for tag. Leading and trailing whitespaces will be removed

@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.GroupName;
 import seedu.address.model.group.ReadOnlyGroup;
@@ -59,6 +60,7 @@ public class CreateGroupCommand extends UndoableCommand {
         } catch (DuplicateGroupException dge) {
             throw new CommandException(MESSAGE_DUPLICATE_GROUP);
         }
+        model.updateFilteredGroupList(Model.PREDICATE_SHOW_ALL_GROUPS);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, groupName, groupMembers.size()));
     }

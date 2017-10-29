@@ -36,6 +36,7 @@ public interface Model {
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_PINNED_PERSONS = p -> UniqueTagList.containsPinTag(p);
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_UNPINNED_PERSONS = p -> !UniqueTagList.containsPinTag(p);
+    Predicate<ReadOnlyGroup> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
 
 
     /**
@@ -113,6 +114,8 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate);
 
     void sort(String sortType) throws DuplicatePersonException;
 
