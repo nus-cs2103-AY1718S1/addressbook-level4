@@ -127,6 +127,9 @@ public class TabCompleteTextField extends TextField {
     private void complete(MenuItem item) {
         String suggestion = ((Label) ((CustomMenuItem) item).getContent()).getText();
         replaceText(suggestion);
-        dropDownMenu.hide();
+    }
+
+    public ContextMenu getDropDownMenu() {
+        return dropDownMenu;
     }
 }

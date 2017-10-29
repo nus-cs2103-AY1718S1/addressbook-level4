@@ -4,15 +4,16 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.TabCompleteTextField;
 
 /**
  * A handle to the {@code CommandBox} in the GUI.
  */
-public class CommandBoxHandle extends NodeHandle<TextField> {
+public class CommandBoxHandle extends NodeHandle<TabCompleteTextField> {
 
     public static final String COMMAND_INPUT_FIELD_ID = "#commandTextField";
 
-    public CommandBoxHandle(TextField commandBoxNode) {
+    public CommandBoxHandle(TabCompleteTextField commandBoxNode) {
         super(commandBoxNode);
     }
 
@@ -31,6 +32,10 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         click();
         guiRobot.interact(() -> getRootNode().setText(command));
         guiRobot.pauseForHuman();
+
+        if (getRootNode().getDropDownMenu().isShowing()) {
+            guiRobot.type(KeyCode.ENTER);
+        }
 
         guiRobot.type(KeyCode.ENTER);
 
