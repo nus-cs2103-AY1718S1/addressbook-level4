@@ -82,11 +82,14 @@ public class ParcelTest {
         assertEquals(differentParcel.deliveryDateProperty().get(),
                 new SimpleObjectProperty<>(new DeliveryDate("05-05-2005")).get());
 
-        // Status Equality
+        // Status Equality (Status does not matter) will be equals as long as other fields are the same.
         differentParcel.setStatus(Status.getInstance("Completed"));
         assertEquals(differentParcel.getStatus(), Status.getInstance("Completed"));
         assertEquals(differentParcel.statusProperty().get(),
                 new SimpleObjectProperty<>(Status.getInstance("Completed")).get());
+        Parcel otherParcel = new Parcel(differentParcel);
+        otherParcel.setStatus(Status.getInstance("Pending"));
+        assertEquals(otherParcel, differentParcel);
 
         // Tags Equality
         differentParcel.setTags(SampleDataUtil.getTagSet("test"));
