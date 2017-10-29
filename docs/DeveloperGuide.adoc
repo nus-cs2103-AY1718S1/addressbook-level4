@@ -363,20 +363,58 @@ As of version 1.2, Person constructor includes Appointment.
 
  new Person(name, phone, email, address, bloodType, tags, remark, appointment);
 
+The CalendarView UI refreshes every 1 second in another thread to update all the appointments in the Observable person
+list.
+
+         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
+             @Override
+             public void run() {
+                 while (true) {
+                     Platform.runLater(() -> {
+                         calendarView.setToday(LocalDate.now());
+                         calendarView.setTime(LocalTime.now());
+                         setAppointments();
+                     });
+                     try {
+                         // update every second
+                         sleep(1000);
+                     } catch (InterruptedException e) {
+                         e.printStackTrace();
+                     }
+                 }
+             }
+         };
+
+_Figure 2.1.2a : Sequence diagram for `add appointment` Model Component_
+
+image::SDforAppointment.png[width="800"]
+
+
 *Reasons for how it is implemented*
 
 The reason for two constructors is so that the person can be initialized with or without an appointment. As of version
 1.2, our address book does not support the setting of appointment concurrent with the addition of the contact. To ease
 the implementation of that, we have decided that the Person class should have appointment in its constructor.
 
-*Future enhancements*
-
-We would like to allow users to use natural language to set appointments instead of the current rigid format. For any
-enhancements for parsing, it should be done in the AddAppointmentParser class.
-
 // end::appointment[]
 
 === *Enhancement: Set tag color*
+
+*Reason for implementation* +
+
+We would like our users to be able to set a unique tag to any color that they want either by specifying the color or
+using RBG numbers.
+
+*How it is implemented * +
+
+Each unique tag will have its color as its attribute as a string.
+
+In the UI component, the tag is set by using the css attribute of the tag label.
+
+             tagLabel.setStyle("-fx-background-color: " + tag.getTagColor());
+
+
+
 
 
 === *Enhancement: List based on Tags* +

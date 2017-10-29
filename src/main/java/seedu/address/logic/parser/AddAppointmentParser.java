@@ -52,6 +52,14 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
             if (groups.size() == 0) {
                 throw new ParseException("Please be more specific with your appointment time");
             }
+
+            //If there is a start and end time that is parsed
+            if (groups.get(0).getDates().size() == 2) {
+                calendar.setTime(groups.get(0).getDates().get(0));
+                Calendar calendarEnd = Calendar.getInstance();
+                calendarEnd.setTime(groups.get(0).getDates().get(1));
+                return new AddAppointmentCommand(index, calendar, calendarEnd);
+            }
             calendar.setTime(groups.get(0).getDates().get(0));
             return new AddAppointmentCommand(index, calendar);
         } catch (NumberFormatException e) {

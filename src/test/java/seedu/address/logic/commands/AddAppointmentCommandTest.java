@@ -83,6 +83,25 @@ public class AddAppointmentCommandTest {
         command.execute();
     }
 
+    @Test
+    public void appointmentsWithDurationTest() throws ParseException, CommandException {
+        Index index1 = Index.fromOneBased(1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Appointment.DATE_FORMATTER.parse("2105/08/08 10:10"));
+        Calendar calendar2 = Calendar.getInstance();
+        calendar.setTime(Appointment.DATE_FORMATTER.parse("2106/08/08 10:10"));
+        AddAppointmentCommand command = new AddAppointmentCommand(index1, calendar, calendar2);
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        command.setData(model);
+        CommandResult result = command.execute();
+        Appointment appointment = new Appointment(model.getFilteredPersonList().get(index1.getZeroBased())
+                .getName().toString(),
+                calendar);
+        assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS + "Meet "
+                + appointment.getPersonName().toString() + " on "
+                + appointment.getDate().toString());
+
+    }
 
 
 }

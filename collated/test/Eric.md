@@ -65,6 +65,25 @@ public class AddAppointmentCommandTest {
         command.execute();
     }
 
+    @Test
+    public void appointmentsWithDurationTest() throws ParseException, CommandException {
+        Index index1 = Index.fromOneBased(1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Appointment.DATE_FORMATTER.parse("2105/08/08 10:10"));
+        Calendar calendar2 = Calendar.getInstance();
+        calendar.setTime(Appointment.DATE_FORMATTER.parse("2106/08/08 10:10"));
+        AddAppointmentCommand command = new AddAppointmentCommand(index1, calendar, calendar2);
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        command.setData(model);
+        CommandResult result = command.execute();
+        Appointment appointment = new Appointment(model.getFilteredPersonList().get(index1.getZeroBased())
+                .getName().toString(),
+                calendar);
+        assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS + "Meet "
+                + appointment.getPersonName().toString() + " on "
+                + appointment.getDate().toString());
+
+    }
 
 
 }
@@ -200,12 +219,12 @@ public class AddAppointmentParserTest {
     @Test
     public void nonParsableString() throws ParseException {
         thrown.expect(ParseException.class);
-        parser.parse("apt 1 d/cant parse this string");
+        parser.parse("appt 1 d/cant parse this string");
     }
     @Test
     public void parseDateExpression() throws ParseException, java.text.ParseException {
 
-        AddAppointmentCommand command = parser.parse("apt 1 d/The 30th of April in the year 2018 12am");
+        AddAppointmentCommand command = parser.parse("appt 1 d/The 30th of April in the year 2018 12am");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/04/30 00:00"));
         assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), calendar), command);
@@ -238,6 +257,21 @@ public class AddAppointmentParserTest {
             fail(e.getMessage());
         } catch (CommandException e) {
             fail();
+        }
+    }
+
+    @Test
+    public void parseAppointmentsWithDuration() {
+
+        try {
+            AddAppointmentCommand command = parser.parse("appt 1 d/7am 5th april 2018 to 10am 5th april 2018");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/04/05 07:00"));
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(Appointment.DATE_FORMATTER.parse("2018/04/05 10:00"));
+            assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), calendar, calendar2), command);
+        } catch (java.text.ParseException | ParseException e) {
+            e.printStackTrace();
         }
     }
 }
@@ -383,5 +417,45 @@ public class AddAppointmentParserTest {
             }
         }
 
+    }
+```
+###### \java\seedu\address\testutil\PersonBuilder.java
+``` java
+    /**
+     * Sets appointment with Date of the person that we are building
+     */
+    public PersonBuilder withAppointment(String name, String date) {
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(Appointment.DATE_FORMATTER.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.person.setAppointment(new Appointment(person.getName().toString(), calendar));
+        return this;
+    }
+
+    /**
+     * With appointment that specified a endDate
+     */
+    public PersonBuilder withAppointment(String name, String date, String endDate) {
+        Calendar calendar = Calendar.getInstance();
+        Calendar calendar1 = Calendar.getInstance();
+        try {
+            calendar.setTime(Appointment.DATE_FORMATTER.parse(date));
+            calendar1.setTime(Appointment.DATE_FORMATTER.parse(endDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.person.setAppointment(new Appointment(person.getName().toString(), calendar, calendar1));
+        return this;
+    }
+
+    /**
+     * Sets an empty appointment with the person that we are building
+     */
+    public PersonBuilder withAppointment(String name) {
+        this.person.setAppointment(new Appointment(person.getName().toString()));
+        return this;
     }
 ```

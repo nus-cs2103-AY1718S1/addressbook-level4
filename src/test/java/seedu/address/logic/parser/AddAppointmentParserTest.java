@@ -43,12 +43,12 @@ public class AddAppointmentParserTest {
     @Test
     public void nonParsableString() throws ParseException {
         thrown.expect(ParseException.class);
-        parser.parse("apt 1 d/cant parse this string");
+        parser.parse("appt 1 d/cant parse this string");
     }
     @Test
     public void parseDateExpression() throws ParseException, java.text.ParseException {
 
-        AddAppointmentCommand command = parser.parse("apt 1 d/The 30th of April in the year 2018 12am");
+        AddAppointmentCommand command = parser.parse("appt 1 d/The 30th of April in the year 2018 12am");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/04/30 00:00"));
         assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), calendar), command);
@@ -81,6 +81,21 @@ public class AddAppointmentParserTest {
             fail(e.getMessage());
         } catch (CommandException e) {
             fail();
+        }
+    }
+
+    @Test
+    public void parseAppointmentsWithDuration() {
+
+        try {
+            AddAppointmentCommand command = parser.parse("appt 1 d/7am 5th april 2018 to 10am 5th april 2018");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(Appointment.DATE_FORMATTER.parse("2018/04/05 07:00"));
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(Appointment.DATE_FORMATTER.parse("2018/04/05 10:00"));
+            assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), calendar, calendar2), command);
+        } catch (java.text.ParseException | ParseException e) {
+            e.printStackTrace();
         }
     }
 }
