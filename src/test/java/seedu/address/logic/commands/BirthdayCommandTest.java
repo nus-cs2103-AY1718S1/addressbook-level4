@@ -22,6 +22,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Person;
 
@@ -36,6 +37,7 @@ public class BirthdayCommandTest {
     public void execute_addBirthday_success() throws Exception {
         Person editedPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         editedPerson.setBirthday(new Birthday("01-01-1995"));
+        editedPerson.setAge(new Age("01-01-1995"));
 
         BirthdayCommand birthdayCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getBirthday().value);
 
@@ -51,6 +53,7 @@ public class BirthdayCommandTest {
     public void execute_deleteBirthday_success() throws Exception {
         Person editedPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         editedPerson.setBirthday(new Birthday(""));
+        editedPerson.setAge(new Age(""));
 
         BirthdayCommand birthdayCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getBirthday().value);
 
