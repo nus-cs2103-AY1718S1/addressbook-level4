@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.optionparser.CommandOptionUtil.PREFIX_OPTION_INDICATOR;
+
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
@@ -9,8 +11,6 @@ import seedu.address.commons.events.ui.ChangeSearchEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import static seedu.address.logic.parser.optionparser.CommandOptionUtil.PREFIX_OPTION_INDICATOR;
 
 /**
  * Selects a person identified using it's last displayed index from the address book.

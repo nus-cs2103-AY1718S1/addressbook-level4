@@ -22,13 +22,17 @@ public class SelectCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsSelectCommand() {
-        assertParseSuccess(parser, "-n 1", new SelectCommand(INDEX_FIRST_PERSON, BrowserSearchMode.GOOGLE_SEARCH_NAME));
+        assertParseSuccess(parser, "-n 1",
+                new SelectCommand(INDEX_FIRST_PERSON, BrowserSearchMode.GOOGLE_SEARCH_NAME));
 
-        assertParseSuccess(parser, "-p 2", new SelectCommand(INDEX_SECOND_PERSON, BrowserSearchMode.GOOGLE_SEARCH_PHONE));
+        assertParseSuccess(parser, "-p 2",
+                new SelectCommand(INDEX_SECOND_PERSON, BrowserSearchMode.GOOGLE_SEARCH_PHONE));
 
-        assertParseSuccess(parser, "-e 2", new SelectCommand(INDEX_SECOND_PERSON, BrowserSearchMode.GOOGLE_SEARCH_EMAIL));
+        assertParseSuccess(parser, "-e 2",
+                new SelectCommand(INDEX_SECOND_PERSON, BrowserSearchMode.GOOGLE_SEARCH_EMAIL));
 
-        assertParseSuccess(parser, "-a 3", new SelectCommand(INDEX_THIRD_PERSON, BrowserSearchMode.GOOGLE_SEARCH_ADDRESS));
+        assertParseSuccess(parser, "-a 3",
+                new SelectCommand(INDEX_THIRD_PERSON, BrowserSearchMode.GOOGLE_SEARCH_ADDRESS));
     }
 
     @Test

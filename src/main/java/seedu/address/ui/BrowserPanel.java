@@ -1,5 +1,10 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.BrowserSearchMode.GOOGLE_SEARCH_ADDRESS;
+import static seedu.address.ui.BrowserSearchMode.GOOGLE_SEARCH_EMAIL;
+import static seedu.address.ui.BrowserSearchMode.GOOGLE_SEARCH_NAME;
+import static seedu.address.ui.BrowserSearchMode.GOOGLE_SEARCH_PHONE;
+
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -15,11 +20,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeSearchEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
-
-import static seedu.address.ui.BrowserSearchMode.GOOGLE_SEARCH_ADDRESS;
-import static seedu.address.ui.BrowserSearchMode.GOOGLE_SEARCH_EMAIL;
-import static seedu.address.ui.BrowserSearchMode.GOOGLE_SEARCH_NAME;
-import static seedu.address.ui.BrowserSearchMode.GOOGLE_SEARCH_PHONE;
 
 /**
  * The Browser Panel of the App.
@@ -66,19 +66,19 @@ public class BrowserPanel extends UiPart<Region> {
      */
     public String getUrl(ReadOnlyPerson person) {
         switch (searchMode) {
-            case GOOGLE_SEARCH_NAME:
-                return GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                        + GOOGLE_SEARCH_URL_SUFFIX;
-            case GOOGLE_SEARCH_PHONE:
-                return GOOGLE_SEARCH_URL_PREFIX + person.getPhone().value.replaceAll(" ", "+")
-                        + GOOGLE_SEARCH_URL_SUFFIX;
-            case GOOGLE_SEARCH_EMAIL:
-                return GOOGLE_SEARCH_URL_PREFIX + person.getEmail().value.replaceAll(" ", "+")
-                        + GOOGLE_SEARCH_URL_SUFFIX;
-            case GOOGLE_SEARCH_ADDRESS:
-                return GOOGLE_MAP_URL_PREFIX + person.getAddress().value.replaceAll(" ", "+");
-            default:
-                return GOOGLE_SEARCH_URL_PREFIX + GOOGLE_SEARCH_URL_SUFFIX;
+        case GOOGLE_SEARCH_NAME:
+            return GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX;
+        case GOOGLE_SEARCH_PHONE:
+            return GOOGLE_SEARCH_URL_PREFIX + person.getPhone().value.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX;
+        case GOOGLE_SEARCH_EMAIL:
+            return GOOGLE_SEARCH_URL_PREFIX + person.getEmail().value.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX;
+        case GOOGLE_SEARCH_ADDRESS:
+            return GOOGLE_MAP_URL_PREFIX + person.getAddress().value.replaceAll(" ", "+");
+        default:
+            return GOOGLE_SEARCH_URL_PREFIX + GOOGLE_SEARCH_URL_SUFFIX;
         }
     }
 
