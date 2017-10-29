@@ -8,7 +8,15 @@ import seedu.address.logic.commands.WhitelistCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * Monitors current displayed list on person list panel.
+ * Obtains or updates the various lists according to the changes made to the current displayed list.
+ */
 public class ListObserver {
+
+    public static final String MASTERLIST_NAME_DISPLAY_FORMAT = "MASTERLIST:\n";
+    public static final String BLACKLIST_NAME_DISPLAY_FORMAT = "BLACKLIST:\n";
+    public static final String WHITELIST_NAME_DISPLAY_FORMAT = "WHITELIST:\n";
 
     private Model model;
 
@@ -56,13 +64,13 @@ public class ListObserver {
         switch (currentList) {
 
         case BlacklistCommand.COMMAND_WORD:
-            return "BLACKLIST:\n";
+            return BLACKLIST_NAME_DISPLAY_FORMAT;
 
         case WhitelistCommand.COMMAND_WORD:
-            return "WHITELIST:\n";
+            return WHITELIST_NAME_DISPLAY_FORMAT;
 
         default:
-            return "MASTERLIST:\n";
+            return MASTERLIST_NAME_DISPLAY_FORMAT;
         }
     }
 }

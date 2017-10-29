@@ -25,7 +25,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
-import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -103,7 +102,9 @@ public class ModelManager extends ComponentManager implements Model {
      * Sets String value of the current displayed list using value of {@param currentList}
      */
     @Override
-    public void setCurrentList(String currentList) {
+    public void setCurrentListName(String currentList) {
+
+
         this.currentList = currentList;
     }
 
@@ -346,7 +347,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        setCurrentList("list");
+        setCurrentListName("list");
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
@@ -356,7 +357,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
-        setCurrentList("blacklist");
+        setCurrentListName("blacklist");
         syncBlacklist();
         filteredBlacklistedPersons.setPredicate(currentPredicate);
         return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
@@ -368,7 +369,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
-        setCurrentList("whitelist");
+        setCurrentListName("whitelist");
         syncWhitelist();
         filteredWhitelistedPersons.setPredicate(currentPredicate);
         return FXCollections.unmodifiableObservableList(filteredWhitelistedPersons);

@@ -37,7 +37,7 @@ public interface Model {
     String getCurrentList();
 
     /** Sets the name of current displayed list */
-    void setCurrentList(String currentList);
+    void setCurrentListName(String currentList);
 
     /** Deletes the given person. */
     void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException;

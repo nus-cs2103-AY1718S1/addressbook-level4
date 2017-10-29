@@ -46,9 +46,7 @@ public class DeleteCommand extends UndoableCommand {
 
         listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
 
-        String currentList = listObserver.getCurrentListName();
-
-        return new CommandResult(currentList + String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
     }
 
     @Override

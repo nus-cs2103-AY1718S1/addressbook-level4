@@ -167,14 +167,16 @@ public class UniquePersonList implements Iterable<Person> {
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableBlacklist() {
-        return FXCollections.unmodifiableObservableList(mappedList.stream().filter(person -> person.isBlacklisted()).collect(toCollection(FXCollections::observableArrayList)));
+        return FXCollections.unmodifiableObservableList(mappedList.stream()
+                .filter(person -> person.isBlacklisted()).collect(toCollection(FXCollections::observableArrayList)));
     }
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<ReadOnlyPerson> asObservableWhitelist() {
-        return FXCollections.unmodifiableObservableList(mappedList.stream().filter(person -> person.isWhitelisted()).collect(toCollection(FXCollections::observableArrayList)));
+        return FXCollections.unmodifiableObservableList(mappedList.stream()
+                .filter(person -> person.isWhitelisted()).collect(toCollection(FXCollections::observableArrayList)));
     }
 
     @Override
