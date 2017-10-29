@@ -46,10 +46,9 @@ public class AddPhotoCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        if(personToEdit.getPhoto().getFilePath().isEmpty() && photo.getFilePath().isEmpty()) {
+        if (personToEdit.getPhoto().getFilePath().isEmpty() && photo.getFilePath().isEmpty()) {
             throw new CommandException(MESSAGE_NO_PHOTO_TO_DELETE);
-        }
-        else if(!photo.getFilePath().equals("")) {
+        } else if (!photo.getFilePath().equals("")) {
             try {
                 //produces a new filepath and rewrites the new filepath to the photo object held by the contact
                 PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getName().hashCode());

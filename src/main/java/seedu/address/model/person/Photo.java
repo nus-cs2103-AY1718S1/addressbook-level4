@@ -25,7 +25,7 @@ public class Photo {
             if (isValidFilePath(file)) {
                 this.filepath = filepath;
             } else {
-                 throw new IllegalArgumentException(URL_VALIDATION);
+                throw new IllegalArgumentException(URL_VALIDATION);
             }
         }
     }
@@ -42,5 +42,7 @@ public class Photo {
         return this.url;
     }
     /** It is guaranteed that the new filepath exists inside the resources folder */
-    public void resetFilePath(String filepath) { this.filepath = filepath;}
+    public void resetFilePath(String filepath) {
+        this.filepath = filepath;
+    }
 }

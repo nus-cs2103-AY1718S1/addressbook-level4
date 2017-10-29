@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 /**
@@ -27,14 +26,14 @@ public class PhotoStorage {
     }
 
     public String setNewFilePath() throws IOException {
-        String newFilePath= "src\\main\\resources\\displaypictures\\" + uniqueFileName + ".jpg";
+        String newFilePath = "src\\main\\resources\\displaypictures\\" + uniqueFileName + ".jpg";
         try {
             fileReader = new File(filePath);
             fileWriter = new File(newFilePath);
             imageReader = ImageIO.read(fileReader);
             ImageIO.write(imageReader, "jpg", fileWriter);
             return newFilePath;
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw new IOException("unable to write to local resource folder");
         }
     }

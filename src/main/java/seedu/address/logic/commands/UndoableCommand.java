@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.io.IOException;
-
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -53,7 +51,7 @@ public abstract class UndoableCommand extends Command {
     }
 
     @Override
-    public final CommandResult execute() throws CommandException{
+    public final CommandResult execute() throws CommandException {
         saveAddressBookSnapshot();
         return executeUndoableCommand();
     }

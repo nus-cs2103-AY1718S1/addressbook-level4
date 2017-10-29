@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.io.IOException;
-
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -20,7 +18,7 @@ public class RedoCommand extends Command {
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
     @Override
-    public CommandResult execute() throws CommandException{
+    public CommandResult execute() throws CommandException {
         requireAllNonNull(model, undoRedoStack);
 
         if (!undoRedoStack.canRedo()) {
