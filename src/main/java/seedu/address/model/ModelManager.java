@@ -34,16 +34,16 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+    private static final Predicate<ReadOnlyParcel> deliveredPredicate = p -> p.getStatus().equals(Status.COMPLETED);
+
     private static boolean selected = false;
     private static Index prevIndex = Index.fromZeroBased(0);
-
     private final AddressBook addressBook;
+
     private final FilteredList<ReadOnlyParcel> filteredParcels;
     private FilteredList<ReadOnlyParcel> filteredDeliveredParcels;
     private FilteredList<ReadOnlyParcel> filteredUndeliveredParcels;
     private FilteredList<ReadOnlyParcel> activeFilteredList;
-    public static Predicate<ReadOnlyParcel> deliveredPredicate = p -> p.getStatus().equals(Status.COMPLETED);
-
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -59,6 +59,13 @@ public class ModelManager extends ComponentManager implements Model {
         activeFilteredList = filteredUndeliveredParcels;
     }
 
+    public ModelManager() {
+        this(new AddressBook(), new UserPrefs());
+    }
+
+    /**
+     * Updates Delivered and UndeliveredParcelList and resets the Active List to the correct reference
+     */
     private void updatedDeliveredAndUndeliveredList() {
         boolean isActiveDelivered = activeFilteredList == filteredDeliveredParcels;
 
@@ -71,10 +78,6 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void setActiveList(boolean isDelivered) {
         activeFilteredList = isDelivered ? filteredDeliveredParcels : filteredUndeliveredParcels;
-    }
-
-    public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
     }
 
     @Override
@@ -166,8 +169,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //=========== Filtered Parcel List Accessors =============================================================
 
+    //=========== Filtered Parcel List Accessors =============================================================
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyParcel} backed by the internal list of
      * {@code addressBook}
@@ -293,4 +296,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && activeFilteredList.equals(other.activeFilteredList);
     }
 
+    public static Predicate<ReadOnlyParcel> getDeliveredPredicate() {
+        return deliveredPredicate;
+    }
 }

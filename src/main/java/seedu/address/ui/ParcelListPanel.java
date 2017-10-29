@@ -25,6 +25,9 @@ import seedu.address.model.parcel.ReadOnlyParcel;
  * Panel containing the list of parcels.
  */
 public class ParcelListPanel extends UiPart<Region> {
+    public static final Index INDEX_FIRST_TAB = Index.fromOneBased(1);
+    public static final Index INDEX_SECOND_TAB = Index.fromOneBased(2);
+
     private static final String FXML = "ParcelListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(ParcelListPanel.class);
 
@@ -36,9 +39,6 @@ public class ParcelListPanel extends UiPart<Region> {
 
     @FXML
     private TabPane tabPanePlaceholder;
-
-    public static final Index INDEX_FIRST_TAB = Index.fromOneBased(1);
-    public static final Index INDEX_SECOND_TAB = Index.fromOneBased(2);
 
     public ParcelListPanel(ObservableList<ReadOnlyParcel> uncompletedParcels,
                            ObservableList<ReadOnlyParcel> completedParcels) {
@@ -80,16 +80,15 @@ public class ParcelListPanel extends UiPart<Region> {
                     }
                 });
 
-        tabPanePlaceholder.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    if(newValue.getText().equals("All Parcels")) {
-                        logger.fine("Tab in parcel list panel changed to : '" + newValue.getText() + "'");
+        tabPanePlaceholder.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    logger.fine("Tab in parcel list panel changed to : '" + newValue.getText() + "'");
+                    if (newValue.getText().equals("All Parcels")) {
                         handleTabSelection(INDEX_FIRST_TAB);
                     } else {
                         handleTabSelection(INDEX_SECOND_TAB);
                     }
-                }
-        );
+                });
     }
 
     /**
@@ -97,14 +96,14 @@ public class ParcelListPanel extends UiPart<Region> {
      */
     private void scrollTo(int index) {
         Platform.runLater(() -> {
-            if(tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 0) {
+            if (tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 0) {
                 allUncompletedParcelListView.scrollTo(index);
                 allUncompletedParcelListView.getSelectionModel().clearAndSelect(index);
             }
         });
 
         Platform.runLater(() -> {
-            if(tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 1) {
+            if (tabPanePlaceholder.getSelectionModel().getSelectedIndex() == 1) {
                 allCompletedParcelListView.scrollTo(index);
                 allCompletedParcelListView.getSelectionModel().clearAndSelect(index);
             }
