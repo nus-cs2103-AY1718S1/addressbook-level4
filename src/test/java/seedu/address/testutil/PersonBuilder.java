@@ -142,6 +142,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author Eric
     /**
      * Sets appointment with Date of the person that we are building
      */
@@ -156,7 +157,9 @@ public class PersonBuilder {
         return this;
     }
 
-
+    /**
+     * With appointment that specified a endDate
+     */
     public PersonBuilder withAppointment(String name, String date, String endDate) {
         Calendar calendar = Calendar.getInstance();
         Calendar calendar1 = Calendar.getInstance();
@@ -177,7 +180,7 @@ public class PersonBuilder {
         this.person.setAppointment(new Appointment(person.getName().toString()));
         return this;
     }
-
+    //@@author
     public Person build() {
         return this.person;
     }
