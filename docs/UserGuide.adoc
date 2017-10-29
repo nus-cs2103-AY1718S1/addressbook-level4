@@ -1,4 +1,7 @@
-﻿= Gentleman's Guide (V1.3) - User Guide
+﻿image::CoverPage.png[width="790"]
+
+
+= Gentleman's Guide (V1.3) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -14,6 +17,8 @@ endif::[]
 
 By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -26,7 +31,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Gentleman's Guide.jpeg[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -347,6 +352,22 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 Clears all entries from the address book. +
 Format: `clear`
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
+
+=== Logging in to private database : `login`
+
+Login into a Private Database +
+Format: `login u/private p/password`
+
+=== Logging out of private database : `logout`
+
+Logout of a Private Database +
+Format: `logout`
+
 
 === Exiting the program : `exit`
 
