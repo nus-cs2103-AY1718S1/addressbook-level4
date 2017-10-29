@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -47,6 +48,9 @@ public class BrowserPanel extends UiPart<Region> {
     private WebView browser;
 
     @FXML
+    private Circle contactImageCircle;
+
+    @FXML
     private BorderPane socialIcon1Placeholder;
 
     @FXML
@@ -64,6 +68,11 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private VBox contactDetailsVBox;
 
+    //This has a getter method as MainWindow.java needs to
+    // access this node to populate it with Logic.getFilteredScheduleList().
+    @FXML
+    private StackPane schedulePlaceholder;
+
     private ParallelTransition pt;
 
     public BrowserPanel() {
@@ -72,28 +81,33 @@ public class BrowserPanel extends UiPart<Region> {
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
         loadDefaultPage();
-
-        setupContactDetailsBox();
-
+        //Setup needed JFX nodes which will be updated upon selecting persons
+        setupContactImageCircle();
+        setupContactDetailsVBox();
+        setupScheduleListViewPlaceholder();
         registerAsAnEventHandler(this);
     }
 
     private void setContactImage() {
-        Circle cir = new Circle(250, 250, 90);
-        cir.setStroke(Color.valueOf("#3fc380"));
-        cir.setStrokeWidth(5);
-        cir.setStrokeDashOffset(20);
         Image img = new Image("images/maleIcon.png");
-        cir.setFill(new ImagePattern(img));
-        cir.radiusProperty().bind(Bindings.min(
+        contactImageCircle.setVisible(true);
+        contactImageCircle.setFill(new ImagePattern(img));
+        easeIn(contactImageCircle);
+    }
+
+    private void setupContactImageCircle() {
+        contactImageCircle = new Circle(250, 250, 90);
+        contactImageCircle.setStroke(Color.valueOf("#3fc380"));
+        contactImageCircle.setStrokeWidth(5);
+        contactImageCircle.radiusProperty().bind(Bindings.min(
                 contactImagePlaceholder.widthProperty().divide(3),
                 contactImagePlaceholder.heightProperty().divide(3))
         );
-        contactImagePlaceholder.setCenter(cir);
-        easeIn(cir);
+        contactImagePlaceholder.setCenter(contactImageCircle);
+        contactImageCircle.setVisible(false);
     }
 
-    private void setupContactDetailsBox() {
+    private void setupContactDetailsVBox() {
         contactDetailsVBox.setSpacing(0);
         contactDetailsVBox.getChildren().addAll(
                 new Label(""),
@@ -122,7 +136,6 @@ public class BrowserPanel extends UiPart<Region> {
             Circle cir = new Circle(250, 250, 30);
             cir.setStroke(Color.valueOf("#3fc380"));
             cir.setStrokeWidth(5);
-            cir.setStrokeDashOffset(20);
             cir.radiusProperty().bind(Bindings.min(
                     socialIconPlaceholders[i].widthProperty().divide(3),
                     socialIconPlaceholders[i].heightProperty().divide(3))
@@ -131,6 +144,10 @@ public class BrowserPanel extends UiPart<Region> {
             socialIconPlaceholders[i].setCenter(cir);
             easeIn(cir);
         }
+    }
+
+    private void setupScheduleListViewPlaceholder() {
+        schedulePlaceholder.setVisible(false);
     }
 
     private void loadPersonPage(ReadOnlyPerson person) {
@@ -164,10 +181,14 @@ public class BrowserPanel extends UiPart<Region> {
         setContactImage();
         setContactDetails(event.getNewSelection().person);
         setIcons();
+        setSchedule();
     }
 
     private void setContactDetails(ReadOnlyPerson person) {
         //Set up name label separately as it has no icons
+        contactDetailsVBox.setSpacing(0);
+        contactDetailsVBox.getChildren().addAll();
+
         Label name = (Label) contactDetailsVBox.getChildren().get(0);
         name.setText("" + person.getName());
         name.setStyle("-fx-font-size: 60;");
@@ -197,6 +218,12 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
+    private void setSchedule() {
+        schedulePlaceholder.setVisible(true);
+        //scheduleListView.setStyle("-fx-alignment: center-left; -fx-padding: 0 0 0 10;");
+        easeIn(schedulePlaceholder);
+    }
+
     /**
      * Animates any node passed into this method with an ease-in
      */
@@ -213,5 +240,9 @@ public class BrowserPanel extends UiPart<Region> {
         ParallelTransition pt = new ParallelTransition();
         pt.getChildren().addAll(ft, tt);
         pt.play();
+    }
+
+    public StackPane getSchedulePlaceholder() {
+        return schedulePlaceholder;
     }
 }

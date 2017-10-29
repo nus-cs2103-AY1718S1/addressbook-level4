@@ -14,7 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToGroupListRequestEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 
 
@@ -39,14 +39,14 @@ public class GroupListPanel extends UiPart<Region> {
                 groupList, (group) -> new GroupCard(group, groupList.indexOf(group) + 1));
         groupListView.setItems(mappedList);
         groupListView.setCellFactory(listView -> new GroupListViewCell());
-        setEventHandlerForSelectionChangeEvent();
+        setEventHandlerForGroupSelectionChangeEvent();
     }
 
-    private void setEventHandlerForSelectionChangeEvent() {
+    private void setEventHandlerForGroupSelectionChangeEvent() {
         groupListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in group list panel changed to : '" + newValue + "'");
                         raise(new GroupPanelSelectionChangedEvent(newValue));
                     }
                 });
@@ -63,9 +63,11 @@ public class GroupListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+    private void handleJumpToGroupListRequestEvent(JumpToGroupListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+        /** To ensure that group at index 1 can be selected even when previous selection was its index */
+        groupListView.getSelectionModel().clearSelection();
     }
 
     /**

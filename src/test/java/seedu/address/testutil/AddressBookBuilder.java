@@ -51,7 +51,7 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Parses {@code groupName} into a {@code Group} and adds it to the {@code AddressBook} that we are building.
+     * Adds a new {@code Group} to the {@code AddressBook} that we are building.
      */
     public AddressBookBuilder withGroup(ReadOnlyGroup group) {
         try {
