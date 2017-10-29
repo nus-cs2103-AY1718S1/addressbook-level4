@@ -27,6 +27,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Birthday> birthday;
+    private ObjectProperty<PortraitPath> portraitPath;
 
     private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<ParticipationList> participation;
@@ -34,22 +35,7 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
-        this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
-        this.address = new SimpleObjectProperty<>(address);
-        this.birthday = new SimpleObjectProperty<>(birthday);
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.participation = new SimpleObjectProperty<>(new ParticipationList());
-    }
-
-    /**
-     * Every field must be present and not null.
-     */
-    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday,
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, PortraitPath portraitPath,
                   Set<Tag> tags, Set<Event> participatedEvents) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
@@ -57,6 +43,7 @@ public class Person implements ReadOnlyPerson {
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.birthday = new SimpleObjectProperty<>(birthday);
+        this.portraitPath = new SimpleObjectProperty<>(portraitPath);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.participation = new SimpleObjectProperty<>(new ParticipationList(participatedEvents));
@@ -67,7 +54,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getBirthday(), source.getTags());
+                source.getBirthday(), source.getPortraitPath(), source.getTags(), source.getParticipation());
         if (source.getParticipation().size() > 0) {
             this.setParticipants(source.getParticipation());
         }
@@ -141,6 +128,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Birthday getBirthday() {
         return birthday.get();
+    }
+
+    public void setPortraitPath(PortraitPath path) {
+        this.portraitPath.set(requireNonNull(path));
+    }
+
+    @Override
+    public ObjectProperty<PortraitPath> portraitProperty() {
+        return portraitPath;
+    }
+
+    @Override
+    public PortraitPath getPortraitPath() {
+        return portraitPath.get();
     }
 
     /**

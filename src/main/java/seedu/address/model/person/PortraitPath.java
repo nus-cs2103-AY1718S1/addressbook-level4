@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.regex.Pattern;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -17,6 +15,8 @@ public class PortraitPath {
             + "The application only supports .png and .jpg portrait files";
 
     public static final String PORTRAIT_VALIDATION_REGEX = "\\S[\\w\\s]+\\.(?:png$|jpg$)";
+
+    public static final String DEFAULT_PORTRAIT_PATH = "sample.png";
 
     private final String filePath;
 

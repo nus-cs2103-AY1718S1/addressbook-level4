@@ -24,6 +24,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Birthday> birthdayProperty();
     Birthday getBirthday();
+    ObjectProperty<PortraitPath> portraitProperty();
+    PortraitPath getPortraitPath();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     Set<Event> getParticipation();

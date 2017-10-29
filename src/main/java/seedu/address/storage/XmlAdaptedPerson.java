@@ -15,6 +15,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.PortraitPath;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -86,8 +87,9 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Birthday birthday = new Birthday(this.birthday);
+        final PortraitPath path = new PortraitPath(PortraitPath.DEFAULT_PORTRAIT_PATH);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Event> events = new HashSet<>(participatedEvents);
-        return new Person(name, phone, email, address, birthday, tags, events);
+        return new Person(name, phone, email, address, birthday, path, tags, events);
     }
 }
