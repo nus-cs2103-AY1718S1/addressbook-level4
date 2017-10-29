@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="insuranceCardPane" fx:id="insuranceCardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <GridPane prefHeight="150.0" prefWidth="661.0" HBox.hgrow="ALWAYS">
       <columnConstraints>
          <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="46.20001220703125" />
