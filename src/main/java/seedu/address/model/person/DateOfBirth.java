@@ -86,7 +86,10 @@ public class DateOfBirth {
      */
     private String getValidYear(String year) throws IllegalValueException {
         int currYear = LocalDate.now().getYear();
-        if (year.length() != 2 && year.length() != 4) {
+        if (year.length() > 4) {
+            year = year.substring(0, 4);
+        }
+        if (!year.matches("\\d+") || (year.length() != 2 && year.length() != 4)) {
             throw new IllegalValueException(MESSAGE_INVALID_YEAR);
         } else if (year.length() == 2) {
             int iYear = Integer.parseInt(year);
