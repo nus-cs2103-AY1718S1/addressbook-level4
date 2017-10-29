@@ -20,12 +20,13 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     /* Regular expressions for validation. */
     private static final Pattern IMPORT_COMMAND_FORMAT = Pattern.compile("--(?<importType>\\S+)\\s+(?<path>.+)");
-    private static final String ARG_BEGIN_WITH = "--\\S+";
+    private static final String ARG_BEGIN_WITH = "--";
     private static final String IMPORT_DEFAULT_TYPE = "--xml ";
 
     @Override
     public ImportCommand parse(String args) throws ParseException {
         requireNonNull(args);
+        args = args.trim();
 
         // Be default, import from .xml file if not specified by the user.
         if (!args.startsWith(ARG_BEGIN_WITH)) {
@@ -33,7 +34,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         }
 
         // Matches the import file type and import file path.
-        final Matcher matcher = IMPORT_COMMAND_FORMAT.matcher(args.trim());
+        final Matcher matcher = IMPORT_COMMAND_FORMAT.matcher(args);
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
         }

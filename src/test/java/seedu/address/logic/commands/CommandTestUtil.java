@@ -95,6 +95,9 @@ public class CommandTestUtil {
     public static final String INVALID_NEW_PROPERTY = " s/b r/[^\\s].*";
     public static final String INVALID_URL = " https://123,tg/";
 
+    public static final String INVALID_IMPORT_TYPE = " --some-import-type-unknown ";
+    public static final String INVALID_IMPORT_PATH = " unknown path";
+
     static {
         PropertyManager.initializePropertyManager();
 
