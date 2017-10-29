@@ -21,6 +21,8 @@ import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
+    public static final String DEFAULT_LIGHT_PAGE = "defaultLight.html";
+    public static final String DARK_THEME_PAGE = "DarkTheme.css";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
@@ -63,6 +65,19 @@ public class BrowserPanel extends UiPart<Region> {
      */
     private void loadDefaultPage() {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        loadPage(defaultPage.toExternalForm());
+    }
+
+    /**
+     * Sets the default HTML file based on the current theme.
+     */
+    public void setDefaultPage(String currentTheme) {
+        URL defaultPage;
+        if (currentTheme.contains(DARK_THEME_PAGE)) {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        } else {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_LIGHT_PAGE);
+        }
         loadPage(defaultPage.toExternalForm());
     }
 
