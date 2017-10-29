@@ -49,7 +49,9 @@ public class InfoPanelTest extends GuiUnitTest {
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddress());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getAddressField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebt());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getTotalDebt());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getDebtField());
+        assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getTotalDebtField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterest());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getInterestField());
         assertEquals(MESSAGE_EMPTY_STRING, infoPanelHandle.getPostalCode());
