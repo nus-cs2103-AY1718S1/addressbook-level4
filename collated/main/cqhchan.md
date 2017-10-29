@@ -1,12 +1,6 @@
-package seedu.address.logic.commands;
-
-import java.util.logging.Logger;
-
-import seedu.address.MainApp;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.ui.Ui;
-
-//@@author cqhchan
+# cqhchan
+###### \java\seedu\address\logic\commands\LoginCommand.java
+``` java
 /**
  *
  */
@@ -33,3 +27,4 @@ public class LoginCommand extends Command {
         return new CommandResult(MESSAGE_LOGIN_ACKNOWLEDGEMENT);
     }
 }
+```

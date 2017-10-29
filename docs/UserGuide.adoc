@@ -1,4 +1,4 @@
-﻿= Gentleman's Guide (V1.3) - User Guide
+= Gentleman's Guide (V1.3) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -13,6 +13,16 @@ endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B1/main
 
 By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
+image:CoverPage.png[width="600"]
+
+== Introduction
+
+Looking way of keeping track of your contacts? Unsastified with ugly clunky designs currently avaliable?  
+
+Look no further with the Gentleman's Guide. With a superb user interface and sleek, professional touch, Gentleman's Guide provides you with a contact book that even James Bond would love, shaken not stirred.
+
+At the Heart of our Design is the idea that every man wants to be a Gentleman. Emcompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he neededs, when he needs it. Nothing more, nothing less
+
 
 == Quick Start
 
@@ -26,7 +36,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Gentleman's Guide.jpeg[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -84,6 +94,11 @@ Examples:
 
 Shows a list of all persons in the address book. +
 Format: `list`
+
+=== Listing all reminders : `listReminder`
+
+Shows a list of all persons in the address book. +
+Format: `listReminder`
 
 === Editing a person : `edit`
 
@@ -144,6 +159,62 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+=== Locating persons by emails: `findEmail`
+
+Finds persons whose emails is same as the keyword. +
+Format: `findEmail KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the email is searched.
+* Only full words will be matched e.g. `johnny` will not match `johnny@example.con`
+* Multiple emails can be searched at one time.
+****
+
+Examples:
+
+* `findEmail alex@example.com` +
+Returns person with the email `alex@example.com`
+* `findEmail alex@example.com jamie@example.com` +
+Returns person with emails `alex@example.com` , `jamie@example.com`
+
+=== Locating persons by emails: `findPhone`
+
+Finds persons whose phone is same as the keyword. +
+Format: `findPhone KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only the numbers is searched.
+* Only full words will be matched e.g. `9567` will not match `95678432`
+* Multiple phone numbers can be searched at one time.
+****
+
+Examples:
+
+* `findPhone 86564385` +
+Returns person with the phone number `96564385`
+* `find 87655678 98435670` +
+Returns person with numbers `87655678` , `98435670`
+
+=== Locating reminders by task names: `findReminder`
+
+Finds reminderss whose task names contain any of the given keywords. +
+Format: `findReminder KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `proposals` will match `Proposals`
+* The order of the keywords does not matter. e.g. `Proposal Submission` will match `Submission Proposal`
+* Only the task name is searched.
+* Only full words will be matched e.g. `proposal` will not match `proposals`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Proposal Submission` will return `Proposal Draft`, `Project Submission`
+****
+
+Examples:
+
+* `findReminder Proposal` +
+Returns `Proposal` and `Proposal Submission`
+* `find Meeting and Project Work` +
+Returns any reminder having task names `Meeting`, `Proposal Submission`
 
 === Deleting a person : `delete`
 
@@ -353,6 +424,22 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Logging in to private database : `login`
+
+Login into a Private Database +
+Format: `login u/private p/password`
+
+=== Logging out of private database : `logout`
+
+Logout of a Private Database +
+Format: `logout`
+
+
+=== Exiting the program : `exit`
+
+Exits the program. +
+Format: `exit`
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -365,16 +452,29 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add Person* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Reminder* : `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...` +
+e.g. `addReminder z/Proposal Submission p/Low d/20/12/2017 1500 m/Submit to John t/work`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Delete Person* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete Reminder* : `deleteReminder INDEX` +
+e.g. `deleteReminder 5`
+* *Edit Person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Edit Reminder* : `editReminder INDEX [z/TASK] [p/PRIORITY] [d/DATE and TIME] [M/MESSAGE] [t/TAG]...` +
+e.g. `editReminder 2 p/Medium m/Venue changed to Office`
+* *Find Person* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *Find Email* : `findEmail KEYWORD [MORE_KEYWORDS]` +
+e.g. `findEmail james@example.com`
+* *Find Phone* : `findPhone KEYWORD [MORE_KEYWORDS]` +
+e.g. `findPhone 87654321`
+* *Find Reminder* : `findReminder KEYWORD [MORE_KEYWORDS]` +
+e.g. `findReminder Project`
+* *List Persons* : `list`
+* *List Reminders* : `listReminder`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
@@ -385,10 +485,11 @@ e.g.`tag 1,2,3 friends`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Birthday*: `birthday INDEX b/BIRTHDAY` +
+* *Update Birthday*: `birthday INDEX b/BIRTHDAY` +
 e.g. `birthday 4 b/20/10/1995`
-* *Sort* : `sort`
-* *SortAge* : `sortAge`
-* *SortBirthday* : `sortBirthday`
+* *Sort by Name* : `sort`
+* *Sort by Age* : `sortAge`
+* *Sort by Birthday* : `sortBirthday`
+* *Sort by Priority* : `sortPriority`
 * *Retrieve* : `retrieve TAGNAME` +
 e.g. `retrieve friends`

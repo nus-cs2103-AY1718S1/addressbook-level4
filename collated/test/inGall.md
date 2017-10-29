@@ -1,4 +1,6 @@
-//@@author inGall
+# inGall
+###### \java\seedu\address\logic\commands\BirthdayCommandTest.java
+``` java
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
@@ -140,3 +142,82 @@ public class BirthdayCommandTest {
         return birthdayCommand;
     }
 }
+```
+###### \java\seedu\address\logic\parser\BirthdayCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.BirthdayCommand;
+import seedu.address.model.person.Birthday;
+
+public class BirthdayCommandParserTest {
+    private BirthdayCommandParser parser = new BirthdayCommandParser();
+
+    @Test
+    public void parse_indexSpecified_failure() throws Exception {
+        final Birthday birthday = new Birthday("01/01/1991");
+
+        // have birthday
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_BIRTHDAY.toString() + " " + birthday;
+        BirthdayCommand expectedCommand = new BirthdayCommand(INDEX_FIRST_PERSON, birthday);
+        assertParseSuccess(parser, userInput, expectedCommand);
+
+        // no birthday
+        userInput = targetIndex.getOneBased() + " " + PREFIX_BIRTHDAY.toString();
+        expectedCommand = new BirthdayCommand(INDEX_FIRST_PERSON, new Birthday(""));
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
+    public void parse_noFieldSpecified_failure() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdayCommand.MESSAGE_USAGE);
+
+        // nothing at all
+        assertParseFailure(parser, BirthdayCommand.COMMAND_WORD, expectedMessage);
+    }
+}
+```
+###### \java\seedu\address\model\person\BirthdayTest.java
+``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class BirthdayTest {
+
+    @Test
+    public void equals() {
+        Birthday birthday = new Birthday("01/01/1991");
+
+        // same object -> returns true
+        assertTrue(birthday.equals(birthday));
+
+        // same values -> returns true
+        Birthday birthdayCopy = new Birthday(birthday.value);
+        assertTrue(birthday.equals(birthdayCopy));
+
+        // different types -> returns false
+        assertFalse(birthday.equals(1));
+
+        // null -> returns false
+        assertFalse(birthday.equals(null));
+
+        // different person -> returns false
+        Birthday differentBirthday = new Birthday("02/02/1992");
+        assertFalse(birthday.equals(differentBirthday));
+    }
+}
+```
