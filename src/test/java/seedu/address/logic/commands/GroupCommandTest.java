@@ -14,6 +14,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Group;
 
 public class GroupCommandTest {
 
@@ -47,7 +48,15 @@ public class GroupCommandTest {
 
     @Test
     public void execute_groupCommand_DeleteSuccesful() throws Exception {
+        GroupCommand validCommand = new GroupCommand(Arrays.asList("Trip"));
+        validCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        Group trip = new Group("Trip");
+        model.addGroup(trip);
 
+        CommandResult result = validCommand.executeUndoableCommand();
+
+        assertEquals(result.feedbackToUser, GroupCommand.MESSAGE_SUCCESS);
+        assertFalse(model.groupExists(trip));
     }
     //@@author
 }
