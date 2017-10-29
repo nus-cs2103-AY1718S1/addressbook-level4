@@ -22,7 +22,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class AddAppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "appointment";
-    public static final String COMMAND_ALIAS = "apt";
+    public static final String COMMAND_ALIAS = "appt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appoint to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
@@ -39,21 +39,31 @@ public class AddAppointmentCommand extends Command {
 
     private final Index index;
     private final Calendar date;
+    private final Calendar endDate;
 
 
     public AddAppointmentCommand() {
         date = null;
         index = null;
+        endDate = null;
     }
 
     public AddAppointmentCommand(Index index) {
         this.index = index;
         this.date = null;
+        endDate = null;
     }
 
     public AddAppointmentCommand(Index index, Calendar date) {
         this.index = index;
         this.date = date;
+        this.endDate = null;
+    }
+
+    public AddAppointmentCommand(Index index, Calendar date, Calendar endDate) {
+        this.index = index;
+        this.date = date;
+        this.endDate = endDate;
     }
 
     @Override
@@ -78,8 +88,10 @@ public class AddAppointmentCommand extends Command {
         requireNonNull(index);
         if (date == null) {
             appointment = new Appointment(personToAddAppointment.getName().toString());
-        } else {
+        } else if (date != null && endDate == null) {
             appointment = new Appointment(personToAddAppointment.getName().toString(), date);
+        } else {
+            appointment = new Appointment(personToAddAppointment.getName().toString(), date, endDate);
         }
 
         if (date != null && !isDateValid()) {
@@ -95,7 +107,7 @@ public class AddAppointmentCommand extends Command {
             return new CommandResult("Appointment with " + personToAddAppointment.getName().toString()
                     + " set to off.");
         }
-        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName().toString()
+        return new CommandResult(MESSAGE_SUCCESS + "Meet " +  appointment.getPersonName()
                 + " on "
                 +  appointment.getDate().toString());
     }

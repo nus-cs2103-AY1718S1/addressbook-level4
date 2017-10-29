@@ -98,8 +98,15 @@ public class CalendarWindow extends UiPart<Region> {
             }
             LocalDateTime ldt = LocalDateTime.ofInstant(person.getAppointment().getDate().toInstant(),
                     ZoneId.systemDefault());
+            LocalDateTime ldt2;
+            if (person.getAppointment().getEndDate() != null) {
+                ldt2 = LocalDateTime.ofInstant(person.getAppointment().getEndDate().toInstant(),
+                        ZoneId.systemDefault());
+            } else {
+                ldt2 = ldt.plusHours(1);
+            }
             Entry entry = new Entry(person.getName().toString());
-            entry.setInterval(new Interval(ldt, ldt.plusHours(1)));
+            entry.setInterval(new Interval(ldt, ldt2));
             List<Entry<?>> result = calendar.findEntries(person.getName().toString());
             calendar.removeEntries(result);
             calendar.addEntry(entry);
