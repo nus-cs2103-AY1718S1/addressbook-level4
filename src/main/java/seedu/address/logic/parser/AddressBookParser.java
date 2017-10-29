@@ -78,13 +78,13 @@ public class AddressBookParser {
 
         case WhitelistCommand.COMMAND_WORD_ALIAS:
         case WhitelistCommand.COMMAND_WORD:
-                logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
-                return new WhitelistCommand();
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new WhitelistCommand();
 
         case OverdueListCommand.COMMAND_WORD_ALIAS:
         case OverdueListCommand.COMMAND_WORD:
-             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
-             return new OverdueListCommand();
+            logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");
+            return new OverdueListCommand();
 
         case BanCommand.COMMAND_WORD:
             logger.info("----------------[ACTUAL COMMAND][" + commandWord + "]");

@@ -76,11 +76,10 @@ public class ModelManager extends ComponentManager implements Model {
             if (!person.getDeadline().value.equals("No deadline set.")) {
                 Date deadline = DateUtil.convertStringToDate(person.getDeadline().valueToDisplay);
                 if (deadline.before(new Date())) {
-                    addOverdueDebtPerson(person);
+                    this.addressBook.addOverdueDebtPerson(person);
                 }
             }
         }
-
         this.userPrefs = userPrefs;
 
         this.currentList = "list";
@@ -128,6 +127,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        syncOverdueList();
+        syncBlacklist();
+        syncWhitelist();
         indicateAddressBookChanged();
     }
 
@@ -443,7 +445,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Obtains the latest list of blacklisted persons from masterlist and adds to {@code filteredBlacklistedPersons}
      * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
      * @return size of current displayed filtered list.
      */
@@ -456,7 +457,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Obtains the latest list of whitelisted persons from masterlist and adds to {@code filteredWhitelistedPersons}
      * Filters {@code filteredWhitelistedPersons} according to given {@param predicate}
      * @return size of current displayed filtered list.
      */
@@ -469,7 +469,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * Obtains the latest list of persons with overdue debt from masterlist and adds to {@code filteredOverduePersons}
      * Filters {@code filteredOverduePersons} according to given {@param predicate}
      * @return size of current displayed filtered list.
      */

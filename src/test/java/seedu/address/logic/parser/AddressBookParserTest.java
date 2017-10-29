@@ -203,7 +203,7 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_OverdueList() throws Exception {
+    public void parseCommand_overdueList() throws Exception {
         assertTrue(parser.parseCommand(OverdueListCommand.COMMAND_WORD) instanceof OverdueListCommand);
         assertTrue(parser.parseCommand(OverdueListCommand.COMMAND_WORD + " 3") instanceof OverdueListCommand);
     }

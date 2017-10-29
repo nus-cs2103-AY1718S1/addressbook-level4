@@ -111,7 +111,7 @@ public class TypicalPersons {
             .withDeadline("11-11-2015").withHandphone("94823442").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("anna@example.com").withAddress("5th street").withHomePhone("63333303")
             .withPostalCode("111112").withDebt("4").withOfficePhone("60000030")
-            .withDateBorrow("11-11-2014").build();
+            .withDateBorrow("Tue, 11 Nov, Year 2014").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withHandphone("84842424")
