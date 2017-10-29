@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -102,7 +97,6 @@
                   </image>
                </ImageView>
             </graphic></Label>
-            <FlowPane fx:id="tags" alignment="BASELINE_LEFT" />
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
@@ -110,18 +104,5 @@
         <rowConstraints>
             <RowConstraints />
         </rowConstraints>
-    </GridPane>
-    <GridPane minWidth="600">
-   <AnchorPane prefHeight="200.0" prefWidth="200.0">
-      <children>
-         <LineChart fx:id="lineChart" layoutY="10.0" maxHeight="1.5" maxWidth="1.5" minHeight="500" minWidth="700" prefHeight="600" prefWidth="800.0">
-           <xAxis>
-             <CategoryAxis minHeight="400.0" minWidth="400.0" side="BOTTOM" fx:id="xNameAxis" />
-           </xAxis>
-           <yAxis>
-             <NumberAxis fx:id="yGradeAxis" side="LEFT" tickLabelFill="#ffffff2e" />
-           </yAxis>
-         </LineChart>
-      </children></AnchorPane>
     </GridPane>
 </HBox>
