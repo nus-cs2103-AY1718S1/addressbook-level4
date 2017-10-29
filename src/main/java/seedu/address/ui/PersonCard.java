@@ -97,7 +97,7 @@ public class PersonCard extends UiPart<Region> {
     }
     /** Checks if the user has added any photo to the specific contact*/
     private void setImage(ReadOnlyPerson person) {
-        String url = person.getPhoto().getFilePath();//gets the file directly from the resources folder.(change!)
+        String url = person.getPhoto().getFilePath();//gets the filepath directly from the resources folder.
         if (url.equals("")) {
             Image image = new Image(getClass().getResource("/images/noPhoto.png").toExternalForm());
             imageView.setImage(image);

@@ -24,7 +24,6 @@ public class Photo {
             this.url = DEFAULT_FILEPATH;
         } else {
             File file = new File(filepath);
-            //this.filepath = filepath;
             if (isValidFilePath(file)) {
                 this.filepath = filepath;
                /* try {
@@ -37,7 +36,7 @@ public class Photo {
                  throw new IllegalArgumentException(URL_VALIDATION);
             }
         }
-        //isBackUp = false;
+        
     }
 
     public boolean isValidFilePath(File file) {
@@ -60,7 +59,7 @@ public class Photo {
     public String getUrl() {
         return this.url;
     }
-    
+    /** It is guaranteed that the new filepath exists inside the resources folder */ 
     public void resetFilePath(String filepath) {
         this.filepath = filepath; 
     }

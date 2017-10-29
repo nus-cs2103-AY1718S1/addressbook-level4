@@ -16,16 +16,20 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.storage.PhotoStorage;
 
-/***/
+/** 
+ * Adds a photo to the specified contact. 
+ * Incorrect formats of AddPhotoCommand will throw different exceptions.
+ * */
 public class AddPhotoCommand extends Command {
     public static final String COMMAND_WORD = "addphoto";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": adds a photo to the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer) " + PREFIX_FILEPATH + " (must be valid filepath)\n"
-            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_FILEPATH + " C:\\users\\Desktop\\imageFolder\\Books";
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_FILEPATH + " C:/users/Desktop/imageFolder/Books";
 
     public static final String MESSAGE_ADD_PHOTO_SUCCESS = "New photo added to: %1$s";
-    public static final String MESSAGE_EXISTING_PHOTO = "There is already a photo tied to this contact.";
+    public static final String MESSAGE_DELETE_PHOTO_SUCCESS = "Removed photo from Person: %1$s";
+    public static final String MESSAGE_NO_PHOTO_TO_DELETE = "This person has no photo to delete.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in PEERSONAL.";
     private final Index index;
     private final Photo photo;
@@ -36,14 +40,18 @@ public class AddPhotoCommand extends Command {
         this.photo = photo;
     }
     @Override
-    public CommandResult execute() throws CommandException, IOException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        if(!photo.getFilePath().equals("")) {
+        if(personToEdit.getPhoto().getFilePath().isEmpty() && photo.getFilePath().isEmpty()) {
+            throw new CommandException(MESSAGE_NO_PHOTO_TO_DELETE);
+        }
+        else if(!photo.getFilePath().equals("")) {
             try {
+                //produces a new filepath and rewrites the new filepath to the photo object held by the contact
                 PhotoStorage rewrite = new PhotoStorage(photo.getFilePath(), personToEdit.getName().hashCode());
                 photo.resetFilePath(rewrite.setNewFilePath());
             } catch (IOException e) {
@@ -69,7 +77,7 @@ public class AddPhotoCommand extends Command {
         if (!photo.getFilePath().isEmpty()) {
             return String.format(MESSAGE_ADD_PHOTO_SUCCESS, personToEdit);
         } else {
-            return String.format(MESSAGE_ADD_PHOTO_SUCCESS, personToEdit);
+            return String.format(MESSAGE_DELETE_PHOTO_SUCCESS, personToEdit);
         }
     }
 
