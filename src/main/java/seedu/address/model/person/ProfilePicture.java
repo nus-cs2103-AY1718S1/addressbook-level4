@@ -3,7 +3,6 @@ package seedu.address.model.person;
 import java.io.File;
 
 import javafx.scene.image.Image;
-import seedu.address.MainApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -13,7 +12,7 @@ public class ProfilePicture {
 
     public static final String MESSAGE_FILENAME_CONSTRAINTS = "Profile picture file name invalid";
 
-    public static final String DEFAULT_PICTURE = "default_profile_picture.png";
+    public static final String DEFAULT_PICTURE = "default_pic";
     private static final String PATH_TO_IMAGE_FOLDER = "/images/";
 
     public final String value;
@@ -25,14 +24,19 @@ public class ProfilePicture {
      */
     public ProfilePicture(String fileName) throws IllegalValueException {
         try {
-            if (!(fileName.contains("/") || fileName.contains("\\"))) {
-                this.value = PATH_TO_IMAGE_FOLDER + fileName;
-            } else {
-                File file = new File(fileName);
-                this.value = file.toURI().toString();
-            }
-        } catch (Exception e) {
+            Image im = new Image(getPath(fileName));
+            this.value = fileName;
+        } catch (IllegalArgumentException iae) {
             throw new IllegalValueException(MESSAGE_FILENAME_CONSTRAINTS);
+        }
+    }
+
+    public static String getPath(String value) {
+        if (value.contains("/") || value.contains("\\")) {
+            File file = new File(value);
+            return file.toURI().toString();
+        } else {
+            return PATH_TO_IMAGE_FOLDER + value;
         }
     }
 

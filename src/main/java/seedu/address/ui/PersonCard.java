@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static seedu.address.model.person.ProfilePicture.getPath;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -88,9 +90,16 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
+    /**
+     * If the path of the image is valid, initializes the image. Otherwise leaves the picture blank.
+     */
     private void initPicture(ReadOnlyPerson person) {
-        Image im = new Image(person.getProfilePicture().value);
-        profilePicture.setImage(im);
+        Image im;
+        try {
+            im = new Image(getPath(person.getProfilePicture().value));
+            profilePicture.setImage(im);
+        } catch (IllegalArgumentException iae) {
+        }
     }
 
     private void initGroups(ReadOnlyPerson person) {
