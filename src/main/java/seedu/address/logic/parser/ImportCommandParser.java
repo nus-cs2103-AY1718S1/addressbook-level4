@@ -94,7 +94,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     private ImportCommand checkNusmodsImport(String path) throws ParseException {
         /*
          * We only do a simple matching check here. More detailed checking will be done when
-         * the {@link ImportNusmodsCommand} is executed.
+         * the {@link ImportNusmodsCommand} is constructed or executed. The matching here
+         * only serves as a defensive programming purpose.
          */
         if (!IMPORT_NUSMODS_FORMAT.matcher(path).matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
