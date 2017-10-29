@@ -11,8 +11,8 @@ public class InitImageFolder {
         requireNonNull(destinationPath);
         
         File file = new File(destinationPath);
-        if (!file.exists()) { 
+        if (!file.exists()) {
             file.mkdir();
         }
-    } 
+    }
 }

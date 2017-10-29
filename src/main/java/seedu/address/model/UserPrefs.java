@@ -13,7 +13,6 @@ public class UserPrefs {
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
     private String displayPicturesPath = "displaypictures";
-    
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
     }
@@ -59,12 +58,13 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(displayPicturesPath, o.displayPicturesPath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, displayPicturesPath);
     }
 
     @Override
@@ -73,6 +73,7 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nAddressBook image storage filepath : " + displayPicturesPath);
         return sb.toString();
     }
 
