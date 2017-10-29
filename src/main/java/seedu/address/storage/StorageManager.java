@@ -23,7 +23,7 @@ public class StorageManager extends ComponentManager implements Storage {
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
 
-
+    //@@author kennard123661
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
@@ -46,6 +46,7 @@ public class StorageManager extends ComponentManager implements Storage {
                     + "Backup of addressbook not available for this instance.");
         }
     }
+    //@@author
 
     // ================ UserPrefs methods ==============================
 
@@ -94,6 +95,7 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author kennard123661
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, getBackupStorageFilePath());
     }
@@ -104,7 +106,7 @@ public class StorageManager extends ComponentManager implements Storage {
     public String getBackupStorageFilePath() {
         return addressBookStorage.getAddressBookFilePath() + "-backup.xml";
     }
-
+    //@@author
 
     @Override
     @Subscribe

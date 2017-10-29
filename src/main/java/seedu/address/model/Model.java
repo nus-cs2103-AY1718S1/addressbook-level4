@@ -47,6 +47,7 @@ public interface Model {
      */
     void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException;
 
+    //@@author kennard123661
     /**
      * Adds all Parcel objects in parcels to the AddressBook
      * @param parcels list of parcels to add

@@ -115,6 +115,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author kennard123661
     @Override
     public synchronized void addAllParcels(List<ReadOnlyParcel> parcels, List<ReadOnlyParcel> parcelsAdded,
                                            List<ReadOnlyParcel> duplicateParcels) {
@@ -132,6 +133,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredParcelList(PREDICATE_SHOW_ALL_PARCELS);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void updateParcel(ReadOnlyParcel target, ReadOnlyParcel editedParcel)
