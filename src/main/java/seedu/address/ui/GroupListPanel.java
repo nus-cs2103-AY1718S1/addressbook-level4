@@ -10,12 +10,9 @@ import javafx.scene.layout.Region;
 import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.NewTagColourChangedEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;;
 import seedu.address.model.group.ReadOnlyGroup;
-import seedu.address.model.person.ReadOnlyPerson;
 
-import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class GroupListPanel extends UiPart<Region> {

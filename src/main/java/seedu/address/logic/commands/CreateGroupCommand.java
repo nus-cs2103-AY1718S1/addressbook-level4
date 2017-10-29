@@ -16,8 +16,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
-public class GroupCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "group";
+public class CreateGroupCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "creategroup";
     public static final String MESSAGE_SUCCESS = "New group added: %1$s, with %2$s member(s)";
     public static final String MESSAGE_DUPLICATE_GROUP = "This group already exists in the address book";
 
@@ -35,7 +35,7 @@ public class GroupCommand extends UndoableCommand {
     private GroupName groupName;
     private List<Index> indexes;
 
-    public GroupCommand(GroupName name, List<Index> indexList) {
+    public CreateGroupCommand(GroupName name, List<Index> indexList) {
         groupName = name;
         indexes = indexList;
     }
