@@ -8,11 +8,9 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.event.timeslot.Timing;
@@ -22,9 +20,6 @@ import seedu.address.model.event.timeslot.Timing;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Event implements ReadOnlyEvent {
-
-//    private static final Logger logger = LogsCenter.getLogger(Event.class);
-
     private ObjectProperty<Title> title;
     private ObjectProperty<Date> date;
     private ObjectProperty<Timing> timing;
@@ -144,7 +139,7 @@ public class Event implements ReadOnlyEvent {
      */
     public LocalTime getStartTime() {
         int start = this.getTiming().getStart();
-        return LocalTime.of(start/100, start%100);
+        return LocalTime.of(start / 100, start % 100);
     }
 
     /**
@@ -153,7 +148,7 @@ public class Event implements ReadOnlyEvent {
      */
     public LocalTime getEndTime() {
         int end = this.getTiming().getEnd();
-        return LocalTime.of(end/100, end%100);
+        return LocalTime.of(end / 100, end % 100);
     }
 
     /**
@@ -167,9 +162,7 @@ public class Event implements ReadOnlyEvent {
         int os = other.getTiming().getStart();
         int oe = other.getTiming().getEnd();
 
-//        logger.info("ts = " + ts + " te = " + te + " os = " + os + " oe = " + oe);
-
-        if(this.getDate().equals(other.getDate()) && !(ts >= oe) && !(te <= os)) {
+        if (this.getDate().equals(other.getDate()) && !(ts >= oe) && !(te <= os)) {
             return true;
         }
         return false;

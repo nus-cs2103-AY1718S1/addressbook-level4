@@ -30,7 +30,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
-    private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private FilteredList<ReadOnlyEvent> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -136,7 +136,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ObservableList<ReadOnlyEvent> getFilteredEventList() {
-        return FXCollections.unmodifiableObservableList(new FilteredList<>(this.addressBook.getEventList()));
+        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        return FXCollections.unmodifiableObservableList(filteredEvents);
     }
 
     //=========== Event Operations  ===========================================================================

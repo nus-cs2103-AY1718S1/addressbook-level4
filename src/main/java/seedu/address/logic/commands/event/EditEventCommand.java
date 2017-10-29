@@ -9,9 +9,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -30,9 +28,6 @@ import seedu.address.model.event.timeslot.Timeslot;
  * Edits the details of an existing event in the address book.
  */
 public class EditEventCommand extends UndoableCommand {
-
-    private static final Logger logger = LogsCenter.getLogger(EditEventCommand.class);
-
     public static final String COMMAND_WORD = "eventedit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the event identified "
@@ -48,6 +43,7 @@ public class EditEventCommand extends UndoableCommand {
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_TIME_CLASH = "The edited event has time clash with an existing event";
 
     private final Index index;
     private final EditEventDescriptor editEventDescriptor;
@@ -95,7 +91,7 @@ public class EditEventCommand extends UndoableCommand {
         } catch (EventNotFoundException pnfe) {
             throw new AssertionError("The target event cannot be missing");
         } catch (EventTimeClashException etce) {
-            throw new AssertionError("The changed event should not have time clash with an existing event.");
+            throw new CommandException(MESSAGE_TIME_CLASH);
         }
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));

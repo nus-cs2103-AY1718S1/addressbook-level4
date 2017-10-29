@@ -15,8 +15,6 @@ import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import org.fxmisc.easybind.EasyBind;
-
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.property.BooleanProperty;
@@ -32,11 +30,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
@@ -58,7 +54,8 @@ public class CalendarView extends UiPart<Region> {
             .minusDays(today.get().getDayOfWeek().getValue() - 1);
     private static Supplier<LocalDate> endOfWeek = () -> startOfWeek.get()
             .plusDays(6);
-    private static int SLOT_LENGTH = 30;
+    private static final int SLOT_LENGTH = 30;
+
     private final LocalTime firstSlotStart = LocalTime.of(7, 0);
     private final Duration slotLength = Duration.ofMinutes(SLOT_LENGTH);
     private final LocalTime lastSlotStart = LocalTime.of(23, 59);
@@ -82,7 +79,6 @@ public class CalendarView extends UiPart<Region> {
         initSlots(calendarView);
         initDateHeader(calendarView);
         initDateTimeHeader(calendarView);
-
         initEvents(calendarView, eventList, null);
 
         ScrollPane scrollableCalendar = new ScrollPane(calendarView);
@@ -190,44 +186,92 @@ public class CalendarView extends UiPart<Region> {
      */
     private void initEvents(GridPane calendarView, ObservableList<ReadOnlyEvent> eventList, ReadOnlyEvent
             lastChangedEvent) {
+        ObservableList<ReadOnlyEvent> eventsThisWeek = extractEvents(eventList);
+
+        removeDuplicatedPane(calendarView, lastChangedEvent);
+
+        //Iteratively add the events to the calendar view
+        for (ReadOnlyEvent event:eventsThisWeek) {
+            StackPane eventPane = createPane(event);
+            addEventPaneToCalendarView(calendarView, event, eventPane);
+        }
+
+    }
+
+    /**
+     * Extract events that are scheduled in the current week.
+     * @param eventList a list of all the events in the address book
+     * @return an ObservableList of events scheduled in the current week
+     */
+    private ObservableList<ReadOnlyEvent> extractEvents(ObservableList<ReadOnlyEvent> eventList) {
         String endOfThisWeek = CalendarView.endOfWeek.get().toString();
         String[] tokens = endOfThisWeek.split("-");
+
         try {
             Timeslot endOfWeek = new Timeslot(tokens[2] + "/" + tokens[1] + "/" + tokens[0] + " " + "2358-2359");
-            ObservableList<ReadOnlyEvent> eventsThisWeek = eventList.stream().filter(event -> event.happensBefore
-                    (endOfWeek)).collect(Collectors.toCollection(FXCollections::observableArrayList));
-
-            //Iteratively add the events
-            for (ReadOnlyEvent event:eventsThisWeek) {
-                LocalDate date = event.getDate().toLocalDate();
-
-                Label eventTitle = new Label();
-                eventTitle.setWrapText(true);
-                eventTitle.setStyle( "-fx-alignment: CENTER; -fx-font-size: 12pt; -fx-text-style: bold;");
-                eventTitle.setText(event.getTitle().toString() + "\n");
-                StackPane eventPane = new StackPane();
-                eventPane.setMaxWidth(150.0);
-                eventPane.setStyle( "-fx-background-color: #FEDFE1; -fx-alignment: CENTER; -fx-border-color: white");
-                eventPane.getChildren().addAll(eventTitle);
-
-                int columnIndex = date.getDayOfWeek().getValue();
-                int rowIndex = (int) MINUTES.between(firstSlotStart, event.getStartTime()) / SLOT_LENGTH + 1;
-                int rowSpan = (((int) event.getDuration().toMinutes() + SLOT_LENGTH - 1) )/ SLOT_LENGTH;
-
-                //In cases of updating events, remove the existing node first before adding a new one
-                if (calendarView.getChildren().contains(addedEvents.get(lastChangedEvent))) {
-                    if(calendarView.getChildren().remove(addedEvents.get(lastChangedEvent))) {
-                        logger.info(lastChangedEvent + " removed.");
-                    }
-                }
-
-                calendarView.add(eventPane, columnIndex, rowIndex, 1, rowSpan);
-                addedEvents.put(event, eventPane);
-            }
+            return eventList.stream().filter(event -> event.happensBefore
+                (endOfWeek)).collect(Collectors.toCollection(FXCollections::observableArrayList));
         } catch (IllegalValueException ive) {
             throw new RuntimeException("Calendar is not correctly initialized.");
         }
     }
+
+    /**
+     * When updating events, remove the existing pane first before adding a new one.
+     * @param calendarView where events are added
+     * @param lastChangedEvent event to be removed (if found)
+     */
+
+    private void removeDuplicatedPane(GridPane calendarView, ReadOnlyEvent lastChangedEvent) {
+        if (calendarView.getChildren().contains(addedEvents.get(lastChangedEvent))) {
+            if (calendarView.getChildren().remove(addedEvents.get(lastChangedEvent))) {
+                logger.info(lastChangedEvent + " removed.");
+            }
+        }
+    }
+
+    /**
+     * Draw a stack pane that displays the information of a given event.
+     * @param event Event to be shown.
+     * @return the stack pane created
+     */
+    private StackPane createPane(ReadOnlyEvent event) {
+        //Create the label
+        Label eventTitle = new Label();
+        eventTitle.setWrapText(true);
+        eventTitle.setStyle("-fx-alignment: CENTER; -fx-font-size: 12pt; -fx-text-style: bold;");
+        eventTitle.setText(event.getTitle().toString() + "\n");
+
+        //Create the pane
+        StackPane eventPane = new StackPane();
+        eventPane.setMaxWidth(150.0);
+        eventPane.setStyle("-fx-background-color: #FEDFE1; -fx-alignment: CENTER; -fx-border-color: white");
+
+        //Add the label to the pane
+        eventPane.getChildren().addAll(eventTitle);
+
+        return eventPane;
+    }
+
+    /**
+     * Add a stack pane displaying event details to the calendar view.
+     * @param calendarView where events will be added
+     * @param event the event to be displayed
+     * @param eventPane the stack pane to be edded
+     */
+    private void addEventPaneToCalendarView(GridPane calendarView, ReadOnlyEvent event, StackPane eventPane) {
+        LocalDate date = event.getDate().toLocalDate();
+        int columnIndex = date.getDayOfWeek().getValue();
+        int rowIndex = (int) MINUTES.between(firstSlotStart, event.getStartTime()) / SLOT_LENGTH + 1;
+        int rowSpan = (((int) event.getDuration().toMinutes() + SLOT_LENGTH - 1)) / SLOT_LENGTH;
+
+        //Add event pane to the corresponding slots on Calendar
+        calendarView.add(eventPane, columnIndex, rowIndex, 1, rowSpan);
+
+        //Store events that have been added for future reference
+        addedEvents.put(event, eventPane);
+    }
+
 
     /**
      * Upon receiving an AddressBookChangedEvent, update the event list accordingly.
@@ -290,7 +334,7 @@ public class CalendarView extends UiPart<Region> {
             view = new Region();
             view.setMinSize(80, 30);
             view.setPrefSize(120, 30);
-            view.setMaxSize(150,40);
+            view.setMaxSize(150, 40);
             view.getStyleClass().add("time-slot");
 
             selectedProperty().addListener((obs, wasSelected, isSelected) ->
@@ -332,32 +376,4 @@ public class CalendarView extends UiPart<Region> {
 
     }
 
-    /**
-     * Class representing the coordinates on a gridpane.
-     */
-    private class Coordinate {
-        int x;
-        int y;
-
-        public Coordinate(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getX() {
-            return this.x;
-        }
-
-        public int getY() {
-            return this.y;
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            return other == this
-                    || (other instanceof Coordinate)
-                    && this.x == ((Coordinate) other).getX()
-                    && this.y == ((Coordinate) other).getY();
-        }
-    }
 }

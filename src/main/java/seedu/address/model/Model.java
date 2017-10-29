@@ -86,7 +86,8 @@ public interface Model {
      * @throws EventNotFoundException if {@code target} could not be found in the list.
      * @@reginleiff Replaces the given event {@code target} with {@code editedPerson}.
      */
-    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws EventNotFoundException, EventTimeClashException;
+    void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent) throws EventNotFoundException,
+            EventTimeClashException;
 
     /**
      * @@reginleiff Returns an unmodifiable view of the filtered event list

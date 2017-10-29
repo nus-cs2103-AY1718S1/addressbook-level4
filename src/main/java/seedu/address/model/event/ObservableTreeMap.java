@@ -1,8 +1,6 @@
 //@@author a0107442n
 package seedu.address.model.event;
 
-import java.util.Collection;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Function;
 
@@ -22,7 +20,7 @@ public class ObservableTreeMap<K, V> extends TreeMap<K, V> implements
 
     private MapListenerHelper<K, V> mapListenerHelper;
 
-    protected void callObservers(MapChangeListener.Change<K,V> change) {
+    protected void callObservers(MapChangeListener.Change<K, V> change) {
         MapListenerHelper.fireValueChangedEvent(mapListenerHelper, change);
     }
 
@@ -31,10 +29,6 @@ public class ObservableTreeMap<K, V> extends TreeMap<K, V> implements
         mapListenerHelper = MapListenerHelper.addListener(mapListenerHelper, listener);
     }
 
-    @Override
-    public void removeListener(InvalidationListener listener) {
-        mapListenerHelper = MapListenerHelper.removeListener(mapListenerHelper, listener);
-    }
 
     @Override
     public void addListener(MapChangeListener<? super K, ? super V> observer) {
@@ -42,13 +36,18 @@ public class ObservableTreeMap<K, V> extends TreeMap<K, V> implements
     }
 
     @Override
+    public void removeListener(InvalidationListener listener) {
+        mapListenerHelper = MapListenerHelper.removeListener(mapListenerHelper, listener);
+    }
+
+    @Override
     public void removeListener(MapChangeListener<? super K, ? super V> observer) {
         mapListenerHelper = MapListenerHelper.removeListener(mapListenerHelper, observer);
     }
 
-    public static <K,V,U> ObservableTreeMap<K, U> map(ObservableTreeMap<K, V>
+    public static <K, V, U> ObservableTreeMap<K, U> map(ObservableTreeMap<K, V>
             sourceMap, Function<V, U> mapper) {
-        return new TransformationTreeMap<K,V,U>(sourceMap, mapper);
+        return new TransformationTreeMap<K, V, U>(sourceMap, mapper);
     }
 
 }

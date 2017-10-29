@@ -7,13 +7,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.ModelManager;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.event.timeslot.Timeslot;
@@ -55,17 +53,18 @@ public class EventList implements Iterable<Event> {
             throws EventNotFoundException, EventTimeClashException {
         requireNonNull(editedEvent);
 
+        //@@author a0107442n
         Event targetEvent = new Event(target);
         if (!internalMap.containsValue(targetEvent)) {
             throw new EventNotFoundException();
         }
+        internalMap.remove(targetEvent.getTimeslot());
 
         if (hasClashWith(new Event(editedEvent))) {
             throw new EventTimeClashException();
         }
-
-        internalMap.remove(targetEvent.getTimeslot());
         internalMap.put(editedEvent.getTimeslot(), new Event(editedEvent));
+        //@@author
     }
 
     /**
@@ -75,12 +74,14 @@ public class EventList implements Iterable<Event> {
      */
     public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
         requireNonNull(toRemove);
+        //@@author a0107442
         final boolean eventFound = internalMap.containsValue(toRemove);
         if (!eventFound) {
             throw new EventNotFoundException();
         }
         internalMap.remove(toRemove.getTimeslot());
         return eventFound;
+        //@@author
     }
 
     public void setEvents(EventList replacement) {
@@ -99,6 +100,7 @@ public class EventList implements Iterable<Event> {
         setEvents(replacement);
     }
 
+    //@@author a0107442n
     /**
      * Check if a given event has any time clash with any event in the EventList.
      * @param event for checking
@@ -108,7 +110,7 @@ public class EventList implements Iterable<Event> {
         Iterator<Event> iterator = this.iterator();
         while (iterator.hasNext()) {
             Event e = iterator.next();
-            if (e.clashesWith(event)) {
+            if (e.clashesWith(event) && !e.equals(event)) {
                 return true;
             }
         }
@@ -127,7 +129,6 @@ public class EventList implements Iterable<Event> {
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
         ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(internalMap.values()));
-//        logger.info("EventList --------- Got EventList with " + internalMap.size() + " events inside");
         return FXCollections.unmodifiableObservableList(list);
     }
 
@@ -136,6 +137,8 @@ public class EventList implements Iterable<Event> {
         Collection<Event> c = internalMap.values();
         return c.iterator();
     }
+
+    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -94,7 +94,7 @@ public class Date implements Comparable<Date> {
     }
 
     public LocalDate toLocalDate() {
-        return LocalDate.of(year, month,day);
+        return LocalDate.of(year, month, day);
     }
 
     public int getDay() {

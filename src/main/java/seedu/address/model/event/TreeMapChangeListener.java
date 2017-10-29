@@ -5,11 +5,15 @@ import java.lang.ref.WeakReference;
 import javafx.beans.NamedArg;
 import javafx.collections.MapChangeListener;
 
-public class TreeMapChangeListener<K, V> implements MapChangeListener<K,V> {
+/**
+ * Implementation of a MapChangeListener for Observable TreeMap.
+ */
 
-    private final WeakReference<MapChangeListener<K,V>> ref;
+public class TreeMapChangeListener<K, V> implements MapChangeListener<K, V> {
 
-    public TreeMapChangeListener(@NamedArg("listener") MapChangeListener<K,V> listener) {
+    private final WeakReference<MapChangeListener<K, V>> ref;
+
+    public TreeMapChangeListener(@NamedArg("listener") MapChangeListener<K, V> listener) {
         if (listener == null) {
             throw new NullPointerException("Listener must be specified.");
         }
