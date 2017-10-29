@@ -46,19 +46,14 @@ public class NearbyCommand extends Command {
         }
 
         model.updateSelectedPerson(nearbyList.get(targetIndex.getZeroBased()));
-        Index index;
-        switch (model.getCurrentList()) {
-        case "blacklist":
-            index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList().indexOf(model.getSelectedPerson()));
-            break;
-        case "whitelist":
-            index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList().indexOf(model.getSelectedPerson()));
-            break;
-        default:
-            index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(model.getSelectedPerson()));
-        }
+
+        Index index = listObserver.getIndexofSelectedPersonInCurrentList();
+
         EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
-        return new CommandResult(String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(MESSAGE_NEARBY_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }
 

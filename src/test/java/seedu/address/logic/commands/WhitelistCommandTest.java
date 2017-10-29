@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -32,13 +33,16 @@ public class WhitelistCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(whitelistCommand, model, whitelistCommand.MESSAGE_SUCCESS, expectedModel);
+        model.setCurrentListName("whitelist");
+        assertCommandSuccess(whitelistCommand, model,
+                ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + whitelistCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showFirstWhitelistedPersonOnly(model);
-        assertCommandSuccess(whitelistCommand, model, whitelistCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(whitelistCommand, model,
+                ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + whitelistCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
 }

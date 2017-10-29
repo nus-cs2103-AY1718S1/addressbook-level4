@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -21,7 +23,7 @@ public class RepaidCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_REPAID_PERSON_SUCCESS = "%1$s has now repaid his/her debt";
-    public static final String MESSAGE_REPAID_PERSON_FAILURE = "Person has already repaid debt!";
+    public static final String MESSAGE_REPAID_PERSON_FAILURE = "%1$s has already repaid debt!";
 
     private final Index targetIndex;
 
@@ -33,7 +35,7 @@ public class RepaidCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
 
         String messagetoDisplay = MESSAGE_REPAID_PERSON_SUCCESS;
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> lastShownList = listObserver.getCurrentFilteredList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -47,7 +49,11 @@ public class RepaidCommand extends UndoableCommand {
             model.addWhitelistedPerson(personToWhitelist);
         }
 
-        return new CommandResult(String.format(messagetoDisplay, personToWhitelist.getName()));
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(messagetoDisplay, personToWhitelist.getName()));
     }
 
     @Override

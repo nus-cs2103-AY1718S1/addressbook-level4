@@ -1,5 +1,8 @@
 package seedu.address.model.util;
 
+import static seedu.address.model.util.DateUtil.formatDate;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateRepaid;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
@@ -15,9 +19,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -62,7 +64,7 @@ public class SampleDataUtil {
                 new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                     new Address("Blk 47 Tampines Street 20, #17-35"), new PostalCode("515047"),
                     new Debt("90000"), new Interest("3"),
-                    new Deadline("15-03-2015"), getTagSet("unfriendly")),
+                    new Deadline("15-03-2050"), getTagSet("unfriendly")),
                 new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                     new Address("Blk 45 Aljunied Street 85, #11-31"), new PostalCode("389045"),
                     new Debt("15630"), new Interest(Interest.NO_INTEREST_SET),
@@ -79,21 +81,11 @@ public class SampleDataUtil {
             Person[] samplePersons = getSamplePersons();
             samplePersons[5].setIsBlacklisted(true);
             samplePersons[7].setIsBlacklisted(true);
+            samplePersons[6].setIsWhitelisted(true);
+            samplePersons[6].setDateRepaid(new DateRepaid(formatDate(new Date())));
 
             for (Person samplePerson : samplePersons) {
                 sampleAb.addPerson(samplePerson);
-                if (samplePerson.getDebt().toNumber() == 0.00) {
-                    sampleAb.addWhitelistedPerson(samplePerson);
-                }
-            }
-
-            for (ReadOnlyPerson person : sampleAb.getWhitelistedPersonList()) {
-                try {
-                    sampleAb.setDateRepaid(person);
-                } catch (PersonNotFoundException pnfe) {
-                    throw new AssertionError("This is not possible as we are iterating through a list of"
-                            + "people and this person is from list.");
-                }
             }
 
             return sampleAb;

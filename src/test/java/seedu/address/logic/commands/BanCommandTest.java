@@ -15,6 +15,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -33,7 +34,8 @@ public class BanCommandTest {
     public void execute_banPersonTwice_success() throws Exception {
         ReadOnlyPerson personToBan = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage = BanCommand.MESSAGE_BAN_PERSON_FAILURE;
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(BanCommand.MESSAGE_BAN_PERSON_FAILURE, personToBan.getName());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addBlacklistedPerson(personToBan);
@@ -49,12 +51,15 @@ public class BanCommandTest {
         ReadOnlyPerson personToBan = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         BanCommand banCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(BanCommand.MESSAGE_BAN_PERSON_SUCCESS, personToBan);
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(BanCommand.MESSAGE_BAN_PERSON_SUCCESS, personToBan.getName());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addBlacklistedPerson(personToBan);
 
         assertCommandSuccess(banCommand, model, expectedMessage, expectedModel);
+        assertTrue(personToBan.getAsText().equals(model.getFilteredPersonList()
+                .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
     }
 
     @Test

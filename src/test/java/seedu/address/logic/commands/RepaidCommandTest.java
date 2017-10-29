@@ -14,6 +14,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -31,7 +32,8 @@ public class RepaidCommandTest {
     public void execute_repaidPersonTwice_success() throws Exception {
         ReadOnlyPerson repaidPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage = RepaidCommand.MESSAGE_REPAID_PERSON_FAILURE;
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(RepaidCommand.MESSAGE_REPAID_PERSON_FAILURE, repaidPerson.getName());;
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addWhitelistedPerson(repaidPerson);
@@ -47,7 +49,8 @@ public class RepaidCommandTest {
         ReadOnlyPerson repaidPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         RepaidCommand repaidCommand = prepareCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(RepaidCommand.MESSAGE_REPAID_PERSON_SUCCESS, repaidPerson.getName());
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(RepaidCommand.MESSAGE_REPAID_PERSON_SUCCESS, repaidPerson.getName());
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addWhitelistedPerson(repaidPerson);
