@@ -24,10 +24,10 @@ public class ImportCommandParser implements Parser<ImportCommand> {
                 FileInputStream fis = new FileInputStream(file);
                 return new ImportCommand(fis);
             } catch (IOException ioe) {
-                throw new ParseException("Please select a proper .vcf file");
+                throw new ParseException(ImportCommand.MESSAGE_FILEERROR);
             }
         } else {
-            throw new ParseException("No File Chosen");
+            throw new ParseException(ImportCommand.MESSAGE_NOFILECHOSEN);
         }
 
     }

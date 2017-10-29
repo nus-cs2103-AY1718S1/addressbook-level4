@@ -17,6 +17,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Remark;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,10 +29,11 @@ public class ImportCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "import";
     public static final String COMMAND_USAGE = COMMAND_WORD + " ";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports contacts from a .vcf file.\n";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports contacts from a .vcf file.";
 
-    public static final String MESSAGE_SUCCESS = "Successfully imported contacts";
+    public static final String MESSAGE_SUCCESS = "Successfully imported contacts. %1$s duplicates were found";
     public static final String MESSAGE_FILEERROR = "Please ensure that VCard file contents are correct.";
+    public static final String MESSAGE_NOFILECHOSEN = "No files were selected";
 
     private final BufferedInputStream bis;
     private final BufferedReader br;
@@ -42,6 +44,8 @@ public class ImportCommand extends UndoableCommand {
     }
 
     public CommandResult executeUndoableCommand() throws CommandException {
+        int duplicate = 0;
+
         try {
             String newLine = br.readLine();
 
@@ -60,34 +64,38 @@ public class ImportCommand extends UndoableCommand {
                         String parameter = newLine.split(":")[1];
 
                         switch (type) {
-                            case "FN":
-                                name = new Name(parameter);
-                                break;
+                        case "FN":
+                            name = new Name(parameter);
+                            break;
 
-                            case "EMAIL":
-                                email = new Email(parameter);
-                                break;
+                        case "EMAIL":
+                            email = new Email(parameter);
+                            break;
 
-                            case "TEL":
-                                phone = new Phone(parameter);
-                                break;
+                        case "TEL":
+                            phone = new Phone(parameter);
+                            break;
 
-                            case "ADR":
-                                address = new Address(parameter);
-                                break;
-                            case "RM":
-                                remark = new Remark(parameter);
-                                break;
-                            case "TAG":
-                                Tag tag = new Tag(parameter);
-                                tagList.add(tag);
-                                break;
+                        case "ADR":
+                            address = new Address(parameter);
+                            break;
+                        case "RM":
+                            remark = new Remark(parameter);
+                            break;
+                        case "TAG":
+                            Tag tag = new Tag(parameter);
+                            tagList.add(tag);
+                            break;
                         }
                         newLine = br.readLine();
                     }
                     newLine = br.readLine();
                     ReadOnlyPerson toAdd = new Person(name, phone, email, address, remark, tagList);
-                    model.addPerson(toAdd);
+                    try {
+                        model.addPerson(toAdd);
+                    } catch (DuplicatePersonException dpe) {
+                        duplicate++;
+                    }
                 } else {
                     newLine = br.readLine();
                 }
@@ -97,6 +105,6 @@ public class ImportCommand extends UndoableCommand {
         } catch (IllegalValueException ive) {
             throw new CommandException("Data problem");
         }
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, duplicate));
     }
 }
