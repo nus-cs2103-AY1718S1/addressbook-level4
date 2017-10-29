@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PORTRAIT;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.PortraitPath;
 
 /**
  * A command that add an head portrait to a person
@@ -21,9 +22,9 @@ public class PortraitCommand extends UndoableCommand {
     public static final String MESSAGE_DELETE_PORTRAIT_SUCCESS = "Removed head portrait from Person: %1$s";
 
     private Index index;
-    private String filePath;
+    private PortraitPath filePath;
 
-    public PortraitCommand (Index index, String filePath) {
+    public PortraitCommand (Index index, PortraitPath filePath) {
         this.index = index;
         this.filePath = filePath;
     }

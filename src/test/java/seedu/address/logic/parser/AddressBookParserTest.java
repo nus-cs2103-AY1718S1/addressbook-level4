@@ -17,6 +17,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -34,6 +35,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PortraitPath;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -77,7 +79,8 @@ public class AddressBookParserTest {
     public void parseCommandPortrait() throws Exception {
         PortraitCommand command = (PortraitCommand) parser.parseCommand(PortraitCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PORTRAIT_DESC_FIRST);
-        assertEquals(new PortraitCommand(INDEX_FIRST_PERSON, VALID_PORTRAIT_PATH_FIRST), command);
+        assertEquals(new PortraitCommand(INDEX_FIRST_PERSON, new PortraitPath(VALID_PORTRAIT_PATH_FIRST)), command);
+
     }
 
     @Test

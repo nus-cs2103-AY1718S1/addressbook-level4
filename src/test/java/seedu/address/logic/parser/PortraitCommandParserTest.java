@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.PORTRAIT_DESC_FIRST;
 import static seedu.address.logic.commands.CommandTestUtil.PORTRAIT_DESC_SECOND;
@@ -10,7 +11,9 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PortraitCommand;
+import seedu.address.model.person.PortraitPath;
 
 public class PortraitCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -19,7 +22,13 @@ public class PortraitCommandParserTest {
 
     @Test
     public void testValidArgs() {
-        PortraitCommand expectedCommand = new PortraitCommand(Index.fromOneBased(1), VALID_PORTRAIT_PATH_FIRST);
+        PortraitCommand expectedCommand = null;
+        try {
+            expectedCommand = new PortraitCommand(Index.fromOneBased(1),
+                    new PortraitPath(VALID_PORTRAIT_PATH_FIRST));
+        } catch (IllegalValueException e) {
+            fail("Test data cannot throw exception");
+        }
 
         assertParseSuccess(parser, "1" + PORTRAIT_DESC_FIRST, expectedCommand);
 

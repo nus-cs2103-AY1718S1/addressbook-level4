@@ -9,6 +9,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.PortraitCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.PortraitPath;
 
 /**
  * Parse the argument to be a portrait command
@@ -30,11 +31,10 @@ public class PortraitCommandParser implements Parser<PortraitCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
             filePath = argMultimap.getValue(PREFIX_PORTRAIT).get();
+            return new PortraitCommand(index, new PortraitPath(filePath));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PortraitCommand.MESSAGE_USAGE));
         }
-
-        return new PortraitCommand(index, filePath);
     }
 
     /**
