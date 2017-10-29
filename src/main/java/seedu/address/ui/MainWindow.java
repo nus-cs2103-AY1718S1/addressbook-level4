@@ -219,10 +219,12 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author newalter
     @Subscribe
     private void handleResizeMainWindowEvent(ResizeMainWindowEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         primaryStage.setWidth(event.getWidth());
         primaryStage.setHeight(event.getHeight());
     }
+    //@@author
 }

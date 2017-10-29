@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.ResizeCommand;
 
-
+//@@author newalter
 public class ResizeCommandParserTest {
 
     private ResizeCommandParser parser = new ResizeCommandParser();
