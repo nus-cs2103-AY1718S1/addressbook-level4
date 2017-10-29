@@ -363,6 +363,28 @@ As of version 1.2, Person constructor includes Appointment.
 
  new Person(name, phone, email, address, bloodType, tags, remark, appointment);
 
+The CalendarView UI refreshes every 1 second in another thread to update all the appointments in the Observable person
+list.
+
+         Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
+             @Override
+             public void run() {
+                 while (true) {
+                     Platform.runLater(() -> {
+                         calendarView.setToday(LocalDate.now());
+                         calendarView.setTime(LocalTime.now());
+                         setAppointments();
+                     });
+                     try {
+                         // update every second
+                         sleep(1000);
+                     } catch (InterruptedException e) {
+                         e.printStackTrace();
+                     }
+                 }
+             }
+         };
+
 *Reasons for how it is implemented*
 
 The reason for two constructors is so that the person can be initialized with or without an appointment. As of version

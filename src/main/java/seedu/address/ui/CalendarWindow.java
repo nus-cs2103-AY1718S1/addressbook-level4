@@ -70,7 +70,7 @@ public class CalendarWindow extends UiPart<Region> {
                     });
 
                     try {
-                        // update every 10 seconds
+                        // update every 1 second
                         sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
