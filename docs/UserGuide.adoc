@@ -77,9 +77,10 @@ Format: `help`
 `since v1.2` `new field: Birthday (Archana) , Website (Darren), Home Number (Cherng Hann) and School Email(Cherng Hann)`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL w/WEBSITE a/ADDRESS [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]`
 
 [TIP]
+Fields wrapped with `[` & `]` bracers are optional +
 You can see the examples provided below to know more about what details should be inputted. +
 A person can have any number of tags (including 0). +
 Home number, school email, and birthday are optional fields
