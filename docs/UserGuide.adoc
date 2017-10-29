@@ -1,4 +1,7 @@
-= Gentleman's Guide
+image::CoverPage.png[width="790"]
+
+
+= Gentleman's Guide (V1.3) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,8 +14,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B1/main
+
 By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
-image::CoverPage.png[width="600"]
+
 == Introduction
 
 Looking way of keeping track of your contacts? Unsastified with ugly clunky designs currently avaliable?  
