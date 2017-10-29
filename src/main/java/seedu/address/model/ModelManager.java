@@ -43,7 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyParcel> filteredParcels;
     private FilteredList<ReadOnlyParcel> filteredDeliveredParcels;
     private FilteredList<ReadOnlyParcel> filteredUndeliveredParcels;
-    private FilteredList<ReadOnlyParcel> activeFilteredList; // references the current selected list 
+    private FilteredList<ReadOnlyParcel> activeFilteredList; // references the current selected list
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
