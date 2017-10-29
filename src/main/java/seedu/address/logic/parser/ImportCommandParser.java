@@ -11,7 +11,7 @@ import seedu.address.logic.commands.imports.ImportCommand.ImportType;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new ImportCommand object.
+ * Parses input arguments and creates a new sub-command of {@link ImportCommand} object.
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
     // Some messages ready to use.
@@ -46,7 +46,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         final ImportType enumImportType = toEnumType(importType);
         final String path = matcher.group("path").trim();
 
-        return null;
+        return checkImportPath(enumImportType, path);
     }
 
     private boolean checkImportType(String type) {
@@ -55,5 +55,28 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     private ImportType toEnumType(String type) {
         return ImportCommand.TO_ENUM_IMPORT_TYPE.get(type);
+    }
+
+    /**
+     * Validates the input for different {@link ImportType} and creates an {@link ImportCommand} accordingly.
+     */
+    private ImportCommand checkImportPath(ImportType enumImportType, String path) throws ParseException {
+        switch (enumImportType) {
+        case XML:
+            return checkXmlImport(path);
+        case SCRIPT:
+            return checkScriptImport(path);
+        default:
+            System.err.println("Unknown ImportType. Should never come to here.");
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, IMPORT_TYPE_NOT_FOUND));
+        }
+    }
+
+    private ImportCommand checkXmlImport(String path) {
+        return null;
+    }
+
+    private ImportCommand checkScriptImport(String path) {
+        return null;
     }
 }
