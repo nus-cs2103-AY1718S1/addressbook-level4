@@ -1,6 +1,8 @@
+
 +
 image::Ui.png[width="790"]
 +
+
 = Gentleman's Guide (V1.3) - User Guide
 :toc:
 :toc-title:
