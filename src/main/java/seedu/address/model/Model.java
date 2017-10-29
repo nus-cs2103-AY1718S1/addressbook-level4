@@ -44,8 +44,10 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author newalter
     /** Returns the predicate of the current filtered person list */
     Predicate<? super ReadOnlyPerson> getPersonListPredicate();
+    //@@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

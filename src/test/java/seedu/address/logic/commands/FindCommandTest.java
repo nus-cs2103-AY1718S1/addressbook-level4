@@ -66,6 +66,7 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
+    //@@author newalter
     @Test
     public void execute_wildcardKeywords_onePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
@@ -79,6 +80,7 @@ public class FindCommandTest {
         FindCommand command = prepareCommand("b*");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, GEORGE));
     }
+    //@@author
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {

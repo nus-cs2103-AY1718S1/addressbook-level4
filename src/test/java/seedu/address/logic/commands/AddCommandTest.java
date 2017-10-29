@@ -131,11 +131,13 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author newalter
         @Override
         public Predicate<? super ReadOnlyPerson> getPersonListPredicate() {
             fail("This method should not be called.");
             return null;
         }
+        //@@author
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
