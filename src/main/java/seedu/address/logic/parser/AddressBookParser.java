@@ -150,7 +150,7 @@ public class AddressBookParser {
             returnThisCommand = new ListCommand();
             break;
         case "tag":
-            returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength));
+            returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength+1));
             break;
         case "asc":
         case "ascending":
