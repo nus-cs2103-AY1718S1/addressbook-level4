@@ -4,13 +4,12 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 
 /**
- * Imports data from a xml file (in BoNUS-specific format) to the application.
+ * Imports data from a BoNUS script file (end with {@code .bo}) to the application.
  */
-public class ImportXmlCommand extends ImportCommand {
+public class ImportScriptCommand extends ImportCommand {
 
-    public ImportXmlCommand(String path) {
-        super(path, ImportType.XML
-        );
+    public ImportScriptCommand(String path) {
+        super(path, ImportType.SCRIPT);
     }
 
     @Override
