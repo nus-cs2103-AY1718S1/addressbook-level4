@@ -54,8 +54,11 @@ public class CreateGroupCommand extends UndoableCommand {
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
+
             ReadOnlyPerson personToAdd = lastShownList.get(index.getZeroBased());
-            groupMembers.add(personToAdd);
+            if (!groupMembers.contains(personToAdd)) {
+                groupMembers.add(personToAdd);
+            }
         }
         ReadOnlyGroup newGroup = new Group(groupName, groupMembers);
         try {
