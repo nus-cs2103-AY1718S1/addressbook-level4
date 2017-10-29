@@ -2,9 +2,6 @@ package seedu.address.model.person;
 
 import java.io.File;
 
-import javafx.scene.image.Image;
-import seedu.address.commons.exceptions.IllegalValueException;
-
 /**
  * Represents a Person's profile picture in the address book.
  */
@@ -12,23 +9,16 @@ public class ProfilePicture {
 
     public static final String MESSAGE_FILENAME_CONSTRAINTS = "Profile picture file name invalid";
 
-    public static final String DEFAULT_PICTURE = "default_pic";
+    public static final String DEFAULT_PICTURE = "default_pic.png";
     private static final String PATH_TO_IMAGE_FOLDER = "/images/";
 
     public final String value;
 
     /**
-     * Validates picture given file name.
-     *
-     * @throws IllegalValueException if given name string is invalid.
+     * Assigns the path to the profile picture
      */
-    public ProfilePicture(String fileName) throws IllegalValueException {
-        try {
-            Image im = new Image(getPath(fileName));
-            this.value = fileName;
-        } catch (IllegalArgumentException iae) {
-            throw new IllegalValueException(MESSAGE_FILENAME_CONSTRAINTS);
-        }
+    public ProfilePicture(String fileName) {
+        this.value = fileName;
     }
 
     public static String getPath(String value) {
