@@ -156,6 +156,20 @@ public class PersonBuilder {
         return this;
     }
 
+
+    public PersonBuilder withAppointment(String name, String date, String endDate) {
+        Calendar calendar = Calendar.getInstance();
+        Calendar calendar1 = Calendar.getInstance();
+        try {
+            calendar.setTime(Appointment.DATE_FORMATTER.parse(date));
+            calendar1.setTime(Appointment.DATE_FORMATTER.parse(endDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.person.setAppointment(new Appointment(person.getName().toString(), calendar, calendar1));
+        return this;
+    }
+
     /**
      * Sets an empty appointment with the person that we are building
      */
