@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -46,6 +48,24 @@ public class ParserUtil {
     }
 
     /**
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static ArrayList<Index> parseIndexes(String manyIndex) throws IllegalValueException {
+        ArrayList<Index> listOfIndex = new ArrayList<>();
+        String trimmedIndex = manyIndex.trim();
+        String[] indexes = trimmedIndex.split("\\s+");
+        for (String index: indexes) {
+            if (!StringUtil.isNonZeroUnsignedInteger(index)) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+            listOfIndex.add(Index.fromOneBased(Integer.parseInt(index)));
+        }
+        return listOfIndex;
+    }
+
+    /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -79,6 +99,15 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<GroupName> parseGroupName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new GroupName(name.get())) : Optional.empty();
     }
 
     /**
