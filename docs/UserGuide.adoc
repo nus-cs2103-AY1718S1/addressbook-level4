@@ -127,10 +127,10 @@ The default system of Mobilize will be address book.
 Whether you’ve just met a new colleague or reconnected with an old friend, adding new contacts to Mobilize is easy! +
 
 . Simply key in your contact details in the following way: +
-Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]…` +
+Format: `add n/NAME p/PHONE e/EMAIL a/ADDRESS [b/BIRTHDAY] [t/TAG]…` +
 
 . Hit enter and you should see a success message in the Result Display: +
-`New Person Added: NAME Phone: PHONE Email: EMAIL Address: ADDRESS Birthday: BIRTHDAY Tags: [TAG1][TAG2]…` +
+`New Person Added: NAME Phone: PHONE Email: EMAIL Address: ADDRESS Birthday: [BIRTHDAY] Tags: [TAG1][TAG2]…` +
 
 Here is an example to illustrate: +
 
@@ -280,7 +280,7 @@ Format: `edit INDEX n/NAME p/PHONE a/ADDRESS e/EMAIL b/BIRTHDAY t/TAG`
 
 When the command succeeds, the Result Display shows:
 
-`Edited Person: NAME Phone: PHONE Email: EMAIL Address: ADDRESS Birthday: BIRTHDAY Tags: [TAG]`
+`Edited Person: NAME Phone: PHONE Email: EMAIL Address: ADDRESS Birthday: [BIRTHDAY] Tags: [TAG]`
 
 [TIP]
 All items are NOT mandatory for editing. Any number between one and multiple items might be given for successful edit. All items left out will continue to have their original PARAMETERS.
@@ -630,7 +630,7 @@ e.g. `switchmode ab` or `switchmode tm`
 __AddressBook__
 
 ****
-*Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +
+*Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/040697 t/friend t/colleague` +
 *Delete* : `delete INDEX` +
 e.g. `delete 3` +

@@ -270,13 +270,6 @@ The `AddCommandParser` class will check for the validity of the parameter entere
 [NOTE]
 If the birthday parameter is not specified, the `AddCommand` will give an invalid command message.
 
-[discrete]
-==== Design Considerations
-**Aspect:** Implementation of birthday feature in `AddCommand` +
-**Alternative 1 (current choice):** Make adding birthday optional +
-**Pros:** User can take note of contact's birthday more easily +
-**Cons:** User has to input an additional parameter
-
 // end::birthday[]
 
 // tag::detag[]
@@ -390,7 +383,7 @@ In addition, dates can be stored after being formatted to a more user-friendly s
 **Cons:** Dates are not stored the correct format. This makes it more difficult to compare and validate later on as they have to be reformatted into Date objects every time. For example,
  in validating whether a start date is indeed before a deadline. +
 **Alternative 2:** Use java.time.LocalDate class. +
-**Pros:** Dates are in correct format. Validation becomes easier and reformatting is not necessary.+
+**Pros:** Dates are in correct format. Validation becomes easier and reformatting is not necessary. +
 **Cons:** LocalDate cannot be initialized when no input is given. In order to make dates optional, phony values would have to be used which violates the coding standard. +
 **Alternative 3:**  Use java.util.Optional class for instance variables along with the LocalDate class. +
 **Pros:** Easy to understand reasoning, for new developers looking to contribute. Easy to format specifically for display (once) and allows empty values when no dates are supplied. +
