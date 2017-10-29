@@ -16,7 +16,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -238,11 +237,4 @@ public class InfoPanel extends UiPart<Region> {
         resetNearbyPersonListPanel(event.getNewSelection().person);
     }
 
-    @Subscribe
-    private void handleNearbyPersonPanelSelectionChangedEvent(NearbyPersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        logic.updateSelectedPerson(event.getNewSelection().person);
-        loadPersonInfo(event.getNewSelection().person);
-
-    }
 }

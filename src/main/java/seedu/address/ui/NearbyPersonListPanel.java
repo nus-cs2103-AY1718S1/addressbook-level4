@@ -6,8 +6,6 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,8 +14,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
-import seedu.address.commons.events.ui.NearbyPersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author khooroko
@@ -42,6 +38,7 @@ public class NearbyPersonListPanel extends UiPart<Region> {
                 .collect(toCollection(FXCollections::observableArrayList));
         setConnections(nearbyList);
         registerAsAnEventHandler(this);
+        scrollTo(nearbyList.indexOf(currentPerson));
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
@@ -56,8 +53,7 @@ public class NearbyPersonListPanel extends UiPart<Region> {
         nearbyPersonListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new NearbyPersonPanelSelectionChangedEvent(newValue));
+                        logger.fine("Selection in nearby person list panel changed to : '" + newValue + "'");
                     }
                 });
     }
@@ -70,12 +66,6 @@ public class NearbyPersonListPanel extends UiPart<Region> {
             nearbyPersonListView.scrollTo(index);
             nearbyPersonListView.getSelectionModel().clearAndSelect(index);
         });
-    }
-
-    @Subscribe
-    private void handleJumpToNearbyListRequestEvent(JumpToNearbyListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
     }
 
     /**

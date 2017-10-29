@@ -3,6 +3,7 @@ package seedu.address.logic;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.logic.commands.WhitelistCommand;
 import seedu.address.model.Model;
@@ -85,5 +86,59 @@ public class ListObserver {
         default:
             return MASTERLIST_NAME_DISPLAY_FORMAT;
         }
+    }
+
+    /**
+     * Monitors current displayed list on person list panel.
+     * @return {@code Index} of current selected person.
+     */
+    public Index getIndexofSelectedPersonInCurrentList() {
+        Index index;
+        switch (model.getCurrentListName()) {
+
+        case "blacklist":
+            index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList().indexOf(model.getSelectedPerson()));
+            break;
+        case "whitelist":
+            index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList().indexOf(model.getSelectedPerson()));
+            break;
+        default:
+            index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(model.getSelectedPerson()));
+        }
+
+        return index;
+    }
+
+    public Index getIndexofPersonInCurrentList(ReadOnlyPerson person) {
+        Index index;
+
+        switch (model.getCurrentListName()) {
+        case "blacklist":
+            if (model.getFilteredBlacklistedPersonList().contains(person)) {
+                index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList()
+                        .indexOf(person));
+            } else {
+                index = null;
+            }
+            break;
+
+        case "whitelist":
+            if (model.getFilteredWhitelistedPersonList().contains(person)) {
+                index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList()
+                        .indexOf(person));
+            } else {
+                index = null;
+            }
+            break;
+
+        default:
+            if (model.getFilteredPersonList().contains(person)) {
+                index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(person));
+            } else {
+                index = null;
+            }
+        }
+
+        return index;
     }
 }

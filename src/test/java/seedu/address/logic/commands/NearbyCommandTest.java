@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
@@ -104,9 +104,9 @@ public class NearbyCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToNearbyListRequestEvent lastEvent =
-                (JumpToNearbyListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(index, Index.fromZeroBased(model.getNearbyPersons()
+                .indexOf(model.getFilteredPersonList().get(lastEvent.targetIndex))));
     }
 
     /**
