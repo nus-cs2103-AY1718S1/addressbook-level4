@@ -59,6 +59,9 @@ public class TaskCard extends UiPart<Region> {
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
     }
 
+    /**
+     * Change colour of taskcard according to urgency of the task
+     */
     private void setColour() {
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
