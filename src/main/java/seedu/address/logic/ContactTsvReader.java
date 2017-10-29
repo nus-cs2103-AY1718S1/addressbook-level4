@@ -66,17 +66,17 @@ public class ContactTsvReader {
                     Name name = ParserUtil.parseName(checkEmptyAndReturn(retrieveColumnField(columns, 0)))
                             .get();
                     Occupation occupation = ParserUtil.parseOccupation(checkEmptyAndReturn(retrieveColumnField(columns,
-                            0))).get();
-                    Phone phone = ParserUtil.parsePhone(checkEmptyAndReturn(retrieveColumnField(columns, 1)))
+                            1))).get();
+                    Phone phone = ParserUtil.parsePhone(checkEmptyAndReturn(retrieveColumnField(columns, 2)))
                             .get();
-                    Email email = ParserUtil.parseEmail(checkEmptyAndReturn(retrieveColumnField(columns, 2)))
+                    Email email = ParserUtil.parseEmail(checkEmptyAndReturn(retrieveColumnField(columns, 3)))
                             .get();
-                    Address address = ParserUtil.parseAddress(checkEmptyAndReturn(retrieveColumnField(columns, 3)))
+                    Address address = ParserUtil.parseAddress(checkEmptyAndReturn(retrieveColumnField(columns, 4)))
                             .get();
-                    Website website = ParserUtil.parseWebsite(checkEmptyAndReturn(retrieveColumnField(columns, 4)))
+                    Website website = ParserUtil.parseWebsite(checkEmptyAndReturn(retrieveColumnField(columns, 5)))
                             .get();
                     Set<Tag> tagList = ParserUtil.parseTags(new ArrayList<String>(
-                            Arrays.asList(retrieveColumnField(columns, 5)
+                            Arrays.asList(retrieveColumnField(columns, 6)
                                     .replaceAll("^[,\"\\s]+", "")
                                     .replace("\"", "")
                                     .split("[,\\s]+"))));
