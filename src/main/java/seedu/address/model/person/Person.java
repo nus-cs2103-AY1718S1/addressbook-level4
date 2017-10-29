@@ -40,7 +40,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
      */
     public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags,
                   Set<Relationship> relationships) {
-        requireAllNonNull(name, phone, email, address, tags, relationships);
+        requireAllNonNull(name, phone, email, address, remark, tags, relationships);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
@@ -221,7 +221,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, remark, tags);
     }
 
     @Override
