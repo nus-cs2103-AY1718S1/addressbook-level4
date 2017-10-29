@@ -2,7 +2,9 @@ package seedu.address.model.schedule;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-/* The object representing a day, from Monday to Sunday in a person's schedule. */
+/**
+ * The object representing a day, from Monday to Sunday in a person's schedule.
+ */
 public class Day {
 
     private final Integer day;

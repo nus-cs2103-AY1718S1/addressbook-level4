@@ -153,24 +153,33 @@ public class Person implements ReadOnlyPerson {
         return schedule;
     }
 
-    /* create an empty schedule object */
+    /**
+     * Create an empty schedule object
+     */
     public void initiateSchedule() {
         Schedule schedule = new Schedule();
         this.schedule = new SimpleObjectProperty<>(schedule);
     }
 
-    public void setSchedule(Schedule schedule){
+    /**
+     * Set the person's schedule based on a given schedule.
+     */
+    public void setSchedule(Schedule schedule) {
         this.schedule.set(schedule);
     }
 
-    /* Add a time span to a person's schedule to indicate that he is busy at this time. */
+    /**
+     * Add a time span to a person's schedule to indicate that he is busy at this time.
+     */
     public void addSpanToSchedule(TreeSet<Integer> span) {
         for (Integer startTime : span) {
             getSchedule().addTime(startTime);
         }
     }
 
-    /* Clear a time span to a person's schedule to indicate that he is free at this time. */
+    /**
+     *Clear a time span to a person's schedule to indicate that he is free at this time.
+     */
     public void clearSpanForSchedule(TreeSet<Integer> span) {
         for (Integer startTime : span) {
             getSchedule().clearTime(startTime);

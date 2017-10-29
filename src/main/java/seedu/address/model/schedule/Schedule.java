@@ -35,6 +35,9 @@ public class Schedule {
         }
     }
 
+    /**
+     * Clear a slot of time with the unit of 30min based on the startTime.
+     */
     public void clearTime(Integer startTime) {
         if (busyTime.contains(startTime)) {
             busyTime.remove(startTime);
@@ -45,15 +48,6 @@ public class Schedule {
     public String toString() {
         return busyTime.toString();
     }
-
-    /*
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Schedule // instanceof handles nulls
-                && this.schedule.equals(((schedule) other).value)); // state check
-    }
-     */
 
     @Override
     public int hashCode() {
