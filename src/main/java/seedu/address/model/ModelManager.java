@@ -43,7 +43,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyParcel> filteredParcels;
     private FilteredList<ReadOnlyParcel> filteredDeliveredParcels;
     private FilteredList<ReadOnlyParcel> filteredUndeliveredParcels;
-    private FilteredList<ReadOnlyParcel> activeFilteredList;
+    private FilteredList<ReadOnlyParcel> activeFilteredList; // references the current selected list 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -67,6 +67,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Updates Delivered and UndeliveredParcelList and resets the Active List to the correct reference
      */
     private void updatedDeliveredAndUndeliveredList() {
+        // checks reference equality
         boolean isActiveDelivered = activeFilteredList == filteredDeliveredParcels;
 
         filteredDeliveredParcels = filteredParcels.filtered(deliveredPredicate);
