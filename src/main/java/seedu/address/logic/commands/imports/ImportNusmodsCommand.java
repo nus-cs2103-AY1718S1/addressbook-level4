@@ -2,7 +2,6 @@ package seedu.address.logic.commands.imports;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,7 +55,7 @@ public class ImportNusmodsCommand extends ImportCommand {
     public CommandResult execute() throws CommandException {
         Set<String> modules;
         try {
-             modules = fetchModuleCodes();
+            modules = fetchModuleCodes();
         } catch (UnsupportedEncodingException e) {
             throw new CommandException(String.format(INVALID_URL, INVALID_ENCODING));
         }
@@ -93,7 +92,8 @@ public class ImportNusmodsCommand extends ImportCommand {
     }
 
     /**
-     * Returns all the module codes embedded in the {@link #url} field.
+     * Returns all the module codes embedded in the {@link #url} field. This fetching will ignore the type
+     * of sessions (lecture, tutorial, etc.). Thus, it only returns all modules in the {@link #url}.
      */
     private Set<String> fetchModuleCodes() throws UnsupportedEncodingException {
         Set<String> keys = UrlUtil.fetchUrlParameterKeys(url);

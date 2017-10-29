@@ -25,7 +25,7 @@ public class UrlUtilTest {
         assertEquals("/contacts", url.getPath());
         assertEquals("day=monday", url.getQuery());
     }
-    
+
     @Test
     public void parseUrlString_fail_expectException() throws Exception {
         thrown.expect(MalformedURLException.class);
