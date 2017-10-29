@@ -8,11 +8,11 @@ https://coveralls.io/github/CS2103AUG2017-T09-B1/main?branch=master[image:https:
 https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-T09-B1/main&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
 
 ifdef::env-github[]
-image::docs/images/Gentleman's Guide.jpeg[width="800"]
+image::docs/images/Ui.png[width="800"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Gentleman's Guide.jpeg[width="800"]
+image::images/Ui.png[width="800"]
 endif::[]
 
 Looking way of keeping track of your contacts? Unsastified with ugly clunky designs currently avaliable?  
