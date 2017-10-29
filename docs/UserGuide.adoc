@@ -1,4 +1,4 @@
-= 
+= Gentleman's Guide
 image::CoverPage.png[width="600"]
 :toc:
 :toc-title:
