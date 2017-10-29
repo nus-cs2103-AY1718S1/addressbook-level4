@@ -243,7 +243,11 @@ This section describes some noteworthy details on how certain features are imple
 
 The switchmode mechanism is facilitated by the ChangeModeCommand class which inherits from Command class. It allows the user switch between 2 sets of command for either addressbook or taskmanager.
 
-Suppose the user has just executed the ChangeMode using switch addressbook(ab) or taskmanager(tm).
+Suppose the user has just executed the ChangeMode using:
+
+----
+switch addressbook(ab) or taskmanager(tm).
+----
 
 In any command mode, the execute() function of the LogicManager class is first called, which calls Model.getCommandMode() to check the current command mode and goes on to pass the command string and command mode string into the parseCommand() function of the AddressBookParser class. This, in turn, determines that the ChangeModeCommand feature is being evoked and calls the ChangeModeCommandParser to parse the string and compare with the current set of command: addressbook(ab) or taskmanager(tm). After validating the input with command mode prefix, ChangeModeCommand(input) is created and calles the excute() feature in ChangeModeCommand which then call Model.changeCommandMode(input) to change the current command mode and return a CommandResult object.
 
