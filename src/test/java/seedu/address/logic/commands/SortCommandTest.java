@@ -31,17 +31,11 @@ public class SortCommandTest {
     private Model expectedModel;
     private String name;
     private String tag;
-    private String company;
-    private String priority;
-    private String status;
 
     @Before
     public void setUp() {
         name = "name";
         tag = "tag";
-        company = "company";
-        priority = "priority";
-        status = "status";
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
     }
@@ -50,20 +44,20 @@ public class SortCommandTest {
     @Test
     public void execute_listIsSorted_showsEverything() {
         SortCommand command = prepareCommand(name);
-        assertCommandSuccess(command, model, SortCommand.MESSAGE_SUCCESS + " name", expectedModel);
+        assertCommandSuccess(command, model, SortCommand.MESSAGE_SUCCESS + name, expectedModel);
     }
 
     @Test
     public void execute_nameValue_listSorted() {
         SortCommand command = prepareCommand(name);
-        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + " name", Arrays.asList(ALICE, BENSON, CARL,
+        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + name, Arrays.asList(ALICE, BENSON, CARL,
                 DANIEL, ELLE, FIONA, GEORGE));
     }
 
     @Test
     public void execute_tagValue_listSorted() {
         SortCommand command = prepareCommand(tag);
-        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + " tag", Arrays.asList(ALICE, CARL, DANIEL,
+        assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + tag, Arrays.asList(ALICE, CARL, DANIEL,
                 ELLE, FIONA, GEORGE, BENSON));
     }
 
