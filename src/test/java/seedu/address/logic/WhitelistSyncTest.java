@@ -56,17 +56,18 @@ public class WhitelistSyncTest {
         // Ensure person is deleted from masterlist
         expectedModel.deletePerson(personToBeDeleted);
         expectedModel.updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         DeleteCommand deleteCommand = prepareDeleteCommand(index);
         deleteCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -83,17 +84,18 @@ public class WhitelistSyncTest {
         // To make sure person does not exist in whitelist anymore
         borrowedPerson = expectedModel.removeWhitelistedPerson(borrowedPerson);
         expectedModel.addDebtToPerson(borrowedPerson, amount);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         BorrowCommand borrowCommand = prepareBorrowCommand(index, amount);
         borrowCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -109,17 +111,18 @@ public class WhitelistSyncTest {
         // To ensure person exists in whitelist
         repayingPerson = expectedModel.deductDebtFromPerson(repayingPerson, amount);
         expectedModel.addWhitelistedPerson(repayingPerson);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         PaybackCommand paybackCommand = preparePaybackCommand(INDEX_FIRST_PERSON, amount);
         paybackCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -134,17 +137,18 @@ public class WhitelistSyncTest {
 
         // To ensure person only gets his debt decremented. No other actions
         expectedModel.deductDebtFromPerson(repayingPerson, amount);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         PaybackCommand paybackCommand = preparePaybackCommand(INDEX_FIRST_PERSON, amount);
         paybackCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -162,17 +166,18 @@ public class WhitelistSyncTest {
 
         // To make sure person does not exist in whitelist
         expectedModel.removeWhitelistedPerson(repayingPerson);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         PaybackCommand paybackCommand = preparePaybackCommand(index, amount);
         paybackCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -194,17 +199,18 @@ public class WhitelistSyncTest {
         // To ensure person does not exist in whitelist
         expectedModel.updatePerson(borrowedPerson, editedPerson);
         expectedModel.removeWhitelistedPerson(editedPerson);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         EditCommand editCommand = prepareEditCommand(index, descriptor);
         editCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -225,17 +231,18 @@ public class WhitelistSyncTest {
         // To ensure person exists in whitelist
         expectedModel.updatePerson(repayingPerson, editedPerson);
         expectedModel.addWhitelistedPerson(editedPerson);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         EditCommand editCommand = prepareEditCommand(INDEX_FIRST_PERSON, descriptor);
         editCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -253,17 +260,18 @@ public class WhitelistSyncTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(repayingPerson, editedPerson);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         EditCommand editCommand = prepareEditCommand(INDEX_FIRST_PERSON, descriptor);
         editCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -284,17 +292,18 @@ public class WhitelistSyncTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(repayingPerson, editedPerson);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
         EditCommand editCommand = prepareEditCommand(index, descriptor);
         editCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -325,17 +334,18 @@ public class WhitelistSyncTest {
 
         // Person will be added to whitelisted as he is now unbanned
         expectedModel.addWhitelistedPerson(unbannedPerson);
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
-        UnbanCommand unbanCommand = prepareUnbanCommand(INDEX_FIRST_PERSON);
+        UnbanCommand unbanCommand = prepareUnbanCommand(index);
         unbanCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }
@@ -345,7 +355,7 @@ public class WhitelistSyncTest {
             throws Exception {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setCurrentList("whitelist");
+        expectedModel.setCurrentListName("whitelist");
         expectedModel.changeListTo("whitelist");
 
         // Preparation done on actual model
@@ -364,10 +374,11 @@ public class WhitelistSyncTest {
         // Preparation done on actual model
         undoCommand.execute();
 
-        String expectedMessage = WhitelistCommand.MESSAGE_SUCCESS;
+        String expectedMessage = ListObserver.WHITELIST_NAME_DISPLAY_FORMAT + WhitelistCommand.MESSAGE_SUCCESS;
 
         // Operation to be done on actual model
         WhitelistCommand whitelistCommand = prepareWhitelistCommand();
+        model.setCurrentListName("whitelist");
 
         assertCommandSuccess(whitelistCommand, model, expectedMessage, expectedModel);
     }

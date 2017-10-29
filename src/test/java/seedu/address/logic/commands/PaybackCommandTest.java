@@ -14,6 +14,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -41,7 +42,8 @@ public class PaybackCommandTest {
     public void execute_successfulPayback() {
         Index firstPerson = Index.fromOneBased(1);
         ReadOnlyPerson personWhoPayback = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        String expectedMessage = String.format(PaybackCommand.MESSAGE_PAYBACK_SUCCESS,
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(PaybackCommand.MESSAGE_PAYBACK_SUCCESS,
                 personWhoPayback.getName().toString(), VALID_DEBT_FIGURE);
         try {
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -63,7 +65,8 @@ public class PaybackCommandTest {
     public void execute_noIndex_successfulPayback() {
         model.updateSelectedPerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
         ReadOnlyPerson personWhoPayback = model.getSelectedPerson();
-        String expectedMessage = String.format(PaybackCommand.MESSAGE_PAYBACK_SUCCESS,
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(PaybackCommand.MESSAGE_PAYBACK_SUCCESS,
                 personWhoPayback.getName().toString(), VALID_DEBT_FIGURE);
         try {
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());

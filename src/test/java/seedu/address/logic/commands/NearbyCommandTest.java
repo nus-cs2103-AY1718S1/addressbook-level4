@@ -16,6 +16,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToNearbyListRequestEvent;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -96,7 +97,8 @@ public class NearbyCommandTest {
 
         try {
             CommandResult commandResult = nearbyCommand.execute();
-            assertEquals(String.format(NearbyCommand.MESSAGE_NEARBY_PERSON_SUCCESS, index.getOneBased()),
+            assertEquals(String.format(ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                            + NearbyCommand.MESSAGE_NEARBY_PERSON_SUCCESS, index.getOneBased()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);

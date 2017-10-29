@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -42,27 +43,32 @@ public class SortCommandTest {
 
         expectedModel.sortBy(ORDERING_NAME);
         sortCommand = prepareCommand(ORDERING_DEFAULT);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_NAME);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_NAME);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
 
         expectedModel.sortBy(ORDERING_NAME);
         sortCommand = prepareCommand(ORDERING_NAME);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_NAME);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_NAME);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
 
         expectedModel.sortBy(ORDERING_DEBT);
         sortCommand = prepareCommand(ORDERING_DEBT);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEBT);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEBT);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
 
         expectedModel.sortBy(ORDERING_CLUSTER);
         sortCommand = prepareCommand(ORDERING_CLUSTER);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_CLUSTER);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_CLUSTER);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
 
         expectedModel.sortBy(ORDERING_DEADLINE);
         sortCommand = prepareCommand(ORDERING_DEADLINE);
-        expectedMessage = String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEADLINE);
+        expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(SortCommand.MESSAGE_SUCCESS, ORDERING_DEADLINE);
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
 
