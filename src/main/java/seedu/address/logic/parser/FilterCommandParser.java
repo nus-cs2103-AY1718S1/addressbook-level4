@@ -8,6 +8,7 @@ import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.ContainsTagsPredicate;
 
+//@@author newalter
 /**
  * Parses input arguments and creates a new FilterCommand object
  */

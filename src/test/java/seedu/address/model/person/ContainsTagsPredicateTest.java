@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import seedu.address.testutil.PersonBuilder;
 
+//@@author newalter
 public class ContainsTagsPredicateTest {
 
     @Test
