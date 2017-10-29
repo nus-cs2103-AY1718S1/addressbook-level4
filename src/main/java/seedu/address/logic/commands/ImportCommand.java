@@ -12,8 +12,7 @@ public class ImportCommand extends Command {
     public static final String COMMAND_ALIAS = "i";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Imports data from the location specified by the file path to the application.\n"
-            + "The file can be either XML format (default) or BoNUS script format.\n"
+            + ": Imports data from various locations in various formats.\n"
             + "Examples:\n"
             + COMMAND_WORD + " --script C:\\Users\\John Doe\\Documents\\bonus.bo (Windows)\n"
             + COMMAND_WORD + " /Users/John Doe/Documents/bonus.xml (macOS, Linux)\n";
