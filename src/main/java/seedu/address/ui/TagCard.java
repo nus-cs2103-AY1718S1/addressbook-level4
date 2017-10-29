@@ -35,15 +35,7 @@ public class TagCard extends UiPart<Region> {
         super(FXML);
         this.tag = tag;
         id.setText(displayedIndex + ". ");
-        bindListeners(tag);
-    }
-
-    /**
-     * Binds the individual UI elements to observe their respective {@code Tag} properties
-     * so that they will be notified of any changes.
-     */
-    private void bindListeners(Tag tag) {
-        name.textProperty().bind(new SimpleStringProperty(tag.tagName));
+        name.setText(tag.tagName);
     }
 
     @Override
