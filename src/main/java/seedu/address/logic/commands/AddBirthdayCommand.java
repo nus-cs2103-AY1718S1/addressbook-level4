@@ -74,14 +74,13 @@ public class AddBirthdayCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson readOnlyPerson = lastShownList.get(targetIndex.getZeroBased());
-        if (Objects.equals(readOnlyPerson.getBirthday().toString(), "[-]")) {
+        if (Objects.equals(readOnlyPerson.getBirthday().toString(), Birthday.DEFAULT_BIRTHDAY)) {
             personsContainsBirthdayToAdd = false;
         }
 
         if (personsContainsBirthdayToAdd) {
-            throw  new CommandException(MESSAGE_DUPLICATE_BIRTHDAY);
+            throw new CommandException(MESSAGE_DUPLICATE_BIRTHDAY);
         }
-
         try {
             model.addBirthday(this.targetIndex, this.toAdd);
         } catch (DuplicatePersonException dpe) {

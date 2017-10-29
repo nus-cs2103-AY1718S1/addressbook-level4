@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 
 /**
@@ -62,11 +63,11 @@ public class ArgumentMultimap {
 
     /**
      * Returns the last birthday value of {@code prefix}.
-     * Returns default birthday value if empty.
+     * Returns default birthday value when no birthday is entered.
      */
     public Optional<String> getBirthdayOptionalValue(Prefix prefix) {
         List<String> values = getAllValues(prefix);
-        return values.isEmpty() ? Optional.of("-") : Optional.of(values.get(values.size() - 1));
+        return values.isEmpty() ? Optional.of(Birthday.DEFAULT_BIRTHDAY) : Optional.of(values.get(values.size() - 1));
     }
 
     /**
