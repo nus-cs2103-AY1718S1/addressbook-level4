@@ -41,6 +41,23 @@ public class CommandBoxHandle extends NodeHandle<TabCompleteTextField> {
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
     }
 
+    //@@author newalter
+    /**
+     * Enters the given command in the Command Box and presses the given keys and then presses enter.
+     * @return true if the command succeeded, false otherwise.
+     */
+    public boolean pressAndRun(String command, KeyCode... keyPresses) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(command));
+        guiRobot.pauseForHuman();
+
+        guiRobot.type(keyPresses);
+
+        guiRobot.type(KeyCode.ENTER);
+        return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
+    }
+    //@@author
+
     /**
      * Returns the list of style classes present in the command box.
      */
