@@ -327,23 +327,23 @@ Lists all contacts having a certain existing tag in the address book. +
 Format: `retrieve TAGNAME`
 
 ****
-* Retrieves all person having the specified `TAGNAME` tag.
+* Retrieves all persons having the specified `TAGNAME` tag.
 * The tag name *must be alphanumeric*
 ****
 
 Examples:
 
 * `retrieve friends` +
-Retrieves all persons with friends tag in the address book.
+Retrieves all persons with the "friends" tag in the address book.
 
 === Tagging multiple persons : `tag`
 
 Tags the persons identified by the index numbers used in the last person listing. +
-Format: `tag INDEX,[MORE_INDEXES]... TAGNAME`
+Format: `tag INDEX,[MORE_INDEXES],... TAGNAME`
 
 ****
-* Tags the persons at the specified `INDEX,[MORE_INDEXES]...` with the `TAGNAME` tag.
-* The indexes refers to the index numbers shown in the most recent listing.
+* Tags the persons at the specified `INDEX,[MORE_INDEXES],...` with the `TAGNAME` tag.
+* The indexes refer to the index numbers shown in the most recent listing.
 * The indexes *must be positive integers* `1, 2, 3, ...`
 * The tag name *must be alphanumeric*
 ****
@@ -352,7 +352,55 @@ Examples:
 
 * `list` +
 `tag 1,2,3 friends` +
-Tags the 1st and 2nd person with the friends tag in the address book.
+Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+=== Untagging multiple persons : `untag`
+
+Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
+Format: `tag INDEX,[MORE_INDEXES],... TAGNAME/[MORE_TAGNAMES]/...`
+
+****
+* Removes all `TAGNAME/[MORE_TAGNAMES]/...` tags from the persons at the specified `INDEX,[MORE_INDEXES],...`.
+* The indexes refer to the index numbers shown in the most recent listing.
+* The indexes *must be positive integers* `1, 2, 3, ...`
+* The tag names *must be alphanumeric*
+* You can choose to remove the specified tags from all persons in the last person listing by replacing `INDEX,[MORE_INDEXES],...` with `-a`.
+* All tags will be removed from the persons at the specified indexes if `TAGNAME/[MORE_TAGNAMES]/...` is left blank.
+****
+
+Examples:
+
+* `list` +
+`untag 1,2,3 friends/enemies` +
+Removes the "friends" and "enemies" tags from the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+* `list` +
+`untag 1,2,3` +
+Removes all tags from the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+* `list` +
+`untag -a friends/enemies` +
+Removes the "friends" and "enemies" tags from all persons in the results of the `list` command.
+
+* `list` +
+`untag -a` +
+Removes all tags from all persons in the results of the `list` command.
+
+=== Renaming an existing tag : `retag`
+
+Renames a certain existing tag to a new tag name. +
+Format: `retag OLD_TAGNAME NEW_TAGNAME`
+
+****
+* Renames the existing `OLD_TAGNAME` tag to `NEW_TAGNAME`.
+* All persons having the `OLD_TAGNAME` tag will be updated accordingly.
+* The tag names *must be alphanumeric*
+****
+
+Examples:
+
+* `retag enemies friends` +
+Renames the existing "enemies" tag in the address book to "friends".
 
 === Listing entered commands : `history`
 
