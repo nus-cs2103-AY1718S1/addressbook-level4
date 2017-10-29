@@ -23,7 +23,8 @@ The terms used in this guide are as follows: +
 
 * Blacklist - List of people who are banned +
 * Whitelist - List of people who have cleared their debts +
-* Index - The ordering of a contact in the list
+* Index - The ordering of a contact in the list +
+* Cluster - The general location of a person based on [https://www.ura.gov.sg/realEstateIIWeb/resources/misc/list_of_postal_districts.htm[postal districts]]
 
 == Introduction
 
