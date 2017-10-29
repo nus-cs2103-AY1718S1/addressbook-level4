@@ -1,4 +1,5 @@
-= image::CoverPage.png[width="600"]
+= 
+image::CoverPage.png[width="600"]
 :toc:
 :toc-title:
 :toc-placement: preamble
