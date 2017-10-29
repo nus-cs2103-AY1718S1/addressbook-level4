@@ -13,6 +13,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.Status;
 import seedu.address.testutil.ParcelBuilder;
 
 /**
@@ -42,6 +43,22 @@ public class AddCommandIntegrationTest {
     public void execute_duplicateParcel_throwsCommandException() {
         Parcel parcelInList = new Parcel(model.getAddressBook().getParcelList().get(0));
         assertCommandFailure(prepareCommand(parcelInList, model), model, AddCommand.MESSAGE_DUPLICATE_PARCEL);
+
+        // Adding a parcel from a undelivered list -> fails
+        Parcel parcelInUndeliveredList = new Parcel(model.getFilteredUndeliveredParcelList().get(0));
+        assertCommandFailure(prepareCommand(parcelInUndeliveredList, model), model,
+                AddCommand.MESSAGE_DUPLICATE_PARCEL);
+
+        // Adding a parcel from a delivered list -> fails
+        Parcel parcelInDeliveredList = new Parcel(model.getFilteredDeliveredParcelList().get(0));
+        assertCommandFailure(prepareCommand(parcelInDeliveredList, model), model,
+                AddCommand.MESSAGE_DUPLICATE_PARCEL);
+
+        // Adding the same parcel with
+        Parcel parcelInListWithDifferentStatus = new Parcel(model.getAddressBook().getParcelList().get(0));
+        parcelInListWithDifferentStatus.setStatus(Status.COMPLETED);
+        assertCommandFailure(prepareCommand(parcelInDeliveredList, model), model,
+                AddCommand.MESSAGE_DUPLICATE_PARCEL);
     }
 
     /**

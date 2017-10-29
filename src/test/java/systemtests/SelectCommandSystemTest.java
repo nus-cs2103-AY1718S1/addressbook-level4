@@ -4,9 +4,12 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PARCEL_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PARCEL_SUCCESS;
+import static seedu.address.model.ModelManager.getDeliveredPredicate;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalParcels.getTypicalParcels;
+
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
@@ -27,7 +30,8 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, INDEX_FIRST_PARCEL);
 
         /* Case: select the last card in the parcel list -> selected */
-        Index parcelCount = Index.fromOneBased(getTypicalParcels().size());
+        Index parcelCount = Index.fromOneBased(getTypicalParcels().stream()
+                .filter(getDeliveredPredicate().negate()).collect(Collectors.toList()).size());
         command = SelectCommand.COMMAND_WORD + " " + parcelCount.getOneBased();
         assertCommandSuccess(command, parcelCount);
 

@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.ParserUtil.MESSAGE_FILE_NOT_FOUND;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_DATA;
 import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.testutil.TypicalParcels.AMY;
+import static seedu.address.testutil.TypicalParcels.BENSON;
 import static seedu.address.testutil.TypicalParcels.BOB;
 import static seedu.address.testutil.TypicalParcels.CARL;
 import static seedu.address.testutil.TypicalParcels.IDA;
@@ -144,6 +145,9 @@ public class ImportCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: imports to ann empty address book -> added */
         executeCommand(ClearCommand.COMMAND_WORD);
+        addressBook = new AddressBookBuilder().withParcel(IDA).withParcel(BENSON).build();
+        parcelsAdded = addressBook.getParcelList();
+        storage.saveAddressBook(addressBook);
         assert getModel().getAddressBook().getParcelList().size() == 0;
         assertCommandSuccess(command, parcelsAdded, parcelsAdded, duplicateParcels);
 

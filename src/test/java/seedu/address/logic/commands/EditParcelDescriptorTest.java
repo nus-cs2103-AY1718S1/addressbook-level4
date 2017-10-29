@@ -8,8 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER_BOB;
 
 import org.junit.Test;
@@ -59,11 +59,11 @@ public class EditParcelDescriptorTest {
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different status -> returns false
-        editedAmy = new EditParcelDescriptorBuilder(DESC_AMY).withStatus(VALID_STATUS_BOB).build();
+        editedAmy = new EditParcelDescriptorBuilder(DESC_AMY).withStatus(VALID_STATUS_COMPLETED).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different tags -> returns false
-        editedAmy = new EditParcelDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
+        editedAmy = new EditParcelDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_FROZEN).build();
         assertFalse(DESC_AMY.equals(editedAmy));
     }
 }
