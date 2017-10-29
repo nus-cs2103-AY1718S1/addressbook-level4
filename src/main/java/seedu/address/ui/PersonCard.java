@@ -42,6 +42,7 @@ public class PersonCard extends UiPart<Region> {
     private Text name;
     @FXML
     private Text id;
+
     @FXML
     private FlowPane tags;
 
@@ -60,7 +61,7 @@ public class PersonCard extends UiPart<Region> {
      * so that they will be notified of any changes.
      */
     private void bindListeners(ReadOnlyPerson person) {
-        name.textProperty().bind(Bindings.convert(person.nameProperty()));
+        name.textProperty().bind(Bindings.convert(person.nameProperty())); 
         pinIcon.setImage(setPinIcon(person));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
