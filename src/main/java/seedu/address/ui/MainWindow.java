@@ -307,6 +307,7 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author Alim95
     @Subscribe
     private void handleSwitchToBrowserEvent(SwitchToBrowserEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

@@ -117,6 +117,8 @@ public class PersonCard extends UiPart<Region> {
         return tagColors.get(tagValue);
     }
 
+    //@@author Alim95
+
     /**
      * Sets the image for pinned person
      */
@@ -127,6 +129,8 @@ public class PersonCard extends UiPart<Region> {
             pinImage.setImage(null);
         }
     }
+
+    //@@author
 
     @Override
     public boolean equals(Object other) {

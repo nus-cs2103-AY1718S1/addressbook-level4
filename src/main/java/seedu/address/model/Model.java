@@ -23,9 +23,9 @@ public interface Model {
      * {@code Predicate} that always evaluate to true
      */
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
-
+    //@@author Alim95
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ONLY_PINNED = person -> person.isPinned();
-
+    //@@author
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_NOT_HIDDEN = person -> !person.isPrivate();
 
     /**
@@ -50,6 +50,7 @@ public interface Model {
      */
     void hidePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    //@@author Alim95
     /**
      * Pins the given person.
      */
@@ -60,6 +61,7 @@ public interface Model {
      */
     void unpinPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 
+    //@@author
     /**
      * Adds the given person
      */
@@ -75,10 +77,12 @@ public interface Model {
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    //@@author Alim95
     /**
      * Sorts the AddressBook.
      */
     void sortList(String toSort);
+    //@@author
 
     /**
      * Returns an unmodifiable view of the filtered person list

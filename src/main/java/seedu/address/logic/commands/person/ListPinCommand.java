@@ -5,6 +5,7 @@ import seedu.address.commons.events.ui.ToggleListPinStyleEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.person.PersonIsPinnedPredicate;
+//@@author Alim95
 
 /**
  * Lists all pinned persons in the address book to the user.

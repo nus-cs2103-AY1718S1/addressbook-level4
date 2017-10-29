@@ -42,6 +42,7 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author Alim95
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

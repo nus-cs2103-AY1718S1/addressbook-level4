@@ -29,6 +29,7 @@ public class SortFindPanelTest extends GuiUnitTest {
         searchBoxHandle = new SearchBoxHandle(sortFindPanel.getSearchBox());
     }
 
+    //@@author Alim95
     @Test
     public void sortMenuHighlight() {
         sortFindPanel.highlightSortMenu();

@@ -61,12 +61,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Alim95
     @Override
     public void sortList(String toSort) {
         addressBook.sortList(toSort);
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
@@ -103,6 +105,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Alim95
     @Override
     public synchronized void pinPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.pinPerson(target);
@@ -115,6 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
