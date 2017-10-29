@@ -53,7 +53,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Birthday birthday = parseBirthdayForAdd(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
-            PortraitPath portraitPath = new PortraitPath(PortraitPath.DEFAULT_PORTRAIT_PATH);
+            PortraitPath portraitPath = new PortraitPath(PortraitPath.EMPTY_PORTRAIT_PATH);
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<Event> participationList = new HashSet<>();
 

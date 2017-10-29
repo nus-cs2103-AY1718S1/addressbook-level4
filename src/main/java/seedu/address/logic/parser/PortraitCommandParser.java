@@ -33,7 +33,7 @@ public class PortraitCommandParser implements Parser<PortraitCommand> {
             filePath = argMultimap.getValue(PREFIX_PORTRAIT).get();
             return new PortraitCommand(index, new PortraitPath(filePath));
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, PortraitCommand.MESSAGE_USAGE));
+            throw new ParseException(ive.getMessage(), ive);
         }
     }
 

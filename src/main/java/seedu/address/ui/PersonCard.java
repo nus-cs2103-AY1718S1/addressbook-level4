@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.PortraitPath;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -76,7 +77,12 @@ public class PersonCard extends UiPart<Region> {
      * @param filePath the picture file
      */
     private void loadPortrait(String filePath) {
-        String url = "/images/" + filePath;
+        String url;
+        if (filePath.isEmpty()) {
+            url = PortraitPath.DEFAULT_PORTRAIT_PATH;
+        } else {
+            url = PortraitPath.FILE_PREFIX + filePath;
+        }
         Image portrait = new Image(url);
 
         this.portrait.setImage(portrait);
