@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import static seedu.address.model.person.ProfilePicture.DEFAULT_PICTURE;
 import static seedu.address.model.person.ProfilePicture.getPath;
 
 import javafx.beans.binding.Bindings;
@@ -97,9 +98,10 @@ public class PersonCard extends UiPart<Region> {
         Image im;
         try {
             im = new Image(getPath(person.getProfilePicture().value));
-            profilePicture.setImage(im);
         } catch (IllegalArgumentException iae) {
+            im = new Image(getPath(DEFAULT_PICTURE));
         }
+        profilePicture.setImage(im);
     }
 
     private void initGroups(ReadOnlyPerson person) {
