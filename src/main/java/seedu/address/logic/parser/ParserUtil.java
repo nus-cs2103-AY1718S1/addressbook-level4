@@ -52,10 +52,11 @@ public class ParserUtil {
      */
     public static Optional<Name> parseName(Optional<String> name, String command) throws IllegalValueException {
         requireNonNull(name);
-        if (command.equals("add"))
+        if (command.equals("add")) {
             return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.of(new Name(0));
-        else
+        } else {
             return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
+        }
     }
 
     /**
@@ -64,22 +65,25 @@ public class ParserUtil {
      */
     public static Optional<Phone> parsePhone(Optional<String> phone, String command) throws IllegalValueException {
         requireNonNull(phone);
-        if (command.equals("add"))
+        if (command.equals("add")) {
             return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(new Phone(0));
-        else
+        } else {
             return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+        }
     }
 
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address, String command) throws IllegalValueException {
+    public static Optional<Address> parseAddress(Optional<String> address, String command)
+            throws IllegalValueException {
         requireNonNull(address);
-        if (command.equals("add"))
+        if (command.equals("add")) {
             return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.of(new Address(0));
-        else
+        } else {
             return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
+        }
     }
 
     /**
@@ -88,10 +92,11 @@ public class ParserUtil {
      */
     public static Optional<Email> parseEmail(Optional<String> email, String command) throws IllegalValueException {
         requireNonNull(email);
-        if (command.equals("add"))
+        if (command.equals("add")) {
             return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.of(new Email(0));
-        else
+        } else {
             return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+        }
     }
 
     /**
