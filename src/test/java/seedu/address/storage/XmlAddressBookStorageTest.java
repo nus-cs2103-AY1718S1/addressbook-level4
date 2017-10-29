@@ -3,7 +3,6 @@ package seedu.address.storage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalParcels.ALICE;
-import static seedu.address.testutil.TypicalParcels.HOON;
 import static seedu.address.testutil.TypicalParcels.IDA;
 import static seedu.address.testutil.TypicalParcels.JOHN;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;

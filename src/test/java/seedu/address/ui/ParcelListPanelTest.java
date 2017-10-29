@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.model.ModelManager.deliveredPredicate;
+import static seedu.address.model.ModelManager.getDeliveredPredicate;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PARCEL;
 import static seedu.address.testutil.TypicalParcels.getTypicalParcels;
@@ -22,15 +22,14 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.model.parcel.ReadOnlyParcel;
-import seedu.address.model.parcel.Status;
 
 public class ParcelListPanelTest extends GuiUnitTest {
 
     private static final ObservableList<ReadOnlyParcel> TYPICAL_DELIVERED_PARCELS =
-            FXCollections.observableList(getTypicalParcels().stream().filter(deliveredPredicate)
+            FXCollections.observableList(getTypicalParcels().stream().filter(getDeliveredPredicate())
                     .collect(Collectors.toList()));
     private static final ObservableList<ReadOnlyParcel> TYPICAL_UNDELIVERED_PARCELS =
-            FXCollections.observableList(getTypicalParcels().stream().filter(deliveredPredicate.negate())
+            FXCollections.observableList(getTypicalParcels().stream().filter(getDeliveredPredicate().negate())
                     .collect(Collectors.toList()));
 
 

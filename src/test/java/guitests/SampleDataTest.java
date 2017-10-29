@@ -1,6 +1,6 @@
 package guitests;
 
-import static seedu.address.model.ModelManager.deliveredPredicate;
+import static seedu.address.model.ModelManager.getDeliveredPredicate;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.io.IOException;
@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.parcel.Parcel;
-import seedu.address.model.parcel.Status;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
@@ -47,7 +46,7 @@ public class SampleDataTest extends AddressBookGuiTest {
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
         List<Parcel> expectedList = Arrays.asList(SampleDataUtil.getSampleParcels()).stream()
-                .filter(deliveredPredicate.negate()).collect(Collectors.toList());
+                .filter(getDeliveredPredicate().negate()).collect(Collectors.toList());
         Parcel[] expectedArray = new Parcel[expectedList.size()];
         expectedList.toArray(expectedArray);
 

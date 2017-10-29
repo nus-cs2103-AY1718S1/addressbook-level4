@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PARCELS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalParcels.CARL;
 import static seedu.address.testutil.TypicalParcels.ELLE;
 import static seedu.address.testutil.TypicalParcels.FIONA;
 import static seedu.address.testutil.TypicalParcels.GEORGE;

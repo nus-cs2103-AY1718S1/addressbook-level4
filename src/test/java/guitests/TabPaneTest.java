@@ -33,10 +33,13 @@ public class TabPaneTest extends AddressBookGuiTest {
     }
 
 
+    /**
+     * checks that the tabPane's active list is equivalent to our expected list contained with the tab with tabIndex
+     */
     private void assertActiveListSelected(TabPaneHandle tabPane, int tabIndex) {
         ParcelListPanelHandle actualList = tabPane.getActiveParcelList();
-        ParcelListPanelHandle expectedList = (tabIndex == INDEX_FIRST_TAB.getZeroBased()) ?
-                tabPane.getUndeliveredParcelListPanel() : tabPane.getDeliveredParcelListPanel();
+        ParcelListPanelHandle expectedList = (tabIndex == INDEX_FIRST_TAB.getZeroBased())
+                ? tabPane.getUndeliveredParcelListPanel() : tabPane.getDeliveredParcelListPanel();
 
         assertEquals(tabIndex, tabPane.getSelectedTabIndex());
         assertEquals(expectedList, actualList);

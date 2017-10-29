@@ -1,14 +1,12 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_PENDING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
 import static seedu.address.testutil.TypicalParcels.VALID_ADDRESS_ALICE;
 import static seedu.address.testutil.TypicalParcels.VALID_DELIVERY_DATE_ALICE;
 import static seedu.address.testutil.TypicalParcels.VALID_EMAIL_ALICE;
 import static seedu.address.testutil.TypicalParcels.VALID_NAME_ALICE;
-import static seedu.address.testutil.TypicalParcels.VALID_PHONE_ALICE;
 import static seedu.address.testutil.TypicalParcels.VALID_TRACKING_NUMBER_ALICE;
 
 import java.util.Set;

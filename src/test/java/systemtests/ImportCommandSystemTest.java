@@ -8,7 +8,6 @@ import static seedu.address.testutil.TypicalParcels.AMY;
 import static seedu.address.testutil.TypicalParcels.BENSON;
 import static seedu.address.testutil.TypicalParcels.BOB;
 import static seedu.address.testutil.TypicalParcels.CARL;
-import static seedu.address.testutil.TypicalParcels.DANIEL;
 import static seedu.address.testutil.TypicalParcels.IDA;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
 

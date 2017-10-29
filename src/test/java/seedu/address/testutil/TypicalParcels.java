@@ -59,7 +59,8 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_BENSON = "johnd@example.com";
     public static final String VALID_ADDRESS_BENSON = "336, Clementi Ave 2, #02-25 s120336";
     public static final String VALID_DELIVERY_DATE_BENSON = "02-02-2000";
-    public static final String TRACKING_NUMBER_DESC_BENSON = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_BENSON;
+    public static final String TRACKING_NUMBER_DESC_BENSON = " " + PREFIX_TRACKING_NUMBER
+            + VALID_TRACKING_NUMBER_BENSON;
     public static final String NAME_DESC_BENSON = " " + PREFIX_NAME + VALID_NAME_BENSON;
     public static final String PHONE_DESC_BENSON = " " + PREFIX_PHONE + VALID_PHONE_BENSON;
     public static final String EMAIL_DESC_BENSON = " " + PREFIX_EMAIL + VALID_EMAIL_BENSON;
@@ -73,12 +74,6 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_CARL = "heinz@example.com";
     public static final String VALID_ADDRESS_CARL = "18 Marina Blvd, S018980";
     public static final String VALID_DELIVERY_DATE_CARL = "03-02-2000";
-    public static final String TRACKING_NUMBER_DESC_CARL = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_CARL;
-    public static final String NAME_DESC_CARL = " " + PREFIX_NAME + VALID_NAME_CARL;
-    public static final String PHONE_DESC_CARL = " " + PREFIX_PHONE + VALID_PHONE_CARL;
-    public static final String EMAIL_DESC_CARL = " " + PREFIX_EMAIL + VALID_EMAIL_CARL;
-    public static final String ADDRESS_DESC_CARL = " " + PREFIX_ADDRESS + VALID_ADDRESS_CARL;
-    public static final String DELIVERY_DATE_DESC_CARL = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_CARL;
 
     public static final String VALID_TRACKING_NUMBER_DANIEL = "RR111321123SG";
     public static final String VALID_NAME_DANIEL = "Daniel Meier";
@@ -86,12 +81,6 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_DANIEL = "cornelia@example.com";
     public static final String VALID_ADDRESS_DANIEL = "59 Namly Garden S267387";
     public static final String VALID_DELIVERY_DATE_DANIEL = "04-02-2000";
-    public static final String TRACKING_NUMBER_DESC_DANIEL = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_DANIEL;
-    public static final String NAME_DESC_DANIEL = " " + PREFIX_NAME + VALID_NAME_DANIEL;
-    public static final String PHONE_DESC_DANIEL = " " + PREFIX_PHONE + VALID_PHONE_DANIEL;
-    public static final String EMAIL_DESC_DANIEL = " " + PREFIX_EMAIL + VALID_EMAIL_DANIEL;
-    public static final String ADDRESS_DESC_DANIEL = " " + PREFIX_ADDRESS + VALID_ADDRESS_DANIEL;
-    public static final String DELIVERY_DATE_DESC_DANIEL = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_DANIEL;
 
     // parcels that are DELIVERING
     public static final String VALID_TRACKING_NUMBER_ELLE = "RR111321124SG";
@@ -100,12 +89,6 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_ELLE = "werner@example.com";
     public static final String VALID_ADDRESS_ELLE = "2 Finlayson Green, S049247";
     public static final String VALID_DELIVERY_DATE_ELLE = "05-02-2000";
-    public static final String TRACKING_NUMBER_DESC_ELLE = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_ELLE;
-    public static final String NAME_DESC_ELLE = " " + PREFIX_NAME + VALID_NAME_ELLE;
-    public static final String PHONE_DESC_ELLE = " " + PREFIX_PHONE + VALID_PHONE_ELLE;
-    public static final String EMAIL_DESC_ELLE = " " + PREFIX_EMAIL + VALID_EMAIL_ELLE;
-    public static final String ADDRESS_DESC_ELLE = " " + PREFIX_ADDRESS + VALID_ADDRESS_ELLE;
-    public static final String DELIVERY_DATE_DESC_ELLE = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_ELLE;
 
     public static final String VALID_TRACKING_NUMBER_FIONA = "RR999123555SG";
     public static final String VALID_NAME_FIONA = "Fiona Kunz";
@@ -113,12 +96,6 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_FIONA = "lydia@example.com";
     public static final String VALID_ADDRESS_FIONA = "48 Upper Dickson Rd S207502";
     public static final String VALID_DELIVERY_DATE_FIONA = "06-02-2000";
-    public static final String TRACKING_NUMBER_DESC_FIONA = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_FIONA;
-    public static final String NAME_DESC_FIONA = " " + PREFIX_NAME + VALID_NAME_FIONA;
-    public static final String PHONE_DESC_FIONA = " " + PREFIX_PHONE + VALID_PHONE_FIONA;
-    public static final String EMAIL_DESC_FIONA = " " + PREFIX_EMAIL + VALID_EMAIL_FIONA;
-    public static final String ADDRESS_DESC_FIONA = " " + PREFIX_ADDRESS + VALID_ADDRESS_FIONA;
-    public static final String DELIVERY_DATE_DESC_FIONA = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_FIONA;
 
     // Parcels that are COMPLETED
     public static final String VALID_TRACKING_NUMBER_GEORGE = "RR696969696SG";
@@ -127,12 +104,6 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_GEORGE = "anna@example.com";
     public static final String VALID_ADDRESS_GEORGE = "Block 532 HDB Upper Cross Street s050532";
     public static final String VALID_DELIVERY_DATE_GEORGE = "07-02-2007";
-    public static final String TRACKING_NUMBER_DESC_GEORGE = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_GEORGE;
-    public static final String NAME_DESC_GEORGE = " " + PREFIX_NAME + VALID_NAME_GEORGE;
-    public static final String PHONE_DESC_GEORGE = " " + PREFIX_PHONE + VALID_PHONE_GEORGE;
-    public static final String EMAIL_DESC_GEORGE = " " + PREFIX_EMAIL + VALID_EMAIL_GEORGE;
-    public static final String ADDRESS_DESC_GEORGE = " " + PREFIX_ADDRESS + VALID_ADDRESS_GEORGE;
-    public static final String DELIVERY_DATE_DESC_GEORGE = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_GEORGE;
 
     public static final String VALID_TRACKING_NUMBER_HOON = "RR121212124SG";
     public static final String VALID_NAME_HOON = "Hoon Meier";
@@ -140,12 +111,6 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_HOON = "stefan@example.com";
     public static final String VALID_ADDRESS_HOON = "522 Hougang Ave 6 s530522";
     public static final String VALID_DELIVERY_DATE_HOON = "10-10-2010";
-    public static final String TRACKING_NUMBER_DESC_HOON = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_HOON;
-    public static final String NAME_DESC_HOON = " " + PREFIX_NAME + VALID_NAME_HOON;
-    public static final String PHONE_DESC_HOON = " " + PREFIX_PHONE + VALID_PHONE_HOON;
-    public static final String EMAIL_DESC_HOON = " " + PREFIX_EMAIL + VALID_EMAIL_HOON;
-    public static final String ADDRESS_DESC_HOON = " " + PREFIX_ADDRESS + VALID_ADDRESS_HOON;
-    public static final String DELIVERY_DATE_DESC_HOON = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_HOON;
 
     // Parcels to be manually added
     public static final String VALID_TRACKING_NUMBER_IDA = "RR111333888SG";
@@ -154,12 +119,6 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_IDA = "hans@example.com";
     public static final String VALID_ADDRESS_IDA = "3 River Valley Rd, S179024";
     public static final String VALID_DELIVERY_DATE_IDA = "09-09-2009";
-    public static final String TRACKING_NUMBER_DESC_IDA = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_IDA;
-    public static final String NAME_DESC_IDA = " " + PREFIX_NAME + VALID_NAME_IDA;
-    public static final String PHONE_DESC_IDA = " " + PREFIX_PHONE + VALID_PHONE_IDA;
-    public static final String EMAIL_DESC_IDA = " " + PREFIX_EMAIL + VALID_EMAIL_IDA;
-    public static final String ADDRESS_DESC_IDA = " " + PREFIX_ADDRESS + VALID_ADDRESS_IDA;
-    public static final String DELIVERY_DATE_DESC_IDA = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_IDA;
 
     public static final String VALID_TRACKING_NUMBER_JOHN = "RR998877665SG";
     public static final String VALID_NAME_JOHN = "John Doe";
@@ -167,12 +126,6 @@ public class TypicalParcels {
     public static final String VALID_EMAIL_JOHN = "jd@example.com";
     public static final String VALID_ADDRESS_JOHN = "3 River Valley Rd, S179024";
     public static final String VALID_DELIVERY_DATE_JOHN = "09-12-2030";
-    public static final String TRACKING_NUMBER_DESC_JOHN = " " + PREFIX_TRACKING_NUMBER + VALID_TRACKING_NUMBER_JOHN;
-    public static final String NAME_DESC_JOHN = " " + PREFIX_NAME + VALID_NAME_JOHN;
-    public static final String PHONE_DESC_JOHN = " " + PREFIX_PHONE + VALID_PHONE_JOHN;
-    public static final String EMAIL_DESC_JOHN = " " + PREFIX_EMAIL + VALID_EMAIL_JOHN;
-    public static final String ADDRESS_DESC_JOHN = " " + PREFIX_ADDRESS + VALID_ADDRESS_JOHN;
-    public static final String DELIVERY_DATE_DESC_JOHN = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_JOHN;
 
     public static final ReadOnlyParcel ALICE = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_ALICE)
             .withName(VALID_NAME_ALICE).withAddress(VALID_ADDRESS_ALICE)
@@ -192,7 +145,8 @@ public class TypicalParcels {
             .withDeliveryDate(VALID_DELIVERY_DATE_DANIEL).build();
     public static final ReadOnlyParcel ELLE = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_ELLE)
             .withName(VALID_NAME_ELLE).withPhone(VALID_PHONE_ELLE).withEmail(VALID_EMAIL_ELLE)
-            .withAddress(VALID_ADDRESS_ELLE).withTags(VALID_TAG_HEAVY).withDeliveryDate(VALID_DELIVERY_DATE_ELLE).build();
+            .withAddress(VALID_ADDRESS_ELLE).withTags(VALID_TAG_HEAVY).withDeliveryDate(VALID_DELIVERY_DATE_ELLE)
+            .build();
     public static final ReadOnlyParcel FIONA = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_FIONA)
             .withName(VALID_NAME_FIONA).withPhone(VALID_PHONE_FIONA).withEmail(VALID_EMAIL_FIONA)
             .withAddress(VALID_ADDRESS_FIONA).withDeliveryDate(VALID_DELIVERY_DATE_FIONA)
@@ -219,12 +173,12 @@ public class TypicalParcels {
     // Manually added - Parcel's details found in {@code CommandTestUtil}
     public static final ReadOnlyParcel AMY = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
             .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-            .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
-            .withTags(VALID_TAG_FLAMMABLE).build();
+            .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY)
+            .withStatus(VALID_STATUS_DELIVERING).withTags(VALID_TAG_FLAMMABLE).build();
     public static final ReadOnlyParcel BOB = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
             .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-            .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_COMPLETED)
-            .withTags(VALID_TAG_FROZEN, VALID_TAG_FLAMMABLE).build();
+            .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB)
+            .withStatus(VALID_STATUS_COMPLETED).withTags(VALID_TAG_FROZEN, VALID_TAG_FLAMMABLE).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

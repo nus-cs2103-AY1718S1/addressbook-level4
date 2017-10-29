@@ -39,21 +39,14 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TRACKING_NUMBER
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PARCELS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PARCEL;
-import static seedu.address.testutil.TypicalParcels.ADDRESS_DESC_ALICE;
 import static seedu.address.testutil.TypicalParcels.ADDRESS_DESC_BENSON;
-import static seedu.address.testutil.TypicalParcels.ALICE;
 import static seedu.address.testutil.TypicalParcels.AMY;
 import static seedu.address.testutil.TypicalParcels.BENSON;
-import static seedu.address.testutil.TypicalParcels.DELIVERY_DATE_DESC_ALICE;
 import static seedu.address.testutil.TypicalParcels.DELIVERY_DATE_DESC_BENSON;
-import static seedu.address.testutil.TypicalParcels.EMAIL_DESC_ALICE;
 import static seedu.address.testutil.TypicalParcels.EMAIL_DESC_BENSON;
 import static seedu.address.testutil.TypicalParcels.KEYWORD_MATCHING_MEIER;
-import static seedu.address.testutil.TypicalParcels.NAME_DESC_ALICE;
 import static seedu.address.testutil.TypicalParcels.NAME_DESC_BENSON;
-import static seedu.address.testutil.TypicalParcels.PHONE_DESC_ALICE;
 import static seedu.address.testutil.TypicalParcels.PHONE_DESC_BENSON;
-import static seedu.address.testutil.TypicalParcels.TRACKING_NUMBER_DESC_ALICE;
 import static seedu.address.testutil.TypicalParcels.TRACKING_NUMBER_DESC_BENSON;
 
 import org.junit.Test;

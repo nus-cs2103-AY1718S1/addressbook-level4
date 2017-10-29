@@ -56,24 +56,22 @@ public class CommandTestUtil {
     public static final String DELIVERY_DATE_DESC_AMY = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_AMY;
     public static final String DELIVERY_DATE_DESC_BOB = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_BOB;
 
+    // list of status
     public static final String VALID_STATUS_PENDING = "PENDING";
     public static final String VALID_STATUS_DELIVERING = "DELIVERING";
     public static final String VALID_STATUS_OVERDUE = "OVERDUE";
     public static final String VALID_STATUS_COMPLETED = "COMPLETED";
-
     public static final String STATUS_DESC_PENDING = " " + PREFIX_STATUS + VALID_STATUS_PENDING;
     public static final String STATUS_DESC_DELIVERING = " " + PREFIX_STATUS + VALID_STATUS_DELIVERING;
-    public static final String STATUS_DESC_OVERDUE = " " + PREFIX_STATUS + VALID_STATUS_OVERDUE;
     public static final String STATUS_DESC_COMPLETED = " " + PREFIX_STATUS + VALID_STATUS_COMPLETED;
 
+    // list of tags
     public static final String VALID_TAG_FROZEN = "FROZEN";
     public static final String VALID_TAG_FRAGILE = "FRAGILE";
     public static final String VALID_TAG_FLAMMABLE = "FLAMMABLE";
     public static final String VALID_TAG_HEAVY = "HEAVY";
     public static final String TAG_DESC_FLAMMABLE = " " + PREFIX_TAG + VALID_TAG_FLAMMABLE;
-    public static final String TAG_DESC_FRAGILE = " " + PREFIX_TAG + VALID_TAG_FLAMMABLE;
     public static final String TAG_DESC_FROZEN = " " + PREFIX_TAG + VALID_TAG_FROZEN;
-    public static final String TAG_DESC_HEAVY = " " + PREFIX_TAG + VALID_TAG_FLAMMABLE;
 
     public static final String INVALID_TRACKING_NUMBER_DESC = " " + PREFIX_TRACKING_NUMBER
             + "SS123456789RR"; // prefix and postfix are reversed
@@ -92,12 +90,12 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditParcelDescriptorBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)
                 .withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY).withStatus(VALID_STATUS_DELIVERING)
-                .withTags(VALID_TAG_FLAMMABLE).build();
+                .withAddress(VALID_ADDRESS_AMY).withDeliveryDate(VALID_DELIVERY_DATE_AMY)
+                .withStatus(VALID_STATUS_DELIVERING).withTags(VALID_TAG_FLAMMABLE).build();
         DESC_BOB = new EditParcelDescriptorBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_BOB)
                 .withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB).withStatus(VALID_STATUS_COMPLETED)
-                .withTags(VALID_TAG_FROZEN, VALID_TAG_FLAMMABLE).build();
+                .withAddress(VALID_ADDRESS_BOB).withDeliveryDate(VALID_DELIVERY_DATE_BOB)
+                .withStatus(VALID_STATUS_COMPLETED).withTags(VALID_TAG_FROZEN, VALID_TAG_FLAMMABLE).build();
     }
 
     /**

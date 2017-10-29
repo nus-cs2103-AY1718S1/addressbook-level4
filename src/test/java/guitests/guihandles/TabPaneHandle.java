@@ -55,6 +55,6 @@ public class TabPaneHandle extends NodeHandle<TabPane> {
      * Returns the index of the selected tab.
      */
     public int getSelectedTabIndex() {
-         return getRootNode().getSelectionModel().getSelectedIndex();
+        return getRootNode().getSelectionModel().getSelectedIndex();
     }
 }
