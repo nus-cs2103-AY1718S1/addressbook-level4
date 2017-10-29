@@ -25,7 +25,7 @@ public class ListObserver {
     }
 
     public List<ReadOnlyPerson> getCurrentFilteredList() {
-        String currentList = model.getCurrentList();
+        String currentList = model.getCurrentListName();
 
         switch (currentList) {
 
@@ -41,7 +41,7 @@ public class ListObserver {
     }
 
     public int updateCurrentFilteredList(Predicate<ReadOnlyPerson> predicate) {
-        String currentList = model.getCurrentList();
+        String currentList = model.getCurrentListName();
 
         switch (currentList) {
 
@@ -59,7 +59,7 @@ public class ListObserver {
     }
 
     public String getCurrentListName() {
-        String currentList = model.getCurrentList();
+        String currentList = model.getCurrentListName();
 
         switch (currentList) {
 

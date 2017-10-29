@@ -34,7 +34,7 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /** Returns the name of current displayed list */
-    String getCurrentList();
+    String getCurrentListName();
 
     /** Sets the name of current displayed list */
     void setCurrentListName(String currentList);

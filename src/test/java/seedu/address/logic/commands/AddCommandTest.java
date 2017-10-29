@@ -131,7 +131,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public String getCurrentList() {
+        public String getCurrentListName() {
             fail("This method should not be called.");
             return null;
         }

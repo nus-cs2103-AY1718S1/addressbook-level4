@@ -94,7 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @return String value of the current displayed list
      */
     @Override
-    public String getCurrentList() {
+    public String getCurrentListName() {
         return currentList;
     }
 
