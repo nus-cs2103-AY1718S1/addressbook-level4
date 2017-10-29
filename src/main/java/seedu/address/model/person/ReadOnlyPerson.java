@@ -62,8 +62,8 @@ public interface ReadOnlyPerson {
                 .append(getRemark())
                 .append(" Birthday: ")
                 .append(getBirthday())
-                .append("Photo: ")
-                .append(getPhoto())
+               // .append("Photo: ")
+               // .append(getPhoto())
                 .append(" Age: ")
                 .append(getAge())
                 .append(" Tags: ");
