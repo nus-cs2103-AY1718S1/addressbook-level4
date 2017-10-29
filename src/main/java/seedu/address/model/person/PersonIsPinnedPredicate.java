@@ -9,7 +9,7 @@ public class PersonIsPinnedPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return person.isPinned();
+        return person.isPinned() && !person.isPrivate();
     }
 
     @Override

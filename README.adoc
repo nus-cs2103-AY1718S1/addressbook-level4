@@ -8,11 +8,11 @@ https://coveralls.io/repos/github/CS2103AUG2017-T15-B4/main?branch=master[image:
 https://www.codacy.com/app/deep4k/main/dashboard[image:https://api.codacy.com/project/badge/Grade/e465693d0a7549f9bc73ed44344ebd5c[Codacy Badge]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::docs/images/Ui.png[width="750"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Ui.png[width="600"]
+image::images/Ui.png[width="750"]
 endif::[]
 
 * Bluebird is a desktop based organisational tool designed for the working parent on the go.

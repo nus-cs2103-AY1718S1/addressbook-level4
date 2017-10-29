@@ -8,7 +8,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.UnaliasCommand;
+import seedu.address.logic.commands.alias.UnaliasCommand;
+import seedu.address.logic.parser.alias.UnaliasCommandParser;
 import seedu.address.model.alias.Keyword;
 
 public class UnaliasCommandParserTest {

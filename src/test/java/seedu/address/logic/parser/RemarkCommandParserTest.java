@@ -9,12 +9,11 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.person.RemarkCommand;
+import seedu.address.logic.parser.person.RemarkCommandParser;
 import seedu.address.model.person.Remark;
 
-/**
- *
- */
+
 public class RemarkCommandParserTest {
     private RemarkCommandParser parser = new RemarkCommandParser();
 
