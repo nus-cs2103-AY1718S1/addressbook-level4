@@ -36,82 +36,83 @@ public class TypicalPersons {
 
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("85355255").withPostalCode("600123").withDebt("123456789")
+            .withPhone("85355255").withPostalCode("600123").withDebt("123456789").withTotalDebt("123456789")
             .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
             .withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com").withPhone("98765432")
-            .withPostalCode("123311").withDebt("12345").withInterest(Interest.NO_INTEREST_SET)
+            .withPostalCode("123311").withDebt("12345").withTotalDebt("12345").withInterest(Interest.NO_INTEREST_SET)
             .withDeadline(Deadline.NO_DEADLINE_SET).withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withPostalCode("111111").withDebt("123456")
+            .withEmail("heinz@example.com").withPostalCode("111111").withDebt("123456").withTotalDebt("123456")
             .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
             .withAddress("wall street").build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withDebt("1234567")
+            .withEmail("cornelia@example.com").withAddress("10th street").withDebt("1234567").withTotalDebt("1234567")
             .withDeadline(Deadline.NO_DEADLINE_SET).withInterest(Interest.NO_INTEREST_SET)
             .withPostalCode("101010").build();
     public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withPostalCode("673673").withDebt("100000").withEmail("werner@example.com")
+            .withPostalCode("673673").withDebt("100000").withTotalDebt("100000").withEmail("werner@example.com")
             .withAddress("michegan ave").withInterest(Interest.NO_INTEREST_SET).build();
     public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz")
-            .withPostalCode("616111").withPhone("9482427").withDebt("12").withDeadline(Deadline.NO_DEADLINE_SET)
-            .withEmail("lydia@example.com").withInterest(Interest.NO_INTEREST_SET).withAddress("little tokyo").build();
+            .withPostalCode("616111").withPhone("9482427").withDebt("12").withTotalDebt("12")
+            .withDeadline(Deadline.NO_DEADLINE_SET).withEmail("lydia@example.com")
+            .withInterest(Interest.NO_INTEREST_SET).withAddress("little tokyo").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withPostalCode("040004").withEmail("anna@example.com").withDebt("45")
+            .withPostalCode("040004").withEmail("anna@example.com").withDebt("45").withTotalDebt("45")
             .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
             .withAddress("4th street").build();
 
     // Blacklisted persons.
     public static final ReadOnlyPerson JELENA = new PersonBuilder().withName("Jelena Neo")
-            .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withEmail("alice@example.com")
+            .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withTotalDebt("1234567").withEmail("alice@example.com")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("85355255").withInterest(Interest.NO_INTEREST_SET)
             .withTags("friends").withPostalCode("623123").build();
     public static final ReadOnlyPerson WEIPING = new PersonBuilder().withName("Khoo Wei Ping")
             .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567")
-            .withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET)
+            .withTotalDebt("1234567").withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET)
             .withPhone("98765432").withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson JAIVIGNESH = new PersonBuilder().withName("Jaivignesh Venugopal")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("95352563").withEmail("heinz@example.com")
             .withAddress("wall street").withPostalCode("111111").withInterest(Interest.NO_INTEREST_SET)
-            .withDebt("1234567").build();
+            .withDebt("1234567").withTotalDebt("1234567").build();
     public static final ReadOnlyPerson LAWRENCE = new PersonBuilder().withName("Lawrence Koh")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("87652533").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("cornelia@example.com").withAddress("10th street")
-            .withPostalCode("111111").withDebt("1234567").build();
+            .withPostalCode("111111").withDebt("1234567").withTotalDebt("1234567").build();
 
     // Whitelisted persons. Debt has to be zero!
     public static final ReadOnlyPerson ARCHANA = new PersonBuilder().withName("Archana Pradeep")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("9482224").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("werner@example.com").withAddress("michegan ave")
-            .withPostalCode("111111").withDebt("0").build();
+            .withPostalCode("111111").withDebt("0").withTotalDebt("123456").build();
     public static final ReadOnlyPerson SIRISHA = new PersonBuilder().withName("Lakshmi Sirisha")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("9482427").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("lydia@example.com").withAddress("little tokyo")
-            .withPostalCode("111111").withDebt("0").build();
+            .withPostalCode("111111").withDebt("0").withTotalDebt("123456").build();
     public static final ReadOnlyPerson RUSHAN = new PersonBuilder().withName("Khor Ru Shan")
             .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("9482442").withInterest(Interest.NO_INTEREST_SET)
             .withEmail("anna@example.com").withAddress("4th street")
-            .withPostalCode("111111").withDebt("0").build();
+            .withPostalCode("111111").withDebt("0").withTotalDebt("123456").build();
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").withDebt("560")
+            .withEmail("stefan@example.com").withAddress("little india").withDebt("560").withTotalDebt("560")
             .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
             .withPostalCode("217959").build();
     public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withPostalCode("789789").withDebt("7890")
+            .withEmail("hans@example.com").withPostalCode("789789").withDebt("7890").withTotalDebt("7890")
             .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
             .withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY)
-            .withDebt(VALID_DEBT_AMY).withTags(VALID_TAG_FRIEND).withInterest(VALID_INTEREST_AMY)
+            .withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY).withTags(VALID_TAG_FRIEND).withInterest(VALID_INTEREST_AMY)
             .withDeadline(VALID_DEADLINE_AMY).build();
     public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .withDebt(VALID_DEBT_BOB).withDeadline(VALID_DEADLINE_BOB).withPostalCode(VALID_POSTAL_CODE_BOB)
+            .withDebt(VALID_DEBT_BOB).withTotalDebt(VALID_DEBT_BOB).withDeadline(VALID_DEADLINE_BOB).withPostalCode(VALID_POSTAL_CODE_BOB)
             .withInterest(VALID_INTEREST_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
