@@ -13,6 +13,16 @@ endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B1/main
 
 By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
+image:CoverPage.png[width="600"]
+
+== Introduction
+
+Looking way of keeping track of your contacts? Unsastified with ugly clunky designs currently avaliable?
+
+Look no further with the Gentleman's Guide. With a superb user interface and sleek, professional touch, Gentleman's Guide provides you with a contact book that even James Bond would love, shaken not stirred.
+
+At the Heart of our Design is the idea that every man wants to be a Gentleman. Emcompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he neededs, when he needs it. Nothing more, nothing less
+
 
 == Quick Start
 
@@ -26,7 +36,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Gentleman's Guide.jpeg[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -413,6 +423,16 @@ Format: `clear`
 
 Exits the program. +
 Format: `exit`
+
+=== Logging in to private database : `login`
+
+Login into a Private Database +
+Format: `login u/private p/password`
+
+=== Logging out of private database : `logout`
+
+Logout of a Private Database +
+Format: `logout`
 
 === Saving the data
 
