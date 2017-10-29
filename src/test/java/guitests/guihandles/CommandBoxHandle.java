@@ -1,7 +1,5 @@
 package guitests.guihandles;
 
-import java.util.ArrayList;
-
 import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import seedu.address.ui.CommandBox;
