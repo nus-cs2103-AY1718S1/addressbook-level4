@@ -132,4 +132,33 @@ public class ParcelListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
     public int getListSize() {
         return getRootNode().getItems().size();
     }
+
+    @Override
+    public boolean equals(Object object) {
+        ParcelListPanelHandle parcelList;
+
+        // check object type
+        if (object instanceof ParcelListPanelHandle) {
+            parcelList = (ParcelListPanelHandle) object;
+        } else {
+            return false;
+        }
+
+        // check same size
+        if (parcelList.getListSize() != getListSize()) {
+            return false;
+        }
+
+        List<ParcelCard> parcels = getRootNode().getItems();
+        List<ParcelCard> otherParcels = parcelList.getRootNode().getItems();
+
+        // compares elements and order
+        for (int i = 0; i < parcels.size(); i++) {
+            if (!parcels.get(i).equals(otherParcels.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
