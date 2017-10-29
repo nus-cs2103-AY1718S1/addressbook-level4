@@ -18,7 +18,7 @@
 }
 
 .label-header, .particular-name {
-    -fx-font-size: 32pt;
+    -fx-font-size: 25pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
@@ -36,6 +36,7 @@
     -fx-font-size: 18pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
+    -fx-background-color: transparent;
     -fx-opacity: 1;
 }
 
@@ -43,6 +44,7 @@
     -fx-font-size: 18pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #d06651;
+    -fx-background-color: gray;
     -fx-opacity: 1;
 }
 
