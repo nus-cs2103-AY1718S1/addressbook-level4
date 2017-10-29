@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.SwitchToEventsListEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.commons.util.UrlUtil;
@@ -82,6 +83,7 @@ public class ImportNusmodsCommand extends ImportCommand {
         super(url.toString(), ImportType.NUSMODS);
         this.url = url;
         matchSemesterInformation();
+        eventsCenter.registerHandler(this);
         eventsAdded = 0;
         failToAdd = false;
     }
@@ -117,6 +119,11 @@ public class ImportNusmodsCommand extends ImportCommand {
                     logger.info(String.format(EXAM_EVENT_EXIST_DUPLICATE, module.getModuleCode()));
                 }
             });
+        }
+
+        // Do not switch to event listing if there is no change.
+        if (eventsAdded > 0) {
+            raise(new SwitchToEventsListEvent());
         }
 
         String successMessage = String.format(MESSAGE_SUCCESS, eventsAdded);
