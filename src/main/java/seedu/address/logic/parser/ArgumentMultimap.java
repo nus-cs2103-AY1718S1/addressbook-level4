@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+
 /**
  * Stores mapping of prefixes to their respective arguments.
  * Each key may be associated with multiple argument values.
@@ -37,6 +40,24 @@ public class ArgumentMultimap {
     public Optional<String> getValue(Prefix prefix) {
         List<String> values = getAllValues(prefix);
         return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
+    }
+
+    /**
+     * Returns the last address value of the field entered {@code prefix}.
+     * Returns default address value when address is entered.
+     */
+    public Optional<String> getAddressOptionalValue(Prefix prefix) {
+        List<String> values = getAllValues(prefix);
+        return values.isEmpty() ? Optional.of(Address.DEFAULT_ADDRESS) : Optional.of(values.get(values.size() - 1));
+    }
+
+    /**
+     * Returns the last email value of the {@code prefix}.
+     * Returns default email value when no email is entered.
+     */
+    public Optional<String> getEmailOptionalValue(Prefix prefix) {
+        List<String> values = getAllValues(prefix);
+        return values.isEmpty() ? Optional.of(Email.DEFAULT_EMAIL) : Optional.of(values.get(values.size() - 1));
     }
 
     /**
