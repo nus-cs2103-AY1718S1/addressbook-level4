@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
@@ -60,5 +61,10 @@ public interface Model {
      * @throws NullPointerException if {@code contactList} is null.
      */
     ObservableList<ReadOnlyPerson> sortByPersonName();
+
+    void addSchedule(Schedule schedule) throws PersonNotFoundException;
+
+    ObservableList scheduleList();
+
 
 }
