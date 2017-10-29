@@ -2,6 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.regex.Pattern;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -14,7 +16,7 @@ public class PortraitPath {
             "The portrait path should be alphanumeric string plus suffix"
             + "The application only supports .png and .jpg portrait files";
 
-    public static final String PORTRAIT_VALIDATION_REGEX = "[\\w]+.(?:png|jpg)";
+    public static final String PORTRAIT_VALIDATION_REGEX = "\\S[\\w\\s]+\\.(?:png$|jpg$)";
 
     private final String filePath;
 
