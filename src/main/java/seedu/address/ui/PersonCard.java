@@ -2,7 +2,6 @@ package seedu.address.ui;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -71,27 +70,16 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
-//        File  file = new File("src/main/photos/default.jpeg");
-//        //}
-//        Image image = new Image(file.toURI().toString(), 150, 150, false, false);
-
-//        File  fileDefault = new File("src/main/photos/default.jpeg");
-//        Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
-//        photo.setImage(image);
 
         Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
-        if(Files.exists(path)) {
-//            System.out.println("Hi i am "+person.getName().toString());
-//            System.out.println("Valid filepath");
-            File  filePic = new File( "src/main/photos/" + person.getEmail().toString() + ".png");
+        if (Files.exists(path)) {
+            File filePic = new File("src/main/photos/" + person.getEmail().toString() + ".png");
             Image image = new Image(filePic.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
-        } else{
-            File  fileDefault = new File("src/main/photos/default.jpeg");
+        } else {
+            File fileDefault = new File("src/main/photos/default.jpeg");
             Image image = new Image(fileDefault.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
-//            System.out.println("Hi i am "+person.getName().toString());
-//            System.out.println("My filepath is "+ fileDefault.getPath());
         }
 
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
@@ -108,10 +96,10 @@ public class PersonCard extends UiPart<Region> {
         File file = new File("src/main/photos/" + person.getEmail().toString() + ".png");
         //}
         Path path = Paths.get("src/main/photos/" + person.getEmail().toString() + ".png");
-        if(Files.exists(path)) {
+        if (Files.exists(path)) {
             Image image = new Image(file.toURI().toString(), 150, 150, false, false);
             photo.setImage(image);
-         //   System.out.println("Photo changed " + person.getName().fullName);
+            //   System.out.println("Photo changed " + person.getName().fullName);
         }
 
     }

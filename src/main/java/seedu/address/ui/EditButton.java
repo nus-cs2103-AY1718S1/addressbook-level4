@@ -56,7 +56,7 @@ public class EditButton extends UiPart<Region> {
                 + " a/" + addressTextFieldTextField.getAddressTextField());
         String tagTextArea = tagTextField.getTagTextArea();
         String[] tagSplit = tagTextArea.split(",");
-        for ( String s : tagSplit) {
+        for (String s : tagSplit) {
             command.append(" t/" + s.trim());
         }
         CommandResult commandResult = logic.execute(command.toString());

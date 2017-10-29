@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +30,8 @@ public class UploadPhotoCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Uploads image to the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) or INDEX (must be a positive integer) and image file path\n"
+            + "Parameters: INDEX (must be a positive integer) or "
+            + "INDEX (must be a positive integer) and image file path\n"
             + "Example: " + COMMAND_WORD + " 1\n"
             + "OR: " + COMMAND_WORD + " 1 " + "C:\\Users\\Pictures\\photo.jpg";
 
@@ -100,7 +100,7 @@ public class UploadPhotoCommand extends UndoableCommand {
     private boolean isValidImageFile(File file) {
         boolean isValid = true;
         try {
-            Image image = ImageIO.read(file);
+            BufferedImage image = ImageIO.read(file);
             if (image == null) {  //file is not an image file
                 isValid = false;
             }

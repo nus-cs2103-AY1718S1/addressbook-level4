@@ -14,7 +14,8 @@ public class UploadPhotoCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "asasd", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadPhotoCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "asasd",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, UploadPhotoCommand.MESSAGE_USAGE));
     }
 
     @Test
@@ -24,7 +25,8 @@ public class UploadPhotoCommandParserTest {
         assertParseSuccess(parser, "1", expectedCommand);
 
         // valid index and file path
-        expectedCommand = new UploadPhotoCommand(INDEX_FIRST_PERSON, ".\\src\\test\\resources\\photos\\connectus_icon.png");
+        expectedCommand = new UploadPhotoCommand(INDEX_FIRST_PERSON,
+                ".\\src\\test\\resources\\photos\\connectus_icon.png");
         assertParseSuccess(parser, "1 .\\src\\test\\resources\\photos\\connectus_icon.png", expectedCommand);
     }
 }

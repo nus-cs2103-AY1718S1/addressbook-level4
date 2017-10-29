@@ -24,11 +24,9 @@ public class UploadPhotoCommandParser implements Parser<UploadPhotoCommand> {
 
             String indexString = argsArr[0];
             String filePath = "";
-//            System.out.println(argsArr[1]);
-            if(argsArr.length>1){
+            if (argsArr.length > 1) {
                 filePath = argsArr[1];
             }
-           // System.out.println(indexString + " " + filePath);
             Index index = ParserUtil.parseIndex(indexString);
             return new UploadPhotoCommand(index, filePath);
         } catch (IllegalValueException ive) {

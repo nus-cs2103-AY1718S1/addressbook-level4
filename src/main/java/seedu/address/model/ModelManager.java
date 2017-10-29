@@ -52,11 +52,12 @@ public class ModelManager extends ComponentManager implements Model {
     public void resetData(ReadOnlyAddressBook newData) {
         addressBook.resetData(newData);
         File dir = new File("src/main/photos/");
-        for (File file : dir.listFiles())
+        for (File file : dir.listFiles()) {
             if (file.getName().equals("default.jpeg")) {
-            }else{
+            } else {
                 file.delete();
             }
+        }
         indicateAddressBookChanged();
     }
 
