@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.imports.ImportCommand;
 import seedu.address.logic.commands.imports.ImportCommand.ImportType;
+import seedu.address.logic.commands.imports.ImportNusmodsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -20,6 +21,7 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     /* Regular expressions for validation. */
     private static final Pattern IMPORT_COMMAND_FORMAT = Pattern.compile("--(?<importType>\\S+)\\s+(?<path>.+)");
+    private static final Pattern IMPORT_NUSMODS_FORMAT = Pattern.compile("https?://(www.)?nusmods.com/\\S*");
     private static final String ARG_BEGIN_WITH = "--";
     private static final String IMPORT_DEFAULT_TYPE = "--xml ";
 
@@ -83,7 +85,19 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         return null;
     }
 
-    private ImportCommand checkNusmodsImport(String path) {
-        return null;
+    /**
+     * Creates an {@link ImportNusmodsCommand}.
+     */
+    private ImportCommand checkNusmodsImport(String path) throws ParseException {
+        /*
+         * We only do a simple matching check here. More detailed checking will be done when
+         * the {@link ImportNusmodsCommand} is executed.
+         */
+        if (!IMPORT_NUSMODS_FORMAT.matcher(path).matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ImportNusmodsCommand.MESSAGE_USAGE));
+        }
+
+        return new ImportNusmodsCommand(path);
     }
 }
