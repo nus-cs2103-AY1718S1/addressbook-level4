@@ -45,7 +45,6 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getPostalCode().value, actualCard.getPostalCode());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getRemark().value, actualCard.getRemark());
-        assertEquals(expectedPerson.getTags().stream(), actualCard.getTags());
     }
 
     /**

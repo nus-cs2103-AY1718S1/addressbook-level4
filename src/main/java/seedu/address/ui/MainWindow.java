@@ -40,20 +40,20 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private ExtendedPersonCard extendedPersonCard;
+    private GraphPanel graphPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-
-    @FXML
-    private StackPane browserPlaceholder;
 
     @FXML
     private StackPane extendedPersonCardPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
+
+    @FXML
+    private StackPane graphPanelPlaceholder;
 
     @FXML
     private MenuItem helpMenuItem;
@@ -133,8 +133,11 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        extendedPersonCard = new ExtendedPersonCard(logic.getFilteredPersonList());
+        extendedPersonCard = new ExtendedPersonCard();
         extendedPersonCardPlaceholder.getChildren().add(extendedPersonCard.getRoot());
+
+        GraphPanel graphPanel = new GraphPanel(logic.getFilteredPersonList());
+        graphPanelPlaceholder.getChildren().add(graphPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -214,6 +217,10 @@ public class MainWindow extends UiPart<Region> {
 
     public ExtendedPersonCard getExtendedPersonCard() {
         return this.extendedPersonCard;
+    }
+
+    public GraphPanel getGraphPanel() {
+        return this.graphPanel;
     }
 
     @Subscribe
