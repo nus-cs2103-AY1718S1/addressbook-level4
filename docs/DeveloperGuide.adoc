@@ -502,7 +502,7 @@ _Figure 3.3.2: Code section in PersonListPanel.java_
 
 The UI outcome of scrolling and selecting a `PersonCard` in the `PersonListPanel` is shown in Figure 3.3.3 below:
 
-image::PersonListPanelSelect.png[width="200"]
+image::PersonListPanelSelect.png[width="400"]
 _Figure 3.3.3 : UI outcome of scrolling and selecting a `PersonCard`_
 
 When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below in _Figure 3.3.4_:
@@ -599,23 +599,23 @@ A successful tokenism of the prefix will ensure that the keywords are  allocated
 Upon any successful match, the particulars of the contact will be displayed. _Figures 3.4.3a to 3.4.3e_ below indicate the various outcomes of search function by  using `FindCommand` .
 
 
-image::FindCommand_Name.PNG[width="300"]
+image::FindCommand_Name.PNG[width="400"]
 _Figure 3.4.3a : Find by name [n/NAME]_
 
-image::FindCommand_Phone.PNG[width="300"]
+image::FindCommand_Phone.PNG[width="400"]
 _Figure 3.4.3b : Find by phone [p/PHONE]_
 
-image::FindCommand_Email.PNG[width="300"]
+image::FindCommand_Email.PNG[width="400"]
 _Figure 3.4.3c : Find by email [e/EMAIL]_
 
-image::FindCommand_Address.PNG[width="300"]
+image::FindCommand_Address.PNG[width="400"]
 _Figure 3.4.3d : Find by address [a/ADDRESS]_
 
-image::FindCommand_Tag.PNG[width="300"]
+image::FindCommand_Tag.PNG[width="400"]
 _Figure 3.4.3e : Find by tag [t/TAG]_
 
 ==== Design Considerations for `FindCommand`
----
+
 
 **Aspect:** Enhancement of `FindCommand` +
 **Alternative 1 (current choice)**: Searching for contact based on the `prefix` of search field given. +
@@ -660,20 +660,20 @@ _Figure 3.5.2: Code section 2 in CopyCommand.java_
 _Figures 3.5.3a and 3.5.3b_ below show examples of copy command on display in the UI, showing the acceptable format for indexes, and the expected result. Note that the message will only be displayed if the message is already copied to the system clipboard.:
 
 
-image::CopyCommand_single_index.PNG[width="300"]
+image::CopyCommand_single_index.PNG[width="400"]
 _Figure 3.5.3a : Copy from a single contact_
 
-image::CopyCommand_multiple_index.PNG[width="300"]
+image::CopyCommand_multiple_index.PNG[width="400"]
 _Figure 3.5.3b : Copy from multiple contacts_
 
 _Figure 3.5.4_ below shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
 
-image::CopyCommand_browser_result.PNG[width="300"]
+image::CopyCommand_browser_result.PNG[width="400"]
 _Figures 3.5.4: Applied use of command in email application_
 
 ==== Design Considerations for `CopyCommand`
 
----
+
 
 Why it is implemented that way
 
@@ -686,6 +686,60 @@ It is possible to provide the same output text in the console message to user, w
 Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
 
 ---
+
+//tag::CalendarCommand[]
+=== Opening `Calendar` [Since v1.3]
+
+`CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays. Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 3.6.1_:. In addition , user are bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
+
+[source,java]
+----
+public class CalendarCommand extends Command {
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        EventsCenter.getInstance().post(new ShowCalendarRequestEvent());
+      //  return new CommandResult
+    }
+}
+
+----
+_Figure 3.6.1: Code section in CalendarCommand.java_
+
+
+The  `BrowserPanel`  which reside in `UI` will handle the event of `ShowCalendarRequestEvent`
+as shown in _Figure 3.6.2_:
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+@Subscribe
+    private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadCalendar();
+   }
+}
+----
+_Figure 3.6.2: Code section in BrowserPanel.java_
+
+The method `loadCalendar` will pass the calendar url to `BrowserPanel` to open up calendar website in `BrowserPanel`. The outcome of successful launching of calendar webpage in browser is shown in _Figure 3.6.3_:
+
+image::CalendarCommand.png[width="800"]
+
+_Figure 3.6.3: Output of `CalendarCommand.java` execution_
+
+==== Design Considerations for `FindCommand`
+
+
+**Aspect:** Implementationt of `CalendarCommand` +
+**Alternative 1 (current choice)**: Opening  `Calendar` webpage in `BrowserPanel`. +
+**Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar.User are able to find out about the public holidays which are not avaliable on desktop calendar. +
+**Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
+**Alternative 2:** Opening up of google calendar +
+**Pros:** User are able to store the events in the google calendar. +
+**Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
+
+---
+
 
 === Logging
 
@@ -1167,6 +1221,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `Contag` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
+=== Use case: Add remark
 === Use case: Add remark
 *MSS*
 
