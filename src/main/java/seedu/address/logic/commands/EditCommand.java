@@ -152,7 +152,7 @@ public class EditCommand extends UndoableCommand {
 
         Person personCreated = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedPostalCode,
                 updatedDebt, updatedInterest, updatedDeadline, updatedTags);
-
+        personCreated.setTotalDebt(personToEdit.getTotalDebt());
         personCreated.setDateBorrow(personToEdit.getDateBorrow());
         personCreated.setDateRepaid(personToEdit.getDateRepaid());
         personCreated.setIsBlacklisted(personToEdit.isBlacklisted());
@@ -253,6 +253,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Debt> getDebt() {
             return Optional.ofNullable(debt);
         }
+
         public void setInterest(Interest interest) {
             this.interest = interest;
         }
