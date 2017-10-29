@@ -21,9 +21,7 @@ import static seedu.address.testutil.TypicalPersons.GEORGE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.junit.After;
@@ -32,31 +30,27 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
-
-import seedu.address.commons.core.index.Index;
 import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
-public class AutoCompleteModelParserTest {
+public class AutoCompleteByPrefixModelParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     private AutoCompleteByPrefixModelParser parser;
     private ModelStubWithRequiredMethods mockModel;
+    private final List<ReadOnlyPerson> allPersonsAdded = Arrays.asList(
+            new ReadOnlyPerson[]{ALICE, AMY, BENSON, BOB, CARL, DANIEL, ELLE, FIONA, GEORGE});
 
     @Before
     public void fillMockModel() {
         mockModel = new ModelStubWithRequiredMethods();
         try {
-            mockModel.addAllPersons(Arrays.asList(
-                    new ReadOnlyPerson[]{ALICE, AMY, BENSON, BOB, CARL, DANIEL, ELLE, FIONA, GEORGE}));
+            mockModel.addAllPersons(allPersonsAdded);
         } catch (DuplicatePersonException ex) {
             fail("This exception should not be thrown.");
         }
@@ -174,104 +168,65 @@ public class AutoCompleteModelParserTest {
                 Arrays.asList(new String[] {"remark 1 r/Not in list"}));
     }
 
+    @Test
+    public void testUpdateNames() {
+        parser.setPrefix(PREFIX_NAME);
+
+        String preamble = "add n/";
+        List<String> expected = allPersonsAdded.stream()
+                .map(person -> preamble + person.getName().toString())
+                .collect(Collectors.toList());
+        expected.add(preamble);
+
+        assertEquals(parser.parseForPossibilities(preamble), expected);
+    }
+
+    @Test
+    public void testUpdatePhones() {
+        parser.setPrefix(PREFIX_PHONE);
+
+        String preamble = "edit 1 p/";
+        List<String> expected = allPersonsAdded.stream()
+                .map(person -> preamble + person.getPhone().toString())
+                .collect(Collectors.toList());
+        expected.add(preamble);
+
+        assertEquals(parser.parseForPossibilities(preamble), expected);
+    }
+
+    @Test
+    public void testUpdateEmails() {
+        parser.setPrefix(PREFIX_EMAIL);
+
+        String preamble = "add n/Jane Dope e/";
+        List<String> expected = allPersonsAdded.stream()
+                .map(person -> preamble + person.getEmail().toString())
+                .collect(Collectors.toList());
+        expected.add(preamble);
+
+        assertEquals(parser.parseForPossibilities(preamble), expected);
+    }
+
+    @Test
+    public void testUpdateTags() {
+        parser.setPrefix(PREFIX_TAG);
+
+        String preamble = "add n/Da Mythic t/";
+
+        assertEquals(parser.parseForPossibilities(preamble),
+                Arrays.asList(preamble + "friends",
+                        preamble + "friend",
+                        preamble + "owesMoney",
+                        preamble + "husband",
+                        preamble + "colleagues",
+                        preamble + "family",
+                        preamble));
+    }
+
     @After
     public void cleanUpMockModel() {
         mockModel = null;
         parser = null;
-    }
-
-    /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public List<String> getAllNamesInAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public List<String> getAllPhonesInAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public List<String> getAllEmailsInAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public List<String> getAllAddressesInAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public List<String> getAllTagsInAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public List<String> getAllRemarksInAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void removeTag(Tag tag) {
-            fail("This method should not be called");
-        }
-
-        @Override
-        public void removeTag(Index index, Tag tag) {
-            fail("This method should not be called");
-        }
-
-        @Override
-        public void sortFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
-            fail("This method should not be called");
-        }
     }
 
     /**
