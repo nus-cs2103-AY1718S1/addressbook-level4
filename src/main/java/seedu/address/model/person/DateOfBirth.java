@@ -17,8 +17,8 @@ import seedu.address.logic.parser.exceptions.EmptyFieldException;
 public class DateOfBirth {
 
     public static final String MESSAGE_DOB_CONSTRAINTS =
-            "Please enter in Day Month Year format where the month can be a number or the name" +
-                    " and the year can be input in 2-digit or 4-digit format.";
+            "Please enter in Day Month Year format where the month can be a number or the name"
+                    + " and the year can be input in 2-digit or 4-digit format.";
     public static final String MESSAGE_INVALID_MONTH = "Month input is invalid.";
     public static final String MESSAGE_INVALID_DAY = "Day input is invalid.";
     public static final String MESSAGE_INVALID_YEAR = "Year input is invalid.";
