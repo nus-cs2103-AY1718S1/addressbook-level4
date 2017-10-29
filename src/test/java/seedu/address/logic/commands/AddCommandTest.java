@@ -143,6 +143,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteUnusedTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
