@@ -254,7 +254,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
      * Returns the {@ReadOnlyPerson} at the specified index of tha address book
      */
     private ReadOnlyPerson getPersonFromAddressBook(Model model, Index index) {
-       return model.getAddressBook().getPersonList().get(index.getZeroBased());
+        return model.getAddressBook().getPersonList().get(index.getZeroBased());
     }
 
     /**

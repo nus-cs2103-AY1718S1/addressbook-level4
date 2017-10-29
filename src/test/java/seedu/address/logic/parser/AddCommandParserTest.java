@@ -71,8 +71,8 @@ public class AddCommandParserTest {
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withPostalCode(VALID_POSTAL_CODE_BOB)
-                .withDebt(VALID_DEBT_BOB).withTotalDebt(VALID_DEBT_BOB).withInterest(VALID_INTEREST_BOB).withDeadline(VALID_DEADLINE_BOB)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withDebt(VALID_DEBT_BOB).withTotalDebt(VALID_DEBT_BOB).withInterest(VALID_INTEREST_BOB)
+                .withDeadline(VALID_DEADLINE_BOB).withTags(VALID_TAG_FRIEND).build();
 
         // multiple names - last name accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + NAME_DESC_BOB + PHONE_DESC_BOB
@@ -125,8 +125,8 @@ public class AddCommandParserTest {
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withPostalCode(VALID_POSTAL_CODE_BOB)
-                .withDebt(VALID_DEBT_BOB).withTotalDebt(VALID_DEBT_BOB).withInterest(VALID_INTEREST_BOB).withDeadline(VALID_DEADLINE_BOB)
-                .withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
+                .withDebt(VALID_DEBT_BOB).withTotalDebt(VALID_DEBT_BOB).withInterest(VALID_INTEREST_BOB)
+                .withDeadline(VALID_DEADLINE_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + POSTAL_CODE_DESC_BOB
                 + DEBT_DESC_BOB + INTEREST_DESC_BOB + DEADLINE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
@@ -137,16 +137,16 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY)
-                .withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY).withInterest(VALID_INTEREST_AMY).withDeadline(VALID_DEADLINE_AMY)
-                .withTags().build();
+                .withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY).withInterest(VALID_INTEREST_AMY)
+                .withDeadline(VALID_DEADLINE_AMY).withTags().build();
         // zero tags
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY
                 + DEBT_DESC_AMY + INTEREST_DESC_AMY + DEADLINE_DESC_AMY, new AddCommand(expectedPerson));
         Person expectedPerson2 = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY)
-                .withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY).withInterest(VALID_INTEREST_AMY).withDeadline(Deadline.NO_DEADLINE_SET)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY).withInterest(VALID_INTEREST_AMY)
+                .withDeadline(Deadline.NO_DEADLINE_SET).withTags(VALID_TAG_FRIEND).build();
         // no deadline
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY

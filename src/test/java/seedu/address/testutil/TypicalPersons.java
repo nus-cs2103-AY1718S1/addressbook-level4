@@ -65,9 +65,9 @@ public class TypicalPersons {
 
     // Blacklisted persons.
     public static final ReadOnlyPerson JELENA = new PersonBuilder().withName("Jelena Neo")
-            .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withTotalDebt("1234567").withEmail("alice@example.com")
-            .withDeadline(Deadline.NO_DEADLINE_SET).withPhone("85355255").withInterest(Interest.NO_INTEREST_SET)
-            .withTags("friends").withPostalCode("623123").build();
+            .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withTotalDebt("1234567")
+            .withEmail("alice@example.com").withDeadline(Deadline.NO_DEADLINE_SET).withPhone("85355255")
+            .withInterest(Interest.NO_INTEREST_SET).withTags("friends").withPostalCode("623123").build();
     public static final ReadOnlyPerson WEIPING = new PersonBuilder().withName("Khoo Wei Ping")
             .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567")
             .withTotalDebt("1234567").withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET)
@@ -108,12 +108,12 @@ public class TypicalPersons {
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final ReadOnlyPerson AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY)
-            .withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY).withTags(VALID_TAG_FRIEND).withInterest(VALID_INTEREST_AMY)
-            .withDeadline(VALID_DEADLINE_AMY).build();
+            .withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY).withTags(VALID_TAG_FRIEND)
+            .withInterest(VALID_INTEREST_AMY).withDeadline(VALID_DEADLINE_AMY).build();
     public static final ReadOnlyPerson BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .withDebt(VALID_DEBT_BOB).withTotalDebt(VALID_DEBT_BOB).withDeadline(VALID_DEADLINE_BOB).withPostalCode(VALID_POSTAL_CODE_BOB)
-            .withInterest(VALID_INTEREST_BOB).build();
+            .withDebt(VALID_DEBT_BOB).withTotalDebt(VALID_DEBT_BOB).withDeadline(VALID_DEADLINE_BOB)
+            .withPostalCode(VALID_POSTAL_CODE_BOB).withInterest(VALID_INTEREST_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
