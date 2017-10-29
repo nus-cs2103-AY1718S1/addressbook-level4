@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import guitests.guihandles.ProfilePanelHandle;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
+import seedu.address.model.insurance.InsurancePerson;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class ProfilePanelTest extends GuiUnitTest {
@@ -19,7 +20,8 @@ public class ProfilePanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        personNameClickedEventStub = new PersonNameClickedEvent(ALICE);
+        InsurancePerson insurancePerson = new InsurancePerson(ALICE);
+        personNameClickedEventStub = new PersonNameClickedEvent(insurancePerson);
 
         guiRobot.interact(() -> profilePanel = new ProfilePanel());
         uiPartRule.setUiPart(profilePanel);
