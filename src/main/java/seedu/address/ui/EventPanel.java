@@ -59,7 +59,7 @@ public class EventPanel extends UiPart<Region> {
      */
     @Subscribe
     private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
-        Index index = event.getNewSelection().index;
+        Index index = event.getNewSelection().getIndex();
         ReadOnlyEvent onlyEvent = event.getNewSelection().event;
         storedEvent = onlyEvent;
         storedEventIndex = index;

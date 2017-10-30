@@ -25,7 +25,8 @@ public class EventCard extends UiPart<Region> {
      */
 
     public final ReadOnlyEvent event;
-    Index index;
+
+    private Index index;
 
     @FXML
     private HBox cardPane;
@@ -75,5 +76,9 @@ public class EventCard extends UiPart<Region> {
         EventCard card = (EventCard) other;
         return id.getText().equals(card.id.getText())
                 && event.equals(card.event);
+    }
+
+    public Index getIndex() {
+        return index;
     }
 }
