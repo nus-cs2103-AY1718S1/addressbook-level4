@@ -33,7 +33,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    //@@author OscarWang114
     private final UniqueLifeInsuranceMap lifeInsuranceMap;
+    //@@author
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -45,7 +47,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        //@@author OscarWang114
         lifeInsuranceMap = new UniqueLifeInsuranceMap();
+        //@@author
     }
 
     public AddressBook() {}
@@ -68,9 +72,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author OscarWang114
     public void setLifeInsurances(Map<UUID, ReadOnlyInsurance> insurances) throws DuplicateInsuranceException {
         this.lifeInsuranceMap.setInsurances(insurances);
     }
+    //@@author
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
@@ -87,6 +93,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
 
+        //@@author OscarWang114
         try {
             setLifeInsurances(newData.getLifeInsuranceMap());
         } catch (DuplicateInsuranceException e) {
@@ -99,6 +106,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (InsuranceNotFoundException e) {
             assert false : "AddressBooks should not contain id that doesn't match to an insurance";
         }
+        //@@author
     }
 
     //// person-level operations
@@ -184,6 +192,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author OscarWang114
     /**
      * Ensures that every insurance in the master map:
      *  - links to its owner, insured, and beneficiary {@code Person} if they exist in master person list respectively
@@ -223,6 +232,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             }
         });
     }
+    //@@author
 
     //// tag-level operations
 
@@ -248,10 +258,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author OscarWang114
     @Override
     public Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap() {
         return lifeInsuranceMap.asMap();
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

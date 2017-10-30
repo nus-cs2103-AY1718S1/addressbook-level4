@@ -2,6 +2,7 @@ package seedu.address.commons.function;
 
 import java.util.function.Consumer;
 
+//@@author OscarWang114
 /**
  * A Consumer that allows lambda expressions to throw exception.
  * @param <T>

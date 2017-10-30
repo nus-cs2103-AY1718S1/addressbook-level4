@@ -13,8 +13,9 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
+//@@author OscarWang114
 /**
- * A list of persons that enforces uniqueness between its elements and does not allow nulls.
+ * A list of insurances that enforces uniqueness between its elements and does not allow nulls.
  *
  * Supports a minimal set of list operations.
  *
@@ -28,70 +29,12 @@ public class UniqueLifeInsuranceList implements Iterable<LifeInsurance> {
     private final ObservableList<ReadOnlyInsurance> mappedList = EasyBind.map(internalList, (insurance) -> insurance);
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
-     */
-    public boolean contains(ReadOnlyInsurance toCheck) {
-        requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
-
-    /**
-     * Adds a person to the list.
+     * Adds an insurance to the list.
      *
-     * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
      */
     public void add(ReadOnlyInsurance toAdd) {
         requireNonNull(toAdd);
         internalList.add(new LifeInsurance(toAdd));
-    }
-
-    /**
-     * Replaces the person {@code target} in the list with {@code editedPerson}.
-     *
-     * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     */
-    public void setInsurance(ReadOnlyInsurance target, ReadOnlyInsurance editedInsurance)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedInsurance);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            //TODO: WRONG exception
-            throw new PersonNotFoundException();
-        }
-
-        if (!target.equals(editedInsurance) && internalList.contains(editedInsurance)) {
-            throw new DuplicatePersonException();
-        }
-
-        internalList.set(index, new LifeInsurance(editedInsurance));
-    }
-
-    /**
-     * Removes the equivalent person from the list.
-     *
-     * @throws PersonNotFoundException if no such person could be found in the list.
-     */
-    public boolean remove(ReadOnlyInsurance toRemove) throws PersonNotFoundException {
-        requireNonNull(toRemove);
-        final boolean personFoundAndDeleted = internalList.remove(toRemove);
-        if (!personFoundAndDeleted) {
-            throw new PersonNotFoundException();
-        }
-        return personFoundAndDeleted;
-    }
-
-    public void setLifeInsurances(UniqueLifeInsuranceList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setLifeInsurances(List<? extends ReadOnlyInsurance> insurances) throws DuplicatePersonException {
-        final UniqueLifeInsuranceList replacement = new UniqueLifeInsuranceList();
-        for (final ReadOnlyInsurance insurance : insurances) {
-            replacement.add(new LifeInsurance(insurance));
-        }
-        setLifeInsurances(replacement);
     }
 
     /**

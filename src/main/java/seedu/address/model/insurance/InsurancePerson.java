@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author OscarWang114
 /**
  * Represents a person and his/her name in an insurance in LISA.
  */

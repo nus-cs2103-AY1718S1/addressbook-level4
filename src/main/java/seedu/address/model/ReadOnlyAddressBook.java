@@ -26,10 +26,11 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    //@@author OscarWang114
     /**
      * Returns an unmodifiable view of the life insurances map.
      * This map will not contain any duplicate insurances.
      */
     Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap();
-
+    //@@author
 }

@@ -36,8 +36,10 @@ public class XmlAdaptedPerson {
 
     @XmlElement(name = "tagged")
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    //@@author OscarWang114
     @XmlElement(name = "lifeInsuranceId")
     private List<String> lifeInsuranceIds = new ArrayList<>();
+    //@@author
 
     /**
      * Constructs an XmlAdaptedPerson.

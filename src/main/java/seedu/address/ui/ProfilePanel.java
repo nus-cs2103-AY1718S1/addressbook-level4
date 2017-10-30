@@ -62,11 +62,13 @@ public class ProfilePanel extends UiPart<Region> {
         bindListeners(person);
     }
 
+    //@@author OscarWang114
     private void loadPersonPage(StringProperty name) {
         this.name.textProperty().bind(Bindings.convert(name));
         this.address.textProperty().unbind();
         this.address.setText(PERSON_DOES_NOT_EXIST_MESSAGE);
     }
+    //@@author
 
     /**
      * Load default page with empty fields and default message
@@ -91,6 +93,7 @@ public class ProfilePanel extends UiPart<Region> {
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
     }
 
+    //@@author OscarWang114
     @Subscribe
     private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -102,4 +105,5 @@ public class ProfilePanel extends UiPart<Region> {
         }
         raise(new SwitchPanelRequestEvent());
     }
+    //@@author
 }

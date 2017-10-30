@@ -12,6 +12,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
 import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 
+//@@author OscarWang114
 /**
  * A map of life insurances that enforces uniqueness between its elements and does not allow nulls.
  *

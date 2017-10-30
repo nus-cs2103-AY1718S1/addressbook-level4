@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
+//@@author OscarWang114
 /**
  * JAXB-friendly version of the LifeInsurance.
  */

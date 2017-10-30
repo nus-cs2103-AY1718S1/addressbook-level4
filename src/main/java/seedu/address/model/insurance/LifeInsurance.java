@@ -15,6 +15,7 @@ import javafx.beans.property.StringProperty;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author OscarWang114
 /**
  * Represents a life insurance in LISA.
  * Guarantees: details are present and not null.

@@ -28,8 +28,10 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement(name = "tags")
     private List<XmlAdaptedTag> tags;
+    //@@author OscarWang114
     @XmlElement(name = "lifeInsuranceMap")
     private Map<String, XmlAdaptedLifeInsurance> lifeInsuranceMap;
+    //@@author
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -83,6 +85,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author OscarWang114
     @Override
     public Map<UUID, ReadOnlyInsurance> getLifeInsuranceMap() {
         final Map<UUID, ReadOnlyInsurance> lifeInsurances = this.lifeInsuranceMap.entrySet().stream()
@@ -99,6 +102,6 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             ));
         return lifeInsurances;
     }
-
+    //@@author
 }
 
