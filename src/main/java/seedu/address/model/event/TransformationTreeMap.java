@@ -3,10 +3,7 @@ package seedu.address.model.event;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
-import javafx.collections.ListChangeListener;
 import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import seedu.address.commons.core.LogsCenter;
 
 /**

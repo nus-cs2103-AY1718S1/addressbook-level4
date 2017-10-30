@@ -9,12 +9,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.fxmisc.easybind.EasyBind;
-
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
@@ -34,9 +31,8 @@ public class EventList implements Iterable<Event> {
     private final ObservableTreeMap<Timeslot, Event> internalMap = new
             ObservableTreeMap<>();
     // used by asObservableList()
-    private final ObservableList<ReadOnlyEvent> mappedList = FXCollections.observableArrayList(new ArrayList<>(internalMap.values()));
-//    private final ObservableTreeMap<Timeslot, ReadOnlyEvent> mappedTreeMap =
-//            ObservableTreeMap.map(internalMap, (event) -> event);
+    private final ObservableList<ReadOnlyEvent> mappedList = FXCollections.observableArrayList(new
+            ArrayList<>(internalMap.values()));
 
     public EventList() {
         internalMap.addListener((MapChangeListener.Change<? extends Timeslot, ? extends Event> change) -> {
@@ -136,18 +132,11 @@ public class EventList implements Iterable<Event> {
     }
 
     /**
-     * Returns the backing tree map as an {@code ObservableTreeMap}.
-     */
-//    public ObservableTreeMap<Timeslot, ReadOnlyEvent> asObservableTreeMap() {
-//        return mappedTreeMap;
-//    }
-
-    /**
      * Returns the backing tree map as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
         ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(internalMap.values()));
-//        logger.info("EventList ------------- got " + mappedList.size() + " list.");
+        //logger.info("EventList ------------- got " + mappedList.size() + " list.");
         return FXCollections.unmodifiableObservableList(list);
     }
 

@@ -2,14 +2,12 @@
 package seedu.address.model.event;
 
 import java.util.TreeMap;
-import java.util.function.Function;
 import java.util.logging.Logger;
 
 import com.sun.javafx.collections.MapListenerHelper;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import seedu.address.commons.core.LogsCenter;
 
@@ -25,6 +23,9 @@ public class ObservableTreeMap<K, V> extends TreeMap<K, V> implements
 
     private MapListenerHelper<K, V> mapListenerHelper;
 
+    /**
+     * A subclass of MapChangeListener.Change for ObervableTreeMap
+     */
     public class Change extends MapChangeListener.Change<K, V> {
         private final K key;
         private final V old;
@@ -109,10 +110,10 @@ public class ObservableTreeMap<K, V> extends TreeMap<K, V> implements
         mapListenerHelper = MapListenerHelper.removeListener(mapListenerHelper, observer);
     }
 
-//    public static <K, V, U> ObservableList<U> map(ObservableTreeMap<K, V>
-//            sourceMap, Function<V, U> mapper) {
-//        logger.info("OTM ========= size = " + sourceMap.values().size());
-//        return new TransformationTreeMap<K, V, U>(sourceMap, mapper);
-//    }
+    /*public static <K, V, U> ObservableList<U> map(ObservableTreeMap<K, V>
+            sourceMap, Function<V, U> mapper) {
+        logger.info("OTM ========= size = " + sourceMap.values().size());
+        return new TransformationTreeMap<K, V, U>(sourceMap, mapper);
+    }*/
 
 }

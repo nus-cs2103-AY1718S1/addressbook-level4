@@ -40,7 +40,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
@@ -203,7 +202,7 @@ public class CalendarView extends UiPart<Region> {
 
         //Iteratively add the events to the calendar view
         for (ReadOnlyEvent event:eventsThisWeek) {
-            if(!addedEvents.containsKey(event)) {
+            if (!addedEvents.containsKey(event)) {
                 StackPane eventPane = createPane(event);
                 addEventPaneToCalendarView(calendarView, event, eventPane);
             }
@@ -223,10 +222,10 @@ public class CalendarView extends UiPart<Region> {
         String[] endofWeekTokens = endOfThisWeek.split("-");
 
         try {
-//            Timeslot startOfWeek = new Timeslot(startofWeekTokens[2] + "/" + startofWeekTokens[1] + "/" +
-//                    startofWeekTokens[0] + " " + "0700-0701");
-            Timeslot endOfWeek = new Timeslot(endofWeekTokens[2] + "/" + endofWeekTokens[1] + "/" +
-                    endofWeekTokens[0] + " " + "2358-2359");
+            /*Timeslot startOfWeek = new Timeslot(startofWeekTokens[2] + "/" + startofWeekTokens[1] + "/" +
+                    startofWeekTokens[0] + " " + "0700-0701");*/
+            Timeslot endOfWeek = new Timeslot(endofWeekTokens[2] + "/" + endofWeekTokens[1] + "/"
+                    + endofWeekTokens[0] + " " + "2358-2359");
             return eventList.stream().filter(event -> event.happensBefore
                 (endOfWeek)).collect(Collectors.toCollection(FXCollections::observableArrayList));
         } catch (IllegalValueException ive) {
@@ -500,8 +499,8 @@ public class CalendarView extends UiPart<Region> {
         public String getDateAsString() {
             LocalDate date = start.toLocalDate();
             String[] tokens = date.toString().split("-");
-            return tokens[2] + "/" + tokens[1] + "/" +
-                    tokens[0];
+            return tokens[2] + "/" + tokens[1] + "/"
+                    + tokens[0];
         }
 
         public String getStartTimeAsString() {
