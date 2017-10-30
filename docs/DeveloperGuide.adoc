@@ -579,8 +579,6 @@ link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAda
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
-[appendix]
-
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -812,6 +810,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
+[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -821,6 +820,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |new user | import contacts from other sources |start using address book without having to re-enter all my current contacts
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
@@ -828,6 +829,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |add a person without including all details |add someone into the address book without having to include all particulars
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |export my contacts |sync my contacts with other devices or applications
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
@@ -882,7 +885,6 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-
 === Use case: Undo Command
 
 *MSS*
@@ -932,6 +934,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
 === Use case: Clear all
 
 *MSS*
@@ -1049,7 +1052,44 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Import contacts
+
+*MSS*
+
+1.  User request to import contacts from external vCard file.
+2.  AddressBook asks for directory of import file.
+3.  User selects vCard file to import.
+4.  AddressBook imports contacts in the vCard file.
++
+Use case ends
+
+*Extension*
+
+[none]
+* 3a. User decides to cancel the import by not selecting a file.
++
+[none]
+** 3a1. Addressbook informs user that no file has been selected.
++
+Use case ends.
+
+* 4a. vCard file has some duplicate persons.
++
+[none]
+** 4a1. Addressbook informs user about the number of duplicated persons before proceeding.
++
+Use case ends.
+
+[discrete]
+=== Use case: Export contacts
+
+*MSS*
+
+1.  User requests to export contacts to an external vCard file.
+2.  AddressBook creates file at Desktop and exports all contacts shown on list to export.vcf.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
