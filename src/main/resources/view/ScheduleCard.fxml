@@ -33,7 +33,10 @@
                <Font name="System Bold" size="13.0" />
             </font></Label>
       <Label fx:id="date" styleClass="cell_small_label" text="\\$date" />
-         <Label text="Person Involved:" />
+         <Label text="Person(s) Involved:">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font></Label>
          <Label fx:id="personName" text="\\$person" />
     </VBox>
       <rowConstraints>
