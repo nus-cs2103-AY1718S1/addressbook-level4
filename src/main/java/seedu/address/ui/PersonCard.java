@@ -59,7 +59,7 @@ public class PersonCard extends UiPart<Region> {
 
     /**
      * This method takes in the tagName, and returns the color associated with that tagName
-     * If the if the tag has no associated color, a random color will be to the tag.
+     * If the if the tag has no associated color, a unique random color will be assigned to the tag.
 =     *
      * @param tagName is the String name of the tag
      * @return the color associated to the tagName
@@ -68,13 +68,13 @@ public class PersonCard extends UiPart<Region> {
         if (!currentTagColors.containsKey(tagName)) {
             ArrayList<String> usedColors = new ArrayList<>();
 
-            //while (usedColors.contains(assignedColor)) {
+            do {
                 Random random = new Random();
                 final float hue = random.nextFloat();
-                final float saturation = 0.70f + random.nextFloat()
-                        * (0.90f - 0.70f);
-                final float luminance = 0.70f + random.nextFloat()
-                        * (0.90f - 0.70f);
+                final float saturation = 0.65f + random.nextFloat()
+                        * (0.90f - 0.65f);
+                final float luminance = 0.60f + random.nextFloat()
+                        * (0.90f - 0.60f);
 
                 Color color = Color.getHSBColor(hue, saturation, luminance);
 
@@ -83,9 +83,9 @@ public class PersonCard extends UiPart<Region> {
                 f.format("%02X", color.getGreen());
                 f.format("%02X", color.getBlue());
                 assignedColor = f.toString();
-            //}
+            } while (usedColors.contains(assignedColor));
 
-            //usedColors.add(assignedColor);
+            usedColors.add(assignedColor);
             currentTagColors.put(tagName, assignedColor);
         }
         return currentTagColors.get(tagName);
