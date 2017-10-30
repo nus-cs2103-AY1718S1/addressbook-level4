@@ -643,11 +643,13 @@ the end of tutorial. The `SwitchToBrowserEvent` is handled in `MainWindow`.
 [source,java]
 ----
 public class TutorialPanel extends UiPart<Region> {
+    ...
     private void endTutorial() {
         mainWindow.unhighlightAll();
         browserPlaceHolder.getChildren().remove(this.getRoot());
         raise(new SwitchToBrowserEvent());
     }
+    ...
 }
 ----
 // end::tutorial[]
