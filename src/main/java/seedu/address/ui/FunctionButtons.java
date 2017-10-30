@@ -111,7 +111,6 @@ public class FunctionButtons extends UiPart<Region> {
             } else {
                 loginStatus.setText("Currently logged in as " + commandResult.feedbackToUser);
             }
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
         } catch (CommandException e) {
             raise(new NewResultAvailableEvent(e.getMessage()));
         } catch (ParseException e) {
