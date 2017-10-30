@@ -78,11 +78,11 @@ public class PersonCard extends UiPart<Region> {
 
                 Color color = Color.getHSBColor(hue, saturation, luminance);
 
-                Formatter f = new Formatter(new StringBuffer("#"));
-                f.format("%02X", color.getRed());
-                f.format("%02X", color.getGreen());
-                f.format("%02X", color.getBlue());
-                assignedColor = f.toString();
+                Formatter hexRepresentation = new Formatter(new StringBuffer("#"));
+                hexRepresentation.format("%02X", color.getRed());
+                hexRepresentation.format("%02X", color.getGreen());
+                hexRepresentation.format("%02X", color.getBlue());
+                assignedColor = hexRepresentation.toString();
             } while (usedColors.contains(assignedColor));
 
             usedColors.add(assignedColor);
