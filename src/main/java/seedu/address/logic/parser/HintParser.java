@@ -159,7 +159,7 @@ public class HintParser {
         //the ordering matters as prefix hints are generated inorder
         assert LIST_OF_PREFIXES.equals(Arrays.asList(
                 PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                PREFIX_TAG, PREFIX_REMARK, PREFIX_EMPTY));
+                PREFIX_TAG, PREFIX_REMARK, PREFIX_AVATAR, PREFIX_EMPTY));
 
         String[] command;
 
@@ -349,13 +349,13 @@ public class HintParser {
      * returns a hint specific to the find command
      */
     private static String generateFindHint() {
-        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
+        Optional<String> endHintOptional = generatePrefixHintBasedOnEndArgs(PREFIX_EMPTY, PREFIX_AVATAR);
 
         if (endHintOptional.isPresent()) {
             return endHintOptional.get();
         }
 
-        return offerHint("prefix/KEYWORD", PREFIX_EMPTY, PREFIX_REMARK, PREFIX_AVATAR);
+        return offerHint("prefix/KEYWORD", PREFIX_EMPTY, PREFIX_AVATAR);
     }
 
     /**

@@ -124,6 +124,11 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    public void saveAvatar() {
+        avatar.get().saveAvatar();
+    }
+
+    @Override
     public ObjectProperty<Avatar> avatarProperty() {
         return avatar;
     }

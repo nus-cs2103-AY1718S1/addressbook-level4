@@ -132,9 +132,16 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
-    public static Optional<Avatar> parseAvatar(Optional<String> avatar, String name) throws IllegalValueException {
-        requireNonNull(avatar);
-        return avatar.isPresent() ? Optional.of(new Avatar(avatar.get(), name)) : Optional.of(new Avatar(null, name));
+    /**
+     * Parses a {@code Optional<String> avatarFilePath} into an {@code Optional<Avatar>}
+     * if {@code avatarFilePath} is present.
+     * If not present, creates an avatar with null value into {@code Optional<Avatar>}
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Avatar> parseAvatar(Optional<String> avatarFilePath) throws IllegalValueException {
+        requireNonNull(avatarFilePath);
+        return avatarFilePath.isPresent()
+                ? Optional.of(Avatar.readAndCreateAvatar(avatarFilePath.get())) : Optional.of(new Avatar(null));
     }
 
     /**

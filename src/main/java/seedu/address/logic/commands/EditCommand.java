@@ -105,7 +105,8 @@ public class EditCommand extends UndoableCommand {
         Avatar updatedAvatar = personToEdit.getAvatar(); //edit command does not allow to edit avatar yet
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedAvatar, updatedTags);
+        return new Person(
+                updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark, updatedAvatar, updatedTags);
     }
 
     @Override

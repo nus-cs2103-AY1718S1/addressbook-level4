@@ -22,6 +22,11 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Avatar> avatarProperty();
     Avatar getAvatar();
+    /**
+     * This is required as explained in Avatar#saveAvatar
+     * Must be changed in the future as this breaks the read-only interface of ReadOnlyPerson
+     */
+    void saveAvatar();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<Remark> remarkProperty();
