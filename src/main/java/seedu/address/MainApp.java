@@ -54,7 +54,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Drawing Circles ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -189,7 +189,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Closing Circles ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
