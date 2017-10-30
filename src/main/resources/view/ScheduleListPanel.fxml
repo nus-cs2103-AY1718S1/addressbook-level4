@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox style="-fx-border-width: 1; -fx-border-color:black; -fx-border-radius: 10; -fx-background-radius: 10;
+ -fx-border-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <Label fx:id="scheduleLabel" prefWidth="${scheduleLabel.parent.width}" styleClass="panelTitlePadding" text="Schedule" />
+  <ListView fx:id="scheduleListView" VBox.vgrow="ALWAYS" />
+</VBox>

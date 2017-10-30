@@ -7,12 +7,16 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.group.exceptions.GroupNotFoundException;
@@ -20,6 +24,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -31,6 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final FilteredList<ReadOnlyGroup> filteredGroups;
+    private final FilteredList<ReadOnlySchedule> filteredSchedules;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -44,6 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredGroups = new FilteredList<>(this.addressBook.getGroupList());
+        filteredSchedules = new FilteredList<>(this.addressBook.getScheduleList());
     }
 
     public ModelManager() {
@@ -69,6 +78,15 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deletePersons(ReadOnlyPerson[] targets) throws PersonNotFoundException {
+        for (ReadOnlyPerson target : targets) {
+            addressBook.removePerson(target);
+        }
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -106,6 +124,38 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void addSchedule(ReadOnlySchedule schedule) throws DuplicateScheduleException {
+        addressBook.addSchedule(schedule);
+        updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
+    }
+
+    @Override
+    public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
+            throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
+        addressBook.addPersonToGroup(targetGroup, toAdd);
+
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteSchedule(ReadOnlySchedule target) throws ScheduleNotFoundException {
+        addressBook.removeSchedule(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
+            throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
+        addressBook.deletePersonFromGroup(targetGroup, toRemove);
+        /** Update filtered list with predicate for current group members in group after removing a person */
+        ObservableList<ReadOnlyPerson> personList = addressBook.getGroupList()
+                .get(targetGroup.getZeroBased()).groupMembersProperty().get().asObservableList();
+        updateFilteredPersonList(getGroupMembersPredicate(personList));
+        indicateAddressBookChanged();
+
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -123,9 +173,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
+        return FXCollections.unmodifiableObservableList(filteredSchedules);
+    }
+
+    @Override
+    public void showUnfilteredPersonList() {
+        filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+
     }
 
     @Override
@@ -134,6 +195,26 @@ public class ModelManager extends ComponentManager implements Model {
         filteredGroups.setPredicate(predicate);
     }
 
+    /** Returns predicate that returns true if group member list contains a person */
+    /** Used to update FilteredPersonList whenever there is a need to display group members */
+    public Predicate<ReadOnlyPerson> getGroupMembersPredicate(ObservableList<ReadOnlyPerson> personList) {
+        return personList::contains;
+    }
+
+    /** Handle any GroupPanelSelectionChangedEvent raised and set predicate to show group members only */
+    @Subscribe
+    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+        ObservableList<ReadOnlyPerson> personList = event.getNewSelection()
+                .group.groupMembersProperty().get().asObservableList();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        updateFilteredPersonList(getGroupMembersPredicate(personList));
+    }
+
+    @Override
+    public void updateFilteredScheduleList(Predicate<ReadOnlySchedule> predicate) {
+        requireNonNull(predicate);
+        filteredSchedules.setPredicate(predicate);
+    }
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -152,5 +233,7 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && filteredGroups.equals(other.filteredGroups);
     }
+
+
 
 }

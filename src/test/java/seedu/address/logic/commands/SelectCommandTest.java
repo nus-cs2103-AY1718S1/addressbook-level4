@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToPersonListRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -75,14 +75,14 @@ public class SelectCommandTest {
 
     @Test
     public void equals() {
-        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON);
-        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON);
+        SelectCommand selectFirstCommand = new SelectCommand(INDEX_FIRST_PERSON, false);
+        SelectCommand selectSecondCommand = new SelectCommand(INDEX_SECOND_PERSON, false);
 
         // same object -> returns true
         assertTrue(selectFirstCommand.equals(selectFirstCommand));
 
         // same values -> returns true
-        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON);
+        SelectCommand selectFirstCommandCopy = new SelectCommand(INDEX_FIRST_PERSON, false);
         assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
 
         // different types -> returns false
@@ -96,8 +96,8 @@ public class SelectCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
-     * is raised with the correct index.
+     * Executes a {@code SelectCommand} with the given {@code index}, and checks that
+     * {@code JumpToPersonListRequestEvent} is raised with the correct index.
      */
     private void assertExecutionSuccess(Index index) {
         SelectCommand selectCommand = prepareCommand(index);
@@ -110,7 +110,8 @@ public class SelectCommandTest {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
 
-        JumpToListRequestEvent lastEvent = (JumpToListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        JumpToPersonListRequestEvent lastEvent =
+                (JumpToPersonListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
         assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
     }
 
@@ -134,7 +135,7 @@ public class SelectCommandTest {
      * Returns a {@code SelectCommand} with parameters {@code index}.
      */
     private SelectCommand prepareCommand(Index index) {
-        SelectCommand selectCommand = new SelectCommand(index);
+        SelectCommand selectCommand = new SelectCommand(index, false);
         selectCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return selectCommand;
     }

@@ -158,11 +158,11 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Marking a person as 'Favourite': `addFave` (Since V1.2)
+=== Marking a person as 'Favourite': `fadd` (Since V1.2)
 
 Marks the person identified by the index number used in the last person listing as a 'Favourite'. +
-Format: `addFave INDEX` +
-Alias: `af`
+Format: `fadd INDEX` +
+Alias: `fa`
 
 ****
 * Marks the contact  at the specified `INDEX` as a 'Favourite'.
@@ -172,15 +172,15 @@ Alias: `af`
 
 Examples:
 
-* `addFave 1`
+* `fadd 1`
 Marks the 1st contact as a 'Favourite' in the address book.
-* `af 1`
+* `fa 1`
 
-=== Unmarking a person as 'Favourite': `removeFave` (Since V1.2)
+=== Unmarking a person as 'Favourite': `fremove` (Since V1.2)
 
 Unmarks the person identified by the index number used in the last person listing as a 'Favourite' +
-Format: `removeFave INDEX` +
-Alias: `rf`
+Format: `fremove INDEX` +
+Alias: `fr`
 
 ****
 * Unmarks the contact at the specified `INDEX` as a 'Favourite'.
@@ -190,9 +190,9 @@ Alias: `rf`
 
 Examples:
 
-* `removeFave 1`
+* `fremove 1`
 Unmarks the 1st contact as a 'Favourite' in the address book.
-* `af 1`
+* `fr 1`
 
 === Creating a group: `gcreate` (Since V1.2)
 
@@ -204,6 +204,23 @@ Examples:
 
 * `gcreate n/Bamboo`
 * `gc n/W09-B4`
+
+=== Adding a person to a group: `gadd` (Since V1.3)
+
+Adds a group to the address book. +
+Format: `gadd g/GROUP INDEX p/PERSON INDEX` +
+Alias: `ga`
+
+****
+* Adds person to the group at the specified `GROUP INDEX` and `PERSON INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `gadd g/1 p/2`
+* `ga g/3 p/2`
 
 === Deleting a group: `gdelete` (Since V1.2)
 
@@ -338,12 +355,14 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *Mark Favourite Contact* : `addFave INDEX` +
-e.g. `addFave 1`
-* *Unmark Favourite Contact* : `removeFave INDEX` +
-e.g. `removeFave 2`
+* *Mark Favourite Contact* : `fadd INDEX` +
+e.g. `fadd 1`
+* *Unmark Favourite Contact* : `fremove INDEX` +
+e.g. `fremove 2`
 * *Create Group* : `gcreate n/NAME` +
 e.g. `gcreate n/Bamboo`
+* *Add Person To Group* : `gadd g/GROUP INDEX p/PERSON INDEX` +
+e.g. `gadd g/1 p/2`
 * *Delete Group* : `gdelete INDEX` +
 e.g. `gdelete 2`
 * *List* : `list`

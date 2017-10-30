@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -29,6 +30,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -114,12 +118,34 @@ public class AddCommandTest {
 
         @Override
         public void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
-
+            fail("This method should not be called.");
         }
 
         @Override
         public void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException {
+            fail("This method should not be called.");
+        }
 
+        @Override
+        public void addSchedule(ReadOnlySchedule schedule) throws DuplicateScheduleException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteSchedule(ReadOnlySchedule schedule) throws ScheduleNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
+                throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
+                throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
+            fail("This method should not be called.");
         }
 
         @Override
@@ -135,6 +161,11 @@ public class AddCommandTest {
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePersons(ReadOnlyPerson[] targets) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
 
@@ -156,13 +187,27 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlySchedule> getFilteredScheduleList() {
+            return null;
+        }
+
+        public void showUnfilteredPersonList() {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
 
         @Override
         public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
+            fail("This method should not be called.");
+        }
 
+        @Override
+        public void updateFilteredScheduleList(Predicate<ReadOnlySchedule> predicate) {
+            fail("This method should not be called.");
         }
     }
 

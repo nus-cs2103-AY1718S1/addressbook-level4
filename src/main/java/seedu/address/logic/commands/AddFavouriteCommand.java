@@ -23,10 +23,10 @@ import seedu.address.model.tag.Tag;
 /**
  * Marks an indexed person as a favourite in the address book.
  */
-public class AddFaveCommand extends UndoableCommand {
+public class AddFavouriteCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addFave";
-    public static final String COMMAND_ALT = "af";
+    public static final String COMMAND_WORD = "fadd";
+    public static final String COMMAND_ALT = "fa";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Marks the person identified by the index number used in the last person listing as a favourite.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
@@ -37,7 +37,7 @@ public class AddFaveCommand extends UndoableCommand {
 
     private final Index targetIndex;
 
-    public AddFaveCommand(Index index) {
+    public AddFavouriteCommand(Index index) {
         requireNonNull(index);
         this.targetIndex = index;
     }

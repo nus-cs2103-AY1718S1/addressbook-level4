@@ -28,6 +28,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
+        //Adding withGroup(ALICE_GROUP) makes assert fail, unsure why
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
         UserPrefs userPrefs = new UserPrefs();
