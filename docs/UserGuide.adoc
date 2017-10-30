@@ -225,7 +225,7 @@ Sort feature available since v1.3
 
 Sorts the list of person in the addressbook. +
 You may choose to sort based on a parameter and display in +
-ascending or descending order.
+ascending or descending order. +
 Format: `sort FIELD ORDER` +
 
 ****
@@ -244,9 +244,42 @@ Sorts the list based on name in ascending order.
 `sort email dsc` +
 Sorts the people with `owesMoney` tag based on their emails in descending order.
 
-=== Import/Export : `import`/`export`
+=== Importing contacts: `import`
+
 [NOTE]
-Coming soon in v2.0
+Import feature available since v1.4.
+
+Imports a list of contacts from the selected vCard file. +
+Format: `import`
+
+****
+* The function only imports user that do not exist in the current address book.
+* Duplicate persons will be ignored.
+****
+
+=== Exporting contacts: `export`
+
+[NOTE]
+Export feature available since v1.4. +
+Currently due to save path, it only works on windows platform.
+
+
+Exports the list of contact shown on the addressbook into a vCard file. +
+Format: `export`
+
+****
+* Exports only the list that is being shown to the user. +
+* Exported contacts are saved into export.vcf file in the user's Desktop folder.
+****
+
+Examples:
+
+* `list` +
+`import` +
+Exports the whole list of addressbook.
+* `findtag prospective` +
+`export` +
+Exports the list of people with prospective `TAG`.
 
 === Selecting a person : `select`
 
