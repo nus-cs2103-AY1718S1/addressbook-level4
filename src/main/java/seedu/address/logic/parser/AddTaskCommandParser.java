@@ -22,7 +22,7 @@ import seedu.address.model.task.Task;
 import seedu.address.model.task.TaskDates;
 
 /**
- * Parses input arguments and creates a new AddCommand object
+ * Parses input arguments and creates a new AddTaskCommand object
  */
 public class AddTaskCommandParser implements Parser<AddTaskCommand> {
 
@@ -38,7 +38,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_ON,
                         PREFIX_DEADLINE_BY, PREFIX_TAG);
 
-        if(!isDescriptionPresent(argMultimap)) {
+        if (!isDescriptionPresent(argMultimap)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         }
 
@@ -53,7 +53,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
 
             ReadOnlyTask task = new Task(description, startDate, deadline, tagList);
 
-            if(!TaskDates.isStartDateBeforeDeadline(startDate, deadline)) {
+            if (!TaskDates.isStartDateBeforeDeadline(startDate, deadline)) {
                 throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
             }
 

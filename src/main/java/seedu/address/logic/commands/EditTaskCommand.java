@@ -18,19 +18,21 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
-import seedu.address.model.task.Task;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.StartDate;
+import seedu.address.model.task.Task;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
-
+/**
+ * Edits the details of an existing task in the task manager.
+ */
 public class EditTaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the task identified "
-            + "by the index number used in the last person listing. "
+            + "by the index number used in the last task listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + "DESCRIPTION] "
@@ -38,8 +40,8 @@ public class EditTaskCommand extends UndoableCommand {
             + "[" + PREFIX_DEADLINE_BY + "/" + PREFIX_DEADLINE_ON + "DEADLINE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_STARTDATE + "20-10-2017 "
-            + PREFIX_DEADLINE_BY + "25-10-2017";
+            + PREFIX_STARTDATE + "wed "
+            + PREFIX_DEADLINE_BY + "10-25-2017 [dates must be in (M)M(d)d(yy)yy format]";
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Edited Task: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -118,7 +120,7 @@ public class EditTaskCommand extends UndoableCommand {
 
     /**
      * Stores the details to edit the task with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * corresponding field value of the task.
      */
     public static class EditTaskDescriptor {
         private Description description;

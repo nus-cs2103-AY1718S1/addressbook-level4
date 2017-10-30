@@ -25,7 +25,10 @@ import seedu.address.model.task.Description;
 import seedu.address.model.task.StartDate;
 import seedu.address.model.task.TaskDates;
 
-public class EditTaskCommandParser implements Parser {
+/**
+ * Parses input arguments and creates a new EditTaskCommand object
+ */
+public class EditTaskCommandParser implements Parser<EditTaskCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditTaskCommand
@@ -40,14 +43,14 @@ public class EditTaskCommandParser implements Parser {
         Index index;
 
         try {
-            index = ParserUtil.parseIndex(getIndexForEdit(argMultimap));
+            index = ParserUtil.parseIndex(getIndexForEdit(argMultimap.getPreamble()));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE));
         }
 
         EditTaskDescriptor editTaskDescriptor = new EditTaskCommand.EditTaskDescriptor();
         try {
-            parseDescriptionForEdit(argMultimap).ifPresent(editTaskDescriptor::setDescription);
+            parseDescriptionForEdit(argMultimap.getPreamble()).ifPresent(editTaskDescriptor::setDescription);
             parseStartDateForEdit(argMultimap.getAllValues(PREFIX_STARTDATE))
                     .ifPresent(editTaskDescriptor::setStartDate);
             parseDeadlineForEdit(argMultimap.getAllValues(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON))
@@ -84,6 +87,12 @@ public class EditTaskCommandParser implements Parser {
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
+    /**
+     * Parses {@code List<String> dates} into a {@code Optional<StartDate} containing the last date in the list,
+     * if {@code dates} is non-empty.
+     * If {@code dates} contain only one element which is an empty string, it will be parsed into a
+     * {@code Optional<StartDate>} containing an empty date.
+     */
     public Optional<StartDate> parseStartDateForEdit(List<String> dates) throws IllegalValueException {
         assert dates != null;
 
@@ -96,6 +105,12 @@ public class EditTaskCommandParser implements Parser {
                 : ParserUtil.parseStartDate(Optional.of(dates.get(dates.size() - 1)));
     }
 
+    /**
+     * Parses {@code List<String> dates} into a {@code Optional<Deadline>} containing the last date in the list,
+     * if {@code dates} is non-empty.
+     * If {@code dates} contain only one element which is an empty string, it will be parsed into a
+     * {@code Optional<Deadline>} containing an empty date.
+     */
     public Optional<Deadline> parseDeadlineForEdit(List<String> dates) throws IllegalValueException {
         assert dates != null;
 
@@ -108,17 +123,28 @@ public class EditTaskCommandParser implements Parser {
 
     }
 
-    public String getIndexForEdit(ArgumentMultimap argumentMultimap) {
-        String preamble = argumentMultimap.getPreamble();
+    /**
+     * Separates the index from the description in the preamble.
+     * @param preamble (string before any valid prefix) received from the argument multimap of the tokenized edit
+     * task command.
+     * @return the index of the task to be edited.
+     */
+    public String getIndexForEdit(String preamble) {
         String trimmedPreamble = preamble.trim();
         return (trimmedPreamble.indexOf(' ') == -1) ? trimmedPreamble
                 : trimmedPreamble.substring(0, trimmedPreamble.indexOf(' '));
     }
 
-    public Optional<Description> parseDescriptionForEdit(ArgumentMultimap argumentMultimap)
+    /**
+     * Separates the description from the index in the preamble.
+     * @param preamble (string before any valid prefix) received from the argument multimap of the tokenized edit
+     * task command.
+     * @return the Optional<Description> (parsed) of the task to be edited if it is present in the preamble or
+     * an empty Optional.
+     */
+    public Optional<Description> parseDescriptionForEdit(String preamble)
             throws IllegalValueException {
-        String preamble = argumentMultimap.getPreamble().trim();
-        int indexLength = getIndexForEdit(argumentMultimap).length();
+        int indexLength = getIndexForEdit(preamble).length();
         String description = (indexLength == preamble.length()) ? "" :
                 preamble.substring(indexLength, preamble.length());
         return description.isEmpty() ? Optional.empty() : ParserUtil.parseDescription(description);
