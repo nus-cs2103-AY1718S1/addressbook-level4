@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.ArrayList;
-//import java.util.Comparator;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -9,7 +7,6 @@ import org.fxmisc.easybind.EasyBind;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
-//import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
@@ -32,24 +29,6 @@ public class PersonListPanel extends UiPart<Region> {
 
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
         super(FXML);
-        ArrayList<ReadOnlyPerson> temp = new ArrayList<>();
-        /*
-        for(ReadOnlyPerson person: personList){
-            //System.out.println(person.getAddress().value);
-            temp.add(person);
-        }
-        ObservableList<ReadOnlyPerson> temp2 = FXCollections.observableArrayList(temp);
-        Comparator<ReadOnlyPerson> ALPHA_ORDER = new Comparator<ReadOnlyPerson>() {
-            public int compare(ReadOnlyPerson first, ReadOnlyPerson second) {
-                int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
-                if (x== 0) {
-                    x = (first.getName().fullName).compareTo(second.getName().fullName);
-                }
-                return x;
-            }
-        };
-        temp2.sort(ALPHA_ORDER);
-        */
         setConnections(personList);
         registerAsAnEventHandler(this);
     }
@@ -64,12 +43,12 @@ public class PersonListPanel extends UiPart<Region> {
 
     private void setEventHandlerForSelectionChangeEvent() {
         personListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
-                    }
-                });
+            .addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                    raise(new PersonPanelSelectionChangedEvent(newValue));
+                }
+            });
     }
 
     /**

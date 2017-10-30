@@ -506,6 +506,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private ObjectProperty<InsurancePerson> insured;
     private ObjectProperty<InsurancePerson> beneficiary;
     private DoubleProperty premium;
+    private StringProperty premiumString;
     private StringProperty contractPath;
     private StringProperty signingDate;
     private StringProperty expiryDate;
@@ -526,6 +527,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.contractPath = new SimpleStringProperty(contractPath);
         this.signingDate = new SimpleStringProperty(signingDate);
         this.expiryDate = new SimpleStringProperty(expiryDate);
+        this.premiumString = new SimpleStringProperty(this.getPremiumString());
     }
 
     /**
@@ -545,6 +547,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.contractPath = new SimpleStringProperty(contractPath);
         this.signingDate = new SimpleStringProperty(signingDate);
         this.expiryDate = new SimpleStringProperty(expiryDate);
+        this.premiumString = new SimpleStringProperty(this.getPremiumString());
     }
 
     /**
@@ -562,6 +565,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
             this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
         }
         this.premium = new SimpleDoubleProperty(source.getPremium());
+        this.premiumString = new SimpleStringProperty(this.getPremiumString());
         this.contractPath = new SimpleStringProperty(source.getContractPath());
         this.signingDate = new SimpleStringProperty(source.getSigningDate());
         this.expiryDate = new SimpleStringProperty(source.getExpiryDate());
@@ -665,6 +669,16 @@ public class LifeInsurance implements ReadOnlyInsurance {
         return premium.get();
     }
 
+    @Override
+    public StringProperty premiumStringProperty() {
+        return premiumString;
+    }
+
+    @Override
+    public String getPremiumString() {
+        return "S$ " + String.format("%.2f", premium.get());
+    }
+
     public void setContractPath(String contractPath) {
         this.contractPath.set(requireNonNull(contractPath));
     }
@@ -726,6 +740,8 @@ public interface ReadOnlyInsurance {
     InsurancePerson getBeneficiary();
     DoubleProperty premiumProperty();
     Double getPremium();
+    StringProperty premiumStringProperty();
+    String getPremiumString();
     StringProperty contractPathProperty();
     String getContractPath();
     StringProperty signingDateProperty();
@@ -1187,7 +1203,7 @@ public class InsuranceProfile extends UiPart<Region> {
     public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
         super(FXML);
         this.insurance = insurance;
-        index.setText(displayIndex + ". ");
+        index.setText(displayIndex + ".");
         owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
         insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
         beneficiary.setOnMouseClicked(e ->
@@ -1206,7 +1222,7 @@ public class InsuranceProfile extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
+        premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
         contractPath.textProperty().bind(Bindings.convert(insurance.contractPathProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateProperty()));
@@ -1235,6 +1251,19 @@ public class InsuranceProfile extends UiPart<Region> {
         raise(new SwitchPanelRequestEvent());
     }
 ```
+###### /resources/view/DarkTheme.css
+``` css
+.list-cell:filled:selected #insuranceCardPane {
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1;
+}
+```
+###### /resources/view/DarkTheme.css
+``` css
+#personListView {
+    -fx-background-color: transparent #383838 transparent #383838;
+}
+```
 ###### /resources/view/InsuranceListPanel.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -1243,71 +1272,68 @@ public class InsuranceProfile extends UiPart<Region> {
 ```
 ###### /resources/view/InsuranceProfile.fxml
 ``` fxml
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <GridPane HBox.hgrow="ALWAYS">
-      <columnConstraints>
-         <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="500" />
-      </columnConstraints>
-      <VBox alignment="CENTER_LEFT" minHeight="150" GridPane.columnIndex="0">
+      <VBox alignment="CENTER_LEFT" minHeight="150" prefHeight="150.0" prefWidth="176.0" GridPane.columnIndex="1">
          <padding>
-            <Insets top="5" right="5" bottom="5" left="15" />
+            <Insets bottom="5" left="15" right="5" top="5" />
          </padding>
-         <HBox spacing="5" alignment="CENTER_LEFT">
-            <Label fx:id="id" styleClass="cell_big_label">
-               <minWidth>
-                  <!-- Ensures that the label text is never truncated -->
-                  <Region fx:constant="USE_PREF_SIZE" />
-               </minWidth>
-            </Label>
-            <Label fx:id="index" layoutX="2.0" styleClass="particular-name" text="\$name" />
-         </HBox>
          <HBox>
             <children>
-               <Label styleClass="particular-field" text="Owner: " />
-               <Label fx:id="owner" styleClass="particular-person" text="\$owner" />
+               <Label styleClass="particular-field" text="Owner: ">
+                  <padding>
+                     <Insets top="10.0" />
+                  </padding></Label>
             </children>
          </HBox>
          <HBox>
             <children>
                <Label styleClass="particular-field" text="Insured: " />
-               <Label fx:id="insured" styleClass="particular-person" text="\$insured" />
             </children>
          </HBox>
          <HBox>
             <children>
                <Label styleClass="particular-field" text="Beneficiary: " />
-               <Label fx:id="beneficiary" styleClass="particular-person" text="\$beneficiary" />
             </children>
          </HBox>
          <HBox>
             <children>
                <Label styleClass="particular-field" text="Premium: " />
-               <Label fx:id="premium" styleClass="particular-field" text="\$premium" />
             </children>
          </HBox>
          <HBox>
             <children>
                <Label styleClass="particular-field" text="Contract File: " />
-               <Label fx:id="contractPath" styleClass="particular-field" text="\$contractPath" />
             </children>
          </HBox>
          <HBox layoutX="10.0" layoutY="70.0">
             <children>
                <Label styleClass="particular-field" text="Signing Date: " />
-               <Label fx:id="signingDate" styleClass="particular-field" text="\$signingDate" />
             </children>
          </HBox>
          <HBox>
             <children>
-               <Label styleClass="particular-field" text="Expiry Date: " />
-               <Label fx:id="expiryDate" styleClass="particular-field" text="\$expiryDate" />
+               <Label styleClass="particular-field" text="Expiry Date: ">
+                  <padding>
+                     <Insets bottom="10.0" />
+                  </padding></Label>
             </children>
          </HBox>
       </VBox>
-   </GridPane>
-</HBox>
-
-
-
-
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="index" styleClass="particular-name" text="\$name">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="8.0" />
+               </padding>
+            </Label>
+            <Label fx:id="id" prefHeight="17.0" prefWidth="17.0" styleClass="cell_big_label">
+               <minWidth>
+                  <!-- Ensures that the label text is never truncated -->
+                  <Region fx:constant="USE_PREF_SIZE" />
+               </minWidth>
+            </Label>
+         </children>
+      </VBox>
 ```

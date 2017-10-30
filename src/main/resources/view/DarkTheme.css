@@ -130,17 +130,21 @@
     -fx-border-width: 1;
 }
 
+/*@@author OscarWang114*/
 .list-cell:filled:selected #insuranceCardPane {
     -fx-border-color: #3e7b91;
     -fx-border-width: 1;
 }
+/*@@author*/
 
+/*@@author RSJunior37*/
 .list-cell:filled #insuranceCardPane .particular-person:hover {
     -fx-font-size: 18pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: #d06651;
     -fx-opacity: 1;
 }
+/*@@author*/
 
 .list-cell .label {
     -fx-text-fill: white;
@@ -331,6 +335,12 @@
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
     -fx-padding: 8 1 8 1;
 }
+
+/*@@author OscarWang114*/
+#personListView {
+    -fx-background-color: transparent #383838 transparent #383838;
+}
+/*@@author*/
 
 #cardPane {
     -fx-background-color: transparent;

@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+
 <HBox id="insuranceCardPane" fx:id="insuranceCardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <GridPane HBox.hgrow="ALWAYS">
       <columnConstraints>
@@ -16,6 +17,7 @@
          <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="201.99996948242188" />
          <ColumnConstraints hgrow="SOMETIMES" maxWidth="495.60003662109375" minWidth="10.0" prefWidth="413.0000305175781" />
       </columnConstraints>
+      <!-- @@author OscarWang114 -->
       <VBox alignment="CENTER_LEFT" minHeight="150" prefHeight="150.0" prefWidth="176.0" GridPane.columnIndex="1">
          <padding>
             <Insets bottom="5" left="15" right="5" top="5" />
@@ -80,6 +82,8 @@
             </Label>
          </children>
       </VBox>
+      <!-- @@author -->
+      <!-- @@author Juxarius -->
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
@@ -125,6 +129,7 @@
             </HBox>
          </children>
       </VBox>
+      <!-- @@author -->
       <rowConstraints>
          <RowConstraints />
       </rowConstraints>
