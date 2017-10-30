@@ -14,7 +14,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-
+//@@author blaqkrow
 /**
  * The UI component that is responsible for editing selected contacts in the PersonListPanel.
  */
@@ -56,7 +56,7 @@ public class EditButton extends UiPart<Region> {
                 + " a/" + addressTextFieldTextField.getAddressTextField());
         String tagTextArea = tagTextField.getTagTextArea();
         String[] tagSplit = tagTextArea.split(",");
-        for ( String s : tagSplit) {
+        for (String s : tagSplit) {
             command.append(" t/" + s.trim());
         }
         CommandResult commandResult = logic.execute(command.toString());

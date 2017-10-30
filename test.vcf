@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:TestData
+N:;TestData;;;
+EMAIL;TYPE=INTERNET;TYPE=HOME:testData@example.com
+TEL;TYPE=CELL:11111111
+ADR:;;111 Test Data Road, Singapore(111111);;;;
+END:VCARD

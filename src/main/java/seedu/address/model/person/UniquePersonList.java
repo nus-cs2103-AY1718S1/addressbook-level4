@@ -103,6 +103,7 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    //@@author limshunyong
     /**
      * Sorts the list
      */
@@ -111,6 +112,7 @@ public class UniquePersonList implements Iterable<Person> {
                 person1.getName().fullName
                         .compareToIgnoreCase(person2.getName().fullName)));
     }
+    //@@author
 
     @Override
     public Iterator<Person> iterator() {

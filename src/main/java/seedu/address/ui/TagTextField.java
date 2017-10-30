@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.tag.Tag;
 
+//@@author blaqkrow
 /**
  * The UI component that is responsible for saving and displaying the currently selected contact's name.
  */
