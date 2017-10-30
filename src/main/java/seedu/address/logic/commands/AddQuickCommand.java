@@ -41,6 +41,7 @@ public class AddQuickCommand extends UndoableCommand {
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
     public static final String MESSAGE_PERSON_NOT_FOUND = "This person is not in the address book";
+    public static final String MESSAGE_NAME_PHONE_MISSING = "Missing name or phone number";
 
     private final Person toAdd;
 

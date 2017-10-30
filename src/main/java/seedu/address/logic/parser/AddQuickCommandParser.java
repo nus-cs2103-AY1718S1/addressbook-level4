@@ -6,8 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -39,17 +41,16 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_BIRTHDAY,
                         PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_BIRTHDAY)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddQuickCommand.MESSAGE_USAGE));
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddQuickCommand.MESSAGE_NAME_PHONE_MISSING));
         }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
-            Birthday birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
-            Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+            Birthday birthday = ParserUtil.parseBirthday(getDetails(argMultimap.getValue(PREFIX_BIRTHDAY), PREFIX_BIRTHDAY)).get();
+            Email email = ParserUtil.parseEmail(getDetails(argMultimap.getValue(PREFIX_EMAIL), PREFIX_EMAIL)).get();
+            Address address = ParserUtil.parseAddress(getDetails(argMultimap.getValue(PREFIX_ADDRESS), PREFIX_ADDRESS)).get();
             Remark remark = new Remark("");
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
@@ -68,7 +69,22 @@ public class AddQuickCommandParser implements Parser<AddQuickCommand> {
      * {@code ArgumentMultimap}.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+        return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
+    public static Optional <String> getDetails(Optional <String> value, Prefix prefix) throws ParseException {
+        if (!value.isPresent()){
+           if (prefix.equals(PREFIX_BIRTHDAY)){
+                return value.ofNullable("00/00/0000");
+            } else if (prefix.equals(PREFIX_EMAIL)){
+                return value.ofNullable("noemail@email.com");
+            } else if (prefix.equals(PREFIX_ADDRESS)){
+                return value.ofNullable("No address recorded");
+            } else if (prefix.equals(PREFIX_REMARK)){
+                return value.ofNullable("No remark recorded");
+            }
+        }
+
+        return value;
+    }
 }
