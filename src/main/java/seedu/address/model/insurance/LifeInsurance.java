@@ -53,10 +53,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.contractPath = new SimpleStringProperty(contractPath);
         this.signingDate = new SimpleStringProperty(signingDate);
         this.expiryDate = new SimpleStringProperty(expiryDate);
-<<<<<<< HEAD
         this.premiumString = new SimpleStringProperty(this.getPremiumString());
-=======
->>>>>>> 1a45c8130c1176c5d5ea07c3deea36e810571b96
     }
 
     /**
