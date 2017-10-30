@@ -42,6 +42,10 @@ public class Schedule {
         return scheduleDate;
     }
 
+    public void setScheduleDate(ScheduleDate scheduleDate) {
+        this.scheduleDate.set(scheduleDate);
+    }
+
     public Activity getActivity() {
         return activity.get();
     }
@@ -50,12 +54,20 @@ public class Schedule {
         return activity;
     }
 
+    public void setActivity(Activity activity) {
+        this.activity.set(activity);
+    }
+
     public Name getPersonInvolvedName() {
         return personInvolvedName.get();
     }
 
     public ObjectProperty<Name> getPersonInvolvedNameProperty() {
         return personInvolvedName;
+    }
+
+    public void setPersonInvolvedName(Name personInvolvedName) {
+        this.personInvolvedName.set(personInvolvedName);
     }
 
     @Override
