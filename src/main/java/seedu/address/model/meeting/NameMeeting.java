@@ -17,7 +17,7 @@ public class NameMeeting {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String NAME_VALIDATION_REGEX = "[^\\s].*";
 
     public final String fullName;
 
