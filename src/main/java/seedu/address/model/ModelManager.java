@@ -86,6 +86,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author arturs68
     @Override
     public void updateGroups(Group group) {
         if (!addressBook.getGroupList().contains(group)) {
@@ -104,6 +105,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.setGroups(newGroups);
         indicateAddressBookChanged();
     }
+    //@@author
 
     @Override
     public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
@@ -131,6 +133,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**

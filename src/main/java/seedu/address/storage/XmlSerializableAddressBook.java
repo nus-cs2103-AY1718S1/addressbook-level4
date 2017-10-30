@@ -76,6 +76,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author arturs68
     @Override
     public ObservableList<Group> getGroupList() {
         final ObservableList<Group> groups = this.groups.stream().map(g -> {

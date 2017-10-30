@@ -29,12 +29,14 @@ public class SortedUniquePersonList implements Iterable<Person> {
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
+    //@@author arturs68
     /**
      * Sorts the list of unique persons
      */
     public void sort() {
         internalList.sort(Comparator.comparing((ReadOnlyPerson person) -> person.getName().toString()));
     }
+    //@@author
 
     /**
      * Returns true if the list contains an equivalent person as the given argument.

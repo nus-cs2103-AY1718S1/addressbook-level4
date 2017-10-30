@@ -143,6 +143,7 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author arturs68
     /**
      * Replaces this person's groups with the groups in the argument group set.
      */
@@ -162,6 +163,7 @@ public class Person implements ReadOnlyPerson {
     public ObjectProperty<UniqueGroupList> groupProperty() {
         return groups;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

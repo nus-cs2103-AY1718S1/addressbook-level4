@@ -68,23 +68,30 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         });
+        //@@author arturs68
         person.groupProperty().addListener((observable, oldValue, newValue) -> {
             groups.getChildren().clear();
             person.getGroups().forEach(group -> groups.getChildren().add((new Label(group.groupName))));
         });
-        groups.getChildren()
-              .forEach(label -> label
-                                     .setStyle("-fx-background-color: mediumblue;"
-                                               + "-fx-effect: dropshadow( one-pass-box , gray , 8 , 0.0 , 2 , 0 );"));
+        //@@author
     }
 
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
+    //@@author arturs68
+    /**
+     * Initializes the group labels and sets style to them
+     */
     private void initGroups(ReadOnlyPerson person) {
         person.getGroups().forEach(group -> groups.getChildren().add(new Label(group.groupName)));
+        groups.getChildren()
+                .forEach(label -> label
+                        .setStyle("-fx-background-color: mediumblue;"
+                                + "-fx-effect: dropshadow( one-pass-box , gray , 8 , 0.0 , 2 , 0 );"));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
