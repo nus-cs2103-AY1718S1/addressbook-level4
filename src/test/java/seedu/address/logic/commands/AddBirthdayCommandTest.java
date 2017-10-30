@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BIRTHDAY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -31,8 +32,8 @@ public class AddBirthdayCommandTest {
     public void execute_addBirthday_success() throws PersonNotFoundException, IllegalValueException {
         //actual model
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withBirthday("240595").build();
-        Birthday toAdd = new Birthday ("240595");
+                .withBirthday(VALID_BIRTHDAY_AMY).build();
+        Birthday toAdd = new Birthday (VALID_BIRTHDAY_AMY);
 
         AddBirthdayCommand addBirthdayCommand = prepareCommand(INDEX_FIRST_PERSON, toAdd);
         String expectedMessage = String.format(AddBirthdayCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, toAdd);
