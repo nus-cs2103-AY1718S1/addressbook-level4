@@ -14,6 +14,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+
+This _Developer Guide_ is written by the **BoNUS v1.0** team for the benefits of future developers and maintainers of the
+application.
+
+* This guide includes instructions for setting up the development environment.
+* This guide provides sufficient UMLs (unified model diagrams) to illustrate the project structure.
+* This guide offers advice for troubleshooting some common issues.
+
 == Setting up
 
 === Prerequisites
@@ -102,7 +111,7 @@ We use https://git-scm.com/[Git] as our version control software (VCS). See <<Us
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -134,7 +143,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -142,7 +151,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -150,7 +159,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -160,7 +169,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -177,10 +186,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component._
+_Figure 3.3.2 : Structure of Commands in the Logic Component._
 
 _The diagram above shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
@@ -200,7 +209,7 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -215,7 +224,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -240,6 +249,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Logic Component Class Diagram_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -279,10 +289,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2(a) : Undo Stack_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.2(b) : Undo Stack_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -292,6 +304,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.2(c) : Undo Stack_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -299,6 +312,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.3 : Undo Command Sequence Diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -308,14 +322,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.4(a) : Redo Stack_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.4(b) : Redo Stack_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.5 : Redo Command Activity Diagram_
 
 ==== Design Considerations
 
@@ -394,10 +411,10 @@ other one for *events*. Each table is composed of many rows and many columns. A 
 all their different properties/fields are the columns.
 
 image::phpmyadminTableView.png[width="700"]
-_Figure 3.3.1 : Data Table View of phpMyAdmin (a MySQL visualization tool)_
+_Figure 4.3.1.1 : Data Table View of phpMyAdmin (a MySQL visualization tool)_
 
 image::phpmyadminAddColumn.png[width="700"]
-_Figure 3.3.2 : Add New Column in phpMyAdmin_
+_Figure 4.3.1.2 : Add New Column in phpMyAdmin_
 
 ==== Design Consideration
 
@@ -410,7 +427,7 @@ _Figure 3.3.2 : Add New Column in phpMyAdmin_
 **Cons:** Hard to implement `AddPropertyCommand`, and difficult to manage as the project grows larger.
 
 image::PropertyManagerClassDiagram.png[width="200"]
-_Figure 3.3.3 : Class Diagram for `PropertyManager`_
+_Figure 4.3.2.1 : Class Diagram for `PropertyManager`_
 
 ==== Implementation Outline
 
@@ -433,7 +450,7 @@ own customize fields. They should have the freedom to arbitrarily choose things 
 easily add/edit these properties of each contact stored in the application, just like the _pre-loaded_ ones.
 
 image::PropertyManagerSequenceDiagram.png[width="800"]
-_Figure 3.3.4 : Sequence Diagram for Adding a Customize Property_
+_Figure 4.3.3.1 : Sequence Diagram for Adding a Customize Property_
 
 === Auto Reminders
 
@@ -453,7 +470,7 @@ convenient for the users themselves. We have set the default reminders to a day 
 users of their upcoming events via notifications on System Tray.
 
 image::SystemTrayNotifications.png[width="300"]
-_Figure 3.3.5 : Notifications via System Tray_
+_Figure 4.4.1 : Notifications via System Tray_
 
 
 ==== Design consideration
@@ -468,7 +485,7 @@ Each reminder is tagged to an event, such that if we want to access the reminder
 **Cons:** Less versatile and reminders cannot be applied anywhere else if needed. +
 
 image::ReminderClassDiagram.png[width="200"]
-_Figure 3.3.6 : Class Diagram for `Reminder`_
+_Figure 4.4.1.1 : Class Diagram for `Reminder`_
 
 Therefore we have decided to adopt alternative 1 of creating a Reminder class as it is more versatile for future usage.
 
@@ -487,15 +504,15 @@ on its own.
 with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself.
 
 image::EventClassDiagram.png[width="200"]
-_Figure 3.3.7 : Class Diagram for `Event`_
+_Figure 4.4.2.1 : Class Diagram for `Event`_
 
 image::EventReminderRS.png[width="300"]
-_Figure 3.3.8 : Relationship of Event and Reminder_
+_Figure 4.4.2.2 : Relationship of Event and Reminder_
 
 The following sequence diagram shows how the automatic adding of reminders work
 
 image::SDaddEventLogicReminder.png[width="700"]
-_Figure 3.3.9 : Sequence Diagram for Adding an event (reminders are automatically added)_
+_Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatically added)_
 
 === Contacts/Event listing order by name/date time mechanism
 
@@ -537,7 +554,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
