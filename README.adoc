@@ -14,7 +14,8 @@ image::images/Ui.png[width="600"]
 endif::[]
 
 * This is a desktop address book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java application intended for students in order to facilitate contact management.
+* It is a Java application intended for students in order to facilitate contacts management and integrate it with the study-related information.
+The target user is familiar with CLI and it is her preferred form of giving input.
 
 == Site Map
 
