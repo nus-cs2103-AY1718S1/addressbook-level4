@@ -44,7 +44,6 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -95,7 +94,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_EMAIL_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + ADDRESS_EMPTY_DESC,
                 String.format(EXCEPTION_EMPTYFIELD, PREFIX_ADDRESS.getPrefix())); // trigger autofill
-        assertParseFailure(parser, "1" + INVALID_DOB_DESC, DateOfBirth.MESSAGE_INVALID_MONTH); // invalid dob
+        assertParseFailure(parser, "1" + INVALID_DOB_DESC, DateParser.MESSAGE_INVALID_MONTH); // invalid dob
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
@@ -219,6 +218,7 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
+    //@@author Juxarius
     @Test
     public void parse_resetTags_success() {
         Index targetIndex = INDEX_THIRD_PERSON;

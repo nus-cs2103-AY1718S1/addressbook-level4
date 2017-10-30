@@ -18,7 +18,7 @@
 }
 
 .label-header, .particular-name {
-    -fx-font-size: 32pt;
+    -fx-font-size: 25pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
@@ -130,12 +130,10 @@
     -fx-border-width: 1;
 }
 
-/*@@author OscarWang114*/
 .list-cell:filled:selected #insuranceCardPane {
     -fx-border-color: #3e7b91;
     -fx-border-width: 1;
 }
-/*@@author*/
 
 .list-cell:filled #insuranceCardPane .particular-person:hover {
     -fx-font-size: 18pt;

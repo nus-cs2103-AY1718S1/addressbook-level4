@@ -24,6 +24,8 @@ public interface ReadOnlyInsurance {
     InsurancePerson getBeneficiary();
     DoubleProperty premiumProperty();
     Double getPremium();
+    StringProperty premiumStringProperty();
+    String getPremiumString();
     StringProperty contractPathProperty();
     String getContractPath();
     StringProperty signingDateProperty();

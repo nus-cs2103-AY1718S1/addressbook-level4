@@ -42,7 +42,7 @@ public class InsuranceProfile extends UiPart<Region> {
     public InsuranceProfile(ReadOnlyInsurance insurance, int displayIndex) {
         super(FXML);
         this.insurance = insurance;
-        index.setText(displayIndex + ". ");
+        index.setText(displayIndex + ".");
         owner.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getOwner())));
         insured.setOnMouseClicked(e -> raise(new PersonNameClickedEvent(insurance.getInsured())));
         beneficiary.setOnMouseClicked(e ->
@@ -61,7 +61,7 @@ public class InsuranceProfile extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
+        premium.textProperty().bind(Bindings.convert(insurance.premiumStringProperty()));
         contractPath.textProperty().bind(Bindings.convert(insurance.contractPathProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateProperty()));

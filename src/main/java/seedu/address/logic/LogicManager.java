@@ -48,6 +48,7 @@ public class LogicManager extends ComponentManager implements Logic {
             CommandResult result = command.execute();
             undoRedoStack.push(command);
             return result;
+            //@@author Juxarius
         } catch (EmptyFieldException efe) {
             // index check was bypassed, this checks the index before filling empty prefix
             if (efe.getIndex().getOneBased() > model.getFilteredPersonList().size()) {
@@ -55,11 +56,13 @@ public class LogicManager extends ComponentManager implements Logic {
             }
             commandText = getAutoFilledCommand(commandText, efe.getIndex());
             throw efe;
+            //@@author
         } finally {
             history.add(commandText);
         }
     }
 
+    //@@author Juxarius
     /**
      * Replaces the given command text with filled command text
      * @param commandText original input command text
@@ -87,6 +90,7 @@ public class LogicManager extends ComponentManager implements Logic {
         }
         return commandText.trim();
     }
+    //@@author
 
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

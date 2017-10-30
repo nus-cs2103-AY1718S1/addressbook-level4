@@ -40,9 +40,11 @@ public class Address {
      */
     public Address(String address) throws IllegalValueException {
         requireNonNull(address);
+        //@@author Juxarius
         if (address.isEmpty()) {
             throw new EmptyFieldException(PREFIX_ADDRESS);
         }
+        //@@author
         if (!isValidAddress(address)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
