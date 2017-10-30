@@ -14,8 +14,8 @@ public class AddEventRequestEvent extends BaseEvent {
         this.event = event;
     }
 
-        @Override
-        public String toString() {
-            return this.getClass().getSimpleName();
-        }
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
