@@ -111,7 +111,6 @@ public class FileUtil {
     public static boolean hasInvalidNameSeparators(String filePath) {
         Matcher unixMatcher = UNIX_NAME_SEPARATOR_FORMAT.matcher(filePath);
         Matcher windowsMatcher = WINDOWS_NAME_SEPARATOR_FORMAT.matcher(filePath);
-        
         return unixMatcher.matches() && File.separator.equals("\\")
                 || windowsMatcher.matches() && File.separator.equals("/");
     }
