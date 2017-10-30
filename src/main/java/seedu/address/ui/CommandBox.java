@@ -2,12 +2,16 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.FontSizeChangeRequestEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
@@ -23,9 +27,13 @@ public class CommandBox extends UiPart<Region> {
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
 
+    private static final int DEFAULT_FONT_SIZE = 17;
+
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+
+    private int fontSizeChange = 0;
 
     @FXML
     private TextField commandTextField;
@@ -36,6 +44,8 @@ public class CommandBox extends UiPart<Region> {
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+
+        registerAsAnEventHandler(this);
     }
 
     /**
@@ -148,4 +158,17 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    @Subscribe
+    private void handleFontSizeChangeEvent(FontSizeChangeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        fontSizeChange = event.sizeChange;
+        refreshFontSizes();
+    }
+
+    /**
+     * Updates the font size of this card.
+     */
+    private void refreshFontSizes() {
+        commandTextField.setStyle("-fx-font-size: " + (DEFAULT_FONT_SIZE + fontSizeChange));
+    }
 }
