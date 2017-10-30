@@ -12,12 +12,12 @@ import javax.imageio.ImageIO;
  * Guarantees : The newly written filepath must exist if ImageIO.write is successful
  */
 public class PhotoStorage {
-    public static final String WRITE_FAILURE_MESSAGE = "Unable to write to local resource folder: displaypictures. " +
-            "Make sure that the image type is supported. Supported types: JPEG, PNG, GIF.";
+    public static final String WRITE_FAILURE_MESSAGE = "Unable to write to local resource folder: displaypictures. " 
+            + "Make sure that the image type is supported. Supported types: JPEG, PNG, GIF.";
     private File fileReader = null;
     private String filePath = "";
     private File fileWriter = null;
-    BufferedImage imageReader = null;
+    private BufferedImage imageReader = null;
     private int uniqueFileName;
     public PhotoStorage(String filePath, int uniqueFileName) {
         this.uniqueFileName = uniqueFileName;
@@ -33,7 +33,7 @@ public class PhotoStorage {
             fileWriter = new File(newFilePath);
             ImageIO.write(imageReader, "jpg", fileWriter);
             return newFilePath;
-        } catch (IOException e ) {
+        } catch (IOException e) {
             throw new IOException(WRITE_FAILURE_MESSAGE);
         } catch (IllegalArgumentException f) {
             throw new IOException(WRITE_FAILURE_MESSAGE);

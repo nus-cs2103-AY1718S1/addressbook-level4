@@ -1,5 +1,4 @@
 package seedu.address.ui;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -102,7 +101,6 @@ public class PersonCard extends UiPart<Region> {
             Image image = new Image(getClass().getResource("/images/noPhoto.png").toExternalForm());
             imageView.setImage(image);
         } else {
-            //File storedImage = new File(url);
             Image image = new Image("file:" + person.getPhoto().getFilePath());
             imageView.setImage(image);
         }
