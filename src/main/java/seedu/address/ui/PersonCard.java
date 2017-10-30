@@ -25,6 +25,8 @@ public class PersonCard extends UiPart<Region> {
 
     private static String assignedColor;
 
+    private static ArrayList<String> usedColors = new ArrayList<>();
+
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -66,8 +68,6 @@ public class PersonCard extends UiPart<Region> {
      */
     public static String obtainTagColors(String tagName) {
         if (!currentTagColors.containsKey(tagName)) {
-            ArrayList<String> usedColors = new ArrayList<>();
-
             do {
                 Random random = new Random();
                 final float hue = random.nextFloat();
@@ -96,6 +96,13 @@ public class PersonCard extends UiPart<Region> {
      */
     public String getAssignedTagColor() {
         return this.assignedColor;
+    }
+
+    /**
+     * To access private ArrayList usedColor for testing
+     */
+    public ArrayList getUsedColor() {
+        return this.usedColors;
     }
 
     /**
