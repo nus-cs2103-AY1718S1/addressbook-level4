@@ -301,10 +301,12 @@ Below is an illustration of an unsorted and sort list of contacts.
 **Before**
 
 image::unsortedlist.png[width="300"]
+_Figure 3.16.1 : Unsorted reminder list ._
 
 **After**
 
 image::sortedlist.png[width="300"]
+_Figure 3.16.2 : Sorted reminder list (In alphabetical order) ._
 
 === Sorting all entries by age : `sortAge`
 

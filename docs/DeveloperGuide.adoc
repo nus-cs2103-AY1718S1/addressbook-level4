@@ -363,7 +363,7 @@ The Login function work by using many different components. To facilitated its i
 The process of how the feature functions and what would happen is as follows:
 
 image::LoginSequenceDiagram.JPG[width="800"]
-
+_Figure 4.2.1 : Interactions in the Login Command._
 
 
 
@@ -392,6 +392,7 @@ The User can choose to Create an account if he does not already have one, but he
 The `BirthdayCommand` lies in the `commands` of `Logic`. and does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
 
 image::logic_birthday.png[width="700"]
+_Figure 4.3.1.1a : Structure of Commands in the Logic Component.
 
 The user will not be able to enter the birthday parameter when adding contacts. +
 Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
@@ -401,6 +402,7 @@ After adding the birthday parameters of contacts, the user can choose to sort th
 The following sequence diagram shows how the birthday operation works:
 
 image::birthday_sd.png[width="800"]
+_Figure 4.3.1.1b : Interactions in the Birthday Command._
 
 ==== sortAgeCommand
 
@@ -435,6 +437,7 @@ For every index specified, a `Person` object with the updated tag list will be c
 The following sequence diagram shows how the tag operation works:
 
 image::TagSequenceDiagram.png[width="800"]
+_Figure 4.4.1.1 : Interactions in the Tag Command._
 
 ==== Retrieve command
 
@@ -459,6 +462,7 @@ If the filtered person list is empty, that means the tag user want to look for d
 The following sequence diagram shows how the retrieve operation works:
 
 image::RetrieveSequenceDiagram.png[width="800"]
+_Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 
 ==== Design Considerations
 
