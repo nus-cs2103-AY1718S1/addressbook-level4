@@ -44,7 +44,6 @@
     </VBox>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
         <items>
-      
           <StackPane fx:id="detailsPanelPlaceholder" prefHeight="75.0" prefWidth="30.0">
             <padding>
               <Insets bottom="10" left="10" right="10" top="10" />
