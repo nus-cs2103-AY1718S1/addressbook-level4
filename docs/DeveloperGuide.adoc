@@ -12,7 +12,16 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T09-B1/main/tree/master
 
-By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
+By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT` +
+image:CoverPage.png[width="350"]
+
+== Introduction
+
+At the Heart of our Design is the idea that every man wants to be a Gentleman. Encompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he needed, when he needs it. Nothing more, nothing less.
+
+Gentleman's Guide is a contact book for the elite. It is a command line based programming with a GUI.
+
+This developer guide will describe the design and implementation of Gentleman's Guide. It will help you understand how Gentleman's Guide works and how you can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
 
 == Setting up
 
@@ -353,7 +362,7 @@ The Login function work by using many different components. To facilitated its i
 The process of how the feature functions and what would happen is as follows:
 
 image::LoginSequenceDiagram.JPG[width="800"]
-
+_Figure 4.2.1 : Interactions in the Login Command._
 
 
 
@@ -382,6 +391,7 @@ The User can choose to Create an account if he does not already have one, but he
 The `BirthdayCommand` lies in the `commands` of `Logic`. and does not deal with `UndoableCommands`, thus the actions cannot be reversed.  The following diagram shows the inheritance diagram for commands:
 
 image::logic_birthday.png[width="700"]
+_Figure 4.3.1.1a : Structure of Commands in the Logic Component.
 
 The user will not be able to enter the birthday parameter when adding contacts. +
 Suppose that the user has a list of persons. The birthday parameters will be empty if the user has not modified the persons yet.
@@ -391,6 +401,7 @@ After adding the birthday parameters of contacts, the user can choose to sort th
 The following sequence diagram shows how the birthday operation works:
 
 image::birthday_sd.png[width="800"]
+_Figure 4.3.1.1b : Interactions in the Birthday Command._
 
 ==== sortAgeCommand
 
@@ -410,13 +421,28 @@ image::birthday_sd.png[width="800"]
 **Pros:** Faster for users to add in all the parameters. +
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
-=== Retrieve mechanism
+=== Tag & Retrieve mechanism
 
-The `RetrieveCommand` reside in the `commands` of `Logic`.
+The `TagCommand`and `RetrieveCommand` reside in the `commands` of `Logic`.
 
-`RetrieveCommand` : allows user to list all persons that have been assigned an existing tag in the unique tags list.
+==== Tag command
 
-The command inherit from `UndoableCommand`, thus these commands can be undone.
+`TagCommand` : allows user to assign tags to the persons at the specified index in the last person listing.
+
+This command inherits from `UndoableCommand`. Thus, it can be undone.
+
+For every index specified, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside the `AddressBook` 's person list with the new person object.
+
+The following sequence diagram shows how the tag operation works:
+
+image::TagSequenceDiagram.png[width="800"]
+_Figure 4.4.1.1 : Interactions in the Tag Command._
+
+==== Retrieve command
+
+`RetrieveCommand` : allows user to list all persons that have been assigned an tag already existing inside the unique tag list.
+
+This command inherits from `Command`, so it cannot be undone.
 
 Suppose that the address book already has a sufficiently large number of persons, some of whom have a certain `Tag`. The `UniqueTagList` will contain this tag. +
 
@@ -435,6 +461,7 @@ If the filtered person list is empty, that means the tag user want to look for d
 The following sequence diagram shows how the retrieve operation works:
 
 image::RetrieveSequenceDiagram.png[width="800"]
+_Figure 4.4.1.1 : Sequence Diagram for the Retrieve Command._
 
 ==== Design Considerations
 
@@ -442,9 +469,9 @@ image::RetrieveSequenceDiagram.png[width="800"]
 **Alternative 1 (current choice):** Go through every person in the addressbook to filter out those having the tag. +
 **Pros:** Easy to implement. +
 **Cons:** Slower if the addressbook contains a large number of persons +
-**Alternative 2:**  Create a list attribute for `Tag` to store all persons having that tag. +
+**Alternative 2:**  Create a list attribute for `Tag` to store all persons currently having that tag. +
 **Pros:** Faster to get the persons as the filtered person list is already created. +
-**Cons:** Requires to save the lists to storage file. +
+**Cons:** Requires to save the lists of all existing tags to storage file. +
 
 === Reminder list
 
@@ -467,6 +494,12 @@ e.g. `deleteReminder 3`
 `SortPriorityCommand`: Sorts the reminder list in order of `priority` . +
 (*High* -> *Medium* -> *Low*) +
 e.g. `sortPriority`
+
+`findReminder` : Finds the reminder that contains the keyword. +
+e.g. `findReminder Project`
+
+`listReminder` : Lists all the reminders in the reminder list. +
+e.g. `listReminder`
 
 [NOTE]
 Missing details during adding of reminders will result in Invalid Command format.
