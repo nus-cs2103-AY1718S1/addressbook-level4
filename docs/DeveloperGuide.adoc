@@ -19,14 +19,22 @@ By: `W15-B1`      Since: `Jun 2016`      Licence: `MIT`
 === What is Rubrika?
 
 Rubrika is a desktop Address Book application that lets you store and manage your contacts in a convenient manner. +
-Rubrika has a simple GUI interface and focuses on using link:#CLI[CLI] to interact.
+Rubrika has a simple link:#GUI[GUI] and allows you to interact using the link:#CLI[CLI].
 
+This document shall assist you in understanding the underlying mechanics of Rubrika and guide you through to making your first contribution.
 
+=== Need help?
+
+We understand that first time contributors may face multiple problems. If you are having trouble following the documentation, please feel free to contact us at devproblem@rubrika.com directly, so we can assist you personally with any issues regarding Rubrika.
+
+[[settingup]]
 == Setting up
 
-What you will need to start contributing to Rubrika.
+Before you start contributing to Rubrika, please take a look below and ensure that you have met the required specification.
 
 === Prerequisites
+
+Firstly, please ensure that the following development tools are installed on your computer.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -47,7 +55,9 @@ If you are missing IntelliJ, you may download the community version for free [ht
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
+Now that you have the required development tools on your computer, it's time to set up Rubrika.
+
+. Fork this repository, and clone the fork on to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
 .. Click `Configure` > `Project Defaults` > `Project Structure`
@@ -60,6 +70,8 @@ If you are missing IntelliJ, you may download the community version for free [ht
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
+
+Before proceeding, please take a moment to verify your project files to ensure that you have completed the previous steps correctly.
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
@@ -92,15 +104,19 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
-==== Getting started with coding
+=== Getting started with coding
 
-When you are ready to start coding,
+Congratulations! You are now ready to take your first step in contributing to Rubrika!
+
+Before you proceed, we advise that you take a look at the following documents.
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
+[[design]]
 == Design
 
+[[architecture]]
 === Architecture
 
 image::Architecture.png[width="600"]
@@ -584,16 +600,17 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose to use asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
 === Editing Documentation
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+Take a look at <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
 === Publishing Documentation
 
-See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
+Check out <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
 === Converting Documentation to PDF format
 
@@ -684,9 +701,13 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
+[[suggested-programming-tasks-to-get-started]]
 == Suggested Programming Tasks to Get Started
 
-Suggested path for new programmers:
+[TIP]
+Before proceeding, please ensure that you have read through the link:#settingup[Setting up] and link:#design[Design] sections of the developer guide.
+
+We recommend that new programmers:
 
 1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
 
@@ -706,11 +727,11 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 +
 ****
 * Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
+** Just like how we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you will need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
 ** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
 * Solution
 ** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
 ****
 
 [discrete]
@@ -727,7 +748,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 **  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
 ** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
 [discrete]
@@ -751,7 +772,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 ** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 * Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
 ****
 
 . Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
@@ -771,7 +792,7 @@ image::getting-started-ui-result-after.png[width="200"]
 * Solution
 ** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
 ** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
 ****
 
 . Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
@@ -791,7 +812,7 @@ image::getting-started-ui-status-after.png[width="500"]
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
 [discrete]
@@ -807,7 +828,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
 ** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
 * Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
+* See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
 [appendix]
