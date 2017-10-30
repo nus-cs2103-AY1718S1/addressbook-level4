@@ -318,10 +318,14 @@ public class Person implements ReadOnlyPerson {
     //@@author jelneo
     /**
      * Sets total debt of a person to the given Debt.
-     * @param debt must not be null.
+     * @param totalDebt must not be null.
      */
-    public void setTotalDebt(Debt debt) {
-        this.totalDebt.set(requireNonNull(debt));
+    public void setTotalDebt(Debt totalDebt) {
+        requireNonNull(totalDebt);
+        if (totalDebt.toNumber() < debt.get().toNumber()) {
+            throw new IllegalArgumentException("Total debt cannot be less than current debt");
+        }
+        this.totalDebt.set(totalDebt);
     }
 
     @Override
