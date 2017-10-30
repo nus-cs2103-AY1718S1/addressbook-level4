@@ -4,12 +4,15 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -30,6 +33,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueScheduleList schedules;
     private final UniqueTagList tags;
 
+    private Logger logger = LogsCenter.getLogger(AddressBook.class);
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
@@ -62,6 +66,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setSchedules(Set<Schedule> schedules) {
         this.schedules.setSchedules(schedules);
+        this.schedules.sort();
     }
 
     public void setTags(Set<Tag> tags) {
@@ -135,14 +140,22 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     private void syncMasterScheduleListWith(Person person) {
         final UniqueScheduleList personSchedules = new UniqueScheduleList(person.getSchedules());
+
         schedules.mergeFrom(personSchedules);
+        schedules.sort();
+
+        //Testing
+        Iterator<Schedule> iterator2 = schedules.iterator();
+        while (iterator2.hasNext()) {
+            logger.info("Schedules after: " + iterator2.next().toString() + "\n");
+        }
 
         // Create map with values = schedule object references in the master list
         // used for checking person schedule references
         final Map<Schedule, Schedule> masterScheduleObjects = new HashMap<>();
         personSchedules.forEach(schedule -> masterScheduleObjects.put(schedule, schedule));
 
-        // Rebuild the list of person schedules to point to the relevant tags in the master tag list.
+        // Rebuild the list of person schedules to point to the relevant schedules in the master schedule list.
         final Set<Schedule> correctScheduleReferences = new HashSet<>();
         personSchedules.forEach(schedule -> correctScheduleReferences.add(masterScheduleObjects.get(schedule)));
         person.setSchedules(correctScheduleReferences);

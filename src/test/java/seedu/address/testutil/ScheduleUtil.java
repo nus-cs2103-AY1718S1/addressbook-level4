@@ -3,6 +3,8 @@ package seedu.address.testutil;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTIVITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 
+import java.util.Set;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.model.schedule.Schedule;
@@ -15,7 +17,7 @@ public class ScheduleUtil {
      * Returns a schedule command string for allocating the {@code schedule} with contact(s) of the specified
      * {@code indices}.
      */
-    public static String getScheduleCommand(Schedule schedule, Index... indices) {
+    public static String getScheduleCommand(Schedule schedule, Set<Index> indices) {
         StringBuilder scheduleCommand = new StringBuilder(ScheduleCommand.COMMAND_WORD + " ");
         for (Index index: indices) {
             scheduleCommand.append(index.getOneBased() + " ");
@@ -29,7 +31,7 @@ public class ScheduleUtil {
      * Returns a schedule command string for allocating the {@code schedule} with contact(s) of the specified
      * {@code indices} using schedule command's alias.
      */
-    public static String getScheduleCommandUsingAlias(Schedule schedule, Index... indices) {
+    public static String getScheduleCommandUsingAlias(Schedule schedule, Set<Index> indices) {
         StringBuilder scheduleCommand = new StringBuilder(ScheduleCommand.COMMAND_ALIAS + " ");
         for (Index index: indices) {
             scheduleCommand.append(index.getOneBased() + " ");

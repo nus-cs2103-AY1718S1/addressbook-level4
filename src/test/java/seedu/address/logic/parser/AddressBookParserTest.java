@@ -206,16 +206,18 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_schedule() throws Exception {
         Schedule schedule = new ScheduleBuilder().build();
-        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleUtil.getScheduleCommand(
-                schedule, INDEX_FIRST_PERSON));
-        ScheduleCommand commandUsingAlias = (ScheduleCommand) parser.parseCommand(ScheduleUtil
-                .getScheduleCommandUsingAlias(schedule, INDEX_FIRST_PERSON));
-
         Set<Index> indices = new HashSet<>();
         indices.add(INDEX_FIRST_PERSON);
 
-        assertEquals(new ScheduleCommand(indices, schedule), command);
-        assertEquals(new ScheduleCommand(indices, schedule), commandUsingAlias);
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleUtil.getScheduleCommand(
+                schedule, indices));
+        ScheduleCommand commandUsingAlias = (ScheduleCommand) parser.parseCommand(ScheduleUtil
+                .getScheduleCommandUsingAlias(schedule, indices));
+
+        assertEquals(new ScheduleCommand(indices, schedule.getScheduleDate(),
+                schedule.getActivity()), command);
+        assertEquals(new ScheduleCommand(indices, schedule.getScheduleDate(),
+                schedule.getActivity()), commandUsingAlias);
     }
 
     @Test

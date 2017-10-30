@@ -40,7 +40,7 @@ public class PersonBuilder {
             Set<Email> defaultEmail = SampleDataUtil.getEmailSet(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Schedule> defaultSchedule = SampleDataUtil.getScheduleSet(asList(DEFAULT_SCHEDULE_DATE),
-                    asList(DEFAULT_ACTIVITY));
+                    asList(DEFAULT_ACTIVITY), asList(DEFAULT_NAME));
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
 
             this.person = new Person(defaultName, defaultPhone, defaultCountry, defaultEmail, defaultAddress,

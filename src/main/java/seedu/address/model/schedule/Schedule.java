@@ -4,36 +4,70 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Objects;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.person.Name;
+
 /**
  * Represents a Schedule in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Schedule {
-    public final ScheduleDate scheduleDate;
-    public final Activity activity;
+    private ObjectProperty<ScheduleDate> scheduleDate;
+    private ObjectProperty<Activity> activity;
+    private ObjectProperty<Name> personInvolvedName;
 
     /**
      * Every field must be present and not null.
      */
-    public Schedule(ScheduleDate scheduleDate, Activity activity) {
-        requireAllNonNull(scheduleDate, activity);
-        this.scheduleDate = scheduleDate;
-        this.activity = activity;
+    public Schedule(ScheduleDate scheduleDate, Activity activity, Name personInvolvedName) {
+        requireAllNonNull(scheduleDate, activity, personInvolvedName);
+        this.scheduleDate = new SimpleObjectProperty<>(scheduleDate);
+        this.activity = new SimpleObjectProperty<>(activity);
+        this.personInvolvedName = new SimpleObjectProperty<>(personInvolvedName);
     }
 
     /**
      * Creates a copy of the given Schedule.
      */
     public Schedule(Schedule source) {
-        this(source.getScheduleDate(), source.getActivity());
+        this(source.getScheduleDate(), source.getActivity(), source.getPersonInvolvedName());
     }
 
     public ScheduleDate getScheduleDate() {
+        return scheduleDate.get();
+    }
+
+    public ObjectProperty<ScheduleDate> getScheduleDateProperty() {
         return scheduleDate;
     }
 
+    public void setScheduleDate(ScheduleDate scheduleDate) {
+        this.scheduleDate.set(scheduleDate);
+    }
+
     public Activity getActivity() {
+        return activity.get();
+    }
+
+    public ObjectProperty<Activity> getActivityProperty() {
         return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity.set(activity);
+    }
+
+    public Name getPersonInvolvedName() {
+        return personInvolvedName.get();
+    }
+
+    public ObjectProperty<Name> getPersonInvolvedNameProperty() {
+        return personInvolvedName;
+    }
+
+    public void setPersonInvolvedName(Name personInvolvedName) {
+        this.personInvolvedName.set(personInvolvedName);
     }
 
     @Override
@@ -50,7 +84,8 @@ public class Schedule {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getScheduleDate().equals(this.getScheduleDate()) // state checks here onwards
-                && other.getActivity().equals(this.getActivity()));
+                && other.getActivity().equals(this.getActivity())
+                && other.getPersonInvolvedName().equals(this.getPersonInvolvedName()));
     }
 
     @Override
@@ -65,7 +100,9 @@ public class Schedule {
         builder.append("Date: ")
                 .append(getScheduleDate())
                 .append(" Activity: ")
-                .append(getActivity());
+                .append(getActivity())
+                .append(" Person: ")
+                .append(getPersonInvolvedName());
         return builder.toString();
     }
 }

@@ -17,7 +17,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.ScheduleDate;
 
 /**
  * Schedules an Activity with a person.
@@ -37,17 +39,20 @@ public class ScheduleCommand extends UndoableCommand {
 
     public static final String MESSAGE_SCHEDULE_SUCCESS = "Scheduled an activity with %1$d person(s)";
 
-    private final Set<Index> indices;
-    private final Schedule schedule;
+    private Set<Index> indices;
+    private ScheduleDate date;
+    private Activity activity;
 
     /**
      * Creates a ScheduleCommand to add the specified {@code Schedule}
      */
-    public ScheduleCommand(Set<Index> indices, Schedule schedule) {
+    public ScheduleCommand(Set<Index> indices, ScheduleDate date, Activity activity) {
         requireNonNull(indices);
-        requireNonNull(schedule);
+        requireNonNull(date);
+        requireNonNull(activity);
         this.indices = indices;
-        this.schedule = schedule;
+        this.date = date;
+        this.activity = activity;
     }
 
     @Override
@@ -62,6 +67,7 @@ public class ScheduleCommand extends UndoableCommand {
             }
 
             ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
+            Schedule schedule = new Schedule(date, activity, schedulePerson.getName());
 
             Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
 
@@ -89,7 +95,8 @@ public class ScheduleCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ScheduleCommand // instanceof handles nulls
-                && schedule.equals(((ScheduleCommand) other).schedule));
+                && date.equals(((ScheduleCommand) other).date)
+                && activity.equals(((ScheduleCommand) other).activity));
     }
 }
 

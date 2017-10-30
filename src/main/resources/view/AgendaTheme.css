@@ -1,0 +1,11 @@
+.background {
+    -fx-background-color: derive(#40593c, 20%);
+    background-color: #40593c; /* Used in the default.html file */
+}
+
+.label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Comic Sans MS";
+    -fx-text-fill: #00c1a7;
+    -fx-opacity: 0.9;
+}

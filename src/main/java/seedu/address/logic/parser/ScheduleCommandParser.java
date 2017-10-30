@@ -14,7 +14,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.schedule.Activity;
-import seedu.address.model.schedule.Schedule;
 import seedu.address.model.schedule.ScheduleDate;
 
 /**
@@ -50,9 +49,9 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             ScheduleDate date = ParserUtil.parseScheduleDate(argMultimap.getValue(PREFIX_DATE)).get();
             Activity activity = ParserUtil.parseActivity(argMultimap.getValue(PREFIX_ACTIVITY)).get();
 
-            Schedule schedule = new Schedule(date, activity);
+            //Schedule schedule = new Schedule(date, activity);
 
-            return new ScheduleCommand(indices, schedule);
+            return new ScheduleCommand(indices, date, activity);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

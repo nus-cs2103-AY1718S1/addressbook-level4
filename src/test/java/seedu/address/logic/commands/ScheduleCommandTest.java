@@ -23,27 +23,34 @@ public class ScheduleCommandTest {
     @Test
     public void constructor_nullSchedule_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new ScheduleCommand(null, null);
+
         Set<Index> indices = new HashSet<>();
         indices.add(INDEX_FIRST_PERSON);
-        new ScheduleCommand(indices, null);
-        new ScheduleCommand(null, new ScheduleBuilder().build());
+
+        new ScheduleCommand(null, null, null);
+        new ScheduleCommand(indices, null, null);
+        //new ScheduleCommand(null, new ScheduleBuilder().build());
     }
 
     @Test
     public void equals() {
         Schedule meeting = new ScheduleBuilder().withActivity("Meeting").build();
         Schedule playing = new ScheduleBuilder().withActivity("Playing").build();
+
         Set<Index> indices = new HashSet<>();
         indices.add(INDEX_FIRST_PERSON);
-        ScheduleCommand scheduleMeetingCommand = new ScheduleCommand(indices, meeting);
-        ScheduleCommand schedulePlayingCommand = new ScheduleCommand(indices, playing);
+
+        ScheduleCommand scheduleMeetingCommand = new ScheduleCommand(indices,
+                meeting.getScheduleDate(), meeting.getActivity());
+        ScheduleCommand schedulePlayingCommand = new ScheduleCommand(indices,
+                playing.getScheduleDate(), playing.getActivity());
 
         // same object -> returns true
         assertTrue(scheduleMeetingCommand.equals(scheduleMeetingCommand));
 
         // same values -> returns true
-        ScheduleCommand scheduleMeetingCommandCopy = new ScheduleCommand(indices, meeting);
+        ScheduleCommand scheduleMeetingCommandCopy = new ScheduleCommand(indices,
+                meeting.getScheduleDate(), meeting.getActivity());
         assertTrue(scheduleMeetingCommand.equals(scheduleMeetingCommandCopy));
 
         // different types -> returns false
@@ -52,7 +59,7 @@ public class ScheduleCommandTest {
         // null -> returns false
         assertFalse(scheduleMeetingCommand.equals(null));
 
-        // different person -> returns false
+        // different activities -> returns false
         assertFalse(scheduleMeetingCommand.equals(schedulePlayingCommand));
     }
 }
