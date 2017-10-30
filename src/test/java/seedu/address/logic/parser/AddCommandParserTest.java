@@ -190,15 +190,33 @@ public class AddCommandParserTest {
                         + WEBSITE_DESC_BOB + ADDRESS_DESC_BOB,
                 new AddCommand(expectedPersonWithNoBirthday));
 
+        // creates a person with no website
+        Person expectedPersonWithNoWebsite = new PersonBuilder().withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withSchEmail(VALID_SCH_EMAIL_BOB)
+                .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+                .withWebsite(Website.WEBSITE_TEMPORARY).withAddress(VALID_ADDRESS_BOB)
+                .withBirthday(VALID_BIRTHDAY_BOB)
+                .build();
+
         // missing website prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                 + HOME_NUM_DESC_BOB + EMAIL_DESC_BOB + SCH_EMAIL_DESC_BOB
-                + VALID_WEBSITE_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB, expectedMessage);
+                + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB,
+                new AddCommand(expectedPersonWithNoWebsite));
+
+        // creates a person with no address
+        Person expectedPersonWithNoAddress = new PersonBuilder().withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB).withSchEmail(VALID_SCH_EMAIL_BOB)
+                .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+                .withWebsite(VALID_WEBSITE_BOB).withAddress(Address.ADDRESS_TEMPORARY)
+                .withBirthday(VALID_BIRTHDAY_BOB)
+                .build();
 
         // missing address prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
                 + HOME_NUM_DESC_BOB + EMAIL_DESC_BOB + SCH_EMAIL_DESC_BOB
-                + WEBSITE_DESC_BOB + VALID_ADDRESS_BOB + BIRTHDAY_DESC_BOB, expectedMessage);
+                + WEBSITE_DESC_BOB + BIRTHDAY_DESC_BOB,
+                new AddCommand(expectedPersonWithNoAddress));
 
         // all prefixes missing
         assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB

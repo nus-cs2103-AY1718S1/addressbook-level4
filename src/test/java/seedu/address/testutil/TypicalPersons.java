@@ -116,6 +116,18 @@ public class TypicalPersons {
             .withWebsite(VALID_WEBSITE_BOB).withAddress(VALID_ADDRESS_BOB)
             .withBirthday(VALID_BIRTHDAY_BOB).withFavourite("false")
             .withTags(VALID_TAG_FRIEND).build();
+    // Person with no Website
+    public static final ReadOnlyPerson ERIC = new PersonBuilder().withName("Edith").withPhone(VALID_PHONE_BOB)
+            .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+            .withSchEmail(VALID_SCH_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
+            .withBirthday(VALID_BIRTHDAY_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
+    // Person with no Address
+    public static final ReadOnlyPerson ETHAN = new PersonBuilder().withName("Edith").withPhone(VALID_PHONE_BOB)
+            .withHomeNumber(VALID_HOME_NUM_BOB).withEmail(VALID_EMAIL_BOB)
+            .withSchEmail(VALID_SCH_EMAIL_BOB).withWebsite(VALID_WEBSITE_BOB)
+            .withBirthday(VALID_BIRTHDAY_BOB).withFavourite("false")
+            .withTags(VALID_TAG_FRIEND).build();
 
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
