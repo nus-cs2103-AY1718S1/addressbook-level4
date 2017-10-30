@@ -6,6 +6,8 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -81,17 +83,26 @@ public class PersonCard extends UiPart<Region> {
      */
     private void initFavouriteLabel(ReadOnlyPerson person) {
         boolean favouriteStatus = person.getFavourite().getFavourite();
-        String textToDisplay = favouriteStatus ? "Fav" : "";
-        Label favouriteLabel = new Label(textToDisplay);
+        //String textToDisplay = favouriteStatus ? "Fav" : "";
+        //Label favouriteLabel = new Label(textToDisplay);
         Button favouriteButton = new Button();
+        String url_filled = "https://upload.wikimedia.org/wikipedia/commons/thumb/" +
+                "2/29/Gold_Star.svg/2000px-Gold_Star.svg.png";
+        String url_transparant = "https://vignette.wikia.nocookie.net/animal-jam-clans-1/" +
+               "images/c/c1/Star_star_.png/revision/latest?cb=20170111070537";
+        Image star_filled = new Image(url_filled, 30, 30, true, true);
+        Image star_transparent = new Image(url_transparant, 30, 30, true, true);
         if (favouriteStatus) {
-            favouriteLabel.setStyle("-fx-background-color: orangered");
-            favouriteButton.setStyle("-fx-background-color: yellow; -fx-border-color: black; -fx-border-width: 2;");
+            //favouriteLabel.setStyle("-fx-background-color: orangered");
+            favouriteButton.setGraphic(new ImageView(star_filled));
+            favouriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
         } else {
-            favouriteLabel.setStyle("-fx-background-color: cornflowerblue");
-            favouriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 2;");
+            //favouriteLabel.setStyle("-fx-background-color: cornflowerblue");
+            favouriteButton.setGraphic(new ImageView((star_transparent)));
+            favouriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent");
+
         }
-        cardPane.getChildren().add(favouriteLabel);
+        //cardPane.getChildren().add(favouriteLabel);
         cardPane.getChildren().add(favouriteButton);
     }
 
