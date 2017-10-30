@@ -149,7 +149,7 @@ public class AddressBookParserTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tag);
         indexSet.add(INDEX_FIRST_PERSON);
-        assertEquals(new RemoveTagCommand(tagSet, indexSet), command);
+        assertEquals(new RemoveTagCommand(tagSet, indexSet, "1"), command);
     }
 
     @Test
@@ -161,7 +161,7 @@ public class AddressBookParserTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tag);
         indexSet.add(INDEX_FIRST_PERSON);
-        assertEquals(new AddTagCommand(tagSet, indexSet), command);
+        assertEquals(new AddTagCommand(tagSet, indexSet, "1"), command);
     }
 
     @Test

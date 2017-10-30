@@ -38,7 +38,7 @@ public class AddTagCommandTest {
         tagSet.add(tagToAdd);
         indexSet.add(INDEX_FIRST_PERSON);
 
-        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet);
+        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet, "1");
 
         String expectedMessage = String.format(AddTagCommand.MESSAGE_ADDED_SUCCESS + " to index "
                 + "1.", tagSet);
@@ -56,15 +56,16 @@ public class AddTagCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToAdd);
         indexSet.add(Index.fromOneBased(model.getFilteredPersonList().size() + 1));
+        String indexInput = String.valueOf(model.getFilteredPersonList().size() + 1);
 
-        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet);
+        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet, indexInput);
 
         String expectedMessage =  Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 
         assertCommandFailure(addTagCommand, model, expectedMessage);
     }
 
-    /* @Test
+    @Test
     public void execute_validTagMultipleIndexes_success() throws Exception {
         Tag tagToAdd = new Tag("enemy");
         Set<Index> indexSet = new HashSet<>();
@@ -73,7 +74,7 @@ public class AddTagCommandTest {
         indexSet.add(INDEX_FIRST_PERSON);
         indexSet.add(INDEX_SECOND_PERSON);
 
-        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet);
+        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet, "1, 2");
 
         String expectedMessage = String.format(AddTagCommand.MESSAGE_ADDED_SUCCESS + " to index "
                 + "1, 2.", tagSet);
@@ -82,7 +83,7 @@ public class AddTagCommandTest {
         expectedModel.addTag(tagSet, indexSet);
 
         assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
-    }*/
+    }
 
     @Test
     public void execute_multipleTagsValidIndex_success() throws Exception {
@@ -94,7 +95,7 @@ public class AddTagCommandTest {
         tagSet.add(tagToAdd2);
         indexSet.add(INDEX_FIRST_PERSON);
 
-        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet);
+        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet, "1");
 
         String expectedMessage = String.format(AddTagCommand.MESSAGE_ADDED_SUCCESS + " to index "
                 + "1.", tagSet);
@@ -113,7 +114,7 @@ public class AddTagCommandTest {
         tagSet.add(tagToAdd);
         indexSet.add(INDEX_FIRST_PERSON);
 
-        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet);
+        AddTagCommand addTagCommand = prepareCommand(tagSet, indexSet, "1");
         assertCommandFailure(addTagCommand, model, String.format(
                 AddTagCommand.MESSAGE_DUPLICATE_TAG + " index: " + INDEX_FIRST_PERSON.getOneBased()
                         + ".", tagSet));
@@ -132,9 +133,9 @@ public class AddTagCommandTest {
         indexSet1.add(INDEX_FIRST_PERSON);
         indexSet2.add(INDEX_SECOND_PERSON);
 
-        AddTagCommand addTagCommand1 = new AddTagCommand(tagSet1, indexSet1);
-        AddTagCommand addTagCommand2 = new AddTagCommand(tagSet1, indexSet2);
-        AddTagCommand addTagCommand3 = new AddTagCommand(tagSet2, indexSet1);
+        AddTagCommand addTagCommand1 = new AddTagCommand(tagSet1, indexSet1, "1");
+        AddTagCommand addTagCommand2 = new AddTagCommand(tagSet1, indexSet2, "2");
+        AddTagCommand addTagCommand3 = new AddTagCommand(tagSet2, indexSet1, "1");
 
         // same object -> returns true
         assertTrue(addTagCommand1.equals(addTagCommand1));
@@ -159,8 +160,8 @@ public class AddTagCommandTest {
     /**
      * Returns a {@code AddTagCommand}.
      */
-    private AddTagCommand prepareCommand(Set<Tag> tag, Set<Index> index) {
-        AddTagCommand addTagCommand = new AddTagCommand(tag, index);
+    private AddTagCommand prepareCommand(Set<Tag> tag, Set<Index> index, String indexInput) {
+        AddTagCommand addTagCommand = new AddTagCommand(tag, index, indexInput);
         addTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return addTagCommand;
     }

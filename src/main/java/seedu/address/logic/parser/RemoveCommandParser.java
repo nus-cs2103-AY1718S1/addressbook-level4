@@ -2,9 +2,12 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -42,6 +45,8 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
         }
 
         Boolean indexAdded = false;
+        String indexInput;
+        List<String> indexSet = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String newToken = st.nextToken();
             Boolean isIndex = true;
@@ -57,6 +62,7 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
 
 
             if (isIndex) {
+                indexSet.add(newToken);
                 try {
                     Index indexToAdd = ParserUtil.parseIndex(newToken);
                     index.add(indexToAdd);
@@ -80,7 +86,8 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
                 }
             }
         }
-        return new RemoveTagCommand(toRemoveSet, index);
+        indexInput = indexSet.stream().collect(Collectors.joining(", "));
+        return new RemoveTagCommand(toRemoveSet, index, indexInput);
     }
 
 }

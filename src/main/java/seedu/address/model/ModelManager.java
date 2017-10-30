@@ -7,8 +7,10 @@ import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_EMAIL;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_NAME;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_PHONE;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import java.util.function.Predicate;
@@ -22,6 +24,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ShowPersonListViewEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -39,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     private final SortedList<ReadOnlyPerson> sortedFilteredPersons;
+    private final SortedList<Tag> tags;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -50,6 +54,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.tags = new SortedList<Tag>(this.addressBook.getTagList());
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedFilteredPersons = new SortedList<>(filteredPersons);
         // Sort contacts by favourite status, then name, then phone, then email, then address
@@ -62,6 +67,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
+        indicateChangedToPersonListView();
         addressBook.resetData(newData);
         indicateAddressBookChanged();
     }
@@ -78,14 +84,23 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    /**
+     * Raises an event to indicate that the UI needs to switch to viewing the Person List
+     */
+    private void indicateChangedToPersonListView() {
+        raise(new ShowPersonListViewEvent());
+    }
+
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        indicateChangedToPersonListView();
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
 
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        indicateChangedToPersonListView();
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
@@ -94,6 +109,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
+        indicateChangedToPersonListView();
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
@@ -118,7 +134,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ObservableList<Tag> getTagList() {
+        return FXCollections.unmodifiableObservableList(tags);
+    }
+
+    @Override
     public void sortByDataFieldFirst(String dataField) {
+        indicateChangedToPersonListView();
         switch (dataField) {
         case DATA_FIELD_NAME:
             sortedFilteredPersons.setComparator(ComparatorUtil.getAllComparatorsFavThenNameFirst());
@@ -162,10 +184,9 @@ public class ModelManager extends ComponentManager implements Model {
         Boolean tagExist = false;
 
         if (!index.isEmpty()) {
-            Iterator<Index> indexIt = index.iterator();
-            while (indexIt.hasNext()) {
-                int indexToRemove = indexIt.next().getZeroBased();
-                Person toDelete = new Person(getFilteredPersonList().get(indexToRemove));
+            List<Index> indexList = new ArrayList<>(index);
+            for (Index i : indexList) {
+                Person toDelete = new Person(getFilteredPersonList().get(0));
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
                 Set<Tag> newTags = deleteTag(tag, oldTags);

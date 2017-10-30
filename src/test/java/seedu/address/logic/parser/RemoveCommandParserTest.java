@@ -26,7 +26,7 @@ public class RemoveCommandParserTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
         indexSet.add(INDEX_SECOND_PERSON);
-        RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet, "2");
         assertParseSuccess(parser, "friends 2", removeCommand);
     }
 
@@ -36,7 +36,7 @@ public class RemoveCommandParserTest {
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
-        RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet, "");
         assertParseSuccess(parser, "friends", removeCommand);
     }
 

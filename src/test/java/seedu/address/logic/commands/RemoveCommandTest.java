@@ -37,7 +37,7 @@ public class RemoveCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
 
-        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, "");
 
         String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_SUCCESS
                         + " from address book.", tagSet);
@@ -55,7 +55,7 @@ public class RemoveCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
 
-        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, "");
 
         String expectedMessage =  String.format(
                 RemoveTagCommand.MESSAGE_TAG_NOT_FOUND + " the address book.", tagSet);
@@ -71,7 +71,7 @@ public class RemoveCommandTest {
         tagSet.add(tagToRemove);
         indexSet.add(INDEX_FIRST_PERSON);
 
-        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, "1");
 
         String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_SUCCESS + " from index "
                 + INDEX_FIRST_PERSON.getOneBased() + ".", tagSet);
@@ -90,8 +90,9 @@ public class RemoveCommandTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
         indexSet.add(outOfBoundIndex);
+        String indexDisplay = String.valueOf(model.getFilteredPersonList().size() + 1);
 
-        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, indexDisplay);
         assertCommandFailure(removeCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
@@ -103,7 +104,7 @@ public class RemoveCommandTest {
         tagSet.add(tagToRemove);
         indexSet.add(INDEX_FIRST_PERSON);
 
-        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet);
+        RemoveTagCommand removeCommand = prepareCommand(tagSet, indexSet, "1");
         assertCommandFailure(removeCommand, model, String.format(
                 RemoveTagCommand.MESSAGE_TAG_NOT_FOUND + " index: " + INDEX_FIRST_PERSON.getOneBased() + ".", tagSet));
     }
@@ -121,11 +122,11 @@ public class RemoveCommandTest {
         tagSet2.add(secondTag);
         indexSet2.add(INDEX_SECOND_PERSON);
         Set<Index> emptySet = new HashSet<>();
-        RemoveTagCommand removeFirstCommand = new RemoveTagCommand(tagSet1, emptySet);
-        RemoveTagCommand removeSecondCommand = new RemoveTagCommand(tagSet2, emptySet);
-        RemoveTagCommand removeThirdCommand = new RemoveTagCommand(tagSet1, indexSet1);
-        RemoveTagCommand removeFourthCommand = new RemoveTagCommand(tagSet1, indexSet2);
-        RemoveTagCommand removeFifthCommand = new RemoveTagCommand(tagSet2, indexSet1);
+        RemoveTagCommand removeFirstCommand = new RemoveTagCommand(tagSet1, emptySet, "");
+        RemoveTagCommand removeSecondCommand = new RemoveTagCommand(tagSet2, emptySet, "");
+        RemoveTagCommand removeThirdCommand = new RemoveTagCommand(tagSet1, indexSet1, "1");
+        RemoveTagCommand removeFourthCommand = new RemoveTagCommand(tagSet1, indexSet2, "2");
+        RemoveTagCommand removeFifthCommand = new RemoveTagCommand(tagSet2, indexSet1, "1");
 
         // same object -> returns true (no Index)
         assertTrue(removeFirstCommand.equals(removeFirstCommand));
@@ -156,8 +157,8 @@ public class RemoveCommandTest {
     /**
      * Returns a {@code RemoveTagCommand}.
      */
-    private RemoveTagCommand prepareCommand(Set<Tag> tag, Set<Index> index) {
-        RemoveTagCommand removeCommand = new RemoveTagCommand(tag, index);
+    private RemoveTagCommand prepareCommand(Set<Tag> tag, Set<Index> index, String indexDisplay) {
+        RemoveTagCommand removeCommand = new RemoveTagCommand(tag, index, indexDisplay);
         removeCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return removeCommand;
     }
