@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Retrieves the location of the import file and passes the FileInputStream into
+ * a new ImportCommand Object.
+ */
 public class ImportCommandParser implements Parser<ImportCommand> {
 
     @Override
