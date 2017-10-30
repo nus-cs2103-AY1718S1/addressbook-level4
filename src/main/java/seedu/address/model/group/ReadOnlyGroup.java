@@ -21,7 +21,8 @@ public interface ReadOnlyGroup {
     default boolean isSameStateAs(ReadOnlyGroup other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
-                && other.getGroupName().equals(this.getGroupName())); // state checks here onwards
+                && other.getGroupName().equals(this.getGroupName())
+                && other.getGroupMembers().equals(this.getGroupMembers())); // state checks here onwards
 
     }
 }

@@ -90,7 +90,7 @@ public class UniqueGroupList implements Iterable<Group> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniquePersonList // instanceof handles nulls
+                || (other instanceof UniqueGroupList // instanceof handles nulls
                 && this.internalList.equals(((UniqueGroupList) other).internalList));
     }
 
