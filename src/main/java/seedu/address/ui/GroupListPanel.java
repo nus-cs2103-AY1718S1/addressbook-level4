@@ -39,7 +39,7 @@ public class GroupListPanel extends UiPart<Region> {
         ObservableList<GroupCard> mappedList = EasyBind.map(
                 groupList, (group) -> new GroupCard(group, groupList.indexOf(group) + 1));
         groupListView.setItems(mappedList);
-        groupListView.setCellFactory(listView -> new GroupListPanel.PersonListViewCell());
+        groupListView.setCellFactory(listView -> new GroupListPanel.GroupListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -69,9 +69,9 @@ public class GroupListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code GroupCard}.
      */
-    class PersonListViewCell extends ListCell<GroupCard> {
+    class GroupListViewCell extends ListCell<GroupCard> {
 
         @Override
         protected void updateItem(GroupCard group, boolean empty) {

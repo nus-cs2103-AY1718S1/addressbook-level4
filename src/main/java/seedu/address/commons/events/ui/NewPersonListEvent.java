@@ -7,11 +7,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Indicates that the colour has been changed.
  */
-public class NewTagColourChangedEvent extends BaseEvent {
+public class NewPersonListEvent extends BaseEvent {
 
     private ObservableList<ReadOnlyPerson> persons;
 
-    public NewTagColourChangedEvent(ObservableList<ReadOnlyPerson> persons) {
+    public NewPersonListEvent(ObservableList<ReadOnlyPerson> persons) {
         this.persons = persons;
     }
 

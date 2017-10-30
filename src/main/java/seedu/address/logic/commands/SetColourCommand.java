@@ -6,7 +6,7 @@ import seedu.address.model.Model;
 /**
  * Sets all iteration of the specified tag to the requested colour
  */
-public class SetColourCommand extends UndoableCommand {
+public class SetColourCommand extends Command {
 
     public static final String COMMAND_WORD = "setcolour";
 
@@ -31,7 +31,7 @@ public class SetColourCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult execute() {
         try {
             if (isColourValid()) {
                 model.setTagColour(tag, newColour);

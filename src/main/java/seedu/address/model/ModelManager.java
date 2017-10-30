@@ -19,7 +19,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.NewTagColourChangedEvent;
+import seedu.address.commons.events.ui.NewPersonListEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -163,7 +163,7 @@ public class ModelManager extends ComponentManager implements Model {
                 tagColours.put(tag, colour);
                 updateAllPersons(tagColours);
                 indicateAddressBookChanged();
-                raise(new NewTagColourChangedEvent(addressBook.getPersonList()));
+                raise(new NewPersonListEvent(getFilteredPersonList()));
                 colourPrefs.updateColorMap(tagColours);
                 return;
             }
@@ -310,5 +310,6 @@ public class ModelManager extends ComponentManager implements Model {
     private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         updateFilteredPersonList(person -> event.getNewSelection().group.getGroupMembers().contains(person));
+        raise(new NewPersonListEvent(getFilteredPersonList()));
     }
 }

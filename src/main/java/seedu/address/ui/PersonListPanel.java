@@ -14,9 +14,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.NewTagColourChangedEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;;
+import seedu.address.commons.events.ui.NewPersonListEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -75,7 +74,7 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleNewTagColourChangedEvent(NewTagColourChangedEvent event) {
+    private void handleNewPersonListEvent(NewPersonListEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         setConnections(event.getPersonsList());
     }
