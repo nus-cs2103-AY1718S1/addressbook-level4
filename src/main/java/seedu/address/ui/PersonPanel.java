@@ -112,7 +112,7 @@ public class PersonPanel extends UiPart<Region> {
                 File file = fileChooser.showOpenDialog(((Node) t.getTarget())
                         .getScene().getWindow());
 
-                //Update photo field in addressbook by simulating a command
+                //Update photo field in addressbook through an edit command
                 try {
                     logger.fine("Person Panel register button for index "
                             + index.getZeroBased());

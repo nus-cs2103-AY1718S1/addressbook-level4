@@ -1,3 +1,5 @@
+//@@author a0107442n
+
 package seedu.address.ui;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
@@ -8,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +34,13 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
@@ -46,6 +54,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.timeslot.Timeslot;
 
+
 /**
  * The calendar view to show all the scheduled events.
  */
@@ -55,6 +64,7 @@ public class CalendarView extends UiPart<Region> {
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass
             .getPseudoClass("selected");
     private static final String FXML = "CalendarView.fxml";
+
     private static Supplier<LocalDate> today = LocalDate::now;
     private static Supplier<LocalDate> startOfWeek = () -> today.get()
             .minusDays(today.get().getDayOfWeek().getValue() - 1);
@@ -62,9 +72,12 @@ public class CalendarView extends UiPart<Region> {
             .plusDays(6);
     private static final int SLOT_LENGTH = 30;
 
+    private static final DataFormat paneFormat = new DataFormat("DraggingPane");
+
     private final LocalTime firstSlotStart = LocalTime.of(7, 0);
     private final Duration slotLength = Duration.ofMinutes(SLOT_LENGTH);
     private final LocalTime lastSlotStart = LocalTime.of(23, 59);
+    private final int lastSlotIndex = (int) MINUTES.between(firstSlotStart, lastSlotStart) / SLOT_LENGTH;
 
     private final List<TimeSlot> timeSlots = new ArrayList<>();
 
@@ -74,7 +87,14 @@ public class CalendarView extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CalendarView.class);
 
-    private Logic logic;
+    private final Logic logic;
+
+    private ObservableList<ReadOnlyEvent> eventList;
+
+    //Used to store details of dragging event
+    private StackPane draggingPane;
+    private int draggingPaneSpan;
+    private ReadOnlyEvent draggedEvent;
 
     @FXML
     private StackPane calendarViewPlaceHolder;
@@ -98,30 +118,6 @@ public class CalendarView extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    /**
-     * Registers handlers on the time slot to manage selecting a range of
-     * slots in the grid.
-     *
-     * @param timeSlot    selected
-     * @param mouseAnchor where the mouse is at
-     */
-
-    private void registerDragHandlers(TimeSlot timeSlot, ObjectProperty<TimeSlot> mouseAnchor) {
-        timeSlot.getView().setOnDragDetected(event -> {
-            mouseAnchor.set(timeSlot);
-            timeSlot.getView().startFullDrag();
-            timeSlots.forEach(slot ->
-                    slot.setSelected(slot == timeSlot));
-        });
-
-        timeSlot.getView().setOnMouseDragEntered(event -> {
-            TimeSlot startSlot = mouseAnchor.get();
-            timeSlots.forEach(slot ->
-                    slot.setSelected(isBetween(slot, startSlot, timeSlot)));
-        });
-
-        timeSlot.getView().setOnMouseReleased(event -> mouseAnchor.set(null));
-    }
 
     /**
      * Initialize all timeslots
@@ -142,7 +138,12 @@ public class CalendarView extends UiPart<Region> {
                 TimeSlot timeSlot = new TimeSlot(startTime, slotLength);
                 timeSlots.add(timeSlot);
 
-                registerDragHandlers(timeSlot, mouseAnchor);
+                int columnIndex = timeSlot.getDayOfWeek().getValue();
+                int rowIndex = (int) MINUTES.between(firstSlotStart, timeSlot.getStartDateTime()) / SLOT_LENGTH + 1;
+
+                registerSelectionHandler(timeSlot, mouseAnchor);
+
+                addDropHandling(timeSlot, columnIndex, rowIndex);
 
                 calendarView.add(timeSlot.getView(), timeSlot.getDayOfWeek().getValue(), slotIndex);
                 slotIndex++;
@@ -195,6 +196,7 @@ public class CalendarView extends UiPart<Region> {
      */
     private void initEvents(GridPane calendarView, ObservableList<ReadOnlyEvent> eventList, ReadOnlyEvent
             lastChangedEvent) {
+        this.eventList = eventList;
         ObservableList<ReadOnlyEvent> eventsThisWeek = extractEvents(eventList);
 
         removeDuplicatedPane(calendarView, lastChangedEvent);
@@ -242,7 +244,6 @@ public class CalendarView extends UiPart<Region> {
         if (calendarView.getChildren().contains(addedEvents.get(lastChangedEvent))) {
             if (calendarView.getChildren().remove(addedEvents.get(lastChangedEvent))) {
                 logger.info(lastChangedEvent + " removed.");
-
                 addedEvents.remove(lastChangedEvent);
             }
         }
@@ -254,6 +255,9 @@ public class CalendarView extends UiPart<Region> {
      * @return the stack pane created
      */
     private StackPane createPane(ReadOnlyEvent event) {
+        String[] colors = {"#FEDFE1", "#D7C4BB", "#D7B98E"};
+        int randomColor = (int) (Math.random() * 3);
+
         //Create the label
         Label eventTitle = new Label();
         eventTitle.setWrapText(true);
@@ -263,7 +267,8 @@ public class CalendarView extends UiPart<Region> {
         //Create the pane
         StackPane eventPane = new StackPane();
         eventPane.setMaxWidth(150.0);
-        eventPane.setStyle("-fx-background-color: #FEDFE1; -fx-alignment: CENTER; -fx-border-color: white");
+        eventPane.setStyle("-fx-background-color: " + colors[randomColor] + "; -fx-alignment: CENTER; "
+                + "-fx-border-color: " + "white");
 
         //Add listener to mouse-click event to show detail of the event
         eventPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -276,6 +281,7 @@ public class CalendarView extends UiPart<Region> {
                 }
             }
         });
+
         //Add the label to the pane
         eventPane.getChildren().addAll(eventTitle);
 
@@ -297,11 +303,109 @@ public class CalendarView extends UiPart<Region> {
         //Add event pane to the corresponding slots on Calendar
         calendarView.add(eventPane, columnIndex, rowIndex, 1, rowSpan);
 
+        //Add on drag listener
+        registerDragHandler(eventPane, event, rowSpan);
+
         //Store events that have been added for future reference
         addedEvents.put(event, eventPane);
-        logger.info("added pane " + eventPane);
     }
 
+    /**
+     * Registers handlers on the time slot to manage selecting a range of
+     * slots in the grid.
+     *
+     * @param timeSlot    selected
+     * @param mouseAnchor where the mouse is at
+     */
+
+    private void registerSelectionHandler(TimeSlot timeSlot, ObjectProperty<TimeSlot> mouseAnchor) {
+        timeSlot.getView().setOnDragDetected(event -> {
+            mouseAnchor.set(timeSlot);
+            timeSlot.getView().startFullDrag();
+            timeSlots.forEach(slot ->
+                    slot.setSelected(slot == timeSlot));
+        });
+
+        timeSlot.getView().setOnMouseDragEntered(event -> {
+            TimeSlot startSlot = mouseAnchor.get();
+            timeSlots.forEach(slot ->
+                    slot.setSelected(isBetween(slot, startSlot, timeSlot)));
+        });
+
+        timeSlot.getView().setOnMouseReleased(event -> mouseAnchor.set(null));
+    }
+
+
+    /**
+     * Registers dragging handlers on the time slots to enable changing event scheduling through drag-and-drop.
+     *
+     * @param eventPane event pane to be dragged
+     * @param event event being re-scheduled
+     * @param rowSpan span of the event pane in the gridpane
+     */
+    private void registerDragHandler(StackPane eventPane, ReadOnlyEvent event, int rowSpan) {
+        eventPane.setOnDragDetected(e -> {
+            Dragboard dragBoard = eventPane.startDragAndDrop(TransferMode.MOVE);
+            dragBoard.setDragView(eventPane.snapshot(null, null));
+            ClipboardContent clipboardContent = new ClipboardContent();
+            clipboardContent.put(paneFormat, " ");
+            dragBoard.setContent(clipboardContent);
+
+            //Register the detail of the dragged event pane
+            draggingPane = eventPane;
+            draggedEvent = event;
+            draggingPaneSpan = rowSpan;
+        });
+    }
+
+    /**
+     * Registers dropping handlers on the time slots to enable changing event scheduling through drag-and-drop.
+     *
+     * @param timeSlot Starting TimeSlot to drop the event at
+     * @param columnIndex column of the dropped TimeSlot
+     * @param rowIndex row of the dropped TimeSlot
+     */
+    private void addDropHandling(TimeSlot timeSlot, int columnIndex, int rowIndex) {
+        StackPane pane = timeSlot.getView();
+        pane.setOnDragOver(e -> {
+            Dragboard dragBoard = e.getDragboard();
+            if (dragBoard.hasContent(paneFormat) && draggingPane != null) {
+                e.acceptTransferModes(TransferMode.MOVE);
+            }
+        });
+
+        pane.setOnDragDropped(e -> {
+            Dragboard dragBoard = e.getDragboard();
+
+            if (dragBoard.hasContent(paneFormat) && rowIndex + draggingPaneSpan < lastSlotIndex) {
+                calendarView.getChildren().remove(draggingPane);
+                calendarView.add(draggingPane, columnIndex, rowIndex, 1, draggingPaneSpan);
+
+                try {
+                    int eventIndex = eventList.indexOf(draggedEvent) + 1;
+                    String date = timeSlot.getDateAsString();
+                    String startTime = timeSlot.getStartTimeAsString();
+                    String endTime = timeSlot.getEndTimeAsString(draggingPaneSpan);
+
+                    //Update event's new date and time information through an edit command
+                    logic.execute("eventedit " + eventIndex + " t/" + date
+                            + " " + startTime + "-" + endTime);
+
+                    logger.info("Dropping event " + eventIndex + " at " + startTime);
+                } catch (CommandException | ParseException exc) {
+                    raise(new NewResultAvailableEvent(exc.getMessage(), true));
+                }
+
+                e.setDropCompleted(true);
+
+                //Dropping finished, reset the details of dragged pane
+                draggingPane = null;
+                draggedEvent = null;
+                draggingPaneSpan = 0;
+            }
+        });
+
+    }
 
     /**
      * Upon receiving an AddressBookChangedEvent, update the event list accordingly.
@@ -311,6 +415,7 @@ public class CalendarView extends UiPart<Region> {
         logger.info("LastChangedEvent is " + abce.data.getLastChangedEvent());
         initEvents(calendarView, abce.data.getEventList(), abce.data.getLastChangedEvent());
     }
+
 
     // Utility method that checks if testSlot is "between" startSlot and endSlot
     // Here "between" means in the visual sense in the grid: i.e. does the time slot
@@ -337,8 +442,8 @@ public class CalendarView extends UiPart<Region> {
                 * endSlot.getDayOfWeek().compareTo(testSlot.getDayOfWeek())
                 >= 0;
 
-        boolean timesBetween = testSlot.getTime().compareTo(startSlot.getTime())
-                * endSlot.getTime().compareTo(testSlot.getTime()) >= 0;
+        boolean timesBetween = testSlot.getStartTime().compareTo(startSlot.getStartTime())
+                * endSlot.getStartTime().compareTo(testSlot.getStartTime()) >= 0;
 
         return daysBetween && timesBetween;
     }
@@ -353,7 +458,7 @@ public class CalendarView extends UiPart<Region> {
 
         private final LocalDateTime start;
         private final Duration duration;
-        private final Region view;
+        private final StackPane view;
 
         private final BooleanProperty selected = new SimpleBooleanProperty();
 
@@ -361,7 +466,7 @@ public class CalendarView extends UiPart<Region> {
             this.start = start;
             this.duration = duration;
 
-            view = new Region();
+            view = new StackPane();
             view.setMinSize(80, 30);
             view.setPrefSize(120, 30);
             view.setMaxSize(150, 40);
@@ -384,12 +489,31 @@ public class CalendarView extends UiPart<Region> {
             selectedProperty().set(selected);
         }
 
-        public LocalDateTime getStart() {
+        public LocalDateTime getStartDateTime() {
             return start;
         }
 
-        public LocalTime getTime() {
+        public LocalTime getStartTime() {
             return start.toLocalTime();
+        }
+
+        public String getDateAsString() {
+            LocalDate date = start.toLocalDate();
+            String[] tokens = date.toString().split("-");
+            return tokens[2] + "/" + tokens[1] + "/" +
+                    tokens[0];
+        }
+
+        public String getStartTimeAsString() {
+            LocalTime startTime = getStartTime();
+            String[] tokens = startTime.toString().split(":");
+            return tokens[0] + tokens[1];
+        }
+
+        public String getEndTimeAsString(int span) {
+            LocalTime endTime = getStartTime().plus(SLOT_LENGTH * span, ChronoUnit.MINUTES);
+            String[] tokens = endTime.toString().split(":");
+            return tokens[0] + tokens[1];
         }
 
         public DayOfWeek getDayOfWeek() {
@@ -400,7 +524,7 @@ public class CalendarView extends UiPart<Region> {
             return duration;
         }
 
-        public Node getView() {
+        public StackPane getView() {
             return view;
         }
 
