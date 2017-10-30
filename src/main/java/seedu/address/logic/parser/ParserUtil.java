@@ -70,6 +70,15 @@ public class ParserUtil {
         }
         return trimmedString;
     }
+
+    public static String parseFilePath(String filePath) throws IllegalValueException {
+        String trimmedString = filePath.trim();
+        if (!StringUtil.isFilePath(trimmedString)) {
+            throw new IllegalValueException(MESSAGE_INVALID_OPTION);
+        }
+        return trimmedString;
+    }
+
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
