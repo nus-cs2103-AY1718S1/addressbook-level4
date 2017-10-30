@@ -19,6 +19,7 @@ import seedu.address.model.tag.UniqueTagList;
 public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
+    private ObjectProperty<Occupation> occupation;
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
@@ -29,9 +30,11 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Website website, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, remark, tags);
+    public Person(Name name, Occupation occupation, Phone phone, Email email, Address address, Remark remark,
+                  Website website, Set<Tag> tags) {
+        requireAllNonNull(name, occupation, phone, email, address, remark, tags);
         this.name = new SimpleObjectProperty<>(name);
+        this.occupation = new SimpleObjectProperty<>(occupation);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
@@ -45,8 +48,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
-                source.getWebsite(), source.getTags());
+        this(source.getName(), source.getOccupation(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getRemark(), source.getWebsite(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -61,6 +64,20 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Name getName() {
         return name.get();
+    }
+
+    public void setOccupation(Occupation occupation) {
+        this.occupation.set(requireNonNull(occupation));
+    }
+
+    @Override
+    public ObjectProperty<Occupation> occupationProperty() {
+        return occupation;
+    }
+
+    @Override
+    public Occupation getOccupation() {
+        return occupation.get();
     }
 
     public void setPhone(Phone phone) {
@@ -163,7 +180,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, website, tags);
+        return Objects.hash(name, occupation, phone, email, address, website, tags);
     }
 
     @Override
@@ -176,6 +193,7 @@ public class Person implements ReadOnlyPerson {
      * if modification is attempted.
      */
     public void resetData(ReadOnlyPerson replacement) {
+        this.setOccupation(replacement.getOccupation());
         this.setPhone(replacement.getPhone());
         this.setEmail(replacement.getEmail());
         this.setAddress(replacement.getAddress());

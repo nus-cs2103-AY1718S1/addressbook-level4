@@ -15,6 +15,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Occupation;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -64,21 +65,24 @@ public class ContactTsvReader {
                     ArrayList<String> columns = tsvLinetoArrayList(line);
                     Name name = ParserUtil.parseName(checkEmptyAndReturn(retrieveColumnField(columns, 0)))
                             .get();
-                    Phone phone = ParserUtil.parsePhone(checkEmptyAndReturn(retrieveColumnField(columns, 1)))
+                    Occupation occupation = ParserUtil.parseOccupation(checkEmptyAndReturn(retrieveColumnField(columns,
+                            1))).get();
+                    Phone phone = ParserUtil.parsePhone(checkEmptyAndReturn(retrieveColumnField(columns, 2)))
                             .get();
-                    Email email = ParserUtil.parseEmail(checkEmptyAndReturn(retrieveColumnField(columns, 2)))
+                    Email email = ParserUtil.parseEmail(checkEmptyAndReturn(retrieveColumnField(columns, 3)))
                             .get();
-                    Address address = ParserUtil.parseAddress(checkEmptyAndReturn(retrieveColumnField(columns, 3)))
+                    Address address = ParserUtil.parseAddress(checkEmptyAndReturn(retrieveColumnField(columns, 4)))
                             .get();
-                    Website website = ParserUtil.parseWebsite(checkEmptyAndReturn(retrieveColumnField(columns, 4)))
+                    Website website = ParserUtil.parseWebsite(checkEmptyAndReturn(retrieveColumnField(columns, 5)))
                             .get();
                     Set<Tag> tagList = ParserUtil.parseTags(new ArrayList<String>(
-                            Arrays.asList(retrieveColumnField(columns, 5)
+                            Arrays.asList(retrieveColumnField(columns, 6)
                                     .replaceAll("^[,\"\\s]+", "")
                                     .replace("\"", "")
                                     .split("[,\\s]+"))));
                     Remark remark = new Remark("");
-                    ReadOnlyPerson toAddPerson = new Person(name, phone, email, address, remark, website, tagList);
+                    ReadOnlyPerson toAddPerson = new Person(name, occupation, phone, email, address, remark, website,
+                            tagList);
                     toAddPeople.add(toAddPerson);
                 } catch (IllegalValueException ive) {
                     throw new ParseException(ive.getMessage(), ive);
