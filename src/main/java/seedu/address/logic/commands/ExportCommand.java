@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author limshunyong
 /**
  * export contacts to external source (in .vcf format)
  */
