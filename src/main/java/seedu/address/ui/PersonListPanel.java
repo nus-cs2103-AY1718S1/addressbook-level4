@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
@@ -59,6 +60,10 @@ public class PersonListPanel extends UiPart<Region> {
             personListView.scrollTo(index);
             personListView.getSelectionModel().clearAndSelect(index);
         });
+    }
+
+    public HashMap<String, String> getTagColors() {
+        return personListView.getItems().get(1).getTagColors();
     }
 
     @Subscribe

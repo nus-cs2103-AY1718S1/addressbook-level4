@@ -59,9 +59,10 @@ public class DetailedPersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
-    public DetailedPersonCard() {
+    public DetailedPersonCard(HashMap tagColors) {
         super(FXML);
         registerAsAnEventHandler(this);
+        this.tagColors = tagColors;
     }
 
     private static String getColorForTag(String tagValue) {
@@ -101,6 +102,7 @@ public class DetailedPersonCard extends UiPart<Region> {
      * @param person name
      */
     private void initTags(ReadOnlyPerson person) {
+        tags.getChildren().clear();
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
@@ -114,8 +116,9 @@ public class DetailedPersonCard extends UiPart<Region> {
      * @param person name
      */
     private void initWebLinks(ReadOnlyPerson person) {
+        webLinks.getChildren().clear();
         person.getWebLinks().forEach(webLink -> {
-            Label webLinkLabel = new Label(webLink.webLinkTag);
+            Label webLinkLabel = new Label(webLink.webLinkInput);
             webLinkLabel.setStyle("-fx-background-color: " + getColorForWeblinks(webLink.toStringWebLinkTag()));
             webLinks.getChildren().add(webLinkLabel);
         });
@@ -143,6 +146,8 @@ public class DetailedPersonCard extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         selectedPerson = event.getNewSelection().person;
+        initTags(selectedPerson);
+        initWebLinks(selectedPerson);
         bindListeners(selectedPerson);
     }
 }

@@ -150,7 +150,7 @@ public class MainWindow extends UiPart<Region> {
         WebsiteButtonBar websiteButtonBar = new WebsiteButtonBar();
         websiteButtonbarPlaceholder.getChildren().add(websiteButtonBar.getRoot());
 
-        DetailedPersonCard detailedPersonCard = new DetailedPersonCard();
+        DetailedPersonCard detailedPersonCard = new DetailedPersonCard(personListPanel.getTagColors());
         detailedPersonCardPlaceholder.getChildren().add(detailedPersonCard.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
