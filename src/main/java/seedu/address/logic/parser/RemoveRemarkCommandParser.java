@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_REMARK_INDEX_FORMAT;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,16 +29,24 @@ public class RemoveRemarkCommandParser implements Parser<RemoveRemarkCommand> {
 
        Index index;
        Scanner scan;
+       String checkedString;
        int tempIndex = 0;
         try {
             List<Integer> integerList = new ArrayList<Integer>();
             scan = new Scanner(args);
             index = Index.fromOneBased(scan.nextInt());
-            while(scan.hasNextInt()) {
-                tempIndex = scan.nextInt();
+            checkedString = scan.nextLine();
+            Scanner scanChecked = new Scanner(checkedString);
+            while(scanChecked.hasNext()) {
+                if (!checkedString.matches(".*\\d+.*")) {
+                    throw new ParseException(String.format(MESSAGE_INVALID_REMARK_INDEX_FORMAT,
+                            RemoveRemarkCommand.MESSAGE_USAGE));
+                }
+                tempIndex = scanChecked.nextInt();
                 if(!integerList.contains(tempIndex)) { //makes sure there are no duplicate index in the list
                     integerList.add(tempIndex);
                 }
+
             }
 
             ArrayList<Integer> remarkIndexArrayList = ParserUtil.parseIndexes(integerList);
