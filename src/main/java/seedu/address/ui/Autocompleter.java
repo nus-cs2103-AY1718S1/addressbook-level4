@@ -150,19 +150,18 @@ public class Autocompleter {
 
     private void autocompleteAddCommand(String commandBoxText) {
         Prefix[] prefixes = AutocompleteState.getPrefixes(state);
-        ArrayList<String> nextPrefix = new ArrayList<>();
+        ArrayList<String> missingPrefixes = new ArrayList<>();
         if (prefixes.length == 0) {
             return;
         }
         ArgumentMultimap argMap = ArgumentTokenizer.tokenize(commandBoxText, prefixes);
         for (Prefix p : prefixes) {
             if (!argMap.getValue(p).isPresent()) {
-                nextPrefix.add(p.toString());
-                //System.out.println(p.toString());
+                missingPrefixes.add(p.toString());
                 break;
             }
         }
-        possibleAutocompleteResults = nextPrefix;
+        possibleAutocompleteResults = missingPrefixes;
     }
 
     /**
