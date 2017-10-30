@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.event.ReadOnlyEvent;
 
 /**
@@ -24,6 +25,7 @@ public class EventCard extends UiPart<Region> {
      */
 
     public final ReadOnlyEvent event;
+    Index index;
 
     @FXML
     private HBox cardPane;
@@ -41,6 +43,7 @@ public class EventCard extends UiPart<Region> {
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
         super(FXML);
         this.event = event;
+        this.index = Index.fromZeroBased(displayedIndex);
         id.setText(displayedIndex + ". ");
         bindListeners(event);
     }
