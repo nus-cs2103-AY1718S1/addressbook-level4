@@ -29,8 +29,8 @@ public class PhotoTest {
                 + ".jpeg")); // valid relative file path
         assertTrue(Photo.isValidPhotoUrl("src" + s + "main" + s + "resources" + s + "images" + s + "John"
                 + ".png")); // valid relative file path
-        assertTrue(Photo.isValidPhotoUrl(s + "Users" + s + "shuangyang" + s + "src" + s + "main" + s +
-                        "resources" + s + "images" + s + "John.jpg")); // valid absolute file path
+        assertTrue(Photo.isValidPhotoUrl(s + "Users" + s + "shuangyang" + s + "src" + s + "main" + s
+                + "resources" + s + "images" + s + "John.jpg")); // valid absolute file path
         assertTrue(Photo.isValidPhotoUrl("John.jpg")); // valid short file path
     }
 }

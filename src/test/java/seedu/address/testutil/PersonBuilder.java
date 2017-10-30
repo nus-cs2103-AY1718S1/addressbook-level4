@@ -38,9 +38,10 @@ public class PersonBuilder {
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_RELATIONSHIP = "siblings";
 
-    public static final String s = File.separator;
+    public static final String FILE_SEPERATOR = File.separator;
 
-    public static final String DEFAULT_PHOTO = "src" + s + "main" + s + "resources" + s + "images" + s + "default.jpg";
+    public static final String DEFAULT_PHOTO = "src" + FILE_SEPERATOR + "main" + FILE_SEPERATOR + "resources" +
+            FILE_SEPERATOR + "images" + FILE_SEPERATOR + "default" + ".jpg";
 
     private Person person;
 
