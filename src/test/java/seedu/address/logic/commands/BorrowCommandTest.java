@@ -11,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -39,7 +38,6 @@ public class BorrowCommandTest {
 
     @Test
     public void execute_successfulBorrowing() {
-        Index firstPerson = Index.fromOneBased(1);
         ReadOnlyPerson personWhoBorrowed = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         String expectedMessage = String.format(BorrowCommand.MESSAGE_BORROW_SUCCESS,
                 personWhoBorrowed.getName().toString(), VALID_DEBT_FIGURE);
@@ -47,7 +45,7 @@ public class BorrowCommandTest {
             Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
             expectedModel.addDebtToPerson(personWhoBorrowed, new Debt(VALID_DEBT_FIGURE));
 
-            BorrowCommand borrowCommand = new BorrowCommand(firstPerson, new Debt(VALID_DEBT_FIGURE));
+            BorrowCommand borrowCommand = new BorrowCommand(INDEX_FIRST_PERSON, new Debt(VALID_DEBT_FIGURE));
             borrowCommand.setData(model, new CommandHistory(), new UndoRedoStack());
 
             assertCommandSuccess(borrowCommand, model, expectedMessage, expectedModel);
