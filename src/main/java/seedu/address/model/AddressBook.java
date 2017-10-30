@@ -81,8 +81,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setEvents(newData.getEventList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateEventException e) {
+            assert false : "AddressBooks should not have duplicate events";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -260,6 +263,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, events);
     }
 }
