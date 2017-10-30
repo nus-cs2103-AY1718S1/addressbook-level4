@@ -41,7 +41,9 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
+                //@@author Affalen
                 && other.getRemark().equals(this.getRemark()))
+                //@@author
                 && other.getBirthday().equals(this.getBirthday())
                 && other.getAge().equals(this.getAge());
     }
@@ -58,8 +60,10 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                //@@author Affalen
                 .append(" Remark: ")
                 .append(getRemark())
+                //@@author
                 .append(" Birthday: ")
                 .append(getBirthday())
                 .append(" Age: ")
