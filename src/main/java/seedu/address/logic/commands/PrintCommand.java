@@ -19,17 +19,21 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 public class PrintCommand extends Command {
 
-    private final String fileName;
+    public static final String[] COMMAND_WORDS = {"print"};
+    public static final String COMMAND_WORD = "print";
 
+    private final String fileName = "lol.txt";
+
+    /*
     public PrintCommand(String filename) {
         requireNonNull(filename);
 
         this.fileName = filename;
     }
+    */
 
     @Override
     public CommandResult execute() {
-        //EventsCenter.getInstance().post(new ShowHelpRequestEvent());
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
@@ -45,13 +49,15 @@ public class PrintCommand extends Command {
             personIndex++;
         }
 
-        Path file = Paths.get("doc/books/"+ fileName +".txt");
+        //Path file = Paths.get("doc/books/"+ fileName +".txt");
+        Path file = Paths.get("docs/books/lol.txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        //System.out.println("test");
         return new CommandResult("lol");
     }
 
