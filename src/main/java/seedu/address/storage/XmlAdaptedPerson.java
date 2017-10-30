@@ -121,7 +121,7 @@ public class XmlAdaptedPerson {
         final DateRepaid dateRepaid = new DateRepaid(this.dateRepaid);
         final Date lastAccruedDate = DateUtil.convertStringToDate(this.lastAccruedDate);
         final Set<Tag> tags = new HashSet<>(personTags);
-      
+
         Person adaptedPerson = new Person(name, handphone, homePhone, officePhone, email, address, postalCode, debt,
                 interest, deadline, tags);
         adaptedPerson.setTotalDebt(totalDebt);
