@@ -11,12 +11,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import seedu.address.model.AddressBook;
 
 /**
  * The UI component that is responsible for implemented Calendar.
  */
-public class Calendar extends AddressBook {
+public class Calendar {
 
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private VBox view;
