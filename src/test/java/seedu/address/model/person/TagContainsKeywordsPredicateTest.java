@@ -106,11 +106,11 @@ public class TagContainsKeywordsPredicateTest {
                 "or", "e", "and", "f", "and", "g", "or", "h");
         predicate = new TagContainsKeywordsPredicate(myStringArray);
         assertFalse(predicate.test(new PersonBuilder().withTags("i").build()));
-        assertTrue (predicate.test(new PersonBuilder().withTags("e","f","g").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("e", "f", "g").build()));
 
         //Additional Cases for Boundary cases
-        assertFalse(predicate.test(new PersonBuilder().withTags("e","f","b").build()));
-        assertTrue(predicate.test(new PersonBuilder().withTags("a","b","c","d","e","f","g","h","i").build()));
+        assertFalse(predicate.test(new PersonBuilder().withTags("e", "f", "b").build()));
+        assertTrue(predicate.test(new PersonBuilder().withTags("a", "b", "c", "d", "e", "f", "g", "h", "i").build()));
 
         //Case sensitive
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("COLLEAGUE", "and", "family"));
