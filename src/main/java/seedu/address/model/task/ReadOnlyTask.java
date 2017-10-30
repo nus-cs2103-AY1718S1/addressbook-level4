@@ -27,13 +27,9 @@ public interface ReadOnlyTask {
 
     boolean hasTime();
 
-    Optional<ObjectProperty<LocalDateTime>> startDateTimeProperty();
-
     Optional<LocalDateTime> getStartDateTime();
 
     Optional<LocalDateTime> getEndDateTime();
-
-    Optional<ObjectProperty<LocalDateTime>> endDateTimeProperty();
 
     LocalDateTime getLastUpdatedTime();
 
