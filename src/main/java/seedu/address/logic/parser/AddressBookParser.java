@@ -15,11 +15,13 @@ import seedu.address.logic.commands.CommentCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EmailLoginCommand;
+import seedu.address.logic.commands.EmailLogoutCommand;
 import seedu.address.logic.commands.EmailSendCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindContainCommand;
+import seedu.address.logic.commands.GetEmailCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -89,6 +91,12 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
+
+        case EmailLogoutCommand.COMMAND_WORD:
+            return new EmailLogoutCommand();
+
+        case GetEmailCommand.COMMAND_WORD:
+            return new GetEmailCommand();
 
         case FindContainCommand.COMMAND_WORD:
             return new FindContainCommandParser().parse(arguments);

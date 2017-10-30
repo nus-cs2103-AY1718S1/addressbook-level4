@@ -117,6 +117,17 @@ public class EmailManager implements Email {
         return (currentAuthenticator != null);
     }
 
+    @Override
+    public void logout() {
+        currentEmail = null;
+        currentEmailProvider = null;
+        currentAuthenticator = null;
+        propertiesSmtp = new Properties();
+        propertiesImap = System.getProperties();
+    }
+
+
+
     /**
      * Initiate the host address hash table based on the given email
      * @param email given email string

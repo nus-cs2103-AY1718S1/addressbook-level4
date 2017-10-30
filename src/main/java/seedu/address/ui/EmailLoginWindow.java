@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -28,6 +29,7 @@ public class EmailLoginWindow extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(EmailLoginWindow.class);
     private Stage primaryStage;
     private Logic logic;
+    private FunctionButtons functionButtonsPanel;
 
     @FXML
     private Text loginText;
@@ -47,7 +49,7 @@ public class EmailLoginWindow extends UiPart<Region> {
     @FXML
     private Label feedbackLabel;
 
-    public EmailLoginWindow(Logic logic, Stage parentStage) {
+    public EmailLoginWindow(Logic logic, Stage parentStage, FunctionButtons functionButtonsPanel) {
         super(FXML);
 
         this.primaryStage = new Stage();
@@ -55,7 +57,11 @@ public class EmailLoginWindow extends UiPart<Region> {
         this.primaryStage.setScene(scene);
         this.primaryStage.initOwner(parentStage);
         this.primaryStage.initModality(Modality.WINDOW_MODAL);
+        this.primaryStage.setResizable(false);
+        this.primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
+        this.primaryStage.setTitle("Login");
         this.logic = logic;
+        this.functionButtonsPanel = functionButtonsPanel;
 
         setOnCloseEvent();
     }
@@ -74,10 +80,17 @@ public class EmailLoginWindow extends UiPart<Region> {
                                     + "\"" + passwordString + "\"");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            functionButtonsPanel.updateLoginStatus();
             feedbackLabel.setText(commandResult.feedbackToUser);
+
+            if (commandResult.feedbackToUser.contains("Success")) {
+                functionButtonsPanel.toggleLoginLogout();
+            }
         } catch (CommandException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
             feedbackLabel.setText(e.getMessage());
         } catch (ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
             feedbackLabel.setText(e.getMessage());
         }
     }

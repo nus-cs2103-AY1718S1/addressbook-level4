@@ -40,22 +40,26 @@
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
-   <StackPane fx:id="searchBarPlaceholder" prefHeight="30.0" prefWidth="918.0" />
+   <StackPane fx:id="searchBarPlaceholder" prefHeight="30.0" prefWidth="918.0" styleClass="pane-with-border" />
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+      <StackPane fx:id="personListPanelPlaceholder" styleClass="pane-with-border" VBox.vgrow="ALWAYS" />
     </VBox>
-
-    <StackPane fx:id="browserPlaceholder" prefWidth="340">
-      <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
-      </padding>
-    </StackPane>
-      <StackPane fx:id="functionButtonsPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="224.0" />
+      <VBox>
+         <children>
+            <StackPane fx:id="functionButtonsPanel" prefWidth="340.0" />
+      
+          <StackPane fx:id="browserPlaceholder" prefWidth="340">
+            <padding>
+              <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+          </StackPane>
+         </children>
+      </VBox>
   </SplitPane>
 
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
