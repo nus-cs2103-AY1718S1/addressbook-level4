@@ -22,6 +22,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -121,6 +124,16 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -154,7 +167,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyGroup> getGroupList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
             fail("This method should not be called.");
         }
 

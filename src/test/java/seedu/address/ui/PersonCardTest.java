@@ -13,19 +13,22 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
 
+import java.util.HashMap;
+
 public class PersonCardTest extends GuiUnitTest {
+    private HashMap<String, String> colourMap = new HashMap<>();
 
     @Test
     public void display() {
         // no tags
         Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
-        PersonCard personCard = new PersonCard(personWithNoTags, 1);
+        PersonCard personCard = new PersonCard(personWithNoTags, 1, colourMap);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithNoTags, 1);
 
         // with tags
         Person personWithTags = new PersonBuilder().build();
-        personCard = new PersonCard(personWithTags, 2);
+        personCard = new PersonCard(personWithTags, 2, colourMap);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
 
@@ -43,10 +46,10 @@ public class PersonCardTest extends GuiUnitTest {
     @Test
     public void equals() {
         Person person = new PersonBuilder().build();
-        PersonCard personCard = new PersonCard(person, 0);
+        PersonCard personCard = new PersonCard(person, 0, colourMap);
 
         // same person, same index -> returns true
-        PersonCard copy = new PersonCard(person, 0);
+        PersonCard copy = new PersonCard(person, 0, colourMap);
         assertTrue(personCard.equals(copy));
 
         // same object -> returns true
@@ -60,10 +63,10 @@ public class PersonCardTest extends GuiUnitTest {
 
         // different person, same index -> returns false
         Person differentPerson = new PersonBuilder().withName("differentName").build();
-        assertFalse(personCard.equals(new PersonCard(differentPerson, 0)));
+        assertFalse(personCard.equals(new PersonCard(differentPerson, 0, colourMap)));
 
         // same person, different index -> returns false
-        assertFalse(personCard.equals(new PersonCard(person, 1)));
+        assertFalse(personCard.equals(new PersonCard(person, 1, colourMap)));
     }
 
     /**
