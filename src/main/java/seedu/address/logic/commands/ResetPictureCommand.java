@@ -22,23 +22,22 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Marks an indexed person as a favourite in the address book.
+ * Resets ProfPic attribute of Indexed person back to default profile picture in the address book.
  */
-public class AddFavouriteCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "fadd";
-    public static final String COMMAND_ALT = "fa";
+public class ResetPictureCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "ppreset";
+    public static final String COMMAND_ALT = "ppr";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Marks the person identified by the index number used in the last person listing as a favourite.\n"
+            + ": Resets the profile picture of the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD;
+            + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_FAVE_PERSON_SUCCESS = "%1$s has been marked as a favourite contact.";
-    public static final String MESSAGE_ALREADY_FAVOURITE = "This person is already marked as a favourite.";
+    public static final String MESSAGE_RESETPICTURE_PERSON_SUCCESS = "%1$s's profile picture reset to default .";
+    public static final String MESSAGE_ALREADY_DEFAULT = "This person's profile picture is already the default.";
 
     private final Index targetIndex;
 
-    public AddFavouriteCommand(Index index) {
+    public ResetPictureCommand(Index index) {
         requireNonNull(index);
         this.targetIndex = index;
     }
@@ -52,29 +51,29 @@ public class AddFavouriteCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
-        Person editedPerson = createFavePerson(personToEdit);
+        Person editedPerson = resetProfPicPerson(personToEdit);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_ALREADY_FAVOURITE);
+            throw new CommandException(MESSAGE_ALREADY_DEFAULT);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target person must exist");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_FAVE_PERSON_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_RESETPICTURE_PERSON_SUCCESS, editedPerson));
     }
 
     /**
-     * Creates and returns a {@code Person} with the the Favourite attribute set to true.
+     * Creates and returns a {@code Person} with the the ProfPic attribute set to the default picture's path.
      */
-    private static Person createFavePerson(ReadOnlyPerson personToEdit) {
+    private static Person resetProfPicPerson(ReadOnlyPerson personToEdit) {
         Name updatedName = personToEdit.getName();
         Phone updatedPhone = personToEdit.getPhone();
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
-        ProfPic updatedProfPic = personToEdit.getProfPic();
-        Favourite updatedFavourite = new Favourite(true);
+        ProfPic updatedProfPic = new ProfPic("maleicon.png");
+        Favourite updatedFavourite = personToEdit.getFavourite();
         Set<Tag> updatedTags = personToEdit.getTags();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,

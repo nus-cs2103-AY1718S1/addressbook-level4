@@ -12,9 +12,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class RemoveFavouriteCommandParser implements Parser<RemoveFavouriteCommand> {
     /**
-     * Parses the given {@code String} of arguments in the context of the RemoveFaveCommandCommand
-     * and returns an RemoveFaveCommandCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Parses the given {@code String} of arguments in the context of the RemoveFaveCommand
+     * and returns an RemoveFaveCommand object for execution.
+     * @throws ParseException if the user input does not conform to the expected format
      */
     public RemoveFavouriteCommand parse(String args) throws ParseException {
         try {
