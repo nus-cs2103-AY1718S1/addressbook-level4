@@ -64,12 +64,14 @@ public class PersonCard extends UiPart<Region> {
         initTags(person);
         bindListeners(person);
     }
+    //@@author wishingmaid
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
             tagColors.put(tagValue, colors[random.nextInt(colors.length)]);
         }
         return tagColors.get(tagValue);
     }
+    //@@author 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
      * so that they will be notified of any changes.
@@ -90,7 +92,7 @@ public class PersonCard extends UiPart<Region> {
             initTags(person);
         });
     }
-
+    //@@author wishingmaid 
     /** Changes the tag colour*/
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
@@ -99,6 +101,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+    //@@author
     //@@author wishingmaid
     /** Checks if the user has added any photo to the specific contact*/
     private void setImage(ReadOnlyPerson person) {
