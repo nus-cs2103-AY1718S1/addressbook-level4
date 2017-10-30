@@ -137,7 +137,8 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> schedule} into an {@code Optional<Schedule>} if {@code schedule} is present.
+     * Parses a {@code Optional<String> schedule} into an {@code Optional<Schedule>} if {@code schedule}
+     * is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Schedule> parseSchedule(Optional<String> schedule) throws IllegalValueException {

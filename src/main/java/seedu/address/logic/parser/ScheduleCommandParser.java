@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class ScheduleCommandParser implements Parser<ScheduleCommand> {
 
+    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private List<DateGroup> scheduleToParse;
 
     /**t
@@ -54,8 +57,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
         }
-        throw new ParseException(
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
+        throw new ParseException("Please enter the correct prefix");
     }
 
     /**

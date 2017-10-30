@@ -1,20 +1,16 @@
 package seedu.address.model.schedule;
 
 import static java.util.Objects.requireNonNull;
-import seedu.address.model.person.Name;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Represents the user's schedule in the address book.
  */
 public class Schedule {
 
-    public static final String DATE = "next Tuesday 4pm";
-    public static final DateFormat DATE_FORMAT = new SimpleDateFormat(DATE);
     public static final String SCHEDULE_VALIDATION_REGEX = "([\\w\\.]+ [\\w\\.]+)|(\\(Schedule not recorded\\))";
 
     private String personName;
@@ -52,7 +48,7 @@ public class Schedule {
         if (date == null) {
             return "Schedule not fixed with " + getPersonName();
         } else {
-            return "Schedule is fixed with " + getPersonName() + " on " + DATE_FORMAT.format(date);
+            return "Schedule is fixed with " + getPersonName() + " on " + date;
         }
     }
 
@@ -66,7 +62,6 @@ public class Schedule {
 
     @Override
     public int hashCode() {
-        return personName.hashCode();
+        return Objects.hash(personName, date);
     }
-
 }

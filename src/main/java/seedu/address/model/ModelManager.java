@@ -19,6 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
@@ -116,11 +117,17 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void removeSchedule(Schedule schedule) throws ScheduleNotFoundException {
+        addressBook.removeSchedule(schedule);
+        indicateAddressBookChanged();
+    }
+
     /**
      * @return a unmodifiable view of the schedule list
      */
     @Override
-    public ObservableList<Schedule> scheduleList() {
+    public ObservableList<Schedule> getScheduleList() {
         ObservableList<Schedule> list = addressBook.getScheduleList();
         return FXCollections.unmodifiableObservableList(list);
     }

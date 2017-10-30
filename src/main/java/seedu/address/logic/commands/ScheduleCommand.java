@@ -57,7 +57,7 @@ public class ScheduleCommand extends Command {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (targetIndex.getOneBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -71,7 +71,7 @@ public class ScheduleCommand extends Command {
             model.addSchedule(schedule);
         } catch (PersonNotFoundException e) {
             return new CommandResult(PERSON_NOT_FOUND);
-        };
+        }
 
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
         return new CommandResult("Added " + personAddedToSchedule.getName().toString() + " to consultations schedule "
@@ -84,7 +84,7 @@ public class ScheduleCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof ScheduleCommand // instanceof handles nulls
                 && this.date.getTimeInMillis() == ((ScheduleCommand) other).date.getTimeInMillis())
-                && this.targetIndex.getZeroBased() == ((ScheduleCommand) other).targetIndex.getZeroBased();
+                && this.targetIndex.getOneBased() == ((ScheduleCommand) other).targetIndex.getOneBased();
     }
 
     /**

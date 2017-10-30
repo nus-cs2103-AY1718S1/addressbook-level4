@@ -7,6 +7,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
@@ -62,9 +63,12 @@ public interface Model {
      */
     ObservableList<ReadOnlyPerson> sortByPersonName();
 
+    /** Adds the given schedule */
     void addSchedule(Schedule schedule) throws PersonNotFoundException;
 
-    ObservableList scheduleList();
+    /** Adds the given schedule */
+    void removeSchedule(Schedule schedule) throws ScheduleNotFoundException;
 
-
+    /** Returns an unmodifiable view of the schedules list */
+    ObservableList<Schedule> getScheduleList();
 }
