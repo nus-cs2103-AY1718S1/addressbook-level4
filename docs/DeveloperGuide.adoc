@@ -390,8 +390,7 @@ _Figure 2.1.2a : Sequence diagram for `add appointment` Model Component_
 image::SDforAppointment.png[width="800"]
 
 As seen from the diagram, CalendarView depends on the UniquePersonList to update every second on another thread.
-There is no need for the model to prompt the UI to update. 
-
+There is no need for the model to prompt the UI to update.
 // end::appointment[]
 
 === *Enhancement: Set tag color*
