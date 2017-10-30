@@ -370,6 +370,8 @@ As it can be seen, when the `logincommand` is called, if the credentials are cor
 
 The User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
 
+Similiarly, the user can choose to implement the `logoutcommand` which would call on the `restart()` method with the parememter addressbook. The application would then restart and load the public addressbook. 
+
 ==== Design Considerations
 
 **Aspect:** Implementation of `LoginFunction` +
