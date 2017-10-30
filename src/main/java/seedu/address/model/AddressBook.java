@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.UniqueGroupList;
@@ -203,8 +202,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags" +
-            groups.asObservableList().size() + " groups.";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags"
+                + groups.asObservableList().size() + " groups.";
         // TODO: refine later
     }
 

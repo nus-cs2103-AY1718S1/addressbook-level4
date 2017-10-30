@@ -57,7 +57,7 @@ public class GroupCard extends UiPart<Region> {
         String labelText = groupSize + " member";
 
         if (groupSize > 1) {
-           labelText = labelText.concat("s");
+            labelText = labelText.concat("s");
         }
 
         Label groupLabel = new Label(labelText);
