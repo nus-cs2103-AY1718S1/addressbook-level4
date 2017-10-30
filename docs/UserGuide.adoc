@@ -145,6 +145,8 @@ You can list contacts based on tag(s) using the optional keywords : "and" or "or
 
 |`Family Friend Female` |If not specified, keywords are evaluated based on the "AND" logic |Filters contacts with the tags `family` `friend` and `female`.
 
+|=======================================================================
+
 * *Listing contacts by name (Ascending)* +
 You can use `list ascending` to show a list of contacts sorted by name in ascending order. +
 *Format:* `list ascending` +
