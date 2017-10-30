@@ -40,8 +40,8 @@ public class PersonBuilder {
 
     public static final String FILE_SEPERATOR = File.separator;
 
-    public static final String DEFAULT_PHOTO = "src" + FILE_SEPERATOR + "main" + FILE_SEPERATOR + "resources" +
-            FILE_SEPERATOR + "images" + FILE_SEPERATOR + "default" + ".jpg";
+    public static final String DEFAULT_PHOTO = "src" + FILE_SEPERATOR + "main" + FILE_SEPERATOR + "resources"
+            + FILE_SEPERATOR + "images" + FILE_SEPERATOR + "default" + ".jpg";
 
     private Person person;
 
