@@ -407,6 +407,8 @@ For example, when user types in `list module`, a `UniqueModulePredicate` will be
 
 The following sequence diagram shows how the list command works:
 
+image::ListCommandSequenceDiagram.jpg[width="900"]
+
 `FixedCodePredicate` and `FixedLocationPredicate` are used to facilitate the implementation of `view` command.
 According to current listing type, which we can obtain from `ListingUnit`, we create either a `FixedCodePredicate` or a `FixedLocationPredicate` to filter the lesson list and set `currentListingUnit` to be `Lesson`.
 
