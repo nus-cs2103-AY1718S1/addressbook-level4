@@ -61,6 +61,7 @@ public class Gender {
             break;
         case ("other"):
         case("o"):
+
             this.value = GenderType.OTHER;
             break;
         default:
