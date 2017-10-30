@@ -33,6 +33,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
     private ObjectProperty<ReadOnlyPerson> insured;
     private ObjectProperty<ReadOnlyPerson> beneficiary;
     private DoubleProperty premium;
+    private StringProperty premiumString;
     private StringProperty contractPath;
     private StringProperty signingDate;
     private StringProperty expiryDate;
@@ -51,7 +52,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.contractPath = new SimpleStringProperty(contractPath);
         this.signingDate = new SimpleStringProperty(signingDate);
         this.expiryDate = new SimpleStringProperty(expiryDate);
-
+        this.premiumString = new SimpleStringProperty(this.getPremiumString());
     }
 
     public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary,
@@ -65,6 +66,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.contractPath = new SimpleStringProperty(contractPath);
         this.signingDate = new SimpleStringProperty(signingDate);
         this.expiryDate = new SimpleStringProperty(expiryDate);
+        this.premiumString = new SimpleStringProperty(this.getPremiumString());
     }
 
     /**
@@ -81,6 +83,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
             this.beneficiary = new SimpleObjectProperty<>(source.getBeneficiary());
         }
         this.premium = new SimpleDoubleProperty(source.getPremium());
+        this.premiumString = new SimpleStringProperty(this.getPremiumString());
         this.contractPath = new SimpleStringProperty(source.getContractPath());
         this.signingDate = new SimpleStringProperty(source.getSigningDate());
         this.expiryDate = new SimpleStringProperty(source.getExpiryDate());
@@ -181,6 +184,16 @@ public class LifeInsurance implements ReadOnlyInsurance {
     @Override
     public Double getPremium() {
         return premium.get();
+    }
+
+    @Override
+    public StringProperty premiumStringProperty() {
+        return premiumString;
+    }
+
+    @Override
+    public String getPremiumString() {
+        return "S$ " + String.format("%.2f", premium.get());
     }
 
     public void setContractPath(String contractPath) {
