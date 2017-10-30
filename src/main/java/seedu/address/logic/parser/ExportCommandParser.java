@@ -19,8 +19,8 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         String filePath = ParserUtil.parseFilePath(args);
         if (filePath.isEmpty()) {
             throw new ParseException(
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
         }
-            return new ExportCommand(filePath);
+        return new ExportCommand(filePath);
     }
 }

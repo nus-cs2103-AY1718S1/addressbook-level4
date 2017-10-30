@@ -2,9 +2,9 @@ package seedu.address.logic.commands;
 
 import java.io.IOException;
 
-import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.storage.XmlAddressBookStorage;
+
 
 /**
  * Exports the contacts list in file format to a provided directory in the provided filename
