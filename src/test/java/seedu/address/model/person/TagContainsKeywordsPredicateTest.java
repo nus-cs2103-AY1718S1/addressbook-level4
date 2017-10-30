@@ -62,8 +62,7 @@ public class TagContainsKeywordsPredicateTest {
 
     @Test
     public void testTagIsNotValidReturnsFalse() {
-        TagContainsKeywordsPredicate predicate ;
-
+        TagContainsKeywordsPredicate predicate;
         // Non-matching keyword
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("Family"));
         assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
