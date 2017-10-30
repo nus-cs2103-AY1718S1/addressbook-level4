@@ -273,6 +273,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author JasmineSee
     /**
      * Changes to default dark theme.
      */
@@ -313,7 +314,7 @@ public class MainWindow extends UiPart<Region> {
         vBox.getStylesheets().remove("view/DarkTheme.css");
         vBox.getStylesheets().add("view/GreenTheme.css");
     }
-
+    //@@author
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }

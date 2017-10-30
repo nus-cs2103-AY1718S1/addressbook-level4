@@ -1,6 +1,30 @@
+<!-- @@author JasmineSee -->
 .background {
-    -fx-background-color: derive(white, 20%);
-    background-color: white;
+    -fx-background-color: derive(#e6e6e6, 20%);
+    background-color: #bfbfbf;
+}
+
+body {
+    -fx-background-color: derive(#e6e6e6, 20%);
+    background-color: #bfbfbf; /* Used in the default.html file */
+}
+
+h1 {
+    font-size: 32pt;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    text-fill: black;
+    color: black;
+}
+
+h2 {
+    font-size: 20pt;
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    text-fill: black;
+    color: black;
+}
+
+.welcomeImage {
+    width: 100%;
 }
 
 .label {
@@ -20,7 +44,7 @@
 .label-header {
     -fx-font-size: 32pt;
     -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-opacity: 1;
 }
 
@@ -77,20 +101,20 @@
 }
 
 .split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: transparent transparent transparent #d9d9d9;
+    -fx-background-color: derive(#e6e6e6, 20%);
+    -fx-border-color: transparent transparent transparent #b3b3b3;
 }
 
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: derive(#e6e6e6, 20%);
 }
 
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
-    -fx-background-color: derive(white, 20%);
+    -fx-background-color: derive(#e6e6e6, 20%);
 }
 
 .list-cell {
@@ -133,17 +157,17 @@
 }
 
 .anchor-pane {
-     -fx-background-color: #e6e6e6;
+      -fx-background-color: derive(#e6e6e6, 20%);
 }
 
 .pane-with-border {
-     -fx-background-color: #e6e6e6;
-     -fx-border-color: #f2f2f2;
-     -fx-border-top-width: 1px;
+    -fx-background-color: derive(#e6e6e6, 20%);
+    -fx-border-color: derive(#e6e6e6, 10%);
+    -fx-border-top-width: 1px;
 }
 
 .status-bar {
-    -fx-background-color: #e6f2ff;
+     -fx-background-color: derive(#e6e6e6, 20%);
     -fx-text-fill: black;
 }
 
@@ -164,35 +188,36 @@
 }
 
 .status-bar-with-border {
-    -fx-background-color: #cccccc;
-    -fx-border-color: #f2f2f2;
+    -fx-background-color: derive(#e6e6e6, 30%);
+    -fx-border-color: derive(#e6e6e6, 25%);
     -fx-border-width: 1px;
 }
+
 
 .status-bar-with-border .label {
     -fx-text-fill: black;
 }
 
 .grid-pane {
-    -fx-background-color: #e6e6e6;
-    -fx-border-color: #e6e6e6;
+    -fx-background-color: derive(#e6e6e6, 30%);
+    -fx-border-color: derive(#e6e6e6, 30%);
     -fx-border-width: 1px;
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: #e6e6e6;
+    -fx-background-color: derive(#e6e6e6, 30%);
 }
 
 .context-menu {
-    -fx-background-color: #d9d9d9;
+    -fx-background-color: derive(#e6e6e6, 50%);
 }
 
 .context-menu .label {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 .menu-bar {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: derive(#e6e6e6, 20%);
 }
 
 .menu-bar .label {
@@ -247,20 +272,20 @@
 }
 
 .button:default {
-    -fx-background-color: #f2f2f2;
+    -fx-background-color: -fx-focus-color;
     -fx-text-fill: black;
 }
 
 .button:default:hover {
-    -fx-background-color: #bfbfbf;
+    -fx-background-color: derive(-fx-focus-color, 30%);
 }
 
 .dialog-pane {
-    -fx-background-color: white;
+    -fx-background-color: #e6e6e6;
 }
 
 .dialog-pane > *.button-bar > *.container {
-    -fx-background-color: white;
+    -fx-background-color: #e6e6e6;
 }
 
 .dialog-pane > *.label.content {
@@ -270,7 +295,7 @@
 }
 
 .dialog-pane:header *.header-panel {
-    -fx-background-color: derive(#1d1d1d, 25%);
+    -fx-background-color: derive(#e6e6e6, 25%);
 }
 
 .dialog-pane:header *.header-panel *.label {
