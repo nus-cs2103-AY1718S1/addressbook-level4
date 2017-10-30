@@ -44,8 +44,8 @@ public class SelectCommand extends Command {
         String name = person.getName().toString();
 
         EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(person.getWebsite().toString()));
-
         EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased(), name));
     }
 
