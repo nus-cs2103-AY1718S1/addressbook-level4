@@ -55,7 +55,7 @@ public class ImportCommand extends UndoableCommand {
                     Email email = null;
                     Phone phone = null;
                     Address address = null;
-                    Remark remark = null;
+                    Remark remark = new Remark("");
                     Set<Tag> tagList = new HashSet<>();
 
                     newLine = br.readLine();
@@ -104,6 +104,13 @@ public class ImportCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_FILEERROR);
         } catch (IllegalValueException ive) {
             throw new CommandException("Data problem");
+        } finally {
+            try {
+                bis.close();
+                br.close();
+            } catch (IOException ioe) {
+                throw new CommandException("Problem Closing File");
+            }
         }
         return new CommandResult(String.format(MESSAGE_SUCCESS, duplicate));
     }
