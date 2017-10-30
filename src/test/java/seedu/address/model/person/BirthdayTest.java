@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 public class BirthdayTest {
     @Test
     public void isValidBirthday() {
@@ -18,6 +20,19 @@ public class BirthdayTest {
         assertTrue(Birthday.isValidBirthday("11/12/1998"));
         assertTrue(Birthday.isValidBirthday("12/01/1971"));
         assertTrue(Birthday.isValidBirthday("14/01/1986"));
+
+        // birthday is not set
+        assertTrue(Birthday.isValidBirthday("NIL"));
+        assertTrue(Birthday.isValidBirthday(Birthday.BIRTHDAY_TEMPORARY));
+    }
+
+    @Test
+    public void testSymmetricHashCode() throws IllegalValueException {
+        // equals and hashCode check birthday field value
+        Birthday birthdayX = new Birthday("14/01/1986");
+        Birthday birthdayY = new Birthday("14/01/1986");
+        assertTrue(birthdayX.equals(birthdayY) && birthdayY.equals(birthdayX));
+        assertTrue(birthdayX.hashCode() == birthdayY.hashCode());
     }
 }
 

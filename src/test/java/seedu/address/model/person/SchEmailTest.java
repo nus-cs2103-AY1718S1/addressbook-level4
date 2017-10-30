@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 public class SchEmailTest {
 
     @Test
@@ -36,5 +38,17 @@ public class SchEmailTest {
         assertTrue(SchEmail.isValidSchEmail("_user_@_e_x_a_m_p_l_e_.com_"));    // underscores
         assertTrue(SchEmail.isValidSchEmail("peter_jack@very_very_very_long_example.com"));   // long domain name
         assertTrue(SchEmail.isValidSchEmail("if.you.dream.it_you.can.do.it@example.com"));    // long local part
+
+        // school email not filled in
+        assertTrue(SchEmail.isValidSchEmail(SchEmail.SCH_EMAIL_TEMPORARY));
+    }
+
+    @Test
+    public void testSymmetricHashCode() throws IllegalValueException {
+        // equals and hashCode check school email field value
+        SchEmail schEmailX = new SchEmail("PeterJack_1190@example.com");
+        SchEmail schEmailY = new SchEmail("PeterJack_1190@example.com");
+        assertTrue(schEmailX.equals(schEmailY) && schEmailY.equals(schEmailX));
+        assertTrue(schEmailX.hashCode() == schEmailY.hashCode());
     }
 }

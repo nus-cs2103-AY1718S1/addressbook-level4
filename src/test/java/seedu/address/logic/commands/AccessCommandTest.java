@@ -104,17 +104,17 @@ public class AccessCommandTest {
      */
     private void assertExecutionSuccess(Index index) {
         AccessCommand accessCommand = prepareCommand(index);
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        ReadOnlyPerson person = lastShownList.get(index.getZeroBased());
+        String name = person.getName().toString();
 
         try {
             CommandResult commandResult = accessCommand.execute();
-            assertEquals(String.format(accessCommand.MESSAGE_ACCESS_PERSON_SUCCESS, index.getOneBased()),
+            assertEquals(String.format(accessCommand.MESSAGE_ACCESS_PERSON_SUCCESS, index.getOneBased(), name),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
-
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        ReadOnlyPerson person = lastShownList.get(index.getZeroBased());
 
         AccessWebsiteRequestEvent lastEvent = (AccessWebsiteRequestEvent) eventsCollectorRule
                 .eventsCollector.getMostRecent();

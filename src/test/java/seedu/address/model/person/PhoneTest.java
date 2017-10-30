@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+
 public class PhoneTest {
 
     @Test
@@ -21,5 +23,14 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
         assertTrue(Phone.isValidPhone("93121534"));
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
+    }
+
+    @Test
+    public void testSymmetricHashCode() throws IllegalValueException {
+        // equals and hashCode check phone field value
+        Phone phoneX = new Phone("93121534");
+        Phone phoneY = new Phone("93121534");
+        assertTrue(phoneX.equals(phoneY) && phoneY.equals(phoneX));
+        assertTrue(phoneX.hashCode() == phoneY.hashCode());
     }
 }

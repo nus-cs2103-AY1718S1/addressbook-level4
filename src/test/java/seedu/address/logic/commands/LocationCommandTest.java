@@ -103,17 +103,17 @@ public class LocationCommandTest {
      */
     private void assertExecutionSuccess(Index index) {
         LocationCommand locationCommand = prepareCommand(index);
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        ReadOnlyPerson person = lastShownList.get(index.getZeroBased());
+        String name = person.getName().toString();
 
         try {
             CommandResult commandResult = locationCommand.execute();
-            assertEquals(String.format(locationCommand.MESSAGE_LOCATE_PERSON_SUCCESS, index.getOneBased()),
+            assertEquals(String.format(locationCommand.MESSAGE_LOCATE_PERSON_SUCCESS, index.getOneBased(), name),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
         }
-
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        ReadOnlyPerson person = lastShownList.get(index.getZeroBased());
 
         AccessLocationRequestEvent lastEvent = (AccessLocationRequestEvent) eventsCollectorRule
                 .eventsCollector.getMostRecent();

@@ -20,7 +20,7 @@ public class AccessCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_ACCESS_PERSON_SUCCESS = "Accessed website of Person: %1$s";
+    public static final String MESSAGE_ACCESS_PERSON_SUCCESS = "Accessed website of Person: %2$s at Index %1$s";
 
     private final Index targetIndex;
 
@@ -37,9 +37,10 @@ public class AccessCommand extends Command {
         }
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        String name = person.getName().toString();
 
         EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(person.getWebsite().toString()));
-        return new CommandResult(String.format(MESSAGE_ACCESS_PERSON_SUCCESS, targetIndex.getOneBased()));
+        return new CommandResult(String.format(MESSAGE_ACCESS_PERSON_SUCCESS, targetIndex.getOneBased(), name));
     }
 
     @Override

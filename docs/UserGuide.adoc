@@ -77,22 +77,28 @@ Format: `help`
 `since v1.2` `new field: Birthday (Archana) , Website (Darren), Home Number (Cherng Hann) and School Email(Cherng Hann)`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL w/WEBSITE a/ADDRESS [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...`
+
+[TIP]
+Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John t/friend` or as `n/John`. +
+You can see the examples provided below to know more about what details should be inputted. +
+A person can have any number of tags (including 0). +
+Home number, school email, and birthday are optional fields.
 
 [NOTE]
-You can see the examples provided below to know more about what details should be inputted. +
 Website should follow this format `https://www.anyName.com/anyContent` where anyName can only be alphanumeric and anyContent can be the exact url details of the website. +
 It is encouraged to have `https://www.` and a domain name like `.com` or `.net` in the inputted website or it will result in website input error. +
 Birthday should be in proper format of "dd/mm/yyyy" where all elements inputted for birthday are integers.
-
-
-[TIP]
-A person can have any number of tags (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432 h/65812321 e/johnd@example.com se/john@u.nus.edu w/https://www.facebook.com/johnDoe a/John street, block 123, #01-01 b/12/11/1972`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com p/98123414 h/65132100 se/betsy@u.nus.edu w/https://www.facebook.com/betsyCrowe a/Newgate Prison p/1234567 b/02/03/2000 t/criminal`
+
+Example of adding an individual without Birthday, School Email, Home Number:
+
+* `add n/Adam Bait t/friend e/adambait@example.com p/98123414 w/https://www.facebook.com/adamBait a/18 Taiseng p/1234567`
+
 
 === Accessing a person's website : `access`
 
@@ -453,8 +459,8 @@ link:#the-myths-book---user-guide[Back To Top]
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER h/HOME_NUMBER e/EMAIL se/SCHOOL_EMAIL w/WEBSITE a/ADDRESS b/BIRTHDAY [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 h/65812131 e/jamesho@example.com se/jamesho@u.nus.edu w/https://www.facebook.com/jamesHo a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL w/WEBSITE a/ADDRESS [h/HOME_NUMBER] [se/SCHOOL_EMAIL] [b/BIRTHDAY] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com w/https://www.facebook.com/jamesHo a/123, Clementi Rd, 1234665 h/65812131 se/jamesho@u.nus.edu b/12/11/1972 t/friend t/colleague`
 * *Access* : `access INDEX` +
 e.g. `access 2`
 * *Clear* : `clear`
