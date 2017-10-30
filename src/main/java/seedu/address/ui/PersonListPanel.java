@@ -69,15 +69,6 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        setConnections(personList.filtered(person -> event.getNewSelection().group.getGroupMembers().contains(person)));
-
-
-    }
-
-
-    @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);

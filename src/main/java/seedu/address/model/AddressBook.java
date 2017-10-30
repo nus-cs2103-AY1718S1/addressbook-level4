@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.ReadOnlyGroup;
 import seedu.address.model.group.UniqueGroupList;
@@ -61,6 +62,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    public void setGroups(List<? extends  ReadOnlyGroup> groups) throws DuplicateGroupException {
+        this.groups.setGroups(groups);
+    }
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -72,8 +77,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setGroups(newData.getGroupList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateGroupException e) {
+            assert false : "AddressBooks should not have duplicate groups";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -195,7 +203,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags" +
+            groups.asObservableList().size() + " groups.";
         // TODO: refine later
     }
 
@@ -219,13 +228,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
+                && this.groups.equals(((AddressBook) other).groups)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, groups, tags);
     }
 
 }
