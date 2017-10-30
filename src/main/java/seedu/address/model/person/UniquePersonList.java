@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -11,6 +12,7 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.InvalidSortTypeException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -21,7 +23,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
+ * @see CollectionUtil #elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -102,25 +104,37 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      *
      */
-    public void sortPersonList(int type) throws InvalidSortTypeException {
+    public void sortPersonList(String type) throws InvalidSortTypeException {
         final Comparator<Person> sortByName = (
                 Person a, Person b) -> a.getName().toString().compareToIgnoreCase(b.getName().toString());
         final Comparator<Person> sortByTags = (Person a, Person b) -> a.getTags().toString().compareToIgnoreCase((b
                 .getTags().toString()));
-        final Comparator<Person> sortByAdd = (Person a, Person b) -> a.getAddress().toString().compareToIgnoreCase(b
-                .getAddress().toString());
+        final Comparator<Person> sortByCompany = (Person a, Person b) -> a.getCompany().toString().compareToIgnoreCase(b
+                .getCompany().toString());
+        final Comparator<Person> sortByPriority = (Person a, Person b) -> a.getPriority().toString()
+                .compareToIgnoreCase(b.getPriority().toString());
+        final Comparator<Person> sortByStatus = (Person a, Person b) -> a.getStatus().toString().compareToIgnoreCase(b
+                .getStatus().toString());
         switch (type) {
-        case 1:
+        case "name":
             internalList.sort(sortByName);
             break;
-        case 2:
+        case "tag":
             internalList.sort(sortByTags);
             break;
-        case 3:
-            internalList.sort(sortByAdd);
+        case "company":
+            internalList.sort(sortByCompany);
+            break;
+        case "priority":
+            internalList.sort(sortByPriority);
+            break;
+        case "status":
+            internalList.sort(sortByStatus);
             break;
         default:
-            System.out.printf("Sorting type entered not found!\n");
+            //System.out.printf("Sorting type entered not found!\n");
+            throw new InvalidSortTypeException(
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
     }
 

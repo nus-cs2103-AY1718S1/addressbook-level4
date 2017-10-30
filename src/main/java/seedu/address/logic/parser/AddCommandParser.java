@@ -14,6 +14,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.io.File;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -77,7 +78,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             Priority priority = new Priority("L");
             Note note = new Note("NIL");
             //Initialize photo to the default icon
-            Photo photo = new Photo("src/main/resources/images/default.jpg");
+            String s = File.separator;
+            Photo photo = new Photo("src" + s + "main" + s + "resources" + s
+                    + "images" + s + "default.jpg");
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
             Set<Relationship> relationList = ParserUtil.parseRel(argMultimap.getAllValues(PREFIX_RELATIONSHIP));

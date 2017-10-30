@@ -104,7 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void sortPerson(int type) throws InvalidSortTypeException {
+    public void sortPerson(String type) throws InvalidSortTypeException {
         addressBook.sortPerson(type);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();

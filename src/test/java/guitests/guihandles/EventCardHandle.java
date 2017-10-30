@@ -3,7 +3,7 @@ package guitests.guihandles;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
-// @@author yangshuang
+// @@author a0107442n
 
 /**
  * Provides a handle to a person card in the person list panel.
@@ -43,7 +43,9 @@ public class EventCardHandle extends NodeHandle<Node> {
         return timingLabel.getText();
     }
 
-    public String getDate() { return dateLabel.getText(); }
+    public String getDate() {
+        return dateLabel.getText();
+    }
 
     public String getDescription() {
         return descriptionLabel.getText();
