@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -55,7 +56,7 @@ public class EditCommand extends UndoableCommand {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -76,6 +77,11 @@ public class EditCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        if (editPersonDescriptor.isEmailFieldEdited()) {
+            String oldEmail = personToEdit.getEmail().toString();
+            String newEmail = editedPerson.getEmail().toString();
+            renamePhoto(oldEmail, newEmail);
+        }
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -137,7 +143,8 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
@@ -152,6 +159,13 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+        }
+
+        /**
+         * Returns true if email field is edited.
+         */
+        public boolean isEmailFieldEdited() {
+            return CollectionUtil.isAnyNonNull(this.email);
         }
 
         public void setName(Name name) {
@@ -214,6 +228,17 @@ public class EditCommand extends UndoableCommand {
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags());
+        }
+    }
+
+    /**
+     * Renames image file of person to new email if image of person exists.
+     */
+    private void renamePhoto(String oldEmail, String newEmail) {
+        File oldFile = new File("src/main/photos/" + oldEmail + ".png");
+        File newFile = new File("src/main/photos/" + newEmail + ".png");
+        if (oldFile.exists()) {
+            oldFile.renameTo(newFile);
         }
     }
 }

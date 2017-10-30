@@ -18,10 +18,10 @@ public class SortCommandTest {
     private LogicManager logic;
     private Model model;
 
-    private Person alice = new PersonBuilder().withName("Alice").build();
-    private Person bob = new PersonBuilder().withName("Bob").build();
-    private Person charlie = new PersonBuilder().withName("Charlie").build();
-    private Person zack = new PersonBuilder().withName("Zack").build();
+    private Person alice = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
+    private Person bob = new PersonBuilder().withName("Bob").withEmail("bob@example.com").build();
+    private Person charlie = new PersonBuilder().withName("Charlie").withEmail("charlie@example.com").build();
+    private Person zack = new PersonBuilder().withName("Zack").withEmail("zack@example.com").build();
 
     @Before
     public void setup() throws Exception {
