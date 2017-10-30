@@ -2,11 +2,8 @@ package seedu.address.model.reminder;
 
 import static java.util.Objects.requireNonNull;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
@@ -31,6 +28,14 @@ public class UniqueReminderList implements Iterable<Reminder> {
     private final ObservableList<Reminder> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyReminder> mappedList = EasyBind.map(internalList, (reminder) -> reminder);
+
+    /**
+     * Constructs empty UniqueReminderList
+     */
+    public UniqueReminderList(ArrayList<Reminder> reminders) {
+        requireNonNull(reminders);
+        internalList.addAll(reminders);
+    }
 
     /**
      * Returns true if the list contains an equivalent reminder as the given argument.
@@ -95,13 +100,15 @@ public class UniqueReminderList implements Iterable<Reminder> {
         this.internalList.setAll(replacement.internalList);
     }
 
-    public void setReminders(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
-        final UniqueReminderList replacement = new UniqueReminderList();
-        for (final ReadOnlyReminder reminder : reminders) {
-            replacement.add(new Reminder(reminder));
-        }
-        setReminders(replacement);
+    /**
+     * Returns all properties (collection of values in all entries) in this map as a Set. This set is mutable
+     * and change-insulated against the internal list.
+     */
+    public ArrayList<Reminder> toList() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new ArrayList<>(internalList);
     }
+
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

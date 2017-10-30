@@ -1,7 +1,6 @@
 package seedu.address.model.reminder;
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.event.Event;
-import seedu.address.model.property.DateTime;
 
 /**
  * A read-only immutable interface for a Reminder in the addressBook.

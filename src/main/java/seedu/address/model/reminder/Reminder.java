@@ -14,9 +14,9 @@ import seedu.address.model.event.Event;
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Reminder implements ReadOnlyReminder {
-    private ObjectProperty<String> message;
     private ObjectProperty<Event> event;
-
+    private ObjectProperty<String> message;
+    private ObjectProperty<String> name;
     /**
      * Every field must be present and not null.
      */
@@ -25,14 +25,18 @@ public class Reminder implements ReadOnlyReminder {
         this.event = new SimpleObjectProperty<>(event);
         this.message = new SimpleObjectProperty<>(message);
     }
-    public Reminder() {
-    }
+    //TODO: better error handling
+    public Reminder(String name, String message) {
+        requireAllNonNull(name, message);
+        this.name = new SimpleObjectProperty<>(name);
+        this.message = new SimpleObjectProperty<>(message);
 
+    }
     /**
      * Creates a copy of the given ReadOnlyReminder.
      */
     public Reminder(ReadOnlyReminder source) {
-        this( source.getEvent(), source.getMessage());
+        this(source.getEvent(), source.getMessage());
     }
     @Override
     public ObjectProperty<Event> eventProperty() {

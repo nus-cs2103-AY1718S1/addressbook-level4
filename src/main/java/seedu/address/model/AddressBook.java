@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +21,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.UniqueReminderList;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -46,7 +51,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
         events = new UniqueEventList();
-        reminders = new UniqueReminderList();
+        reminders = new UniqueReminderList(new ArrayList<>());
     }
 
     public AddressBook() {
@@ -258,6 +263,31 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /*****************************************************
+     * Reminder-level operations
+     *****************************************************/
+
+    /**
+     * Adds a reminder to the address book.
+     *
+     * @throws DuplicateReminderException if an equivalent reminder already exists.
+     */
+    public void addReminder(ReadOnlyReminder r) throws DuplicateReminderException {
+        Reminder newReminder = new Reminder(r);
+        reminders.add(newReminder);
+    }
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws ReminderNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeReminder(ReadOnlyReminder key) throws ReminderNotFoundException {
+        if (reminders.remove(key)) {
+            return true;
+        } else {
+            throw new ReminderNotFoundException();
+        }
+    }
+
+    /*****************************************************
      * Util methods
      *****************************************************/
 
@@ -275,6 +305,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyEvent> getEventList() {
         return events.asObservableList();
+    }
+    @Override
+    public ObservableList<ReadOnlyReminder> getReminderList() {
+        return reminders.asObservableList();
     }
 
     @Override

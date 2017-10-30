@@ -1,9 +1,12 @@
 package seedu.address.model.event;
 
+import java.util.ArrayList;
+
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.property.Address;
 import seedu.address.model.property.DateTime;
 import seedu.address.model.property.Name;
+import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.reminder.Reminder;
 import seedu.address.model.reminder.UniqueReminderList;
 
@@ -21,7 +24,7 @@ public interface ReadOnlyEvent {
     ObjectProperty<Address> venueProperty();
     Address getVenue();
     ObjectProperty<UniqueReminderList> reminderProperty();
-    Reminder getReminder();
+    ArrayList<Reminder> getReminders();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

@@ -3,10 +3,8 @@ package seedu.address.model.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -30,23 +28,30 @@ public class Event implements ReadOnlyEvent {
     /**
      * Every field must be present and not null.
      */
+    public Event(Name name, DateTime time, Address venue, ArrayList<Reminder> reminders) {
+        requireAllNonNull(name, time, venue);
+        this.name = new SimpleObjectProperty<>(name);
+        this.time = new SimpleObjectProperty<>(time);
+        this.venue = new SimpleObjectProperty<>(venue);
+        this.reminders = new SimpleObjectProperty<>(new UniqueReminderList(reminders));
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
     public Event(Name name, DateTime time, Address venue) {
         requireAllNonNull(name, time, venue);
         this.name = new SimpleObjectProperty<>(name);
         this.time = new SimpleObjectProperty<>(time);
         this.venue = new SimpleObjectProperty<>(venue);
-
-        Set<Reminder> reminders = new HashSet<>();
-
-        // ensuring every instance of Event has an empty list of reminders in it.
-        this.reminders = new SimpleObjectProperty<>();
     }
 
     /**
      * Creates a copy of the given ReadOnlyEvent.
      */
     public Event(ReadOnlyEvent source) {
-        this(source.getName(), source.getTime(), source.getVenue());
+        this(source.getName(), source.getTime(), source.getVenue(), source.getReminders()
+        );
     }
 
     public void setName(Name name) {
@@ -99,8 +104,8 @@ public class Event implements ReadOnlyEvent {
      * if modification is attempted.
      */
     @Override
-    public Set<Reminder> getReminder() {
-        return Collections.unmodifiableSet(reminders.get().toSet());
+    public ArrayList<Reminder> getReminders() {
+        return (reminders.get().toList());
     }
 
 

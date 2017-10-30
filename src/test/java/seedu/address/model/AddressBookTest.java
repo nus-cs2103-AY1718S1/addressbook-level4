@@ -28,6 +28,8 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.Reminder;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -46,6 +48,7 @@ public class AddressBookTest {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
         assertEquals(Collections.emptyList(), addressBook.getEventList());
+        assertEquals(Collections.emptyList(), addressBook.getReminderList());
     }
 
     @Test
@@ -74,7 +77,14 @@ public class AddressBookTest {
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
         List<Event> newEvents = Arrays.asList(new Event(EVENT1), new Event(EVENT2));
-        AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags);
+        Reminder r1 = new Reminder(EVENT1.getName().toString(), EVENT1.getTime().toString());
+        EVENT1.getReminders().add(r1);
+        Reminder r2 = new Reminder(EVENT2.getName().toString(), EVENT2.getTime().toString());
+        EVENT2.getReminders().add(r2);
+        ArrayList<Reminder> newReminders = new ArrayList<>();
+        newReminders.add(r1);
+        newReminders.add(r2);
+        AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags, newReminders);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -87,7 +97,8 @@ public class AddressBookTest {
         newTags.addAll(BENSON.getTags());
         // Repeat EVENT1 twice
         List<Event> newEvents = Arrays.asList(new Event(EVENT1), new Event(EVENT1));
-        AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags);
+        List<Reminder> newReminders = new ArrayList<>(EVENT1.getReminders());
+        AddressBookStub newData = new AddressBookStub(newPersons, newEvents, newTags, newReminders);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -164,12 +175,14 @@ public class AddressBookTest {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<ReadOnlyEvent> events = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyReminder> reminders = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends ReadOnlyEvent> events,
-                        Collection<? extends Tag> tags) {
+                        Collection<? extends Tag> tags, Collection<? extends Reminder> reminders) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.events.setAll(events);
+            this.reminders.setAll(reminders);
         }
 
         @Override
@@ -181,7 +194,10 @@ public class AddressBookTest {
         public ObservableList<ReadOnlyEvent> getEventList() {
             return events;
         }
-
+        @Override
+        public ObservableList<ReadOnlyReminder> getReminderList() {
+            return reminders;
+        }
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;

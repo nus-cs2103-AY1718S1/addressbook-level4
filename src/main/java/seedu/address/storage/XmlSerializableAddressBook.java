@@ -16,6 +16,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.property.PropertyManager;
 import seedu.address.model.property.exceptions.DuplicatePropertyException;
 import seedu.address.model.property.exceptions.PropertyNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -32,6 +33,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedEvent> events;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedReminder> reminders;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -80,6 +83,19 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(events);
+    }
+    @Override
+    public ObservableList<ReadOnlyReminder> getReminderList() {
+        final ObservableList<ReadOnlyReminder> reminders = this.reminders.stream().map(p -> {
+            try {
+                return p.toModelType();
+            } catch (IllegalValueException | PropertyNotFoundException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(reminders);
     }
     @Override
     public ObservableList<Tag> getTagList() {
