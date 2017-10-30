@@ -9,14 +9,13 @@ import javafx.stage.Stage;
 /**
  * A handle to the {@code HelpWindow} of the application.
  */
-public class CalendarWindowHandle extends StageHandle {
+public class EmailWindowHandle extends StageHandle {
 
-    public static final String CALENDAR_WINDOW_TITLE = "Calendar";
+    public static final String EMAIL_WINDOW_TITLE = "Email";
 
+    private static final String EMAIL_WINDOW_BROWSER_ID = "#browser";
 
-    private static final String CALENDAR_WINDOW_BROWSER_ID = "#browser";
-
-    public CalendarWindowHandle(Stage stage) {
+    public EmailWindowHandle(Stage stage) {
         super(stage);
     }
 
@@ -24,13 +23,14 @@ public class CalendarWindowHandle extends StageHandle {
      * Returns true if a help window is currently present in the application.
      */
     public static boolean isWindowPresent() {
-        return new GuiRobot().isWindowShown(CALENDAR_WINDOW_TITLE);
+        return new GuiRobot().isWindowShown(EMAIL_WINDOW_TITLE);
     }
+
 
     /**
      * Returns the {@code URL} of the currently loaded page.
      */
     public URL getLoadedUrl() {
-        return WebViewUtil.getLoadedUrl(getChildNode(CALENDAR_WINDOW_BROWSER_ID));
+        return WebViewUtil.getLoadedUrl(getChildNode(EMAIL_WINDOW_BROWSER_ID));
     }
 }

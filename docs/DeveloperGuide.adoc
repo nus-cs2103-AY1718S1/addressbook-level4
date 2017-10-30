@@ -1,4 +1,4 @@
-= About ConTag's Developer Guide
+= ConTag - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,95 +12,154 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T15-B2/main/tree/master
 
+{empty} +
+
+image::contag_logo_ugdg.png[align="center"]
+
+{empty} +
+
 By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
 
-Welcome to the ConTag's Developer Guide! Fret not if you are a developer or user,regardless if you are a beginner or expert, this guide brings to you all the necessary information you will need to navigate around the address book.This includes the initial set up, implementation of the features, coding, documentation writing to the testing of the application.Let's start from zero knowledge to full knowledge!
+Welcome to the ConTag's Developer Guide! Whether you are a beginner or an expert developer, if you are looking to improve and customise our ConTag application, this is the perfect place to get you started.
 
-== Setting up
+This comprehensive guide brings you all the necessary information you need to navigate around ConTag with ease, which includes:
+
+* Step by step guide to set up your project
+* Design and implementation of ConTag features
+* *(NOT SURE WHETHER TO INCLUDE THE REST)*
+
+=== Overview of the ConTag Project
+
+ConTag was initially developed to be an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers.
+
+*(ANY MORE THINGS TO ADD HERE? It has the following capabilities:??)*
+
+*(MENTION THAT CONTAG IS STILL IN DEVELOPMENT? MANAGE THEIR EXPECTATION THAT IT WILL STILL CHANGE?)*
+
+*(MENTION THAT THIS IS AN OPEN SOURCE PROJECT? THEY ARE WELCOME TO CONTRIBUTE OR FORK TO DEVELOP THEIR OWN APPLICATION? OR SAY THAT THEY CANNOT PR, SOLELY FOR THE DEVELOPMENT OF THEIR OWN APPLICATION ONLY, AND HENCE THE EXPECTATION THAT CONTAG MAY CHANGE IF THEY FORK AT DIFFERENT TIME)*
+
+*(ENSURE THEM THAT WE WILL ONLY MOVE ON TO THE NEXT VERSION WHEN EVERYTHING IS WORKING PROPERLY, SO NO MATTER WHEN THEY FORK, THEY WILL ALWAYS HAVE A WORKING COPY OF THE PROJECT)*
+*(WE NEED TO MAKE SURE WE KNOW THE CONTEXT OF THE DEVELOPER GUIDE)*
+
+*(WHERE DO WE MENTION THAT THIS IS V1.5? WE WANT TO DEVELOP UNTIL V2.0, AND HENCE THE USER STORIES THAT HAVE NOT BEEN IMPLEMENTED. MENTION THAT EVERYTHING IN THE USER STORIES WILL BE IMPLEMENTED BY V2.0?)*
+
+*(MENTION THAT DEVELOPMENT WILL BE HALTED AT V2.0. SO AFTER THAT, CAN FORK TO DEVELOP THEIR OWN ADDRESS BOOK. NO MORE PR?)*
+
+=== How to Use the Developer Guide
+
+The developer guide contains quite a number of information, so it can be quite intimidating. However, you do not have to read the developer guide in a linear order. Instead, you can use the linked content list at the top of this guide to navigate towards specific issues as needed.
+
+This guide has been organised in a manner that mimics how you would go about developing your features. It starts with setting up your project to documenting your features implementation details, before ending off with additional information, such as User Stories and Glossary.
+
+Finally, as you read the developer guide, you will see these two icons:
+
+[NOTE]
+This symbol indicates something for you to take note of.
+
+[TIP]
+This symbol indicates a tip to help you.
+
+*(NOT SURE WHETHER TO MENTION THAT APPENDIX A IS CATERED TOWARDS BEGINNER DEVELOPER TO GET THEM STARTED)*
+
+== Setting Up
 
 === Prerequisites
 
-This section guides you on the necessary set up  you need to work with the code optimally:
+Before starting your project, make sure that you have all the following:
 
-. *JDK `1.8.0_60`* or later
+* *JDK `1.8.0_60`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 
-. *IntelliJ* IDE
+* *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
+IntelliJ, by default, has Gradle and JavaFX plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
-. Overall *understanding* and *knowledge* of `JAVA`
+* Overall *understanding* and *knowledge* of `JAVA`
 +
 [NOTE]
 This application is written in JAVA. +
-All example codes in the guide uses JAVA langugae
+All example codes in the guide uses JAVA language. +
+*(HOW ABOUT JAVAFX THAT REQUIRES MINIMUM UNDERSTANDING OF XML, JSON AND CSS?)*
 
-=== Setting up the project in your computer
+=== Setting up the Project in Your Computer (PICTURES - BUT HOW MANY?)
 
-Before you start coding, follow these steps to set up the project in Intellij IDEA:
+*(SHOULD WE PUT A SINGLE SENTENCE HERE? AND OTHER PLACES AS WELL? THE SENTENCE WILL BE A REITERATION OF THE SUBHEADING ...)*
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
+. Fork this repository and clone the fork to your computer *(WHEN CAN WE COMBINE TO ACTION INTO ONE POINT?)*
+. Open IntelliJ IDEA
+[NOTE]
+If you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first.
 . Set up the correct JDK version for Gradle
 .. Click `Configure` > `Project Defaults` > `Project Structure`
 .. Click `New...` and find the directory of the JDK
 . Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
+. Locate the `build.gradle` file and select it by clicking `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
-This will generate all resources required by the application and tests.
+. Open a console and run the command `gradlew processResources` (Windows) or `./gradlew processResources` (Mac/Linux)
 
-=== Verifying the setup
+If everything goes well, it should finish with the `BUILD SUCCESSFUL` message. This indicates the generation of all resources required by the application and tests.
 
-To make sure that the application runs as expected after setting up, do the following:
+=== Verifying the Setup
 
-. Run the `seedu.address.MainApp` and try a few commands
-. link:#testing[Run the tests] to ensure they all pass.
+To make sure that the application runs as expected after the initial set up setting up, do the following: *(DO WE NEED THIS LINE? OR HOW CAN WE IMPROVE IT?)*
 
-=== Configurations to do before writing code
+. Run the `seedu.address.MainApp` and try a few commands *(REFER TO USER GUIDE? CAN WE SAY THIS? LINK?)*
+. link:#testing[Run the tests] to ensure they all pass. *(DO WE NEED TO WRITE REFER TO SECTION ... FOR THE TYPES OF TESTS, ETC? SAME FOR ALL THE LINKS?)*
 
-==== Configuring the coding style
+=== Configurations to Do Before Writing Code (PICTURES!!!)
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+==== Configuring the Coding Style
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours *(CHANGE TO CONTAG'S?)*. However, it uses a different import order from ours *(CHANGE TO CONTAG'S?)*. To rectify, *(WHEN TO USE , AND WHEN TO USE : ? ANY WAY TO STANDARDISE?)*
+
+. Go to `File` > `Settings...` (Windows/Linux) or `IntelliJ IDEA` > `Preferences...` (macOS)
 . Select `Editor` > `Code Style` > `Java`
 . Click on the `Imports` tab to set the order
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* Set `Class count to use import with '\*'` and `Names count to use static import with '*'` to `999` to prevent IntelliJ from contracting the import statements
+* Configure `Import Layout` to follow the following order. You need to add `<blank line>` in between each `import`:
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+.. `import static all other imports`
+.. `import java.\*`
+.. `import javax.*`
+.. `import org.\*`
+.. `import com.*`
+.. `import all other imports`
 
-==== Updating documentation to match your fork
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code. *(FOR THIS KIND OF LINK, DO WE NEED TO PROVIDE CONTEXT (WHAT IT IS ABOUT) OR WHICH FOLDER IT CAN BE FOUND?)*
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+==== Updating Documentation to Match Your Fork (DELETE THIS PART? OR SET IT AS A TIP AND CHANGE THE LINK TO POINT TO OUR PROJECT?)
 
-==== Setting up CI
+After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repository. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+
+==== Setting up CI (TO BE DELETED? OR SET IT AS A TIP?)
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
-==== Getting started with coding
+==== Getting Started with Coding
 
 When you are ready to start coding,
 
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started]. *(PUT THIS AT THE INTRODUCTION PART INSTEAD? BOTH?)*
 
 == Design
+
+*(WRITE SOMETHING HERE? WHAT IS DESIGN? WHY IS IT IMPORTANT FOR DEVELOPER TO KNOW ABOUT DESIGN?)*
 
 === Architecture
 
@@ -194,7 +253,7 @@ _Figure 2.3.1 : Structure of the Logic Component_
 
 _Figure 2.3.2_ shows finer details concerning `XYZCommand` and `Command` in _Figure 2.3.1_.
 
-image::LogicCommandClassDiagram.png[width="800"]
+image::NewLogicComponentCommandClassDiagram.png[width="800"]
 _Figure 2.3.2 : Structure of Commands in the Logic Component.
 
 *API* :
@@ -223,7 +282,7 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-image::ModelClassDiagram.png[width="800"]
+image::NewModelComponentClassDiagram.PNG[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -237,7 +296,7 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-image::StorageClassDiagram.png[width="800"]
+image::NewStorageClassDiagram.PNG[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
@@ -258,12 +317,12 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. _Figure 3.1.1_ below shows the inheritance diagram for commands:
 
-image::LogicCommandClassDiagram.png[width="800"]
+image::NewLogicComponentCommandClassDiagram.png[width="800"]
 _Figure 3.1.1 : Inheritance Diagram for Commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
-Commands that are not undoable are implemented this way:
+Commands that are not undoable are implemented this way in _Figure 3.1.2_:
 [source,java]
 ----
 public class ListCommand extends Command {
@@ -273,8 +332,9 @@ public class ListCommand extends Command {
     }
 }
 ----
+_Figure 3.1.2 : Code section in ListCommand.java_
 
-With the extra layer, the commands that are undoable are implemented this way:
+With the extra layer, the commands that are undoable are implemented this way in _Figure 3.1.3_:
 [source,java]
 ----
 public abstract class UndoableCommand extends Command {
@@ -293,61 +353,62 @@ public class DeleteCommand extends UndoableCommand {
     }
 }
 ----
+_Figure 3.1.3 : Code section in UndoableCommand.java_
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-As depicted in _Figure 3.1.2_: The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+As depicted in _Figure 3.1.4_: The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 3.1.2 : UndoRedoStack Diagram 1_
+_Figure 3.1.4 : UndoRedoStack Diagram 1_
 
-As depicted in _Figure 3.1.3_: As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As depicted in _Figure 3.1.5_: As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 3.1.3 : UndoRedoStack Diagram 2_
+_Figure 3.1.5 : UndoRedoStack Diagram 2_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-As depicted in _Figure 3.1.4_: We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+As depicted in _Figure 3.1.6_: We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 3.1.4 : UndoRedoStack Diagram 3_
+_Figure 3.1.6 : UndoRedoStack Diagram 3_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The sequence diagram in _Figure 3.1.5_ below shows how the undo operation works:
+The sequence diagram in _Figure 3.1.7_ below shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 3.1.5 : Undo sequence diagram_
+_Figure 3.1.7 : Undo sequence diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-As depicted in _Figure 3.1.6_: The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+As depicted in _Figure 3.1.8_: The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 3.1.6 : UndoRedoStack Diagram 4_
+_Figure 3.1.8 : UndoRedoStack Diagram 4_
 
-As depicted in _Figure 3.1.7_: Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution.
+As depicted in _Figure 3.1.9_: Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 3.1.7 : UndoRedoStack Diagram 5_
+_Figure 3.1.9 : UndoRedoStack Diagram 5_
 
-The following activity diagram in _Figure 3.1.8_ below summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram in _Figure 3.1.10_ below summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 3.1.8 : UndoRedoStack Activity Diagram_
+_Figure 3.1.10 : UndoRedoStack Activity Diagram_
 
-==== Design Considerations
+==== Design Considerations for `UndoableCommand`
 
 **Aspect:** Implementation of `UndoableCommand` +
-**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
 **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
 **Cons:** Hard for new developers to understand the template pattern. +
 **Alternative 2:** Just override `execute()` +
@@ -390,7 +451,7 @@ _Figure 3.1.8 : UndoRedoStack Activity Diagram_
 
 This function is an enhancement of the exisitng help function, which opens the help command. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Model and Logic components of the application.
 
-For the Model component, `CommandIdentifier` is implemented this way:
+For the Model component, `CommandIdentifier` is implemented this way in _Figure 3.2.1_:
 [source,java]
 ----
 public class CommandIdentifier {
@@ -410,10 +471,11 @@ public class CommandIdentifier {
     }
 }
 ----
+_Figure 3.2.1: Code section in CommandIdentifier.java_
 [NOTE]
 A valid command identifier includes all existing command and their aliases.
 
-For the Logic component, when the user key in help command in the command box, `HelpCommandParser` will be called. It parses user input that folows the help command, which may contain the optional command identifier argument:
+For the Logic component, when the user key in help command in the command box, `HelpCommandParser` will be called. It parses user input that folows the help command, which may contain the optional command identifier argument, as shown in _Figure 3.2.2_:
 [source,java]
 ----
 public HelpCommand parse(String args) throws ParseException {
@@ -424,7 +486,9 @@ public HelpCommand parse(String args) throws ParseException {
     // ... calls HelpCommand ...
 }
 ----
-To accomodate this enhancement, the following method is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object:
+_Figure 3.2.2: Code section in HelpCommandParser.java_
+
+To accomodate this enhancement, the following method is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object, as shown in _Figure 3.2.3_:
 [source,java]
 ----
 public static CommandIdentifier parseCommandIdentifier(String commandWord) throws IllegalValueException {
@@ -432,7 +496,9 @@ public static CommandIdentifier parseCommandIdentifier(String commandWord) throw
     return new CommandIdentifier(commandWord.trim());
 }
 ----
-Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. The execute method in the `HelpCommand` is implemented as follows:
+_Figure 3.2.3: Code section in ParserUtil.java_
+
+Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. The execute method in the `HelpCommand` is implemented as follows in _Figure 3.2.4_:
 [source,java]
 ----
 public CommandResult execute() {
@@ -441,16 +507,18 @@ public CommandResult execute() {
     // ... default case: opens help window ...
 }
 ----
-The `HelpCommand` execution is done in `AddressBookParser`. _Figure 3.4.1_ below shows the output of this function.
+_Figure 3.2.4: Code section in HelpCommand.java_
+
+The `HelpCommand` execution is done in `AddressBookParser`. _Figure 3.2.5_ below shows the output of this function.
 
 image::HelpEnhancementScreenShot.PNG[width="800"]
-_Figure 3.4.1 : Output of `HelpCommand` execution_
+_Figure 3.2.5 : Output of `HelpCommand` execution_
 
 === Locating a person's address [Since v1.2]
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
 
-When the LocateCommand is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`:
+When the LocateCommand is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 3.3.1_:
 [source,java]
 ----
 public class LocateCommand extends Command {
@@ -465,7 +533,9 @@ public class LocateCommand extends Command {
     }
 }
 ----
-The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it:
+_Figure 3.3.1: Code section in LocateCommand.java_
+
+The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it, as shown in _Figure 3.3.2_:
 [source,java]
 ----
 public class PersonListPanel extends UiPart<Region> {
@@ -487,13 +557,14 @@ public class PersonListPanel extends UiPart<Region> {
     }
 }
 ----
+_Figure 3.3.2: Code section in PersonListPanel.java_
 
-The UI outcome of scrolling and selecting a `PersonCard` in the `PersonListPanel` is shown in Figure 3.5.1 below:
+The UI outcome of scrolling and selecting a `PersonCard` in the `PersonListPanel` is shown in Figure 3.3.3 below:
 
-image::PersonListPanelSelect.png[width="200"]
-_Figure 3.5.1 : UI outcome of scrolling and selecting a `PersonCard`_
+image::PersonListPanelSelect.png[width="400"]
+_Figure 3.3.3 : UI outcome of scrolling and selecting a `PersonCard`_
 
-When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below:
+When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below in _Figure 3.3.4_:
 [source,java]
 ----
 public class PersonListPanel extends UiPart<Region> {
@@ -528,8 +599,9 @@ public class PersonListPanel extends UiPart<Region> {
     }
 }
 ----
+_Figure 3.3.4: Code section 2 in PersonListPanel.java_
 
-The `BrowserPanel` contains a `WebView` which displays a web page of the google map location of the selected person's address. It is able to do so as it is an event subscriber for the `PersonPanelSelectionChangedEvent` as shown below:
+The `BrowserPanel` contains a `WebView` which displays a web page of the google map location of the selected person's address. It is able to do so as it is an event subscriber for the `PersonPanelSelectionChangedEvent` as shown below in _Figure 3.3.5_:
 [source,java]
 ----
 public class BrowserPanel extends UiPart<Region> {
@@ -541,6 +613,8 @@ public class BrowserPanel extends UiPart<Region> {
     }
 }
 ----
+_Figure 3.3.5: Code section in BrowserPanel.java_
+
 By being a subscriber to this event, the `WebView` in `BrowserPanel` will load the corresponding web page whenever a new
 `PersonPanelSelectionChangedEvent` is posted to the `EventBus`.
 
@@ -551,7 +625,7 @@ By being a subscriber to this event, the `WebView` in `BrowserPanel` will load t
 The find function `FindCommand` which reside in `Logic` will support the search of contact by any keywords. The keywords must be a full word match.The find function only deals with existing parameters `Name`, `Email`, `Address`, `Phone` and `Tags`. Such parameters inherit from `Person` which resides inside `Model`.
 
 
-`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input. Checks will be conducted via l`FindCommandParserl` which inherits from `FindCommand`.
+`Find Command` will only execute when the prefix of the parameters is given. Any other prefix as input will be considered as invalid input. Checks will be conducted via `FindCommandParser` which inherits from `FindCommand`, as shown in _Figure 3.4.1_.
 
 [source,java]
 ----
@@ -565,42 +639,58 @@ public class FindCommandParser implements Parser<FindCommand> {
 }
 
 ----
+_Figure 3.4.1: Code section in FindCommandParser.java_
+
 [NOTE]
 A valid find command can only search for keywords based on specific prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG]
 
-Also,the input will first have to be tokenised in order to extract the prefix for for the search procedure. In absence of valid prefix ,an exception will be thrown.
+Also,the input will first have to be tokenised in order to extract the prefix for for the search procedure. In absence of valid prefix ,an exception will be thrown, as shown in _Figure 3.4.2_.
 [source,java]
 ----
         if (!areSomePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TAG)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 ----
+_Figure 3.4.2: Code section 2 in FindCommandParser.java_
 
 A successful tokenism of the prefix will ensure that the keywords are  allocated to  method `containsKeyWordPredicate` under `Model` . The methods takes in the user input and returns a `containsKeyWordPredicate`. Addressbook will search for the keywords in the revelvant parameters.
 
-Upon any successful match, the particulars of the contact will be displayed. _Figures 3.6.1a to 3.6.1e_ below indicate the various outcomes of search function by  using `FindCommand` .
+Upon any successful match, the particulars of the contact will be displayed. _Figures 3.4.3a to 3.4.3e_ below indicate the various outcomes of search function by  using `FindCommand` .
 
 
-image::FindCommand_Name.PNG[width="300"]
-_Figure 3.6.1a : Find by name [n/NAME]_
+image::FindCommand_Name.PNG[width="400"]
+_Figure 3.4.3a : Find by name [n/NAME]_
 
-image::FindCommand_Phone.PNG[width="300"]
-_Figure 3.6.1b : Find by phone [p/PHONE]_
+image::FindCommand_Phone.PNG[width="400"]
+_Figure 3.4.3b : Find by phone [p/PHONE]_
 
-image::FindCommand_Email.PNG[width="300"]
-_Figure 3.6.1c : Find by email [e/EMAIL]_
+image::FindCommand_Email.PNG[width="400"]
+_Figure 3.4.3c : Find by email [e/EMAIL]_
 
-image::FindCommand_Address.PNG[width="300"]
-_Figure 3.6.1d : Find by address [a/ADDRESS]_
+image::FindCommand_Address.PNG[width="400"]
+_Figure 3.4.3d : Find by address [a/ADDRESS]_
 
-image::FindCommand_Tag.PNG[width="300"]
-_Figure 3.6.1e : Find by tag [t/TAG]_
+image::FindCommand_Tag.PNG[width="400"]
+_Figure 3.4.3e : Find by tag [t/TAG]_
+
+==== Design Considerations for `FindCommand`
+
+
+**Aspect:** Enhancement of `FindCommand` +
+**Alternative 1 (current choice)**: Searching for contact based on the `prefix` of search field given. +
+**Pros:** To brings about greater convenience for the user during the searching process. User no longer not restricted to find contact by name soley. +
+**Cons:** User have to be know the various `prefixes` in order to be able to search for the contract via the attribute of the contact. +
+**Alternative 2:** Searching for contact without having the need to input prefix +
+**Pros:** Easier for users to find a contact without the hassle to have full knowledge of the various `prefixes`. Might be more intuitive for user. +
+**Cons:** Have to look through all the attribute of contact thus slowing down FindCommand. +
+
+---
 
 //tag::CopyCommand[]
 === Copy email address to clipboard [Since v1.2]
 
 The `copy` function uses the Clipboard in Toolkit API to automatically copy emails of selected indexes onto the system clipboard.
-The index(es) selected must exist in the current result display window.
+The index(es) selected must exist in the current result display window, as shown in _Figure 3.5.1_.
 
 [source,java]
 ----
@@ -611,8 +701,9 @@ StringSelection messageOutputSelection = new StringSelection(messageOutput);
 clipboard.setContents(messageOutputSelection, null);
 
 ----
+_Figure 3.5.1: Code section in CopyCommand.java_
 
-The selected emails are stored in a string ArrayList, then re-formatted to remove square brackets around the ArrayList and change all commas to semi-colons before sending the result to system clipboard output. This ensures that the final output string copied to clipboard has maximum compatibility with formatting conventions in email applications.
+The selected emails are stored in a string ArrayList, then re-formatted to remove square brackets around the ArrayList and change all commas to semi-colons before sending the result to system clipboard output, as shown in _Figure 3.5.2_ below. This ensures that the final output string copied to clipboard has maximum compatibility with formatting conventions in email applications.
 
 [source,java]
 ----
@@ -623,20 +714,24 @@ String messageOutput = outputList.toString().substring(1, outputList.toString().
 messageOutput = messageOutput.replace(",", ";");
 
 ----
+_Figure 3.5.2: Code section 2 in CopyCommand.java_
 
-_Figures 3.7.1a and 3.7.1b_ below show examples of copy command on display in the UI, showing the acceptable format for indexes, and the expected result. Note that the message will only be displayed if the message is already copied to the system clipboard.:
+_Figures 3.5.3a and 3.5.3b_ below show examples of copy command on display in the UI, showing the acceptable format for indexes, and the expected result. Note that the message will only be displayed if the message is already copied to the system clipboard.:
 
 
-image::CopyCommand_single_index.PNG[width="300"]
-_Figure 3.7.1a : Copy from a single contact_
+image::CopyCommand_single_index.PNG[width="400"]
+_Figure 3.5.3a : Copy from a single contact_
 
-image::CopyCommand_multiple_index.PNG[width="300"]
-_Figure 3.7.1b : Copy from multiple contacts_
+image::CopyCommand_multiple_index.PNG[width="400"]
+_Figure 3.5.3b : Copy from multiple contacts_
 
-_Figure 3.7.2_ below shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
+_Figure 3.5.4_ below shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
 
-image::CopyCommand_browser_result.PNG[width="300"]
-_Figures 3.7.2: Applied use of command in email application_
+image::CopyCommand_browser_result.PNG[width="400"]
+_Figures 3.5.4: Applied use of command in email application_
+
+==== Design Considerations for `CopyCommand`
+
 
 
 Why it is implemented that way
@@ -648,6 +743,62 @@ Alternatives considered
 It is possible to provide the same output text in the console message to user, which was the first iteration of this feature. However, since the resultant string was only meant to be copied either way, this implementation would cause the user to perform one more action per email address output request, as they would have to manually copy the output to their system clipboard.
 
 Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
+
+---
+
+//tag::CalendarCommand[]
+=== Opening Calendar [Since v1.3]
+
+`CalendarCommand` which reside in `Logic` will  open up a new browser webpage in the `BrowserPanel` that shows calendar for the entire year. The webpage will display the calendar from January to December, inclusive of public holidays. Upon taking in `CalendarCommand`  in the command line, a new `ShowCalendarRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 3.6.1_:. In addition , user are bypass `CalendarCommand` by pressing on `F2` key to post `ShowCalendarRequestEvent` thus allow user to launch calendar webpage via command line or via accelerators.
+
+[source,java]
+----
+public class CalendarCommand extends Command {
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        EventsCenter.getInstance().post(new ShowCalendarRequestEvent());
+      //  return new CommandResult
+    }
+}
+
+----
+_Figure 3.6.1: Code section in CalendarCommand.java_
+
+
+The  `BrowserPanel`  which reside in `UI` will handle the event of `ShowCalendarRequestEvent`
+as shown in _Figure 3.6.2_:
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+@Subscribe
+    private void handleCalendarRequestEvent(ShowCalendarRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadCalendar();
+   }
+}
+----
+_Figure 3.6.2: Code section in BrowserPanel.java_
+
+The method `loadCalendar` will pass the calendar url to `BrowserPanel` to open up calendar website in `BrowserPanel`. The outcome of successful launching of calendar webpage in browser is shown in _Figure 3.6.3_:
+
+image::CalendarCommand.png[width="800"]
+
+_Figure 3.6.3: Output of `CalendarCommand.java` execution_
+
+==== Design Considerations for `FindCommand`
+
+
+**Aspect:** Implementationt of `CalendarCommand` +
+**Alternative 1 (current choice)**: Opening  `Calendar` webpage in `BrowserPanel`. +
+**Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar.User are able to find out about the public holidays which are not avaliable on desktop calendar. +
+**Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
+**Alternative 2:** Opening up of google calendar +
+**Pros:** User are able to store the events in the google calendar. +
+**Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
+
+---
+
 
 === Logging
 
@@ -1101,6 +1252,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |check my calendar|update of new events
 
+|`* *` |user |send email|make immediate business communication
+
 |`* *` |user |see my contacts' social media profile pictures |identify them more easily
 
 |`* *` |user |write down remarks for a contact |record specific information about the contact
@@ -1124,16 +1277,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Contag` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
+=== Use case: Add remark
 === Use case: Add remark
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ConTag shows a list of persons
 3.  User requests to add remark to a specific person in the list
-4.  AddressBook successfully adds remark to contact
+4.  ConTag successfully adds remark to contact
 +
 Use case ends.
 
@@ -1147,7 +1301,7 @@ Use case ends.
 * 3a. The given index or format is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConTagshows an error message.
 +
 Use case resumes at step 2.
 
@@ -1155,9 +1309,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ConTag shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  ConTag deletes the person
 +
 Use case ends.
 
@@ -1171,31 +1325,31 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConTag shows an error message.
 +
 Use case resumes at step 2.
 
 === Use case: Rename existing tag
-#Pre-condition :The identitifed tag exists in Addressbook
+#Pre-condition :The identitifed tag exists in  ConTag
 **MSS**
 
 1. User requests to list persons
-2. AddressBook shows a list of persons
+2. ConTagshows a list of persons
 3. User requests to rename the tag and key in the new input
-4. AddressBook prompts user to confirm the changes
+4. ConTagprompts user to confirm the changes
 5. User confirms changes
-6. AddressBook successfully replaces the name of the existing tag to the newer version
+6. ConTag successfully replaces the name of the existing tag to the newer version
 +
 Use case ends.
 
 === Use case: Search by phone
-#Pre-condition :The identitifed phone exist in AddressBook
+#Pre-condition :The identitifed phone exist in ConTag
 **MSS**
 
 1. User requests to list persons
-2. AddressBook shows a list of persons
+2. ConTag shows a list of persons
 3. User requests to search for phone number by inputting 4 or 8 digits
-4. AddressBook successfully find the persons with matching phone numbers
+4. ConTag successfully find the persons with matching phone numbers
 +
 Use case ends.
 
@@ -1209,7 +1363,7 @@ Use case ends.
 * 3a. The given phone number is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConTag shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1247,6 +1401,13 @@ A contact detail that is not meant to be shared with others
 ....
 
 
+[[CI]]
+CI
+
+....
+Continuous Integration (CI) is the process of automating the build and testing of code every time a team member commits changes to version contron
+....
+
 [[gradle]]
 Gradle
 
@@ -1254,6 +1415,33 @@ Gradle
 Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven
 ....
 
+[[JUnit]]
+JUnit
+
+....
+JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks
+....
+
+[[JavaFX]]
+JavaFX
+
+....
+JavaFX is a software platform for creating and delivering desktop applications, as well as rich internet applications (RIAs) that can run across a wide variety of devices
+....
+
+[[GUI]]
+GUI
+
+....
+A graphical user interface (GUI) is a human-computer interface that uses windows, icons and menus and which can be manipulated by a mouse (and often to a limited extent by a keyboard as well).
+....
+
+[[xml]]
+xml
+
+....
+XML is a file extension for an Extensible Markup Language (XML) file format used to create common information formats and share both the format and the data on the World Wide Web, intranets, and elsewhere using standard ASCII text
+....
 
 [appendix]
 == Product Survey

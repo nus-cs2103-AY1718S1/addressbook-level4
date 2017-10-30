@@ -4,10 +4,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ScheduleBuilder;
 
@@ -19,8 +23,12 @@ public class ScheduleCommandTest {
     @Test
     public void constructor_nullSchedule_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
+
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+
         new ScheduleCommand(null, null, null);
-        new ScheduleCommand(INDEX_FIRST_PERSON, null, null);
+        new ScheduleCommand(indices, null, null);
         //new ScheduleCommand(null, new ScheduleBuilder().build());
     }
 
@@ -29,16 +37,19 @@ public class ScheduleCommandTest {
         Schedule meeting = new ScheduleBuilder().withActivity("Meeting").build();
         Schedule playing = new ScheduleBuilder().withActivity("Playing").build();
 
-        ScheduleCommand scheduleMeetingCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+
+        ScheduleCommand scheduleMeetingCommand = new ScheduleCommand(indices,
                 meeting.getScheduleDate(), meeting.getActivity());
-        ScheduleCommand schedulePlayingCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
+        ScheduleCommand schedulePlayingCommand = new ScheduleCommand(indices,
                 playing.getScheduleDate(), playing.getActivity());
 
         // same object -> returns true
         assertTrue(scheduleMeetingCommand.equals(scheduleMeetingCommand));
 
         // same values -> returns true
-        ScheduleCommand scheduleMeetingCommandCopy = new ScheduleCommand(INDEX_FIRST_PERSON,
+        ScheduleCommand scheduleMeetingCommandCopy = new ScheduleCommand(indices,
                 meeting.getScheduleDate(), meeting.getActivity());
         assertTrue(scheduleMeetingCommand.equals(scheduleMeetingCommandCopy));
 

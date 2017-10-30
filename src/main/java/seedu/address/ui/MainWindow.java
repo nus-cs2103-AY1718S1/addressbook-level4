@@ -61,6 +61,9 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem calendarItem;
 
     @FXML
+    private MenuItem emailItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
 
     @FXML
@@ -101,6 +104,7 @@ public class MainWindow extends UiPart<Region> {
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
         setAccelerator(calendarItem, KeyCombination.valueOf("F2"));
+        setAccelerator(emailItem, KeyCombination.valueOf("F3"));
     }
 
     /**
@@ -210,12 +214,16 @@ public class MainWindow extends UiPart<Region> {
 
 
     /**
-     * Opens the Calendar window.
+     * Opens the Calendar window via accelerator.
      */
     @FXML
     public void handleCalendar() {
-        //browserPanel.loadCalendar();
-        browserPanel.loadPage("https://www.timeanddate.com/calendar/");
+        browserPanel.loadCalendar();
+    }
+
+    @FXML
+    public void handleEmail() {
+        browserPanel.loadEmail();
     }
 
 

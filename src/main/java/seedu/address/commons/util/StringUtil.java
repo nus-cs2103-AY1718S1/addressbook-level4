@@ -2,7 +2,6 @@ package seedu.address.commons.util;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -32,8 +31,7 @@ public class StringUtil {
      * @param searchWord cannot be null, cannot be empty, must be a single word
      */
     public static boolean containsNameIgnoreCase(String sentence, String searchWord) {
-        requireNonNull(sentence);
-        requireNonNull(searchWord);
+        keywordsPredicateCheckForNull(sentence, searchWord);
 
         String preppedWord = searchWord.trim();
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
@@ -58,12 +56,11 @@ public class StringUtil {
      *       containsEmailgnoreCase(("abc@example.com", "e/   EXAMPLE") == true//Case insensitive
      *       </pre>
      *
-     * @param emailSet cannot be null
-     * @param searchWord    cannot be null, cannot be empty, must be a valid  email domain
+     * @param emailSet   cannot be null
+     * @param searchWord cannot be null, cannot be empty, must be a valid  email domain
      */
     public static boolean containsEmailIgnoreCase(Collection<Email> emailSet, String searchWord) {
-        requireNonNull(emailSet);
-        requireNonNull(searchWord);
+        keywordsPredicateCheckForNull(emailSet, searchWord);
 
         String preppedWord = searchWord.trim();
         checkArgument(!preppedWord.isEmpty(), "Email parameter cannot be empty");
@@ -96,8 +93,7 @@ public class StringUtil {
      * @param searchWord    cannot be null, cannot be empty, must be 4 digits or 8 digits only
      */
     public static boolean containsPhoneIgnoreCase(String phoneSentence, String searchWord) {
-        requireNonNull(phoneSentence);
-        requireNonNull(searchWord);
+        keywordsPredicateCheckForNull(phoneSentence, searchWord);
 
         String preppedPhone = searchWord.trim();
         checkArgument(!preppedPhone.isEmpty(), "Phone parameter cannot be empty");
@@ -129,8 +125,7 @@ public class StringUtil {
      * @param searchWord      cannot be null, cannot be empty, must be 4 digits or 8 digits
      */
     public static boolean containsAddressIgnoreCase(String addressSentence, String searchWord) {
-        requireNonNull(addressSentence);
-        requireNonNull(searchWord);
+        keywordsPredicateCheckForNull(addressSentence, searchWord);
 
         String preppedAddress = searchWord.trim();
         checkArgument(!preppedAddress.isEmpty(), "Address parameter cannot be empty");
@@ -153,8 +148,7 @@ public class StringUtil {
      * @param searchWord cannot be null, cannot be empty, must be at least a a single word
      */
     public static boolean containsTagIgnoreCase(Collection<Tag> tagSet, String searchWord) {
-        requireAllNonNull(tagSet);
-        requireNonNull(searchWord);
+        keywordsPredicateCheckForNull(tagSet, searchWord);
 
         String preppedTag = searchWord.trim();
         checkArgument(!preppedTag.isEmpty(), "Tag parameter cannot be empty");
@@ -169,6 +163,15 @@ public class StringUtil {
             }
         }
         return false;
+    }
+
+
+    /**
+     * Check for if sentence or searchWord is null .
+     */
+    private static void keywordsPredicateCheckForNull(Object sentence, String searchWord) {
+        requireNonNull(sentence);
+        requireNonNull(searchWord);
     }
 
     /**

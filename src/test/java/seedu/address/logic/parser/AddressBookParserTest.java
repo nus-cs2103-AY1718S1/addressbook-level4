@@ -9,7 +9,9 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -23,6 +25,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -203,13 +206,17 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_schedule() throws Exception {
         Schedule schedule = new ScheduleBuilder().build();
+        Set<Index> indices = new HashSet<>();
+        indices.add(INDEX_FIRST_PERSON);
+
         ScheduleCommand command = (ScheduleCommand) parser.parseCommand(ScheduleUtil.getScheduleCommand(
-                INDEX_FIRST_PERSON, schedule));
+                schedule, indices));
         ScheduleCommand commandUsingAlias = (ScheduleCommand) parser.parseCommand(ScheduleUtil
-                .getScheduleCommandUsingAlias(INDEX_FIRST_PERSON, schedule));
-        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule.getScheduleDate(),
+                .getScheduleCommandUsingAlias(schedule, indices));
+
+        assertEquals(new ScheduleCommand(indices, schedule.getScheduleDate(),
                 schedule.getActivity()), command);
-        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule.getScheduleDate(),
+        assertEquals(new ScheduleCommand(indices, schedule.getScheduleDate(),
                 schedule.getActivity()), commandUsingAlias);
     }
 
@@ -228,6 +235,10 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(CalendarCommand.COMMAND_WORD) instanceof CalendarCommand);
     }
 
+    @Test
+    public void parseEmail_calendar() throws Exception {
+        assertTrue(parser.parseCommand(EmailCommand.COMMAND_WORD) instanceof EmailCommand);
+    }
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
