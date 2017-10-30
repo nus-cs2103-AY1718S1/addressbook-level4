@@ -100,7 +100,8 @@ public class AddressBookParser {
             return new UndoCommand();
 
         case PRINT:
-            return new PrintCommand();
+            //return new PrintCommand();
+            return new PrintCommandParser().parse(arguments);
 
         case REDO:
             return new RedoCommand();

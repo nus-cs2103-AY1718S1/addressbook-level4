@@ -13,8 +13,8 @@ public class PrintCommandParser implements Parser<PrintCommand> {
     public PrintCommand parse(String args) throws ParseException {
         try {
             //Index index = ParserUtil.parseIndex(args);
-            String filepath = ParserUtil.parseFilePath(args);
-            return new PrintCommand(filepath);
+            String filename = ParserUtil.parseFilePath(args);
+            return new PrintCommand(filename);
         } catch (IllegalValueException ive) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrintCommand.MESSAGE_USAGE));

@@ -22,7 +22,12 @@ public class PrintCommand extends Command {
     public static final String[] COMMAND_WORDS = {"print"};
     public static final String COMMAND_WORD = "print";
 
-    public static final String MESSAGE_USAGE = "";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Saves the addressbook into a .txt file named by you for your viewing.\n"
+            + "Example: " + COMMAND_WORD + "addressbook";
+
+    public static final String MESSAGE_SUCCESS = "Addressbook has been saved! " +
+            "Find your addressbook in the .txt file named by you in the doc/books folder.";
 
     //private final String fileName = "lol.txt";
     private final String fileName;
@@ -67,8 +72,8 @@ public class PrintCommand extends Command {
             personIndex++;
         }
 
-        //Path file = Paths.get("doc/books/"+ fileName +".txt");
-        Path file = Paths.get("docs/books/lol.txt");
+        Path file = Paths.get("docs/books/"+ fileName +".txt");
+        //Path file = Paths.get("docs/books/lol.txt");
         try {
             Files.write(file, lines, Charset.forName("UTF-8"));
         } catch (IOException e) {
@@ -76,7 +81,7 @@ public class PrintCommand extends Command {
         }
 
         //System.out.println("test");
-        return new CommandResult("lol");
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
 }
