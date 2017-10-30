@@ -38,22 +38,51 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
 
     }
 
+    /**
+     * Returns true if tag list argument is invalid.
+     * Tag list is invalid if
+     * 1. List starts or ends with "AND" or "OR"
+     * 2. "AND" or "OR" are clustered together
+     */
     private boolean invalidListTagArgs(List<String> evaluateList) {
+        boolean multipleAndOrCluster = hasManyAndOrClustered(evaluateList);
+        boolean startWithAndOr = startsWithAndOr(evaluateList);
+        boolean endWithAndOr = endsWithAndOr(evaluateList);
+        return multipleAndOrCluster || startWithAndOr || endWithAndOr;
+    }
+
+    /**
+     * Returns true if list starts with "AND" or "OR"
+     */
+    private boolean startsWithAndOr(List<String> evaluateList) {
+        boolean startWithAndOr = "and".equalsIgnoreCase(evaluateList.get(0)) ||
+                "or".equalsIgnoreCase(evaluateList.get(0));
+        return startWithAndOr;
+    }
+
+    /**
+     * Returns true if list ends with "AND" or "OR"
+     */
+    private boolean endsWithAndOr (List<String> evaluateList) {
+        boolean endWithAndOr = "and".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1)) ||
+                "or".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1));
+        return endWithAndOr;
+    }
+
+    /**
+     * Returns true if "AND" or "OR" strings are clustered together
+     */
+    private boolean hasManyAndOrClustered (List<String> evaluateList) {
         String previousString = "";
         boolean multipleAndOrCluster = false;
-        boolean startWithAndOr;
-        boolean endWithAndOr;
         for (String str : evaluateList) {
             if (("and".equalsIgnoreCase(previousString) || "or".equalsIgnoreCase(previousString)) &&
                     ("and".equalsIgnoreCase(str) || "or".equalsIgnoreCase(str))) {
                 multipleAndOrCluster = true;
+                break;
             }
             previousString = str;
         }
-        startWithAndOr = "and".equalsIgnoreCase(evaluateList.get(0)) || "or".equalsIgnoreCase(evaluateList.get(0));
-        endWithAndOr = "and".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1)) ||
-                "or".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1));
-        return multipleAndOrCluster || startWithAndOr || endWithAndOr;
+        return multipleAndOrCluster;
     }
-
 }
