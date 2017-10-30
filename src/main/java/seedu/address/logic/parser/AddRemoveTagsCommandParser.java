@@ -22,6 +22,9 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
     private static final int TYPE_ARGUMENT_INDEX = 0;
     private static final int INDEX_ARGUMENT_INDEX = 1;
     private static final int TAG_ARGUMENT_INDEX = 2;
+
+    private static final String TYPE_ADD = "add";
+    private static final String TYPE_REMOVE = "remove";
     /**
      * Parses the given {@code String} of arguments in the context of the AddRemoveTagsCommand
      * and returns an AddRemoveTagsCommand object for execution.
@@ -42,9 +45,9 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
         }
 
         boolean isAdd;
-        if (argsList.get(TYPE_ARGUMENT_INDEX).equals("add")) {
+        if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_ADD)) {
             isAdd = true;
-        } else if (argsList.get(TYPE_ARGUMENT_INDEX).equals("remove")) {
+        } else if (argsList.get(TYPE_ARGUMENT_INDEX).equals(TYPE_REMOVE)) {
             isAdd = false;
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE));

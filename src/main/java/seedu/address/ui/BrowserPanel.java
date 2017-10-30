@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeBrowserPanelUrlEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -70,5 +71,11 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         event.getNewSelection().person.incrementAccess();
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleChangeBrowserPanelUrlEvent(ChangeBrowserPanelUrlEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPage(event.url);
     }
 }
