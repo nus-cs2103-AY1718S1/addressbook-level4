@@ -18,7 +18,7 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
-    private static String[] colors = {"red", "blue", "black", "grey", "pink", "cyan", "teal", "brown", "green",
+    private static String[] colors = {"red", "blue", "black", "grey", "teal", "brown", "green",
                                          "orange", "purple"};
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
@@ -43,18 +43,6 @@ public class PersonCard extends UiPart<Region> {
     private Label phone;
     @FXML
     private Label email;
-    /*
-    @FXML
-    private Label homeNumber;
-    @FXML
-    private Label address;
-    @FXML
-    private Label schEmail;
-    @FXML
-    private Label website;
-    @FXML
-    private Label birthday;
-    */
     @FXML
     private FlowPane tags;
 

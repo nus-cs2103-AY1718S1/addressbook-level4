@@ -143,6 +143,7 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPanel.setDefaultPage(prefs.getTheme());
 
         detailsPanel = new DetailsPanel();
         detailsPanelPlaceholder.getChildren().clear();
@@ -285,6 +286,7 @@ public class MainWindow extends UiPart<Region> {
     private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleChangeTheme(event.theme);
+        browserPanel.setDefaultPage(event.theme);
         logic.setCurrentTheme(getCurrentTheme());
     }
 }
