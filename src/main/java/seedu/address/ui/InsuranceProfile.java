@@ -10,6 +10,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
+//@@author OscarWang114
 /**
  * The Profile Panel of the App.
  */

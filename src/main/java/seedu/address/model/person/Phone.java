@@ -18,13 +18,15 @@ public class Phone {
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
+    //@@author OscarWang114
     /**
-     * Initialise a Phone object with value of empty String. This can ONLY be used in the default field of
+     * Initialize a Phone object with value of empty String. This can ONLY be used in the default field of
      * {@code AddPersonOptionalFieldDescriptor}
      */
     public Phone() {
         this.value = "";
     }
+    //@@author
 
     /**
      * Validates given phone number.

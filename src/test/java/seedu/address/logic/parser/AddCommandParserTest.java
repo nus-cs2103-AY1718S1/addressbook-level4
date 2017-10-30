@@ -78,6 +78,7 @@ public class AddCommandParserTest {
                 new AddCommand(expectedPersonMultipleTags));
     }
 
+    //@@author OscarWang114
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
@@ -115,6 +116,7 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
     }
+    //@@author
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {

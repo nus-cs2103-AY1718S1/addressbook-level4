@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.EnumMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.UUID;
 
 import javafx.beans.property.DoubleProperty;
@@ -17,6 +15,7 @@ import javafx.beans.property.StringProperty;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author OscarWang114
 /**
  * Represents a life insurance in LISA.
  * Guarantees: details are present and not null.
@@ -24,43 +23,50 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class LifeInsurance implements ReadOnlyInsurance {
 
     /**
-     * Represents the three person roles inside a insurance in LISA.
+     * Represents the three person-roles inside an insurance in LISA.
      */
-    private enum LinkedRole { OWNER, INSURED, BENEFICIARY }
+    enum Roles { OWNER, INSURED, BENEFICIARY }
     private ObjectProperty<UUID> id;
-    private EnumMap<LinkedRole, String> roleToPersonMap;
-    private ObjectProperty<ReadOnlyPerson> owner;
-    private ObjectProperty<ReadOnlyPerson> insured;
-    private ObjectProperty<ReadOnlyPerson> beneficiary;
+    private EnumMap<Roles, String> roleToPersonNameMap;
+    private ObjectProperty<InsurancePerson> owner;
+    private ObjectProperty<InsurancePerson> insured;
+    private ObjectProperty<InsurancePerson> beneficiary;
     private DoubleProperty premium;
     private StringProperty contractPath;
     private StringProperty signingDate;
     private StringProperty expiryDate;
 
-    public LifeInsurance() {
-        this.roleToPersonMap = new EnumMap<>(LinkedRole.class);
-    }
-
+    /**
+     * Constructor for {@code XmlAdaptedLifeInsurance.toModelType()}
+     */
     public LifeInsurance(String owner, String insured, String beneficiary, Double premium,
                          String contractPath, String signingDate, String expiryDate) {
-        this();
-        this.roleToPersonMap.put(LinkedRole.OWNER, owner);
-        this.roleToPersonMap.put(LinkedRole.INSURED, insured);
-        this.roleToPersonMap.put(LinkedRole.BENEFICIARY, beneficiary);
+        this.roleToPersonNameMap = new EnumMap<>(Roles.class);
+        this.roleToPersonNameMap.put(Roles.OWNER, owner);
+        this.roleToPersonNameMap.put(Roles.INSURED, insured);
+        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary);
+        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
+        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
+        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
         this.premium = new SimpleDoubleProperty(premium);
         this.contractPath = new SimpleStringProperty(contractPath);
         this.signingDate = new SimpleStringProperty(signingDate);
         this.expiryDate = new SimpleStringProperty(expiryDate);
-
     }
 
+    /**
+     * Constructor for {@code AddLifeInsuranceCommand}
+     */
     public LifeInsurance(ReadOnlyPerson owner, ReadOnlyPerson insured, ReadOnlyPerson beneficiary,
                          Double premium, String contractPath, String signingDate, String expiryDate) {
         requireAllNonNull(owner, insured, beneficiary, premium, contractPath);
-        this.id = new SimpleObjectProperty<>(UUID.randomUUID());
-        this.owner = new SimpleObjectProperty<>(owner);
-        this.insured = new SimpleObjectProperty<>(insured);
-        this.beneficiary = new SimpleObjectProperty<>(beneficiary);
+        this.roleToPersonNameMap = new EnumMap<>(Roles.class);
+        this.roleToPersonNameMap.put(Roles.OWNER, owner.getName().fullName);
+        this.roleToPersonNameMap.put(Roles.INSURED, insured.getName().fullName);
+        this.roleToPersonNameMap.put(Roles.BENEFICIARY, beneficiary.getName().fullName);
+        this.owner = new SimpleObjectProperty<>(new InsurancePerson(owner));
+        this.insured = new SimpleObjectProperty<>(new InsurancePerson(insured));
+        this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(beneficiary));
         this.premium = new SimpleDoubleProperty(premium);
         this.contractPath = new SimpleStringProperty(contractPath);
         this.signingDate = new SimpleStringProperty(signingDate);
@@ -71,6 +77,7 @@ public class LifeInsurance implements ReadOnlyInsurance {
      * Creates a copy of the given ReadOnlyInsurance.
      */
     public LifeInsurance(ReadOnlyInsurance source) {
+        //TODO: fix
         if (source.ownerProperty() != null) {
             this.owner = new SimpleObjectProperty<>(source.getOwner());
         }
@@ -84,32 +91,30 @@ public class LifeInsurance implements ReadOnlyInsurance {
         this.contractPath = new SimpleStringProperty(source.getContractPath());
         this.signingDate = new SimpleStringProperty(source.getSigningDate());
         this.expiryDate = new SimpleStringProperty(source.getExpiryDate());
-        if (source.getRoleToPersonMap() != null) {
-            this.roleToPersonMap = source.getRoleToPersonMap();
+        if (source.getRoleToPersonNameMap() != null) {
+            this.roleToPersonNameMap = source.getRoleToPersonNameMap();
         }
     }
 
-    public void setInsurancePerson(Person person) {
-        String name = person.getName().fullName;
-        Iterator it = this.roleToPersonMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            if (pair.getValue().equals(name)) {
-                switch (pair.getKey().toString()) {
-                case "OWNER":
-                    this.owner = new SimpleObjectProperty<>(person);
+    public void setInsuranceRole(Person person) {
+        String fullName = person.getName().fullName;
+        roleToPersonNameMap.forEach((role, name) -> {
+            if (name == fullName) {
+                switch (role) {
+                case OWNER:
+                    this.owner = new SimpleObjectProperty<>(new InsurancePerson(person));
                     break;
-                case "INSURED":
-                    this.insured = new SimpleObjectProperty<>(person);
+                case INSURED:
+                    this.insured = new SimpleObjectProperty<>(new InsurancePerson(person));
                     break;
-                case "BENEFICIARY":
-                    this.beneficiary = new SimpleObjectProperty<>(person);
+                case BENEFICIARY:
+                    this.beneficiary = new SimpleObjectProperty<>(new InsurancePerson(person));
                     break;
                 default:
-                    assert(false);
+                    assert (false);
                 }
             }
-        }
+        });
     }
 
     @Override
@@ -123,49 +128,52 @@ public class LifeInsurance implements ReadOnlyInsurance {
     }
 
     @Override
-    public EnumMap getRoleToPersonMap() {
-        return roleToPersonMap;
+    public EnumMap getRoleToPersonNameMap() {
+        return roleToPersonNameMap;
     }
 
     public void setOwner(Person owner) {
-        this.owner.set(requireNonNull(owner));
+        requireNonNull(owner);
+        this.owner.get().setPerson(owner);
     }
 
     @Override
-    public ObjectProperty<ReadOnlyPerson> ownerProperty() {
+    public ObjectProperty<InsurancePerson> ownerProperty() {
         return owner;
     }
 
     @Override
-    public ReadOnlyPerson getOwner() {
+    public InsurancePerson getOwner() {
         return owner.get();
     }
 
     public void setInsured(Person insured) {
-        this.insured.set(requireNonNull(insured));
+        requireNonNull(insured);
+        this.insured.get().setPerson(insured);
     }
 
     @Override
-    public ObjectProperty<ReadOnlyPerson> insuredProperty() {
+    public ObjectProperty<InsurancePerson> insuredProperty() {
         return insured;
     }
 
     @Override
-    public ReadOnlyPerson getInsured() {
+    public InsurancePerson getInsured() {
         return insured.get();
     }
 
     public void setBeneficiary(Person beneficiary) {
-        this.beneficiary.set(requireNonNull(beneficiary));
+        requireNonNull(beneficiary);
+        this.beneficiary.get().setPerson(beneficiary);
     }
 
     @Override
-    public ObjectProperty<ReadOnlyPerson> beneficiaryProperty() {
+    public ObjectProperty<InsurancePerson> beneficiaryProperty() {
         return beneficiary;
     }
 
     @Override
-    public ReadOnlyPerson getBeneficiary() {
+    public InsurancePerson getBeneficiary() {
         return beneficiary.get();
     }
 

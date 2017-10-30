@@ -6,8 +6,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 
+//@@author OscarWang114
 /**
- * JAXB-friendly version of the Person.
+ * JAXB-friendly version of the LifeInsurance.
  */
 public class XmlAdaptedLifeInsurance {
     @XmlElement(required = true)
@@ -26,21 +27,21 @@ public class XmlAdaptedLifeInsurance {
     private String expiryDate;
 
     /**
-     * Constructs an XmlAdaptedPerson.
+     * Constructs an XmlAdaptedLifeInsurance.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedLifeInsurance() {}
 
 
     /**
-     * Converts a given Person into this class for JAXB use.
+     * Converts a given LifeInsurance into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedLifeInsurance
      */
     public XmlAdaptedLifeInsurance(ReadOnlyInsurance source) {
-        owner = source.getOwner().getName().fullName;
-        insured = source.getInsured().getName().fullName;
-        beneficiary = source.getBeneficiary().getName().fullName;
+        owner = source.getOwner().getName();
+        insured = source.getInsured().getName();
+        beneficiary = source.getBeneficiary().getName();
         premium = source.getPremium();
         contractPath = source.getContractPath();
         signingDate = source.getSigningDate();
@@ -48,9 +49,9 @@ public class XmlAdaptedLifeInsurance {
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Person object.
+     * Converts this jaxb-friendly adapted life insurance object into the model's LifeInsurance object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted life insurance
      */
 
     public LifeInsurance toModelType() throws IllegalValueException {
