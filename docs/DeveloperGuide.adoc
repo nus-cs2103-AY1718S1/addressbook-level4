@@ -796,6 +796,23 @@ Thus, it may be time consuming for the user to search for a contact by scrolling
           i.e. scroll the list until the contact is visible, then select the desired contact with a select command/shortcut. +
 // end::shortcut[]
 
+// tag::helpWindowHighlight[]
+=== Help Window Highlighting
+Rolodex uses link:#java-fx[JavaFx] version http://javafx.com/javafx/8.0.111[8.0.111], where WebView does not support
+search functionality that mimics kbd:[Ctrl] + kbd:[F] capability of modern web browsers. As a workaround, Johann Burkard's
+http://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html[jQuery text highlighting]
+library is being used to implement such a feature.
+
+Users can easily find keywords by using the highlighting feature of the help window, as opposed to manually looking through the
+help document for information, which can be counterproductive:
+
+image::Highlight.png[width="800"]
+
+The discussion for link:#java-fx[JavaFX] to implement a native search feature within WebView is ongoing and you can find it
+https://stackoverflow.com/questions/19418626/javafx-search-and-highlight-text-add-search-bar-for-loaded-web-page[here].
+
+// end::helpWindowHighlight[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
