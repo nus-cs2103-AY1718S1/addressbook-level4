@@ -12,9 +12,8 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-T09-B1/main/tree/master
 
-By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT`
-
-image:CoverPage.png[width="600"]
+By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT` +
+image:CoverPage.png[width="350"]
 
 == Introduction
 
