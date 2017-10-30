@@ -440,6 +440,8 @@ When a new lesson is added. By default it is not in the marked list thus the `is
 
 The following sequence diagram shows how the mark command works:
 
+image::MarkCommandSequenceDiagram.jpg[width="900"]
+
 You can see a list of all marked lesson by command `list marked`.
 
 [NOTE]
@@ -508,6 +510,10 @@ Only module can be remarked, therefore user can use remark if and only if curren
 Both adding a remark and deleting a remark used an index while the meaning of the index is different.
 The index in `remark INDEX CONTENT` is the index of the module in the module list we want to add remark to.
 While the index in `delete -d INDEX` is the index of the remark we want to delete.
+
+The following link:#activity-diagram[activity diagram] summarize what happens when an user execute remark command.
+
+image::RemarkCommandSequenceDiagram.jpg[width="900"]
 
 ==== Design Considerations
 
