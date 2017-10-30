@@ -84,7 +84,10 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        //@@author Jemereny
         UiStyle.getInstance().setScene(scene);
+        //@@author
+
         primaryStage.setScene(scene);
 
         setAccelerators();

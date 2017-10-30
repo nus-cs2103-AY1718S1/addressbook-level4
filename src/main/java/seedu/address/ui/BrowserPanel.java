@@ -40,7 +40,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
+    //@@author Jemereny
     /**
      * Load website of person if he has a website
      * If not just google search his name
@@ -53,6 +53,7 @@ public class BrowserPanel extends UiPart<Region> {
                     + GOOGLE_SEARCH_URL_SUFFIX);
         }
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));

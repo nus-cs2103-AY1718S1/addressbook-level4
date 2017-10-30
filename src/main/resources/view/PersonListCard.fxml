@@ -27,10 +27,13 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
+        <!--@@author Jemereny-->
         <ImageView fx:id="picture" fitHeight="64" fitWidth="64">
         </ImageView>
+        <!--@@author Jemereny-->
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
+      <!--@@author Jemereny-->
       <VBox alignment="CENTER_LEFT">
         <padding>
           <Insets left="23.0" />
@@ -44,6 +47,7 @@
         <Label fx:id="website" styleClass="cell_small_label" text="\$website" />
       </VBox>
     </VBox>
+    <!--@author-->
       <rowConstraints>
          <RowConstraints />
       </rowConstraints>

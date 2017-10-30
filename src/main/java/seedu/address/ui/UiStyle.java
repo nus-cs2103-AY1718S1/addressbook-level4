@@ -1,3 +1,4 @@
+//@@author Jemereny
 package seedu.address.ui;
 
 import java.util.Random;
@@ -21,7 +22,6 @@ public class UiStyle {
     private static final String HEX_COLOR = "#%1$s";
     // Max hex color "FFFFFF" in integer
     private static final int MAX_HEX_COLOR = 16777216;
-
 
     private static Random random = new Random();
 
@@ -47,7 +47,7 @@ public class UiStyle {
     }
 
     /**
-     * @param color either color in String "red,blue,etc.." or hexadecimal color
+     * @param color in hexadecimals
      * @return String to indicate background color
      */
     public static String getBackgroundStyle(String color) {

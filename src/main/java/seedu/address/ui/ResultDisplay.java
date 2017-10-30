@@ -39,13 +39,16 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
 
+        //@@author Jemereny
         if (event.isError) {
             setStyleToIndicateCommandFailture();
         } else {
             setStyleToDefault();
         }
+        //@@author
     }
 
+    //@@author Jemereny
     private void setStyleToDefault() {
         resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
@@ -62,5 +65,5 @@ public class ResultDisplay extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
-
+    //@@author
 }

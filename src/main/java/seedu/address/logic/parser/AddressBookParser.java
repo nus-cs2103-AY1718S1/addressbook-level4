@@ -99,9 +99,11 @@ public class AddressBookParser {
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
 
+        //@@author Jemereny
         case ThemeCommand.COMMAND_WORD:
+        case ThemeCommand.COMMAND_ALIAS:
             return new ThemeCommandParser().parse(arguments);
-
+        //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
