@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.UniqueEventList;
@@ -35,8 +33,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueEventList events;
     private final UniqueTagList tags;
     private final ArrayList<String> themes;
-
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
