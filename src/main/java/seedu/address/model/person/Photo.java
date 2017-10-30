@@ -31,7 +31,7 @@ public class Photo {
      * Constructs with a given pathName.
      */
     public Photo(String pathName) throws IllegalValueException {
-        requireNonNull(pathName);
+        //requireNonNull(pathName);
 
         this.pathName = pathName;
     }

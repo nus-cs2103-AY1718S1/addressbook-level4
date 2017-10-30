@@ -14,10 +14,12 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.phone.Phone;
+import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -55,12 +57,15 @@ public class CustomCommand extends UndoableCommand {
         Phone phone = personToUpdateCustomField.getPhone();
         Email email = personToUpdateCustomField.getEmail();
         Address address = personToUpdateCustomField.getAddress();
+        Photo photo = personToUpdateCustomField.getPhoto();
+        UniquePhoneList uniquePhoneList = personToUpdateCustomField.getPhoneList();
         Set<Tag> tags = personToUpdateCustomField.getTags();
         UniqueCustomFieldList customFields = personToUpdateCustomField.getCustomFieldList();
 
         customFields.add(customField);
 
-        Person personUpdated = new Person(name, phone, email, address, tags, customFields.toSet());
+        Person personUpdated = new Person(name, phone, email, address,
+                photo, uniquePhoneList, tags, customFields.toSet());
 
         return personUpdated;
     }

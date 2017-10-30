@@ -16,14 +16,17 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.customField.CustomField;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.phone.Phone;
+import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -99,9 +102,15 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Photo updatedPhoto = editPersonDescriptor.getPhoto().orElse(personToEdit.getPhoto());
+        UniquePhoneList updatedPhoneList = editPersonDescriptor.getUniquePhoneList()
+                .orElse(personToEdit.getPhoneList());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<CustomField> updatedCustomFields =
+                editPersonDescriptor.getCustomFields().orElse(personToEdit.getCustomFields());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
+                updatedPhoto, updatedPhoneList, updatedTags, updatedCustomFields);
     }
 
     @Override
@@ -131,7 +140,10 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Photo photo;
+        private UniquePhoneList uniquePhoneList;
         private Set<Tag> tags;
+        private Set<CustomField> customFields;
 
         public EditPersonDescriptor() {}
 
@@ -140,14 +152,18 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.photo = toCopy.photo;
+            this.uniquePhoneList = toCopy.uniquePhoneList;
             this.tags = toCopy.tags;
+            this.customFields = toCopy.customFields;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
+                    this.photo, this.uniquePhoneList, this.tags, this.customFields);
         }
 
         public void setName(Name name) {
@@ -182,12 +198,32 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setPhoto(Photo photo) {
+            this.photo = photo;
+        }
+
+        public Optional<Photo> getPhoto() {
+            return Optional.ofNullable(photo);
+        }
+
+        public void setUniquePhoneList(UniquePhoneList uniquePhoneList) { this.uniquePhoneList = uniquePhoneList; }
+
+        public Optional<UniquePhoneList> getUniquePhoneList() { return Optional.ofNullable(uniquePhoneList); }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
 
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
+        }
+
+        public void setCustomFields(Set<CustomField> customFields) {
+            this.customFields = customFields;
+        }
+
+        public Optional<Set<CustomField>> getCustomFields() {
+            return Optional.ofNullable(customFields);
         }
 
         @Override
@@ -209,7 +245,10 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getPhoto().equals(e.getPhoto())
+                    && getUniquePhoneList().equals(e.getUniquePhoneList())
+                    && getTags().equals(e.getTags())
+                    && getCustomFields().equals(e.getCustomFields());
         }
     }
 }

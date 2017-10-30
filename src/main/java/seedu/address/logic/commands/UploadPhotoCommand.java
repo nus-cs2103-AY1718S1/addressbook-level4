@@ -18,6 +18,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.person.phone.Phone;
+import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -54,10 +55,12 @@ public class UploadPhotoCommand extends UndoableCommand {
         Phone phone = personToUpdatePhoto.getPhone();
         Email email = personToUpdatePhoto.getEmail();
         Address address = personToUpdatePhoto.getAddress();
+        UniquePhoneList uniquePhoneList = personToUpdatePhoto.getPhoneList();
         Set<Tag> tags = personToUpdatePhoto.getTags();
         Set<CustomField> customFields = personToUpdatePhoto.getCustomFields();
 
-        Person personUpdated = new Person(name, phone, email, address, photo, tags, customFields);
+        Person personUpdated = new Person(name, phone, email, address,
+                photo, uniquePhoneList, tags, customFields);
         return personUpdated;
     }
 
@@ -72,7 +75,6 @@ public class UploadPhotoCommand extends UndoableCommand {
         ReadOnlyPerson personToUpdatePhoto = lastShownList.get(targetIndex.getZeroBased());
 
         Person personUpdated = updatePersonPhoto(personToUpdatePhoto, photo);
-        Photo img = personUpdated.getPhoto();
 
         try {
             model.updatePerson(personToUpdatePhoto, personUpdated);
@@ -82,7 +84,9 @@ public class UploadPhotoCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        System.out.println(img.getPathName());
+        List<ReadOnlyPerson> checkList = model.getFilteredPersonList();
+        ReadOnlyPerson personChecked = checkList.get(targetIndex.getZeroBased());
+        Photo img = personChecked.getPhoto();
         img.showPhoto();
 
         return new CommandResult(String.format(MESSAGE_UPDATE_PERSON_PHOTO_SUCCESS, personUpdated));
