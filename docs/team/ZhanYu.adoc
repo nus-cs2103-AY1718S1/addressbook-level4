@@ -103,6 +103,21 @@ include::../DeveloperGuide.adoc[leveloffset=2,tag=commandAbbreviations]
 
 ---
 
+=== Enhancement Added: Search Highlighting in HelpWindow
+
+==== Justification
+
+JavaFx's native WebView does not allow the user to easily search a html document, putting it on a subpar standard to modern
+web browsers. Implementing a search feature in the help window will allow the user to search for terms in the user guide with ease.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=helpWindowHighlight]
+
+---
+
 === Enhancement Proposed: Markdown/HTML parser
 
 To replace the content field of the note/remark command with 'rich-text', to be displayed on the browser panel.
@@ -115,7 +130,6 @@ https://ci.appveyor.com/project/ZY-Ang/main[AppVeyor],
 https://coveralls.io/github/CS2103AUG2017-W11-B2/main?branch=master[Coveralls] and
 https://www.codacy.com/app/ZY-Ang/main/dashboard[Codacy].
 * Added a simple navbar to the github pages for ease of navigation.
-* Added a highlight function for the HelpWindow to allow the ease of looking for text in the help document.
 
 == Project: https://zy-ang.github.io/AutoNameGenerator/[AutoNameGenerator]
 

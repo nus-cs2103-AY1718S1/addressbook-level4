@@ -933,7 +933,7 @@ private void clearHighlights(WebEngine engine) {
 `asciidoctor.css` `.highlight` class:
 [source,css]
 ----
-.highlight{background-color:yellow} 
+.highlight{background-color:yellow}
 ----
 // end::helpWindowHighlight[]
 
