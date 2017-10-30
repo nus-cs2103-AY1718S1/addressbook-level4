@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CalendarPanelSelectionEvent;
@@ -73,17 +72,17 @@ public class AnchorPaneNode extends AnchorPane {
         ButtonType button = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().add(button);
 
-        dialog.setResultConverter(new Callback<ButtonType, Event>() {
-            @Override
-            public Event call(ButtonType b) {
-                if (b == button){
-                    Event newEvent = new BuildEvent().withName(text1.getText()).withDate(date)
+        dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == button){
+                    return new BuildEvent().withName(text1.getText()).withDate(date)
                             .withAddress(text2.getText()).build();
                 }
                 return null;
-            }
-        });
+            });
 
         Optional<Event> result = dialog.showAndWait();
+        result.ifPresent(event -> {
+            EventsCenter.getInstance().post(new AddEventRequestEvent(event));
+        });
     }
 }
