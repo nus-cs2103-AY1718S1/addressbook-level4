@@ -140,6 +140,24 @@ Edits the priority and message of the 1st reminder to be `Low` and `venue at NUS
 * `edit 2 z/Progress Report t/` +
 Edits the task name of the 2nd reminder to be `Progress Report` and clears all existing tags.
 
+=== Modifying birthday to person: `birthday`
+
+Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
+Format: `birthday INDEX [b/dd/mm/yyyy]`
+
+****
+* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
+* For removing : input nothing after " `b/` "
+****
+
+Examples:
+
+* `birthday 1 b/20/07/1995` +
+Adds / changes birthday of the 1st person to be `20/07/1995`
+* `birthday 3 b/` +
+Removes the birthday of the 3rd person.
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -273,24 +291,6 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Modifying birthday to person: `birthday`
-
-Adds / Edits / Removes a birthday parameter to an existing person in the address book. +
-Format: `birthday INDEX [b/dd/mm/yyyy]`
-
-****
-* Add / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
-* For removing : input nothing after " `b/` "
-****
-
-Examples:
-
-* `birthday 1 b/20/07/1995` +
-Adds / changes birthday of the 1st person to be `20/07/1995`
-* `birthday 3 b/` +
-Removes the birthday of the 3rd person.
-
 === Sorting all entries by name: `sort`
 
 Sorts all entries in the address book by alphabetical order. +
@@ -324,26 +324,26 @@ Format: `sortPriority`
 === Retrieving all persons having an existing tag : `retrieve`
 
 Lists all contacts having a certain existing tag in the address book. +
-Format: `retrieve TAGNAME`
+Format: `retrieve TAG`
 
 ****
-* Retrieves all person having the specified `TAGNAME` tag.
+* Retrieves all persons having the specified `TAG` tag.
 * The tag name *must be alphanumeric*
 ****
 
 Examples:
 
 * `retrieve friends` +
-Retrieves all persons with friends tag in the address book.
+Retrieves all persons with the "friends" tag in the address book.
 
 === Tagging multiple persons : `tag`
 
 Tags the persons identified by the index numbers used in the last person listing. +
-Format: `tag INDEX,[MORE_INDEXES]... TAGNAME`
+Format: `tag INDEX,[MORE_INDEXES],... TAG`
 
 ****
-* Tags the persons at the specified `INDEX,[MORE_INDEXES]...` with the `TAGNAME` tag.
-* The indexes refers to the index numbers shown in the most recent listing.
+* Tags the persons at the specified `INDEX,[MORE_INDEXES],...` with the `TAG` tag.
+* The indexes refer to the index numbers shown in the most recent listing.
 * The indexes *must be positive integers* `1, 2, 3, ...`
 * The tag name *must be alphanumeric*
 ****
@@ -352,7 +352,55 @@ Examples:
 
 * `list` +
 `tag 1,2,3 friends` +
-Tags the 1st and 2nd person with the friends tag in the address book.
+Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+=== Untagging multiple persons : `untag`
+
+Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
+Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
+
+****
+* Removes all `TAG/[MORE_TAGS]/...` tags from the persons at the specified `INDEX,[MORE_INDEXES],...`.
+* The indexes refer to the index numbers shown in the most recent listing.
+* The indexes *must be positive integers* `1, 2, 3, ...`
+* The tag names *must be alphanumeric*
+* You can choose to remove the specified tags from all persons in the last person listing by replacing `INDEX,[MORE_INDEXES],...` with `-a`.
+* All tags will be removed from the persons at the specified indexes if `TAG/[MORE_TAGS]/...` is left blank.
+****
+
+Examples:
+
+* `list` +
+`untag 1,2,3 friends/enemies` +
+Removes the "friends" and "enemies" tags from the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+* `list` +
+`untag 1,2,3` +
+Removes all tags from the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+* `list` +
+`untag -a friends/enemies` +
+Removes the "friends" and "enemies" tags from all persons in the results of the `list` command.
+
+* `list` +
+`untag -a` +
+Removes all tags from all persons in the results of the `list` command.
+
+=== Renaming an existing tag : `retag`
+
+Renames a certain existing tag to a new tag name. +
+Format: `retag OLD_TAG NEW_TAG`
+
+****
+* Renames the existing `OLD_TAG` tag to `NEW_TAG`.
+* All persons having the `OLD_TAG` tag will be updated accordingly.
+* The tag names *must be alphanumeric*
+****
+
+Examples:
+
+* `retag enemies friends` +
+Renames the existing "enemies" tag in the address book to "friends".
 
 === Listing entered commands : `history`
 
@@ -459,6 +507,8 @@ e.g. `deleteReminder 5`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Edit Reminder* : `editReminder INDEX [z/TASK] [p/PRIORITY] [d/DATE and TIME] [M/MESSAGE] [t/TAG]...` +
 e.g. `editReminder 2 p/Medium m/Venue changed to Office`
+* *Update Birthday*: `birthday INDEX b/BIRTHDAY` +
+e.g. `birthday 4 b/20/10/1995`
 * *Find Person* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Find Email* : `findEmail KEYWORD [MORE_KEYWORDS]` +
@@ -472,18 +522,20 @@ e.g. `findReminder Project`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Retrieve* : `retrieve TAGNAME` +
-e.g.`retrieve family`
-* *Tag* : `tag INDEX,[MORE_INDEXES]... TAGNAME` +
-e.g.`tag 1,2,3 friends`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Update Birthday*: `birthday INDEX b/BIRTHDAY` +
-e.g. `birthday 4 b/20/10/1995`
 * *Sort by Name* : `sort`
 * *Sort by Age* : `sortAge`
 * *Sort by Birthday* : `sortBirthday`
 * *Sort by Priority* : `sortPriority`
-* *Retrieve* : `retrieve TAGNAME` +
-e.g. `retrieve friends`
+* *Retrieve* : `retrieve TAG` +
+e.g.`retrieve family`
+* *Tag* : `tag INDEX,[MORE_INDEXES],... TAG` +
+e.g.`tag 1,2,3 friends`
+* *Untag* : `untag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...` +
+e.g.`untag 1,2,3 friends/enemies`
+* *Retag* : `retag OLD_TAG NEW_TAG` +
+e.g.`retag enemies friends`
+* *History* : `history`
+* *Undo* : `undo`
+* *Redo* : `redo`
+* *Log in to private database* : `login u/private p/password`
+* *Log out of private database* : `logout`
