@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -30,44 +31,53 @@ public class MeetingListPanel extends UiPart<Region> {
     @FXML
     private ListView<MeetingCard> meetingListView;
 
-    public MeetingListPanel(ObservableList<ReadOnlyPerson> personList) {
+    public MeetingListPanel(ObservableList<Meeting> meetingList) {
         super(FXML);
-        setConnections(personList);
+        setConnections(meetingList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
-        ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(personList, (person) -> new Person(person));
+    private void setConnections(ObservableList<Meeting> meetingList) {
+        ObservableList<MeetingCard> mappedList = EasyBind.map(
+                meetingList, (meeting) -> new MeetingCard(meeting, meetingList.indexOf(meeting) + 1));
+        meetingListView.setItems(mappedList);
+        meetingListView.setCellFactory(listView -> new MeetingListViewCell());
+
+//        ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(personList, (person) -> new Person(person));
 //        ObservableList<Meeting> meetingList;
 //        EasyBind.listBind(meetingList, getMeetingList(mappedList));
-        ObservableList<MeetingCard> displayList = EasyBind.map(
-                getMeetingList(mappedList), (meeting) ->
-                        new MeetingCard(meeting, getMeetingList(mappedList).indexOf(meeting) + 1));
-        meetingListView.setItems(displayList);
-        meetingListView.setCellFactory(listView -> new MeetingListViewCell());
+//        ObservableList<MeetingCard> displayList = EasyBind.map(
+//                getMeetingList(mappedList), (meeting) ->
+//                        new MeetingCard(meeting, getMeetingList(mappedList).indexOf(meeting) + 1));
+//        meetingListView.setItems(displayList);
+//        meetingListView.setCellFactory(listView -> new MeetingListViewCell());
     }
 
-//    public void getDisplayMeetingList(ObservableList<Meeting> meetingList) {
-//        ObservableList<MeetingCard> displayList;
-//        for (Meeting meeting : meetingList) {
-//            displayList.add(meeting, meetingList.indexOf(meeting) + 1);
-//        }
+//    private void updateMeetingList(UniqueMeetingList meetingList) {
+//
+//        ObservableList<MeetingCard> displayList = meetingList.stream().map(meeting -> new MeetingCard(meeting, meetingList.indexOf(meeting) + 1)).collect(Collectors.toList());
+//                forEach((meeting -> new MeetingCard(meeting, meetingList.indexOf(meeting) + 1)));
 //    }
 
-    public ObservableList<Meeting> getMeetingList(ObservableList<ReadOnlyPerson> personList) {
-//        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        UniqueMeetingList meetingList = new UniqueMeetingList();
-        for (ReadOnlyPerson person : personList) {
-            for (Meeting meeting : person.getMeetings()) {
-                try {
-                    meetingList.add(meeting);
-                } catch (UniqueMeetingList.DuplicateMeetingException e) {
-                    throw new AssertionError("Meetings should all be unique" + e);
-                }
-            }
-        }
-        return meetingList.asObservableList();
-    }
+//    public UniqueMeetingList getMeetingList(ObservableList<ReadOnlyPerson> personList) {
+//        UniqueMeetingList meetingList = new UniqueMeetingList();
+//        for (ReadOnlyPerson person : personList) {
+//            for (Meeting meeting : person.getMeetings()) {
+//                try {
+//                    meetingList.add(meeting);
+//                } catch (UniqueMeetingList.DuplicateMeetingException e) {
+//                    throw new AssertionError("Meetings should all be unique" + e);
+//                }
+//            }
+//        }
+//        return meetingList;
+//    }
+
+//    @Subscribe
+//    private void handleUpdateMeetingListUIEvent(updateMeetingListUIEvent event) {
+//        UniqueMeetingList meetingList = getMeetingList(event.getPersonList);
+//        updateMeetingList(meetingList);
+//    }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.

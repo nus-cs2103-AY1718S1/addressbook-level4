@@ -127,7 +127,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        meetingListPanel = new MeetingListPanel(logic.getFilteredPersonList());
+        meetingListPanel = new MeetingListPanel(logic.getFilteredMeetingList());
         meetingListPanelPlaceholder.getChildren().add(meetingListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
