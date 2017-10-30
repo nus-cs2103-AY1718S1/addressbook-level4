@@ -11,7 +11,8 @@ import seedu.address.ui.ParcelCard;
  * Provides a handle for {@code ParcelListPanel} containing the list of {@code ParcelCard}.
  */
 public class ParcelListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
-    public static final String PARCEL_LIST_VIEW_ID = "#parcelListView";
+    public static final String UNDELIVERED_PARCEL_LIST_VIEW_ID = "#allUncompletedParcelListView";
+    public static final String DELIVERED_PARCEL_LIST_VIEW_ID = "#allCompletedParcelListView";
 
     private Optional<ParcelCard> lastRememberedSelectedParcelCard;
 
@@ -130,5 +131,35 @@ public class ParcelListPanelHandle extends NodeHandle<ListView<ParcelCard>> {
      */
     public int getListSize() {
         return getRootNode().getItems().size();
+    }
+
+    //@@author kennard123661
+    @Override
+    public boolean equals(Object object) {
+        ParcelListPanelHandle parcelList;
+
+        // check object type
+        if (object instanceof ParcelListPanelHandle) {
+            parcelList = (ParcelListPanelHandle) object;
+        } else {
+            return false;
+        }
+
+        // check same size
+        if (parcelList.getListSize() != getListSize()) {
+            return false;
+        }
+
+        List<ParcelCard> parcels = getRootNode().getItems();
+        List<ParcelCard> otherParcels = parcelList.getRootNode().getItems();
+
+        // compares elements and order
+        for (int i = 0; i < parcels.size(); i++) {
+            if (!parcels.get(i).equals(otherParcels.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

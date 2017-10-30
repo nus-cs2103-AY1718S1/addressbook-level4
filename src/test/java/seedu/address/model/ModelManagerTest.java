@@ -31,6 +31,7 @@ public class ModelManagerTest {
         modelManager.getFilteredParcelList().remove(0);
     }
 
+    //@@author kennard123661
     @Test
     public void addAllParcelsTest() {
         AddressBook addressBook = new AddressBookBuilder().withParcel(ALICE).withParcel(BENSON).build();
@@ -45,8 +46,8 @@ public class ModelManagerTest {
 
         // logic test
         modelManager.addAllParcels(parcels, parcelsAdded, duplicateParcels);
-        assertEquals(7, parcels.size());
-        assertEquals(5, parcelsAdded.size());
+        assertEquals(8, parcels.size());
+        assertEquals(6, parcelsAdded.size());
         assertEquals(2, duplicateParcels.size());
 
         // elements in parcels test
@@ -56,7 +57,13 @@ public class ModelManagerTest {
 
         // ensure that addressbook updated
         assertEquals(4, modelManager.getAddressBook().getTagList().size());
-        assertEquals(7, modelManager.getAddressBook().getParcelList().size());
+        assertEquals(8, modelManager.getAddressBook().getParcelList().size());
+        assertEquals(2, modelManager.getFilteredDeliveredParcelList().size());
+        assertEquals(6, modelManager.getFilteredUndeliveredParcelList().size());
+
+        assertEquals(modelManager.getActiveList(), modelManager.getFilteredUndeliveredParcelList());
+        modelManager.setActiveList(true);
+        assertEquals(modelManager.getActiveList(), modelManager.getFilteredDeliveredParcelList());
     }
 
     @Test

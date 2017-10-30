@@ -19,6 +19,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.parcel.ReadOnlyParcel;
 
+//@author kennard123661
 /**
  * Contains integration tests (interaction with the Model) for {@code ImportCommand}.
  */

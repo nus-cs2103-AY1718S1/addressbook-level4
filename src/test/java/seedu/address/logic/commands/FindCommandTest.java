@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PARCELS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalParcels.CARL;
 import static seedu.address.testutil.TypicalParcels.ELLE;
 import static seedu.address.testutil.TypicalParcels.FIONA;
+import static seedu.address.testutil.TypicalParcels.GEORGE;
 import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -61,14 +61,16 @@ public class FindCommandTest {
     public void execute_zeroKeywords_noParcelFound() {
         String expectedMessage = String.format(MESSAGE_PARCELS_LISTED_OVERVIEW, 0);
         FindCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList(), Collections.emptyList(),
+                Collections.emptyList());
     }
 
     @Test
     public void execute_multipleKeywords_multipleParcelsFound() {
-        String expectedMessage = String.format(MESSAGE_PARCELS_LISTED_OVERVIEW, 3);
-        FindCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+        String expectedMessage = String.format(MESSAGE_PARCELS_LISTED_OVERVIEW, 2);
+        FindCommand command = prepareCommand("Kunz Elle Best");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE, FIONA, GEORGE), Arrays.asList(ELLE, FIONA),
+                Arrays.asList(GEORGE));
     }
 
     /**
@@ -87,12 +89,16 @@ public class FindCommandTest {
      *     - the {@code FilteredList<ReadOnlyParcel>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyParcel> expectedList) {
+    private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyParcel> expectedList,
+                                      List<ReadOnlyParcel> expectedUndeliveredList,
+                                      List<ReadOnlyParcel> expectedDeliveredList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredParcelList());
         assertEquals(expectedAddressBook, model.getAddressBook());
+        assertEquals(expectedUndeliveredList, model.getFilteredUndeliveredParcelList());
+        assertEquals(expectedDeliveredList, model.getFilteredDeliveredParcelList());
     }
 }

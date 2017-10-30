@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author kennard123661
 public class AddressTest {
 
     @Test

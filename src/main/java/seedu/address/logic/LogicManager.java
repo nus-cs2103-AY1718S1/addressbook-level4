@@ -45,10 +45,27 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author kennard123661
     @Override
     public ObservableList<ReadOnlyParcel> getFilteredParcelList() {
         return model.getFilteredParcelList();
     }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getDeliveredParcelList() {
+        return model.getFilteredDeliveredParcelList();
+    }
+
+    @Override
+    public void setActiveList(boolean isDelivered) {
+        model.setActiveList(isDelivered);
+    }
+
+    @Override
+    public ObservableList<ReadOnlyParcel> getUndeliveredParcelList() {
+        return model.getFilteredUndeliveredParcelList();
+    }
+    //@@ author
 
     @Override
     public ListElementPointer getHistorySnapshot() {

@@ -1,5 +1,14 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_PENDING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FROZEN;
+import static seedu.address.testutil.TypicalParcels.VALID_ADDRESS_ALICE;
+import static seedu.address.testutil.TypicalParcels.VALID_DELIVERY_DATE_ALICE;
+import static seedu.address.testutil.TypicalParcels.VALID_EMAIL_ALICE;
+import static seedu.address.testutil.TypicalParcels.VALID_NAME_ALICE;
+import static seedu.address.testutil.TypicalParcels.VALID_TRACKING_NUMBER_ALICE;
+
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -20,14 +29,14 @@ import seedu.address.model.util.SampleDataUtil;
  */
 public class ParcelBuilder {
 
-    public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
-    public static final String DEFAULT_ADDRESS = "6, Jurong West Ave 1, #08-111 S649520";
-    public static final String DEFAULT_TAGS = "friends";
-    public static final String DEFAULT_TRACKING_NUMBER = "RR999966699SG";
-    public static final String DEFAULT_DELIVERY_DATE = "01-01-2001";
-    public static final String DEFAULT_STATUS = "PENDING";
+    public static final String DEFAULT_NAME = VALID_NAME_ALICE;
+    public static final String DEFAULT_PHONE = VALID_PHONE_AMY; // to ensure uniqueness
+    public static final String DEFAULT_EMAIL = VALID_EMAIL_ALICE;
+    public static final String DEFAULT_ADDRESS = VALID_ADDRESS_ALICE;
+    public static final String DEFAULT_TAGS = VALID_TAG_FROZEN;
+    public static final String DEFAULT_TRACKING_NUMBER = VALID_TRACKING_NUMBER_ALICE;
+    public static final String DEFAULT_DELIVERY_DATE = VALID_DELIVERY_DATE_ALICE;
+    public static final String DEFAULT_STATUS = VALID_STATUS_PENDING;
 
     private Parcel parcel;
 

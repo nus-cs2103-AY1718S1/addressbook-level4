@@ -69,4 +69,13 @@ public class BrowserPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadParcelLocationPage(event.getNewSelection().parcel);
     }
+
+    //@@author kennard123661
+    public static String getMapQueryStringFromPostalString(String postalCode) {
+        int firstDigitIndex = 1;
+        int lastDigitIndex = 7;
+
+        return "Singapore+" + postalCode.substring(firstDigitIndex, lastDigitIndex);
+    }
+
 }
