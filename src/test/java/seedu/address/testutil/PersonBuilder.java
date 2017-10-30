@@ -130,6 +130,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author Ernest
     /**
      * Sets the {@code Bloodtype} of the {@code Person} that we are building.
      */
@@ -141,6 +142,7 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author
 
     //@@author Eric
     /**

@@ -143,6 +143,7 @@ public class ParserUtilTest {
         assertEquals(expectedAddress, actualAddress.get());
     }
 
+    //@@author Ernest
     @Test
     public void parseBloodTypeNullThrowsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -167,6 +168,7 @@ public class ParserUtilTest {
 
         assertEquals(expectedBloodType, actualBloodType.get());
     }
+    //@@author
 
     @Test
     public void parseEmail_null_throwsNullPointerException() throws Exception {

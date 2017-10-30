@@ -220,6 +220,7 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        //@@author Ernest
         public void setBloodType(Bloodtype bloodType) {
             this.bloodType = bloodType;
         }
@@ -227,6 +228,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Bloodtype> getBloodType() {
             return Optional.ofNullable(bloodType);
         }
+        //@@author
 
         public void setRemark(Remark remark) {
             this.remark = remark;
