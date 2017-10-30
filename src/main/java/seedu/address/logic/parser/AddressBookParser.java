@@ -25,11 +25,13 @@ import seedu.address.logic.commands.event.CheckScheduleCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.event.FindEventCommand;
+import seedu.address.logic.commands.relationship.SetRelCommand;
 import seedu.address.logic.parser.event.AddEventCommandParser;
 import seedu.address.logic.parser.event.DeleteEventCommandParser;
 import seedu.address.logic.parser.event.EditEventCommandParser;
 import seedu.address.logic.parser.event.FindEventCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.relationship.SetRelCommandParser;
 
 /**
  * Parses user input.
@@ -110,6 +112,9 @@ public class AddressBookParser {
 
         case FindEventCommand.COMMAND_WORD:
             return new FindEventCommandParser().parse(arguments);
+        return new FindEventCommandParser().parse(arguments);
+        case SetRelCommand.COMMAND_WORD:
+            return new SetRelCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
