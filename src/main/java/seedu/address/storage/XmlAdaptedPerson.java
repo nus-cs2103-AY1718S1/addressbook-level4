@@ -69,6 +69,7 @@ public class XmlAdaptedPerson {
         }
     }
 
+    //@@author OscarWang114
     /**
      * Converts this jaxb-friendly adapted person object into the model's Person object.
      *
@@ -91,5 +92,5 @@ public class XmlAdaptedPerson {
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, dob, tags, personLifeInsuranceIds);
     }
-
+    //@@author
 }
