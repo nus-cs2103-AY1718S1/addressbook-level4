@@ -85,11 +85,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
-        syncMasterTagListWith(newPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         persons.add(newPerson);
+        syncMasterTagListWith(newPerson);
     }
 
     /**
@@ -107,11 +104,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
-        syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         persons.setPerson(target, editedPerson);
+        syncMasterTagListWith(editedPerson);
+        Person removedPerson = new Person(target);
+        cleanUpTagListAfterRemovalOf(removedPerson);
     }
 
     /**
@@ -145,11 +141,33 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
+     * After a person has been removed/replaced in the list,
+     * check if the person's tags are still in use and remove them if they aren't
+     */
+    private void cleanUpTagListAfterRemovalOf(Person person) {
+        final UniqueTagList removedPersonTags = new UniqueTagList(person.getTags());
+        for (Tag t : removedPersonTags) {
+            boolean tagExists = false;
+            for (ReadOnlyPerson p : persons) {
+                if (p.getTags().contains(t)) {
+                    tagExists = true;
+                    break;
+                }
+            }
+            if (!tagExists) {
+                tags.remove(t);
+            }
+        }
+    }
+
+    /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            Person removedPerson = new Person(key);
+            cleanUpTagListAfterRemovalOf(removedPerson);
             return true;
         } else {
             throw new PersonNotFoundException();
