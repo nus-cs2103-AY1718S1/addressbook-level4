@@ -9,7 +9,6 @@ public class InitImageFolder {
 
     public InitImageFolder(String destinationPath) throws IOException {
         requireNonNull(destinationPath);
-        
         File file = new File(destinationPath);
         if (!file.exists()) {
             file.mkdir();
