@@ -1,4 +1,4 @@
-= Unify - User Guide
+= image:UG_userguideheader.png[width="900"]
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -14,7 +14,13 @@ endif::[]
 
 By: `W-11 B4`      Since: `Sep 2017`      Licence: `MIT`
 
+image::header_tableofcontents.png[width="400"]
+
 == Welcome to Unify
+image::UG_mainheader_introduction.png[width="900"]
+//-
+{sp}
+
 Unify is a Command Line Interface AddressBook that helps manage your contacts efficiently.
 
 === Do More with Less
@@ -79,16 +85,37 @@ image::UG_help.png[width="590"]
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+image::divider.png[width="900"]
+//-
+{sp}+
+
 === Viewing help : `help`
 
-Opens the User Guide +
+image::UG_commandheader_viewinghelp.png[width="500"]
+//-
+{sp}+
+Opens the User Guide
+
+image::UG_header_format.png[width="400"]
+//-
+{sp}+
 Format: `help`
 
-. Type `help` into the command box, and press kbd:[Enter] to execute it.
-. The help window will appear as shown above.
+image::UG_header_stepbystep.png[width="400"]
+{sp}+
+image:step1.png[width="70"] Type `help` into the command box, and press kbd:[Enter] to execute it.
 
 image::UG_help1.png[width="590"]
+image:step2.png[width="70"] The help window will appear as shown above.
+
 image::UG_help2.png[width="590"]
+//-
+{sp}+
+
+image::divider.png[width="900"]
+
+{sp}+
+
 
 === Adding a person: `add`
 
@@ -99,12 +126,16 @@ Alias: `a`
 [TIP]
 A person can have any number of tags (including 0)
 
+image::UG_header_examples.png[width="400"]
+
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 //-
+
+image::UG_header_stepbystep.png[width="400"]
 
 . Type `add` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
 . The result box will display "New person added:" with the contact details.
