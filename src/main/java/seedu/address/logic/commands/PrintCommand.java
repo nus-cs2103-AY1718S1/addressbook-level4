@@ -24,15 +24,16 @@ public class PrintCommand extends Command {
 
     public static final String MESSAGE_USAGE = "";
 
-    private final String fileName = "lol.txt";
+    //private final String fileName = "lol.txt";
+    private final String fileName;
 
-    /*
+
     public PrintCommand(String filename) {
         requireNonNull(filename);
 
         this.fileName = filename;
     }
-    */
+
 
     @Override
     public CommandResult execute() {
