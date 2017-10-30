@@ -83,11 +83,13 @@ public class PersonCard extends UiPart<Region> {
         boolean favouriteStatus = person.getFavourite().getFavourite();
         String textToDisplay = favouriteStatus ? "Fav" : "";
         Label favouriteLabel = new Label(textToDisplay);
-        Button favouriteButton = new Button("Fav");
+        Button favouriteButton = new Button();
         if (favouriteStatus) {
             favouriteLabel.setStyle("-fx-background-color: orangered");
+            favouriteButton.setStyle("-fx-background-color: yellow; -fx-border-color: black; -fx-border-width: 2;");
         } else {
             favouriteLabel.setStyle("-fx-background-color: cornflowerblue");
+            favouriteButton.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 2;");
         }
         cardPane.getChildren().add(favouriteLabel);
         cardPane.getChildren().add(favouriteButton);
