@@ -122,7 +122,9 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return name.get();
     }
 
-    public void setPhoneList(UniquePhoneList list) { this.uniquePhoneList.set(requireNonNull(list)); }
+    public void setPhoneList(UniquePhoneList list) {
+        this.uniquePhoneList.set(requireNonNull(list));
+    }
 
     @Override
     public UniquePhoneList getPhoneList() {

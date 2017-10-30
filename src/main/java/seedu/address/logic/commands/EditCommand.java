@@ -206,9 +206,13 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(photo);
         }
 
-        public void setUniquePhoneList(UniquePhoneList uniquePhoneList) { this.uniquePhoneList = uniquePhoneList; }
+        public void setUniquePhoneList(UniquePhoneList uniquePhoneList) {
+            this.uniquePhoneList = uniquePhoneList;
+        }
 
-        public Optional<UniquePhoneList> getUniquePhoneList() { return Optional.ofNullable(uniquePhoneList); }
+        public Optional<UniquePhoneList> getUniquePhoneList() {
+            return Optional.ofNullable(uniquePhoneList);
+        }
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
