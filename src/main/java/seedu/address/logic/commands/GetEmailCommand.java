@@ -7,6 +7,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.storage.AddressBookStorage;
 
+/**
+ * Get the currently logged in email
+ */
 public class GetEmailCommand extends Command {
     public static final String COMMAND_WORD = "email_address";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Get the current logged in email\n"

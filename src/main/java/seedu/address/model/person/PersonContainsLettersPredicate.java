@@ -1,17 +1,21 @@
 package seedu.address.model.person;
 
-import seedu.address.model.tag.Tag;
-
-import java.util.HashMap;
-import java.util.Set;
-import java.util.function.Predicate;
-
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.HashMap;
+import java.util.Set;
+import java.util.function.Predicate;
+
+import seedu.address.model.tag.Tag;
+
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} or {@code Tag} or {@code Address} or {@code Phone}
+ * or {@code Email} contains any string given
+ */
 public class PersonContainsLettersPredicate implements Predicate<ReadOnlyPerson> {
     private final HashMap<String, String> keywords;
 
@@ -49,8 +53,8 @@ public class PersonContainsLettersPredicate implements Predicate<ReadOnlyPerson>
         if (keywords.containsKey(PREFIX_TAG.toString())) {
             String keyword = keywords.get(PREFIX_TAG.toString());
             Set<Tag> tagSet = readOnlyPerson.getTags();
-            result = result && tagSet.stream().anyMatch(tag -> tag.toString().toLowerCase().
-                                                            contains(keyword.toLowerCase()));
+            result = result && tagSet.stream().anyMatch(tag -> tag.toString().toLowerCase()
+                                                            .contains(keyword.toLowerCase()));
         }
 
         return result;

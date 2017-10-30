@@ -10,7 +10,7 @@ import seedu.address.storage.AddressBookStorage;
 /**
  * Log out any email currently logged in
  */
-public class EmailLogoutCommand extends Command{
+public class EmailLogoutCommand extends Command {
     public static final String COMMAND_WORD = "email_logout";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Log out from any logged in email\n"
                                                 + "Parameter: email_logout";

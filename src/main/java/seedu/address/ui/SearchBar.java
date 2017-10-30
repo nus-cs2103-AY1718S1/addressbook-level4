@@ -1,20 +1,19 @@
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
-import javafx.stage.Stage;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.util.logging.Logger;
 
 /**
  * Search bar on the GUI to filter contacts
@@ -81,6 +80,9 @@ public class SearchBar extends UiPart<Region> {
         });
     }
 
+    /**
+     * Fires a new FindContainsCommand everytime search bar changes
+     */
     @FXML
     private void onSearchbarChanged() {
         String commandString = "find_contain ";
