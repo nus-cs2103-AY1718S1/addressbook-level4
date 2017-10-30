@@ -129,7 +129,15 @@ image::divider.png[width="900"]
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+
+image::UG_header_format.png[width="400"]
+//-
+{sp}+
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+image::UG_header_alias.png[width="400"]
+//-
+{sp}+
 Alias: `a`
 
 [TIP]
