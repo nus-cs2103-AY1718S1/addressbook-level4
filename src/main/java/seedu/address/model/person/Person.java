@@ -318,7 +318,7 @@ public class Person implements ReadOnlyPerson {
     //@@author jelneo
     /**
      * Sets total debt of a person to the given Debt.
-     * @param totalDebt must not be null.
+     * @param totalDebt must not be null and cannot be less than current debt
      */
     public void setTotalDebt(Debt totalDebt) {
         requireNonNull(totalDebt);
