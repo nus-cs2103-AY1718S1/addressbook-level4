@@ -76,6 +76,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author arturs68
     /**
      * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code Person} that we are building.
      */
@@ -87,6 +88,7 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Address} of the {@code Person} that we are building.
