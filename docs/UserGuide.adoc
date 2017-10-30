@@ -14,6 +14,15 @@ endif::[]
 
 By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+
+As the name implies, link:{repoURL}[**BoNUS**] helps you _better(B) organize(o) your NUS life_.
+
+* It is a desktop personal organizer application that targets at http://www.nus.edu.sg/[NUS] students.
+* It cannot be more convenient to manage contacts and upcoming events.
+* It is oriented for typist user (most operations should be done using keyboard rather than mouse).
+* Exclusive features have been developed to suit out primary user group - NUS students.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -422,6 +431,10 @@ For `macOS` and `Linux` users, use `/` instead.
 ====
 
 ==== From `.bo` format
+
+_(Coming in v2.0)_
+
+
 
 ==== From NUSMods URL
 
