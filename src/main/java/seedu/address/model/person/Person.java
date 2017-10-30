@@ -3,12 +3,20 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.insurance.LifeInsurance;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.tag.Tag;
@@ -32,7 +40,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<UniqueTagList> tags;
 
     /**
-     * Every field must be present and not null.
+     * Only the name field is required
      */
     public Person(Name name, Phone phone, Email email, Address address, DateOfBirth dob, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, dob, tags);
@@ -169,6 +177,29 @@ public class Person implements ReadOnlyPerson {
     public ReadOnlyInsurance getLifeInsurance() {
         return lifeInsurance;
     }
+
+    public String getDetailByPrefix(Prefix prefix) {
+        if (prefix.equals(PREFIX_NAME)) {
+            return getName().toString();
+        } else if (prefix.equals(PREFIX_ADDRESS)) {
+            return getAddress().toString();
+        } else if (prefix.equals(PREFIX_EMAIL)) {
+            return getEmail().toString();
+        } else if (prefix.equals(PREFIX_PHONE)) {
+            return getPhone().toString();
+        } else if (prefix.equals(PREFIX_DOB)) {
+            return getDateOfBirth().toString();
+        } else if (prefix.equals(PREFIX_TAG) || prefix.equals(PREFIX_DELTAG)) {
+            Set<Tag> tags = getTags();
+            String detail = "";
+            for (Tag tag : tags) {
+                detail += tag.tagName + " ";
+            }
+            return detail.trim();
+        }
+        return "";
+    }
+
 
     @Override
     public boolean equals(Object other) {
