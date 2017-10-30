@@ -2,8 +2,6 @@ package seedu.address.logic;
 
 import java.util.logging.Logger;
 
-import org.graphstream.ui.view.Viewer;
-
 import javafx.collections.ObservableList;
 
 import seedu.address.commons.core.ComponentManager;

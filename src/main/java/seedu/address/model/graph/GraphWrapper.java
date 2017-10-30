@@ -38,7 +38,6 @@ public class GraphWrapper {
     private final String nodeAttributePerson = "Person";
 
     public GraphWrapper() {
-
         this.graph = new SingleGraph(graphId);
         this.viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();

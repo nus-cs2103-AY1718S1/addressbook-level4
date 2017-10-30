@@ -180,8 +180,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
      * details of {@code toAdd}, and the model related components equal to the current model added with {@code toAdd}.
      * These verifications are done by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the command box has the default style class, the status bar's sync status changes,
-     * the browser url and selected card remains unchanged.
+     * Also verifies that the command box has the default style class, the status bar's sync status changes, and
+     * the selected card remains unchanged.
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(ReadOnlyPerson toAdd) {
