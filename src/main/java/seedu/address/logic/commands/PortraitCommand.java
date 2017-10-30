@@ -27,6 +27,8 @@ public class PortraitCommand extends UndoableCommand {
             + PREFIX_PORTRAIT + "C:/user/images/sample.png";
     public static final String MESSAGE_ADD_PORTRAIT_SUCCESS = "Attached a head portrait to Person: %1$s";
     public static final String MESSAGE_DELETE_PORTRAIT_SUCCESS = "Removed head portrait from Person: %1$s";
+    public static final String MESSAGE_INVALID_URL = "The file path does not locate the image. "
+        + "Please make sure you enter the correct path.";
 
     private Index index;
     private PortraitPath filePath;
@@ -40,6 +42,10 @@ public class PortraitCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
+        if (!filePath.toString().isEmpty() && !PortraitPath.isValidUrl(filePath.toString())) {
+            throw new CommandException(MESSAGE_INVALID_URL);
+        }
+
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {

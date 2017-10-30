@@ -18,6 +18,7 @@ import seedu.address.model.person.PortraitPath;
 public class PortraitCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             PortraitCommand.MESSAGE_USAGE);
+    private static final String MESSAGE_INVALID_INDEX = ParserUtil.MESSAGE_INVALID_INDEX;
     private PortraitCommandParser parser = new PortraitCommandParser();
 
     @Test
@@ -38,7 +39,7 @@ public class PortraitCommandParserTest {
     @Test
     public void testMissingPartsFailure() {
 
-        assertParseFailure(parser, "" + PORTRAIT_DESC_FIRST, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "" + PORTRAIT_DESC_FIRST, MESSAGE_INVALID_INDEX);
 
         assertParseFailure(parser, "1 " + VALID_PORTRAIT_PATH_FIRST, MESSAGE_INVALID_FORMAT);
     }
@@ -46,10 +47,10 @@ public class PortraitCommandParserTest {
     @Test
     public void testInvalidValueFailure() {
         // negative index
-        assertParseFailure(parser, "-5" + PORTRAIT_DESC_FIRST, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + PORTRAIT_DESC_FIRST, MESSAGE_INVALID_INDEX);
 
         // zero index
-        assertParseFailure(parser, "0" + PORTRAIT_DESC_FIRST, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + PORTRAIT_DESC_FIRST, MESSAGE_INVALID_INDEX);
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 not an index", MESSAGE_INVALID_FORMAT);
