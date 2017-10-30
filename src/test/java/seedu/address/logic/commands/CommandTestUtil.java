@@ -17,6 +17,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,10 +59,11 @@ public class CommandTestUtil {
     public static final String VALID_PRIORITY_BOB = "M";
     public static final String VALID_NOTE_AMY = "Met this person last week";
     public static final String VALID_NOTE_BOB = "Likes coffee";
-    public static final String VALID_PHOTO_AMY =
-            "src/main/resources/images/summer.jpg";
-    public static final String VALID_PHOTO_BOB =
-            "src/main/resources/images/mad-men.jpg";
+    public static final String FILE_SEPARATOR = File.separator;
+    public static final String VALID_PHOTO_AMY = "src" + FILE_SEPARATOR + "main" + FILE_SEPARATOR + "resources"
+            + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "summer.jpg";
+    public static final String VALID_PHOTO_BOB = "src" + FILE_SEPARATOR + "main" + FILE_SEPARATOR + "resources"
+            + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "mad-men.jpg";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_REL_SIBLINGS = "siblings";
