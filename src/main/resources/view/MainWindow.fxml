@@ -52,7 +52,7 @@
       <VBox>
          <children>
             <StackPane fx:id="functionButtonsPanel" prefWidth="340.0" />
-      
+
           <StackPane fx:id="browserPlaceholder" prefWidth="340">
             <padding>
               <Insets bottom="10" left="10" right="10" top="10" />
