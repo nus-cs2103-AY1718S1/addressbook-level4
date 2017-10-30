@@ -558,20 +558,6 @@ are doing before using any of the following commands. These commands are intende
 Adds a new property field available to all persons or events. +
 Format: `(cfg)config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
 
-[NOTE]
-====
-* Short name is used as the prefix for `add`/`addE` and `edit`/`editE` commands.
-* Full name is used to display the name of each property on the right panel (to show details of the selected person, see `select` command).
-* Constraint message is the string that will be shown in result display box when the input value for this property in
-`add`/`addE` and `edit`/`editE` commands is invalid.
-* Regular expression is used to check whether the input value for this property is valid.
-====
-
-Example:
-
-* `config --add-property s/ag f/age`
-* `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*`
-
 ****
 * This command does not add a new property to a specific person. Instead, it defines a property that will be available to
 all persons/events.
@@ -583,6 +569,20 @@ if there is an existing property with the same short name.
 * The given regular expression must use legal syntax. It will be checked by the
 https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#compile-java.lang.String-[Pattern.compile] method.
 ****
+
+Example:
+
+* `config --add-property s/ag f/age`
+* `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*`
+
+[NOTE]
+====
+* Short name is used as the prefix for `add`/`addE` and `edit`/`editE` commands.
+* Full name is used to display the name of each property on the right panel (to show details of the selected person, see `select` command).
+* Constraint message is the string that will be shown in result display box when the input value for this property in
+`add`/`addE` and `edit`/`editE` commands is invalid.
+* Regular expression is used to check whether the input value for this property is valid.
+====
 
 ==== Set tag color : `(cfg)config --set-tag-color`
 
