@@ -18,6 +18,24 @@ endif::[]
 
 By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+**BoNUS** is an address book dedicated to NUS students to carry out various tasks such as storing contacts, planning
+for events, timetable planning as well as a calendar to better organise their campus life. The address book allows
+contacts to be stored with important information such as name, email, address and phone number. **BoNUS** also allows
+infinite freedom of customizing your own fields as you deem fit.
+
+The name **BoNUS** came about with the inspiration of **B**etter **o**rganizing your **NUS** life.
+
+**BoNUS** is convenient, fast, secured, integrated, solely with the motivation of giving you a bonus for your student
+life in NUS
+
+**BoNUS** is a Command Line Input (CLI) based application that caters to NUS students who are proficient with Command
+Line Input format to utilise the address book to make their NUS life more organized!
+
+== Purpose
+This user guide aims to provide NUS students with a comprehensive step-by-step guide on how to better utilise **BoNUS**
+to make their NUS life a more organised one.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
