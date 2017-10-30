@@ -98,7 +98,7 @@ Examples:
 `mark 1` +
 Mark the person into the marked list.
 
-=== Marking a lesson: `unmark`
+=== Unmarking a lesson: `unmark`
 
 remove a lesson from the marked list +
 Format: `unmark INDEX`

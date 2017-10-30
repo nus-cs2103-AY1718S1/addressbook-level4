@@ -26,8 +26,4 @@ public class RemarkCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE));
     }
 
-    @Test
-    public void parse_deleteRemark_returnsDeleteRemarkCommand() {
-        assertParseSuccess(parser, "-d 2", new DeleteRemarkCommand(INDEX_SECOND_LESSON));
-    }
 }

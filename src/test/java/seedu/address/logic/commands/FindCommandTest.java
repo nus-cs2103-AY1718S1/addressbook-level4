@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalLessons.MA1101R_L1;
 import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
@@ -14,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -83,14 +85,6 @@ public class FindCommandTest {
 
         // different find command -> returns false
         assertFalse(firstFindCommand.equals(secondFindCommand));
-    }
-
-    @Test
-    public void execute_zeroKeywords_noLessonFound() {
-        String expectedMessage = String.format(FindCommand.MESSAGE_SUCCESS);
-        FindCommand command = new FindCommand(keywords);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
     @Test
