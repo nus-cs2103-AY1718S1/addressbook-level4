@@ -17,7 +17,6 @@ import seedu.address.logic.commands.configs.AddPropertyCommand;
 import seedu.address.logic.commands.configs.ChangeTagColorCommand;
 import seedu.address.logic.commands.configs.ConfigCommand;
 import seedu.address.logic.commands.configs.ConfigCommand.ConfigType;
-import seedu.address.logic.commands.configs.ImportCalenderCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -36,8 +35,6 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
     private static final Pattern CONFIG_COMMAND_FORMAT = Pattern.compile("--(?<configType>\\S+)(?<configValue>.+)");
     private static final Pattern TAG_COLOR_FORMAT = Pattern.compile("(?<tagName>\\p{Alnum}+)\\s+(?<tagNewColor>.+)");
     private static final Pattern RGB_FORMAT = Pattern.compile("#(?<rgbValue>([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$)");
-    private static final Pattern URL_FORMAT =  Pattern.compile("https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]"
-            + "{2,256}\\.[a-z]{2,4}\\b([-a-zA-Z0-9@:%_+.~#?&//=]*)");
 
     // Some pre-defined colors for convenience.
     private static final HashMap<String, String> preDefinedColors = new HashMap<>();
@@ -92,8 +89,6 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
         switch (enumConfigType) {
         case ADD_PROPERTY:
             return checkAddProperty(value);
-        case IMPORT_CALENDAR:
-            return checkImportCalendar(value);
         case TAG_COLOR:
             return checkTagColor(value);
         default:
@@ -157,18 +152,6 @@ public class ConfigCommandParser implements Parser<ConfigCommand> {
         String regex = argMultimap.getValue(PREFIX_REGEX).orElse(DEFAULT_REGEX);
 
         return new AddPropertyCommand(value, shortName, fullName, message, regex);
-    }
-
-    /**
-     * Creates an {@link ImportCalenderCommand}.
-     */
-    private ImportCalenderCommand checkImportCalendar(String value) throws ParseException {
-        final Matcher matcher = URL_FORMAT.matcher(value.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ConfigCommand.MESSAGE_USAGE));
-        }
-
-        return new ImportCalenderCommand(value);
     }
 
     /**

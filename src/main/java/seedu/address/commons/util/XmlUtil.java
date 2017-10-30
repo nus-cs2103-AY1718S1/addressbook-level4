@@ -14,7 +14,6 @@ import javax.xml.bind.Unmarshaller;
  * Helps with reading from and writing to XML files.
  */
 public class XmlUtil {
-
     /**
      * Returns the xml data in the file as an object of the specified type.
      *

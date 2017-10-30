@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -92,6 +94,9 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_COLOR = " bee";
     public static final String INVALID_NEW_PROPERTY = " s/b r/[^\\s].*";
     public static final String INVALID_URL = " https://123,tg/";
+
+    public static final String INVALID_IMPORT_TYPE = " --some-import-type-unknown ";
+    public static final String INVALID_IMPORT_PATH = " unknown path";
 
     static {
         PropertyManager.initializePropertyManager();

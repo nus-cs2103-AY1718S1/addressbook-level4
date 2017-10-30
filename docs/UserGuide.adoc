@@ -316,10 +316,10 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `(i)history`
+=== Listing entered commands : `(his)history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `(i)history`
+Format: `(his)history`
 
 [NOTE]
 ====
@@ -391,6 +391,15 @@ Format: `(c)clear`
 ====
 Use `clear --all` if you want to clear data in all components (both contacts and events).
 ====
+
+=== Importing data : `(i)import`
+
+==== From `.xml` format
+
+==== From `.bo` format
+
+==== From NUSMods URL
+
 
 === Exporting data : `(p)export`
 

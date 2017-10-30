@@ -14,6 +14,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.person.AddCommand;
 import seedu.address.logic.commands.stub.ModelStub;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;

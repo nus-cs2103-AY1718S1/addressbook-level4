@@ -47,7 +47,7 @@ public class ArgumentMultimap {
      * If the prefix does not exist or has no values, this will return an empty list.
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
      */
-    List<String> getAllValues(Prefix prefix) {
+    public List<String> getAllValues(Prefix prefix) {
         if (!internalMap.containsKey(prefix)) {
             return new ArrayList<>();
         }
@@ -77,7 +77,7 @@ public class ArgumentMultimap {
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */
-    String getPreamble() {
+    public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }
 }

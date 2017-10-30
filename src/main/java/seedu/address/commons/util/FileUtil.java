@@ -118,6 +118,8 @@ public class FileUtil {
         } else {
             return false;
         }
+        return unixMatcher.matches() && File.separator.equals("\\")
+                || windowsMatcher.matches() && File.separator.equals("/");
     }
 
     /**
