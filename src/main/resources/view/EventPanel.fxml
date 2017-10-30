@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane id="eventName" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Label id="eventName" fx:id="nameLabel" alignment="TOP_CENTER" text="Event Name Placeholder" StackPane.alignment="TOP_CENTER">
+               <padding>
+                  <Insets top="100.0" />
+               </padding>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane id="eventTime" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Label id="eventTime" fx:id="timeslotLabel" text="Event Timeslot Placeholder" StackPane.alignment="CENTER" />
+         </children>
+      </StackPane>
+      <StackPane id="eventDescription" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Label id="eventDescription" fx:id="descriptionLabel" alignment="CENTER" prefHeight="200.0" prefWidth="800.0" text="Event Description Placeholder" textAlignment="CENTER" wrapText="true" StackPane.alignment="BOTTOM_CENTER">
+               <padding>
+                  <Insets bottom="50.0" />
+               </padding>
+            </Label>
+         </children>
+      </StackPane>
+   </children>
+</StackPane>
