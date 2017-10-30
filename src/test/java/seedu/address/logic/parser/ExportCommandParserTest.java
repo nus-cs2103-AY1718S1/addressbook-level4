@@ -12,7 +12,7 @@ public class ExportCommandParserTest {
     private ExportCommandParser parser = new ExportCommandParser();
 
     @Test
-    public void parse_validArgs_returnsListCommand() {
+    public void parse_validArgs_returnsExportCommand() {
         assertParseSuccess(parser, "data\\circlesExportTest.xml", new ExportCommand("data\\circlesExportTest.xml"));
     }
 
