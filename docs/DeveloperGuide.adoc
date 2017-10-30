@@ -14,6 +14,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
+== Introduction
+**BoNUS** is an address book application written in Java. This developer guide aims to provide a comprehensive guide for
+developers to understand the processes behind the development of this application. Furthermore, with the aid of sequence
+diagrams, we hope to better illustrate the architectural structure and methodology behind the development of **BoNUS**
+for fellow developers for reference if needed. **BoNUS** is open for extension, should any developers be interested,
+feel free to contact anyone of us in the `AboutUs` section.
+
 == Setting up
 
 === Prerequisites
@@ -483,8 +490,9 @@ Such a design makes Reminder class more adaptable to changes and ready for futur
 3. `Reminder` is now more open to changes if needed and can easily add parameters and methods now that it is a class
 on its own.
 
-4. Have a list of reminders in `Event` class. Since `Event` can have multiple reminders, each reminder is instantiated
-with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself.
+4. Have a list of reminders in `Event` class (Figure 3.37). Since `Event` can have multiple reminders, each reminder is
+instantiated with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself. Figure 3.38 depicts the
+relationship between `Event` and `Reminder`.
 
 image::EventClassDiagram.png[width="200"]
 _Figure 3.3.7 : Class Diagram for `Event`_
