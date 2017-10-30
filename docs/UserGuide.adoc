@@ -263,6 +263,61 @@ image::Figure12.png[width="790"]
 _Figure 12: Redoing a command_ +
 // end::undoredo[]
 
+
+=== Pinning a contact : `pin`
+Pin important contacts on Circles, such as professors or tutors to contact them easily. +
+Format: `pin INDEX`
+
+1. Enter `pin 3` to pin the 3rd person in the contacts list.
+2. The pinned contact should now be at the top of the contact list, sorted in alphabetical order.
+
+_Figure XX: Pinning a person_ +
+
+
+=== Pinning a group : `unpin`
+Unpin contacts that are previously pinned on Circles. +
+Format: `unpin INDEX`
+
+1. Enter `pin 1` to unpin the 1st person in the contacts list.
+2. The unpinned contact should now return to its original position in the contact list, sorted in alphabetical order. +
+
+_Figure XX: Unpinning a person_ +
+
+
+
+=== Creating a group : `creategroup`
+Creating a group for project work or a group meet-up? You can create a group in Circles in a few simple steps! +
+Format: `creategroup n/GROUP_NAME i/INDEX INDEX...`
+
+1. Enter `creategroup n/GROUP_NAME i/INDEX INDEX...` +
+_E.g: creategroup n/CS2103 Project i/1 2 3_ +
+
+2. The following message will appear if the creation of group is successful. (as shown in Figure XX) +
+_E.g: New group added: CS2103 Project with 3 member(s)_ +
+
+_Figure XX: Creating a group_ +
+
+=== Deleting a group : `deletegroup`
+Done with your group project and you have no need for the group anymore? Just delete the group with `deletegroup`! +
+Format: `deletegroup INDEX`
+
+1. Enter `deletegroup 1` to delete the 1st group on the Groups list on the right.
+
+_Figure XX: Deleting a group_ +
+
+=== Setting colours for tags : `setcolour`
+Circles allows you to differentiate tags from each other by allowing you to manually set colours for you tags. +
+Format: `setcolour TAGS COLOUR`
+
+1. Enter `setcolour friends red` to set all the tags `friends` to red in Circles.
+
+_Figure XX: Changing colour for a tag_ +
+
+[TIP]
+The colour that you entered here must be one of the colours in our library. +
+The suitable colours to be changed are `blue, red, brown, green, black, purple, indigo, gray, chocolate, orange,
+aquamarine`.
+
 === Sorting your contacts : `sort`
 The first step to organizing your address book to make it search-friendly is to have your contacts sorted alphabetically.
 Circles can do the job for you as well! +
@@ -357,8 +412,12 @@ Enter `list` or `find NAME` to check if you have already added the person.
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
+* *Create Group* : `creategroup n/GROUP NAME i/INDEX INDEX...`
+e.g. `creategroup n/CS2103 Project i/1 2 3`
 * *Delete* : `delete INDEX` + or `delete INDEX, INDEX`
 e.g. `delete 3` or `delete 1, 5`
+* *Delete Group* : `deletegroup INDEX`
+e.g. `deletegroup 1`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -366,12 +425,18 @@ e.g. `find James Jake`
 * *Sort* : `sort name` , `sort email` and `sort phone`
 * *List* : `list`
 * *Help* : `help` or kbd:[F1]
+* *Pin* : `pin INDEX` +
+e.g. `pin 1`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
+* *Set Colour*: `setcolour TAGS COLOUR` +
+e.g. `setcolour friends red`
+* *Unpin* : `unpin INDEX` +
+e.g. `unpin 1`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Exit* : `exit` or kbd:[F4]
 
 
-_Last updated on 27th October 2017_
+_Last updated on 31th October 2017_
