@@ -106,7 +106,7 @@ public class EditCommand extends UndoableCommand {
         Remark updatedRemark = personToEdit.getRemark();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Date createdAt = editPersonDescriptor.getCreatedAt().orElse(personToEdit.getCreatedAt());
-        AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
+        AccessCount accessCount = new AccessCount(personToEdit.getAccessCount().numAccess() + 1);
 
         SocialMedia updatedSocialMedia;
         if (editPersonDescriptor.getSocialMedia().isPresent()) {

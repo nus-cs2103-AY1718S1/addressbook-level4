@@ -113,7 +113,7 @@ public class AddRemoveTagsCommand extends UndoableCommand {
         HashSet<Tag> newTags = new HashSet<Tag>(personTags);
         newTags.removeAll(tags);
 
-        AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
+        AccessCount accessCount = new AccessCount(personToEdit.getAccessCount().numAccess() + 1);
 
         return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getRemark(), newTags, personToEdit.getCreatedAt(),
