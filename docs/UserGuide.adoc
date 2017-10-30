@@ -12,6 +12,10 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103AUG2017-T09-B3/main
 
+// Workaround for asciidoctor-pdf compatibility issues.
+:up-arrow-key: &#8593;
+:down-arrow-key: &#8595;
+
 By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Quick Start
@@ -323,7 +327,7 @@ Format: `(his)history`
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the kbd:[{up-arrow-key}] and kbd:[{down-arrow-key}] arrows will display the previous and next input respectively in the command box.
 ====
 
 // tag::undoredo[]
