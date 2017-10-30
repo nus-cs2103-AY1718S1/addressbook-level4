@@ -42,9 +42,11 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
 
+        Address address;
         Birthday birthday;
         HomeNumber homeNumber;
         SchEmail schEmail;
+        Website website;
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_HOME_NUMBER,
@@ -60,9 +62,11 @@ public class AddCommandParser implements Parser<AddCommand> {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
             Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
-            Website website = ParserUtil.parseWebsite(argMultimap.getValue(PREFIX_WEBSITE)).get();
-            Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+            // Optional Address Field
+            Optional<Address> tempAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS));
+            address = (tempAddress.isPresent()) ? tempAddress.get() : new Address(null);
 
             // Optional Birthday Field
             Optional<Birthday> tempBirthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY));
@@ -75,6 +79,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             // Optional SchEmail Field
             Optional<SchEmail> tempSchEmail = ParserUtil.parseSchEmail(argMultimap.getValue(PREFIX_SCH_EMAIL));
             schEmail = (tempSchEmail.isPresent()) ? tempSchEmail.get() : new SchEmail(null);
+
+            // Optional Website
+            Optional<Website> tempWebsite = ParserUtil.parseWebsite(argMultimap.getValue(PREFIX_WEBSITE));
+            website = (tempWebsite.isPresent()) ? tempWebsite.get() : new Website(null);
 
             ReadOnlyPerson person = new Person(name, phone, homeNumber,
                     email, schEmail, website, address, birthday, false, tagList);
