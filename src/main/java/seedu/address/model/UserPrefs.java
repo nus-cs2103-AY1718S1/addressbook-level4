@@ -70,7 +70,7 @@ public class UserPrefs {
     public int hashCode() {
         //@@author wishingmaid
         return Objects.hash(guiSettings, addressBookFilePath, addressBookName, displayPicturesPath);
-        //@@author   
+        //@@author
     }
 
     @Override
