@@ -41,11 +41,13 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
+    //@@author vivekscl
     /* JaroWinklerDistance method uses double values ranging from 0 to 1. Set initial value to match very similar
      * names only as setting the value to any value less than or equal to 0 will match the first name in filteredPersons
      */
     private final double initialToleranceValue = 0.5;
 
+    //@@author
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -106,6 +108,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author vivekscl
     /**
      * Removes given tag from the given indexes of the target persons shown in the last person listing.
      */
@@ -148,6 +151,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -157,6 +161,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author vivekscl
     @Override
     public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
 

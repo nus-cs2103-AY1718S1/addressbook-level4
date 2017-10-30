@@ -345,8 +345,9 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores the address book to the state before the previous _undoable_ command was executed. Multiple undos can be
+executed at once.  +
+Format: `undo` OR `undomult NUMBER_OF_COMMANDS_TO_UNDO`
 
 [NOTE]
 ====
@@ -368,11 +369,17 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
+The `undo` command restores the previous state starting from the most recent command made.
+
+* `delete 1` +
+`clear` +
+`undomult 2` (reverses the `clear` command and `delete 1` command) +
+
 
 ==== Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+Reverses the most recent `undo` command. Multiple redos can be executed at once +
+Format: `redo` OR `redomult NUMBER_OF_COMMANDS_TO_REDO`
 
 Examples:
 
@@ -388,8 +395,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`redomult` (reapplies the `delete 1` command and `clear` command) +
 // end::undoredo[]
 
 === Miscellaneous

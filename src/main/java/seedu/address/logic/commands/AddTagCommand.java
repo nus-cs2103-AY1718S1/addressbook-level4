@@ -14,6 +14,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author vivekscl
 /**
  * Adds a tag to the identified persons using the last displayed indexes from the address book.
  */
