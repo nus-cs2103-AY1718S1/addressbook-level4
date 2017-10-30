@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Personal Information Manager Program (PIMP) - User Guide
 :toc:
 :toclevels: 4
 :toc-title:
@@ -17,7 +17,7 @@ By: `Team PIMP (W10-B1)`      Since: `Sep 2016`      Licence: `MIT`
 
 == Introduction
 
-PIMP (Personal Information Manager Program) is a command line interface (CLI) address book that allows you to store your contacts. You can use PIMP to add friends, add specific tags to them, add their social media accounts (such as Facebook, Twitter, Instagram), or add remarks. You can search through the list of your contacts by typing specific names. For more advanced user, you can use regex to find your friends. Most of the functionality works by typing in single line commands.
+Personal Information Manager Program (PIMP) is a command line interface (CLI) address book that allows you to store your contacts. You can use PIMP to add friends, add specific tags to them, add their social media accounts (such as Facebook, Twitter, Instagram), or add remarks. You can search through the list of your contacts by typing specific names. For more advanced user, you can use regex to find your friends. Most of the functionality works by typing in single line commands.
 
 PIMP v1.5 is available on any platform running Java 8.
 
@@ -39,8 +39,14 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
+
+
 image::Ui.png[width="790"]
-+
+_The current user interface of PIMP._
+
+image::personcard.png[width="450"]
+_A breakdown of the different information that a contact contains._
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -61,24 +67,35 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-* The alias stated below refers to the command shortcut you can use instead of typing the full command. e.g. `l` instead of `list`
+* The alias stated below refers to the command shortcut you can use instead of typing the full command. e.g. `e 1 n/Ben` instead of `edit 1 n/Ben`
+
+PIMP has numerous commands. The following section describes the basic commands.
+
 ====
 
 === Basic Commands
 
+These are the most basic commands required for the usage of PIMP.
+
 ==== Viewing help : `help`
 
+Opens the help window, showing this user guide. +
 Format: `help` +
 Alias: `h`
 
+This command takes no arguments.
+
 ==== Viewing quick help : `quickhelp` (Coming v2.0)
 
+Opens a quick summary of using the address book. +
 Format: `quickhelp` +
 Alias: `qh`
 
+This command takes no arguments.
+
 ==== Adding a person: `add`
 
-Adds a person to the address book +
+Adds a person to the address book. +
 Format: `add n/NAME [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
 Alias: `a`
 
@@ -91,11 +108,22 @@ A person can have any number of tags, phone numbers, emails or addresses (includ
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+This adds a person named "John Doe", with phone number 98765432, email johnd@example.com,
+and address "John street, block 123, #01-01".
+
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `add n/Bob p/91294232`
-* `add n/Sally e/friend@casual.com e/colleague@work.com
+
+* `add n/Bob p/91294232` +
+This adds a person named "Bob" with phone number 91294232. As you can see, all fields are optional.
+
+* `add n/Sally e/friend@casual.com e/colleague@work.com`
+
 * `add n/Allen Walker p/11112222 e/allen@walker.com a/Agate Street 22 fb/allenwalker tw/allenwalker99 ig/iamallen`
+
+Alias Example:
+
+* `a n/Ben p/12345678 e/ben@ten.com a/Unicorn Lane t/SuperHero`
 
 ==== Listing all persons : `list`
 
@@ -112,12 +140,18 @@ Format: `list [m/MODE] [tag/TAG]`
 
 Examples:
 
-* `list`
-Lists all persons
-* `list m/recent`
+* `list` +
+Lists all persons.
+
+* `list m/recent` +
 Lists the 5 most recently accessed entries.
-* `list m/tag tag/work`
+
+* `list m/tag tag/work` +
 Returns a list of all persons tagged with "work"
+
+Alias example:
+
+* `l m/recent`
 
 ==== Locating persons by name: `find`
 
@@ -136,29 +170,47 @@ Alias: `f`
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns `john` and `John Doe`.
 
-===== Locating persons by name: `findregex` (Since v1.2)
+* `find Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`.
+
+Alias example:
+
+* `f Ben`
+
+==== Locating persons by name: `findregex` (Since v1.2)
 
 Finds persons whose names match the regex given. Note that only the name is searched.  +
-Format: `findregex REGEX`
+Format: `findregex REGEX` +
+Alias: `fr`
 
 Examples:
 
 * `findregex ^Joh?n$` +
-Returns `Jon` and `John`
+Returns `Jon` and `John`, but not `John Doe`.
 
-===== Locating persons by tags: `findtag` (Since v1.2)
+* `findregex Joh?n` +
+Returns `Jon` and `John`, as well as `John Doe` and `Jane John`.
+
+Alias example:
+
+* `fr Do?`
+
+==== Locating persons by tags: `findtag` (Since v1.2)
 
 Finds persons who has has a tag matching any of the search tags. +
-Format: `findtag TAG`
+Format: `findtag TAG` +
+Alias: `ft`
 
 Examples:
 
 * `findtag friends family` +
-Returns all person having tags `friends` or `family`
+Returns all person having tags `friends` or `family`.
+
+Alias example:
+
+* `ft friends`
 
 ==== Selecting a person : `select`
 
@@ -177,14 +229,18 @@ Examples:
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
+
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+Alias example:
+
+* `s 1`
+
 ==== Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL]... [a/ADDRESS]... [t/TAG]...`
 Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL]... [a/ADDRESS]... [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
 Alias: `e`
 
@@ -200,10 +256,16 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
 * `edit 3 f/becca93` +
 Edits the Facebook username of 3rd person.
+
+Alias example:
+
+* `e 1 p/12345678`
 
 ==== Deleting a person : `delete`
 
@@ -222,9 +284,14 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd person in the address book.
+
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+Alias example:
+
+* `d 1`
 
 ==== Clearing all entries : `clear`
 
@@ -232,13 +299,19 @@ Clears all entries from the address book. +
 Format: `clear` +
 Alias: `c`
 
+This command takes no arguments.
+
 ==== Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit` +
 Alias: `ex`
 
+This command takes no arguments.
+
 === Advanced Commands
+
+These are advanced commands available in PIMP that might be useful for the user.
 
 ==== Adding/Removing tag/s to existing contact : `tags` (Since v1.2)
 
@@ -258,8 +331,13 @@ Examples:
 
 * `tags add 1 friends` +
 Add a tag 'friends' to the 1st person.
+
 * `tags remove 2 classmate CS2103` +
 Remove tags "classmate" and "CS2103" from the 2nd person.
+
+Alias example:
+
+* `t add 1 friends`
 
 ==== Changing a person's remark : `remark` (Since v1.2)
 
@@ -284,6 +362,10 @@ Changes the remark of the 1st person in the address book to "Loves beer".
 `remark 2 r/Going overseas` +
 Changes the remark of the 2nd person returned by the `find` command to "Going overseas".
 
+Alias example:
+
+* `re 1 r/Owe money`
+
 ==== Accessing a person's social media : `socialmedia` (Coming v2.0)
 
 Access a person's social media profile on the browser. +
@@ -297,10 +379,22 @@ Alias: `sm`
 * TYPE can be either of the following: 'facebook', 'twitter', 'instagram'
 ****
 
+Examples:
+
+* `list` +
+`socialmedia 1 facebook` +
+Loads the Facebook account of the 1st person in the address book.
+
+* `find Tony` +
+`socialmedia 2 instagram` +
+Loads the Instagram account of the 2nd person returned by the `find` command.
+
 ==== Viewing contacts with birthday in current month : `birthday`
-View a list of persons with birthdays in the current month +
+View a list of persons with birthdays in the current month. +
 Format: `birthday` +
 Alias: `bd`
+
+This command takes no arguments.
 
 ==== Increasing/decreasing font size : `size` (Since v1.3)
 
@@ -318,8 +412,10 @@ Examples:
 
 * `size 2` +
 Increases the font size by 2 pts.
+
 * `size -3` +
 Decreases the font size by 3 pts.
+
 * `size` +
 Resets the font size back to the default.
 
@@ -328,6 +424,8 @@ Resets the font size back to the default.
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` +
 Alias: `h`
+
+This command takes no arguments.
 
 [NOTE]
 =====
@@ -356,7 +454,7 @@ Examples:
 
 * `delete 1` +
 `list` +
-`undo 1` (reverses the `delete 1` command) +
+`undo` (or `undo 1`: reverses the `delete 1` command)
 
 * `select 1` +
 `list` +
@@ -366,15 +464,19 @@ The `undo 1` command fails as there are no undoable commands executed previously
 * `delete 1` +
 `clear` +
 `undo 1` (reverses the `clear` command) +
-`undo 1` (reverses the `delete 1` command) +
+`undo 1` (reverses the `delete 1` command)
 
 * `delete 1` +
 `clear` +
-`undo 2` (reverses the last commands) +
+`undo 2` (reverses the last commands)
 
 * `delete 1` +
 `clear` +
-`undo 2` (reverses the `clear` and the `delete 1` command) +
+`undo 2` (reverses the `clear` and the `delete 1` command)
+
+Alias example:
+
+* `u 1`
 
 ==== Redoing the previously undone command : `redo`
 
@@ -392,7 +494,7 @@ Examples:
 
 * `delete 1` +
 `undo 1` (reverses the `delete 1` command) +
-`redo 1` (reapplies the `delete 1` command) +
+`redo` (or `redo 1`: reapplies the `delete 1` command)
 
 * `delete 1` +
 `redo 1` +
@@ -401,12 +503,16 @@ The `redo` command fails as there are no `undo` commands executed previously.
 * `delete 1` +
 `clear` +
 `undo 2` (reverses the last 2 commands) +
-`redo 2` (reapplies the last 2 commands) +
+`redo 2` (reapplies the last 2 commands)
 // end::undoredo[]
 
-==== Exporting all entries : `export`
+Alias example:
 
-Exports all entries in the address book into the given format and stores it at the given location. (Coming in v2.0) +
+* `r 1`
+
+==== Exporting all entries : `export` (Coming in v2.0)
+
+Exports all entries in the address book into the given format and stores it at the given location. +
 Format: `export FORMAT LOCATION`
 
 ****
@@ -416,9 +522,12 @@ Format: `export FORMAT LOCATION`
 
 Examples:
 
-* `export JSON ~/contacts.json` stores all contacts into `~/contacts.json` in JSON format.
+* `export JSON ~/contacts.json` +
+Stores all contacts into `~/contacts.json` in JSON format.
 
 === Other Features
+
+These are features that do not have commands but can be helpful to the user.
 
 ==== Viewing total number of persons stored
 
@@ -447,35 +556,37 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Help* : `help`
+* *Quick Help* : `quickhelp`
+* *Add* `add n/NAME [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Add Tags* : `addtags INDEX TAG [TAG]...` +
-e.g. `addtags 1 friends classmate`
-* *Remove Tags* : `removetags INDEX TAG [TAG]...` +
-e.g. `removetags 2 neighbour`
+* *List* : `list`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *Find Regex* : `findregex REGEX` +
 e.g. `findregex Joh?n`
-* *List* : `list`
-* *Help* : `help`
-* *Quick Help* : `quickhelp`
+* *Find Tag* : `findtag tag` +
+e.g. `findtag friends`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Delete* : `delete INDEX` +
+e.g. `delete 3`
+* *Clear* : `clear`
+* *Exit* : `exit`
+* *Add Tags* : `tags add INDEX TAG [TAG]...` +
+e.g. `addtags 1 friends classmate`
+* *Remove Tags* : `tags remove INDEX TAG [TAG]...` +
+e.g. `removetags 2 neighbour`
 * *Remark* : `remark INDEX r/REMARK` +
 e.g.`remark 4 r/new remark`
-* *Statistics* : `statistics`
+* *Social Media* : `socialmedia INDEX TYPE` +
+e.g. `socialmedia 1 facebook`
 * *Birthday* : `birthday`
 * *Font size* : `size AMOUNT` +
 e.g. `size 3`
 * *History* : `history`
-* *Social Media* : `socialmedia INDEX TYPE` +
-e.g. `socialmedia 1 facebook`
 * *Undo* : `undo [AMOUNT]`
 * *Redo* : `redo [AMOUNT]`
 * *Export* : `export FORMAT LOCATION` +
