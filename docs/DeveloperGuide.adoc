@@ -412,6 +412,8 @@ According to current listing type, which we can obtain from `ListingUnit`, we cr
 
 The following sequence diagram shows how the view command works:
 
+image::ViewCommandSequenceDiagram.jpg[width="900"]
+
 ==== Design Considerations
 
 **Aspect:** Implementation of `List` and `View` +
