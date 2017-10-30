@@ -21,6 +21,10 @@ public class ExportCommandParser implements Parser<ExportCommand> {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
         }
+
+        if (!(filePath.endsWith(".xml"))) {
+            filePath = String.format(filePath + ".xml");
+        }
         return new ExportCommand(filePath);
     }
 }
