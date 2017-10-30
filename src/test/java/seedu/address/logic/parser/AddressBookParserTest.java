@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -155,15 +156,22 @@ public class AddressBookParserTest {
         UntagCommand command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + ","
                 + INDEX_SECOND_PERSON.getOneBased() + ","
-                + INDEX_THIRD_PERSON.getOneBased() + " " + "friends");
-        assertEquals(new UntagCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON),
-                new Tag("friends")), command);
+                + INDEX_THIRD_PERSON.getOneBased() + " " + "friends/enemies");
+        Tag firstTag = new Tag("friends");
+        Tag secondTag = new Tag("enemies");
+        assertEquals(new UntagCommand(false, Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
+                INDEX_THIRD_PERSON), Arrays.asList(secondTag, firstTag)), command);
 
-        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -all " + "friends");
-        assertEquals(new UntagCommand(new Tag("friends")), command);
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " 1,2,3");
+        assertEquals(new UntagCommand(false, Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
+                INDEX_THIRD_PERSON), Collections.emptyList()), command);
 
-        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -all");
-        assertEquals(new UntagCommand(), command);
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -a " + "friends/enemies");
+        assertEquals(new UntagCommand(true, Collections.emptyList(),
+                Arrays.asList(secondTag, firstTag)), command);
+
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -a");
+        assertEquals(new UntagCommand(true, Collections.emptyList(), Collections.emptyList()), command);
     }
 
     @Test
