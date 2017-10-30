@@ -19,7 +19,7 @@ By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 As the name implies, link:{repoURL}[**BoNUS**] helps you _better(B) organize(o) your NUS life_.
 
 * It is a desktop personal organizer application that targets at http://www.nus.edu.sg/[NUS] students.
-* It cannot be more convenient to manage contacts and upcoming events.
+* With *BoNUS*, managing _contacts_ and upcoming _events_ is no more a headache.
 * It is oriented for typist user (most operations should be done using keyboard rather than mouse).
 * Exclusive features have been developed to suit out primary user group - NUS students.
 
@@ -190,6 +190,10 @@ Examples:
 Shows a list of all persons in the application. +
 Format: `(l)list`
 
+Example:
+
+* `list`
+
 [TIP]
 Contacts will be sorted by their names (increment).
 
@@ -197,6 +201,10 @@ Contacts will be sorted by their names (increment).
 
 Shows a list of all events in the application. +
 Format: `(lE)listE`
+
+Example:
+
+* `listE`
 
 [TIP]
 Events will be sorted by date/time (increment).
@@ -240,8 +248,6 @@ Examples:
 Edits the date/time the 1st event to be `18052013 03:30`.
 * `editE 2 n/Lunch with Betsy  +
 Edits the name of the 2nd event to be `Lunch with Betsy`.
-
-
 
 === Locating persons/events by any property : `(f)find`
 
@@ -330,6 +336,10 @@ Selects the 1st person in the results of the `find` command.
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `(his)history`
 
+Example:
+
+* `history`
+
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
@@ -395,6 +405,11 @@ You can view what command you have redone from the user feedback message.
 
 Clears all entries from the current component (either contacts or events). +
 Format: `(c)clear`
+
+Examples:
+
+* `clear`
+* `clear --all`
 
 [NOTE]
 ====
@@ -485,7 +500,8 @@ provided by NUSMods.
 ****
 
 Example:
-* `import --nusmods https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01`
+
+* `import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++`
 
 === Exporting data : `(p)export`
 
@@ -582,12 +598,17 @@ starting with a `#`). You can pick the RGB value of your favorite color from htt
 ****
 
 Example:
+
 * `config --set-tag-color friends red`
 
 === Exiting the program : `(x)exit`
 
 Exits the program. +
 Format: `(x)exit`
+
+Example:
+
+* `exit`
 
 === Saving the data
 
@@ -627,10 +648,20 @@ e.g.`select 2`
 * *Undo* : `(u)undo`
 * *Redo* : `(r)redo`
 * *Exit* : `(x)exit`
-* *Import* : `(i)import FILEPATH` +
+* *Import* : +
+(i) From `.xml` file: `import FILEPATH` +
 eg. For `Windows` users: `import C:\Users\John Doe\Documents\bonus.xml` +
-eg. For `macOS` and `Linux` users: `import /Users/John Doe/Documents/bonus.xml`
+eg. For `macOS` and `Linux` users: `import /Users/John Doe/Documents/bonus.xml` +
+(ii) From script file: `import --script FILEPATH` +
+eg. For `Windows` users: `import C:\Users\John Doe\Documents\bonus.bo` +
+eg. For `macOS` and `Linux` users: `import /Users/John Doe/Documents/bonus.bo` +
+(iii) From NUSMods timetable: `import --nusmods URL` +
+eg. `import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++`
 * *Export* : `(p)export [--excel] FILEPATH` +
 eg. For `Windows` users: `export C:\Users\John Doe\Documents\bonus.xml` +
 eg. For `macOS` and `Linux` users: `export /Users/John Doe/Documents/bonus.xml`
-* *Config* : `(cfg)config --add-property` `(cfg)config --set-tag-color` `(cfg)config --import-calendar`
+* *Config* : +
+(i) Add customize property `(cfg)config --add-property` +
+eg. `config --add-property s/b f/birthday` +
+(ii) Change tag color `(cfg)config --set-tag-color` +
+eg. `config --set-tag-color friends blue`
