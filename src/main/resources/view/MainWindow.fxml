@@ -17,7 +17,7 @@
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
   </stylesheets>
-
+    <!-- @@author JasmineSee -->
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
     <Menu mnemonicParsing="false" text="File">
          <MenuItem mnemonicParsing="false" onAction="#handleBlackTheme" text="Black Theme" />
@@ -25,6 +25,7 @@
          <MenuItem mnemonicParsing="false" onAction="#handleGreenTheme" text="Green Theme" />
       <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
     </Menu>
+      <!-- @@author-->
     <Menu mnemonicParsing="false" text="Help">
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>

@@ -52,6 +52,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private ImageView photo;
 
+    //@@author JasmineSee
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -103,6 +104,7 @@ public class PersonCard extends UiPart<Region> {
         }
 
     }
+    //@@author JasmineSee
 
     /**
      * Init person tags with colour

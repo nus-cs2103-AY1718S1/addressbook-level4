@@ -21,6 +21,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author JasmineSee
 /**
  * Uploads image file to specified person.
  */

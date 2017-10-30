@@ -10,6 +10,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author JasmineSee
 /**
  * Removes specified tag from all persons from the address book.
  */

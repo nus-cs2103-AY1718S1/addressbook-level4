@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.UploadPhotoCommand;
 
+//@@author JasmineSee
 public class UploadPhotoCommandParserTest {
     private UploadPhotoCommandParser parser = new UploadPhotoCommandParser();
 
