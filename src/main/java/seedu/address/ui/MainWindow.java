@@ -185,6 +185,7 @@ public class MainWindow extends UiPart<Region> {
     private void setWindowMinSize() {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
+        primaryStage.setFullScreen(true);
     }
 
     /**
