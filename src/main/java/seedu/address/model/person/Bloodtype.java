@@ -35,7 +35,7 @@ public class Bloodtype {
         if (!isValidBloodType(trimmedBloodType)) {
             throw new IllegalValueException(MESSAGE_BLOODTYPE_CONSTRAINTS);
         }
-        this.type = bloodType;
+        this.type = bloodType.toUpperCase();
     }
 
 
