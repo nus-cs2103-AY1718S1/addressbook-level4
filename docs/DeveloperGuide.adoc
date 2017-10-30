@@ -420,13 +420,25 @@ image::birthday_sd.png[width="800"]
 **Pros:** Faster for users to add in all the parameters. +
 **Cons:** More parameters to add while creating person class and harder to implement. +
 
-=== Retrieve mechanism
+=== Tag & Retrieve mechanism
 
-The `RetrieveCommand` reside in the `commands` of `Logic`.
+The `TagCommand`and `RetrieveCommand` reside in the `commands` of `Logic`.
 
-`RetrieveCommand` : allows user to list all persons that have been assigned an existing tag in the unique tags list.
+==== Tag command
 
-The command inherit from `UndoableCommand`, thus these commands can be undone.
+`TagCommand` : allows user to assign tags to the persons at the specified index in the last person listing.
+
+This command inherits from `UndoableCommand`. Thus, it can be undone.
+
+The following sequence diagram shows how the tag operation works:
+
+image::TagSequenceDiagram.png[width="800"]
+
+==== Retrieve command
+
+`RetrieveCommand` : allows user to list all persons that have been assigned an tag already existing inside the unique tag list.
+
+This command inherits from `Command`, so it cannot be undone.
 
 Suppose that the address book already has a sufficiently large number of persons, some of whom have a certain `Tag`. The `UniqueTagList` will contain this tag. +
 
@@ -452,9 +464,9 @@ image::RetrieveSequenceDiagram.png[width="800"]
 **Alternative 1 (current choice):** Go through every person in the addressbook to filter out those having the tag. +
 **Pros:** Easy to implement. +
 **Cons:** Slower if the addressbook contains a large number of persons +
-**Alternative 2:**  Create a list attribute for `Tag` to store all persons having that tag. +
+**Alternative 2:**  Create a list attribute for `Tag` to store all persons currently having that tag. +
 **Pros:** Faster to get the persons as the filtered person list is already created. +
-**Cons:** Requires to save the lists to storage file. +
+**Cons:** Requires to save the lists of all existing tags to storage file. +
 
 === Reminder list
 
