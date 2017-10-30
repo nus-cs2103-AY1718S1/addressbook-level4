@@ -501,21 +501,16 @@ A filtered list is used to show remarks related to a specified module when a mod
 
 [NOTE]
 Only module can be remarked, therefore user can use remark if and only if current listing element is module.
-
-Although delete remark is a separate command, it shares the same parser as Remark Command, according to different syntax, RemarkCommand Parser will either return a `RemarkCommand` or a `DeleteRemarkCommand`.
-Adding a remark has the syntax `remark INDEX CONTENT` while deleting a remark has the syntax `remark -d INDEX`.
-
-[NOTE]
 Both adding a remark and deleting a remark used an index while the meaning of the index is different.
 The index in `remark INDEX CONTENT` is the index of the module in the module list we want to add remark to.
-While the index in `remark -d INDEX` is the index of the remark we want to delete.
+While the index in `delete -d INDEX` is the index of the remark we want to delete.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of DeleteRemarkCommand +
-**Alternative 1 (current choice):** Use the same parser for RemarkCommand and DeleteRemarkCommand. +
-**Pros:** The prefix of the command input for both of the commands is remark, it is more user-friendly since we summarise the two commands related to remark under the same prefix.
-**Cons:** The parser has to choose to parse the input into one of the two commands according to the syntax.
+**Aspect:** Implementation of RemarkCommand +
+**Alternative 1 (current choice):** use a `uniqueRemarkList` similar to 'uniqueLessonList'. +
+**Pros:** Store all remarks as a single list thus it is easy to manage.
+**Cons:** Need to filter out a selected set of remarks when user select a specific module.
 // end::remark[]
 
 // tag::sort[]
