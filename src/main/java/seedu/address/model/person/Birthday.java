@@ -55,7 +55,7 @@ public class Birthday {
      */
     public static boolean isValidDayEntered(String test) {
 
-        if ((test.substring(0,2).compareTo("32") < 0 && test.substring(0,2).compareTo("00") > 0)
+        if ((test.substring(0, 2).compareTo("32") < 0 && test.substring(0, 2).compareTo("00") > 0)
                 || test.equalsIgnoreCase(DEFAULT_BIRTHDAY)) {
             return true;
         }
@@ -67,7 +67,7 @@ public class Birthday {
      */
     public static boolean isValidMonthEntered(String test) {
 
-        if ((test.substring(2,4).compareTo("13") < 0 && test.substring(2,4).compareTo("00") > 0)
+        if ((test.substring(2, 4).compareTo("13") < 0 && test.substring(2, 4).compareTo("00") > 0)
                 || test.equalsIgnoreCase(DEFAULT_BIRTHDAY)) {
             return true;
         }
