@@ -27,7 +27,9 @@ Rubrika has a simple GUI interface and focuses on using CLI to interact.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+If you are missing Java 8, you may download it for free [http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here]]
+
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
@@ -396,7 +398,7 @@ Examples:
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. Alternatively, you may export your contacts into a vCard file and transfer the file to the other Computer and import the vCard file from there.
 
 == Command Summary
 
@@ -419,6 +421,8 @@ e.g.`select 2`
 * *Sort* : `sort FIELD ORDER` +
 e.g. `sort name asc` +
 e.g. `sort email dsc`
+* *Import* : `ìmport`
+* *Export* : `export`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
