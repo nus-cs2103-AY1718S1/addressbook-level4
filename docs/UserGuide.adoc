@@ -324,10 +324,10 @@ Format: `sortPriority`
 === Retrieving all persons having an existing tag : `retrieve`
 
 Lists all contacts having a certain existing tag in the address book. +
-Format: `retrieve TAGNAME`
+Format: `retrieve TAG`
 
 ****
-* Retrieves all persons having the specified `TAGNAME` tag.
+* Retrieves all persons having the specified `TAG` tag.
 * The tag name *must be alphanumeric*
 ****
 
@@ -339,10 +339,10 @@ Retrieves all persons with the "friends" tag in the address book.
 === Tagging multiple persons : `tag`
 
 Tags the persons identified by the index numbers used in the last person listing. +
-Format: `tag INDEX,[MORE_INDEXES],... TAGNAME`
+Format: `tag INDEX,[MORE_INDEXES],... TAG`
 
 ****
-* Tags the persons at the specified `INDEX,[MORE_INDEXES],...` with the `TAGNAME` tag.
+* Tags the persons at the specified `INDEX,[MORE_INDEXES],...` with the `TAG` tag.
 * The indexes refer to the index numbers shown in the most recent listing.
 * The indexes *must be positive integers* `1, 2, 3, ...`
 * The tag name *must be alphanumeric*
@@ -357,15 +357,15 @@ Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the 
 === Untagging multiple persons : `untag`
 
 Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
-Format: `tag INDEX,[MORE_INDEXES],... TAGNAME/[MORE_TAGNAMES]/...`
+Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
 
 ****
-* Removes all `TAGNAME/[MORE_TAGNAMES]/...` tags from the persons at the specified `INDEX,[MORE_INDEXES],...`.
+* Removes all `TAG/[MORE_TAGS]/...` tags from the persons at the specified `INDEX,[MORE_INDEXES],...`.
 * The indexes refer to the index numbers shown in the most recent listing.
 * The indexes *must be positive integers* `1, 2, 3, ...`
 * The tag names *must be alphanumeric*
 * You can choose to remove the specified tags from all persons in the last person listing by replacing `INDEX,[MORE_INDEXES],...` with `-a`.
-* All tags will be removed from the persons at the specified indexes if `TAGNAME/[MORE_TAGNAMES]/...` is left blank.
+* All tags will be removed from the persons at the specified indexes if `TAG/[MORE_TAGS]/...` is left blank.
 ****
 
 Examples:
@@ -389,11 +389,11 @@ Removes all tags from all persons in the results of the `list` command.
 === Renaming an existing tag : `retag`
 
 Renames a certain existing tag to a new tag name. +
-Format: `retag OLD_TAGNAME NEW_TAGNAME`
+Format: `retag OLD_TAG NEW_TAG`
 
 ****
-* Renames the existing `OLD_TAGNAME` tag to `NEW_TAGNAME`.
-* All persons having the `OLD_TAGNAME` tag will be updated accordingly.
+* Renames the existing `OLD_TAG` tag to `NEW_TAG`.
+* All persons having the `OLD_TAG` tag will be updated accordingly.
 * The tag names *must be alphanumeric*
 ****
 
@@ -520,18 +520,22 @@ e.g. `findReminder Project`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Retrieve* : `retrieve TAGNAME` +
-e.g.`retrieve family`
-* *Tag* : `tag INDEX,[MORE_INDEXES]... TAGNAME` +
-e.g.`tag 1,2,3 friends`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
 * *Update Birthday*: `birthday INDEX b/BIRTHDAY` +
 e.g. `birthday 4 b/20/10/1995`
 * *Sort by Name* : `sort`
 * *Sort by Age* : `sortAge`
 * *Sort by Birthday* : `sortBirthday`
 * *Sort by Priority* : `sortPriority`
-* *Retrieve* : `retrieve TAGNAME` +
-e.g. `retrieve friends`
+* *Retrieve* : `retrieve TAG` +
+e.g.`retrieve family`
+* *Tag* : `tag INDEX,[MORE_INDEXES],... TAG` +
+e.g.`tag 1,2,3 friends`
+* *Untag* : `untag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...` +
+e.g.`untag 1,2,3 friends/enemies`
+* *Retag* : `retag OLD_TAG NEW_TAG` +
+e.g.`retag enemies friends`
+* *History* : `history`
+* *Undo* : `undo`
+* *Redo* : `redo`
+* *Log in to private database* : `login u/private p/password`
+* *Log out of private database* : `logout`
