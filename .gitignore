@@ -18,5 +18,4 @@ classes/
 /bin/
 src/main/resources/docs/
 out/
-output.vcf
-contacts.vcf
+*.vcf
