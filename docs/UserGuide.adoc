@@ -130,8 +130,20 @@ You can use `list reverse` to reverse the displayed list. +
 *Shorthand Format:* `l rev`
 
 * *Listing persons by tag* +
-MedNus can list selected contacts with specific tag(s). +
-*Format:* `list tag TAG1 TAG2...` +
+You can list contacts based on tag(s) using the optional keywords : "and" or "or". +
+*Format:* `list tag TAG1 [and] TAG2 [or] TAG3 ...` +
+
+*Example:*
+
+[width="59%",cols="22%,<30%,<30%",options="header",]
+|=======================================================================
+|Arguments |Remarks |Result
+
+|`Family and Friend` |Inputs are case insensitive |Filters contacts with both tags `family` and `friend`
+
+|`Family or Friend` |Inputs are case insensitive |Filters contacts with either/both `family` or/and `friend` tags
+
+|`Family Friend Female` |If not specified, keywords are evaluated based on the "AND" logic |Filters contacts with the tags `family` `friend` and `female`.
 
 * *Listing contacts by name (Ascending)* +
 You can use `list ascending` to show a list of contacts sorted by name in ascending order. +
@@ -478,7 +490,13 @@ You do not need to save data manually.
 
 |*List* |Reverses a list |`list reverse` |`list reverse`
 
-|*List* |Lists contacts with specific tag |`list tag TAG/s` |`list tag colleagues`
+|*List* |Lists contacts with specific tag without "AND" or "OR |`list tag TAG/s` |`list tag colleagues family female`
+
+|*List* |Lists contacts with specific tag with "AND" |`list tag TAG/s and TAG/s` |`list tag colleagues and family and female`
+
+|*List* |Lists contacts with specific tag with "OR" |`list tag TAG/s or TAG/s` |`list tag colleagues or family or female`
+
+|*List* |Lists contacts with specific tag with "AND" and "OR" |`list tag TAG/s and TAG/s or TAG/s` |`list tag colleagues and family or female`
 
 |*List* |Lists contacts by name in ascending order |`list asc` |`list asc`
 
