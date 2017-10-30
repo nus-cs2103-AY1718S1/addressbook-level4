@@ -52,21 +52,21 @@ public class LogicManager extends ComponentManager implements Logic {
         return model.getFilteredPersonList();
     }
 
-    @Override
-    public ObservableList<Meeting> getMeetingList() {
-        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
-        UniqueMeetingList meetingList = new UniqueMeetingList();
-        for (ReadOnlyPerson person : personList) {
-            for (Meeting meeting : person.getMeetings()) {
-                try {
-                    meetingList.add(meeting);
-                } catch (UniqueMeetingList.DuplicateMeetingException e) {
-                    throw new AssertionError("Meetings should all be unique" + e);
-                }
-            }
-        }
-        return meetingList.asObservableList();
-    }
+//    @Override
+//    public ObservableList<Meeting> getMeetingList() {
+//        ObservableList<ReadOnlyPerson> personList = model.getFilteredPersonList();
+//        UniqueMeetingList meetingList = new UniqueMeetingList();
+//        for (ReadOnlyPerson person : personList) {
+//            for (Meeting meeting : person.getMeetings()) {
+//                try {
+//                    meetingList.add(meeting);
+//                } catch (UniqueMeetingList.DuplicateMeetingException e) {
+//                    throw new AssertionError("Meetings should all be unique" + e);
+//                }
+//            }
+//        }
+//        return meetingList.asObservableList();
+//    }
 
     @Override
     public ListElementPointer getHistorySnapshot() {
