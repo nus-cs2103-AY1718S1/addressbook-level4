@@ -5,23 +5,19 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.CalendarPanelSelectionEvent;
-
-import seedu.address.logic.commands.AddEventCommand;
-import seedu.address.logic.parser.AddEventCommandParser;
-import seedu.address.model.event.Date;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.exceptions.BuildEvent;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
-
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 
 /**
  * Create an anchor pane that can store additional data.
@@ -89,6 +85,5 @@ public class AnchorPaneNode extends AnchorPane {
         });
 
         Optional<Event> result = dialog.showAndWait();
-
     }
 }
