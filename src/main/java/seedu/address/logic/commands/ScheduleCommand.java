@@ -57,7 +57,7 @@ public class ScheduleCommand extends Command {
 
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getOneBased() >= lastShownList.size()) {
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -65,7 +65,7 @@ public class ScheduleCommand extends Command {
             return new CommandResult("You have entered an invalid date.");
         }
 
-        ReadOnlyPerson personAddedToSchedule = lastShownList.get(targetIndex.getOneBased());
+        ReadOnlyPerson personAddedToSchedule = lastShownList.get(targetIndex.getZeroBased());
         Schedule schedule = new Schedule(personAddedToSchedule.getName().toString(), date);
         try {
             model.addSchedule(schedule);
@@ -84,7 +84,7 @@ public class ScheduleCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof ScheduleCommand // instanceof handles nulls
                 && this.date.getTimeInMillis() == ((ScheduleCommand) other).date.getTimeInMillis())
-                && this.targetIndex.getOneBased() == ((ScheduleCommand) other).targetIndex.getOneBased();
+                && this.targetIndex.getZeroBased() == ((ScheduleCommand) other).targetIndex.getZeroBased();
     }
 
     /**
