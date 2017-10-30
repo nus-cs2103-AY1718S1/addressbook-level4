@@ -398,9 +398,10 @@ There is no need for the model to prompt the UI to update.
 *Reason for implementation* +
 
 We would like our users to be able to set a unique tag to any color that they want either by specifying the color or
-using RBG numbers.
+using RBG numbers. This allows users more freedom in choice of color of tags, as they may want to make some tags more
+glaring in color.
 
-*How it is implemented * +
+*How it is implemented* +
 
 Each unique tag will have its color as its attribute as a string.
 
@@ -408,7 +409,12 @@ In the UI component, the tag is set by using the css attribute of the tag label.
 
              tagLabel.setStyle("-fx-background-color: " + tag.getTagColor());
 
+_Figure 2.1.3a : Sequence diagram for `add appointment` Model Component_
 
+image::SDforTagColor.png[width="800"]
+
+The sequence diagram is given if the command requests the model to set all the tags to a random color. As seen from
+above diagram, each tag is updated to a certain color and does not need to know which tag belongs towhich person.
 
 
 
