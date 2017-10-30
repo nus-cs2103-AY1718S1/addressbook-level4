@@ -29,6 +29,18 @@ public class Picture {
             "/images/";
     public static final String DEFAULT_PICTURE =
             "default_profile.png";
+    public static final String DEFAULT_ALEX =
+            "default_alex.png";
+    public static final String DEFAULT_BALAKRISHNAN =
+            "default_balakrishnan.png";
+    public static final String DEFAULT_BERNICE =
+            "default_bernice.png";
+    public static final String DEFAULT_CHARLOTTE =
+            "default_charlotte.png";
+    public static final String DEFAULT_DAVID =
+            "default_david.png";
+    public static final String DEFAULT_IRFAN =
+            "default_irfan.png";
 
     private static final String PICTURE_SUFFIX = ".png";
     private static final String PICTURE_DELIMITER = "/";
@@ -79,6 +91,13 @@ public class Picture {
             return true;
         }
 
+        // For default people
+        if (fileLocation == Picture.DEFAULT_ALEX || fileLocation == Picture.DEFAULT_BALAKRISHNAN
+                || fileLocation == Picture.DEFAULT_BERNICE || fileLocation == Picture.DEFAULT_CHARLOTTE
+                || fileLocation == Picture.DEFAULT_DAVID || fileLocation == Picture.DEFAULT_IRFAN) {
+            return true;
+        }
+
         File file = new File(fileLocation);
         if (file.exists() && file.length() <= PICTURE_MAX_SIZE && fileLocation.endsWith(PICTURE_SUFFIX)) {
             return true;
@@ -98,6 +117,11 @@ public class Picture {
     public String getPictureLocation() {
         if (value == null) {
             return DEFAULT_PICTURE_LOCATION + DEFAULT_PICTURE;
+        } else if (value == Picture.DEFAULT_ALEX || value == Picture.DEFAULT_BALAKRISHNAN
+                || value == Picture.DEFAULT_BERNICE || value == Picture.DEFAULT_CHARLOTTE
+                || value == Picture.DEFAULT_DAVID || value == Picture.DEFAULT_IRFAN) {
+            // Sample data
+            return DEFAULT_PICTURE_LOCATION + value;
         } else {
             return PREFIX_PICTURE + Paths.get(PICTURE_SAVE_LOCATION + value)
                     .toAbsolutePath().toUri().getPath();
