@@ -194,7 +194,8 @@ public class EditCommand extends UndoableCommand {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.company,
-                    this.position, this.status, this.priority, this.note, this.tags, this.relation);
+                    this.position, this.status, this.priority, this.note,
+                    this.photo, this.tags, this.relation);
         }
 
         public Optional<Name> getName() {
