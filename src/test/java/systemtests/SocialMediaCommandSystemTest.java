@@ -12,6 +12,7 @@ import seedu.address.logic.commands.SocialMediaCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
+//@@author kenpaxtonlim
 public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void socialmedia() {

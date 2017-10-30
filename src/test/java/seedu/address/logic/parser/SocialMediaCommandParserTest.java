@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.SocialMediaCommand;
 
+//@@author kenpaxtonlim
 public class SocialMediaCommandParserTest {
     private SocialMediaCommandParser parser = new SocialMediaCommandParser();
 

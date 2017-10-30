@@ -160,6 +160,7 @@ public class Person implements ReadOnlyPerson {
         return createdAt.get();
     }
 
+    //@@author kenpaxtonlim
     @Override
     public ObjectProperty<SocialMedia> socialMediaProperty() {
         return socialMedia;
@@ -173,6 +174,7 @@ public class Person implements ReadOnlyPerson {
     public void setSocialMedia(SocialMedia socialMedia) {
         this.socialMedia.set(requireNonNull(socialMedia));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

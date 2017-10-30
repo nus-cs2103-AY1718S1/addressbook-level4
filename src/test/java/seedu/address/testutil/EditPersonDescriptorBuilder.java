@@ -97,6 +97,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author kenpaxtonlim
     /**
      * Sets the {@code SocialMedia} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -109,6 +110,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author
 
     public EditPersonDescriptor build() {
         return descriptor;

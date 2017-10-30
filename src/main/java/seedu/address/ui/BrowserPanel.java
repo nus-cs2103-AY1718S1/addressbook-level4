@@ -72,9 +72,11 @@ public class BrowserPanel extends UiPart<Region> {
         loadPersonPage(event.getNewSelection().person);
     }
 
+    //@@author kenpaxtonlim
     @Subscribe
     private void handleChangeBrowserPanelUrlEvent(ChangeBrowserPanelUrlEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPage(event.url);
     }
+    //@@author
 }

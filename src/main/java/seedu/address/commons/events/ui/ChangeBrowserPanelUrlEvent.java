@@ -2,6 +2,7 @@ package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
 
+//@@author kenpaxtonlim
 /**
  * Indicates a request to change the url on the browser panel.
  */

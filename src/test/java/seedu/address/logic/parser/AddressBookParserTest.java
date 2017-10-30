@@ -63,12 +63,14 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_add_alias() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommandAlias(person));
         assertEquals(new AddCommand(person), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_clear() throws Exception {
@@ -76,11 +78,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_clear_alias() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_delete() throws Exception {
@@ -89,12 +93,14 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_delete_alias() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_edit() throws Exception {
@@ -105,6 +111,7 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_edit_alias() throws Exception {
         Person person = new PersonBuilder().build();
@@ -165,6 +172,7 @@ public class AddressBookParserTest {
                         + VALID_TAG_HUSBAND + " " + VALID_TAG_FRIEND);
         assertEquals(new AddRemoveTagsCommand(false, INDEX_FIRST_PERSON, tags), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_exit() throws Exception {
@@ -172,11 +180,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_exit_alias() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_ALIAS) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_ALIAS + " 3") instanceof ExitCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_find() throws Exception {
@@ -198,6 +208,7 @@ public class AddressBookParserTest {
         assertEquals(new FindRegexCommand(new NameMatchesRegexPredicate("asdf")), command);
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_find_alias() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -205,6 +216,7 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_ALIAS + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_help() throws Exception {
@@ -212,11 +224,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_help_alias() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_ALIAS) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_ALIAS + " 3") instanceof HelpCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_history() throws Exception {
@@ -231,6 +245,7 @@ public class AddressBookParserTest {
         }
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_history_alias() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS) instanceof HistoryCommand);
@@ -243,6 +258,7 @@ public class AddressBookParserTest {
             assertEquals(MESSAGE_UNKNOWN_COMMAND, pe.getMessage());
         }
     }
+    //@@author
 
     @Test
     public void parseCommand_list() throws Exception {
@@ -250,11 +266,13 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_list_alias() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
+    //@@author
 
     @Test
     public void parseCommand_remark() throws Exception {
@@ -273,12 +291,14 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_select_alias() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_ALIAS + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
@@ -332,6 +352,7 @@ public class AddressBookParserTest {
         parser.parseCommand("unknownCommand");
     }
 
+    //@@author kenpaxtonlim
     @Test
     public void parseCommand_socialmedia() throws Exception {
         SocialMediaCommand command = (SocialMediaCommand) parser.parseCommand(
@@ -347,4 +368,5 @@ public class AddressBookParserTest {
                         + SocialMediaCommand.TYPE_FACEBOOK + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SocialMediaCommand(INDEX_FIRST_PERSON, SocialMediaCommand.TYPE_FACEBOOK), command);
     }
+    //@@author
 }
