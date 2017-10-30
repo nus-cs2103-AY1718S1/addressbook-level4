@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
-
 import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.logging.Logger;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 
 
@@ -17,11 +16,9 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class LoggingCommand {
     private final Logger logger = LogsCenter.getLogger(LoggingCommand.class);
-    
     /**
      *keepLog Method to Write Activity Log To The ConnectUsLog.txt file
      */
-    
     public void keepLog(String logText, String functionType) {
         try (FileWriter fileWrite = new FileWriter("src/test/data/XMLUtilTest/ConnectUsLog.txt", true);
              BufferedWriter buffWriter = new BufferedWriter(fileWrite);

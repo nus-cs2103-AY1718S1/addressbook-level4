@@ -42,7 +42,6 @@ public class ClearLogButton extends UiPart<Region> {
         Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want clear the log?",
                 ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
         alert.showAndWait();
-        
         if (alert.getResult() == ButtonType.YES) {
             loggingCommand.clearLog();
             logger.info("Log has been cleared.");
