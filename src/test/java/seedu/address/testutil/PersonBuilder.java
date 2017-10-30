@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.io.File;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -34,9 +35,12 @@ public class PersonBuilder {
     public static final String DEFAULT_STATUS = "NIL";
     public static final String DEFAULT_PRIORITY = "L";
     public static final String DEFAULT_NOTE = "NIL";
-    public static final String DEFAULT_PHOTO = "src/main/resources/images/default.jpg";
     public static final String DEFAULT_TAGS = "friends";
     public static final String DEFAULT_RELATIONSHIP = "siblings";
+
+    public static final String s = File.separator;
+
+    public static final String DEFAULT_PHOTO = "src" + s + "main" + s + "resources" + s + "images" + s + "default.jpg";
 
     private Person person;
 
