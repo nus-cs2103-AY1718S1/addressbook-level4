@@ -8,18 +8,19 @@ import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_QUOTED_PA
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTDATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTDATE_INTERNSHIP_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_GROUP;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_URGENT;
+import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
-import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_PAPER;
@@ -50,11 +51,6 @@ public class AddTaskCommandParserTest {
         assertParseSuccess(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_GRAD_SCHOOL
                 + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT,
                 new AddTaskCommand(expectedTask));
-
-        //multiple deadlines (with different prefix) - last deadline accepted
-//        assertParseSuccess(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
-//                + DEADLINE_DESC_GRAD_SCHOOL + DEADLINE_DESC_INTERNSHIP
-        //+ TAG_DESC_URGENT, new AddTaskCommand(expectedTask));
 
         // multiple tags - all accepted
         Task expectedTaskWithMultipleTags = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
@@ -93,8 +89,8 @@ public class AddTaskCommandParserTest {
                 + DEADLINE_DESC_GRAD_SCHOOL, new AddTaskCommand(expectedTask));
 
         // no deadline, deadline prefix in description with quotes - no deadline accepted
-        expectedTask = new TaskBuilder().withDescription(UNQUOTED_DESCRIPTION_PAPER).withStartDate(VALID_STARTDATE_PAPER)
-                .withDeadline("").withTags(VALID_TAG_URGENT).build();
+        expectedTask = new TaskBuilder().withDescription(UNQUOTED_DESCRIPTION_PAPER)
+                .withStartDate(VALID_STARTDATE_PAPER).withDeadline("").withTags(VALID_TAG_URGENT).build();
         assertParseSuccess(parser, DESCRIPTION_QUOTED_PAPER + STARTDATE_DESC_PAPER + TAG_DESC_URGENT,
                 new AddTaskCommand(expectedTask));
 
@@ -146,12 +142,17 @@ public class AddTaskCommandParserTest {
                 + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT, TaskDates.MESSAGE_DATE_CONSTRAINTS);
 
         // invalid start date - after deadline
-        //assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + );
+        assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + INVALID_STARTDATE_INTERNSHIP_DESC
+                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT, TaskDates.MESSAGE_DATE_CONSTRAINTS);
 
         // invalid deadline - invalid format
         assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
                 + INVALID_DEADLINE_DESC + TAG_DESC_URGENT, TaskDates.MESSAGE_DATE_CONSTRAINTS);
 
+        // invalid deadline - multiple deadline prefixes
+        assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + DEADLINE_DESC_GRAD_SCHOOL + TAG_DESC_URGENT,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         // invalid tag
         assertParseFailure(parser, VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
                 + DEADLINE_DESC_INTERNSHIP + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);

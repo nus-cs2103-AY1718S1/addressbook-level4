@@ -19,12 +19,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_GRAD_S
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
-import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_GROUP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NOT_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
+import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;

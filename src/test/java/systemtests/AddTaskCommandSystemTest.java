@@ -12,11 +12,11 @@ import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_GRAD_S
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_URGENT;
+import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
-import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
@@ -112,10 +112,10 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(BUY_PRESENTS);
 
         /* Case: add a task, missing start date -> added */
-         assertCommandSuccess(SUBMISSION);
+        assertCommandSuccess(SUBMISSION);
 
         /* Case: add a task, missing deadline -> added */
-         assertCommandSuccess(GYM);
+        assertCommandSuccess(GYM);
 
         /* Case: missing description -> rejected */
         command = AddTaskCommand.COMMAND_WORD + " " + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP;

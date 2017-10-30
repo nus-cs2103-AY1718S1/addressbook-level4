@@ -38,7 +38,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_ON,
                         PREFIX_DEADLINE_BY, PREFIX_TAG);
 
-        if (!isDescriptionPresent(argMultimap)) {
+        if (!isDescriptionPresent(argMultimap) | areMultiplePrefixesPresent(argMultimap)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
         }
 
@@ -69,5 +69,15 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
      */
     private static boolean isDescriptionPresent(ArgumentMultimap argumentMultimap) {
         return !argumentMultimap.getPreamble().isEmpty();
+    }
+
+    /**
+     * Checks if multiple deadline prefixes have been used.
+     * @param argumentMultimap
+     * @return
+     */
+    private static boolean areMultiplePrefixesPresent(ArgumentMultimap argumentMultimap) {
+        return argumentMultimap.getValue(PREFIX_DEADLINE_BY).isPresent()
+                && argumentMultimap.getValue(PREFIX_DEADLINE_ON).isPresent();
     }
 }

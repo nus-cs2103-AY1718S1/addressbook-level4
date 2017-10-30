@@ -24,18 +24,6 @@ public class EditTaskDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Description} of the {@code EditTaskDescriptor} that we are building.
-     */
-    public EditTaskDescriptorBuilder withDescription(String description) {
-        try {
-            ParserUtil.parseDescription(description).ifPresent(descriptor::setDescription);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("name is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
      * Returns an {@code EditTaskDescriptor} with fields containing {@code task}'s details
      */
     public EditTaskDescriptorBuilder(ReadOnlyTask task) {
@@ -46,7 +34,17 @@ public class EditTaskDescriptorBuilder {
         descriptor.setTags(task.getTags());
     }
 
-
+    /**
+     * Sets the {@code Description} of the {@code EditTaskDescriptor} that we are building.
+     */
+    public EditTaskDescriptorBuilder withDescription(String description) {
+        try {
+            ParserUtil.parseDescription(description).ifPresent(descriptor::setDescription);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("name is expected to be unique.");
+        }
+        return this;
+    }
 
     /**
      * Sets the {@code StartDate} of the {@code EditTaskDescriptor} that we are building.
