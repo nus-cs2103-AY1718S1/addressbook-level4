@@ -95,6 +95,7 @@ public class AddressBookParserTest {
         assertEquals(new AppointCommand(INDEX_FIRST_PERSON, new Appointment(VALID_APPOINTMENT)), command);
     }
 
+    //@@author arturs68
     @Test
     public void parseCommand_group() throws Exception {
         final String groupName = "Some group name";
@@ -118,6 +119,7 @@ public class AddressBookParserTest {
                     + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_PATH + " " + picturePath);
         assertEquals(new ChangePicCommand(INDEX_FIRST_PERSON, picturePath), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_exit() throws Exception {

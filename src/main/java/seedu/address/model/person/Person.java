@@ -125,6 +125,7 @@ public class Person implements ReadOnlyPerson {
         return appointment.get();
     }
 
+    //@@author arturs68
     public void setProfilePicture(ProfilePicture profilePicture) {
         this.profilePicture.set(requireNonNull(profilePicture));
     }
@@ -138,6 +139,7 @@ public class Person implements ReadOnlyPerson {
     public ProfilePicture getProfilePicture() {
         return profilePicture.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

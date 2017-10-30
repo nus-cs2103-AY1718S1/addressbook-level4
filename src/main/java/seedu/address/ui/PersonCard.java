@@ -91,6 +91,7 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
+    //@@author arturs68
     /**
      * If the path of the image is valid, initializes the image. Otherwise leaves the picture blank.
      */
@@ -103,6 +104,7 @@ public class PersonCard extends UiPart<Region> {
         }
         profilePicture.setImage(im);
     }
+    //@@author
 
     private void initGroups(ReadOnlyPerson person) {
         person.getGroups().forEach(group -> groups.getChildren().add(new Label(group.groupName)));

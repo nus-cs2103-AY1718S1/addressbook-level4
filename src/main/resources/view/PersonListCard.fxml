@@ -30,7 +30,9 @@
         </Label>
         <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
       </HBox>
+      <!-- @@author arturs68 -->
       <FlowPane fx:id="groups" />
+      <!-- @@author -->
       <FlowPane fx:id="tags" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
@@ -41,9 +43,11 @@
          <RowConstraints />
       </rowConstraints>
   </GridPane>
+  <!-- @@author arturs68 -->
    <ImageView fx:id="profilePicture" fitHeight="150.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="/images/default_pic.png" />
       </image>
    </ImageView>
+  <!-- @@author  -->
 </HBox>
