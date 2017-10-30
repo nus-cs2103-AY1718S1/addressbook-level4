@@ -46,13 +46,16 @@ public class AnchorPaneNode extends AnchorPane {
         this.date = date;
     }
 
-    private void handleCalendarEvent(String event){
+    private void handleCalendarEvent(String event) {
         startDialog(event);
         EventsCenter.getInstance().post(new CalendarPanelSelectionEvent(date.toString()));
         logger.info(LogsCenter.getEventHandlingLogMessage(new CalendarPanelSelectionEvent(event)));
     }
 
-    private void startDialog(String date){
+    /**
+     * This creates the Dialog window for Add Event
+     */
+    private void startDialog(String date) {
         Dialog<Event> dialog = new Dialog<>();
         dialog.setTitle("Add Event");
         dialog.setHeaderText("Fill up the details for the event on " + date);
@@ -73,12 +76,11 @@ public class AnchorPaneNode extends AnchorPane {
         dialog.getDialogPane().getButtonTypes().add(button);
 
         dialog.setResultConverter(dialogButton -> {
-                if (dialogButton == button){
-                    return new BuildEvent().withName(text1.getText()).withDate(date)
-                            .withAddress(text2.getText()).build();
-                }
-                return null;
-            });
+            if (dialogButton == button) {
+                return new BuildEvent().withName(text1.getText()).withDate(date).withAddress(text2.getText()).build();
+            }
+            return null;
+        });
 
         Optional<Event> result = dialog.showAndWait();
         result.ifPresent(event -> {
