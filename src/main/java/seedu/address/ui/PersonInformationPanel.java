@@ -44,6 +44,8 @@ public class PersonInformationPanel extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
+    @FXML
+    private Label photoPath;
 
     public PersonInformationPanel() {
         super(FXML);
@@ -88,6 +90,7 @@ public class PersonInformationPanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        photoPath.textProperty().bind(Bindings.convert(person.photoProperty()));
         id.setText(Integer.toString(personid));
 
     }

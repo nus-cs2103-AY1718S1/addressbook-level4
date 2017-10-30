@@ -36,6 +36,12 @@
                   <Label fx:id="email" styleClass="label-bright" />
                </children>
             </HBox>
+            <HBox>
+               <children>
+                  <Label styleClass="label-bright" text="Photo path: " />
+                  <Label fx:id="photoPath" styleClass="label-bright" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>
