@@ -36,6 +36,8 @@ public interface ReadOnlyEvent {
 
     boolean happensBefore(Timeslot slot);
 
+    boolean happensAfter(Timeslot slot);
+
     Duration getDuration();
 
     LocalTime getStartTime();

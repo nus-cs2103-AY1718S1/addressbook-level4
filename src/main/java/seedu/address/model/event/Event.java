@@ -126,6 +126,15 @@ public class Event implements ReadOnlyEvent {
     }
 
     /**
+     * Check if this event happens at a later time than the given timeslot.
+     * @return true if indeed earlier.
+     */
+    public boolean happensAfter(Timeslot slot) {
+        int comparison = this.getTimeslot().compareTo(slot);
+        return comparison > 0;
+    }
+
+    /**
      * Obtain the duration of the event.
      * @return a Duration object.
      */

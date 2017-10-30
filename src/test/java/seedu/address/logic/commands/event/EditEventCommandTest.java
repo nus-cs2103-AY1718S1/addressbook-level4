@@ -10,6 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstEventOnly;
+import static seedu.address.logic.commands.CommandTestUtil.showFirstTwoEventsOnly;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
@@ -162,8 +163,13 @@ public class EditEventCommandTest {
 
     @Test
     public void execute_eventTimeClashUnfilteredList_failure() {
-        Event firstEvent = new Event(model.getFilteredEventList().get(INDEX_FIRST_EVENT.getOneBased()));
-        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(firstEvent).build();
+        Index indexLastEvent = Index.fromOneBased(model.getFilteredEventList().size());
+        ReadOnlyEvent lastEvent = model.getFilteredEventList().get(indexLastEvent.getZeroBased());
+
+        EventBuilder eventInList = new EventBuilder(lastEvent);
+        Event editedEvent = eventInList.withTitle(VALID_TITLE_MIDTERM).build();
+
+        EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(editedEvent).build();
         EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT, descriptor);
 
         assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_TIME_CLASH);
@@ -171,12 +177,14 @@ public class EditEventCommandTest {
 
     @Test
     public void execute_eventTimeClashFilteredList_failure() {
-        showFirstEventOnly(model);
+        showFirstTwoEventsOnly(model);
 
         //edit event in filtered list to clash with an existing event in address book
-        ReadOnlyEvent eventInList = model.getAddressBook().getEventList().get(INDEX_FIRST_EVENT.getOneBased());
+        ReadOnlyEvent secondEventInList = model.getAddressBook().getEventList().get(INDEX_SECOND_EVENT.getOneBased());
+        EventBuilder eventInList = new EventBuilder(secondEventInList);
+        Event editedEvent = eventInList.withTitle(VALID_TITLE_MIDTERM).build();
         EditEventCommand editEventCommand = prepareCommand(INDEX_FIRST_EVENT, new EditEventDescriptorBuilder
-                (eventInList).build());
+                (editedEvent).build());
 
         assertCommandFailure(editEventCommand, model, EditEventCommand.MESSAGE_TIME_CLASH);
     }

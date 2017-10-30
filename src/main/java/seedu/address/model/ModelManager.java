@@ -136,8 +136,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        Predicate<? super ReadOnlyEvent> predicate = filteredEvents.getPredicate();
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
-        return FXCollections.unmodifiableObservableList(filteredEvents);
+        filteredEvents.setPredicate(predicate);
+        ObservableList<ReadOnlyEvent> list = FXCollections.unmodifiableObservableList(filteredEvents);
+        return list;
     }
 
     //=========== Event Operations  ===========================================================================

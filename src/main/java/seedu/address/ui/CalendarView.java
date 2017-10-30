@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
@@ -129,7 +130,6 @@ public class CalendarView extends UiPart<Region> {
                  !startTime.isAfter(date.atTime(lastSlotStart));
                  startTime = startTime.plus(slotLength)) {
 
-
                 TimeSlot timeSlot = new TimeSlot(startTime, slotLength);
                 timeSlots.add(timeSlot);
 
@@ -192,8 +192,10 @@ public class CalendarView extends UiPart<Region> {
 
         //Iteratively add the events to the calendar view
         for (ReadOnlyEvent event:eventsThisWeek) {
-            StackPane eventPane = createPane(event);
-            addEventPaneToCalendarView(calendarView, event, eventPane);
+            if(!addedEvents.containsKey(event)) {
+                StackPane eventPane = createPane(event);
+                addEventPaneToCalendarView(calendarView, event, eventPane);
+            }
         }
 
     }
@@ -204,11 +206,16 @@ public class CalendarView extends UiPart<Region> {
      * @return an ObservableList of events scheduled in the current week
      */
     private ObservableList<ReadOnlyEvent> extractEvents(ObservableList<ReadOnlyEvent> eventList) {
+        String startOfThisWeek = CalendarView.startOfWeek.get().toString();
         String endOfThisWeek = CalendarView.endOfWeek.get().toString();
-        String[] tokens = endOfThisWeek.split("-");
+        String[] startofWeekTokens = startOfThisWeek.split("-");
+        String[] endofWeekTokens = endOfThisWeek.split("-");
 
         try {
-            Timeslot endOfWeek = new Timeslot(tokens[2] + "/" + tokens[1] + "/" + tokens[0] + " " + "2358-2359");
+//            Timeslot startOfWeek = new Timeslot(startofWeekTokens[2] + "/" + startofWeekTokens[1] + "/" +
+//                    startofWeekTokens[0] + " " + "0700-0701");
+            Timeslot endOfWeek = new Timeslot(endofWeekTokens[2] + "/" + endofWeekTokens[1] + "/" +
+                    endofWeekTokens[0] + " " + "2358-2359");
             return eventList.stream().filter(event -> event.happensBefore
                 (endOfWeek)).collect(Collectors.toCollection(FXCollections::observableArrayList));
         } catch (IllegalValueException ive) {
@@ -226,6 +233,8 @@ public class CalendarView extends UiPart<Region> {
         if (calendarView.getChildren().contains(addedEvents.get(lastChangedEvent))) {
             if (calendarView.getChildren().remove(addedEvents.get(lastChangedEvent))) {
                 logger.info(lastChangedEvent + " removed.");
+
+                addedEvents.remove(lastChangedEvent);
             }
         }
     }
@@ -270,6 +279,7 @@ public class CalendarView extends UiPart<Region> {
 
         //Store events that have been added for future reference
         addedEvents.put(event, eventPane);
+        logger.info("added pane " + eventPane);
     }
 
 
