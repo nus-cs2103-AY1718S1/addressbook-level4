@@ -389,13 +389,8 @@ _Figure 2.1.2a : Sequence diagram for `add appointment` Model Component_
 
 image::SDforAppointment.png[width="800"]
 
-
-*Reasons for how it is implemented*
-
-The reason for two constructors is so that the person can be initialized with or without an appointment. As of version
-1.2, our address book does not support the setting of appointment concurrent with the addition of the contact. To ease
-the implementation of that, we have decided that the Person class should have appointment in its constructor.
-
+As seen from the diagram, CalendarView depends on the UniquePersonList to update every second on another thread.
+There is no need for the model to prompt the UI to update.
 // end::appointment[]
 
 === *Enhancement: Set tag color*
