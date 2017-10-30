@@ -270,6 +270,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + ADDRESS_DESC_AMY + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING + TAG_DESC_FLAMMABLE;
         assertCommandSuccess(command, toAdd);
 
+
         /* Case: missing tracking number -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + DELIVERY_DATE_DESC_AMY + STATUS_DESC_DELIVERING;

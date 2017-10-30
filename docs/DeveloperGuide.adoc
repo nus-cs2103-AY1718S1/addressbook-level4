@@ -500,7 +500,7 @@ and has to be updated whenever we edit other parcel details as well.
 
 //end::deleteTag[]
 
-tag::backup[]
+//tag::backup[]
 
 === Backup Mechanism
 
@@ -515,7 +515,7 @@ stores the backup in the same directory as the main `AddressBook` storage file. 
 the name of the main `AddressBook` storage file appended with `-backup.xml`. i.e. If the main `AddressBook` storage file
  is named as `addressbook.xml`, the backup storage file will be saved as `addressbook.xml-backup.xml`.
 
-end::backup[]
+//end::backup[]
 
 ==== Design Considerations
 
@@ -551,7 +551,8 @@ other. +
 the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
 provides a workable copy of the data of Ark.
 
-tag::import[]
+//tag::import[]
+
 === Import Mechanism
 
 To use this command, type `import (FILE_NAME)` into the `CommandBox`.
@@ -619,7 +620,10 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 ** **Pros:** Allows user to name his files following any conventions and be successfully imported into Ark. +
 ** **Cons:** Makes Ark vulnerable to simple directory traversal attack where user can access files outside the
 `data/import/` directory. +
-end::import[]
+
+//end::import[]
+
+//tag::autocomplete[]
 
 === Tab autocomplete mechanism
 
@@ -662,7 +666,9 @@ Also creates coupling between the `Autocompleter` and `CommandBox`. +
 ** **Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
 ** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +=== Tab autocomplete mechanism
 
-tag::trackingNumber[]
+//end::autocomplete[]
+
+//tag::trackingNumber[]
 
 === TrackingNumber Field
 
@@ -676,9 +682,9 @@ Presently, the `Tracking Number` Field only has support for Registered Article t
 You can read more about their Registered Article tracking number
  link:http://www.singpost.com/send-receive/sending-within-singapore/registered-article-local[here].
 
-end::trackingNumber[]
+//end::trackingNumber[]
 
-tag::postalCode[]
+//tag::postalCode[]
 
 === PostalCode Field
 
@@ -692,9 +698,9 @@ code exists even though it might meet the criteria above. The team is working on
  in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
  the correct postal code.
 
-end::postalCode[]
+//end::postalCode[]
 
-tag::status[]
+//tag::status[]
 
 === Status field
 
@@ -708,15 +714,6 @@ delivered by. +
 
 These states have different colours codes to allow users to differentiate the `Status` values more easily.
 
-//tag::deliveryDate[]
-=== Delivery Date field
-
-`Delivery Date` is used to indicate the delivery date that the parcel must be delivered by.
-The dates are only accepted if they are valid. The parcel list is maintained in sorted order by comparing
-their delivery dates, with the earliest on top.
-
-//end::deliveryDate[]
-
 ==== Design Considerations
 
 ** `Implementation of Status`**
@@ -729,7 +726,17 @@ their delivery dates, with the earliest on top.
 ** **Cons:** It becomes more difficult to import data files since different users may use different terminologies to
 describe the same status of the parcel.
 
-end::status[]
+//end::status[]
+
+//tag::deliveryDate[]
+=== Delivery Date field
+
+`Delivery Date` is used to indicate the delivery date that the parcel must be delivered by.
+The dates are only accepted if they are valid. The parcel list is maintained in sorted order by comparing
+their delivery dates, with the earliest on top.
+
+//end::deliveryDate[]
+
 
 //tag::sortedList[]
 
@@ -974,7 +981,7 @@ information from other sources
 *MSS*
 
 1.  User requests to list parcels
-2.  AddressBook shows a list of parcels
+2.  AddressBook shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
 3.  User requests to delete a specific parcel in the list
 4.  AddressBook deletes the parcel
 +
@@ -1075,7 +1082,7 @@ Use case ends
 *MSS*
 
 1.  User requests to list parcels
-2.  AddressBook shows a list of parcels
+2.  AddressBook shows a list of parcels and maximizes the `ParcelListPanel` in the `MainWindow` UI
 3.  User requests to upload image of a specific parcel in the list
 4.  AddressBook prompts for location of image
 5.  User inputs file path

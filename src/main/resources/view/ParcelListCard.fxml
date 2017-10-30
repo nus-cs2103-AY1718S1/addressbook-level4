@@ -21,11 +21,11 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="147.33331298828125" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="107.66668701171875" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="290.6666259765625" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.3333740234375" minWidth="10.0" prefWidth="318.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="141.666748046875" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.66650390625" minWidth="10.0" prefWidth="88.333251953125" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="77.66650390625" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.666748046875" minWidth="10.0" prefWidth="289.33349609375" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.3333740234375" minWidth="10.0" prefWidth="310.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="140.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.66650390625" minWidth="10.0" prefWidth="95.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="89.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.666748046875" minWidth="10.0" prefWidth="277.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

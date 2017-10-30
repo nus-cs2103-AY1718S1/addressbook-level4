@@ -5,7 +5,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.POSTAL_CODE_LENGTH;
+import static seedu.address.ui.BrowserPanel.QUERY_POSTAL_CODE_LENGTH;
+import static seedu.address.ui.BrowserPanel.getMapQueryStringFromPostalString;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -197,13 +198,15 @@ public abstract class AddressBookSystemTest {
         String selectedCardLocation = getParcelListPanel().getHandleToSelectedCard().getAddress();
         URL expectedUrl;
         try {
+            int postalCodeLength = 7;
             expectedUrl = new URL(GOOGLE_MAP_URL_PREFIX
-                    + selectedCardLocation.substring(selectedCardLocation.length() - POSTAL_CODE_LENGTH));
+                    + getMapQueryStringFromPostalString(selectedCardLocation.substring(
+                            selectedCardLocation.length() - postalCodeLength)));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
 
-        int correctUrlLength = GOOGLE_MAP_URL_PREFIX.length() + POSTAL_CODE_LENGTH;
+        int correctUrlLength = GOOGLE_MAP_URL_PREFIX.length() + QUERY_POSTAL_CODE_LENGTH;
         String actualParcelUrl = getBrowserPanel().getLoadedUrl().toString().substring(0, correctUrlLength);
         assertEquals(expectedUrl.toString(), actualParcelUrl);
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getParcelListPanel().getSelectedCardIndex());

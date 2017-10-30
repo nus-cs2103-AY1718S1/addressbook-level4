@@ -224,9 +224,9 @@ public class MainWindow extends UiPart<Region> {
     }
 
     @FXML @Subscribe
-    private void handleHideParcelListEvent(JumpToListRequestEvent event) {
+    private void handleMinimizeParcelListEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        splitPanePlaceholder.setDividerPositions(1.0);
+        splitPanePlaceholder.setDividerPositions(0.6);
     }
 
     //@@author kennard123661
