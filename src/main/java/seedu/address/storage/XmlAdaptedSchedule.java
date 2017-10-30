@@ -1,11 +1,12 @@
 package seedu.address.storage;
 
+import static seedu.address.logic.parser.ScheduleCommandParser.DATE_FORMAT;
+
 import java.util.Calendar;
 
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Name;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -16,7 +17,7 @@ public class XmlAdaptedSchedule {
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
-    private String date;
+    private String dateString;
 
     /**
      * Constructs an XmlAdaptedSchedule.
@@ -31,8 +32,8 @@ public class XmlAdaptedSchedule {
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
     public XmlAdaptedSchedule(Schedule source) {
-        name = source.getPersonName();
-        date = Schedule.DATE_FORMAT.format(source.getDate());
+        name = source.getPersonName().toString();
+        dateString = DATE_FORMAT.format(source.getDate());
     }
 
     /**
@@ -41,21 +42,19 @@ public class XmlAdaptedSchedule {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Schedule toModelType() throws IllegalValueException {
-        final String name = new Name(this.name).fullName;
+        final String name = this.name;
         final Schedule schedule;
         Calendar calendar = null;
-        // if there is previously a scheduled date, the constructor with scheduled date is called
-        if (date != null) {
-            calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
+        if (calendar != null) {
             try {
-                calendar.setTime(Schedule.DATE_FORMAT.parse(this.date));
+                calendar.setTime(DATE_FORMAT.parse(dateString));
+                return new Schedule(name.toString(), calendar);
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
-            schedule = new Schedule(name, calendar);
-        } else {
-            schedule = new Schedule(name);
         }
-        return new Schedule(name, calendar);
+        schedule = new Schedule(name.toString(), calendar);
+        return new Schedule(name.toString(), calendar);
     }
 }
