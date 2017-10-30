@@ -426,35 +426,35 @@ To *transfer data* to another Computer, install the app in the other computer an
 |Commands Words |Commands Alias |Format|Example
 |link:#adding-a-person-code-add-code[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL] a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 
-|link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
+|link:#opening-calendar-code-calendar-code-since-v1-3[Calendar] |`cl` |`calendar` |
 
-|link:#finding-persons-by-any-field-code-find-code-since-v1-2[Find]|`f` |`find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`find n/James Jake`
-
-|link:#viewing-help-code-help-code[Help] | `h` | `help COMMAND WORD` | `help add`
-
-|link:#locating-a-person-s-address-code-locate-code-since-v1-2[Locate]|`lc` |`locate INDEX` | `locate 2`
-
-|link:#scheduling-an-activity-code-schedule-code-since-v1-3[Schedule] |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
+|link:#clearing-all-entries-code-clear-code[Clear] | `c`| `clear` |
 
 |link:#getting-email-addresses-code-copy-code-since-v1-3[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`|
 
 |link:#deleting-person-s-code-delete-code[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`|
 
-|link:#listing-entered-commands-code-history-code[History]|`his`|`history`|
-
-|link:#clearing-all-entries-code-clear-code[Clear] | `c`| `clear` |
-
-|link:#listing-entered-commands-code-history-code[List] |`l` |`list` |
-
-|link:#undoing-previous-command-code-undo-code[Undo] |`u`| `undo` |
-
-|link:#redoing-the-previously-undone-command-code-redo-code[Redo] |`r` |`redo` |
-
-|link:#opening-calendar-code-calendar-code-since-v1-3[Calendar] |`cl` |`calendar` |
+|link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
 |link:#opening-email-code-email-code-since-v1-4[Email] |`em` |`email` |
 
 |link:#exiting-the-program-code-exit-code[Exit] |
+
+|link:#finding-persons-by-any-field-code-find-code-since-v1-2[Find]|`f` |`find [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`find n/James Jake`
+
+|link:#viewing-help-code-help-code[Help] | `h` | `help COMMAND WORD` | `help add`
+
+|link:#listing-entered-commands-code-history-code[History]|`his`|`history`|
+
+|link:#listing-entered-commands-code-history-code[List] |`l` |`list` |
+
+|link:#locating-a-person-s-address-code-locate-code-since-v1-2[Locate]|`lc` |`locate INDEX` | `locate 2`
+
+|link:#redoing-the-previously-undone-command-code-redo-code[Redo] |`r` |`redo` |
+
+|link:#scheduling-an-activity-code-schedule-code-since-v1-3[Schedule] |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
+
+|link:#undoing-previous-command-code-undo-code[Undo] |`u`| `undo` |
 
 |=======================================================================
 
