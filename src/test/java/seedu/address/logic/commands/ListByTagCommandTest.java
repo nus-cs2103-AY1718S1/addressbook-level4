@@ -68,19 +68,7 @@ public class ListByTagCommandTest {
         return command;
     }
 
-    @Test
-    public void executeZeroKeywordsNoPersonFound() {
-        String expectedMessage = String.format(ListByTagCommand.MESSAGE_SUCCESS);
-        ListByTagCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
-    }
 
-    @Test
-    public void executeMultipleKeywordsMultiplePersonsFound() {
-        String expectedMessage = String.format(ListByTagCommand.MESSAGE_SUCCESS);
-        ListByTagCommand command = prepareCommand("Test1 Test2 Test3");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
-    }
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>

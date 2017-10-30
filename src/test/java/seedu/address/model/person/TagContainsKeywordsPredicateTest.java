@@ -52,8 +52,8 @@ public class TagContainsKeywordsPredicateTest {
 
         // Only one matching tag
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("Colleague", "Family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Colleague").build()));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Family").build()));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Colleague").build()));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Family").build()));
 
         // Mixed-case keywords
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("FaMiLy"));
@@ -62,9 +62,7 @@ public class TagContainsKeywordsPredicateTest {
 
     @Test
     public void testTagIsNotValidReturnsFalse() {
-        // Zero keywords
-        TagContainsKeywordsPredicate predicate = new TagContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withTags("Family").build()));
+        TagContainsKeywordsPredicate predicate ;
 
         // Non-matching keyword
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("Family"));
