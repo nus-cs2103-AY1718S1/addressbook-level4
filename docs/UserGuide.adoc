@@ -79,6 +79,9 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 [NOTE]
 Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
++
+You can input your command words in capital letters, small letters or a mix of both. +
+Example: Typing "help" is the same as typing "HELP" and "hELp".
 
 <<<
 
@@ -109,7 +112,10 @@ image::addexample.png[width="500"]
 [NOTE]
 You can only use the following twelve inputs for BLOODTYPE. +
 A, A+, A-, B, B+, B-, AB, AB+, AB-, O, O+, O-. +
-Both capital letters and small letters are can be entered.
+Both capital letters and small letters are can be entered. +
+Your inputs for BLOODTYPE will always be shown in capital letters as shown below.
+
+image::bloodtypestored.png[width="500"]
 
 <<<
 
