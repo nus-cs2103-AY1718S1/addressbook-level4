@@ -35,6 +35,18 @@ public class ImportCommandTest {
     }
 
     @Test
+    public void execute_import_fail() throws Exception {
+        AddressBook ab = new AddressBook();
+
+        CommandResult r = logic.execute("import wrongfilename.vcf");
+        assertEquals(ImportCommand.MESSAGE_FAILURE, r.feedbackToUser);
+
+        // addressbook should be empty
+        assertEquals(ab, model.getAddressBook());
+
+    }
+
+    @Test
     public void execute_import_success() throws Exception {
 
         AddressBook expected = new AddressBook();
