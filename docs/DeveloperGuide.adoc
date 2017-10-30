@@ -360,15 +360,16 @@ Adding multiple contacts is used so as to allow the user to add multiple contact
 A valid file must satisfy the following conditions:
 
 * Must be a tsv, or in tab separated value form, that is each attribute of a contact (`name`, `phone`,...) is separated by a tab
-* The first line must contains the following values, *in this specific order*, corresponding to contact attributes, separated by tab: `name`   `phone` `email` `address`   `tag`
+* The first line must contains the following values, *in this specific order*, corresponding to contact attributes, separated by tab: `name` `occupation `phone` `email` `address` `website `tag`
 
 A valid format can be as follow. It is highly advisable that user enter the data in Excel and export as `Text (Tab delimited)`:
 
 
 |===
-|name |phone |email |address |website |tag
+|name  |occupation |phone |email |address |website |tag
 
 |John Doe
+|Google, CEO
 |98765432
 |johnd@example.com
 |John street, block 123, #01-01
@@ -376,6 +377,7 @@ A valid format can be as follow. It is highly advisable that user enter the data
 |friend, neighbor
 
 |Betsy Crowe
+|Microsoft, Software Engineer
 |1234567
 |betsycrowe@example.com
 |Newgate Prison
@@ -385,7 +387,7 @@ A valid format can be as follow. It is highly advisable that user enter the data
 
 `AddMultipleByTsvCommand` can throw the following exception:
 
- * `NoSuchElementException`: Just as `AddCommand`, this happens when `name`, `phone`, `email`, `address` or `website` is missing, and that specific entry will not be added.
+ * `NoSuchElementException`: Just as `AddCommand`, this happens when `name`, `occupation, `phone`, `email`, `address` or `website` is missing, and that specific entry will not be added.
  * `IOException`: This happens when the system cannot find the file specified by users, and no entry will be added.
  * `DuplicatePersonException`: This happens when any entry has already been added, and that specific entry will not be added.
 

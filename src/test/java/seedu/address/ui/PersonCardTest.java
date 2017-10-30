@@ -32,6 +32,7 @@ public class PersonCardTest extends GuiUnitTest {
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
             personWithTags.setName(ALICE.getName());
+            personWithTags.setOccupation(ALICE.getOccupation());
             personWithTags.setAddress(ALICE.getAddress());
             personWithTags.setEmail(ALICE.getEmail());
             personWithTags.setPhone(ALICE.getPhone());
