@@ -55,8 +55,8 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
      * Returns true if list starts with "AND" or "OR"
      */
     private boolean startsWithAndOr(List<String> evaluateList) {
-        boolean startWithAndOr = "and".equalsIgnoreCase(evaluateList.get(0)) ||
-                "or".equalsIgnoreCase(evaluateList.get(0));
+        boolean startWithAndOr = "and".equalsIgnoreCase(evaluateList.get(0))
+                || "or".equalsIgnoreCase(evaluateList.get(0));
         return startWithAndOr;
     }
 
@@ -64,8 +64,8 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
      * Returns true if list ends with "AND" or "OR"
      */
     private boolean endsWithAndOr(List<String> evaluateList) {
-        boolean endWithAndOr = "and".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1)) ||
-                "or".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1));
+        boolean endWithAndOr = "and".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1))
+                || "or".equalsIgnoreCase(evaluateList.get(evaluateList.size() - 1));
         return endWithAndOr;
     }
 
@@ -76,8 +76,8 @@ public class ListByTagCommandParser implements Parser<ListByTagCommand> {
         String previousString = "";
         boolean multipleAndOrCluster = false;
         for (String str : evaluateList) {
-            if (("and".equalsIgnoreCase(previousString) || "or".equalsIgnoreCase(previousString)) &&
-                    ("and".equalsIgnoreCase(str) || "or".equalsIgnoreCase(str))) {
+            if (("and".equalsIgnoreCase(previousString) || "or".equalsIgnoreCase(previousString))
+                    && ("and".equalsIgnoreCase(str) || "or".equalsIgnoreCase(str))) {
                 multipleAndOrCluster = true;
                 break;
             }

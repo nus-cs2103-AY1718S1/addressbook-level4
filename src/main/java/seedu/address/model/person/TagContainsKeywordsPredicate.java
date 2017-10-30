@@ -21,8 +21,8 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        boolean containsAndOR = keywords.contains("and") || keywords.contains("or");
-        if (containsAndOR) {
+        boolean containsAndOr = keywords.contains("and") || keywords.contains("or");
+        if (containsAndOr) {
             return predicateWithAndOr(person);
         } else {
             return predicateWithoutAndOr(person);
