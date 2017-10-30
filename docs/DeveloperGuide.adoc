@@ -811,6 +811,130 @@ image::Highlight.png[width="800"]
 The discussion for link:#java-fx[JavaFX] to implement a native search feature within WebView is ongoing and you can find it
 https://stackoverflow.com/questions/19418626/javafx-search-and-highlight-text-add-search-bar-for-loaded-web-page[here].
 
+==== Removing jQuery implementation
+In a future version of link:#java-fx[JavaFx] where such an implementation is no longer necessary, you may revert the changes by reverting pull request
+https://github.com/CS2103AUG2017-W11-B2/main/pull/99[#99] on the Rolodex repo on GitHub. You may also choose to manually do this by reverting the following code:
+
+Original `HelpWindow.fxml`:
+[source,xml]
+----
+<StackPane fx:id="helpWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <WebView fx:id="browser" />
+</StackPane>
+----
+`HelpWindow.fxml` with makeshift user guide search functionality:
+[source,xml]
+----
+<StackPane fx:id="helpWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox fx:id="layout">
+        <children>
+            <TextField fx:id="txtSearch" promptText="Search and press ENTER" />
+                <HBox fx:id="controls">
+                    <children>
+                        <Button fx:id="btnSearch" mnemonicParsing="false" text="Search">
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnClear" mnemonicParsing="false" text="Clear" />
+                    </children>
+                </HBox>
+            <WebView fx:id="browser" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100000.0" />
+        </children>
+    </VBox>
+</StackPane>
+----
+
+Original `HelpWindow.java`:
+[source,java]
+----
+@FXML
+private WebView browser;
+
+private final Stage dialogStage;
+
+public HelpWindow() {
+    super(FXML);
+    Scene scene = new Scene(getRoot());
+    //Null passed as the parent stage to make it non-modal.
+    dialogStage = createDialogStage(TITLE, null, scene);
+    dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+    FxViewUtil.setStageIcon(dialogStage, ICON);
+
+    String userGuideUrl = getClass().getResource(HELP_FILE_PATH).toString();
+    browser.getEngine().load(userGuideUrl);
+}
+----
+`HelpWindow.java` with makeshift user guide search functionality:
+[source,java]
+----
+@FXML
+private WebView browser;
+
+@FXML
+private TextField txtSearch;
+
+@FXML
+private Button btnSearch;
+
+@FXML
+private Button btnClear;
+
+@FXML
+private HBox controls;
+
+private final Stage dialogStage;
+
+public HelpWindow() {
+    super(FXML);
+
+    txtSearch.setOnAction(event -> {
+        if (browser.getEngine().getDocument() != null) {
+            highlight(browser.getEngine(), txtSearch.getText());
+        }
+    });
+
+    btnSearch.setDefaultButton(true);
+    btnSearch.setOnAction(actionEvent -> txtSearch.fireEvent(new ActionEvent()));
+
+    btnClear.setOnAction(actionEvent -> clearHighlights(browser.getEngine()));
+    btnClear.setCancelButton(true);
+
+    controls.disableProperty().bind(browser.getEngine().getLoadWorker().runningProperty());
+    txtSearch.disableProperty().bind(browser.getEngine().getLoadWorker().runningProperty());
+
+    Scene scene = new Scene(getRoot());
+    //Null passed as the parent stage to make it non-modal.
+    dialogStage = createDialogStage(TITLE, null, scene);
+    dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+    FxViewUtil.setStageIcon(dialogStage, ICON);
+
+    String userGuideUrl = getClass().getResource(HELP_FILE_PATH).toString();
+    browser.getEngine().load(userGuideUrl);
+}
+
+private void highlight(WebEngine engine, String text) {
+    engine.executeScript("$('body').removeHighlight().highlight('" + text + "')");
+}
+
+private void clearHighlights(WebEngine engine) {
+    engine.executeScript("$('body').removeHighlight()");
+    txtSearch.clear();
+}
+----
+
+`Help.adoc` passthrough imports:
+[source,javascript]
+----
+<script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.highlight-5.js"></script>
+----
+
+`asciidoctor.css` `.highlight` class:
+[source,css]
+----
+.highlight{background-color:yellow} 
+----
 // end::helpWindowHighlight[]
 
 === Logging
