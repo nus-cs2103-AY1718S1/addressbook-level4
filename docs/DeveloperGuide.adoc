@@ -124,7 +124,7 @@ Before you start contributing to Ark, get some sense of the overall design by re
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of
 each component.
@@ -163,7 +163,7 @@ For example, the `Logic` component (see the class diagram given below) defines i
 and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -172,7 +172,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the address book data are changed, instead of
@@ -182,7 +182,7 @@ The diagram below shows how the `EventsCenter` reacts to that event, which event
 saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be
@@ -194,7 +194,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -215,11 +215,11 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand`
-and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand`
+and `Command` in Figure 3.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -233,12 +233,12 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 call.
 
 image::DeleteParcelSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -253,7 +253,7 @@ so that the UI automatically updates when the data in the list change.
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -281,6 +281,7 @@ and redoing of commands that modifies the state of address book (e.g. `add`, `ed
 The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Inheritance diagram for commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and
 concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing
@@ -328,12 +329,13 @@ of the address book is saved before the `delete 5` command executes. The `delete
 the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2 : State of the undoStack and redoStack after `delete 5` is executed_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may
 execute `add n/David ...` to add a new parcel.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-
+_Figure 4.1.2 : State of the undoStack and redoStack after `add n/David` is executed_
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
@@ -343,7 +345,7 @@ We will pop the most recent command out of the `undoStack` and push it back to t
 address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-
+_Figure 4.1.3 : State of the undoStack and redoStack after `undo` is executed_
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when
 popping the `undoStack`.
@@ -351,6 +353,7 @@ popping the `undoStack`.
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.4 : Sequence diagram of the undo operation_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the
 state after the command is executed).
@@ -364,15 +367,19 @@ time the `redoStack` is no longer empty. It will be purged as it no longer make 
 (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.5 : State of the undoStack and redoStack after `clear` is executed_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command`
 rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.6 : State of the undoStack and redoStack after `list` is executed_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.7 : The activity diagram describing what happens inside the `UndoRedoStack` when the user executes a new
+command_
 
 ==== Design Considerations
 
@@ -508,6 +515,7 @@ The back up mechanism is facilitated by a `backupAddressBook()` method within th
 backing up of AddressBook data in Ark. +
 
 image::BackupSequenceDiagram.png[width="600"]
+_Figure 4.6.1 : Sequence diagram describing the operation of the `storageManager` when it is initialized_
 
 The `backupAddressBook()` method is called automatically when `storageManager` is initialised in `MainApp#init()`,
 a method that is called when `Ark` is launched. The method utilises the `StorageManager#saveAddressBook()` method and
@@ -575,6 +583,7 @@ attacks link:https://www.acunetix.com/websitesecurity/directory-traversal/[here]
 The following sequence diagram shows how the `import` operation works:
 
 image::ImportSequenceDiagram.png[width="1000"]
+_Figure 4.7.1 : Sequence diagram describing the operation of `import` when it is executed_
 
 [NOTE]
 The `ImportCommand` will only add parcels non-duplicate parcels. Duplicate parcels are ignored. If all the parcels to be
@@ -628,6 +637,7 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 === Tab autocomplete mechanism
 
 image::SDforTabAutocomplete.png[width="900"]
+_Figure 4.8.1 : Sequence Diagram describing the operation of the `Autocompleter` when `autocomplete` is executed_
 
 The tab autocomplete mechanism is facilitated by the `autocomplete` method residing inside the `Autocompleter`.
 It supports the tab autocompletion for possible commands that that match the text in the CommandBox. +
@@ -742,7 +752,7 @@ their delivery dates, with the earliest on top.
 
 === Maintain sorted mechanism
 image::AddParcelSdForLOgic.png[width="300"]
-_Figure 4.9.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
+_Figure 4.13.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
 
 The list of parcels in Ark is maintained to be always in sorted order according to delivery dates,
 with the earliest being on the top. This is so that the user will be able to look at the more
@@ -806,7 +816,7 @@ in the `docs/` directory to HTML format.
 use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
