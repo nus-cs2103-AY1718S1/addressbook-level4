@@ -38,7 +38,7 @@ public class Gender {
     }
 
     /**
-     * Validates given address.
+     * Validates given gender.
      *
      * @throws IllegalValueException if given gender string is invalid.
      */
@@ -61,7 +61,6 @@ public class Gender {
             break;
         case ("other"):
         case("o"):
-
             this.value = GenderType.OTHER;
             break;
         default:
