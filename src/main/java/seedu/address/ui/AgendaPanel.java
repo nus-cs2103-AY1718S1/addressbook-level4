@@ -40,41 +40,8 @@ public class AgendaPanel extends UiPart<Region> {
                 scheduleList, (schedule) -> new ScheduleCard(schedule, scheduleList.indexOf(schedule) + 1));
         scheduleCardListView.setItems(mappedList);
         scheduleCardListView.setCellFactory(listView -> new ScheduleCardListViewCell());
-        //addListenerForSelectionChangeEvent();
     }
 
-    /*
-    /**
-     *
-     * Adds a listener to {@code personListView} so that
-     * selected item raises {@code PersonPanelSelectionChangedEvent}.
-     */
-    /*   private void addListenerForSelectionChangeEvent() {
-        scheduleCardListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new AgendaPanelSelectionChangedEvent(newValue));
-                    }
-                });
-    }
-
-    /**
-     * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
-     */
-    /*    private void scrollTo(int index) {
-        Platform.runLater(() -> {
-            scheduleCardListView.scrollTo(index);
-            scheduleCardListView.getSelectionModel().clearAndSelect(index);
-        });
-    }
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
-    }
-    */
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code ScheduleCard}.
      */

@@ -85,7 +85,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
 
         setSchedules(new HashSet<>(newData.getScheduleList()));
-        //syncMasterScheduleListWith(persons);
+        syncMasterScheduleListWith(persons);
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
@@ -139,17 +139,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * - points to a Schedule object in the master list
      */
     private void syncMasterScheduleListWith(Person person) {
-        //Testing
-        Iterator<Schedule> iterator1 = schedules.iterator();
-        while (iterator1.hasNext()) {
-            logger.info("Schedules before: " + iterator1.next().toString() + "\n");
-        }
-
         final UniqueScheduleList personSchedules = new UniqueScheduleList(person.getSchedules());
-        Iterator<Schedule> personIterator = personSchedules.iterator();
-        while (personIterator.hasNext()) {
-            logger.info("Person Iterator : " + personIterator.next().toString() + "\n");
-        }
 
         schedules.mergeFrom(personSchedules);
         schedules.sort();

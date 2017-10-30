@@ -64,10 +64,7 @@ public class UniqueScheduleList implements Iterable<Schedule> {
      */
     public void mergeFrom(UniqueScheduleList from) {
         final Set<Schedule> alreadyInside = this.toSet();
-        /*from.internalList.stream()
-                .filter(schedule -> !alreadyInside.contains(schedule))
-                .forEach(internalList::add);
-        */
+
         for (Schedule scheduleFrom : from.internalList) {
             int flag = 1;
             for (Schedule scheduleInside : alreadyInside) {
