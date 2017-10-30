@@ -1,0 +1,117 @@
+= Jelena Neo Hui Ling - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Codii
+[https://github.com/CS2103AUG2017-T17-B1/main[Codii]] is a desktop address book application specially designed for debt collectors to manage debtors in a simple manner. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+
+Debt collectors can store information such as the amount owed, debt borrow date and debt cleared date in addition to debtor’s personal information.
+
+Unique features such as an interest calculator help debt collectors manage debts more efficiently.
+
+Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook - Level 4]] which is a desktop address book application used for teaching Software Engineering principles.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Login/Logout
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=login]
+
+include::../UserGuide.adoc[tag=logout]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Debtor's personal information will be stored in the address book. Hence, there is a need to limit access of the address book to debt collectors only.
+
+Only `help`, `exit` and `login` commands can be entered before login. Users can open a help window using the `help` command to look for further information on how to login if they need to. Users should also be able to exit the app without being logged in.
+
+It also makes sense for the user to be able to log out of the app without closing the app.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Borrow/Payback command
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=borrow]
+
+include::../UserGuide.adoc[tag=payback]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Should there be a need to adjust the debt of a person, the debt collector can use the `borrow` command to increase the debt by a specified amount  and the `payback` command to deduct a specified amount.
+If the debt collector uses the `edit` command to update the debt of a person, he/she has to manually calculate the new total debt before entering the new debt into the address book.
+The `borrow` and `payback` command eliminates this hassle by doing the math for the user.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=borrowCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Filter command
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Tags can be a way of adding additional information to a contact. The `filter` command provides debt collectors a way to group debtors according to these  additional information for various purposes.
+
+For example, tags can be used to indicate a particular behavior of a debtor. A debt collection agency  can filter debtors by the `violent` tag to get a list of debtors that are violent. Manpower can then be planned accordingly to ensure that debt collectors go in pairs to collect debts from debtors listed in the 'violent' list for safety reasons.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `remark`
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Nag about code quality
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

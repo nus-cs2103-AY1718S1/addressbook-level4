@@ -25,7 +25,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.logic.Password;
 import seedu.address.logic.Username;
-import seedu.address.logic.commands.BlacklistCommand;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -53,6 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
     private ReadOnlyPerson selectedPerson;
 
     private String currentList;
+    private Predicate<ReadOnlyPerson> currentPredicate;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -72,6 +72,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.userPrefs = userPrefs;
 
         this.currentList = "list";
+        this.currentPredicate = PREDICATE_SHOW_ALL_PERSONS;
     }
 
     public ModelManager() {
@@ -93,7 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @return String value of the current displayed list
      */
     @Override
-    public String getCurrentList() {
+    public String getCurrentListName() {
         return currentList;
     }
 
@@ -101,7 +102,9 @@ public class ModelManager extends ComponentManager implements Model {
      * Sets String value of the current displayed list using value of {@param currentList}
      */
     @Override
-    public void setCurrentList(String currentList) {
+    public void setCurrentListName(String currentList) {
+
+
         this.currentList = currentList;
     }
 
@@ -126,7 +129,6 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized ReadOnlyPerson removeBlacklistedPerson(ReadOnlyPerson target) throws PersonNotFoundException {
         ReadOnlyPerson removedBlacklistedPerson = addressBook.removeBlacklistedPerson(target);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
-        changeListTo(BlacklistCommand.COMMAND_WORD);
         indicateAddressBookChanged();
         return removedBlacklistedPerson;
     }
@@ -160,9 +162,17 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public synchronized ReadOnlyPerson addBlacklistedPerson(ReadOnlyPerson person) {
-        ReadOnlyPerson newBlacklistPerson = addressBook.addBlacklistedPerson(person);
+        ReadOnlyPerson newBlacklistPerson = person;
+
+        if (person.isWhitelisted()) {
+            try {
+                newBlacklistPerson = addressBook.removeWhitelistedPerson(newBlacklistPerson);
+            } catch (PersonNotFoundException e) {
+                assert false : "This person cannot be missing from addressbook";
+            }
+        }
+        addressBook.addBlacklistedPerson(newBlacklistPerson);
         updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
-        changeListTo(BlacklistCommand.COMMAND_WORD);
         indicateAddressBookChanged();
         return newBlacklistPerson;
     }
@@ -337,7 +347,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        setCurrentList("list");
+        setCurrentListName("list");
         return FXCollections.unmodifiableObservableList(filteredPersons);
     }
 
@@ -347,7 +357,9 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredBlacklistedPersonList() {
-        setCurrentList("blacklist");
+        setCurrentListName("blacklist");
+        syncBlacklist();
+        filteredBlacklistedPersons.setPredicate(currentPredicate);
         return FXCollections.unmodifiableObservableList(filteredBlacklistedPersons);
     }
 
@@ -357,36 +369,44 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredWhitelistedPersonList() {
-        setCurrentList("whitelist");
+        setCurrentListName("whitelist");
+        syncWhitelist();
+        filteredWhitelistedPersons.setPredicate(currentPredicate);
         return FXCollections.unmodifiableObservableList(filteredWhitelistedPersons);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+    public int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
+        currentPredicate = predicate;
         filteredPersons.setPredicate(predicate);
+        return filteredPersons.size();
     }
 
     /**
      * Obtains the latest list of blacklisted persons from masterlist and adds to {@code filteredBlacklistedPersons}
      * Filters {@code filteredBlacklistedPersons} according to given {@param predicate}
+     * @return size of current displayed filtered list.
      */
     @Override
-    public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+    public int updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
-        syncBlacklist();
+        currentPredicate = predicate;
         filteredBlacklistedPersons.setPredicate(predicate);
+        return filteredBlacklistedPersons.size();
     }
 
     /**
      * Obtains the latest list of whitelisted persons from masterlist and adds to {@code filteredWhitelistedPersons}
      * Filters {@code filteredWhitelistedPersons} according to given {@param predicate}
+     * @return size of current displayed filtered list.
      */
     @Override
-    public void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+    public int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
-        syncWhitelist();
+        currentPredicate = predicate;
         filteredWhitelistedPersons.setPredicate(predicate);
+        return filteredWhitelistedPersons.size();
     }
 
     /**
@@ -460,8 +480,8 @@ public class ModelManager extends ComponentManager implements Model {
         if (event.getLoginStatus() == true) {
             for (ReadOnlyPerson person : allPersons) {
                 if (!person.getInterest().value.equals("No interest set.")
-                        && (person.checkUpdateDebt(new Date()) != 0)) {
-                    updateDebtFromInterest(person, person.checkUpdateDebt(new Date()));
+                        && (person.checkLastAccruedDate(new Date()) != 0)) {
+                    updateDebtFromInterest(person, person.checkLastAccruedDate(new Date()));
                 }
             }
         }

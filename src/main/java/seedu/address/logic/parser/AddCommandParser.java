@@ -5,9 +5,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEBT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDPHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OFFICE_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -22,10 +24,12 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Deadline;
 import seedu.address.model.person.Debt;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Handphone;
+import seedu.address.model.person.HomePhone;
 import seedu.address.model.person.Interest;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.OfficePhone;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
 import seedu.address.model.person.PostalCode;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
@@ -42,17 +46,20 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_POSTAL_CODE, PREFIX_DEBT, PREFIX_INTEREST, PREFIX_DEADLINE, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_HANDPHONE, PREFIX_HOME_PHONE, PREFIX_OFFICE_PHONE,
+                        PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_POSTAL_CODE, PREFIX_DEBT, PREFIX_INTEREST, PREFIX_DEADLINE,
+                        PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_POSTAL_CODE,
-                PREFIX_EMAIL, PREFIX_DEBT)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_HANDPHONE, PREFIX_HOME_PHONE,
+                PREFIX_POSTAL_CODE, PREFIX_EMAIL, PREFIX_DEBT)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
         try {
             Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
-            Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+            Handphone handphone = ParserUtil.parseHandphone(argMultimap.getValue(PREFIX_HANDPHONE)).get();
+            HomePhone homePhone = ParserUtil.parseHomePhone(argMultimap.getValue(PREFIX_HOME_PHONE)).get();
+            OfficePhone officePhone = ParserUtil.parseOfficePhone(argMultimap.getValue(PREFIX_OFFICE_PHONE)).get();
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             PostalCode postalCode = ParserUtil.parsePostalCode(argMultimap.getValue(PREFIX_POSTAL_CODE)).get();
@@ -67,8 +74,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
             //{@code DateBorrow}, {@code DateRepaid} and {@code totalDebt} fields are created
             // within {@code Person} class
-            ReadOnlyPerson person = new Person(name, phone, email, address, postalCode, debt, interest,
-                    deadline, tagList);
+            ReadOnlyPerson person = new Person(name, handphone, homePhone, officePhone, email, address, postalCode,
+                    debt, interest, deadline, tagList);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {

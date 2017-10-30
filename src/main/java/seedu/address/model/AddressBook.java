@@ -80,44 +80,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(persons);
     }
 
-    /**
-     * Searches for blacklisted persons in {@code persons}.
-     * @return UniquePersonList of all blacklisted person in {@code persons}
-     */
-    public UniquePersonList getBlacklistedPersons() {
-        UniquePersonList blacklistedPersons = new UniquePersonList();
-        for (Person person : persons.getInternalList()) {
-            if (person.isBlacklisted()) {
-                try {
-                    blacklistedPersons.add(person);
-                } catch (DuplicatePersonException e) {
-                    assert false : "This is not possible as prior checks have"
-                            + " been done to ensure AddressBook does not have duplicate persons";
-                }
-            }
-        }
-        return blacklistedPersons;
-    }
-
-    /**
-     * Searches for whitelisted persons in {@code persons}.
-     * @return UniquePersonList of all whitelisted persons in {@code persons}
-     */
-    public UniquePersonList getWhitelistedPersons() {
-        UniquePersonList whitelistedPersons = new UniquePersonList();
-        for (Person person : persons.getInternalList()) {
-            if (person.isWhitelisted()) {
-                try {
-                    whitelistedPersons.add(person);
-                } catch (DuplicatePersonException e) {
-                    assert false : "This is not possible as prior checks have"
-                            + " been done to ensure AddressBook does not have duplicate persons";
-                }
-            }
-        }
-        return whitelistedPersons;
-    }
-
     //// person-level operations
 
     /**
@@ -147,20 +109,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         Person newBlacklistedPerson = new Person(p);
         newBlacklistedPerson.setIsBlacklisted(true);
         try {
-            persons.remove(p);
+            updatePerson(p, newBlacklistedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
         } catch (PersonNotFoundException e) {
-            assert false : "This is not possible as prior checks have been done";
-        }
-        newBlacklistedPerson.setIsWhitelisted(false);
-        try {
-            persons.add(index, newBlacklistedPerson);
-        } catch (DuplicatePersonException dpe) {
-            assert false : "This is not possible as it not possible to"
-                    + " have duplicates in persons before persons.remove(key) statement was executed.";
+            throw new AssertionError("This is not possible as prior checks have been done");
         }
 
         return persons.getReadOnlyPerson(index);
-
     }
 
     /**
@@ -174,15 +130,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         Person newWhitelistedPerson = new Person(p);
         newWhitelistedPerson.setIsWhitelisted(true);
         try {
-            persons.remove(p);
+            updatePerson(p, newWhitelistedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
         } catch (PersonNotFoundException e) {
-            assert false : "This is not possible as prior checks have been done";
-        }
-        try {
-            persons.add(index, newWhitelistedPerson);
-        } catch (DuplicatePersonException dpe) {
-            assert false : "This is not possible as it not possible to"
-                    + " have duplicates in persons before persons.remove(key) statement was executed.";
+            throw new AssertionError("This is not possible as prior checks have been done");
         }
         return persons.getReadOnlyPerson(index);
     }
@@ -451,12 +403,12 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<ReadOnlyPerson> getBlacklistedPersonList() {
-        return getBlacklistedPersons().asObservableList();
+        return persons.asObservableBlacklist();
     }
 
     @Override
     public ObservableList<ReadOnlyPerson> getWhitelistedPersonList() {
-        return getWhitelistedPersons().asObservableList();
+        return persons.asObservableWhitelist();
     }
 
     @Override
