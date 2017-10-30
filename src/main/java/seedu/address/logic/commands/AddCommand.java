@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -12,6 +13,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -33,6 +35,7 @@ public class AddCommand extends UndoableCommand {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_DOB + "DATE OF BIRTH] "
+            + "[" + PREFIX_GENDER + "GENDER] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -40,6 +43,7 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_DOB + "20 01 1997 "
+            + PREFIX_GENDER + "Male "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
@@ -83,12 +87,14 @@ public class AddCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private DateOfBirth dateofbirth;
+        private Gender gender;
 
         public AddPersonOptionalFieldDescriptor() {
             this.phone = new Phone();
             this.email = new Email();
             this.address = new Address();
             this.dateofbirth = new DateOfBirth();
+            this.gender = new Gender();
         }
 
         public void setPhone(Phone phone) {
@@ -123,6 +129,14 @@ public class AddCommand extends UndoableCommand {
             return dateofbirth;
         }
 
+        public void setGender(Gender gender) {
+            this.gender = gender;
+        }
+
+        public Gender getGender() {
+            return gender;
+        }
+
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -142,7 +156,8 @@ public class AddCommand extends UndoableCommand {
             return getPhone().equals(a.getPhone())
                     && getEmail().equals(a.getEmail())
                     && getAddress().equals(a.getAddress())
-                    && getDateOfBirth().equals(a.getDateOfBirth());
+                    && getDateOfBirth().equals(a.getDateOfBirth())
+                    && getGender().equals(a.getGender());
         }
     }
 }

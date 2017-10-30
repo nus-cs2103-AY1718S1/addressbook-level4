@@ -26,6 +26,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<DateOfBirth> dobProperty();
     DateOfBirth getDateOfBirth();
+    ObjectProperty<Gender> genderProperty();
+    Gender getGender();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     String getReason();
@@ -45,7 +47,8 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
-                && other.getDateOfBirth().equals(this.getDateOfBirth()));
+                && other.getDateOfBirth().equals(this.getDateOfBirth())
+                && other.getGender().equals(this.getGender()));
     }
 
     /**
@@ -62,6 +65,8 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" DateOfBirth: ")
                 .append(getDateOfBirth())
+                .append(" Gender: ")
+                .append(getGender())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

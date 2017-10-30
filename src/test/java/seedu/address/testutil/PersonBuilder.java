@@ -6,6 +6,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Gender;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -23,6 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_DOB = "27 01 1997";
+    public static final String DEFAULT_GENDER = "FEMALE";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -34,9 +36,10 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             DateOfBirth defaultDateOfBirth = new DateOfBirth(DEFAULT_DOB);
+            Gender defaultGender = new Gender(DEFAULT_GENDER);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(
-                    defaultName, defaultPhone, defaultEmail, defaultAddress, defaultDateOfBirth, defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultDateOfBirth, defaultGender, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -110,6 +113,26 @@ public class PersonBuilder {
      */
     public PersonBuilder withEmptyDateOfBirth() {
         this.person.setDateOfBirth(new DateOfBirth());
+        return this;
+    }
+
+    /**
+     * Sets the {@code Gender} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withGender(String gender) {
+        try {
+            this.person.setGender(new Gender(gender));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Gender is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Gender} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withEmptyGender() {
+        this.person.setGender(new Gender());
         return this;
     }
 

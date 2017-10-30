@@ -6,6 +6,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <dob isPrivate="false">31 06 1995</dob>
+        <gender isPrivate="false">MALE</gender>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -13,6 +14,7 @@
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
         <dob isPrivate="false">30 06 1995</dob>
+        <gender isPrivate="false">FEMALE</gender>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -20,6 +22,7 @@
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
         <dob isPrivate="false">28 06 1995</dob>
+        <gender isPrivate="false">MALE</gender>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -27,6 +30,7 @@
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
         <dob isPrivate="false">29 06 1995</dob>
+        <gender isPrivate="false">FEMALE</gender>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -34,6 +38,7 @@
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
         <dob isPrivate="false">27 06 1995</dob>
+        <gender isPrivate="false">MALE</gender>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -41,6 +46,7 @@
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
         <dob isPrivate="false">31 04 1995</dob>
+        <gender isPrivate="false">FEMALE</gender>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -48,6 +54,7 @@
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
         <dob isPrivate="false">31 02 1995</dob>
+        <gender isPrivate="false">FEMALE</gender>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -55,6 +62,7 @@
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
         <dob isPrivate="false">31 01 1995</dob>
+        <gender isPrivate="false">MALE</gender>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -62,5 +70,6 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
         <dob isPrivate="false">31 09 1995</dob>
+        <gender isPrivate="false">MALE</gender>
     </persons>
 </addressbook>

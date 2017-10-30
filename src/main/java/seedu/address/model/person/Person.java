@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -37,6 +38,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<DateOfBirth> dob;
+    private ObjectProperty<Gender> gender;
 
     private String reason;
 
@@ -47,14 +49,15 @@ public class Person implements ReadOnlyPerson {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, DateOfBirth dob, Set<Tag> tags,
+    public Person(Name name, Phone phone, Email email, Address address, DateOfBirth dob, Gender gender, Set<Tag> tags,
                   List<UUID> lifeInsuranceIds) {
-        requireAllNonNull(name, phone, email, address, dob, tags);
+        requireAllNonNull(name, phone, email, address, dob, gender, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.dob = new SimpleObjectProperty<>(dob);
+        this.gender = new SimpleObjectProperty<>(gender);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.lifeInsuranceIds = new SimpleObjectProperty<>(lifeInsuranceIds);
@@ -64,13 +67,14 @@ public class Person implements ReadOnlyPerson {
     /**
      * Only the name field is required
      */
-    public Person(Name name, Phone phone, Email email, Address address, DateOfBirth dob, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, DateOfBirth dob, Gender gender, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, dob, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.dob = new SimpleObjectProperty<>(dob);
+        this.gender = new SimpleObjectProperty<>(gender);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
         this.lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
@@ -82,7 +86,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getDateOfBirth(), source.getTags());
+                source.getDateOfBirth(), source.getGender(), source.getTags());
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
@@ -93,7 +97,7 @@ public class Person implements ReadOnlyPerson {
 
     public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getDateOfBirth(), source.getTags());
+                source.getDateOfBirth(), source.getGender(), source.getTags());
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
@@ -170,6 +174,20 @@ public class Person implements ReadOnlyPerson {
         return dob.get();
     }
 
+    public void setGender(Gender gender) {
+        this.gender.set(requireNonNull(gender));
+    }
+
+    @Override
+    public ObjectProperty<Gender> genderProperty() {
+        return gender;
+    }
+
+    @Override
+    public Gender getGender() {
+        return gender.get();
+    }
+
     @Override
     public String getReason() {
         Address a = this.getAddress();
@@ -238,6 +256,8 @@ public class Person implements ReadOnlyPerson {
             return getPhone().toString();
         } else if (prefix.equals(PREFIX_DOB)) {
             return getDateOfBirth().toString();
+        } else if (prefix.equals(PREFIX_GENDER)) {
+            return getGender().toString();
         } else if (prefix.equals(PREFIX_TAG) || prefix.equals(PREFIX_DELTAG)) {
             Set<Tag> tags = getTags();
             String detail = "";
@@ -259,7 +279,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, dob, tags);
+        return Objects.hash(name, phone, email, address, dob, gender, tags);
     }
 
     @Override

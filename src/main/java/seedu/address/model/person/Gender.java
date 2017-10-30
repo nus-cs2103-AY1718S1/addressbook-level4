@@ -52,20 +52,14 @@ public class Gender {
         }
         switch (gen.toLowerCase()) {
         case ("female"):
-            this.value = GenderType.FEMALE;
-            break;
         case ("f"):
             this.value = GenderType.FEMALE;
             break;
         case ("male"):
-            this.value = GenderType.MALE;
-            break;
         case ("m"):
             this.value = GenderType.MALE;
             break;
         case ("other"):
-            this.value = GenderType.OTHER;
-            break;
         case("o"):
             this.value = GenderType.OTHER;
             break;

@@ -17,6 +17,7 @@
                             <Label fx:id="phone" styleClass="particular-field"  text="\$phone" />
                             <Label fx:id="address" styleClass="particular-field" text="\$address" />
                             <Label fx:id="dob" styleClass="particular-field" text="\$dob" />
+                            <Label fx:id="gender" styleClass="particular-field" text="\$gender" />
                             <Label fx:id="email" styleClass="particular-field" text="\$email" />
                         </VBox>
                     </children>

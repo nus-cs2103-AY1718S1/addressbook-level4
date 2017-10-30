@@ -39,6 +39,8 @@ public class ProfilePanel extends UiPart<Region> {
     @FXML
     private Label dob;
     @FXML
+    private Label gender;
+    @FXML
     private Label email;
 
     public ProfilePanel() {
@@ -68,6 +70,7 @@ public class ProfilePanel extends UiPart<Region> {
         phone.setText("");
         address.setText("");
         dob.setText("");
+        gender.setText("");
         email.setText("");
     }
 
@@ -80,6 +83,7 @@ public class ProfilePanel extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         dob.textProperty().bind(Bindings.convert(person.dobProperty()));
+        gender.textProperty().bind(Bindings.convert(person.genderProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
     }
 
