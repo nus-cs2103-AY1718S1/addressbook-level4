@@ -85,6 +85,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author OscarWang114
     /**
      * Sets the {@code Address} of the {@code Person} that we are building.
      */
@@ -92,6 +93,7 @@ public class PersonBuilder {
         this.person.setAddress(new Address());
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Address} of the {@code Person} that we are building.
@@ -125,6 +127,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author OscarWang114
     /**
      * Sets an empty {@code Phone} for the {@code Person} that we are building.
      */
@@ -132,6 +135,7 @@ public class PersonBuilder {
         this.person.setPhone(new Phone());
         return this;
     }
+    //@@author
 
     /**
      * Sets the {@code Email} of the {@code Person} that we are building.
@@ -145,6 +149,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author OscarWang114
     /**
      * Sets an empty {@code Email} for the {@code Person} that we are building.
      */
@@ -152,6 +157,7 @@ public class PersonBuilder {
         this.person.setEmail(new Email());
         return this;
     }
+    //@@author
 
     public Person build() {
         return this.person;

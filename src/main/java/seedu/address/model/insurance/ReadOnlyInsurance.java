@@ -6,8 +6,8 @@ import java.util.UUID;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
-import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author OscarWang114
 /**
  * Represents an insurance.
  */
@@ -15,13 +15,13 @@ public interface ReadOnlyInsurance {
 
     ObjectProperty<UUID> idProperty();
     String getId();
-    EnumMap getRoleToPersonMap();
-    ObjectProperty<ReadOnlyPerson> ownerProperty();
-    ReadOnlyPerson getOwner();
-    ObjectProperty<ReadOnlyPerson> insuredProperty();
-    ReadOnlyPerson getInsured();
-    ObjectProperty<ReadOnlyPerson> beneficiaryProperty();
-    ReadOnlyPerson getBeneficiary();
+    EnumMap getRoleToPersonNameMap();
+    ObjectProperty<InsurancePerson> ownerProperty();
+    InsurancePerson getOwner();
+    ObjectProperty<InsurancePerson> insuredProperty();
+    InsurancePerson getInsured();
+    ObjectProperty<InsurancePerson> beneficiaryProperty();
+    InsurancePerson getBeneficiary();
     DoubleProperty premiumProperty();
     Double getPremium();
     StringProperty premiumStringProperty();

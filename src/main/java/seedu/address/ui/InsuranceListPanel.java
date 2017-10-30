@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.ObservableList;
@@ -9,17 +7,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author OscarWang114
 /**
- * The Profile Panel of the App.
+ * The Insurance Panel of the App.
  */
 public class InsuranceListPanel extends UiPart<Region> {
 
     private static final String FXML = "InsuranceListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
     private ListView<InsuranceProfile> insuranceListView;
@@ -32,7 +29,6 @@ public class InsuranceListPanel extends UiPart<Region> {
 
     public InsuranceListPanel(ReadOnlyPerson person) {
         super(FXML);
-        //if(person.getLifeInsurances)
         setConnections(person.getLifeInsurances().asObservableList());
         registerAsAnEventHandler(this);
     }
@@ -55,10 +51,9 @@ public class InsuranceListPanel extends UiPart<Region> {
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code InsuranceProfile}.
      */
     class InsuranceListViewCell extends ListCell<InsuranceProfile> {
-
         @Override
         protected void updateItem(InsuranceProfile insurance, boolean empty) {
             super.updateItem(insurance, empty);

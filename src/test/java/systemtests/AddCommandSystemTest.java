@@ -158,8 +158,8 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person, missing tags -> added */
         assertCommandSuccess(HOON);
 
+        //@@author OscarWang114
         /* Case: missing phone -> added */
-
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + DOB_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_PHONE);
@@ -173,16 +173,20 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + DOB_DESC_AMY + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_ADDRESS);
+        //@@author
 
         /* Case: missing dob -> added */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY  + TAG_DESC_FRIEND;
         assertCommandSuccess(command, AMY_NO_DOB);
 
+        //@@author OscarWang114
         /* Case: missing name -> rejected */
         command = AddCommand.COMMAND_WORD + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + DOB_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        //@@author
+
         /* Case: invalid keyword -> rejected */
         command = "adds " + PersonUtil.getPersonDetails(toAdd);
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);

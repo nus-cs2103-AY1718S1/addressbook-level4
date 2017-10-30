@@ -41,8 +41,10 @@ public class Person implements ReadOnlyPerson {
     private String reason;
 
     private ObjectProperty<UniqueTagList> tags;
+    //@@author OscarWang114
     private ObjectProperty<List<UUID>> lifeInsuranceIds;
     private ObjectProperty<UniqueLifeInsuranceList> lifeInsurances;
+    //@@author
 
     /**
      * Every field must be present and not null.
@@ -57,8 +59,10 @@ public class Person implements ReadOnlyPerson {
         this.dob = new SimpleObjectProperty<>(dob);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        //@@author OscarWang114
         this.lifeInsuranceIds = new SimpleObjectProperty<>(lifeInsuranceIds);
         this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
+        //@@author
     }
 
     /**
@@ -73,8 +77,10 @@ public class Person implements ReadOnlyPerson {
         this.dob = new SimpleObjectProperty<>(dob);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        //@@author OscarWang114
         this.lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
         this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
+        //@@author
     }
 
     /**
@@ -83,21 +89,25 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
+        //@@author OscarWang114
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
         if (source.getLifeInsurances() != null) {
             this.lifeInsurances = new SimpleObjectProperty<>(source.getLifeInsurances());
         }
+        //@@author
     }
 
     public Person(ReadOnlyPerson source, LifeInsurance lifeInsurance) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
                 source.getDateOfBirth(), source.getTags());
+        //@@author OscarWang114
         if (source.getLifeInsuranceIds() != null) {
             this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
         }
         addLifeInsurances(lifeInsurance);
+        //@@author
     }
 
     public void setName(Name name) {
@@ -178,6 +188,7 @@ public class Person implements ReadOnlyPerson {
         return reason;
     }
 
+    //@@author OscarWang114
     @Override
     public ObjectProperty<List<UUID> > lifeInsuranceIdProperty() {
         return this.lifeInsuranceIds;
@@ -205,6 +216,7 @@ public class Person implements ReadOnlyPerson {
     public UniqueLifeInsuranceList getLifeInsurances() {
         return this.lifeInsurances.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
