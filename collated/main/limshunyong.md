@@ -1,137 +1,4 @@
 # limshunyong
-###### /java/seedu/address/logic/commands/ExportCommand.java
-``` java
-/**
- * export contacts to external source (in .vcf format)
- */
-public class ExportCommand extends Command {
-
-    public static final String COMMAND_WORD = "export";
-    public static final String COMMAND_ALIAS = "ex";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Export contact details to external source (in .vcf format).\n"
-            + "Parameters: FILENAME \n"
-            + "Example: " + COMMAND_WORD;
-
-    public static final String MESSAGE_SUCCESS = "Contacts successfully exported as output.vcf !!";
-
-
-
-    @Override
-    public CommandResult execute() {
-
-        try {
-            writeToFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    /**
-     * This method handles the writing of contacts to a file
-     */
-    private void writeToFile() throws IOException {
-
-        final String filename = "output.vcf";
-
-        FileWriter fw = new FileWriter(filename);
-        BufferedWriter bw = new BufferedWriter(fw);
-
-        for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
-
-            String header = "BEGIN:VCARD\n";
-            String version = "VERSION:3.0\n";
-            String fullName = "FN:" + p.getName().toString() + "\n";
-            String name = "N:;" + p.getName().toString() + ";;;\n";
-            String email = "EMAIL;TYPE=INTERNET;TYPE=HOME:" + p.getEmail().toString() + "\n";
-            String tel = "TEL;TYPE=CELL:" + p.getPhone().toString() + "\n";
-            String address = "ADR:;;" + p.getAddress().toString() + ";;;;\n";
-            String footer = "END:VCARD\n";
-
-            bw.write(header);
-            bw.write(version);
-            bw.write(fullName);
-            bw.write(name);
-            bw.write(email);
-            bw.write(tel);
-            bw.write(address);
-            bw.write(footer);
-        }
-
-        if (bw != null) {
-            bw.close();
-        }
-
-        if (fw != null) {
-            fw.close();
-        }
-
-    }
-}
-```
-###### /java/seedu/address/logic/commands/ImportCommand.java
-``` java
-/**
- * import contacts from external source (in .vcf format)
- */
-public class ImportCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "import";
-    public static final String COMMAND_ALIAS = "im";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Import contact details from external source (must be in .vcf format).\n"
-            + "Parameters: FILENAME \n"
-            + "Example: " + COMMAND_WORD + " contacts.vcf";
-
-    public static final String MESSAGE_SUCCESS = "Contacts successfully imported";
-    public static final String MESSAGE_FAILURE = "Error importing contacts. File not found or Filename incorrect.";
-
-    private ArrayList<ReadOnlyPerson> p;
-
-    public ImportCommand(ArrayList<ReadOnlyPerson> list) {
-        this.p = list;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        if (p.isEmpty()) {
-            return new CommandResult(MESSAGE_FAILURE);
-        } else {
-            try {
-                for (ReadOnlyPerson pp : p) {
-                    model.addPerson(pp);
-                }
-            } catch (DuplicatePersonException de) {
-                throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
-            }
-            LoggingCommand loggingCommand = new LoggingCommand();
-            loggingCommand.keepLog("", "Import Action");
-            return new CommandResult(MESSAGE_SUCCESS);
-        }
-    }
-}
-```
-###### /java/seedu/address/logic/commands/SortCommand.java
-``` java
-/**
- * Sorts the contacts in the address book based on name.
- */
-public class SortCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "sort";
-    public static final String COMMAND_ALIAS = "ss";
-    public static final String MESSAGE_SUCCESS = "Address book successfully sorted!";
-
-    @Override
-    public CommandResult executeUndoableCommand() {
-        model.sortContact();
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-}
-```
 ###### /java/seedu/address/logic/parser/ImportCommandParser.java
 ``` java
 /**
@@ -213,26 +80,138 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### /java/seedu/address/logic/commands/ExportCommand.java
 ``` java
-    /**
-     *  Sorts the address book
-     */
-    public void sort() {
-        persons.sort();
+/**
+ * export contacts to external source (in .vcf format)
+ */
+public class ExportCommand extends Command {
+
+    public static final String COMMAND_WORD = "export";
+    public static final String COMMAND_ALIAS = "ex";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Export contact details to external source (in .vcf format).\n"
+            + "Parameters: FILENAME \n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "Contacts successfully exported as output.vcf !!";
+
+
+
+    @Override
+    public CommandResult execute() {
+
+        try {
+            writeToFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
-```
-###### /java/seedu/address/model/person/UniquePersonList.java
-``` java
     /**
-     * Sorts the list
+     * This method handles the writing of contacts to a file
      */
-    public void sort() {
-        internalList.sort((person1, person2) ->(
-                person1.getName().fullName
-                        .compareToIgnoreCase(person2.getName().fullName)));
+    private void writeToFile() throws IOException {
+
+        final String filename = "output.vcf";
+
+        FileWriter fw = new FileWriter(filename);
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
+
+            String header = "BEGIN:VCARD\n";
+            String version = "VERSION:3.0\n";
+            String fullName = "FN:" + p.getName().toString() + "\n";
+            String name = "N:;" + p.getName().toString() + ";;;\n";
+            String email = "EMAIL;TYPE=INTERNET;TYPE=HOME:" + p.getEmail().toString() + "\n";
+            String tel = "TEL;TYPE=CELL:" + p.getPhone().toString() + "\n";
+            String address = "ADR:;;" + p.getAddress().toString() + ";;;;\n";
+            String footer = "END:VCARD\n";
+
+            bw.write(header);
+            bw.write(version);
+            bw.write(fullName);
+            bw.write(name);
+            bw.write(email);
+            bw.write(tel);
+            bw.write(address);
+            bw.write(footer);
+        }
+
+        if (bw != null) {
+            bw.close();
+        }
+
+        if (fw != null) {
+            fw.close();
+        }
+
     }
+}
+```
+###### /java/seedu/address/logic/commands/SortCommand.java
+``` java
+/**
+ * Sorts the contacts in the address book based on name.
+ */
+public class SortCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "sort";
+    public static final String COMMAND_ALIAS = "ss";
+    public static final String MESSAGE_SUCCESS = "Address book successfully sorted!";
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        model.sortContact();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/ImportCommand.java
+``` java
+/**
+ * import contacts from external source (in .vcf format)
+ */
+public class ImportCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "import";
+    public static final String COMMAND_ALIAS = "im";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Import contact details from external source (must be in .vcf format).\n"
+            + "Parameters: FILENAME \n"
+            + "Example: " + COMMAND_WORD + " contacts.vcf";
+
+    public static final String MESSAGE_SUCCESS = "Contacts successfully imported";
+    public static final String MESSAGE_FAILURE = "Error importing contacts. File not found or Filename incorrect.";
+
+    private ArrayList<ReadOnlyPerson> p;
+
+    public ImportCommand(ArrayList<ReadOnlyPerson> list) {
+        this.p = list;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        if (p.isEmpty()) {
+            return new CommandResult(MESSAGE_FAILURE);
+        } else {
+            try {
+                for (ReadOnlyPerson pp : p) {
+                    model.addPerson(pp);
+                }
+            } catch (DuplicatePersonException de) {
+                throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
+            }
+            LoggingCommand loggingCommand = new LoggingCommand();
+            loggingCommand.keepLog("", "Import Action");
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+    }
+}
 ```
 ###### /java/seedu/address/storage/AddressBookStorage.java
 ``` java
@@ -257,4 +236,25 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 
 }
+```
+###### /java/seedu/address/model/person/UniquePersonList.java
+``` java
+    /**
+     * Sorts the list
+     */
+    public void sort() {
+        internalList.sort((person1, person2) ->(
+                person1.getName().fullName
+                        .compareToIgnoreCase(person2.getName().fullName)));
+    }
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     *  Sorts the address book
+     */
+    public void sort() {
+        persons.sort();
+    }
+
 ```

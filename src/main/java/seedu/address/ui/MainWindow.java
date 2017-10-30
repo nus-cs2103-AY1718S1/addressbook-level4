@@ -54,6 +54,7 @@ public class MainWindow extends UiPart<Region> {
     private EmailTextField emailTextField;
     private AddressTextField addressTextField;
     private TagTextField tagTextField;
+    private ClearLogButton clearLogButton;
     @FXML
     private StackPane browserPlaceholder;
 
@@ -102,6 +103,8 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane editTagTextfieldPlaceholder;
+    @FXML
+    private StackPane clearLogButtonPlaceholder;
     //@@author
     @FXML
     private VBox vBox;
@@ -170,6 +173,8 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        clearLogButton = new ClearLogButton();
+        clearLogButtonPlaceholder.getChildren().add(clearLogButton.getRoot());
 
         nameTextField = new NameTextField();
         editNameTextfieldPlaceholder.getChildren().add(nameTextField.getRoot());

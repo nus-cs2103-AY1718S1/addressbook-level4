@@ -6,6 +6,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -36,31 +37,40 @@
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
-
-  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-    <padding>
-      <Insets bottom="5" left="10" right="10" top="5" />
-    </padding>
-  </StackPane>
+   <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+      <items>
+      
+              <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" prefWidth="709.0" styleClass="pane-with-border">
+          <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+          </padding>
+        </StackPane>
+         <StackPane fx:id="clearLogButtonPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="178.0" />
+      </items>
+   </SplitPane>
     <!-- @@author blaqkrow-->
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4352226720647773, 0.569838056680162" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4352226720647773, 0.569838056680162">
     <VBox fx:id="personList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="323.0">
+         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <children>
-               <StackPane fx:id="deleteButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="168.0" />
-               <StackPane fx:id="emailButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="167.0" />
+               <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="368.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="20.0">
+                  <children>
+                     <StackPane fx:id="deleteButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="168.0" />
+                     <StackPane fx:id="emailButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="167.0" />
+                  </children>
+               </HBox>
             </children>
-         </HBox>
+         </AnchorPane>
     </VBox>
       <VBox prefHeight="667.0" prefWidth="113.0">
          <children>
             <StackPane fx:id="editNamePlaceholder" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Name:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -73,7 +83,7 @@
             <StackPane fx:id="editNameTextfieldPlaceholder" alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editPhonePlaceholder" layoutX="10.0" layoutY="10.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Phone:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -83,7 +93,7 @@
             <StackPane fx:id="editPhoneTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editEmailPlaceholder" layoutX="10.0" layoutY="139.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Email:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -93,7 +103,7 @@
             <StackPane fx:id="editEmailTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="174.0" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editAddressPlaceholder" layoutX="10.0" layoutY="268.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Address:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -103,7 +113,7 @@
             <StackPane fx:id="editAddressTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="303.0" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editTagPlaceholder" layoutX="10.0" layoutY="397.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" fill="darkgrey" text="Tags:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -117,8 +127,10 @@
             <StackPane fx:id="editButtonPlaceholder" prefHeight="32.0" prefWidth="64.0">
                <padding>
                   <Insets top="15.0" />
-               </padding></StackPane>
-         </children></VBox>
+               </padding>
+            </StackPane>
+         </children>
+      </VBox>
       <!-- @@author-->
     <StackPane fx:id="browserPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="593.0">
       <padding>

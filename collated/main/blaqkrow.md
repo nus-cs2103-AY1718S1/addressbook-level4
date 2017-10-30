@@ -1,24 +1,28 @@
 # blaqkrow
 ###### /resources/view/MainWindow.fxml
 ``` fxml
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4352226720647773, 0.569838056680162" VBox.vgrow="ALWAYS">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4352226720647773, 0.569838056680162">
     <VBox fx:id="personList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
       <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="323.0">
+         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <children>
-               <StackPane fx:id="deleteButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="168.0" />
-               <StackPane fx:id="emailButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="167.0" />
+               <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="368.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="20.0">
+                  <children>
+                     <StackPane fx:id="deleteButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="168.0" />
+                     <StackPane fx:id="emailButtonPlaceholder" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="167.0" />
+                  </children>
+               </HBox>
             </children>
-         </HBox>
+         </AnchorPane>
     </VBox>
       <VBox prefHeight="667.0" prefWidth="113.0">
          <children>
             <StackPane fx:id="editNamePlaceholder" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -31,7 +35,7 @@
             <StackPane fx:id="editNameTextfieldPlaceholder" alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editPhonePlaceholder" layoutX="10.0" layoutY="10.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -41,7 +45,7 @@
             <StackPane fx:id="editPhoneTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editEmailPlaceholder" layoutX="10.0" layoutY="139.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -51,7 +55,7 @@
             <StackPane fx:id="editEmailTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="174.0" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editAddressPlaceholder" layoutX="10.0" layoutY="268.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -61,7 +65,7 @@
             <StackPane fx:id="editAddressTextfieldPlaceholder" alignment="CENTER_LEFT" layoutX="10.0" layoutY="303.0" prefHeight="55.0" prefWidth="64.0" />
             <StackPane fx:id="editTagPlaceholder" layoutX="10.0" layoutY="397.0" prefHeight="10.0" prefWidth="64.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
+                  <Text fill="darkgrey" strokeType="OUTSIDE" strokeWidth="0.0" text="Tags:" wrappingWidth="56.21875" StackPane.alignment="TOP_LEFT">
                      <font>
                         <Font name="Helvetica" size="14.0" />
                      </font>
@@ -75,8 +79,10 @@
             <StackPane fx:id="editButtonPlaceholder" prefHeight="32.0" prefWidth="64.0">
                <padding>
                   <Insets top="15.0" />
-               </padding></StackPane>
-         </children></VBox>
+               </padding>
+            </StackPane>
+         </children>
+      </VBox>
 ```
 ###### /resources/view/EmailButton.fxml
 ``` fxml
@@ -133,6 +139,43 @@
 
 
 <TextField fx:id="addressTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
+```
+###### /java/seedu/address/ui/ClearLogButton.java
+``` java
+/**
+ * The UI component that is responsible for deleting selected contacts in the PersonListPanel.
+ */
+public class ClearLogButton extends UiPart<Region> {
+
+    public static final String ERROR_STYLE_CLASS = "error";
+    private static final String FXML = "ClearLogButton.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+    private LoggingCommand loggingCommand;
+
+    @FXML
+    private Button deleteButton;
+
+    public ClearLogButton() {
+        super(FXML);
+        loggingCommand = new LoggingCommand();
+    }
+
+    /**
+     * Handles the Enter button pressed event.
+     */
+    @FXML
+    private void handleClearLogButtonPressed() throws CommandException, ParseException, IOException {
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want clear the log?",
+                ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        alert.showAndWait();
+        
+        if (alert.getResult() == ButtonType.YES) {
+            loggingCommand.clearLog();
+            logger.info("Log has been cleared.");
+        }
+    }
+}
 ```
 ###### /java/seedu/address/ui/OpenEmailClient.java
 ``` java
@@ -222,7 +265,7 @@ public class EditButton extends UiPart<Region> {
                 + " a/" + addressTextFieldTextField.getAddressTextField());
         String tagTextArea = tagTextField.getTagTextArea();
         String[] tagSplit = tagTextArea.split(",");
-        for ( String s : tagSplit) {
+        for (String s : tagSplit) {
             command.append(" t/" + s.trim());
         }
         CommandResult commandResult = logic.execute(command.toString());
@@ -510,6 +553,7 @@ public class EmailTextField extends UiPart<Region> {
     private EmailTextField emailTextField;
     private AddressTextField addressTextField;
     private TagTextField tagTextField;
+    private ClearLogButton clearLogButton;
     @FXML
     private StackPane browserPlaceholder;
 
@@ -558,6 +602,8 @@ public class EmailTextField extends UiPart<Region> {
 
     @FXML
     private StackPane editTagTextfieldPlaceholder;
+    @FXML
+    private StackPane clearLogButtonPlaceholder;
 ```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
@@ -565,6 +611,8 @@ public class EmailTextField extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        clearLogButton = new ClearLogButton();
+        clearLogButtonPlaceholder.getChildren().add(clearLogButton.getRoot());
 
         nameTextField = new NameTextField();
         editNameTextfieldPlaceholder.getChildren().add(nameTextField.getRoot());
@@ -672,6 +720,22 @@ public class EmailButton extends UiPart<Region> {
 
 
 
+}
+```
+###### /java/seedu/address/commons/events/ui/PhotoChangeEvent.java
+``` java
+/**
+ * Indicates that a photo change is occurring.
+ */
+public class PhotoChangeEvent extends BaseEvent {
+
+    public PhotoChangeEvent() {
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
 ```
 ###### /java/seedu/address/commons/events/ui/PersonPanelSelectionChangedEvent.java
