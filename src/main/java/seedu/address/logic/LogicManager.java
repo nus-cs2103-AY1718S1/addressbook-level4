@@ -31,7 +31,6 @@ public class LogicManager extends ComponentManager implements Logic {
     private final UndoRedoStack undoRedoStack;
 
     private final GraphWrapper graphWrapper;
-    private final Viewer graphViewer;
 
     private final Storage storage;
 
@@ -44,11 +43,6 @@ public class LogicManager extends ComponentManager implements Logic {
         this.undoRedoStack = new UndoRedoStack();
         this.graphWrapper = new GraphWrapper();
         graphWrapper.buildGraph(model);
-        if (System.getProperty("testfx.headless") == null) {
-            graphViewer = graphWrapper.display();
-        } else {
-            graphViewer = null;
-        }
     }
 
     @Override
@@ -65,6 +59,9 @@ public class LogicManager extends ComponentManager implements Logic {
             history.add(commandText);
         }
     }
+
+    @Override
+    public GraphWrapper getGraphWrapper() { return this.graphWrapper; }
 
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

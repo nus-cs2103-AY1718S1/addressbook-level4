@@ -8,6 +8,7 @@ import java.util.Set;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.graph.implementations.SingleNode;
+import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
 
 import javafx.collections.ObservableList;
@@ -28,6 +29,8 @@ public class GraphWrapper {
     private static final String graphId = "ImARandomGraphID";
 
     private SingleGraph graph;
+    private Viewer viewer;
+    private View view;
     private Model model;
     private ObservableList<ReadOnlyPerson> filteredPersons;
 
@@ -35,7 +38,12 @@ public class GraphWrapper {
     private final String nodeAttributePerson = "Person";
 
     public GraphWrapper() {
+
         this.graph = new SingleGraph(graphId);
+        this.viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer.enableAutoLayout();
+        viewer.setCloseFramePolicy(Viewer.CloseFramePolicy.EXIT);
+        this.view = viewer.addDefaultView(false);
     }
 
     private void setData(Model model) {
@@ -202,7 +210,10 @@ public class GraphWrapper {
         return graph;
     }
 
-    public Viewer display() {
-        return this.graph.display();
+    /**
+     * Returns the view attached to the viewer for the graph.
+     */
+    public View getView() {
+        return this.view;
     }
 }
