@@ -30,19 +30,20 @@ public class RemoveRemarkCommandParser implements Parser<RemoveRemarkCommand> {
        Index index;
        Scanner scan;
        String checkedString;
+       String tempString;
        int tempIndex = 0;
         try {
             List<Integer> integerList = new ArrayList<Integer>();
             scan = new Scanner(args);
             index = Index.fromOneBased(scan.nextInt());
-            checkedString = scan.nextLine();
-            Scanner scanChecked = new Scanner(checkedString);
-            while(scanChecked.hasNext()) {
-                if (!checkedString.matches(".*\\d+.*")) {
+            while(scan.hasNext()) {
+                tempString = scan.next();
+                //Makes sure index accepted are integers
+                if (!tempString.matches(".*\\d+.*")) {
                     throw new ParseException(String.format(MESSAGE_INVALID_REMARK_INDEX_FORMAT,
                             RemoveRemarkCommand.MESSAGE_USAGE));
                 }
-                tempIndex = scanChecked.nextInt();
+                tempIndex = Integer.parseInt(tempString);
                 if(!integerList.contains(tempIndex)) { //makes sure there are no duplicate index in the list
                     integerList.add(tempIndex);
                 }
