@@ -10,6 +10,8 @@
     -fx-opacity: 0.9;
 }
 
+
+
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -128,6 +130,13 @@
 .cell_small_label {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
+    -fx-text-fill: #010504;
+}
+
+.cell_text_label {
+    -fx-padding: 0 0 0 15;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 10px;
     -fx-text-fill: #010504;
 }
 
@@ -330,6 +339,12 @@
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
+/*@@author vivekscl */
+#personListView {
+    -fx-background-color: #383838;
+}
+
+/*@@author */
 #resultDisplay .content {
     -fx-background-color: transparent, #383838, transparent, #383838;
     -fx-background-radius: 0;

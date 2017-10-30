@@ -22,7 +22,7 @@
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
         <favourite isPrivate="false">True</favourite>
-        <birthday isPrivate="false">-</birthday>
+        <birthday isPrivate="false"></birthday>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -54,7 +54,7 @@
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
         <favourite isPrivate="false">True</favourite>
-        <birthday isPrivate="false">-</birthday>
+        <birthday isPrivate="false"></birthday>
     </persons>
     <persons>
         <name>Stefan Meier</name>

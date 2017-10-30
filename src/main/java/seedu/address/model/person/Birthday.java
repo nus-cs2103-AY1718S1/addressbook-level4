@@ -12,12 +12,14 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Birthdays should be in numeric, 6 numbers long "
             + "in the format DDMMYY.";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "[0-9-]{1,8}";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "[0-9]{4,8}";
+
+    public static final String DEFAULT_BIRTHDAY = "No Birthday Added";
 
     private final String birthdayNumber;
 
     public Birthday () {
-        this.birthdayNumber = "-"; //default value
+        this.birthdayNumber = DEFAULT_BIRTHDAY; //default value
     }
 
     /**
@@ -25,19 +27,18 @@ public class Birthday {
      *
      * @throws IllegalValueException if the given birthday string is invalid.
      */
-    public Birthday(String name) throws IllegalValueException {
-        requireNonNull(name);
-        String trimmedName = name.trim();
-        if (!isValidBirthdayNumber(trimmedName)) {
+    public Birthday(String birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        String trimmedBirthday = birthday.trim();
+        if (!isValidBirthdayNumber(trimmedBirthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
-        this.birthdayNumber = trimmedName;
+        this.birthdayNumber = trimmedBirthday;
     }
 
     /**
      * Returns the string value of the birthday
      */
-
     public String getBirthdayNumber() {
         return birthdayNumber;
     }
@@ -46,7 +47,11 @@ public class Birthday {
      * Returns true if a given string is a valid birthday number.
      */
     public static boolean isValidBirthdayNumber(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+
+        if (test.matches(BIRTHDAY_VALIDATION_REGEX) || test.equalsIgnoreCase(DEFAULT_BIRTHDAY)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -65,6 +70,6 @@ public class Birthday {
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + birthdayNumber + ']';
+        return birthdayNumber;
     }
 }

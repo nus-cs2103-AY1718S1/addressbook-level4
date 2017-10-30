@@ -152,9 +152,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_facebook() throws Exception {
-        FacebookCommand command = (FacebookCommand) parser.parseCommand(
-                FacebookCommand.COMMAND_WORDVAR_1);
-        assertEquals(new FacebookCommand(), command);
+        assertTrue(parser.parseCommand(FacebookCommand.COMMAND_WORDVAR_1) instanceof FacebookCommand);
     }
 
     @Test
@@ -167,6 +165,7 @@ public class AddressBookParserTest {
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_WORDVAR_1) instanceof RedoCommand);
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
+        assertTrue(parser.parseCommand("redomult 1") instanceof RedoCommand);
     }
 
     @Test
@@ -185,6 +184,7 @@ public class AddressBookParserTest {
         assertEquals(new AddBirthdayCommand(INDEX_FIRST_PERSON, toAdd), shortCommand);
     }
 
+    //@@author vivekscl
     @Test
     public void parseCommand_removeTag() throws Exception {
         ArrayList<Index> indexes = new ArrayList<Index>();
@@ -213,6 +213,7 @@ public class AddressBookParserTest {
         assertEquals(new AddTagCommand(indexes, toAdd), command);
     }
 
+    //@@author
     @Test
     public void parseCommand_showFavourite() throws Exception {
         assertTrue(parser.parseCommand(ShowFavouriteCommand.COMMAND_WORD_1) instanceof ShowFavouriteCommand);
@@ -223,6 +224,7 @@ public class AddressBookParserTest {
     public void parseCommand_undoCommandWord_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORDVAR_1) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
+        assertTrue(parser.parseCommand("undomult 3") instanceof UndoCommand);
     }
 
     @Test

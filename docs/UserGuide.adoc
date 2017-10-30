@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= UniCity - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,33 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B1`      Since: `AUG 2017`      Licence: `MIT`
+
+== Introduction
+
+UniCity is a desktop application that is mainly based on the usage of the Command Line Interface (CLI).
+It aims to provide a user-friendly contact management experience for students struggling to manage their
+ever increasing network.
+
+This user guide provides a reference for the user if he/she requires extra guidance and provides the following: +
+
+* Detailed explanation of the features in UniCity and how to execute them. +
+* Features that are to be implemented in the future to provide a road map of where UniCity is headed. +
+* Summary of the commands to serve as a cheat sheet in the future. +
+* Dedicated section for Frequently Asked Questions (FAQ). +
+
+[NOTE]
+Familiarity with the CLI may be necessary to maximise the utility of UniCity.
+
+== Overview of UniCity
+
+UniCity has the following features categorised according to the extent of their utility: +
+
+* Viewing contacts in different views using listing, filtering, finding and sorting contacts. +
+* Modifying contacts by adding, deleting and editing contacts.  +
+* Using web services such as FaceBook and Google. +
+* Managing of command sequence and history through undoing and redoing previous commands and viewing a list of
+ executed commands. +
 
 == Quick Start
 
@@ -49,10 +75,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
-
-=== Viewing help : `help`
-
-Format: `help`
 
 === Viewing Contacts
 
@@ -93,7 +115,10 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return
+ `Hans Gruber`, `Bo Yang`
+* When no persons are found, the command will return a decently accurate suggestion of
+  who you might have been referring to.
 ****
 
 Examples:
@@ -102,6 +127,8 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find Bets` +
+Returns `0 persons listed! Did you mean Betsy?`
 
 ==== Sorting a person : `sort`
 
@@ -123,7 +150,7 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Contacts Modification
+=== Modifying Contacts
 
 This section lists commands that modify UniCity's contact list.
 
@@ -181,7 +208,7 @@ Changes the `favourite` status of the 1st person in the latest list.
 ==== Adding a birthday to select person : `birthday`
 
 Adds the given birthday to the specified persons . +
-Format: `birthday INDEX b/BIRTHDAY...`
+Format: `birthday INDEX [b/BIRTHDAY]`
 
 ****
 * Adds the birthday to the person specified by the `INDEX`.
@@ -200,7 +227,7 @@ Adds the birthday "211095" to the 1st person in the address book.
 ==== Adding a tag to select persons : `addtag`
 
 Adds the given tag to the specified persons . +
-Format: `addtag [INDEX] [MORE_INDEXES] [t/TAG]...`
+Format: `addtag INDEX [MORE_INDEXES] [t/TAG]...`
 
 ****
 * Adds the tag to every person specified by the `INDEXES`.
@@ -221,7 +248,7 @@ Adds the tag "classmate" to the 2nd and 5th person in the results of the `find` 
 ==== Removing a tag from select persons : `removetag`
 
 Removes the given tag from identified person by the list of index numbers used in the last person . +
-Format: `removetag [INDEX] [MORE_INDEXES] [t/TAG]...`
+Format: `removetag INDEX [MORE_INDEXES] [t/TAG]...`
 
 ****
 * Removes the tag from every person specified by the `INDEXES`.
@@ -264,7 +291,7 @@ Deletes the 1st person in the results of the `find` command.
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Web Services
+=== Using Web Services
 
 This section lists commands that require the Internet to provide services. Ensure Internet connection is established before entering these commands.
 
@@ -301,7 +328,7 @@ Format: `facebook` or 'fb'
 
 image::facebook-command-ui.png[width="790"]
 
-=== Command Sequence and History
+=== Managing Command Sequence and History
 
 This section lists commands that toggle with the past and present commands entered in UniCity.
 
@@ -318,8 +345,9 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores the address book to the state before the previous _undoable_ command was executed. Multiple undos can be
+executed at once.  +
+Format: `undo` OR `undomult NUMBER_OF_COMMANDS_TO_UNDO`
 
 [NOTE]
 ====
@@ -341,11 +369,17 @@ The `undo` command fails as there are no undoable commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
+The `undo` command restores the previous state starting from the most recent command made.
+
+* `delete 1` +
+`clear` +
+`undomult 2` (reverses the `clear` command and `delete 1` command) +
+
 
 ==== Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+Reverses the most recent `undo` command. Multiple redos can be executed at once +
+Format: `redo` OR `redomult NUMBER_OF_COMMANDS_TO_REDO`
 
 Examples:
 
@@ -361,43 +395,72 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`redomult` (reapplies the `delete 1` command and `clear` command) +
 // end::undoredo[]
 
-=== Exiting the program : `exit`
+=== Miscellaneous
+
+==== Viewing help : `help`
+
+Shows this user guide. +
+Format: `help`
+
+==== Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+==== Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
 == Coming in v2.0
 
-=== Log in window for a user
+=== Login window for a user
 
-=== Automatic pop-up help window for new users
+=== UniCity as an online application
 
-=== Event reminders for a person
+=== Database to check for UniCity users
 
-=== Changing wallpaper of the background of UniCity
+=== Facebook command to search for contacts on Facebook
 
-=== Auto-completion through command history
+=== Automatic pop-up of help window for new users
+
+=== Event reminders for the user
+
+=== Choosing personalized wallpaper for the background of UniCity
+
+=== Auto-completion of commands through analysing commands history
 
 === Suggestions when typing a name in find command
 
 === Group contacts by their courses of study
 
-=== Memories
+=== Memories field to store memorable texts, images and videos
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 Alternatively, you may log in as a user into the online version of UniCity and it will fetch your contacts from your addressbook.
+
+*Q*: Will my contacts disappear after I exit from UniCity? +
+*A*: UniCity saves all your contacts in a local file so that you can always find them after running the application.
+
+*Q*: Can I add remarks and other information to my contacts in UniCity? +
+*A*: You can only add specified information to each contacts such as name, number, email, address, favourite, birthday and tags.
+
+*Q*: Can I find my friends using the Facebook command without logging in Facebook? +
+*A*: The pre-requisite of connecting with your friends on Facebook is logging into your own Facebook account to add them as friends.
+
+*Q*: Will it be save for me to enter so many private information of my contacts on UniCity?
+:A*: Each user has an unique set of encryption to use UniCity and as developers, we do not have access to your contacts.
+It is safe to enter anything in UniCity.
+
+*Q*: What do I do if I accidentally cleared my contacts? +
+*A*: Use the undo function implemented in UniCity to go back to the original copy.
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
@@ -415,9 +478,13 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *Sort* : 'sort'
+* *Sort* : `sort`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *RemoveTag* : `removetag` +
+* *Birthday* : `birthday INDEX [b/BIRTHDAY]` +
+e.g. `birthday 2 b/240596`
+* *AddTag* : `addtag INDEX [MORE_INDEXES] [t/TAG]` +
+e.g. `addtag 1 4 t/friends`
+* *RemoveTag* : `removetag INDEX [MORE_INDEXES] [t/TAG]` +
 e.g. `removetag 3 7 t/lecturer`

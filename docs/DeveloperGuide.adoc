@@ -1,5 +1,5 @@
-= AddressBook Level 4 - Developer Guide
-= AddressBook Level 4 - Developer Guide
+= UniCity - Developer Guide
+= UniCity - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,9 +11,26 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W13-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B1`      Since: `AUG 2017`      Licence: `MIT`
+
+== Introduction
+
+=== Purpose
+
+UniCity is a contact management desktop application implemented in Java. This developer guide aims to provide
+adequate information for a new developer to understand the underlying structure of UniCity and how it works.
+
+=== Overview
+
+This guide covers the following: +
+
+* Design architecture of UniCity. +
+* Implementation details of main features such as undoing and redoing of previous commands, logging, configuration and
+etc. +
+* Testing and integrating the software for future releases. +
+* Additional information covered by the appendix section. +
 
 == Setting up
 

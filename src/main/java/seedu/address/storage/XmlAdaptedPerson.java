@@ -77,7 +77,12 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
-        final Favourite favourite = new Favourite(this.favourite);
+        final Favourite favourite = new Favourite();
+        if (this.favourite.equals("True")) {
+            favourite.toggleFavourite();
+        } else if (!this.favourite.equals("False")) {
+            throw new IllegalValueException("Illegal favourite status");
+        }
         final Birthday birthday = new Birthday(this.birthday);
         final Set<Tag> tags = new HashSet<>(personTags);
         return new Person(name, phone, email, address, favourite, birthday, tags);

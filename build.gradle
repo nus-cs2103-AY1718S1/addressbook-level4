@@ -25,11 +25,13 @@ allprojects {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 
+    //@@author vivekscl
     repositories {
         jcenter()
         mavenCentral()
         maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://repository.apache.org/content/groups/snapshots/" }
     }
 
     // This part is similar to global variables
@@ -59,12 +61,14 @@ allprojects {
         }
     }
 
+    //@@author vivekscl
     dependencies {
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
+        compile 'org.apache.commons:commons-text:1.2-SNAPSHOT'
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"

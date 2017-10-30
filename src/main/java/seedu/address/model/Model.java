@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Birthday;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -34,11 +35,13 @@ public interface Model {
     void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
             DuplicatePersonException;
 
-    /** Deletes given tag from every person */
+    //@@author vivekscl
+    /** Deletes given tag from every of the given persons */
     void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
             DuplicatePersonException;
 
-    /** Adds given tag to every person */
+    //@@author vivekscl
+    /** Adds given tag to every of the given persons */
     void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
             DuplicatePersonException;
 
@@ -60,6 +63,14 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    //@@author vivekscl
+    /**
+     * Uses the JaroWinklerDistance function from the Apache Commons library to find the closest matching name when
+     * given keywords that are not found in the FilteredPersonList.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    public String getClosestMatchingName(NameContainsKeywordsPredicate predicate);
 
     /**
      * Sort the given list according to alphabetical order

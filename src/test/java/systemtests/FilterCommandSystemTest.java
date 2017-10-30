@@ -9,11 +9,9 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_FRIEND;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FilterCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
@@ -119,7 +117,7 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: filter address of person in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORDVAR_1 + " " + FIONA.getAddress().value;
+        command = FilterCommand.COMMAND_WORDVAR + " " + FIONA.getAddress().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -132,15 +130,6 @@ public class FilterCommandSystemTest extends AddressBookSystemTest {
         command = FilterCommand.COMMAND_WORDVAR + " " + FIONA.getName().fullName;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-
-        /* Case: filter while a person is selected -> selected card deselected */
-        showAllPersons();
-        selectPerson(Index.fromOneBased(1));
-        assert !getPersonListPanel().getHandleToSelectedCard().getTags().equals(FIONA.getTags().toString());
-        command = FilterCommand.COMMAND_WORDVAR + " colleague friend";
-        ModelHelper.setFilteredList(expectedModel, FIONA);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardDeselected();
 
         /* Case: filter person in empty address book -> 0 persons found */
         executeCommand(ClearCommand.COMMAND_WORDVAR_1);

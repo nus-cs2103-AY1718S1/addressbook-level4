@@ -1,5 +1,6 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_NO_PERSON_FOUND;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalPersons.BENSON;
@@ -19,6 +20,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
 
 public class FindCommandSystemTest extends AddressBookSystemTest {
@@ -154,6 +156,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
     }
 
+    //@@author vivekscl
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,
@@ -167,6 +170,15 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel) {
         String expectedResultMessage = String.format(
                 MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
+        if (expectedModel.getFilteredPersonList().size() == 0) {
+            String[] parts = command.split(" ");
+            ArrayList<String> keywords = new ArrayList<String>();
+            for (int i = 1; i < parts.length; i++) {
+                keywords.add(parts[i]);
+            }
+            expectedResultMessage += String.format(MESSAGE_NO_PERSON_FOUND,
+                    expectedModel.getClosestMatchingName(new NameContainsKeywordsPredicate(keywords)));
+        }
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
@@ -174,6 +186,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertStatusBarUnchanged();
     }
 
+    //@@author
     /**
      * Executes {@code command} and verifies that the command box displays {@code command}, the result display
      * box displays {@code expectedResultMessage} and the model related components equal to the current model.

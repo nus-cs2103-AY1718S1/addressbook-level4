@@ -49,7 +49,7 @@ public class BirthdayTest {
 
         // valid birthday
         assertTrue(Birthday.isValidBirthdayNumber("040598"));
-        assertTrue(Birthday.isValidBirthdayNumber("-"));  // non used
+        assertTrue(Birthday.isValidBirthdayNumber(Birthday.DEFAULT_BIRTHDAY));  // non used
 
     }
 

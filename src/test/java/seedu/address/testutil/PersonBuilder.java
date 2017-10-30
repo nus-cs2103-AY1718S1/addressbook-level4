@@ -21,22 +21,23 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final Favourite DEFAULT_FAVOURITE = new Favourite();
-    public static final Birthday DEFAULT_BIRTHDAY = new Birthday();
+    //public static final String DEFAULT_EMAIL = "alice@gmail.com";
+    //public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
 
+    /**
+     * The default value of an optional field happens when nothing is passed in.
+     */
     public PersonBuilder() {
         try {
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
-            Email defaultEmail = new Email(DEFAULT_EMAIL);
-            Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            Favourite defaultFavourite = DEFAULT_FAVOURITE;
-            Birthday defaultBirthday = DEFAULT_BIRTHDAY;
+            Email defaultEmail = new Email();
+            Address defaultAddress = new Address();
+            Favourite defaultFavourite = new Favourite();
+            Birthday defaultBirthday = new Birthday();
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
                     defaultFavourite, defaultBirthday, defaultTags);
@@ -116,7 +117,11 @@ public class PersonBuilder {
      * Sets the {@code Favourite} of the {@code Person} that we are building
      */
     public PersonBuilder withFavourite(String favourite) {
-        this.person.setFavourite(new Favourite(favourite));
+        if (favourite.equals("True")) {
+            this.person.setFavourite(new Favourite(true));
+        } else if (favourite.equals("False")) {
+            this.person.setFavourite(new Favourite());
+        }
         return this;
     }
 
