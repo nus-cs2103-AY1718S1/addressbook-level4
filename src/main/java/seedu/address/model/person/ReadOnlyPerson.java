@@ -24,6 +24,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Favourite> favouriteProperty();
     Favourite getFavourite();
+    ObjectProperty<ProfPic> profPicProperty();
+    ProfPic getProfPic();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     ObjectProperty<UniqueGroupList> groupProperty();
