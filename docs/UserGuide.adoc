@@ -18,10 +18,17 @@ By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 As the name implies, link:{repoURL}[**BoNUS**] helps you _better(B) organize(o) your NUS life_.
 
-* It is a desktop personal organizer application that targets at http://www.nus.edu.sg/[NUS] students.
-* With *BoNUS*, managing _contacts_ and upcoming _events_ is no more a headache.
-* It is oriented for typist user (most operations should be done using keyboard rather than mouse).
-* Exclusive features have been developed to suit out primary user group - NUS students.
+* **BoNUS** is a desktop personal organizer application dedicated to NUS students to carry out various tasks such as storing
+contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise their campus life.
+* Apart from storing important information such as name, email, address and phone number. you are given _infinite freedom_
+to customize your own fields as you deem fit.
+* **BoNUS** is convenient, fast, secured, integrated, solely with the motivation of giving you a bonus for your student
+life in NUS.
+* **BoNUS** is oriented for typist user (most operations should be done using keyboard rather than mouse).
+
+=== Purpose
+This user guide aims to provide potential users with a comprehensive step-by-step guide on how to better utilise **BoNUS**
+to make their NUS life a more organised one.
 
 == Quick Start
 

@@ -20,8 +20,10 @@ This _Developer Guide_ is written by the **BoNUS v1.0** team for the benefits of
 application.
 
 * This guide includes instructions for setting up the development environment.
-* This guide provides sufficient UMLs (unified model diagrams) to illustrate the project structure.
+* This guide provides sufficient UMLs (unified model diagrams) to illustrate the architectural structure and design methodology.
 * This guide offers advice for troubleshooting some common issues.
+
+**BoNUS** is an open-source project, should any developers be interested, see <<ContactUs#, Contact Us>> page for more information.
 
 == Setting up
 
@@ -500,8 +502,9 @@ Such a design makes Reminder class more adaptable to changes and ready for futur
 3. `Reminder` is now more open to changes if needed and can easily add parameters and methods now that it is a class
 on its own.
 
-4. Have a list of reminders in `Event` class. Since `Event` can have multiple reminders, each reminder is instantiated
-with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself.
+4. Have a list of reminders in `Event` class (Figure 3.37). Since `Event` can have multiple reminders, each reminder is
+instantiated with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself. Figure 3.38 depicts the
+relationship between `Event` and `Reminder`.
 
 image::EventClassDiagram.png[width="200"]
 _Figure 4.4.2.1 : Class Diagram for `Event`_
