@@ -41,7 +41,7 @@
       <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
-
+    <!-- @@author blaqkrow-->
   <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4352226720647773, 0.569838056680162" VBox.vgrow="ALWAYS">
     <VBox fx:id="personList" minWidth="340" prefWidth="340.0" SplitPane.resizableWithParent="false">
       <padding>
@@ -118,7 +118,7 @@
                   <Insets top="15.0" />
                </padding></StackPane>
          </children></VBox>
-
+      <!-- @@author-->
     <StackPane fx:id="browserPlaceholder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="593.0">
       <padding>
         <Insets bottom="10" left="10" right="10" top="10" />

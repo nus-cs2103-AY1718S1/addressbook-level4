@@ -23,6 +23,13 @@ public class MainMenuHandle extends NodeHandle<Node> {
     }
 
     /**
+     * Opens the {@code FileWindow} using the menu bar in {@code MainWindow}.
+     */
+    public void openFileWindowUsingMenu() {
+        clickOnMenuItemsSequentially("File", "White Theme");
+    }
+
+    /**
      * Opens the {@code HelpWindow} by pressing the shortcut key associated
      * with the menu bar in {@code MainWindow}.
      */

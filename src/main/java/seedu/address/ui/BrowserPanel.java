@@ -19,12 +19,12 @@ import seedu.address.model.person.ReadOnlyPerson;
  * The Browser Panel of the App.
  */
 public class BrowserPanel extends UiPart<Region> {
-
+    //@@author blaqkrow
     public static final String DEFAULT_PAGE = "default.html";
     //public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps/place/";
     //public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-
+    //@@author
     private static final String FXML = "BrowserPanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
@@ -41,12 +41,13 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
+    //@@author blaqkrow
     private void loadPersonPage(ReadOnlyPerson person) {
         browser.getEngine().setUserAgent("Mozilla/5.0 "
                 + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));

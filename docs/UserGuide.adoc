@@ -110,6 +110,15 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+Alternatively, you can use the form implementation to edit contacts:
+
+****
+1. Select a person in the list, the textboxes fill up with the individual's particulars.
+2. Select on a field you what to edit, e.g. `Name`
+3. Modify the field by editing the text
+4. To save changes, click the save button.
+****
+
 === Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords. +
@@ -157,10 +166,25 @@ Another way to delete a contact in the list:
 3. Selected person will be deleted from the list
 ****
 
-=== Email a person
+=== Displaying a contact's location
 (added in v1.2)
 
+Shows the contact's location on Google Maps
+
+Select a contact either using:
+
+* `select INDEX`
+* Click on a contact on the list
+
+Their location will be displayed on the browser panel on the right.
+
+
+=== Email a person : `email`
+(added in v1.3)
+
 Opens an email client with the recipient's email address.
+
+Format: `email INDEX`
 
 ****
 1. Select a person in the list
@@ -168,6 +192,10 @@ Opens an email client with the recipient's email address.
 3. Proceed to compose email on email client
 ****
 
+Examples:
+
+* `email 1` +
+Opens an email client with the email of the first person in the address book.
 
 === Selecting a person : `select`
 
