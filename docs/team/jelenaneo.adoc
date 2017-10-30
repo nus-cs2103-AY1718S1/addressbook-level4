@@ -20,9 +20,9 @@ Codii is evolved from [https://github.com/nus-cs2103-AY1718S1/addressbook-level4
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=login]
+Login: include::../UserGuide.adoc[tag=login]
 
-include::../UserGuide.adoc[tag=logout]
+Logout: include::../UserGuide.adoc[tag=logout]
 
 #End of Extract#
 
@@ -51,9 +51,9 @@ It also makes sense for the user to be able to log out of the app without closin
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=borrow]
+Borrow Command: include::../UserGuide.adoc[tag=borrow]
 
-include::../UserGuide.adoc[tag=payback]
+Payback Command: include::../UserGuide.adoc[tag=payback]
 
 #End of Extract#
 
