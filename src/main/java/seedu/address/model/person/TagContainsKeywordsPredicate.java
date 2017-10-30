@@ -74,10 +74,10 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
      */
     private boolean evaluateListOfTags(List<String> listOfTags, ReadOnlyPerson person) {
         int foundTags = 0;
-        for (String tag : listOfTags){
+        for (String tag : listOfTags) {
             for (Tag tags : person.getTags()) {
                 if (tags.tagName.equalsIgnoreCase(tag)) {
-                    foundTags +=1 ;
+                    foundTags += 1;
                     break;
                 }
             }

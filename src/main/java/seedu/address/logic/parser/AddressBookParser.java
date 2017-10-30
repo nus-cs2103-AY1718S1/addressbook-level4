@@ -133,6 +133,7 @@ public class AddressBookParser {
     }
 
     //@@author Jeremy
+
     /**
      * Returns the correct list feature based on word after list
      *
@@ -150,7 +151,7 @@ public class AddressBookParser {
             returnThisCommand = new ListCommand();
             break;
         case "tag":
-            returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength+1));
+            returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength + 1));
             break;
         case "asc":
         case "ascending":
