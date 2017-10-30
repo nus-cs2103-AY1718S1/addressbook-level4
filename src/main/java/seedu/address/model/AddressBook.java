@@ -340,6 +340,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             Debt newDebt = new Debt(target.getDebt().toNumber() + amount.toNumber());
             editedPerson.setDebt(newDebt);
+            editedPerson.setTotalDebt(newDebt);
             persons.setPerson(target, editedPerson);
         } catch (DuplicatePersonException dpe) {
             assert false : "There should be no duplicate when updating the debt of a person";
