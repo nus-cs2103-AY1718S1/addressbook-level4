@@ -79,6 +79,22 @@ public class MeetingBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code PersonName} of the {@code Meeting} that we are building.
+     */
+    public MeetingBuilder withPersonToMeet(String personToMeet) {
+        this.meeting.setPersonName(new PersonToMeet(personToMeet));
+        return this;
+    }
+
+    /**
+     * Sets the {@code PhoneNum} of the {@code Meeting} that we are building.
+     */
+    public MeetingBuilder withPhoneNum(String phoneNum) {
+        this.meeting.setPhoneNum(new PhoneNum(phoneNum));
+        return this;
+    }
+
 
     public Meeting build() {
         return this.meeting;

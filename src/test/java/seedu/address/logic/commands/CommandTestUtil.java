@@ -15,9 +15,12 @@ import java.util.List;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.meeting.MeetingContainsKeywordsPredicate;
+import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.testutil.EditMeetingDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -35,6 +38,17 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+
+    public static final String VALID_NAME_ACTIVITY = "Activity Alone";
+    public static final String VALID_NAME_BIKING = "Biking training";
+    public static final String VALID_DATE_ACTIVITY = "12-12-9999 00:00";
+    public static final String VALID_DATE_BIKING = "12-12-9999 00:01";
+    public static final String VALID_PERSONTOMEET_ACTIVITY = "Amy Bee";
+    public static final String VALID_PERSONTOMEET_BIKING = "Bob Choo";
+    public static final String VALID_PHONENUM_ACTIVITY = "87987987";
+    public static final String VALID_PHONENUM_BIKING = "67887987";
+    public static final String VALID_PLACE_ACTIVITY = "Vivocity";
+    public static final String VALID_PLACE_BIKING = "Bishan";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -55,6 +69,9 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditMeetingCommand.EditMeetingDescriptor DESC_ACTIVITY;
+    public static final EditMeetingCommand.EditMeetingDescriptor DESC_BIKING;
+
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -63,6 +80,12 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_ACTIVITY = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_ACTIVITY).withDate(VALID_DATE_ACTIVITY)
+                .withPersonToMeet(VALID_PERSONTOMEET_ACTIVITY).withPlace(VALID_PLACE_ACTIVITY).withPhoneNum(VALID_PHONENUM_ACTIVITY)
+                .build();
+        DESC_BIKING = new EditMeetingDescriptorBuilder().withMeetingName(VALID_NAME_BIKING).withDate(VALID_DATE_BIKING)
+                .withPersonToMeet(VALID_PERSONTOMEET_BIKING).withPlace(VALID_PLACE_BIKING).withPhoneNum(VALID_PHONENUM_BIKING)
+                .build();
     }
 
     /**
@@ -124,5 +147,15 @@ public class CommandTestUtil {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
         }
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the first meeting in the {@code model}'s address book.
+     */
+    public static void showFirstMeetingOnly(Model model) {
+        ReadOnlyMeeting meeting = model.getAddressBook().getMeetingList().get(0);
+        final String[] splitName = meeting.getName().fullName.split("\\s+");
+        model.updateFilteredMeetingList(new MeetingContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        assert model.getFilteredMeetingList().size() == 1;
     }
 }
