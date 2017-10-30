@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_NAME_CS2103;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUP_NAME_FAMILY;
@@ -11,6 +10,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -27,26 +27,26 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.PersonBuilder;
 
 /**
- * Contains integration tests (interaction with the Model) and unit tests for GroupCommand.
+ * Contains integration tests (interaction with the Model) and unit tests for UngroupCommand.
  */
-public class GroupCommandTest {
+public class UngroupCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_addGroup_success() throws Exception {
-        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withGroups("Some Group").build();
-
-        GroupCommand groupCommand = prepareCommand(INDEX_FIRST_PERSON, new Group("Some Group"));
-
-        String expectedMessage =
-                String.format(GroupCommand.MESSAGE_ADD_GROUP_SUCCESS, editedPerson.getName(), "Some Group");
-
+    public void execute_ungroup_success() throws Exception {
+        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person afterEditPerson = new PersonBuilder(personInFilteredList).build();
+        Person editedPerson = new PersonBuilder(personInFilteredList)
+                .withGroups("Some group").build();
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        model.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
-        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
+        UngroupCommand ungroupCommand = prepareCommand(INDEX_FIRST_PERSON, new Group("Some group"));
+        String expectedMessage =
+                String.format(UngroupCommand.MESSAGE_UNGROUP_SUCCESS, afterEditPerson.getName(), "Some group");
+
+        assertCommandSuccess(ungroupCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -54,23 +54,23 @@ public class GroupCommandTest {
         showFirstPersonOnly(model);
 
         ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person afterEditPerson = new PersonBuilder(personInFilteredList).build();
         Person editedPerson = new PersonBuilder(personInFilteredList)
-                .withGroups("Some Group").build();
-        GroupCommand groupCommand = prepareCommand(INDEX_FIRST_PERSON, new Group("Some Group"));
-
-        String expectedMessage =
-                String.format(GroupCommand.MESSAGE_ADD_GROUP_SUCCESS, editedPerson.getName(), "Some Group");
-
+                .withGroups("Some group").build();
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        model.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
-        assertCommandSuccess(groupCommand, model, expectedMessage, expectedModel);
+        UngroupCommand ungroupCommand = prepareCommand(INDEX_FIRST_PERSON, new Group("Some group"));
+        String expectedMessage =
+                String.format(UngroupCommand.MESSAGE_UNGROUP_SUCCESS, afterEditPerson.getName(), "Some group");
+
+        assertCommandSuccess(ungroupCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        GroupCommand remarkCommand = prepareCommand(outOfBoundIndex, new Group(VALID_GROUP_NAME_FAMILY));
+        UngroupCommand remarkCommand = prepareCommand(outOfBoundIndex, new Group(VALID_GROUP_NAME_FAMILY));
 
         assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -86,41 +86,45 @@ public class GroupCommandTest {
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        GroupCommand remarkCommand = prepareCommand(outOfBoundIndex, new Group(VALID_GROUP_NAME_FAMILY));
+        UngroupCommand ungroupCommand = prepareCommand(outOfBoundIndex, new Group(VALID_GROUP_NAME_FAMILY));
 
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(ungroupCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() throws Exception {
-        final GroupCommand standardCommand = new GroupCommand(INDEX_FIRST_PERSON, new Group(VALID_GROUP_NAME_FAMILY));
+        final UngroupCommand standardCommand =
+                new UngroupCommand(INDEX_FIRST_PERSON, new Group(VALID_GROUP_NAME_FAMILY));
 
         // same values -> returns true
-        GroupCommand commandWithSameValues = new GroupCommand(INDEX_FIRST_PERSON, new Group(VALID_GROUP_NAME_FAMILY));
+        UngroupCommand commandWithSameValues =
+                new UngroupCommand(INDEX_FIRST_PERSON, new Group(VALID_GROUP_NAME_FAMILY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
 
         // null -> returns false
-        assertFalse(standardCommand.equals(null));
+        Assert.assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        Assert.assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new GroupCommand(INDEX_SECOND_PERSON, new Group(VALID_GROUP_NAME_FAMILY))));
+        Assert.assertFalse(
+                standardCommand.equals(new UngroupCommand(INDEX_SECOND_PERSON, new Group(VALID_GROUP_NAME_FAMILY))));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new GroupCommand(INDEX_FIRST_PERSON, new Group(VALID_GROUP_NAME_CS2103))));
+        Assert.assertFalse(
+                standardCommand.equals(new UngroupCommand(INDEX_FIRST_PERSON, new Group(VALID_GROUP_NAME_CS2103))));
     }
 
     /**
-     * Returns an {@code GroupCommand} with parameters {@code index} and {@code group}
+     * Returns an {@code UngroupCommand} with parameters {@code index} and {@code group}
      */
-    private GroupCommand prepareCommand(Index index, Group group) {
-        GroupCommand groupCommand = new GroupCommand(index, group);
-        groupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return groupCommand;
+    private UngroupCommand prepareCommand(Index index, Group group) {
+        UngroupCommand ungroupCommand = new UngroupCommand(index, group);
+        ungroupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return ungroupCommand;
     }
 }

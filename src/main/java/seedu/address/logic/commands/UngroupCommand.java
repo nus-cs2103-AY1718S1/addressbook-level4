@@ -13,34 +13,35 @@ import seedu.address.model.group.UniqueGroupList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.GroupNotFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Adds person with given index to a group. If such a group does not exist, creates it and then adds the person.
+ * Removes a person from a group
  */
-public class GroupCommand extends UndoableCommand {
+public class UngroupCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "group";
+    public static final String COMMAND_WORD = "ungroup";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds person to the group identified "
-            + "by the group's name. Person to be added is specified by "
-            + "index used in the last person listing. "
-            + "Non existing group will be created before adding persons to it.\n"
-            + "Parameters: " + "INDEX (must be a positive integer) "
-            + PREFIX_GROUP_NAME + "GROUP_NAME.\n"
-            + "Example: " + COMMAND_WORD + " 3 " + PREFIX_GROUP_NAME + "Family";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes from the group with name GROUP_NAME "
+            + "the person identified by the index number used in the last person listing."
+            + "If it was the last member of the group, the group is also removed.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + PREFIX_GROUP_NAME + "GROUP_NAME\n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_GROUP_NAME + "Family";
 
-    public static final String MESSAGE_ADD_GROUP_SUCCESS = "Added %1$s to the group: %2$s";
-    public static final String MESSAGE_DUPLICATE_GROUP = "%1$s already belongs to: %2$s";
+    public static final String MESSAGE_UNGROUP_SUCCESS = "Removed %1$s from a group: %2$s";
+    public static final String MESSAGE_GROUP_NOT_FOUND = "%1$s does not belong to: %2$s";
 
     private final Index index;
     private final Group group;
 
     /**
-     * @param index of the person in the filtered person list to add to the group
-     * @param group where person is to be added
+     * @param index of the person in the filtered person list to remove from the group
+     * @param group from which the person is to be removed
      */
-    public GroupCommand(Index index, Group group) {
+    public UngroupCommand(Index index, Group group) {
         requireNonNull(index);
         requireNonNull(group);
 
@@ -49,7 +50,7 @@ public class GroupCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -61,24 +62,25 @@ public class GroupCommand extends UndoableCommand {
 
         Person editedPerson;
         try {
-            editedGroups.add(group);
+            editedGroups.remove(group);
             editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                    personToEdit.getAddress(), personToEdit.getAppointment(), editedGroups.toSet(),
-                    personToEdit.getTags());
+                    personToEdit.getAddress(), personToEdit.getAppointment(),
+                    editedGroups.toSet(), personToEdit.getTags());
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException("The person cannot be duplicated when adding to a group");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
-        } catch (UniqueGroupList.DuplicateGroupException dge) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_GROUP, personToEdit.getName(), group.groupName));
+        } catch (GroupNotFoundException gnfe) {
+            throw new CommandException(String.format(MESSAGE_GROUP_NOT_FOUND, personToEdit.getName(), group.groupName));
         }
+        model.updateGroups(group);
         model.updateFilteredPersonList(p ->true);
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
-        return String.format(MESSAGE_ADD_GROUP_SUCCESS, personToEdit.getName(), group.groupName);
+        return String.format(MESSAGE_UNGROUP_SUCCESS, personToEdit.getName(), group.groupName);
     }
 
     @Override
@@ -89,12 +91,12 @@ public class GroupCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof GroupCommand)) {
+        if (!(other instanceof UngroupCommand)) {
             return false;
         }
 
         // state check
-        GroupCommand e = (GroupCommand) other;
+        UngroupCommand e = (UngroupCommand) other;
         return index.equals(e.index)
                 && group.equals(e.group);
     }

@@ -58,8 +58,6 @@ public interface ReadOnlyPerson {
                 .append(getAppointment())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
-        builder.append(" Groups: ");
-        getGroups().forEach(builder::append);
         return builder.toString();
     }
 }

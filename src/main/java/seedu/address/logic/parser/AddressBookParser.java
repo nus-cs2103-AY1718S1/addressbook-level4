@@ -13,6 +13,8 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterAllCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.GroupCommand;
@@ -22,6 +24,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UngroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -49,7 +52,7 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
+        switch (commandWord.toLowerCase()) {
 
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
@@ -67,6 +70,9 @@ public class AddressBookParser {
         case AppointCommand.COMMAND_WORD:
             return new AppointCommandParser().parse(arguments);
 
+        case UngroupCommand.COMMAND_WORD:
+            return new UngroupCommandParser().parse(arguments);
+
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
@@ -78,6 +84,14 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
+
+        case FilterCommand.COMMAND_WORD:
+        case FilterCommand.COMMAND_ALIAS:
+            return new FilterCommandParser().parse(arguments);
+
+        case FilterAllCommand.COMMAND_WORD:
+        case FilterAllCommand.COMMAND_ALIAS:
+            return new FilterAllCommandParser().parse(arguments);
 
         case FindTagCommand.COMMAND_WORD:
         case FindTagCommand.COMMAND_ALIAS:
