@@ -116,7 +116,7 @@ public abstract class AddressBookSystemTest {
         waitUntilBrowserLoaded(getBrowserPanel());
     }
 
-    //@@author newlater
+    //@@author newalter
     /**
      * Presses Tab and executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
