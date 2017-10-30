@@ -508,7 +508,7 @@ While the index in `delete -d INDEX` is the index of the remark we want to delet
 ==== Design Considerations
 
 **Aspect:** Implementation of RemarkCommand +
-**Alternative 1 (current choice):** use a `uniqueRemarkList` similar to 'uniqueLessonList'. +
+**Alternative 1 (current choice):** use a `uniqueRemarkList` similar to `uniqueLessonList`. +
 **Pros:** Store all remarks as a single list thus it is easy to manage.
 **Cons:** Need to filter out a selected set of remarks when user select a specific module.
 // end::remark[]
