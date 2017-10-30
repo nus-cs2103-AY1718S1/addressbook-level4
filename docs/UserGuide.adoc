@@ -278,6 +278,11 @@ _Figure 13: Sorting address book by name_ +
 You can sort the address book by phone and email too! Just enter `sort phone` or
 `sort email` to sort address book by phone and email respectively
 
+=== Exporting the contacts list : `export`
+Format: `export [directory]\[filename].xml` +
+
+Example: `export C:\user\desktop\circles.xml` +
+
 === Clearing all entries : `clear`
 When changing device used for Circles or to start a new address book, you might want to delete all contacts due to
 privacy concerns. Instead of manually deleting contacts using the `delete` command,

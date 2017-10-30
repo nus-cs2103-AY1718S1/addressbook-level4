@@ -192,4 +192,13 @@ public class ParserUtil {
         return trimmedTag;
 
     }
+
+    /**
+     * Parses a String argument for a file path destination for Export.
+     * Leading and trailing whitespaces will be removed
+     */
+    public static String parseFilePath(String path) {
+        String trimmedPath = path.trim();
+        return trimmedPath;
+    }
 }
