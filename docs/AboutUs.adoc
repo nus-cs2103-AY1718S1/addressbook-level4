@@ -9,7 +9,7 @@ It was then modified and enhanced by the https://github.com/CS2103AUG2017-T09-B1
 
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
-=== Loh Jia Hao
+== Loh Jia Hao
 image::jiahao.jpg[width="150", align="left"]
 {empty}[http://github.com/inGall[github]] [<<inGall#, portfolio>>]
 
@@ -18,7 +18,7 @@ Responsibilities: In charge of Logic
 
 '''
 
-=== Chan Qing Hong
+== Chan Qing Hong
 image::ChanQingHong.jpg[width="150", align="left"]
 {empty}[http://github.com/cqhchan[github]] [<<cqhchan#, portfolio>>]
 
@@ -27,7 +27,7 @@ Responsibilities: In charge of  UI
 
 '''
 
-=== Nguyen Duy Son
+== Nguyen Duy Son
 image::duyson98.jpg[width="150", align="left"]
 {empty}[http://github.com/duyson98[github]] [<<duyson98#, portfolio>>]
 

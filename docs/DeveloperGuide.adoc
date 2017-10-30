@@ -18,11 +18,11 @@ image:CoverPage.png[width="600"]
 
 == Introduction
 
-At the Heart of our Design is the idea that every man wants to be a Gentleman. Emcompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he neededs, when he needs it. Nothing more, nothing less
+At the Heart of our Design is the idea that every man wants to be a Gentleman. Encompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he needed, when he needs it. Nothing more, nothing less.
 
-Gentleman's Guide is a contactbook for the elite. It a command line based programming with a GUI.
+Gentleman's Guide is a contact book for the elite. It is a command line based programming with a GUI.
 
-This developers guide will describe the design and implementation of Gentleman's Guide. It will help you understand how Gentleman's Guide works and how you can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
+This developer guide will describe the design and implementation of Gentleman's Guide. It will help you understand how Gentleman's Guide works and how you can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
 
 == Setting up
 
@@ -491,6 +491,12 @@ e.g. `deleteReminder 3`
 `SortPriorityCommand`: Sorts the reminder list in order of `priority` . +
 (*High* -> *Medium* -> *Low*) +
 e.g. `sortPriority`
+
+`findReminder` : Finds the reminder that contains the keyword. +
+e.g. `findReminder Project`
+
+`listReminder` : Lists all the reminders in the reminder list. +
+e.g. `listReminder`
 
 [NOTE]
 Missing details during adding of reminders will result in Invalid Command format.
