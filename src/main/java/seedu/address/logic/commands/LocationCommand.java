@@ -38,8 +38,13 @@ public class LocationCommand extends Command {
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
         String name = person.getName().toString();
+        String location = person.getAddress().toString();
 
-        EventsCenter.getInstance().post(new AccessLocationRequestEvent(person.getAddress().toString()));
+        if (location.equals("NIL")) {
+            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION);
+        }
+
+        EventsCenter.getInstance().post(new AccessLocationRequestEvent(location));
         return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased(), name));
     }
 

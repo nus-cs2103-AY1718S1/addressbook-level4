@@ -38,8 +38,13 @@ public class AccessCommand extends Command {
 
         ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
         String name = person.getName().toString();
+        String website = person.getWebsite().toString();
 
-        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(person.getWebsite().toString()));
+        if (website.equals("NIL")) {
+            throw new CommandException(Messages.MESSAGE_INVALID_WEBSITE);
+        }
+
+        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(website));
         return new CommandResult(String.format(MESSAGE_ACCESS_PERSON_SUCCESS, targetIndex.getOneBased(), name));
     }
 
