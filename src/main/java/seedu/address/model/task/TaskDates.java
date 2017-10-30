@@ -14,11 +14,11 @@ public abstract class TaskDates {
 
     public static final String DISPLAY_DATE_FORMAT = "EEE, MMM d, ''yy";
     public static final String[] DOTTED_DATE_FORMATS = new String[]{"MM.dd.yyyy", "MM.d.yyyy", "M.d.yyyy",
-            "M.d.yy", "M.dd.yy", "MM.d.yy", "MM.dd.yy", "M.dd.yyyy"};
+        "M.d.yy", "M.dd.yy", "MM.d.yy", "MM.dd.yy", "M.dd.yyyy"};
     public static final String[] VALID_DATE_FORMATS = new String[]{"MM-dd-yyyy", "M-dd-yyyy", "M-d-yyyy",
-            "MM-d-yyyy", "MM-dd-yy", "M-dd-yy", "MM-d-yy", "M-d-yy", "MM.dd.yyyy", "MM.d.yyyy", "M.d.yyyy",
-            "M.d.yy", "M.dd.yy", "MM.d.yy", "MM.dd.yy", "M.dd.yyyy", "MM/dd/yyyy", "M/dd/yyyy", "M/d/yyyy",
-            "MM/d/yyyy", "MM/dd/yy", "M/dd/yy", "MM/d/yy", "M/d/yy"};
+        "MM-d-yyyy", "MM-dd-yy", "M-dd-yy", "MM-d-yy", "M-d-yy", "MM.dd.yyyy", "MM.d.yyyy", "M.d.yyyy",
+        "M.d.yy", "M.dd.yy", "MM.d.yy", "MM.dd.yy", "M.dd.yyyy", "MM/dd/yyyy", "M/dd/yyyy", "M/d/yyyy",
+        "MM/d/yyyy", "MM/dd/yy", "M/dd/yy", "MM/d/yy", "M/d/yy"};
     public static final int NUMBER_MONTHS = 12;
     public static final int FEBRUARY = 2;
     public static final int MAX_DAYS_IN_MONTH = 31;
@@ -62,12 +62,17 @@ public abstract class TaskDates {
                 Date parsedDeadline = new SimpleDateFormat(DISPLAY_DATE_FORMAT).parse(deadline.get().toString());
                 return parsedDeadline.after(parsedStartDate);
             } catch (ParseException p) {
-               return false;
+                return false;
             }
         }
         return true;
     }
 
+    /**
+     *
+     * @param inputDate
+     * @return
+     */
     public static boolean isDateValid(String inputDate) {
         String trimmedDate = inputDate.trim();
         for (String format : VALID_DATE_FORMATS) {
@@ -87,6 +92,9 @@ public abstract class TaskDates {
         return true;
     }
 
+    /**
+     * Determines the specific dotted date format used by the {@code String inputDate}
+     */
     public static String getDottedFormat(String inputDate) {
         for (String format : DOTTED_DATE_FORMATS) {
             if (isDateInDottedFormat(inputDate, format) && isDateValid(inputDate)) {
@@ -97,7 +105,7 @@ public abstract class TaskDates {
     }
 
     /**
-     * Validates a given date before it is parsed so as to ensure it is not parsed incorrectly
+     * Checks if a given {@code String inputDate} is in (M)M.(d)d.(yy)yy format.
      */
     public static boolean isDateInDottedFormat(String inputDate, String dateFormat) {
         try {
@@ -108,6 +116,9 @@ public abstract class TaskDates {
         }
     }
 
+    /**
+     * Checks if the {@code String inputDate} matches the given {@code String validDateFormat}
+     */
     public static boolean doesDateMatchValidFormat(String inputDate, String validDateFormat) {
         try {
             new SimpleDateFormat(validDateFormat).parse(inputDate);

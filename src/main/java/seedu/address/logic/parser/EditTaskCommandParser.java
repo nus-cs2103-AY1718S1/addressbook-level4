@@ -100,8 +100,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             return Optional.empty();
         }
 
-        return dates.size() == 1 && dates.contains("") ?
-                Optional.of(new StartDate("", SUFFIX_NO_RECUR_INTERVAL))
+        return dates.size() == 1 && dates.contains("")
+                ? Optional.of(new StartDate("", SUFFIX_NO_RECUR_INTERVAL))
                 : ParserUtil.parseStartDate(Optional.of(dates.get(dates.size() - 1)));
     }
 
@@ -117,8 +117,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         if (dates.isEmpty()) {
             return Optional.empty();
         }
-        return dates.size() == 1 && dates.contains("") ?
-                Optional.of(new Deadline("", SUFFIX_NO_RECUR_INTERVAL))
+        return dates.size() == 1 && dates.contains("")
+                ? Optional.of(new Deadline("", SUFFIX_NO_RECUR_INTERVAL))
                 : ParserUtil.parseDeadline(Optional.of(dates.get(dates.size() - 1)));
 
     }
@@ -139,14 +139,14 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
      * Separates the description from the index in the preamble.
      * @param preamble (string before any valid prefix) received from the argument multimap of the tokenized edit
      * task command.
-     * @return the Optional<Description> (parsed) of the task to be edited if it is present in the preamble or
+     * @return {@code Optional<Description>} (parsed) of the task to be edited if it is present in the preamble or
      * an empty Optional.
      */
     public Optional<Description> parseDescriptionForEdit(String preamble)
             throws IllegalValueException {
         int indexLength = getIndexForEdit(preamble).length();
-        String description = (indexLength == preamble.length()) ? "" :
-                preamble.substring(indexLength, preamble.length());
+        String description = (indexLength == preamble.length()) ? ""
+                : preamble.substring(indexLength, preamble.length());
         return description.isEmpty() ? Optional.empty() : ParserUtil.parseDescription(description);
     }
 }

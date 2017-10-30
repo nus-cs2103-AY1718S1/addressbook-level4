@@ -30,7 +30,6 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.StartDate;
-import seedu.address.model.task.Task;
 import seedu.address.model.task.TaskDates;
 
 /**
@@ -137,8 +136,9 @@ public class ParserUtil {
             return Optional.of(new StartDate(TaskDates.formatDate(parseDottedDate(date.get())),
                     parseRecurInterval(date.get())));
         }
-        return (date.isPresent() && !date.get().isEmpty()) ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())),
-                parseRecurInterval(date.get()))) : Optional.empty();
+        return (date.isPresent() && !date.get().isEmpty()) ?
+                Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
+                : Optional.empty();
     }
 
     /**
@@ -151,15 +151,15 @@ public class ParserUtil {
             return Optional.of(new Deadline(TaskDates.formatDate(parseDottedDate(date.get())),
                     parseRecurInterval(date.get())));
         }
-        return (date.isPresent() && !date.get().isEmpty()) ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())),
-                parseRecurInterval(date.get()))) : Optional.empty();
+        return (date.isPresent() && !date.get().isEmpty()) ?
+                Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
+                : Optional.empty();
     }
 
     /**
-     * Parses Dates using PrettyTime NLP.
-     * @param naturalLanguageInput date input.
-     * @return Date output.
-     * @throws IllegalValueException if string cannot be parsed.
+     * Parses a {@code String naturalLanguageInput} using PrettyTime NLP, into a {@code Date}.
+     * Guarantees: is valid as declared in {@link TaskDates#isDateValid(String)}
+     * @throws IllegalValueException if the date cannot be parsed from the phrase or if the given date is invalid.
      */
     public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {
         List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput.trim());
@@ -170,6 +170,10 @@ public class ParserUtil {
         return dates.get(dates.size() - 1);
     }
 
+    /**
+     * Parses the {@code String inputDate} into a {@code Date} if the input is given in (M)M.(d)d.(yy)yy format,
+     * which cannot be parsed by the PrettyTime NLP.
+     */
     public static Date parseDottedDate(String inputDate) throws IllegalValueException {
         try {
             return new SimpleDateFormat(TaskDates.getDottedFormat(inputDate)).parse(inputDate);
@@ -179,9 +183,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses the recur interval of a date.
-     * @param dateString input string.
-     * @return Suffix of the recur interval.
+     * Parses the {@code String dateString} of a date into a {@code Suffix} specifying its recur interval.
      */
     public static Suffix parseRecurInterval(String dateString) {
         return (dateString.contains(SUFFIX_RECURRING_DATE_WEEKLY.toString()) ? SUFFIX_RECURRING_DATE_WEEKLY
