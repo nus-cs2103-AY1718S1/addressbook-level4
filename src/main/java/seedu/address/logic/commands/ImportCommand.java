@@ -43,6 +43,7 @@ public class ImportCommand extends UndoableCommand {
         br = new BufferedReader(new InputStreamReader(bis));
     }
 
+    @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         int duplicate = 0;
 
@@ -86,6 +87,8 @@ public class ImportCommand extends UndoableCommand {
                             Tag tag = new Tag(parameter);
                             tagList.add(tag);
                             break;
+                        default :
+                            br.readLine();
                         }
                         newLine = br.readLine();
                     }
