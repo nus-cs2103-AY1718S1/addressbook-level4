@@ -173,7 +173,7 @@ public class ModelManager extends ComponentManager implements Model {
                 if (!(newTags.size() == oldTags.size())) {
                     toUpdate.setTags(newTags);
                     tagExist = true;
-                    addressBook.updatePerson(toDelete, toUpdate);
+                    updatePerson(toDelete, toUpdate);
                 }
             }
         } else {
@@ -185,7 +185,7 @@ public class ModelManager extends ComponentManager implements Model {
                 if (!(newTags.size() == oldTags.size())) {
                     toUpdate.setTags(newTags);
                     tagExist = true;
-                    addressBook.updatePerson(toDelete, toUpdate);
+                    updatePerson(toDelete, toUpdate);
                 }
             }
         }
@@ -211,7 +211,7 @@ public class ModelManager extends ComponentManager implements Model {
             if (!(current.size() == updated.size())) {
                 toUpdate.setTags(updated);
                 added = true;
-                addressBook.updatePerson(toCheck, toUpdate);
+                updatePerson(toCheck, toUpdate);
             }
         }
 
