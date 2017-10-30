@@ -13,8 +13,9 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+
     private HashMap<String, String> colourMap;
+    private String addressBookName = "Circles";
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 10, 10);
