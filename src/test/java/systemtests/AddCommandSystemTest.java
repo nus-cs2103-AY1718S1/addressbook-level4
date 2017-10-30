@@ -51,8 +51,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.DateParser;
 import seedu.address.model.Model;
-import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -201,7 +201,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid dob -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + INVALID_DOB_DESC;
-        assertCommandFailure(command, DateOfBirth.MESSAGE_INVALID_MONTH);
+        assertCommandFailure(command, DateParser.MESSAGE_INVALID_MONTH);
         /* Case: invalid tag -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + DOB_DESC_AMY + INVALID_TAG_DESC;
