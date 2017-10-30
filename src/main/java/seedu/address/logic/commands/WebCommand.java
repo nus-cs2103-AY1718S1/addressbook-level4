@@ -20,6 +20,9 @@ public class WebCommand extends Command {
             + "Parameters: 'facebook' OR 'insta' OR 'maps' OR 'search' OR 'linkedin' OR 'personal'\n"
             + "Example: " + COMMAND_WORD + " facebook";
 
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
+            + " {[facebook|insta|linkedin|maps|search|perosnal]}";
+
     public static final String MESSAGE_SUCCESS = "Social Site Loaded";
 
     private final String targetWebsite;

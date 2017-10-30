@@ -30,6 +30,12 @@ public class UpdateUserCommand extends Command {
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
+    public static final String MESSAGE_USAGE_EXAMPLE = COMMAND_WORD
+            + " " + PREFIX_NAME + "{NAME} "
+            + PREFIX_PHONE + "{PHONE} "
+            + PREFIX_EMAIL + "{EMAIL} "
+            + PREFIX_ADDRESS + "{ADDRESS} ";
+
     public static final String MESSAGE_UPDATE_USER_SUCCESS = "Successfully edited User Profile: %1s";
     public static final String MESSAGE_NOT_UPDATED = "At least one field to update must be provided.";
     public static final String MESSAGE_TAGS_NOT_ALLOWED = "Unable to edit your own tags";
