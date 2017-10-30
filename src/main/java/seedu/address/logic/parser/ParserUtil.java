@@ -136,8 +136,8 @@ public class ParserUtil {
             return Optional.of(new StartDate(TaskDates.formatDate(parseDottedDate(date.get())),
                     parseRecurInterval(date.get())));
         }
-        return (date.isPresent() && !date.get().isEmpty()) ?
-                Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
+        return (date.isPresent() && !date.get().isEmpty())
+                ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
                 : Optional.empty();
     }
 
@@ -151,8 +151,8 @@ public class ParserUtil {
             return Optional.of(new Deadline(TaskDates.formatDate(parseDottedDate(date.get())),
                     parseRecurInterval(date.get())));
         }
-        return (date.isPresent() && !date.get().isEmpty()) ?
-                Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
+        return (date.isPresent() && !date.get().isEmpty())
+                ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
                 : Optional.empty();
     }
 
