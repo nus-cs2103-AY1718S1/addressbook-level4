@@ -13,8 +13,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class DateTime {
 
     public static final String MESSAGE_DATETIME_CONSTRAINTS =
-            "Date and time should only contain numeric characters, colon and spaces, and it should not be blank"
-                    + ", date and time should be an actual date and time";
+            "Date and time should only contain numeric characters, colon and spaces, and it should not be blank."
+                    + " Date and time should be an actual date and time, with the format dd-MM-yyyy";
 
     /*
      * The first character of the address must not be a whitespace,

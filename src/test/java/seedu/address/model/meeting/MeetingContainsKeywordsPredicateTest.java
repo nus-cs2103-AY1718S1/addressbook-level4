@@ -18,14 +18,17 @@ public class MeetingContainsKeywordsPredicateTest {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
         List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
-        MeetingContainsKeywordsPredicate firstPredicate = new MeetingContainsKeywordsPredicate(firstPredicateKeywordList);
-        MeetingContainsKeywordsPredicate secondPredicate = new MeetingContainsKeywordsPredicate(secondPredicateKeywordList);
+        MeetingContainsKeywordsPredicate firstPredicate =
+                new MeetingContainsKeywordsPredicate(firstPredicateKeywordList);
+        MeetingContainsKeywordsPredicate secondPredicate =
+                new MeetingContainsKeywordsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        MeetingContainsKeywordsPredicate firstPredicateCopy = new MeetingContainsKeywordsPredicate(firstPredicateKeywordList);
+        MeetingContainsKeywordsPredicate firstPredicateCopy =
+                new MeetingContainsKeywordsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -41,35 +44,36 @@ public class MeetingContainsKeywordsPredicateTest {
     @Test
     public void test_nameContainsKeywords_returnsTrue() {
         // One keyword
-        MeetingContainsKeywordsPredicate predicate = new MeetingContainsKeywordsPredicate(Collections.singletonList("Shopping"));
-        assertTrue(predicate.test(new MeetingBuilder().withName("Shopping Date").build()));
+        MeetingContainsKeywordsPredicate predicate =
+                new MeetingContainsKeywordsPredicate(Collections.singletonList("Shopping"));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
 
         // Multiple keywords
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Shopping", "Date"));
-        assertTrue(predicate.test(new MeetingBuilder().withName("Shopping Date").build()));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
 
         // Only one matching keyword
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Date", "Study"));
-        assertTrue(predicate.test(new MeetingBuilder().withName("Date Study").build()));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Date Study").build()));
 
         // Mixed-case keywords
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("SHOPping", "DaTe"));
-        assertTrue(predicate.test(new MeetingBuilder().withName("Shopping Date").build()));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
     }
 
     @Test
     public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
         MeetingContainsKeywordsPredicate predicate = new MeetingContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new MeetingBuilder().withName("Shopping").build()));
+        assertFalse(predicate.test(new MeetingBuilder().withNameMeeting("Shopping").build()));
 
         // Non-matching keyword
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Study"));
-        assertFalse(predicate.test(new MeetingBuilder().withName("Shopping Date").build()));
+        assertFalse(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
 
         // Keywords match DateTime, Place, but does not match name
-        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("30-10-2018 15:00", "NUS"));
-        assertFalse(predicate.test(new MeetingBuilder().withName("Shopping").withPlace("NUS")
+        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("30-10-2018", "NUS"));
+        assertFalse(predicate.test(new MeetingBuilder().withNameMeeting("Shopping").withPlace("NUS")
                 .withDateTime("30-10-2018 15:00").build()));
     }
 }
