@@ -15,21 +15,19 @@ endif::[]
 By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
-**BoNUS** is an address book dedicated to NUS students to carry out various tasks such as storing contacts, planning
-for events, timetable planning as well as a calendar to better organise their campus life. The address book allows
-contacts to be stored with important information such as name, email, address and phone number. **BoNUS** also allows
-infinite freedom of customizing your own fields as you deem fit.
 
-The name **BoNUS** came about with the inspiration of **B**etter **o**rganizing your **NUS** life.
+As the name implies, link:{repoURL}[**BoNUS**] helps you _better(B) organize(o) your NUS life_.
 
-**BoNUS** is convenient, fast, secured, integrated, solely with the motivation of giving you a bonus for your student
-life in NUS
+* **BoNUS** is a desktop personal organizer application dedicated to NUS students to carry out various tasks such as storing
+contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise their campus life.
+* Apart from storing important information such as name, email, address and phone number. you are given _infinite freedom_
+to customize your own fields as you deem fit.
+* **BoNUS** is convenient, fast, secured, integrated, solely with the motivation of giving you a bonus for your student
+life in NUS.
+* **BoNUS** is oriented for typist user (most operations should be done using keyboard rather than mouse).
 
-**BoNUS** is a Command Line Input (CLI) based application that caters to NUS students who are proficient with Command
-Line Input format to utilise the address book to make their NUS life more organized!
-
-== Purpose
-This user guide aims to provide NUS students with a comprehensive step-by-step guide on how to better utilise **BoNUS**
+=== Purpose
+This user guide aims to provide potential users with a comprehensive step-by-step guide on how to better utilise **BoNUS**
 to make their NUS life a more organised one.
 
 == Quick Start
@@ -44,7 +42,10 @@ This app will not work with earlier versions of Java 8.
 .  Create a folder you want to use as home folder for **BoNUS** and copy the `jar` you have downloaded there.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
+
 image::Ui.png[width="790"]
+_Figure 2.1 : User Interface Demo_
+
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -60,7 +61,15 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Components
 
 **BoNUS** mainly consists on three components: *contacts*, *events* and *calendar*. They work independently and each is
-considered as a collection of one kind of `data items`. They are described in details as follows:
+considered as a collection of one kind of `data items`.
+
+[TIP]
+You can use the sidebar on the left-hand side of the application interface to switch between different components.
+
+image::UiSidebarHighlight.png[width="500"]
+_Figure 3.1 : Sidebar for Switching between Different Components_
+
+They are described in details as follows:
 
 === Contacts
 
@@ -199,6 +208,10 @@ Examples:
 Shows a list of all persons in the application. +
 Format: `(l)list`
 
+Example:
+
+* `list`
+
 [TIP]
 Contacts will be sorted by their names (increment).
 
@@ -206,6 +219,10 @@ Contacts will be sorted by their names (increment).
 
 Shows a list of all events in the application. +
 Format: `(lE)listE`
+
+Example:
+
+* `listE`
 
 [TIP]
 Events will be sorted by date/time (increment).
@@ -249,8 +266,6 @@ Examples:
 Edits the date/time the 1st event to be `18052013 03:30`.
 * `editE 2 n/Lunch with Betsy  +
 Edits the name of the 2nd event to be `Lunch with Betsy`.
-
-
 
 === Locating persons/events by any property : `(f)find`
 
@@ -339,6 +354,10 @@ Selects the 1st person in the results of the `find` command.
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `(his)history`
 
+Example:
+
+* `history`
+
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
@@ -405,6 +424,11 @@ You can view what command you have redone from the user feedback message.
 Clears all entries from the current component (either contacts or events). +
 Format: `(c)clear`
 
+Examples:
+
+* `clear`
+* `clear --all`
+
 [NOTE]
 ====
 Use `clear --all` if you want to clear data in all components (both contacts and events).
@@ -417,6 +441,12 @@ Use `clear --all` if you want to clear data in all components (both contacts and
 Imports the data in an external XML file, including data from all three components: *Contacts*, *Events* and *Calendar*,
 into the current address book of *BoNUS*. +
 Format: `(i)import FILEPATH`
+
+[NOTE]
+====
+The default data format is `.xml` file. Without explicit parameters, the application will treat the given path as a file
+in `.xml` format. It is unnecessary to explicitly state `import --xml FILEPATH`, although you are allowed to do so.
+====
 
 ****
 * Imports data from the location and file name specified by `FILEPATH`.
@@ -441,8 +471,55 @@ For `macOS` and `Linux` users, use `/` instead.
 
 ==== From `.bo` format
 
+_(Coming in v2.0)_
+
+Imports the data in an external BoNUS script file (which ends with `.bo`), including data from all three components:
+*Contacts*, *Events* and *Calendar*, into the application. +
+Format: `(i)import --script FILEPATH`
+
+****
+* You must explicitly provide the `--script` parameter.
+* `FILEPATH` must end with an extension of `.bo`.
+* The file name and folder names in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
+* If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
+* The provided script file should include one or multiple lines of valid *BoNUS* command(s). Each line can only have **at
+most one** command.
+* The *command* here refers to any command mentioned in this guide.
+****
+
+Examples:
+
+* For `Windows` users: +
+`import C:\Users\John Doe\Documents\bonus.bo`
+
+* For `macOS` and `Linux` users: +
+`import /Users/John Doe/Documents/bonus.bo`
+
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
+
 ==== From NUSMods URL
 
+_(Exclusive feature for NUS students)_
+
+The **BoNUS** team understands that https://nusmods.com/[NUSMods] has become an indispensable school timetable builder
+for almost all students at NUS. Thus, you are definitely allowed to import your timetable from NUSMods to the *BoNUS*
+application. +
+Format: `(i)import --nusmods YOUR_NUSMODS_URL`
+
+****
+* The URL provided must be complete and should begin with `http(s)://nusmods.com/timetable/`.
+* Directly copy from the address bar of your browser. Do *NOT* use the short URL generated by the _Sharing Timetable_ feature
+provided by NUSMods.
+* Final examinations for all modules in your NUSMods timetable will be automatically added as events to the application.
+****
+
+Example:
+
+* `import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++`
 
 === Exporting data : `(p)export`
 
@@ -499,20 +576,6 @@ are doing before using any of the following commands. These commands are intende
 Adds a new property field available to all persons or events. +
 Format: `(cfg)config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
 
-[NOTE]
-====
-* Short name is used as the prefix for `add`/`addE` and `edit`/`editE` commands.
-* Full name is used to display the name of each property on the right panel (to show details of the selected person, see `select` command).
-* Constraint message is the string that will be shown in result display box when the input value for this property in
-`add`/`addE` and `edit`/`editE` commands is invalid.
-* Regular expression is used to check whether the input value for this property is valid.
-====
-
-Example:
-
-* `config --add-property s/ag f/age`
-* `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*`
-
 ****
 * This command does not add a new property to a specific person. Instead, it defines a property that will be available to
 all persons/events.
@@ -524,6 +587,20 @@ if there is an existing property with the same short name.
 * The given regular expression must use legal syntax. It will be checked by the
 https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#compile-java.lang.String-[Pattern.compile] method.
 ****
+
+Example:
+
+* `config --add-property s/ag f/age`
+* `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*`
+
+[NOTE]
+====
+* Short name is used as the prefix for `add`/`addE` and `edit`/`editE` commands.
+* Full name is used to display the name of each property on the right panel (to show details of the selected person, see `select` command).
+* Constraint message is the string that will be shown in result display box when the input value for this property in
+`add`/`addE` and `edit`/`editE` commands is invalid.
+* Regular expression is used to check whether the input value for this property is valid.
+====
 
 ==== Set tag color : `(cfg)config --set-tag-color`
 
@@ -538,21 +615,18 @@ starting with a `#`). You can pick the RGB value of your favorite color from htt
 * Pre-defined color names include _black_, _blue_, _brown_, _green_, _red_, _white_, _yellow_.
 ****
 
-==== Import calendar : `(cfg)config --import-calendar`
+Example:
 
-_(Coming in version 2.0)_ +
-Imports events from an online available calender. +
-Format: `(cfg)config --import-calendar URL`
-
-[NOTE]
-====
-The supplied URL should be in either a valid ICS/iCal format or generated from your https://nusmods.com/[NUSMods].
-====
+* `config --set-tag-color friends red`
 
 === Exiting the program : `(x)exit`
 
 Exits the program. +
 Format: `(x)exit`
+
+Example:
+
+* `exit`
 
 === Saving the data
 
@@ -592,10 +666,20 @@ e.g.`select 2`
 * *Undo* : `(u)undo`
 * *Redo* : `(r)redo`
 * *Exit* : `(x)exit`
-* *Import* : `(i)import FILEPATH` +
+* *Import* : +
+(i) From `.xml` file: `import FILEPATH` +
 eg. For `Windows` users: `import C:\Users\John Doe\Documents\bonus.xml` +
-eg. For `macOS` and `Linux` users: `import /Users/John Doe/Documents/bonus.xml`
+eg. For `macOS` and `Linux` users: `import /Users/John Doe/Documents/bonus.xml` +
+(ii) From script file: `import --script FILEPATH` +
+eg. For `Windows` users: `import C:\Users\John Doe\Documents\bonus.bo` +
+eg. For `macOS` and `Linux` users: `import /Users/John Doe/Documents/bonus.bo` +
+(iii) From NUSMods timetable: `import --nusmods URL` +
+eg. `import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++`
 * *Export* : `(p)export [--excel] FILEPATH` +
 eg. For `Windows` users: `export C:\Users\John Doe\Documents\bonus.xml` +
 eg. For `macOS` and `Linux` users: `export /Users/John Doe/Documents/bonus.xml`
-* *Config* : `(cfg)config --add-property` `(cfg)config --set-tag-color` `(cfg)config --import-calendar`
+* *Config* : +
+(i) Add customize property `(cfg)config --add-property` +
+eg. `config --add-property s/b f/birthday` +
+(ii) Change tag color `(cfg)config --set-tag-color` +
+eg. `config --set-tag-color friends blue`
