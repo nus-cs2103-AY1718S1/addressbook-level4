@@ -100,11 +100,15 @@ public class Commands {
         }
     }
 
-    public static String[] getAllCommandWords() { return ALL_COMMAND_WORDS; }
+    public static String[] getAllCommandWords() {
+        return ALL_COMMAND_WORDS;
+    }
 
     public static String[] getAllCommandAliases() {
         return ALL_COMMAND_ALIASES;
     }
 
-    public static HashMap<String, String> getAllCommandUsages() { return ALL_COMMANDS_AND_SHORT_MESSAGES; }
+    public static HashMap<String, String> getAllCommandUsages() {
+        return ALL_COMMANDS_AND_SHORT_MESSAGES;
+    }
 }

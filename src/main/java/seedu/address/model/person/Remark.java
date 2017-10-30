@@ -14,7 +14,7 @@ public class Remark {
 
     public final String value;
 
-    private Remark(){
+    private Remark() {
         value = "Unspecified remark";
     }
 
