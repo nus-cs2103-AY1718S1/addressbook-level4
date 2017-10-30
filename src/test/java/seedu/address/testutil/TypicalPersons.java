@@ -42,9 +42,8 @@ public class TypicalPersons {
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withHandphone("85355255").withHomePhone("60101010").withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET)
-            .withPostalCode("600123").withDebt("123456789").withTotalDebt("123456789").withInterest(Interest.NO_INTEREST_SET)
-            .withDeadline(Deadline.NO_DEADLINE_SET)
-            .withTags("friendly").build();
+            .withPostalCode("600123").withDebt("123456789").withTotalDebt("123456789")
+            .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET).withTags("friendly").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com").withHandphone("98765432")
             .withPostalCode("123311").withDebt("12345").withTotalDebt("12345").withInterest(Interest.NO_INTEREST_SET)
@@ -68,20 +67,20 @@ public class TypicalPersons {
             .withInterest(Interest.NO_INTEREST_SET).withAddress("little tokyo")
             .withTags("tricky", "friendly").build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withHandphone("94821442")
-            .withPostalCode("040004").withEmail("anna@example.com").withDebt("45").withTotalDebt("45").withHomePhone("67273787")
-            .withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
+            .withPostalCode("040004").withEmail("anna@example.com").withDebt("45").withTotalDebt("45")
+            .withHomePhone("67273787").withInterest(Interest.NO_INTEREST_SET).withDeadline(Deadline.NO_DEADLINE_SET)
             .withAddress("4th street").withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).build();
 
     // Blacklisted persons.
     public static final ReadOnlyPerson JELENA = new PersonBuilder().withName("Jelena Neo")
             .withAddress("123, Jurong West Ave 6, #08-111").withDebt("1234567").withTotalDebt("1234567")
             .withEmail("alice@example.com").withDeadline(Deadline.NO_DEADLINE_SET).withHandphone("85355255")
-            .withInterest(Interest.NO_INTEREST_SET).withHomePhone("61234123").withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET)
-            .withTags("friends").withPostalCode("623123").build();
+            .withInterest(Interest.NO_INTEREST_SET).withHomePhone("61234123")
+            .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).withTags("friends").withPostalCode("623123").build();
     public static final ReadOnlyPerson WEIPING = new PersonBuilder().withName("Khoo Wei Ping")
-            .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567").withTotalDebt("1234567")
-            .withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET).withHomePhone("65600222")
-            .withHandphone("98765432").withTags("friends")
+            .withAddress("311, Clementi Ave 2, #02-25").withPostalCode("111111").withDebt("1234567")
+            .withTotalDebt("1234567").withEmail("johnd@example.com").withInterest(Interest.NO_INTEREST_SET)
+            .withHomePhone("65600222").withHandphone("98765432").withTags("friends")
             .withOfficePhone(OfficePhone.NO_OFFICE_PHONE_SET).build();
     public static final ReadOnlyPerson JAIVIGNESH = new PersonBuilder().withName("Jaivignesh Venugopal")
             .withDeadline(Deadline.NO_DEADLINE_SET).withHandphone("95352563").withEmail("heinz@example.com")
@@ -130,7 +129,8 @@ public class TypicalPersons {
             .withHandphone(VALID_HANDPHONE_BOB).withHomePhone(VALID_HOME_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .withDebt(VALID_DEBT_BOB).withTotalDebt(VALID_DEBT_BOB).withDeadline(VALID_DEADLINE_BOB)
-            .withPostalCode(VALID_POSTAL_CODE_BOB).withInterest(VALID_INTEREST_BOB).withOfficePhone(VALID_OFFICE_PHONE_BOB).build();
+            .withPostalCode(VALID_POSTAL_CODE_BOB).withInterest(VALID_INTEREST_BOB)
+            .withOfficePhone(VALID_OFFICE_PHONE_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 

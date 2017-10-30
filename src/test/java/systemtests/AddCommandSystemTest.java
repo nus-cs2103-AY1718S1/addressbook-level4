@@ -160,8 +160,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with all fields same as another person in the address book except home phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withHandphone(VALID_HANDPHONE_AMY)
                 .withHomePhone(VALID_HOME_PHONE_BOB).withOfficePhone(VALID_OFFICE_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY)
-                .withInterest(VALID_INTEREST_AMY).withDeadline(VALID_DEADLINE_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY)
+                .withTotalDebt(VALID_DEBT_AMY).withInterest(VALID_INTEREST_AMY).withDeadline(VALID_DEADLINE_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + HANDPHONE_DESC_AMY + HOME_PHONE_DESC_BOB
                 + OFFICE_PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY
                 + INTEREST_DESC_AMY + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
@@ -170,8 +171,9 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: add a person with all fields same as another person in the address book except office phone -> added */
         toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withHandphone(VALID_HANDPHONE_AMY)
                 .withHomePhone(VALID_HOME_PHONE_AMY).withOfficePhone(VALID_OFFICE_PHONE_BOB).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY).withTotalDebt(VALID_DEBT_AMY)
-                .withInterest(VALID_INTEREST_AMY).withDeadline(VALID_DEADLINE_AMY).withTags(VALID_TAG_FRIEND).build();
+                .withAddress(VALID_ADDRESS_AMY).withPostalCode(VALID_POSTAL_CODE_AMY).withDebt(VALID_DEBT_AMY)
+                .withTotalDebt(VALID_DEBT_AMY).withInterest(VALID_INTEREST_AMY).withDeadline(VALID_DEADLINE_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + HANDPHONE_DESC_AMY + HOME_PHONE_DESC_AMY
                 + OFFICE_PHONE_DESC_BOB + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + POSTAL_CODE_DESC_AMY + DEBT_DESC_AMY
                 + INTEREST_DESC_AMY + DEADLINE_DESC_AMY + TAG_DESC_FRIEND;
