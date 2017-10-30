@@ -15,11 +15,11 @@ ifndef::env-github[]
 image::images/Ui.png[width="800"]
 endif::[]
 
-Looking way of keeping track of your contacts? Unsastified with ugly clunky designs currently avaliable?
+Looking way of keeping track of your contacts? Unsatisfied with ugly clunky designs currently available?
 
 Look no further with the Gentleman's Guide. With a superb user interface and sleek, professional touch, Gentleman's Guide provides you with a contact book that even James Bond would love, shaken not stirred.
 
-At the Heart of our Design is the idea that every man wants to be a Gentleman. Emcompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he neededs, when he needs it. Nothing more, nothing less
+At the Heart of our Design is the idea that every man wants to be a Gentleman. Encompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he needed, when he needs it. Nothing more, nothing less
 
 == Want to experience elegance at its finest?
 
@@ -37,6 +37,7 @@ At the Heart of our Design is the idea that every man wants to be a Gentleman. E
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 
-* This AddressBook application is modified from the original AddressBook-Level4 project, created by SE-EDU initiative at https://github.com/se-edu/
+* This AddressBook application originated from the AddressBook-Level4 project, created by SE-EDU initiative at https://github.com/se-edu/
+* It was modified by the CS2103T T09-B1 team to become the Gentleman's Guide.
 
 == Licence : link:LICENSE[MIT]
