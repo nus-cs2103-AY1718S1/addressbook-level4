@@ -207,8 +207,10 @@ public class AddressBookParserTest {
                 INDEX_FIRST_PERSON, schedule));
         ScheduleCommand commandUsingAlias = (ScheduleCommand) parser.parseCommand(ScheduleUtil
                 .getScheduleCommandUsingAlias(INDEX_FIRST_PERSON, schedule));
-        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), command);
-        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule), commandUsingAlias);
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule.getScheduleDate(),
+                schedule.getActivity()), command);
+        assertEquals(new ScheduleCommand(INDEX_FIRST_PERSON, schedule.getScheduleDate(),
+                schedule.getActivity()), commandUsingAlias);
     }
 
     @Test

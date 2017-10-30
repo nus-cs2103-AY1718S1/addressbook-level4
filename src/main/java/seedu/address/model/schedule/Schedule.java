@@ -6,8 +6,7 @@ import java.util.Objects;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Name;
 
 /**
  * Represents a Schedule in the address book.
@@ -16,22 +15,23 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class Schedule {
     private ObjectProperty<ScheduleDate> scheduleDate;
     private ObjectProperty<Activity> activity;
-    private ObjectProperty<ReadOnlyPerson> personInvolved;
+    private ObjectProperty<Name> personInvolvedName;
 
     /**
      * Every field must be present and not null.
      */
-    public Schedule(ScheduleDate scheduleDate, Activity activity) {
-        requireAllNonNull(scheduleDate, activity);
+    public Schedule(ScheduleDate scheduleDate, Activity activity, Name personInvolvedName) {
+        requireAllNonNull(scheduleDate, activity, personInvolvedName);
         this.scheduleDate = new SimpleObjectProperty<>(scheduleDate);
         this.activity = new SimpleObjectProperty<>(activity);
+        this.personInvolvedName = new SimpleObjectProperty<>(personInvolvedName);
     }
 
     /**
      * Creates a copy of the given Schedule.
      */
     public Schedule(Schedule source) {
-        this(source.getScheduleDate(), source.getActivity());
+        this(source.getScheduleDate(), source.getActivity(), source.getPersonInvolvedName());
     }
 
     public ScheduleDate getScheduleDate() {
@@ -50,16 +50,12 @@ public class Schedule {
         return activity;
     }
 
-    public ReadOnlyPerson getPersonInvolved() {
-        return personInvolved.get();
+    public Name getPersonInvolvedName() {
+        return personInvolvedName.get();
     }
 
-    public ObjectProperty<ReadOnlyPerson> getPersonInvolvedProperty() {
-        return personInvolved;
-    }
-
-    public void setPersonInvolved(ReadOnlyPerson personInvolved) {
-        this.personInvolved = new SimpleObjectProperty<>(personInvolved);
+    public ObjectProperty<Name> getPersonInvolvedNameProperty() {
+        return personInvolvedName;
     }
 
     @Override
@@ -76,7 +72,8 @@ public class Schedule {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getScheduleDate().equals(this.getScheduleDate()) // state checks here onwards
-                && other.getActivity().equals(this.getActivity()));
+                && other.getActivity().equals(this.getActivity())
+                && other.getPersonInvolvedName().equals(this.getPersonInvolvedName()));
     }
 
     @Override
@@ -91,7 +88,9 @@ public class Schedule {
         builder.append("Date: ")
                 .append(getScheduleDate())
                 .append(" Activity: ")
-                .append(getActivity());
+                .append(getActivity())
+                .append(" Person: ")
+                .append(getPersonInvolvedName());
         return builder.toString();
     }
 }

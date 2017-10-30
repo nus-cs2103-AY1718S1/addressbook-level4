@@ -9,17 +9,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Activity;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.ScheduleDate;
 
 /**
  * Schedules an Activity with a person.
@@ -29,8 +29,6 @@ public class ScheduleCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "schedule";
 
     public static final String COMMAND_ALIAS = "sc";
-
-    public static final String SHOW_SCHEDULE_ARGS = "show";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
             + ": Schedules an Activity with a person.\n"
@@ -43,16 +41,19 @@ public class ScheduleCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_SCHEDULE = "Schedule already exists";
 
     private Index index;
-    private Schedule schedule;
+    private ScheduleDate date;
+    private Activity activity;
 
     /**
      * Creates a ScheduleCommand to add the specified {@code Schedule}
      */
-    public ScheduleCommand(Index index, Schedule schedule) {
+    public ScheduleCommand(Index index, ScheduleDate date, Activity activity) {
         requireNonNull(index);
-        requireNonNull(schedule);
+        requireNonNull(date);
+        requireNonNull(activity);
         this.index = index;
-        this.schedule = schedule;
+        this.date = date;
+        this.activity = activity;
     }
 
     @Override
@@ -66,12 +67,12 @@ public class ScheduleCommand extends UndoableCommand {
         ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
         Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
 
+        Schedule schedule = new Schedule(date, activity, schedulePerson.getName());
         if (schedules.contains(schedule)) {
             throw new CommandException(MESSAGE_DUPLICATE_SCHEDULE);
         }
 
         schedules.add(schedule);
-        schedule.setPersonInvolved(schedulePerson);
 
         Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
                 schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
@@ -93,7 +94,8 @@ public class ScheduleCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ScheduleCommand // instanceof handles nulls
-                && schedule.equals(((ScheduleCommand) other).schedule));
+                && date.equals(((ScheduleCommand) other).date)
+                && activity.equals(((ScheduleCommand) other).activity));
     }
 }
 

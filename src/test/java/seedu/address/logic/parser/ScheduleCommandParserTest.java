@@ -10,7 +10,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.Test;
-
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ScheduleBuilder;
@@ -23,7 +22,8 @@ public class ScheduleCommandParserTest {
         Schedule expectedSchedule = new ScheduleBuilder().withScheduleDate(VALID_SCHEDULE_DATE_AMY)
                 .withActivity(VALID_ACTIVITY_AMY).build();
         assertParseSuccess(parser, "1" + SCHEDULE_DATE_DESC_AMY + ACTIVITY_DESC_AMY,
-                new ScheduleCommand(INDEX_FIRST_PERSON, expectedSchedule));
+                new ScheduleCommand(INDEX_FIRST_PERSON, expectedSchedule.getScheduleDate(),
+                        expectedSchedule.getActivity()));
     }
 
     @Test

@@ -52,7 +52,7 @@
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
         </StackPane>
-      <VBox alignment="TOP_RIGHT" minWidth="300.0" prefWidth="300.0">
+      <VBox alignment="TOP_RIGHT" minWidth="175.0" prefWidth="175.0">
          <children>
             <StackPane fx:id="agendaPanelPlaceholder" />
          </children>

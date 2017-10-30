@@ -19,23 +19,27 @@ public class ScheduleCommandTest {
     @Test
     public void constructor_nullSchedule_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new ScheduleCommand(null, null);
-        new ScheduleCommand(INDEX_FIRST_PERSON, null);
-        new ScheduleCommand(null, new ScheduleBuilder().build());
+        new ScheduleCommand(null, null, null);
+        new ScheduleCommand(INDEX_FIRST_PERSON, null, null);
+        //new ScheduleCommand(null, new ScheduleBuilder().build());
     }
 
     @Test
     public void equals() {
         Schedule meeting = new ScheduleBuilder().withActivity("Meeting").build();
         Schedule playing = new ScheduleBuilder().withActivity("Playing").build();
-        ScheduleCommand scheduleMeetingCommand = new ScheduleCommand(INDEX_FIRST_PERSON, meeting);
-        ScheduleCommand schedulePlayingCommand = new ScheduleCommand(INDEX_FIRST_PERSON, playing);
+
+        ScheduleCommand scheduleMeetingCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
+                meeting.getScheduleDate(), meeting.getActivity());
+        ScheduleCommand schedulePlayingCommand = new ScheduleCommand(INDEX_FIRST_PERSON,
+                playing.getScheduleDate(), playing.getActivity());
 
         // same object -> returns true
         assertTrue(scheduleMeetingCommand.equals(scheduleMeetingCommand));
 
         // same values -> returns true
-        ScheduleCommand scheduleMeetingCommandCopy = new ScheduleCommand(INDEX_FIRST_PERSON, meeting);
+        ScheduleCommand scheduleMeetingCommandCopy = new ScheduleCommand(INDEX_FIRST_PERSON,
+                meeting.getScheduleDate(), meeting.getActivity());
         assertTrue(scheduleMeetingCommand.equals(scheduleMeetingCommandCopy));
 
         // different types -> returns false
@@ -44,7 +48,7 @@ public class ScheduleCommandTest {
         // null -> returns false
         assertFalse(scheduleMeetingCommand.equals(null));
 
-        // different person -> returns false
+        // different activities -> returns false
         assertFalse(scheduleMeetingCommand.equals(schedulePlayingCommand));
     }
 }

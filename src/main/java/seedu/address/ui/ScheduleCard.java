@@ -49,7 +49,7 @@ public class ScheduleCard extends UiPart<Region> {
     private void bindListeners(Schedule schedule) {
         activity.textProperty().bind(Bindings.convert(schedule.getActivityProperty()));
         date.textProperty().bind(Bindings.convert(schedule.getScheduleDateProperty()));
-        personName.textProperty().bind(Bindings.convert(schedule.getPersonInvolved().nameProperty()));
+        personName.textProperty().bind(Bindings.convert(schedule.getPersonInvolvedNameProperty()));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ScheduleCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof ScheduleCard)) {
             return false;
         }
 

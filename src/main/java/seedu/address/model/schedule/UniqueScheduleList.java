@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.commons.util.DateUtil;
 
 /**
  * A list of schedules that enforces no nulls and uniqueness between its elements.
@@ -105,6 +106,32 @@ public class UniqueScheduleList implements Iterable<Schedule> {
     public ObservableList<Schedule> asObservableList() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     * Sorts the list from earliest to latest schedule.
+     */
+    public void sort() {
+        FXCollections.sort(internalList, (schedule1, schedule2) -> {
+            String schedule1DateInString = schedule1.getScheduleDate().value;
+            String schedule2DateInString = schedule2.getScheduleDate().value;
+
+            int schedule1Year = DateUtil.getYear(schedule1DateInString);
+            int schedule2Year = DateUtil.getYear(schedule2DateInString);
+            if (schedule1Year != schedule2Year) {
+                return schedule1Year - schedule2Year;
+            }
+
+            int schedule1Month = DateUtil.getMonth(schedule1DateInString);
+            int schedule2Month = DateUtil.getMonth(schedule2DateInString);
+            if (schedule1Month != schedule2Month) {
+                return schedule1Month - schedule2Month;
+            }
+
+            int schedule1Day = DateUtil.getDay(schedule1DateInString);
+            int schedule2Day = DateUtil.getDay(schedule2DateInString);
+            return schedule1Day - schedule2Day;
+        });
     }
 
     @Override

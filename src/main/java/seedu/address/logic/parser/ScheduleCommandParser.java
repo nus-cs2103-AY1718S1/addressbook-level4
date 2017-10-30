@@ -39,9 +39,9 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             ScheduleDate date = ParserUtil.parseScheduleDate(argMultimap.getValue(PREFIX_DATE)).get();
             Activity activity = ParserUtil.parseActivity(argMultimap.getValue(PREFIX_ACTIVITY)).get();
 
-            Schedule schedule = new Schedule(date, activity);
+            //Schedule schedule = new Schedule(date, activity);
 
-            return new ScheduleCommand(index, schedule);
+            return new ScheduleCommand(index, date, activity);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

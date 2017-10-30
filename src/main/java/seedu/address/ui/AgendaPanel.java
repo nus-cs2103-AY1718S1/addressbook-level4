@@ -2,20 +2,14 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
-import javax.smartcardio.Card;
+import org.fxmisc.easybind.EasyBind;
 
-import com.google.common.eventbus.Subscribe;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import org.fxmisc.easybind.EasyBind;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.schedule.Schedule;
 
 /**
@@ -39,6 +33,9 @@ public class AgendaPanel extends UiPart<Region> {
      * and adds listener to {@code scheduleCardListView} for selection change.
      */
     private void setConnections(ObservableList<Schedule> scheduleList) {
+        for (Schedule i : scheduleList) {
+            logger.info(i.toString() + " Index: " + scheduleList.indexOf(i));
+        }
         ObservableList<ScheduleCard> mappedList = EasyBind.map(
                 scheduleList, (schedule) -> new ScheduleCard(schedule, scheduleList.indexOf(schedule) + 1));
         scheduleCardListView.setItems(mappedList);
