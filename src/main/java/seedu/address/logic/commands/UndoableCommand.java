@@ -2,9 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_WHITELISTED_PERSONS;
 
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -34,30 +32,7 @@ public abstract class UndoableCommand extends Command {
             this.selectedPerson = new Person(model.getSelectedPerson());
             if (model.getAllPersons().size() > 0) {
                 // if the command is not "clear"
-                switch (model.getCurrentList()) {
-                case "blacklist":
-                    if (model.getFilteredBlacklistedPersonList().contains(selectedPerson)) {
-                        this.index = Index.fromZeroBased(model.getFilteredBlacklistedPersonList()
-                                .indexOf(selectedPerson));
-                    } else {
-                        this.index = null;
-                    }
-                    break;
-                case "whitelist":
-                    if (model.getFilteredWhitelistedPersonList().contains(selectedPerson)) {
-                        this.index = Index.fromZeroBased(model.getFilteredWhitelistedPersonList()
-                                .indexOf(selectedPerson));
-                    } else {
-                        this.index = null;
-                    }
-                    break;
-                default:
-                    if (model.getFilteredPersonList().contains(selectedPerson)) {
-                        this.index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(selectedPerson));
-                    } else {
-                        this.index = null;
-                    }
-                }
+                this.index = listObserver.getIndexofPersonInCurrentList(selectedPerson);
             }
         }
         this.previousAddressBook = new AddressBook(model.getAddressBook());
@@ -71,7 +46,7 @@ public abstract class UndoableCommand extends Command {
     protected final void undo() throws CommandException {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
-        updateCurrentDisplayedList(model.getCurrentList());
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
         if (index != null) {
             EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
         }
@@ -90,28 +65,7 @@ public abstract class UndoableCommand extends Command {
             throw new AssertionError("The command has been successfully executed previously; "
                     + "it should not fail now");
         }
-        updateCurrentDisplayedList(model.getCurrentList());
-    }
-
-    /**
-     * Updates the current list in Person List Panel to reflect latest changes done.
-     *
-     * @param currentList cannot be null.
-     */
-    private void updateCurrentDisplayedList(String currentList) {
-
-        switch (currentList) {
-
-        case "blacklist":
-            model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
-            break;
-        case "whitelist":
-            model.updateFilteredWhitelistedPersonList(PREDICATE_SHOW_ALL_WHITELISTED_PERSONS);
-            break;
-
-        default:
-            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        }
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override

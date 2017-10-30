@@ -18,6 +18,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -104,7 +105,8 @@ public class SelectCommandTest {
 
         try {
             CommandResult commandResult = selectCommand.execute();
-            assertEquals(String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, index.getOneBased()),
+            assertEquals(ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                            + String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS, index.getOneBased()),
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);

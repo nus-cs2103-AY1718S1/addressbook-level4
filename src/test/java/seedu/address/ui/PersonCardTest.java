@@ -34,7 +34,6 @@ public class PersonCardTest extends GuiUnitTest {
             personWithTags.setName(ALICE.getName());
             personWithTags.setAddress(ALICE.getAddress());
             personWithTags.setEmail(ALICE.getEmail());
-            personWithTags.setPhone(ALICE.getPhone());
             personWithTags.setPostalCode(ALICE.getPostalCode());
             personWithTags.setDebt(ALICE.getDebt());
             personWithTags.setInterest(ALICE.getInterest());

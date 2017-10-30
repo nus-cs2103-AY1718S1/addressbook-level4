@@ -18,7 +18,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
     private static final String NAME_FIELD_ID = "#name";
     private static final String ADDRESS_FIELD_ID = "#address";
-    private static final String PHONE_FIELD_ID = "#phone";
+    private static final String HANDPHONE_FIELD_ID = "#handphone";
+    private static final String HOME_PHONE_FIELD_ID = "#homePhone";
+    private static final String OFFICE_PHONE_FIELD_ID = "#officePhone";
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String POSTAL_CODE_FIELD_ID = "#postalCode";
     private static final String CLUSTER_FIELD_ID = "#cluster";
@@ -30,7 +32,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private static final String DATE_REPAID_FIELD_ID = "#dateRepaid";
     private static final String TAGS_FIELD_ID = "#tags";
     private static final String ADDRESS_FIELD_FIELD_ID = "#addressField";
-    private static final String PHONE_FIELD_FIELD_ID = "#phoneField";
+    private static final String HANDPHONE_FIELD_FIELD_ID = "#handphoneField";
+    private static final String HOME_PHONE_FIELD_FIELD_ID = "#homePhoneField";
+    private static final String OFFICE_PHONE_FIELD_FIELD_ID = "#officePhoneField";
     private static final String EMAIL_FIELD_FIELD_ID = "#emailField";
     private static final String POSTAL_CODE_FIELD_FIELD_ID = "#postalCodeField";
     private static final String CLUSTER_FIELD_FIELD_ID = "#clusterField";
@@ -43,7 +47,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
     private final Label nameLabel;
     private final Label addressLabel;
-    private final Label phoneLabel;
+    private final Label handphoneLabel;
+    private final Label homePhoneLabel;
+    private final Label officePhoneLabel;
     private final Label emailLabel;
     private final Label postalCodeLabel;
     private final Label clusterLabel;
@@ -55,7 +61,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     private final Label dateRepaidLabel;
     private final List<Label> tagLabels;
     private final Text addressText;
-    private final Text phoneText;
+    private final Text handphoneText;
+    private final Text homePhoneText;
+    private final Text officePhoneText;
     private final Text emailText;
     private final Text postalCodeText;
     private final Text clusterText;
@@ -68,7 +76,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
     private String lastRememberedName;
     private String lastRememberedAddress;
-    private String lastRememberedPhone;
+    private String lastRememberedHandphone;
+    private String lastRememberedHomePhone;
+    private String lastRememberedOfficePhone;
     private String lastRememberedEmail;
     private String lastRememberedPostalCode;
     private String lastRememberedCluster;
@@ -87,7 +97,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
 
         this.nameLabel = getChildNode(NAME_FIELD_ID);
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
-        this.phoneLabel = getChildNode(PHONE_FIELD_ID);
+        this.handphoneLabel = getChildNode(HANDPHONE_FIELD_ID);
+        this.homePhoneLabel = getChildNode(HOME_PHONE_FIELD_ID);
+        this.officePhoneLabel = getChildNode(OFFICE_PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
         this.postalCodeLabel = getChildNode(POSTAL_CODE_FIELD_ID);
         this.clusterLabel = getChildNode(CLUSTER_FIELD_ID);
@@ -106,7 +118,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
                 .collect(Collectors.toList());
 
         this.addressText = getChildNode(ADDRESS_FIELD_FIELD_ID);
-        this.phoneText = getChildNode(PHONE_FIELD_FIELD_ID);
+        this.handphoneText = getChildNode(HANDPHONE_FIELD_FIELD_ID);
+        this.homePhoneText = getChildNode(HOME_PHONE_FIELD_FIELD_ID);
+        this.officePhoneText = getChildNode(OFFICE_PHONE_FIELD_FIELD_ID);
         this.emailText = getChildNode(EMAIL_FIELD_FIELD_ID);
         this.postalCodeText = getChildNode(POSTAL_CODE_FIELD_FIELD_ID);
         this.clusterText = getChildNode(CLUSTER_FIELD_FIELD_ID);
@@ -131,8 +145,16 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return addressLabel.getText();
     }
 
-    public String getPhone() {
-        return phoneLabel.getText();
+    public String getHandphone() {
+        return handphoneLabel.getText();
+    }
+
+    public String getHomePhone() {
+        return homePhoneLabel.getText();
+    }
+
+    public String getOfficePhone() {
+        return officePhoneLabel.getText();
     }
 
     public String getEmail() {
@@ -175,8 +197,16 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         return addressText.getText();
     }
 
-    public String getPhoneField() {
-        return phoneText.getText();
+    public String getHandphoneField() {
+        return handphoneText.getText();
+    }
+
+    public String getHomePhoneField() {
+        return homePhoneText.getText();
+    }
+
+    public String getOfficePhoneField() {
+        return officePhoneText.getText();
     }
 
     public String getEmailField() {
@@ -235,7 +265,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
         lastRememberedInterest = getInterest();
         lastRememberedEmail = getEmail();
         lastRememberedName = getName();
-        lastRememberedPhone = getPhone();
+        lastRememberedHandphone = getHandphone();
+        lastRememberedHomePhone = getHomePhone();
+        lastRememberedOfficePhone = getOfficePhone();
         lastRememberedPostalCode = getPostalCode();
         lastRememberedCluster = getCluster();
         lastRememberedTags = getTags();
@@ -251,7 +283,9 @@ public class InfoPanelHandle extends NodeHandle<Node> {
     public boolean isSelectedPersonChanged() {
         return !getName().equals(lastRememberedName)
                 || !getAddress().equals(lastRememberedAddress)
-                || !getPhone().equals(lastRememberedPhone)
+                || !getHandphone().equals(lastRememberedHandphone)
+                || !getHomePhone().equals(lastRememberedHomePhone)
+                || !getOfficePhone().equals(lastRememberedOfficePhone)
                 || !getDebt().equals(lastRememberedDebt)
                 || !getInterest().equals(lastRememberedInterest)
                 || !getEmail().equals(lastRememberedEmail)

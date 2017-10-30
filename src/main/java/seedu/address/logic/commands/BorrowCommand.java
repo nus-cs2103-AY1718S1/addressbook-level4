@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Debt;
@@ -49,7 +51,12 @@ public class BorrowCommand extends UndoableCommand {
             assert false : "The target person cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_BORROW_SUCCESS, personThatBorrowed.getName(), amount));
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList
+                + String.format(MESSAGE_BORROW_SUCCESS, personThatBorrowed.getName(), amount));
     }
 
     @Override

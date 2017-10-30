@@ -4,9 +4,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEBT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HANDPHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INTEREST;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_OFFICE_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -31,7 +33,9 @@ public class PersonUtil {
     public static String getPersonDetails(ReadOnlyPerson person) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + person.getName().fullName + " ");
-        sb.append(PREFIX_PHONE + person.getPhone().value + " ");
+        sb.append(PREFIX_HANDPHONE + person.getHandphone().value + " ");
+        sb.append(PREFIX_HOME_PHONE + person.getHomePhone().value + " ");
+        sb.append(PREFIX_OFFICE_PHONE + person.getOfficePhone().value + " ");
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_POSTAL_CODE + person.getPostalCode().value + " ");

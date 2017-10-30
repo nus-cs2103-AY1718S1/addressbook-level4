@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -20,7 +22,8 @@ public class UnbanCommand extends UndoableCommand {
             + ": Unban a person identified by the index number used in the last person listing from blacklist.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
-    public static final String MESSAGE_UNBAN_PERSON_SUCCESS = "Removed person from blacklist: %1$s";
+    public static final String MESSAGE_UNBAN_PERSON_SUCCESS = "Removed %1$s from BLACKLIST";
+    public static final String MESSAGE_UNBAN_PERSON_FAILURE = "%1$s is not BLACKLISTED!";
 
     private final Index targetIndex;
 
@@ -31,7 +34,8 @@ public class UnbanCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredBlacklistedPersonList();
+        String messagetoDisplay = MESSAGE_UNBAN_PERSON_SUCCESS;
+        List<ReadOnlyPerson> lastShownList = listObserver.getCurrentFilteredList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -40,12 +44,20 @@ public class UnbanCommand extends UndoableCommand {
         ReadOnlyPerson personToUnban = lastShownList.get(targetIndex.getZeroBased());
 
         try {
-            model.removeBlacklistedPerson(personToUnban);
+            if (personToUnban.isBlacklisted()) {
+                model.removeBlacklistedPerson(personToUnban);
+            } else {
+                messagetoDisplay = MESSAGE_UNBAN_PERSON_FAILURE;
+            }
         } catch (PersonNotFoundException e) {
             assert false : "The target person is not in blacklist";
         }
 
-        return new CommandResult(String.format(MESSAGE_UNBAN_PERSON_SUCCESS, personToUnban));
+        listObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
+
+        String currentList = listObserver.getCurrentListName();
+
+        return new CommandResult(currentList + String.format(messagetoDisplay, personToUnban.getName()));
     }
 
     @Override

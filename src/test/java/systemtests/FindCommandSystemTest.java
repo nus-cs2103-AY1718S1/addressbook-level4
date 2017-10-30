@@ -13,6 +13,7 @@ import java.util.List;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -111,8 +112,18 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone number of person in address book -> 0 persons found */
-        command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        /* Case: find handphone number of person in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getHandphone().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find home phone number of person in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getHomePhone().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find office phone number of person in address book -> 0 persons found */
+        command = FindCommand.COMMAND_WORD + " " + DANIEL.getOfficePhone().value;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -166,7 +177,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
-        String expectedResultMessage = String.format(
+        String expectedResultMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT + String.format(
                 MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
 
         executeCommand(command);

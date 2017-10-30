@@ -52,8 +52,8 @@ public class AddCommandTest {
         Person validPerson = new PersonBuilder().build();
 
         CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
-
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
+        String expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, validPerson.getName());
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
 
@@ -135,13 +135,13 @@ public class AddCommandTest {
         }
 
         @Override
-        public String getCurrentList() {
+        public String getCurrentListName() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void setCurrentList(String currentList) {
+        public void setCurrentListName(String currentList) {
             fail("This method should not be called.");
         }
 
@@ -198,18 +198,21 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        public int updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+            return 0;
         }
 
         @Override
-        public void updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+        public int updateFilteredBlacklistedPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+            return 0;
         }
 
         @Override
-        public void updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
+        public int updateFilteredWhitelistedPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
+            return 0;
         }
 
         @Override
@@ -288,7 +291,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public String getCurrentList() {
+        public String getCurrentListName() {
             return "list";
         }
 
@@ -321,7 +324,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public String getCurrentList() {
+        public String getCurrentListName() {
             return "list";
         }
 

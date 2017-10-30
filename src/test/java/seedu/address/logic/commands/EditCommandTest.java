@@ -4,8 +4,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_HANDPHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -19,6 +19,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.ListObserver;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.AddressBook;
@@ -44,7 +45,8 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
@@ -73,14 +75,15 @@ public class EditCommandTest {
         ReadOnlyPerson lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
         PersonBuilder personInList = new PersonBuilder(lastPerson);
-        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+        Person editedPerson = personInList.withName(VALID_NAME_BOB).withHandphone(VALID_HANDPHONE_BOB)
                 .withTags(VALID_TAG_HUSBAND).build();
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withHandphone(VALID_HANDPHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(lastPerson, editedPerson);
@@ -93,7 +96,8 @@ public class EditCommandTest {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, new EditPersonDescriptor());
         ReadOnlyPerson editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -109,7 +113,8 @@ public class EditCommandTest {
         EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
@@ -155,7 +160,8 @@ public class EditCommandTest {
         model.updateSelectedPerson(model.getFilteredPersonList().get(0));
         EditCommand editCommand = prepareCommand(descriptor);
 
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+        String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
+                + String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName());
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
