@@ -18,13 +18,10 @@ image::header_tableofcontents.png[width="400"]
 
 == Welcome to Unify
 image::UG_mainheader_introduction.png[width="900"]
-//-
 {sp}
 
-Unify is a Command Line Interface AddressBook that helps manage your contacts efficiently.
-
 === Do More with Less
-Unlike conventional Address Books, Unify adopts a Command-Line Interface (CLI).
+Unify is a Command Line Interface AddressBook that helps manage your contacts efficiently. Unlike conventional Address Books, Unify adopts a Command-Line Interface (CLI).
 By having a CLI, you can navigate and manage Unify efficiently by typing commands.
 Commands capture the important details of your action into a concise line.
 With just one line, you can traverse your large network to find your old pal John or update your Mum's phone number.
@@ -47,25 +44,36 @@ image::UG_Validation.png[width="300"]
 
 
 == Quick Start
+image::UG_mainheader_installationguide.png[width="900"]
+//-
+{sp}
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
+image::UG_header_stepbystep.png[width="400"]
+{sp}
+
+image:step1.png[width="70"]Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
-+
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. You should see the application open in a few seconds:
-+
+
+image:step2.png[width="70"] Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+
+image:step3.png[width="70"]  Copy the file to the folder you want to use as the home folder for your Address Book.
+
+image:step4.png[width="70"] Double-click the file to start the app. You should see the application open in a few seconds:
+
 image::UG_introui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. Typing *`help`* and pressing kbd:[Enter] will open the help window.
-+
+
+image:step5.png[width="70"]  Type the command in the command box and press kbd:[Enter] to execute it. e.g. Typing *`help`* and pressing kbd:[Enter] will open the help window.
+
 image::UG_help.png[width="590"]
-+
-.  Some example commands you can try:
+{sp}
+
+image::UG_header_examples.png[width="400"]
+{sp}
+
+Some example commands you can try:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
@@ -77,7 +85,8 @@ image::UG_help.png[width="590"]
 == Features
 
 ====
-*Command Format*
+image::UG_header_commandformat.png[width="500"]
+{sp}+
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
@@ -85,9 +94,9 @@ image::UG_help.png[width="590"]
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-image::divider.png[width="900"]
+image::UG_mainheader_basicfeatures.png[width="900"]
 //-
-{sp}+
+{sp}
 
 === Viewing help : `help`
 
@@ -506,11 +515,17 @@ image::UG_exit1.png[width="590"]
 Unify knows that your contacts are important and automatically saves them to your hard disk. There is no need to save manually.
 
 == FAQ
+image::UG_mainheader_faq.png[width="900"]
+//-
+{sp}
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
+image::UG_mainheader_commandsummary.png[width="900"]
+//-
+{sp}
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
