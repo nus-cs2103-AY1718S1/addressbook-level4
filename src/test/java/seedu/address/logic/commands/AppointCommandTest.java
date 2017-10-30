@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -15,6 +14,7 @@ import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -33,7 +33,7 @@ public class AppointCommandTest {
     @Test
     public void execute_addAppointment_success() throws Exception {
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withAppointment("Some appointment").build();
+                .withAppointment("15/12/2020 00:00 60").build();
         AppointCommand appointCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getAppointment().value);
         String expectedMessage = String.format(AppointCommand.MESSAGE_APPOINT_SUCCESS, editedPerson);
 
@@ -82,12 +82,12 @@ public class AppointCommandTest {
     }
 
     @Test
-    public void equals() {
+    public void equals() throws IllegalValueException {
         final AppointCommand standardCommand = new AppointCommand(INDEX_FIRST_PERSON,
-                                                                    new Appointment(APPOINTMENT_DESC));
+                                                                    new Appointment(VALID_APPOINTMENT));
 
         // same values -> returns true
-        String copyDescriptor = new String(APPOINTMENT_DESC);
+        String copyDescriptor = new String(VALID_APPOINTMENT);
         AppointCommand commandWithSameValues = new AppointCommand(INDEX_FIRST_PERSON, new Appointment(copyDescriptor));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -103,12 +103,9 @@ public class AppointCommandTest {
         // different index -> returns false
         assertFalse(standardCommand.equals(new AppointCommand(INDEX_SECOND_PERSON,
                 new Appointment(VALID_APPOINTMENT))));
-
-        // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new AppointCommand(INDEX_FIRST_PERSON, new Appointment("random desc"))));
     }
 
-    private AppointCommand prepareCommand(Index index, String appointment) {
+    private AppointCommand prepareCommand(Index index, String appointment) throws IllegalValueException {
         AppointCommand appointCommand = new AppointCommand(index, new Appointment(appointment));
         appointCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return appointCommand;

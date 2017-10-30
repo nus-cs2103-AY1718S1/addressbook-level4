@@ -128,7 +128,15 @@ public class PersonBuilder {
      * Sets the {@code Appointment} of the {@code Person} that we are building.
      */
     public PersonBuilder withAppointment(String appointment) {
-        this.person.setAppointment(new Appointment(appointment));
+        try {
+            this.person.setAppointment(new Appointment(appointment));
+        } catch (IllegalValueException ive) {
+            try {
+                throw new IllegalValueException("appointment is expected to be unique");
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+            }
+        }
         return this;
     }
 
