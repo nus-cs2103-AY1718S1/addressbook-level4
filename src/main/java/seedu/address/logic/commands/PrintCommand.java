@@ -22,6 +22,8 @@ public class PrintCommand extends Command {
     public static final String[] COMMAND_WORDS = {"print"};
     public static final String COMMAND_WORD = "print";
 
+    public static final String MESSAGE_USAGE = "";
+
     private final String fileName = "lol.txt";
 
     /*
@@ -45,6 +47,21 @@ public class PrintCommand extends Command {
         for (ReadOnlyPerson person: lastShownList) {
             String entry = personIndex + ". " + person.getAsText();
             lines.add(entry);
+            lines.add("Insurance Policy: =========");
+            String owner = "";//person.getLifeInsurance().getOwner().getName().fullName;
+            String insured = "";//person.getLifeInsurance().getInsured().getName().fullName;
+            String beneficiary = ""; //person.getLifeInsurance().getBeneficiary().getName().fullName;
+            String premium = ""; //person.getLifeInsurance().getPremium().toString();
+            String signingdate = ""; //person.getLifeInsurance().getSigningDate();
+            String expirydate = "";//person.getLifeInsurance().getExpiryDate();
+            lines.add("Owner: " + owner +"\n"
+                    + "Insured: " + insured + "\n"
+                    + "Beneficiary: " + beneficiary + "\n"
+                    + "Premium: " + premium + "\n"
+                    + "Signing Date: " + signingdate + "\n"
+                    + "Expiry Date: " + expirydate + "\n"
+            );
+            lines.add("============");
             lines.add("\n");
             personIndex++;
         }
