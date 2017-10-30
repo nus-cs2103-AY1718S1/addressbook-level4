@@ -10,7 +10,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
@@ -25,19 +24,25 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.TextAlignment;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.timeslot.Timeslot;
 
@@ -69,11 +74,15 @@ public class CalendarView extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CalendarView.class);
 
+    private Logic logic;
+
     @FXML
     private StackPane calendarViewPlaceHolder;
 
-    public CalendarView(ObservableList<ReadOnlyEvent> eventList) {
+    public CalendarView(ObservableList<ReadOnlyEvent> eventList, Logic logic) {
         super(FXML);
+
+        this.logic = logic;
 
         calendarView = new GridPane();
 
@@ -256,6 +265,17 @@ public class CalendarView extends UiPart<Region> {
         eventPane.setMaxWidth(150.0);
         eventPane.setStyle("-fx-background-color: #FEDFE1; -fx-alignment: CENTER; -fx-border-color: white");
 
+        //Add listener to mouse-click event to show detail of the event
+        eventPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent t) {
+                try {
+                    logic.execute("eventfind " + event.getTitle().toString());
+                } catch (CommandException | ParseException e) {
+                    raise(new NewResultAvailableEvent(e.getMessage(), true));
+                }
+            }
+        });
         //Add the label to the pane
         eventPane.getChildren().addAll(eventTitle);
 
