@@ -409,26 +409,7 @@ Since this search function involves iterating searching through all tags of all 
 
 However, since these other commands are more commonly used, we decided not to slow down these commands for the performance of the `FingTagCommand` function. Instead, we simply allowed the `FindTagCommand` to search through all possibilities each time it is called.
 
-=== Logging
-
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
-
-*Logging Levels*
-
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
-
-=== Add/Remove Tags mechanism (Since v1.2)
+=== Add/Remove Tags Command (Since v1.2)
 
 The `EditCommand` currently allows the user to edit all the fields of a contact, including tags. However, the tags entered with this command will completely override all the tags existing in that contact.
 
@@ -485,6 +466,64 @@ After parsing, the TYPE, INDEX, and set of tags is passed to the `AddRemoveTagsC
 * **Alternative 2:** Have separate command for adding and removing tags.
 ** **Pros:** Easier to implement because each command will only handle 1 thing.
 ** **Cons:** Boilerplate codes.
+
+=== Social Media Page Command (Since v1.4)
+
+Since v1.3, users can add social media account details to their contacts. They are mainly Facebook, Twitter, and Instagram.
+Users can use the command `socialmedia TYPE INDEX` to load the contact's social media page to the browser panel.
+
+A new event `ChangeBrowserPanelUrlEvent` is created for the purpose when the browser panel URL needs to be changed. Previously, the URL was completely handled within the BrowserPanel UI and not exposed to the other components.
+With this event, other components will be able to call it and change the url of the browser. In the case of `SocialMediaCommand`, the URL will be changed to Facebook, Twitter, or Instagram according to the TYPE that the user indicated in the command.
+
+
+Subsequently, the `BrowserPanel` UI will handle the event and change the URL accordingly.
+
+[source, java]
+----
+@Subscribe
+    private void handleChangeBrowserPanelUrlEvent(ChangeBrowserPanelUrlEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPage(event.url);
+    }
+----
+
+To call the event, simply invoke the `EventsCenter` and post that event like such:
+[source, java]
+----
+EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(url));
+----
+
+==== Design considerations
+*Aspect:* Commands to show different social media pages
+
+* **Alternative 1 (current choice):** 1 unified command `SocialMediaCommand` that parse arguments to determine which social media page to show.
+** **Pros:** Cleaner implementation and easier for additional social medias to be added.
+** **Cons:** Have to parse the argument and match which social media and URL to use.
+
+* **Alternative 2:** Have separate command to show Facebook, Twitter, and Instagram.
+** **Pros:** Easier to implement because each command will only handle 1 thing.
+** **Cons:** Repeated codes for each social media.
+
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
 
 == Documentation
 

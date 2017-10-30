@@ -366,10 +366,10 @@ Alias example:
 
 * `re 1 r/Owe money`
 
-==== Accessing a person's social media : `socialmedia` (Coming v2.0)
+==== Accessing a person's social media : `socialmedia` (Since v1.4)
 
 Access a person's social media profile on the browser. +
-Format: `socialmedia INDEX TYPE` +
+Format: `socialmedia TYPE INDEX` +
 Alias: `sm`
 
 ****
@@ -382,11 +382,11 @@ Alias: `sm`
 Examples:
 
 * `list` +
-`socialmedia 1 facebook` +
+`socialmedia facebook 1` +
 Loads the Facebook account of the 1st person in the address book.
 
 * `find Tony` +
-`socialmedia 2 instagram` +
+`socialmedia instagram 2` +
 Loads the Instagram account of the 2nd person returned by the `find` command.
 
 ==== Viewing contacts with birthday in current month : `birthday`
