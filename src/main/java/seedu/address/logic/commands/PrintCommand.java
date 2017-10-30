@@ -2,6 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,15 +37,22 @@ public class PrintCommand extends Command {
         String timeStamp = new SimpleDateFormat("dd/MM/YYYY" + " "+ "HH:mm:ss").format(new Date());
         lines.add("Addressbook was last updated on: " + timeStamp +"\n");
 
+        int personIndex = 1;
+        for (ReadOnlyPerson person: lastShownList) {
+            String entry = personIndex + ". " + person.getAsText();
+            lines.add(entry);
+            lines.add("\n");
+            personIndex++;
+        }
 
-        /*
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        Name name = personToDelete.getName();
-        Address address = personToDelete.getAddress();
-        String reason = personToDelete.getReason();
-        return new CommandResult(reason);
-        */
-        return new CommandResult("Lol");
+        Path file = Paths.get("doc/books/"+ fileName +".txt");
+        try {
+            Files.write(file, lines, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new CommandResult("lol");
     }
 
 }
