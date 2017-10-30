@@ -6,14 +6,18 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysSchedule
 import java.util.Arrays;
 import java.util.List;
 
-import guitests.guihandles.AgendaPanelHandle;
-import guitests.guihandles.ScheduleCardHandle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.junit.Before;
 import org.junit.Test;
+
+import guitests.guihandles.AgendaPanelHandle;
+import guitests.guihandles.ScheduleCardHandle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ScheduleBuilder;
+
+
 
 public class AgendaPanelTest extends GuiUnitTest {
     private static final List<Schedule> scheduleList = Arrays.asList(new ScheduleBuilder().build(),

@@ -43,7 +43,7 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     * Asserts that {@code actualCard} displays the details of {@code expectedSchedule}.
      */
     public static void assertCardDisplaysSchedule(Schedule expectedSchedule, ScheduleCardHandle actualCard) {
         assertEquals(expectedSchedule.getScheduleDate().value, actualCard.getDate());

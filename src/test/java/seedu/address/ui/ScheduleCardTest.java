@@ -5,10 +5,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysSchedule;
 
-import guitests.guihandles.ScheduleCardHandle;
 import org.junit.Test;
+
+import guitests.guihandles.ScheduleCardHandle;
+
 import seedu.address.model.schedule.Schedule;
 import seedu.address.testutil.ScheduleBuilder;
+
+
 
 public class ScheduleCardTest extends GuiUnitTest {
     @Test
