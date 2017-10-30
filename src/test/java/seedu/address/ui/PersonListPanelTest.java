@@ -20,13 +20,13 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class PersonListPanelTest extends GuiUnitTest {
-    private HashMap<String, String> colourMap = new HashMap<>();
     private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
             FXCollections.observableList(getTypicalPersons());
 
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
 
     private PersonListPanelHandle personListPanelHandle;
+    private HashMap<String, String> colourMap = new HashMap<>();
 
     @Before
     public void setUp() {
