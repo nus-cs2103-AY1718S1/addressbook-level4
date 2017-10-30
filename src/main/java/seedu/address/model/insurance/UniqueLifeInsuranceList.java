@@ -3,15 +3,12 @@ package seedu.address.model.insurance;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
-import java.util.List;
 
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author OscarWang114
 /**
