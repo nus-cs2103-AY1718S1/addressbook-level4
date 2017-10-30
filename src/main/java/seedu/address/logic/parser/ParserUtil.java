@@ -137,8 +137,8 @@ public class ParserUtil {
                     parseRecurInterval(date.get())));
         }
         return (date.isPresent() && !date.get().isEmpty())
-                ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
-                : Optional.empty();
+                ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())),
+                parseRecurInterval(date.get()))) : Optional.empty();
     }
 
     /**
