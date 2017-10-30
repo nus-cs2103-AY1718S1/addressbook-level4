@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -31,7 +29,7 @@ public class Photo {
      * Constructs with a given pathName.
      */
     public Photo(String pathName) throws IllegalValueException {
-        requireNonNull(pathName);
+        //requireNonNull(pathName);
 
         this.pathName = pathName;
     }
