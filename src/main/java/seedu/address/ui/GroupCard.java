@@ -53,19 +53,17 @@ public class GroupCard extends UiPart<Region> {
      * @param group
      */
     private void initMembers(ReadOnlyGroup group) {
-        group.getGroupMembers().forEach(person -> {
-            if (members.getChildren().size() < TAG_LIMIT) {
-                Label memberName = new Label(person.getName().fullName);
-                memberName.setStyle("-fx-background-color: blue");
-                members.getChildren().add(memberName);
-            }
-        });
+        int groupSize = group.getGroupMembers().size();
+        String labelText = groupSize + " member";
 
-        if(group.getGroupMembers().size() > TAG_LIMIT) {
-            members.getChildren().add(new Label("+" + (group.getGroupMembers().size() - TAG_LIMIT)));
+        if (groupSize > 1) {
+           labelText = labelText.concat("s");
         }
-        members.setHgap(4);
-        members.setVgap(7);
+
+        Label groupLabel = new Label(labelText);
+        members.getChildren().add(groupLabel);
+
+
     }
 
     @Override
