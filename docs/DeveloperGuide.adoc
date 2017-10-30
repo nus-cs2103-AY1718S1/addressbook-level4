@@ -430,6 +430,8 @@ The `TagCommand`and `RetrieveCommand` reside in the `commands` of `Logic`.
 
 This command inherits from `UndoableCommand`. Thus, it can be undone.
 
+For every index specified, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside the `AddressBook` 's person list with the new person object.
+
 The following sequence diagram shows how the tag operation works:
 
 image::TagSequenceDiagram.png[width="800"]
