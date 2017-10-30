@@ -117,6 +117,7 @@ Your inputs for BLOODTYPE will always be shown in capital letters as shown below
 
 image::bloodtypestored.png[width="800"]
     Figure 4: Mixed case BLOODTYPE input
+
 <<<
 
 // tag::list[]
