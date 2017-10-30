@@ -16,12 +16,13 @@ import seedu.address.model.person.ReadOnlyPerson;
  * An UI component that displays information of a {@code Person}.
  */
 public class PersonCard extends UiPart<Region> {
-
+    //@@author wishingmaid
     private static final String FXML = "PersonListCard.fxml";
     private static String[] colors = { "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
-
+    //@@author
+    
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -52,8 +53,10 @@ public class PersonCard extends UiPart<Region> {
     private Label age;
     @FXML
     private FlowPane tags;
+    //@@author wishingmaid
     @FXML
     private ImageView imageView;
+    //@@author
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -79,7 +82,9 @@ public class PersonCard extends UiPart<Region> {
         remark.textProperty().bind(Bindings.convert(person.remarkProperty()));
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
         age.textProperty().bind(Bindings.convert(person.ageProperty()));
+        //@@author wishingmaid
         setImage(person);
+        //@@author
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(person);
@@ -94,6 +99,7 @@ public class PersonCard extends UiPart<Region> {
             tags.getChildren().add(tagLabel);
         });
     }
+    //@@author wishingmaid
     /** Checks if the user has added any photo to the specific contact*/
     private void setImage(ReadOnlyPerson person) {
         String url = person.getPhoto().getFilePath(); //gets the filepath directly from the resources folder.
@@ -105,6 +111,7 @@ public class PersonCard extends UiPart<Region> {
             imageView.setImage(image);
         }
     }
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

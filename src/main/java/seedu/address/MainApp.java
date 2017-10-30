@@ -51,11 +51,14 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    //@@author wishingmaid
     protected InitImageFolder imageFolder;
-
+    //@@author
     @Override
     public void init() throws Exception {
+        //@@author wishingmaid
         logger.info("=============================[ Initializing PEERSONAL ]===========================");
+        //@@author 
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -64,7 +67,9 @@ public class MainApp extends Application {
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        //@@author wishingmaid
         imageFolder = new InitImageFolder(userPrefs.getDisplayPicturesPath());
+        //@@author
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);

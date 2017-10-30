@@ -1,3 +1,4 @@
+//@@author wishingmaid
 package seedu.address.storage;
 
 import java.awt.image.BufferedImage;
