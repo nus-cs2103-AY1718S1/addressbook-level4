@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<HBox id="cardPane" fx:id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane HBox.hgrow="ALWAYS">
+         <children>
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="320.0">
+               <padding>
+                  <Insets bottom="5" left="15" right="5" top="5" />
+               </padding>
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="400.0" spacing="5">
+                     <children>
+                        <StackPane>
+                           <children>
+                              <Circle fill="#545f6b" radius="16.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Text fx:id="id" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="1." textAlignment="CENTER" wrappingWidth="39.0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <StackPane.margin>
+                                    <Insets left="5.0" />
+                                 </StackPane.margin>
+                              </Text>
+                           </children>
+                        </StackPane>
+                        <Text fx:id="groupName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="\$name">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <FlowPane fx:id="members">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </FlowPane>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+   </children>
+</HBox>

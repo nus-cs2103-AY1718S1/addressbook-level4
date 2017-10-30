@@ -1,15 +1,20 @@
 package seedu.address.model;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
@@ -31,6 +36,7 @@ public interface Model {
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_PINNED_PERSONS = p -> UniqueTagList.containsPinTag(p);
     Predicate<ReadOnlyPerson> PREDICATE_SHOW_UNPINNED_PERSONS = p -> !UniqueTagList.containsPinTag(p);
+    Predicate<ReadOnlyGroup> PREDICATE_SHOW_ALL_GROUPS = unused -> true;
 
 
     /**
@@ -54,6 +60,16 @@ public interface Model {
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
     /**
+     * Adds the given group
+     */
+    void addGroup(ReadOnlyGroup group) throws DuplicateGroupException;
+
+    /**
+     * Deletes the given group
+     */
+    void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException;
+
+    /**
      * Pins the given person
      */
     void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
@@ -62,6 +78,15 @@ public interface Model {
      * Unpins the given person
      */
     void unpinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException;
+
+    /**
+     * Set the colour for the specific tag
+     * @param tag
+     * @param colour
+     */
+    void setTagColour(String tag, String colour) throws IllegalValueException;
+
+    HashMap<Tag, String> getTagColours();
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -79,11 +104,18 @@ public interface Model {
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
     /**
+     * Returns an unmodifiable view of the filtered group list
+     */
+    ObservableList<ReadOnlyGroup> getGroupList();
+
+    /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      *
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate);
 
     void sort(String sortType) throws DuplicatePersonException;
 

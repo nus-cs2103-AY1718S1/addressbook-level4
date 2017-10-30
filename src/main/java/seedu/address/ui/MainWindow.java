@@ -41,12 +41,17 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private PersonInfo personInfoPanel;
     private PersonListPanel personListPanel;
+    private GroupListPanel groupListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
     private StackPane browserPlaceholder;
+
+    @FXML
+    private StackPane personInfoPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -56,6 +61,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -129,8 +137,14 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personInfoPanel = new PersonInfo(prefs.getColourMap());
+        personInfoPlaceholder.getChildren().add(personInfoPanel.getRoot());
+
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), prefs.getColourMap());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        groupListPanel = new GroupListPanel(logic.getGroupList());
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

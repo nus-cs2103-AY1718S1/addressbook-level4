@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.group.GroupName;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
@@ -31,6 +33,7 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
     public static final String MESSAGE_INVALID_SORT = "Invalid Sorting type.";
+    public static final String MESSAGE_INVALID_ARGUMENTS = "Incorrect number of arguments.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -43,6 +46,25 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static ArrayList<Index> parseIndexes(String manyIndex) throws IllegalValueException {
+        ArrayList<Index> listOfIndex = new ArrayList<>();
+        String trimmedIndex = manyIndex.trim();
+        String[] indexes = trimmedIndex.split("\\s+");
+        for (String index : indexes) {
+            if (!StringUtil.isNonZeroUnsignedInteger(index)) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+            listOfIndex.add(Index.fromOneBased(Integer.parseInt(index)));
+        }
+        return listOfIndex;
     }
 
     /**
@@ -115,6 +137,15 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<GroupName> parseGroupName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new GroupName(name.get())) : Optional.empty();
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
@@ -143,11 +174,23 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a String and checks whether it has two different .
+     */
+    public static String[] parseColourCommand(String args) throws IllegalValueException {
+        String[] splitArgs = args.trim().split("\\s+");
+        if (splitArgs.length == 2) {
+            return splitArgs;
+        }
+        throw new IllegalValueException(MESSAGE_INVALID_ARGUMENTS);
+    }
+
+    /**
      * Parses a String argument for tag. Leading and trailing whitespaces will be removed
      */
     public static String parseTag(String tag) {
         String trimmedTag = tag.trim();
         return trimmedTag;
+
     }
 
     /**

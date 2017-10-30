@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Circle fx:id="circle" fill="DODGERBLUE" layoutX="308.0" layoutY="73.0" radius="70.0" stroke="BLACK" strokeType="INSIDE" />
+      <Text fx:id="initial" fill="WHITE" layoutX="262.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="85.0">
+         <font>
+            <Font size="93.0" />
+         </font>
+      </Text>
+      <GridPane layoutX="114.0" layoutY="244.0" prefHeight="134.0" prefWidth="479.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="101.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="382.0" minWidth="0.0" prefWidth="378.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="addressHeader" styleClass="label-bright" GridPane.rowIndex="1" />
+            <Label fx:id="birthdayHeader" styleClass="label-bright" GridPane.rowIndex="2" />
+            <Label fx:id="tagsHeader" styleClass="label-bright" GridPane.rowIndex="3" />
+            <Label fx:id="birthday" styleClass="label-bright" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="email" styleClass="label-bright" GridPane.columnIndex="1" />
+            <Label fx:id="address" styleClass="label-bright" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="emailHeader" styleClass="label-bright" />
+            <FlowPane fx:id="tags" alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+      <Text fx:id="name" fill="WHITE" layoutX="20.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="560.0">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Text>
+      <Text fx:id="phone" fill="WHITE" layoutX="4.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="591.0000050663948">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>

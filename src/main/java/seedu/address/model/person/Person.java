@@ -25,7 +25,7 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Address> address;
 
     private ObjectProperty<UniqueTagList> tags;
-    private boolean pinned;
+    private ObjectProperty<Boolean> pinned;
 
     /**
      * Every field must be present and not null.
@@ -39,7 +39,7 @@ public class Person implements ReadOnlyPerson {
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        pinned = checkPinTag(tags);
+        pinned = new SimpleObjectProperty<>(checkPinTag(tags));
     }
 
     /**
@@ -149,8 +149,14 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public boolean isPinned() {
+        return pinned.get();
+    }
+
+    @Override
+    public ObjectProperty<Boolean> pinnedProperty() {
         return pinned;
     }
+
 
     /**
      * Replaces this person's tags with the tags in the argument tag set.

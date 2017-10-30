@@ -1,8 +1,10 @@
 package seedu.address.model;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents User's preferences.
@@ -11,10 +13,13 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
+
+    private HashMap<String, String> colourMap;
     private String addressBookName = "Circles";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(500, 500, 10, 10);
+        colourMap = new HashMap<>();
     }
 
     public GuiSettings getGuiSettings() {
@@ -43,6 +48,25 @@ public class UserPrefs {
 
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+    public HashMap<String, String> getColourMap() {
+        return colourMap;
+    }
+
+    public void setColourMap(HashMap<String, String> colourMap) {
+        this.colourMap = colourMap;
+    }
+
+    /**
+     * updates colormap with the new hashmap
+     * @param newMap
+     */
+    public void updateColorMap(HashMap<Tag, String> newMap) {
+        colourMap.clear();
+        for (HashMap.Entry<Tag, String> newEntry : newMap.entrySet()) {
+            colourMap.put(newEntry.getKey().tagName, newEntry.getValue());
+        }
     }
 
     @Override

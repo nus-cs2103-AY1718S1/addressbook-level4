@@ -5,8 +5,12 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,10 +19,15 @@ import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.NewPersonListEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -35,6 +44,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyGroup> filteredGroups;
+    private HashMap<Tag, String> tagColours = new HashMap<>();
+    private UserPrefs colourPrefs;
 
 
     /**
@@ -48,6 +60,20 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredGroups = new FilteredList<>(this.addressBook.getGroupList());
+        colourPrefs = userPrefs;
+        HashMap<String, String> stringColourMap = userPrefs.getColourMap();
+        if (stringColourMap != null) {
+            try {
+                for (HashMap.Entry<String, String> entry : stringColourMap.entrySet()) {
+                    tagColours.put(new Tag(entry.getKey()), entry.getValue());
+                }
+
+            } catch (IllegalValueException ive) {
+                //it shouldn't ever reach here
+            }
+        }
+        updateAllPersons(tagColours);
     }
 
     public ModelManager() {
@@ -86,6 +112,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public synchronized void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
+        addressBook.addGroup(group);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteGroup(ReadOnlyGroup group) throws GroupNotFoundException {
+        addressBook.deleteGroup(group);
+        indicateAddressBookChanged();
+    }
+
+    @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
@@ -93,6 +131,8 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+
 
     @Override
     public void pinPerson(ReadOnlyPerson person) throws CommandException, PersonNotFoundException {
@@ -114,6 +154,31 @@ public class ModelManager extends ComponentManager implements Model {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
         }
+    }
+
+    @Override
+    public void setTagColour(String tagName, String colour) throws IllegalValueException {
+        List<Tag> tagList = addressBook.getTagList();
+        for (Tag tag: tagList) {
+            if (tagName.equals(tag.tagName)) {
+                tagColours.put(tag, colour);
+                updateAllPersons(tagColours);
+                indicateAddressBookChanged();
+                raise(new NewPersonListEvent(getFilteredPersonList()));
+                colourPrefs.updateColorMap(tagColours);
+                return;
+            }
+        }
+        throw new IllegalValueException("No such tag!");
+    }
+
+    @Override
+    public HashMap<Tag, String> getTagColours() {
+        return tagColours;
+    }
+
+    private void updateAllPersons(HashMap<Tag, String> allTagColours) {
+        colourPrefs.updateColorMap(allTagColours);
     }
 
     /**
@@ -170,9 +235,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ObservableList<ReadOnlyGroup> getGroupList() {
+        return FXCollections.unmodifiableObservableList(filteredGroups);
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
+        requireNonNull(predicate);
+        filteredGroups.setPredicate(predicate);
     }
 
     @Override
@@ -231,4 +307,10 @@ public class ModelManager extends ComponentManager implements Model {
         return newList;
     }
 
+    @Subscribe
+    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        updateFilteredPersonList(person -> event.getNewSelection().group.getGroupMembers().contains(person));
+        raise(new NewPersonListEvent(getFilteredPersonList()));
+    }
 }
