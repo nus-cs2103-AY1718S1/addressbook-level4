@@ -39,6 +39,7 @@ import seedu.address.model.parcel.exceptions.DuplicateParcelException;
  * A utility class containing a list of {@code Parcel} objects to be used in tests.
  */
 public class TypicalParcels {
+    //@@author kennard123661
     // Parcels that are PENDING.
     public static final String VALID_TRACKING_NUMBER_ALICE = "RR000111000SG";
     public static final String VALID_NAME_ALICE = "Alice Pauline";
@@ -169,6 +170,7 @@ public class TypicalParcels {
             .withName(VALID_NAME_JOHN).withPhone(VALID_PHONE_JOHN).withEmail(VALID_EMAIL_JOHN)
             .withAddress(VALID_ADDRESS_JOHN).withDeliveryDate(VALID_DELIVERY_DATE_JOHN)
             .withTags(VALID_TAG_HEAVY, VALID_TAG_FLAMMABLE).withStatus(VALID_STATUS_COMPLETED).build();
+    //@@author
 
     // Manually added - Parcel's details found in {@code CommandTestUtil}
     public static final ReadOnlyParcel AMY = new ParcelBuilder().withTrackingNumber(VALID_TRACKING_NUMBER_AMY)

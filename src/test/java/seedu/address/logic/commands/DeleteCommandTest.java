@@ -42,6 +42,7 @@ public class DeleteCommandTest {
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
+    //@@author kennard123661
     @Test
     public void execute_validIndexActiveList_success() throws Exception {
         // active list will be valid.
@@ -59,6 +60,7 @@ public class DeleteCommandTest {
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
+    //@@author
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {

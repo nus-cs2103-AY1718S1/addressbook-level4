@@ -66,6 +66,7 @@ public class LogicManagerTest {
         logic.getFilteredParcelList().remove(0);
     }
 
+    //@@author kennard123661
     @Test
     public void getFilteredParcelListWithStatus() {
         // setting up
@@ -84,6 +85,7 @@ public class LogicManagerTest {
         ObservableList<ReadOnlyParcel> uncompletedParcels = testLogic.getUndeliveredParcelList();
         assertFalse(uncompletedParcels.stream().anyMatch(parcel -> parcel.getStatus().equals(Status.COMPLETED)));
     }
+    //@@author
 
     /**
      * Executes the command, confirms that no exceptions are thrown and that the result message is correct.

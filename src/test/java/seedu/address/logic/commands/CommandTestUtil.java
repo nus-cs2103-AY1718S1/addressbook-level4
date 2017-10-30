@@ -58,6 +58,7 @@ public class CommandTestUtil {
     public static final String DELIVERY_DATE_DESC_AMY = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_AMY;
     public static final String DELIVERY_DATE_DESC_BOB = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_BOB;
 
+    //@@author kennard123661
     // list of status
     public static final String VALID_STATUS_PENDING = "PENDING";
     public static final String VALID_STATUS_DELIVERING = "DELIVERING";
@@ -74,6 +75,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HEAVY = "HEAVY";
     public static final String TAG_DESC_FLAMMABLE = " " + PREFIX_TAG + VALID_TAG_FLAMMABLE;
     public static final String TAG_DESC_FROZEN = " " + PREFIX_TAG + VALID_TAG_FROZEN;
+    //@@author
 
     public static final String INVALID_TRACKING_NUMBER_DESC = " " + PREFIX_TRACKING_NUMBER
             + "SS123456789RR"; // prefix and postfix are reversed
@@ -149,6 +151,7 @@ public class CommandTestUtil {
         assert model.getFilteredParcelList().size() == 1;
     }
 
+    //@@author kennard123661
     /**
      * Updates {@code model}'s filtered list to show only the first parcel in the {@code model}'s address book.
      * with status not completed (Active List default state references Undelivered parcels)
@@ -170,6 +173,7 @@ public class CommandTestUtil {
 
         assert model.getFilteredParcelList().size() == 1;
     }
+    //@@author
 
     /**
      * Deletes the first parcel in {@code model}'s filtered list from {@code model}'s address book.

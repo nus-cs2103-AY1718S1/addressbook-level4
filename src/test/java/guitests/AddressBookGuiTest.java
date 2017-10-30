@@ -72,6 +72,7 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getCommandBox();
     }
 
+    //@@author kennard123661
     protected ParcelListPanelHandle getParcelListPanel() {
         return mainWindowHandle.getActiveParcelListPanel();
     }
@@ -79,6 +80,7 @@ public abstract class AddressBookGuiTest {
     protected TabPaneHandle getTabPane() {
         return mainWindowHandle.getTabPane();
     }
+    //@@author
 
     protected MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
