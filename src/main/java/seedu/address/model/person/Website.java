@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import org.apache.commons.validator.routines.UrlValidator;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -25,7 +23,7 @@ public class Website {
      */
     public Website(String websiteName) throws IllegalValueException {
         if (websiteName == null) {
-          this.value =  WEBSITE_TEMPORARY;
+            this.value =  WEBSITE_TEMPORARY;
         } else {
             String trimmedWebsite = websiteName.trim();
 
