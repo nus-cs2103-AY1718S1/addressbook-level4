@@ -70,7 +70,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE)).ifPresent(editPersonDescriptor::setNote);
             ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO)).ifPresent(editPersonDescriptor::setPhoto);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-            parseRelForEdit(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP)).ifPresent(editPersonDescriptor::setRelation);
+            parseRelForEdit(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP)).ifPresent
+                (editPersonDescriptor::setRelation);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
