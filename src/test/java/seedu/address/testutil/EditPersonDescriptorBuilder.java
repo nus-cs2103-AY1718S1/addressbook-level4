@@ -71,6 +71,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+
     /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */

@@ -3,6 +3,10 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.customField.CustomField;
+import seedu.address.model.customField.UniqueCustomFieldList;
+import seedu.address.model.person.phone.Phone;
+import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -16,12 +20,19 @@ public interface ReadOnlyPerson {
     Name getName();
     ObjectProperty<Phone> phoneProperty();
     Phone getPhone();
+    ObjectProperty<UniquePhoneList> phoneListProperty();
+    UniquePhoneList getPhoneList();
     ObjectProperty<Email> emailProperty();
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Photo> photoProperty();
+    Photo getPhoto();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<UniqueCustomFieldList> customFieldProperty();
+    Set<CustomField> getCustomFields();
+    UniqueCustomFieldList getCustomFieldList();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -49,6 +60,7 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        getCustomFields().forEach(builder::append);
         return builder.toString();
     }
 

@@ -21,7 +21,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.phone.Phone;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -126,11 +126,6 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
-    }
-
-    @Test
     public void parseAddress_validValue_returnsAddress() throws Exception {
         Address expectedAddress = new Address(VALID_ADDRESS);
         Optional<Address> actualAddress = ParserUtil.parseAddress(Optional.of(VALID_ADDRESS));
@@ -148,11 +143,6 @@ public class ParserUtilTest {
     public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
         ParserUtil.parseEmail(Optional.of(INVALID_EMAIL));
-    }
-
-    @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
     }
 
     @Test

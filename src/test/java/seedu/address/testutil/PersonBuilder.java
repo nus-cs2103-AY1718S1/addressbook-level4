@@ -7,8 +7,10 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.phone.Phone;
+import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -94,6 +96,19 @@ public class PersonBuilder {
     }
 
     /**
+     * UniquePhoneList
+     */
+    public PersonBuilder withPhoneList(String phone) {
+        try {
+            this.person.setPhoneList(new UniquePhoneList(new Phone(phone)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("phone is expected to be unique.");
+        }
+        return this;
+    }
+
+
+    /**
      * Sets the {@code Email} of the {@code Person} that we are building.
      */
     public PersonBuilder withEmail(String email) {
@@ -101,6 +116,31 @@ public class PersonBuilder {
             this.person.setEmail(new Email(email));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code customFields} into a {@code Set<CustomField>}
+     * and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withCustomFields(String ... customFields) {
+        try {
+            this.person.setCustomFields(SampleDataUtil.getCustomFieldSet(customFields));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Photo} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPhoto(String photo) {
+        try {
+            this.person.setPhoto(new Photo(photo));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("photo is expected to be unique.");
         }
         return this;
     }

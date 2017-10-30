@@ -52,7 +52,13 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
+    private StackPane searchBoxPlaceholder;
+
+    @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private StackPane personInformationPanelPlaceholder;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -126,8 +132,11 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //browserPanel = new BrowserPanel();
+        //browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        PersonInformationPanel personInformationPanel = new PersonInformationPanel();
+        personInformationPanelPlaceholder.getChildren().add(personInformationPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -140,6 +149,10 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        SearchBox searchBox = new SearchBox(logic);
+        searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
+
     }
 
     void hide() {
