@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -82,12 +83,14 @@ public class PersonCard extends UiPart<Region> {
         boolean favouriteStatus = person.getFavourite().getFavourite();
         String textToDisplay = favouriteStatus ? "Fav" : "";
         Label favouriteLabel = new Label(textToDisplay);
+        Button favouriteButton = new Button("Fav");
         if (favouriteStatus) {
             favouriteLabel.setStyle("-fx-background-color: orangered");
         } else {
             favouriteLabel.setStyle("-fx-background-color: cornflowerblue");
         }
         cardPane.getChildren().add(favouriteLabel);
+        cardPane.getChildren().add(favouriteButton);
     }
 
     /**
