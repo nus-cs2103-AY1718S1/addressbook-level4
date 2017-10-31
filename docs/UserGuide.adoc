@@ -118,8 +118,8 @@ and `Alice Tan`
 
 Examples:
 
-* `find n/John` +
-Returns `john` and `John Doe`
+* `find n/John Bob` +
+Returns `john`, `John Doe` and `Bob`
 * `find p/98765432` +
 Returns any person having the phone number `98765432`
 * `find a/138 Clementi Road` +
@@ -128,10 +128,10 @@ Returns any person having the address `138 Clementi Road`
 Returns any person having the email `john@example.com`
 * `find t/[friend]` +
 Returns any person having the tag `[friend]`
-* `find r/[Likes coffee]` +
+* `find r/Likes coffee` +
 Returns any person having the remarks `[Likes coffee]`
-* `find b/10-October-1995` +
-Returns any person with birthday on `10-October-1995`
+* `find b/10-10-1995` +
+Returns any person with birthday on `10-10-1995`
 
 === Deleting a person : `delete`
 

@@ -83,10 +83,10 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
-
+        //@@author Affalen
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
-
+        //@@author
         case ListCommand.COMMAND_ALIAS:
         case ListCommand.COMMAND_WORD:
             return new ListCommand();

@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 import java.io.File;
-import java.net.MalformedURLException;
 
 /**
  * Represents a Photo in the address book.
@@ -21,24 +20,17 @@ public class Photo {
             this.url = DEFAULT_FILEPATH;
         } else {
             File file = new File(filepath);
-            this.filepath = filepath;
             if (isValidFilePath(file)) {
-                try {
-                    String localUrl = file.toURI().toURL().toString();
-                    this.url = localUrl;
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+                this.filepath = filepath;
             } else {
                 throw new IllegalArgumentException(URL_VALIDATION);
             }
         }
     }
 
-    public static boolean isValidFilePath(File file) {
+    public boolean isValidFilePath(File file) {
         return file.exists();
     }
-
     //the filepath of the image
     public String getFilePath() {
         return filepath;
@@ -47,5 +39,22 @@ public class Photo {
     public String getUrl() {
         return this.url;
     }
-
+    /** It is guaranteed that the new filepath exists inside the resources folder */
+    public void resetFilePath(String filepath) {
+        this.filepath = filepath;
+    }
+    @Override
+    public String toString() {
+        return filepath;
+    }
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Photo // instanceof handles nulls
+                && this.filepath.equals(((Photo) other).filepath)); // state check
+    }
+    @Override
+    public int hashCode() {
+        return filepath.hashCode();
+    }
 }
