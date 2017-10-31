@@ -49,8 +49,6 @@ public class CalendarPanel extends UiPart<Region> {
 
     private DatePicker datePicker;
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
     @FXML
     private StackPane calendarPane;
 
@@ -94,8 +92,9 @@ public class CalendarPanel extends UiPart<Region> {
     private void findDateForSelection() {
         // Make datePicker editable (i.e. i think can select and update value)
         datePicker.setEditable(true);
-        // TODO: 23/10/17 Able to execute findCommand when a colour date is selected
-        // TODO: 26/10/17 Able to not execute findCommand when cell is not colour, able to find birthday with dd-MM
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        // TODO: 26/10/17 Able to not execute findCommand when cell is not colour
         datePicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -155,27 +154,27 @@ public class CalendarPanel extends UiPart<Region> {
                         int bCount = 0;
                         int dCount = 0;
                         StringBuilder colour = new StringBuilder();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
                         for (ReadOnlyPerson person: personList) {
                             try {
-                                if (!person.getBirthday().isEmpty()) {
-                                    if (MonthDay.from(item).equals
+                                if (!person.getBirthday().isEmpty() && MonthDay.from(item).equals
                                             (MonthDay.from(LocalDate.parse(person.getBirthday().toString(),
                                                     formatter)))) {
-                                        if (bCount == 0) {
-                                            bCount++;
-                                            s.append(person.getName() + "'s Birthday");
-                                        } else if (bCount > 0) {
-                                            int endIndex = s.indexOf("Birthday");
-                                            s.delete(0, endIndex);
-                                            bCount++;
-                                            s.insert(0, bCount + " ");
-                                            if (bCount == 2) {
-                                                s.append("s");
-                                            }
+                                    if (bCount == 0) {
+                                        bCount++;
+                                        s.append(person.getName() + "'s Birthday");
+                                    } else if (bCount > 0) {
+                                        int endIndex = s.indexOf("Birthday");
+                                        s.delete(0, endIndex);
+                                        bCount++;
+                                        s.insert(0, bCount + " ");
+                                        if (bCount == 2) {
+                                            s.append("s");
                                         }
-                                        colour = new StringBuilder("-fx-background-color: #f1a3ff;");
                                     }
+                                    colour = new StringBuilder("-fx-background-color: #f1a3ff;");
+
                                 }
                             } catch (DateTimeParseException exc) {
                                 logger.warning("Not parsable: " + person.getBirthday().toString());
@@ -225,7 +224,7 @@ public class CalendarPanel extends UiPart<Region> {
                                 throw exc;
                             }
                         }
-                        if (!s.toString().equals("")) {
+                        if (s.length() == 0) {
                             setTooltip(new Tooltip(s.toString()));
                         }
                         setStyle(colour.toString());
