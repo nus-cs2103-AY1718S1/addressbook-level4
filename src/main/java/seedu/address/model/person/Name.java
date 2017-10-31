@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+
 /**
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
@@ -21,6 +22,8 @@ public class Name {
 
     public final String fullName;
 
+    public final String fullNameInit;
+
     /**
      * Validates given name.
      *
@@ -33,6 +36,12 @@ public class Name {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         this.fullName = trimmedName;
+        String init = "";
+        String[] trimmedNameArray = trimmedName.split(" ");
+        for (String word: trimmedNameArray) {
+            init += (word.substring(0, 1));
+        }
+        this.fullNameInit = fullName + " " + init;
     }
 
     /**
