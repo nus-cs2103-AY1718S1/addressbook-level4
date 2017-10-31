@@ -520,13 +520,13 @@ public class TagAddCommand extends UndoableCommand {
 }
 ----
 
-For example, the user input might be `t-add college friend 1 2 3`.
-After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input(tag to add, indices in the list), in the example `college friend 1 2 3`, will be passed to and parsed by `TagAddCommandParser`.
+For example, the user input might be `t-add 1 2 3 college friend`.
+After the command word `t-add` is parsed at the `AddresBookParser`, the remaining user input(indices in the list, tag to add), in the example `t-add 1 2 3 college friend`, will be passed to and parsed by `TagAddCommandParser`.
 Different from the previous limitation on the choice of word for `tag`, which is `Alnum`, we allow multiple words `tagName` as well, such as `college friend`.
 The change of `tagName` format requires a new algorithm for parsing in the `TagAddCommandParser`.
-The key is to differentiate between command words and the indices to follow. The parser algorithm would first split the input string into parts by space as delimiter.
-It would then determine whether a part is a word or a number, the parser keeps track of the last recognized word. After processing the entire user input, the parser would treat all parts after the last recognized word as indices and those before it as `tagName`.
-In this case, as `friend` is the last part that is not numeric, `college friend` is treated as `tagName`; `1 2 3` is treated as indices.
+The key is to differentiate between indices and tagName. The parser algorithm would first split the input string into parts by space as delimiter. +
+It would then determine whether a part is a word or a number, the parser keeps track of the last recognized number. After processing the entire user input, the parser would treat all parts after the last recognized number as indices and those after it as `tagName`.
+In this case, as `3` is the last part that is numeric, `1 2 3` is treated as indices and `college friend` is treated as `tagName`. +
 The `TagAddCommandParser` returns `TagAddCommand` after execution, which will be further processed by `logic` component.
 
 TagAddCommandParser is implemented in this way:
@@ -570,7 +570,6 @@ public class TagAddCommandParser implements Parser<TagAddCommand> {
 **Pros:** It is efficient for the user +
 **Cons:** Difficult to implement.
 
-// tag::deletemech[]
 === Improvements on DeleteCommand
 
 We have improved the delete command to let it be able to delete by multiple indexes or a name with prefix. The reason why we do this is to improve the efficiency to delete the contacts.The prefix for deleting by name is `n/`. The prefix for deleting by indexes is `I/`.
@@ -1265,6 +1264,20 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[Alnum]]
+Alnum
+
+....
+A regular expression that matches all numbers and letters
+....
+
+[[tagName]]
+tagName
+
+....
+Name of a tag
 ....
 
 [[index]]
