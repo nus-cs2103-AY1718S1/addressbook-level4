@@ -12,7 +12,7 @@ import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
-
+// @@author HuWanqing
 /**
  * Adds an event to the address book.
  */

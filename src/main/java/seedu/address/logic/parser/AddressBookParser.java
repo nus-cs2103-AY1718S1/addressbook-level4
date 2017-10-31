@@ -89,10 +89,10 @@ public class AddressBookParser {
 
         case DisJoinCommand.COMMAND_WORD:
             return new DisjoinCommandParser().parse(arguments);
-
+            // @@author HuWanqing
         case JoinCommand.COMMAND_WORD:
             return new JoinCommandParser().parse(arguments);
-
+        //@author
         case DisplayEmailsCommand.COMMAND_WORD:
             return new DisplayEmailsCommandParser().parse(arguments);
 

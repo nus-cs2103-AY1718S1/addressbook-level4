@@ -18,7 +18,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.EventDescription;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
-
+// @@author HuWanqing
 /**
  * Parses input arguments and creates a new AddEventCommand object
  */
