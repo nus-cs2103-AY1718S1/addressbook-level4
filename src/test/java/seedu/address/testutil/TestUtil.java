@@ -9,6 +9,7 @@ import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
 import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * A utility class for test cases.
@@ -68,5 +69,12 @@ public class TestUtil {
             }
         }
         return foundAliasToken;
+    }
+
+    /**
+     * Returns the task in the {@code model}'s task list at {@code index}.
+     */
+    public static ReadOnlyTask getTask(Model model, Index index) {
+        return model.getAddressBook().getTaskList().get(index.getZeroBased());
     }
 }
