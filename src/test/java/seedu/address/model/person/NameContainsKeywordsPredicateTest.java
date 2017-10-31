@@ -56,9 +56,11 @@ public class NameContainsKeywordsPredicateTest {
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("AlIcE", "boB"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
+        //@@author newalter
         // Wildcard Symbol in keywords
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("A*e", "*b"));
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+        //@@author
     }
 
     @Test

@@ -41,7 +41,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 3, 0, true);
+    public static final Version VERSION = new Version(1, 4, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -105,12 +105,8 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        try {
-            return new ModelManager(initialData, userPrefs);
-        } catch (NullPointerException e) {
-            logger.warning("AddressBook corrupted. Will be starting with an empty AddressBook");
-            return new ModelManager(new AddressBook(), userPrefs);
-        }
+        return new ModelManager(initialData, userPrefs);
+
 
     }
 

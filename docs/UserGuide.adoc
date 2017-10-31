@@ -66,6 +66,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * Wildcard symbol `*` and `?` are allowed in parameters for `find` and `filter` where `*` matches any non-space string and `?` matches any non-space unit-length symbol.
+* Suggestions would pop up for partial words keyed in. Press kbd:[TAB] to auto-complete using the first suggestion.
 ====
 
 === Viewing help : `help`
@@ -83,7 +84,7 @@ If you want to view the *User Guide*: +
 `>> help` +
 image:help.png[] +
 _Figure 4.1.1_
-.  Press `Enter` and a *User Guide* document would show up.
+.  Press kbd:[Enter] and a *User Guide* document would show up.
 
 === Adding a person: `add`
 
@@ -106,7 +107,7 @@ If you want to add a new contact to your *DummyName*: +
 `>> add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 image:add1.png[add1, 600] +
 _Figure 4.2.1_
-.  Press `Enter` and you should see (Figure 4.2.2): +
+.  Press kbd:[Enter] and you should see (Figure 4.2.2): +
 image:add2.png[UI, 600] +
 _Figure 4.2.2_
 
@@ -163,7 +164,7 @@ If you want to delete a contact in your *DummyName*: +
 `>> delete 1`.
 image:Delete_1.png[600] +
 _Figure 4.4.1_
-.  Press `Enter` and you should see that the selected contact has been deleted. (Figure 4.4.2) +
+.  Press kbd:[Enter] and you should see that the selected contact has been deleted. (Figure 4.4.2) +
 image:Delete_2.png[600] +
 _Figure 4.4.2_
 
@@ -203,7 +204,7 @@ If you want to change the details of a contact in your *DummyName*: +
 `>> edit 1 p/91234567 e/johndoe@example.com`.
 image:Edit_1.png[600] +
 _Figure 4.5.1_
-.  Press `Enter` and you should see that the contact that you selected has been modified. (Figure 4.5.2) +
+.  Press kbd:[Enter] and you should see that the contact that you selected has been modified. (Figure 4.5.2) +
 image:Edit_2.png[600] +
 _Figure 4.5.2_
 
@@ -251,7 +252,7 @@ If you want to add a single tag to a contact in your *DummyName*: +
 `>> addtag 1 classmate`.
 image:addtag_1.png[addtag1, 600] +
 _Figure 4.6.1_
-.  Press `Enter` and you should see that the contact that you selected has been modified. (Figure 4.6.2) +
+.  Press kbd:[Enter] and you should see that the contact that you selected has been modified. (Figure 4.6.2) +
 image:addtag_2.png[addtag2, 600] +
 _Figure 4.6.2_
 
@@ -288,7 +289,7 @@ If you want to delete a single tag from a contact in your *DummyName*: +
 `>> deletetag 1 classmate`.
 image:deletetag_1.png[600] +
 _Figure 4.7.1_
-.  Press `Enter` and you should see that the contact that you selected has been modified. (Figure 4.7.2) +
+.  Press kbd:[Enter] and you should see that the contact that you selected has been modified. (Figure 4.7.2) +
 image:deletetag_2.png[600] +
 _Figure 4.7.2_
 
@@ -309,7 +310,7 @@ If you would like to delete all instances of a particular tag from your *DummyNa
 image:deletetag_3.png[600] +
 _Figure 4.7.3_
 
-.  Press `Enter` and you should see that this tag has been deleted from all contacts. (Figure 4.7.4) +
+.  Press kbd:[Enter] and you should see that this tag has been deleted from all contacts. (Figure 4.7.4) +
 image:deletetag_4.png[600] +
 _Figure 4.7.4_
 
@@ -336,7 +337,7 @@ If you want to find a person named `John Watson`:
 `>> find john` +
 image:find_1.png[] +
 _Figure 4.8.1_
-.  Press `Enter` and you should see a list of persons having the name `john`: (Figure 4.8.2) +
+.  Press kbd:[Enter] and you should see a list of persons having the name `john`: (Figure 4.8.2) +
 image:find_2.png[] +
 _Figure 4.8.2_
 
@@ -374,14 +375,14 @@ If you want to find your friends among all your colleagues: +
 `>> filter colleagues`  +
 image:filter_1.png[] +
 _Figure 4.9.1_
-.  Press `Enter` and you will see a list of persons who are tagged with `colleagues` (Figure 4.9.2) +
+.  Press kbd:[Enter] and you will see a list of persons who are tagged with `colleagues` (Figure 4.9.2) +
 image:filter_2.png[] +
 _Figure 4.9.2_
 .  Type in (Figure 4.9.3) +
 `>> filter friends` +
 image:filter_3.png[] +
 _Figure 4.9.3_
-.  Press `Enter` and you will see a list of persons who are tagged with both `friends` and `colleagues` (Figure 4.9.4) +
+.  Press kbd:[Enter] and you will see a list of persons who are tagged with both `friends` and `colleagues` (Figure 4.9.4) +
 image:filter_4.png[] +
 _Figure 4.9.4_
 
@@ -460,7 +461,7 @@ If you want to add a note for a DummyName contact:
 `>> note 1 n/This is an important note` +
 image:note1.png[note1, 600] +
 _Figure 4.11.1_
-. Press `Enter`. Your note should now be displayed as the last row in your contact's details (Figure 4.11.2) +
+. Press kbd:[Enter]. Your note should now be displayed as the last row in your contact's details (Figure 4.11.2) +
 image:note2.png[note2, 600, 40] +
 _Figure 4.11.2_
 
@@ -489,7 +490,7 @@ You may want to be safe and backup often when using *DummyName*:
 `>> backup` +
 image:Backup_1.png[600] +
 _Figure 4.12.1_ +
-. Press `Enter` and you should see a message indicating the successful backup of your data. (Figure 4.12.2) +
+. Press kbd:[Enter] and you should see a message indicating the successful backup of your data. (Figure 4.12.2) +
 image:Backup_2.png[600] +
 _Figure 4.12.2_ +
 
@@ -522,7 +523,7 @@ _Figure 4.13.2_ +
 image:Restore_3.png[600] +
 _Figure 4.13.3_ +
 
-. Press `Enter` and you should see that the backup data is restored. (Figure 4.13.4) +
+. Press kbd:[Enter] and you should see that the backup data is restored. (Figure 4.13.4) +
 image:Restore_4.png[600] +
 _Figure 4.13.4_ +
 
@@ -549,7 +550,7 @@ You can easily synchronise your DummyName contacts with Google Contacts through 
 `>> sync` +
 image:sync1.png[sync1, 600] +
 _Figure 4.14.1_ +
-.   Press `Enter`. Your default browser should open a login window (Figure 4.14.2) +
+.   Press kbd:[Enter]. Your default browser should open a login window (Figure 4.14.2) +
 image:sync2.png[sync2, 600] +
 _Figure 4.14.2_
 .   Enter your login details and press Next (Figure 4.14.3) +
@@ -579,7 +580,7 @@ If you want to view the list of commands entered: +
 `>> history` +
 image:history.png[] +
 _Figure 4.15.1_
-.  Press `Enter` and the lists of commands that you entered before would show up.
+.  Press kbd:[Enter] and the lists of commands that you entered before would show up.
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -608,7 +609,7 @@ _Figure 4.16.1_ +
 image:Undo_2.png[600] +
 _Figure 4.16.2_ +
 
-. Press `Enter` and you should see that the effects of `delete 1` has been reverted. (Figure 4.16.3) +
+. Press kbd:[Enter] and you should see that the effects of `delete 1` has been reverted. (Figure 4.16.3) +
 image:Undo_3.png[600] +
 _Figure 4.16.3_ +
 
@@ -642,7 +643,7 @@ _Figure 4.16.8_ +
 `>> u` +
 image:Undo_9.png[600] +
 _Figure 4.16.9_ +
-. Press `Enter` and you should see that the `clear` command is reverted. (Figure 4.16.10)+
+. Press kbd:[Enter] and you should see that the `clear` command is reverted. (Figure 4.16.10)+
 image:Undo_10.png[600] +
  _Figure 4.16.10_ +
 . Type in `undo` and you should see that the `delete 1` command is reverted as well. (Figure 4.16.11)+
@@ -665,7 +666,7 @@ You `delete` a contact and `undo` the `delete` by mistake: +
 `>> delete 1` +
 image:Redo_1.png[600] +
 _Figure 4.17.1_ +
-. Press `Enter` and the contact is removed. (Figure 4.17.2)+
+. Press kbd:[Enter] and the contact is removed. (Figure 4.17.2)+
 image:Redo_2.png[600] +
 . Type in `undo` by mistake. (Figure 4.17.3) +
 `>> undo` +
@@ -675,7 +676,7 @@ _Figure 4.17.3_ +
 `>> redo` +
 image:Redo_4.png[600] +
 _Figure 4.17.4_ +
-. Press `Enter` and you shoud see that the `undo` command has been reverted and the contact remains deleted. Refer to _Fig_ to see that you have obtained the correct results. (Figure 4.17.5) +
+. Press kbd:[Enter] and you shoud see that the `undo` command has been reverted and the contact remains deleted. Refer to _Fig_ to see that you have obtained the correct results. (Figure 4.17.5) +
 image:Redo_5.png[600] +
 _Figure 4.17.5_ +
 
@@ -690,7 +691,7 @@ _Figure 4.17.6_ +
 `>> redo`
 image:Redo_7.png[600] +
 _Figure 4.17.7_ +
-. Press `Enter` and you should see an error message. (Figure 4.17.8) +
+. Press kbd:[Enter] and you should see an error message. (Figure 4.17.8) +
 image:Redo_8.png[600] +
 _Figure 4.17.8_ +
 
@@ -737,7 +738,7 @@ You can also clear all DummyName contacts. To do so,
 `>> clear` +
 image:clear1.png[clear1, 600] +
 _Figure 4.18.1_
-.   Press `Enter`. Your contacts should now be cleared (Figure 4.18.2) +
+.   Press kbd:[Enter]. Your contacts should now be cleared (Figure 4.18.2) +
 image:clear2.png[clear2, 600] +
 _Figure 4.18.2_
 
@@ -764,7 +765,7 @@ If you want to resize your main window to 1280 * 720: +
 `>> resize 1280 720` +
 image:resize.png[] +
 _Figure 4.19.1_
-.  Press `Enter` and the main window would be resized to 1280 * 720.
+.  Press kbd:[Enter] and the main window would be resized to 1280 * 720.
 
 === Exiting the program : `exit`
 
@@ -781,7 +782,7 @@ If you want to close the app:
 `>> exit` +
 image:Exit_1.png[600] +
 _Figure 4.20.1_ +
-. Press `Enter` and you will see that *DummyName* is closed. +
+. Press kbd:[Enter] and you will see that *DummyName* is closed. +
 
 Do not worry about losing your contacts as they will be saved automatically.
 
