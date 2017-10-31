@@ -16,7 +16,7 @@ image::images/Ui.png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
+* PEERSONAL is a Java application made for university students to keep track of their contacts and events with their peers.
 * It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
 * What's different from https://github.com/se-edu/addressbook-level3[level 3]:
 ** A more sophisticated GUI that includes a list  panel and an in-built Browser.
@@ -25,10 +25,10 @@ endif::[]
 
 == Site Map
 
-* <<UserGuide#, User Guide>>
-* <<DeveloperGuide#, Developer Guide>>
-* <<AboutUs#, About Us>>
-* <<ContactUs#, Contact Us>>
+* {empty}https://github.com/CS2103AUG2017-T10-B2/main/blob/master/docs/UserGuide.adoc[User Guide]
+* {empty}https://github.com/CS2103AUG2017-T10-B2/main/blob/master/docs/DeveloperGuide.adoc[Developer Guide]
+* {empty}https://github.com/CS2103AUG2017-T10-B2/main/blob/master/docs/AboutUs.adoc[About Us]
+* {empty}https://github.com/CS2103AUG2017-T10-B2/main/blob/master/docs/ContactUs.adoc[Contact Us]
 
 == Acknowledgements
 

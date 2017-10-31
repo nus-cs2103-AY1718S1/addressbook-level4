@@ -129,7 +129,7 @@ Returns any person having the email `john@example.com`
 * `find t/[friend]` +
 Returns any person having the tag `[friend]`
 * `find r/Likes coffee` +
-Returns any person having the remarks `[Likes coffee]`
+Returns any person having the remarks `Likes coffee`
 * `find b/10-10-1995` +
 Returns any person with birthday on `10-10-1995`
 
@@ -157,14 +157,14 @@ Deletes the 1st, 3rd and 4th person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Adding photo : `addPhoto` (Since v1.3)
+=== Adding photo : `addphoto` (Since v1.3)
 
 Adds a photo for the specified person in the address book. +
-Format: `addPhoto INDEX f/[FILEPATH]`
+Format: `addphoto INDEX f/[FILEPATH]`
 
 Examples:
 
-* `addPhoto 1 f/C:/users/pictures/cuteThings/cutedog.png` +
+* `addphoto 1 f/C:/users/pictures/cuteThings/cutedog.png` +
 Adds a photo `cutedog.png` to the first person of the Address Book.
 
 === Selecting a person : `select`
