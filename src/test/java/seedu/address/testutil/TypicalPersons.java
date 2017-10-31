@@ -85,20 +85,20 @@ public class TypicalPersons {
         List<ReadOnlyPerson> personList;
 
         switch(sortBy) {
-            case "name":
-                personList = getTypicalPersons();
-                break;
-            case "phone":
-                personList = getTypicalPersonsSortedByPhone();
-                break;
-            case "email":
-                personList = getTypicalPersonsSortedByEmail();
-                break;
-            case "address":
-                personList = getTypicalPersonsSortedByAddress();
-                break;
-            default:
-                personList = getTypicalPersons();
+        case "name":
+            personList = getTypicalPersons();
+            break;
+        case "phone":
+            personList = getTypicalPersonsSortedByPhone();
+            break;
+        case "email":
+            personList = getTypicalPersonsSortedByEmail();
+            break;
+        case "address":
+            personList = getTypicalPersonsSortedByAddress();
+            break;
+        default:
+            personList = getTypicalPersons();
         }
 
         for (ReadOnlyPerson person : personList) {
