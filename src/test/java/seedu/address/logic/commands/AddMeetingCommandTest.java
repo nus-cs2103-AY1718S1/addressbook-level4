@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +21,9 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
@@ -35,8 +38,9 @@ public class AddMeetingCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    private Index index;
 
+    private Index index;
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
@@ -97,8 +101,8 @@ public class AddMeetingCommandTest {
      */
     private AddMeetingCommand getAddMeetingCommandForMeeting(Meeting meeting, Model model) {
         this.index = Index.fromZeroBased(1);
-        AddMeetingCommand command = new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(),
-                index);
+        AddMeetingCommand command = new AddMeetingCommand(meeting.getName(), meeting.getDate(),
+                meeting.getPlace(), index);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -152,8 +156,7 @@ public class AddMeetingCommandTest {
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
+            return model.getFilteredPersonList();
         }
 
         @Override
