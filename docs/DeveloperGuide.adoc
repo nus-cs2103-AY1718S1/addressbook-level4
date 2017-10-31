@@ -778,6 +778,14 @@ Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by
 
 ==== Design Considerations
 
+**Aspect:** Location of `KeyCombination` constants for the `KeyListener` class +
+**Alternative 1 (current choice):** `KeyCombination` constants are stored in a separate utility class, `KeyListenerUtil` +
+**Pros:** Better modularity given that the number of constants is fairly large. +
+**Cons:** The constants have to be imported to be used in the `KeyListener` class. +
+**Alternative 2:** Store the constants in the `KeyListener` class itself +
+**Pros:** Straightforward implementation and the constants does not have to be imported. +
+**Cons:** Violates Separation of Concerns as the `KeyListener` class acts as a storage for the constants in addition to handling key events.
+
 **Aspect:** The way commands words are executed +
 **Alternative 1 (current choice):** Pressing the shortcut automatically executes the command +
 **Pros:** Execution of command is faster and more convenient for the user. +
@@ -786,15 +794,6 @@ Where the key combination `FOCUS_PERSON_LIST` matches the `keyEvent` captured by
 **Pros:** Allows the user to check the command before executing it. +
 **Cons:**  An extra step for user to execute the command, i.e. pressing `Enter`.
 
-**Aspect:** Scrolling of the contact list +
-**Alternative 1 (current choice):** Pressing the `Esc` key focuses on the person list panel, then scrolling is handled by selecting the next contact with either the up or down arrow key. +
-**Pros:**  User can select contacts quickly. +
-**Cons:** Scrolling is done by selection of contacts one at a time.
-Thus, it may be time consuming for the user to search for a contact by scrolling. +
-**Alternative 2:** Contact list scrolls without triggering selection of a contact in the list +
-**Pros:** Scrolling motion is faster and smoother. +
-**Cons:** An extra step is needed for users who want to select a contact,
-          i.e. scroll the list until the contact is visible, then select the desired contact with a select command/shortcut. +
 // end::shortcut[]
 
 === Logging
