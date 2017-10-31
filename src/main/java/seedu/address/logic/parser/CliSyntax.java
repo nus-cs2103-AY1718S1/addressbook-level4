@@ -14,5 +14,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_GROUP = new Prefix("g/");
     public static final Prefix PREFIX_FAVOURITE = new Prefix("f/");
     public static final Prefix PREFIX_FILEPATH = new Prefix("fp/");
+    public static final Prefix PREFIX_CALENDAR_ID = new Prefix("i/");
 
 }

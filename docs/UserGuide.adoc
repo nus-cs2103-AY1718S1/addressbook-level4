@@ -230,6 +230,23 @@ Examples:
 * `gadd g/1 p/2`
 * `ga g/3 p/2`
 
+=== Removing a person to a group: `gremove` (Since V1.3)
+
+Adds a group to the address book. +
+Format: `gremove g/GROUP INDEX p/PERSON INDEX` +
+Alias: `gr`
+
+****
+* Removes person from the group at the specified `GROUP INDEX` and `PERSON INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `gremove g/1 p/2`
+* `gr g/3 p/2`
+
 === Deleting a group: `gdelete` (Since V1.2)
 
 Deletes a group from address book. +
@@ -247,6 +264,23 @@ Examples:
 * `gdelete 2` +
 Deletes the 2nd group in the address book.
 * `gd 2`
+
+=== Adding a schedule to a person (Since V1.4)
+
+Adds a person's Google Calendar events to schedules. +
+Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID`
+Alias: `ca`
+
+****
+* Adds schedule list to person at specified `INDEX`
+* Calendar ID must be from publicly shared Calendar.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `cadd p/2 i/b8dyuv028k71krma10abbc8f3s`
 
 === Sorting persons : `sort` (Since V1.1)
 

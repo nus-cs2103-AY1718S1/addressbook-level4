@@ -77,7 +77,6 @@ public class BrowserPanel extends UiPart<Region> {
 
     public BrowserPanel() {
         super(FXML);
-
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
         loadDefaultPage();
@@ -181,7 +180,7 @@ public class BrowserPanel extends UiPart<Region> {
         setContactImage();
         setContactDetails(event.getNewSelection().person);
         setIcons();
-        setSchedule();
+        setSchedule(event.getNewSelection().person);
     }
 
     private void setContactDetails(ReadOnlyPerson person) {
@@ -218,9 +217,11 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
-    private void setSchedule() {
+    private void setSchedule(ReadOnlyPerson person) {
         schedulePlaceholder.setVisible(true);
+
         //scheduleListView.setStyle("-fx-alignment: center-left; -fx-padding: 0 0 0 10;");
+
         easeIn(schedulePlaceholder);
     }
 

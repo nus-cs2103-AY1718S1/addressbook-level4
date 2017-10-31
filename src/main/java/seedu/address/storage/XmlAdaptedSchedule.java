@@ -1,12 +1,11 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.schedule.ReadOnlySchedule;
 import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.ScheduleDate;
 import seedu.address.model.schedule.ScheduleName;
 
 
@@ -17,10 +16,16 @@ public class XmlAdaptedSchedule {
 
     @XmlElement(required = true)
     private String scheduleName;
+    @XmlElement(required = true)
+    private String startDateTime;
+    @XmlElement(required = true)
+    private String endDateTime;
+    @XmlElement(required = true)
+    private String scheduleDuration;
     @XmlElement
-    private List<XmlAdaptedSchedule> schedules = new ArrayList<>();
+    private String scheduleDetails;
     /**
-     * Constructs an XmlAdapteddSchedule.
+     * Constructs an XmlAdaptedSchedule.
      * This is the no-arg constructor that is required by JAXB.
      */
     public XmlAdaptedSchedule() {}
@@ -32,20 +37,25 @@ public class XmlAdaptedSchedule {
      */
     public XmlAdaptedSchedule(ReadOnlySchedule source) {
         scheduleName = source.getName().toString();
-        for (ReadOnlySchedule schedule: source.getSchedules()) {
-            schedules.add(new XmlAdaptedSchedule(schedule));
-        }
+        startDateTime = source.getStartDateTime().toString();
+        endDateTime = source.getEndDateTime().toString();
+        scheduleDuration = source.getSheduleDuration();
+        scheduleDetails = source.getScheduleDetails();
 
     }
 
     /**
-     * Converts this jaxb-friendly adapted group object into the model's Group object.
+     * Converts this jaxb-friendly adapted schedule object into the model's Schedule object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Schedule toModelType() throws IllegalValueException {
         final ScheduleName scheduleName = new ScheduleName(this.scheduleName);
-        return new Schedule(scheduleName);
+        final ScheduleDate startDateTime = new ScheduleDate(this.startDateTime);
+        final ScheduleDate endDateTime = new ScheduleDate(this.endDateTime);
+        final String scheduleDuration = this.scheduleDuration;
+        final String scheduleDetails = this.scheduleDetails;
+        return new Schedule(scheduleName, startDateTime, endDateTime, scheduleDuration, scheduleDetails);
     }
 
 }

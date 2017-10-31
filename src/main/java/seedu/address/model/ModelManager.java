@@ -25,6 +25,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.schedule.exceptions.DuplicateScheduleException;
 import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 
@@ -130,11 +131,12 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredScheduleList(PREDICATE_SHOW_ALL_SCHEDULES);
     }
 
+
+
     @Override
     public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
             throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
         addressBook.addPersonToGroup(targetGroup, toAdd);
-
         indicateAddressBookChanged();
     }
 
@@ -142,6 +144,13 @@ public class ModelManager extends ComponentManager implements Model {
     public void deleteSchedule(ReadOnlySchedule target) throws ScheduleNotFoundException {
         addressBook.removeSchedule(target);
         indicateAddressBookChanged();
+    }
+
+    @Override
+    public void setFilteredScheduleList(UniqueScheduleList toSet) throws DuplicateScheduleException {
+        for (ReadOnlySchedule s: toSet) {
+            addressBook.addSchedule(s);
+        }
     }
 
     @Override
@@ -215,6 +224,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredSchedules.setPredicate(predicate);
     }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

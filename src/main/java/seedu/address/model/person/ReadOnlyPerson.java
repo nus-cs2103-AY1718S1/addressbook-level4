@@ -5,6 +5,8 @@ import java.util.Set;
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.group.Group;
 import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -30,6 +32,8 @@ public interface ReadOnlyPerson {
     Set<Tag> getTags();
     ObjectProperty<UniqueGroupList> groupProperty();
     Set<Group> getGroups();
+    ObjectProperty<UniqueScheduleList> scheduleProperty();
+    Set<Schedule> getSchedule();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

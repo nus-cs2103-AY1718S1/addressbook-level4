@@ -18,6 +18,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProfPic;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.schedule.ReadOnlySchedule;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -42,6 +44,8 @@ public class XmlAdaptedPerson {
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
     @XmlElement
     private List<XmlAdaptedGroup> grouped = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedSchedule> schedule = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -71,6 +75,11 @@ public class XmlAdaptedPerson {
         for (ReadOnlyGroup group: source.getGroups()) {
             grouped.add(new XmlAdaptedGroup(group));
         }
+
+        schedule = new ArrayList<>();
+        for (ReadOnlySchedule event: source.getSchedule()) {
+            schedule.add(new XmlAdaptedSchedule(event));
+        }
     }
 
     /**
@@ -89,6 +98,11 @@ public class XmlAdaptedPerson {
             personGroups.add(group.toModelType());
         }
 
+        final List<Schedule> personSchedule = new ArrayList<>();
+        for (XmlAdaptedSchedule event: schedule) {
+            personSchedule.add(event.toModelType());
+        }
+
         final Name name = new Name(this.name);
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
@@ -97,6 +111,8 @@ public class XmlAdaptedPerson {
         final ProfPic profPic = new ProfPic(this.profPic);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Group> groups = new HashSet<>(personGroups);
-        return new Person(name, phone, email, address, favourite, profPic, tags, groups);
+        final Set<Schedule> schedules = new HashSet<>(personSchedule);
+        return new Person(name, phone, email, address, favourite, profPic, tags, groups, schedules);
+
     }
 }
