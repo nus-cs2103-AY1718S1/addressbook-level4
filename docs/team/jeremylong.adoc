@@ -97,8 +97,25 @@ include::../UserGuide.adoc[tag=remark]
 
 ==== Justification
 
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remarkreason]
+
+#End of Extract#
+
+---
+
 ==== Implementation
 
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remarkimple]
+
+#End of Extract#
+
+---
 
 === Other contributions
 
