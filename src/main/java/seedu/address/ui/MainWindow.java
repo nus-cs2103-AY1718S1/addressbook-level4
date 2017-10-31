@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeBrightThemeEvent;
+import seedu.address.commons.events.ui.ChangeDarkThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -59,6 +61,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private MenuItem styleMenuItem;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -219,6 +224,39 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Change to dark theme.
+     */
+    @FXML
+    public void changeToDarkTheme() {
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().setAll("view/DarkTheme.css");
+        primaryStage.setScene(scene);
+        show();
+    }
+
+    /**
+     * Change to bright theme.
+     */
+    @FXML
+    public void changeToBrightTheme() {
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().setAll("view/BrightTheme.css");
+        primaryStage.setScene(scene);
+        show();
+    }
+
+    /**
+     * Change to default theme.
+     */
+    @FXML
+    public void changeToDefaultTheme() {
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().setAll("view/Extensions.css");
+        primaryStage.setScene(scene);
+        show();
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -243,5 +281,23 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleDarkThemeEvent(ChangeDarkThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeToDarkTheme();
+    }
+
+    @Subscribe
+    private void handleBrightThemeEvent(ChangeBrightThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeToBrightTheme();
+    }
+
+    @Subscribe
+    private void handleDefaultThemeEvent(ChangeBrightThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeToDefaultTheme();
     }
 }
