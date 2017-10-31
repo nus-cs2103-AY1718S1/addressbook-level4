@@ -63,6 +63,7 @@ public class PersonDetailPanelTest extends GuiUnitTest {
         assertEquals(PERSON_PHONE_ICON + expectedPerson.getPhone().toString(), panel.getPhone());
         assertEquals(PERSON_ADDRESS_ICON + expectedPerson.getAddress().toString(), panel.getAddress());
         assertEquals(PERSON_EMAIL_ICON + expectedPerson.getEmail().toString(), panel.getEmail());
+        assertEquals(expectedPerson.getRemark().toString(), panel.getRemark());
 
         panel.updateTags();
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),

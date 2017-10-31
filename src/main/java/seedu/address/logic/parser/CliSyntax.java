@@ -14,6 +14,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_PHONE = new Prefix("p/");
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
+    public static final Prefix PREFIX_REMARK = new Prefix("r/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
 
     /* Prefix set */
@@ -23,6 +24,7 @@ public class CliSyntax {
                     PREFIX_PHONE,
                     PREFIX_EMAIL,
                     PREFIX_ADDRESS,
+                    PREFIX_REMARK,
                     PREFIX_TAG
             ));
 
@@ -39,6 +41,9 @@ public class CliSyntax {
             new SortArgument(PREFIX_EMAIL.toString());
     public static final SortArgument SORT_ARGUMENT_ADDRESS_DEFAULT =
             new SortArgument(PREFIX_ADDRESS.toString());
+    public static final SortArgument SORT_ARGUMENT_REMARK_DEFAULT =
+            new SortArgument(PREFIX_REMARK.toString());
+
     public static final SortArgument SORT_ARGUMENT_NAME_ASCENDING =
             new SortArgument(PREFIX_NAME.concat(POSTFIX_ASCENDING));
     public static final SortArgument SORT_ARGUMENT_PHONE_ASCENDING =
@@ -47,6 +52,9 @@ public class CliSyntax {
             new SortArgument(PREFIX_EMAIL.concat(POSTFIX_ASCENDING));
     public static final SortArgument SORT_ARGUMENT_ADDRESS_ASCENDING =
             new SortArgument(PREFIX_ADDRESS.concat(POSTFIX_ASCENDING));
+    public static final SortArgument SORT_ARGUMENT_REMARK_ASCENDING =
+            new SortArgument(PREFIX_REMARK.concat(POSTFIX_ASCENDING));
+
     public static final SortArgument SORT_ARGUMENT_NAME_DESCENDING =
             new SortArgument(PREFIX_NAME.concat(POSTFIX_DESCENDING));
     public static final SortArgument SORT_ARGUMENT_PHONE_DESCENDING =
@@ -55,6 +63,8 @@ public class CliSyntax {
             new SortArgument(PREFIX_EMAIL.concat(POSTFIX_DESCENDING));
     public static final SortArgument SORT_ARGUMENT_ADDRESS_DESCENDING =
             new SortArgument(PREFIX_ADDRESS.concat(POSTFIX_DESCENDING));
+    public static final SortArgument SORT_ARGUMENT_REMARK_DESCENDING =
+            new SortArgument(PREFIX_REMARK.concat(POSTFIX_DESCENDING));
 
     /* SortArgument set */
     public static final Set<SortArgument> POSSIBLE_SORT_ARGUMENTS =
@@ -63,12 +73,15 @@ public class CliSyntax {
                     SORT_ARGUMENT_PHONE_DEFAULT,
                     SORT_ARGUMENT_EMAIL_DEFAULT,
                     SORT_ARGUMENT_ADDRESS_DEFAULT,
+                    SORT_ARGUMENT_REMARK_DEFAULT,
                     SORT_ARGUMENT_NAME_DESCENDING,
                     SORT_ARGUMENT_PHONE_DESCENDING,
                     SORT_ARGUMENT_EMAIL_DESCENDING,
                     SORT_ARGUMENT_ADDRESS_DESCENDING,
+                    SORT_ARGUMENT_REMARK_DESCENDING,
                     SORT_ARGUMENT_NAME_ASCENDING,
                     SORT_ARGUMENT_PHONE_ASCENDING,
                     SORT_ARGUMENT_EMAIL_ASCENDING,
-                    SORT_ARGUMENT_ADDRESS_ASCENDING));
+                    SORT_ARGUMENT_ADDRESS_ASCENDING,
+                    SORT_ARGUMENT_REMARK_ASCENDING));
 }

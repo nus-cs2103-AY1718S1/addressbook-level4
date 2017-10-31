@@ -44,6 +44,8 @@ public class PersonDetailPanel extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label remark;
+    @FXML
     private FlowPane tags;
 
     public PersonDetailPanel() {
@@ -60,6 +62,7 @@ public class PersonDetailPanel extends UiPart<Region> {
         phone.setText("");
         email.setText("");
         address.setText("");
+        remark.setText("");
         initial.setText("");
         tags.getChildren().clear();
         avatar.setFill(Color.TRANSPARENT);
@@ -82,6 +85,7 @@ public class PersonDetailPanel extends UiPart<Region> {
         phone.setText(PERSON_PHONE_ICON + person.getPhone().toString());
         address.setText(PERSON_ADDRESS_ICON + person.getAddress().toString());
         email.setText(PERSON_EMAIL_ICON + person.getEmail().toString());
+        remark.setText(person.getRemark().toString());
     }
 
     private void setTags(ReadOnlyPerson person) {
