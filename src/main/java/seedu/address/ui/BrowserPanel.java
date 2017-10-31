@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.commands.QrCommand;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -26,7 +27,7 @@ public class BrowserPanel extends UiPart<Region> {
     //public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
     //@@author
     private static final String FXML = "BrowserPanel.fxml";
-
+    private static BrowserPanel instance;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
@@ -41,14 +42,28 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
+
+    public WebView getBrowser() {
+        return browser;
+    }
     //@@author blaqkrow
-    private void loadPersonPage(ReadOnlyPerson person) {
+    /**
+     * loads webpage
+     */
+    public void loadPersonPage(ReadOnlyPerson person) {
         browser.getEngine().setUserAgent("Mozilla/5.0 "
                 + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
     }
-    //@@author
-
+    /**
+     * Loads Webpage
+     */
+    public void loadQrCode(ReadOnlyPerson person) {
+        QrCommand qrCommand = new QrCommand();
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(qrCommand.qrCall(person.getPhone().toString()));
+    }
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
