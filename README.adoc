@@ -16,8 +16,8 @@ image::docs/images/UniCity Facebook.png[width="600"]
 endif::[]
 
 * This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
+* It is a product targeting university students, who can use it to manage their connections and network in their courses of study in the univeristy.
+* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC) than what students usually write in beginner-level SE modules.
 * What's different from https://github.com/se-edu/addressbook-level3[level 3]:
 ** A more sophisticated GUI that includes a list  panel and an in-built Browser.
 ** More test cases, including automated GUI testing.
@@ -35,6 +35,6 @@ endif::[]
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
 
-* Original Souce Code: AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/
+* Original Source Code: AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/
 
 == Licence : link:LICENSE[MIT]
