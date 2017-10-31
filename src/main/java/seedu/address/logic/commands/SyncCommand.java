@@ -82,7 +82,7 @@ public class SyncCommand extends UndoableCommand {
     public void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
         for (ReadOnlyPerson person : personList) {
             if (person.getId().getValue().equals("")) {
-                Person contactToCreate = new Person();
+                Person contactToCreate = convertAPerson(person);
                 Person createdContact = client.people().createContact(contactToCreate).execute();
 
                 String id = createdContact.getResourceName();
@@ -109,18 +109,20 @@ public class SyncCommand extends UndoableCommand {
         for (Person person : connections) {
             try {
                 seedu.address.model.person.Person aPerson = convertGooglePerson(person);
-                String id = aPerson.getId().getValue();
+                String id = person.getResourceName();
                 if (id == "") {
                     logger.warning("Google Contact has no retrievable ResourceName");
                 } else if (syncedIDs.contains(id)) {
                     //checks for updating
                     updateContact(person);
                 }  else {
+
                     model.addPerson(aPerson);
                     syncedIDs.add(id);
                 }
             } catch (Exception e) {
                 logger.severe(e.getMessage());
+                e.printStackTrace();
             }
         }
 
@@ -143,10 +145,13 @@ public class SyncCommand extends UndoableCommand {
 
                 if (compare < 0) {
                     Person updatedPerson = convertAPerson(aPerson);
+                    updatedPerson.setMetadata(person.getMetadata());
 
                     // The Google Contact is updated
                     Person updatedContact = client.people()
-                            .updateContact(person.getResourceName(), updatedPerson).execute();
+                            .updateContact(person.getResourceName(), updatedPerson)
+                            .setUpdatePersonFields("names,emailAddresses,addresses,phoneNumbers")
+                            .execute();
 
                     // Synchronize update time of both database entries to prevent looping
                     String newUpdated = updatedContact.getMetadata().getSources().get(0).getUpdateTime();
