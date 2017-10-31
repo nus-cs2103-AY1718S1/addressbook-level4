@@ -26,7 +26,9 @@ public class PersonCardTest extends GuiUnitTest {
         // with tags
         Person personWithTags = new PersonBuilder().build();
         personCard = new PersonCard(personWithTags, 2);
-        uiPartRule.setUiPart(personCard);
+        uiPartRule.setUiPart(personCard
+        );
+
         assertCardDisplay(personCard, personWithTags, 2);
 
         // changes made to Person reflects on card
@@ -36,6 +38,7 @@ public class PersonCardTest extends GuiUnitTest {
             personWithTags.setEmail(ALICE.getEmail());
             personWithTags.setPhone(ALICE.getPhone());
             personWithTags.setTags(ALICE.getTags());
+            personWithTags.setPortraitPath(ALICE.getPortraitPath());
         });
         assertCardDisplay(personCard, personWithTags, 2);
     }

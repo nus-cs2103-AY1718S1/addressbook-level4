@@ -38,7 +38,6 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label timer;
 
-
     public EventCard(ReadOnlyEvent event, int displayedIndex) {
         super(FXML);
         this.event = event;
@@ -55,6 +54,7 @@ public class EventCard extends UiPart<Region> {
         description.textProperty().bind(Bindings.convert(event.descriptionProperty()));
         time.textProperty().bind(Bindings.convert(event.timeProperty()));
         timer.textProperty().bind(Bindings.concat(event.timeProperty()));
+        timer.textProperty().bind(Bindings.convert(event.daysProperty()));
     }
 
 

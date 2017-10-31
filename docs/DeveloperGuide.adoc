@@ -777,6 +777,37 @@ _Figure 3.9.3: interaction storage_
 **Pros:** Can save every participation entry. +
 **Cons:** Need to implement extra storage for association class, and it is costly in terms of time to operate `show person` and `select event`.
 
+=== Portrait Command mechanism
+The portrait command is facilitated by `LogicManager` and is extended from `UndoableCommand`. +
+The following diagram shows the structure of PortraitPath class:
+
+image::DG_Portrait class.png[]
+_Figure 3.10.1 PortraitPath class structure_
+
+As shown in above diagram, we only store a string value, which is the file path in this class.
+We only load the image file in the UI component.
+
+The portrait can only be changed by this command. In other words, `Add`command can only create a person without portrait. +
+
+However, users may type a wrong path, and we only load it in UI component. This makes it difficult to handle exception in UI part.
+Therefore, we apply defensive coding here. We pre-check whether the file can be loaded before modifying the person's information.
+If not, we can throw an exception in logic component rather than UI component, which is much easier. The following activity diagram shows it:
+
+image::DG_preload.png[]
+_Figure 3.10.2 defensive code for loading file_
+
+[discrete]
+===== Design Considerations
+
+**Aspect:** How to store the portrait. +
+**Alternative 1 (current choice):**  Only store the path in .xml file, and only load the image in UI. +
+**Pros:** Easy to implement, and save the memory. +
+**Cons:** Cannot move the image file in the computer, otherwise the user needs to change the path. +
+**Alternative 2:** Store the image file. +
+**Pros:** No need to load the image every time. +
+**Cons:** Hard to store images into .xml file. +
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
