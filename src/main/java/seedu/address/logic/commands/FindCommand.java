@@ -33,6 +33,7 @@ public class FindCommand extends Command {
         this.keywords = keywords;
     }
 
+    //@@author angtianlannus
     @Override
     public CommandResult execute() {
 
@@ -59,6 +60,7 @@ public class FindCommand extends Command {
         model.updateFilteredLessonList(predicate);
         return new CommandResult(MESSAGE_SUCCESS);
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

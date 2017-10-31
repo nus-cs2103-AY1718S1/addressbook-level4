@@ -80,11 +80,13 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
+        //@@author angtianlannus
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
+        //@@author
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);

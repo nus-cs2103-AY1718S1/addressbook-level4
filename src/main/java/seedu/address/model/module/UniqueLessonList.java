@@ -99,6 +99,7 @@ public class UniqueLessonList implements Iterable<Lesson> {
         setLessons(replacement);
     }
 
+    //@@author angtianlannus
     /**
      * This method will sort the lessons
      */
@@ -132,7 +133,7 @@ public class UniqueLessonList implements Iterable<Lesson> {
             break;
         }
     }
-
+    //@@author
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

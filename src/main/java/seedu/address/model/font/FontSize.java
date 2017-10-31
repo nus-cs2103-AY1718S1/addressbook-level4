@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
+//@@author cctdaniel
 /**
  * Represents the font size of the AddressBook.
  * Guarantees: immutable; is valid as declared in {@link #isValidFontSize(String)}
