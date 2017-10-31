@@ -72,6 +72,10 @@ public class Avatar {
         ImageStorage.saveAvatar(originalFilePath, value);
     }
 
+    public String getOriginalFilePath() {
+        return originalFilePath;
+    }
+
     @Override
     public String toString() {
         return value;

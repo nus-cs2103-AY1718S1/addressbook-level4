@@ -127,6 +127,9 @@ public class Person implements ReadOnlyPerson {
     public void saveAvatar() {
         avatar.get().saveAvatar();
     }
+    public void setAvatar(Avatar avatar) {
+        this.avatar.set(requireNonNull(avatar));
+    }
 
     @Override
     public ObjectProperty<Avatar> avatarProperty() {

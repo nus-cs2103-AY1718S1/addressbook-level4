@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 /**
@@ -18,6 +20,7 @@ public class PersonPanelHandle extends NodeHandle<Node> {
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String REMARK_FIELD_ID = "#remark";
     private static final String TAGS_FIELD_ID = "#tags";
+    private static final String AVATAR_FIELD_ID = "#avatar";
 
     private Label name;
     private Label phone;
@@ -25,6 +28,7 @@ public class PersonPanelHandle extends NodeHandle<Node> {
     private Label email;
     private Label remark;
     private List<Label> tagLabels;
+    private ImageView avatar;
 
     public PersonPanelHandle(Node personPanelNode) {
         super(personPanelNode);
@@ -34,6 +38,7 @@ public class PersonPanelHandle extends NodeHandle<Node> {
         this.address = getChildNode(ADDRESS_FIELD_ID);
         this.email = getChildNode(EMAIL_FIELD_ID);
         this.remark = getChildNode(REMARK_FIELD_ID);
+        this.avatar = getChildNode(AVATAR_FIELD_ID);
 
         updateTags();
     }
@@ -56,6 +61,10 @@ public class PersonPanelHandle extends NodeHandle<Node> {
 
     public String getRemark() {
         return remark.getText();
+    }
+
+    public Image getAvatar() {
+        return avatar.getImage();
     }
 
     public List<String> getTags() {

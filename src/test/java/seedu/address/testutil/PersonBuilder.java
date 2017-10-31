@@ -120,7 +120,23 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Avatar} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAvatar(String filePath) {
+        try {
+            this.person.setAvatar(Avatar.readAndCreateAvatar(filePath));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("avatar file is not valid");
+        }
+        return this;
+    }
+
+    /**
+     * saves {@code avatar} to data folder and returns {@code Person}
+     */
     public Person build() {
+        this.person.saveAvatar();
         return this.person;
     }
 

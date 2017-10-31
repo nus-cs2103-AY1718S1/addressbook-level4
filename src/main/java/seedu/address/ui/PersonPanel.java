@@ -61,14 +61,9 @@ public class PersonPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        try {
-            Image image = ImageStorage.getAvatar(event.getNewSelection().person.getAvatar().value);
-            avatar.setImage(image);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e);
 
-        }
+        Image image = ImageStorage.getAvatar(event.getNewSelection().person.getAvatar().value);
+        avatar.setImage(image);
 
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonDetails(event.getNewSelection().person);

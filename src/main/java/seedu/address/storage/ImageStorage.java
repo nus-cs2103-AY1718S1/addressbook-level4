@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -23,7 +24,6 @@ public class ImageStorage {
 
     /**
      * Looks for image in {@code AVATAR_STORAGE_PATH} based on imageName
-     * Will check if image exists
      * @param imageName
      * @return image if it exists or default image if image does not exist
      */
@@ -31,16 +31,11 @@ public class ImageStorage {
         Image image;
 
         try {
-            if (!isValidImagePath(AVATAR_STORAGE_PATH + imageName)) {
-                image = AppUtil.getImage(DEFAULT_RESOURCE_PATH);
-                return image;
-            }
 
             String fullPath = AVATAR_STORAGE_PATH + imageName;
             image = new Image(new FileInputStream(new File(fullPath)));
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
             image = AppUtil.getImage(DEFAULT_RESOURCE_PATH);
         }
 
@@ -54,10 +49,6 @@ public class ImageStorage {
      * @return true if avatar is successfully saved and false if avatar is not saved
      */
     public static boolean saveAvatar(String imageFilePath, String name) {
-
-        if (!isValidImagePath(imageFilePath)) {
-            return false;
-        }
 
         String format = getFormat(imageFilePath);
 
