@@ -3,7 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -151,7 +155,11 @@ public class ModelManager extends ComponentManager implements Model {
         return false;
     }
 
-
+    /**
+     * Sorts the address book in chronological order according to the birthday from the current date.
+     * @param contactList
+     * @throws CommandException
+     */
     public void sortListByUpcomingBirthday(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
         contactList.addAll(filteredPersons);
         Collections.sort(contactList, new BirthdayComparator());

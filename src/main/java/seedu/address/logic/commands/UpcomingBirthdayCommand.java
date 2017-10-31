@@ -6,6 +6,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * Lists the birthdays in chronological order from the current date.
+ */
 public class UpcomingBirthdayCommand extends Command {
     public static final String COMMAND_WORD = "UpcomingBirthday";
 
