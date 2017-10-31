@@ -12,7 +12,7 @@ import seedu.address.model.person.Name;
 public class BuildEvent {
     public static final String DEFAULT_NAME = "ZoukOut";
     public static final String DEFAULT_ADDRESS = "Sentosa, Siloso Beach";
-    public static final String DEFAULT_DATE = "2018-12-12";
+    public static final String DEFAULT_DATE = "12/12/2018";
 
     private Event event;
 

@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -35,7 +36,7 @@ public class AnchorPaneNode extends AnchorPane {
         super(children);
         // Add action handler for mouse clicked
         this.setOnMouseClicked(e ->
-                handleCalendarEvent(date.toString()));
+                handleCalendarEvent(date));
     }
 
     public LocalDate getDate() {
@@ -46,10 +47,12 @@ public class AnchorPaneNode extends AnchorPane {
         this.date = date;
     }
 
-    private void handleCalendarEvent(String event) {
-        startDialog(event);
+    private void handleCalendarEvent(LocalDate event) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+        String newDate = formatter.format(event);
+        startDialog(newDate);
         EventsCenter.getInstance().post(new CalendarPanelSelectionEvent(date.toString()));
-        logger.info(LogsCenter.getEventHandlingLogMessage(new CalendarPanelSelectionEvent(event)));
+        logger.info(LogsCenter.getEventHandlingLogMessage(new CalendarPanelSelectionEvent(newDate)));
     }
 
     /**
