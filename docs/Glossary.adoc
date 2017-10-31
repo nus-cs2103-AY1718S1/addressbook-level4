@@ -61,5 +61,5 @@ A contact detail that is not meant to be shared with others
 Rolodex
 
 ....
-The name of this application is Rolodex. It is used to refer to the java object of a similar name developed for this application under the application's model component. A Rolodex is also as a rotating file device used to store business contact information. Its name is a combination of the words rolling and index.
+The name of this application is Rolodex. It is used to refer to the java object of a similar name developed for this application under the application's model component. A Rolodex is also a rotating file device used to store business contact information. Its name is a combination of the words rolling and index.
 ....
