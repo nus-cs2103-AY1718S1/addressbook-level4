@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -27,21 +28,23 @@ public class RemoveTagCommand extends UndoableCommand {
             + "in the last person listing.\n"
             + "Remove the specified tag in the whole address book by excluding the [INDEX] parameter.\n"
             + "Parameters: [TAG]... [INDEX]...(INDEX must be positive integer)\n"
-            + "Example: " + COMMAND_WORD + " friends 1";
+            + "[INDEX] can be set as a range."
+            + "Example: " + COMMAND_WORD + " friends 1"
+            + "Example: " + COMMAND_WORD + " friends 1-4";
 
     public static final String MESSAGE_REMOVE_SUCCESS = "Removed Tag: %1$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "Tag: %1$s does not exist in";
 
     private final Set<Tag> tag;
     private final Set<Index> index;
-    private final String indexDisplay;
+    private final List<String> indexDisplay;
 
     /**
      *
      * @param tag to be removed from address book
      * @param index of the person in the filtered list to remove tag
      */
-    public RemoveTagCommand(Set<Tag> tag, Set<Index> index, String indexDisplay)  {
+    public RemoveTagCommand(Set<Tag> tag, Set<Index> index, List<String> indexDisplay)  {
         this.tag = tag;
         this.index = index;
         this.indexDisplay = indexDisplay;
@@ -53,6 +56,8 @@ public class RemoveTagCommand extends UndoableCommand {
         String successMessage;
         String notFound;
 
+        String indexInput = indexDisplay.stream().collect(Collectors.joining(", "));
+
         if (!index.isEmpty()) {
 
             for (Index i : index) {
@@ -60,8 +65,8 @@ public class RemoveTagCommand extends UndoableCommand {
                     throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
                 }
             }
-            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from index " + indexDisplay + ".", tag);
-            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexDisplay + ".", tag);
+            successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from index " + indexInput + ".", tag);
+            notFound = String.format(MESSAGE_TAG_NOT_FOUND + " index: " + indexInput + ".", tag);
         } else {
             successMessage = String.format(MESSAGE_REMOVE_SUCCESS + " from address book.", tag);
             notFound = String.format(MESSAGE_TAG_NOT_FOUND + " the address book.", tag);
@@ -69,7 +74,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
 
         try {
-            model.removeTag(tag, index);
+            model.removeTag(tag, indexDisplay);
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(
                     String.format

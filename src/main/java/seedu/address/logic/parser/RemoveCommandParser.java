@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -45,49 +44,94 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
         }
 
         Boolean indexAdded = false;
-        String indexInput;
         List<String> indexSet = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String newToken = st.nextToken();
             Boolean isIndex = true;
 
+
             // check is newToken holds an non-integer value
             char[] charArray = newToken.toCharArray();
+            String lowerLimit = "";
+            String upperLimit = "";
+            boolean isRange = false;
+            if (newToken.contains("-")) {
+                isRange = true;
+            }
+            boolean reach2nd = false;
             for (char c : charArray) {
                 if (!Character.isDigit(c)) {
+                    if (c == '-') {
+                        reach2nd = true;
+                        continue;
+                    }
                     isIndex = false;
                     break;
+                } else {
+                    if (isRange) {
+                        if (!reach2nd) {
+                            lowerLimit += c;
+                        } else {
+                            upperLimit += c;
+                        }
+                    }
                 }
             }
 
-
-            if (isIndex) {
-                indexSet.add(newToken);
-                try {
-                    Index indexToAdd = ParserUtil.parseIndex(newToken);
-                    index.add(indexToAdd);
-                    indexAdded = true;
-                } catch (IllegalValueException ive) {
-                    throw new ParseException(
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+            if (isRange) {
+                boolean isLowerValid = lowerLimit.isEmpty();
+                boolean isUpperValid = upperLimit.isEmpty();
+                if (isLowerValid || isUpperValid) {
+                    throw new ParseException("Invalid index range provided.\n"
+                            + String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
                 }
-            } else {
-                if (indexAdded) {
-                    throw new ParseException(
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
-                } else {
+                int lower = Integer.parseInt(lowerLimit);
+                int upper = Integer.parseInt(upperLimit);
+                if (lower > upper) {
+                    throw new ParseException("Invalid index range provided.\n"
+                            + String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+                }
+
+                for (int i = lower; i <= upper; i++) {
+                    String toAdd = String.valueOf(i);
+                    indexSet.add(toAdd);
                     try {
-                        Tag toRemove = new Tag(newToken);
-                        toRemoveSet.add(toRemove);
+                        Index indexFromRangeToAdd = ParserUtil.parseIndex(toAdd);
+                        index.add(indexFromRangeToAdd);
+                        indexAdded = true;
                     } catch (IllegalValueException ive) {
                         throw new ParseException(
                                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
                     }
                 }
+            } else {
+                if (isIndex) {
+                    indexSet.add(newToken);
+                    try {
+                        Index indexToAdd = ParserUtil.parseIndex(newToken);
+                        index.add(indexToAdd);
+                        indexAdded = true;
+                    } catch (IllegalValueException ive) {
+                        throw new ParseException(
+                                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+                    }
+                } else {
+                    if (indexAdded) {
+                        throw new ParseException(
+                                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+                    } else {
+                        try {
+                            Tag toRemove = new Tag(newToken);
+                            toRemoveSet.add(toRemove);
+                        } catch (IllegalValueException ive) {
+                            throw new ParseException(
+                                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+                        }
+                    }
+                }
             }
         }
-        indexInput = indexSet.stream().collect(Collectors.joining(", "));
-        return new RemoveTagCommand(toRemoveSet, index, indexInput);
+        return new RemoveTagCommand(toRemoveSet, index, indexSet);
     }
 
 }

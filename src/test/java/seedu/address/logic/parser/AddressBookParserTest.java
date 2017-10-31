@@ -150,7 +150,9 @@ public class AddressBookParserTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tag);
         indexSet.add(INDEX_FIRST_PERSON);
-        assertEquals(new RemoveTagCommand(tagSet, indexSet, "1"), command);
+        List<String> indexDisplay = new ArrayList<>();
+        indexDisplay.add("1");
+        assertEquals(new RemoveTagCommand(tagSet, indexSet, indexDisplay), command);
     }
 
     @Test

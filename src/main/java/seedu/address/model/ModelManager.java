@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_EMAIL;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_NAME;
 import static seedu.address.logic.parser.SortCommandParser.DATA_FIELD_PHONE;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -178,22 +177,38 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void removeTag(Set<Tag> tag, Set<Index> index) throws DuplicatePersonException,
+    public void removeTag(Set<Tag> tag, List<String> index) throws DuplicatePersonException,
             PersonNotFoundException {
         int totalSize = getFilteredPersonList().size();
-        Boolean tagExist = false;
-
+        boolean tagExist = false;
+        int decrease = 0;
         if (!index.isEmpty()) {
-            List<Index> indexList = new ArrayList<>(index);
-            for (Index i : indexList) {
-                Person toDelete = new Person(getFilteredPersonList().get(0));
+            boolean removed = false;
+            for (int i = 0; i < index.size(); i++) {
+                int currentSize = getFilteredPersonList().size();
+                int indexToRemove = Integer.parseInt(index.get(i)) - 1;
+                Person toDelete;
+                /**
+                 * Checks if tags have been removed before
+                 * causing filtered list to change
+                 */
+                if (totalSize != currentSize) {
+                    if (removed) {
+                        indexToRemove -= decrease;
+                    }
+                    toDelete = new Person(getFilteredPersonList().get(indexToRemove));
+                } else {
+                    toDelete = new Person(getFilteredPersonList().get(indexToRemove));
+                }
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
                 Set<Tag> newTags = deleteTag(tag, oldTags);
                 if (!(newTags.size() == oldTags.size())) {
                     toUpdate.setTags(newTags);
                     tagExist = true;
-                    addressBook.updatePerson(toDelete, toUpdate);
+                    removed = true;
+                    decrease++;
+                    updatePerson(toDelete, toUpdate);
                 }
             }
         } else {
@@ -205,7 +220,7 @@ public class ModelManager extends ComponentManager implements Model {
                 if (!(newTags.size() == oldTags.size())) {
                     toUpdate.setTags(newTags);
                     tagExist = true;
-                    addressBook.updatePerson(toDelete, toUpdate);
+                    updatePerson(toDelete, toUpdate);
                 }
             }
         }
@@ -231,7 +246,7 @@ public class ModelManager extends ComponentManager implements Model {
             if (!(current.size() == updated.size())) {
                 toUpdate.setTags(updated);
                 added = true;
-                addressBook.updatePerson(toCheck, toUpdate);
+                updatePerson(toCheck, toUpdate);
             }
         }
 
@@ -254,7 +269,7 @@ public class ModelManager extends ComponentManager implements Model {
         while (it.hasNext()) {
             Tag checkTag = it.next();
             String current = checkTag.tagName;
-            Boolean toAdd = true;
+            boolean toAdd = true;
             Iterator<Tag> it2 = tag.iterator();
             while (it2.hasNext()) {
                 String toCheck = it2.next().tagName;

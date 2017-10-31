@@ -5,7 +5,9 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -26,7 +28,9 @@ public class RemoveCommandParserTest {
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
         indexSet.add(INDEX_SECOND_PERSON);
-        RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet, "2");
+        List<String> indexDisplay = new ArrayList<>();
+        indexDisplay.add("2");
+        RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet, indexDisplay);
         assertParseSuccess(parser, "friends 2", removeCommand);
     }
 
@@ -36,7 +40,9 @@ public class RemoveCommandParserTest {
         Set<Index> indexSet = new HashSet<>();
         Set<Tag> tagSet = new HashSet<>();
         tagSet.add(tagToRemove);
-        RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet, "");
+        List<String> indexDisplay = new ArrayList<>();
+        indexDisplay.add("");
+        RemoveTagCommand removeCommand = new RemoveTagCommand(tagSet, indexSet, indexDisplay);
         assertParseSuccess(parser, "friends", removeCommand);
     }
 

@@ -53,34 +53,81 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
 
             // check is newToken holds an non-integer value
             char[] charArray = newToken.toCharArray();
+            String lowerLimit = "";
+            String upperLimit = "";
+            boolean isRange = false;
+            if (newToken.contains("-")) {
+                isRange = true;
+            }
+            boolean reach2nd = false;
             for (char c : charArray) {
                 if (!Character.isDigit(c)) {
+                    if (c == '-') {
+                        reach2nd = true;
+                        continue;
+                    }
                     isIndex = false;
+                    break;
+                } else {
+                    if (isRange) {
+                        if (!reach2nd) {
+                            lowerLimit += c;
+                        } else {
+                            upperLimit += c;
+                        }
+                    }
                 }
             }
 
-
-            if (isIndex) {
-                indexSet.add(newToken);
-                try {
-                    Index indexToAdd = ParserUtil.parseIndex(newToken);
-                    index.add(indexToAdd);
-                    indexAdded = true;
-                } catch (IllegalValueException ive) {
-                    throw new ParseException(
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+            if (isRange) {
+                boolean isLowerValid = lowerLimit.isEmpty();
+                boolean isUpperValid = upperLimit.isEmpty();
+                if (isLowerValid || isUpperValid) {
+                    throw new ParseException("Invalid index range provided.\n"
+                            + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
                 }
-            } else {
-                if (indexAdded) {
-                    throw new ParseException(
-                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
-                } else {
+                int lower = Integer.parseInt(lowerLimit);
+                int upper = Integer.parseInt(upperLimit);
+                if (lower > upper) {
+                    throw new ParseException("Invalid index range provided.\n"
+                            + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+                }
+
+                for (int i = lower; i <= upper; i++) {
+                    String toAdd = String.valueOf(i);
+                    indexSet.add(toAdd);
                     try {
-                        Tag toAdd = new Tag(newToken);
-                        toAddSet.add(toAdd);
+                        Index indexFromRangeToAdd = ParserUtil.parseIndex(toAdd);
+                        index.add(indexFromRangeToAdd);
+                        indexAdded = true;
                     } catch (IllegalValueException ive) {
                         throw new ParseException(
                                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+                    }
+                }
+            } else {
+                if (isIndex) {
+                    indexSet.add(newToken);
+                    try {
+                        Index indexToAdd = ParserUtil.parseIndex(newToken);
+                        index.add(indexToAdd);
+                        indexAdded = true;
+                    } catch (IllegalValueException ive) {
+                        throw new ParseException(
+                                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+                    }
+                } else {
+                    if (indexAdded) {
+                        throw new ParseException(
+                                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+                    } else {
+                        try {
+                            Tag toAdd = new Tag(newToken);
+                            toAddSet.add(toAdd);
+                        } catch (IllegalValueException ive) {
+                            throw new ParseException(
+                                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+                        }
                     }
                 }
             }
