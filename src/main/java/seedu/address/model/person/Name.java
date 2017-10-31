@@ -1,6 +1,7 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 
@@ -37,7 +38,7 @@ public class Name {
         this.fullName = trimmedName;
         String init = "";
         String[] trimmedNameArray = trimmedName.split(" ");
-        for(String word: trimmedNameArray) {
+        for (String word: trimmedNameArray) {
             init += (word.substring(0, 1));
         }
         this.fullNameInit = fullName + " " + init;
