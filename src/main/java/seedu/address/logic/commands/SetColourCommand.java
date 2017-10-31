@@ -20,8 +20,8 @@ public class SetColourCommand extends Command {
 
     public static final String SETCOLOUR_SUCCESS = "All tags [%1s] are now coloured %2s";
     public static final String SETCOLOUR_INVALID_COLOUR = "Unfortunately, %1s is unavailable to be set in addressbook";
-    private static final String[] colours = { "red", "yellow", "blue",
-        "orange", "brown", "green", "pink", "black", "grey" };
+    private static final String[] colours = {"blue", " red", "brown", "green", "black", "purple", "indigo", "grey",
+        "chocolate", "orange", "aquamarine"};
 
     private String tag;
     private String newColour;
