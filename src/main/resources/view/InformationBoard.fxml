@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author HouDenghao -->
+<StackPane fx:id="placeHolder" prefHeight="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <VBox style="-fx-background-color: lightgreen; -fx-background-radius: 18px; -fx-border-radius: 18px;">
+      <children>
+         <Label fx:id="title" contentDisplay="CENTER" style="-fx-text-fill: white; -fx-font-size: 18" text="\$title">
+            <VBox.margin>
+               <Insets left="20.0" />
+            </VBox.margin></Label>
+          <TextArea fx:id="informationBoard" editable="false" prefHeight="800.0" prefWidth="538.0" styleClass="text-area" />
+      </children>
+   </VBox>
+</StackPane>

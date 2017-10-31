@@ -72,9 +72,11 @@ public class AddressBookParser {
         case EditEventCommand.COMMAND_WORD:
             return new EditEventCommandParser().parse(arguments);
 
+        // @@author HouDenghao
         case ShowParticipantsCommand.COMMAND_WORD:
             return new ShowParticipantsCommandParser().parse(arguments);
 
+        // @@author
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
@@ -94,10 +96,10 @@ public class AddressBookParser {
         //@@author
         case DisJoinCommand.COMMAND_WORD:
             return new DisjoinCommandParser().parse(arguments);
-
+            // @@author HuWanqing
         case JoinCommand.COMMAND_WORD:
             return new JoinCommandParser().parse(arguments);
-
+            
         //@@author leonchowwenhao
         case DisplayEmailsCommand.COMMAND_WORD:
             return new DisplayEmailsCommandParser().parse(arguments);
@@ -112,18 +114,22 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
+        // @@author HouDenghao
         case FindEventCommand.COMMAND_WORD:
             return new FindEventCommandParser().parse(arguments);
 
+        // @@author
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
+        // @@author HouDenghao
         case ListEventCommand.COMMAND_WORD:
             return new ListEventCommand();
 
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
 
+        // @@author
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 

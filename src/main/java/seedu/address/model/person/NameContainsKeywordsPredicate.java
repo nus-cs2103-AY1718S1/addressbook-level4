@@ -16,7 +16,7 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
     public NameContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
-
+    // @@author HuWanqing
     @Override
     public boolean test(ReadOnlyPerson person) {
         Boolean isSelected = keywords.stream().anyMatch(keyword ->
@@ -36,6 +36,7 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
         }
         return isSelected;
     }
+    // @@author
 
     @Override
     public boolean equals(Object other) {

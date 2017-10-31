@@ -104,12 +104,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    // @@author HouDenghao
     @Override
     public synchronized void sortPersons() {
         addressBook.sortPersons();
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
+    // @@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -176,12 +178,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateEventListChanged();
     }
 
+    // @@author HouDenghao
     @Override
     public synchronized void sortEvents() {
         eventList.sortEvents();
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
+    // @@author
     @Override
     public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws DuplicateEventException, EventNotFoundException {
