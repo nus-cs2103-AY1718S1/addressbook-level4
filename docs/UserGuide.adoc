@@ -359,6 +359,30 @@ You will see the following after typing `list` and `selectE 2`: +
 image::UG_selectEvent.png[width='790']
 _Figure 3.11: select events result_
 
+=== Attaching a portrait to a person: `portrait`
+
+You can use this command to attach a portrait to a person so that you can identify him easily.
+
+Format: `portrait PERSON_INDEX p/IMAGE_FILE_PATH`
+
+****
+* The `image file path` should be in this format: +
+ `HARD_DISK_NAME:/[FOLDER_NAME]/FILE_NAME` +
+* The application only supports .jpg and .png images.
+****
+
+Example: +
+
+* `portrait 1 p/C:/Users/My Profile/Images/sample picture.png` +
+The image named `sample picture.png` and located at `C:/Users/My Profile/Images/` will be attached to the first person.
+
+****
+* You can use either '\' or '/' to separate two subfolders.
+* The app will report an error if it cannot find the file by the path you provide.
+****
+Assume this is the `sample picture.png` +
+Then you will see the following after typing the example portrait command
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
