@@ -77,6 +77,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         /* Case: redo adding Amy to the list -> Amy added again */
         command = RedoCommand.COMMAND_WORD;
         model.addPerson(toAdd);
+
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 

@@ -23,7 +23,7 @@ public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
     public static final String DEFAULT_PHONE = "85355255";
-    public static final String DEFAULT_COUNTRY_CODE = "65";
+    public static final String DEFAULT_COUNTRY_CODE = "Singapore";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, Singapore 408769";
     public static final String DEFAULT_SCHEDULE_DATE = "15-01-1997";
