@@ -97,6 +97,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_BIRTHDAY + " " + birthday.value);
         assertTrue(command instanceof BirthdayCommand);
     }
+    //@@author wishingmaid
     @Test
     public void parseCommand_photo() throws Exception {
         final Photo photo = new Photo("");
@@ -104,7 +105,7 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_FILEPATH + " " + photo.getFilePath());
         assertTrue(command instanceof AddPhotoCommand);
     }
-
+    //@@author 
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
