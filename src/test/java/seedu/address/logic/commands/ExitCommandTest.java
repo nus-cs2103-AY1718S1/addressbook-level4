@@ -20,6 +20,9 @@ public class ExitCommandTest {
     private ExitCommand exitCommand;
     private CommandHistory history;
 
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
     @Before
     public void setUp() {
         Model model = new ModelManager();
@@ -27,9 +30,6 @@ public class ExitCommandTest {
         exitCommand = new ExitCommand();
         exitCommand.setData(model, history, new UndoRedoStack());
     }
-
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     @Test
     public void execute_exit_stalled() {
