@@ -3,6 +3,8 @@ package seedu.address;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -19,7 +21,6 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.google.OAuth;
-import seedu.address.google.SyncTable;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
@@ -53,7 +54,7 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
     protected OAuth oauth;
-    protected SyncTable syncTable;
+    protected ExecutorService executor;
 
 
     @Override
@@ -70,12 +71,14 @@ public class MainApp extends Application {
 
         initLogging(config);
 
-        syncTable = new SyncTable();
-        oauth = new OAuth(syncTable);
+        oauth = OAuth.getInstance();
+
+        executor = Executors.newSingleThreadExecutor();
 
         model = initModelManager(storage, userPrefs);
+        oauth.setModel(model);
 
-        logic = new LogicManager(model, syncTable);
+        logic = new LogicManager(model, oauth, executor);
 
         ui = new UiManager(logic, config, userPrefs);
 

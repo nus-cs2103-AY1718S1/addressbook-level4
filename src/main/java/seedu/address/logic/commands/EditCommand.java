@@ -17,7 +17,6 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
-import seedu.address.google.SyncTable;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.*;
@@ -77,18 +76,6 @@ public class EditCommand extends UndoableCommand {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        Instant time = Instant.now();
-
-        editedPerson.setLastUpdated(new LastUpdated(time.toString()));
-
-
-        if (syncTable.containsKey(personToEdit)) {
-            String key =  syncTable.get(personToEdit);
-            syncTable.remove(personToEdit);
-            syncTable.put(editedPerson, key);
-
-        }
-
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
@@ -113,11 +100,14 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Note updatedNote = personToEdit.getNote();
+        Id updatedId = personToEdit.getId();
+        Instant time = Instant.now();
+        LastUpdated lastUpdated = new LastUpdated(time.toString());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Meeting> updatedMeetings = editPersonDescriptor.getMeetings().orElse(personToEdit.getMeetings());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress,
-                updatedNote, updatedTags, updatedMeetings);
+                updatedNote, updatedId, lastUpdated, updatedTags, updatedMeetings);
     }
 
     @Override

@@ -11,6 +11,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Id;
+import seedu.address.model.person.LastUpdated;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
@@ -33,6 +35,10 @@ public class XmlAdaptedPerson {
     private String address;
     @XmlElement(required = true)
     private String note;
+    @XmlElement(required = true)
+    private String id;
+    @XmlElement(required = true)
+    private String lastUpdated;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -55,6 +61,8 @@ public class XmlAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         note = source.getNote().getValue();
+        id = source.getId().getValue();
+        lastUpdated = source.getLastUpdated().getValue();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -77,8 +85,10 @@ public class XmlAdaptedPerson {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
         final Note note = new Note(this.note);
+        final Id id = new Id(this.id);
+        final LastUpdated lastUpdated = new LastUpdated(this.lastUpdated);
         final Set<Tag> tags = new HashSet<>(personTags);
         final Set<Meeting> meetings = new HashSet<> (personMeetings);
-        return new Person(name, phone, email, address, note, tags, meetings);
+        return new Person(name, phone, email, address, note, id, lastUpdated, tags, meetings);
     }
 }

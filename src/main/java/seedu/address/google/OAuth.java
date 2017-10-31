@@ -3,6 +3,7 @@ package seedu.address.google;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collections;
+import java.util.Observable;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -18,11 +19,8 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.people.v1.PeopleService;
 import com.google.api.services.people.v1.PeopleServiceScopes;
 
-import com.google.common.eventbus.Subscribe;
-
 import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.model.AuthorizationEvent;
-import seedu.address.google.Synchronise;
+import seedu.address.model.Model;
 
 /**
  * Command-line sample for the Google OAuth2 API described at <a
@@ -31,39 +29,37 @@ import seedu.address.google.Synchronise;
  *
  * @author Yaniv Inbar
  */
-public class OAuth {
+public class OAuth extends Observable{
+
+    private static final OAuth oauth = new OAuth();
+    private Model model;
 
     /**
      * Be sure to specify the name of your application. If the application name is {@code null} or
      * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
      */
-    private static final String APPLICATION_NAME = "W13B3-AddressBook/1.2";
+    private final String APPLICATION_NAME = "W13B3-AddressBook/1.2";
 
     /** Directory to store user credentials. */
-    private static final java.io.File DATA_STORE_DIR =
+    private final java.io.File DATA_STORE_DIR =
             new java.io.File(System.getProperty("user.home"), ".store/addressbook");
 
     /**
      * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single
      * globally shared instance across your application.
      */
-    private static FileDataStoreFactory dataStoreFactory;
+    private FileDataStoreFactory dataStoreFactory;
 
     /** Global instance of the HTTP transport. */
-    private static HttpTransport httpTransport;
+    private HttpTransport httpTransport;
 
     /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-    private static com.google.api.services.people.v1.PeopleService client;
+    private com.google.api.services.people.v1.PeopleService client;
 
-    private static Synchronise sync;
-
-    private static SyncTable syncTable;
-
-    public OAuth(SyncTable syncTable) {
+    private OAuth() {
         registerAsAnEventHandler(this);
-        this.syncTable = syncTable;
     }
 
     protected void registerAsAnEventHandler(Object handler) {
@@ -71,7 +67,7 @@ public class OAuth {
     }
 
     /** Authorizes the installed application to access user's protected data. */
-    private static Credential authorize() throws Exception {
+    private Credential authorize() throws Exception {
         // load client secrets
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
                 new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
@@ -94,12 +90,8 @@ public class OAuth {
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
-
-
-    @Subscribe
-    private static void handleAuthorizationEvent(AuthorizationEvent event) throws Throwable {
-        new Thread (() -> {
-            try {
+    public PeopleService execute() throws Throwable {
+        try {
                 // initialize the transport
                 httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
@@ -112,18 +104,27 @@ public class OAuth {
                 client = new PeopleService.Builder(
                         httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
 
-                sync = new Synchronise(client, syncTable);
-                sync.execute(event.getPersonList());
-//                exportContacts(event.getPersonList());
-//                importContacts();
             } catch (IOException e) {
                 System.err.println(e.getMessage());
             } catch (Throwable t) {
                 t.printStackTrace();
             }
-        }).start();
+
+        return client;
 
 
+    }
+
+    public void setModel (Model newModel) {
+        model = newModel;
+    }
+
+    public Model getModel () {
+       return model;
+    }
+
+    public static OAuth getInstance () {
+        return oauth;
     }
 
 }

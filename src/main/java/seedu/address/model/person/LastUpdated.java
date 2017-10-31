@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Represents a Person's note in the address book.
  */
@@ -12,6 +14,7 @@ public class LastUpdated {
     private String value;
 
     public LastUpdated(String value) {
+        requireNonNull(value);
         this.value = value;
     }
 
@@ -20,7 +23,7 @@ public class LastUpdated {
     }
 
 
-    public void setValue (String lastUpdated) {
+    public void setValue (String value) {
         this.value = value;
     }
     @Override

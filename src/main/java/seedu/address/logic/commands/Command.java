@@ -1,11 +1,15 @@
 package seedu.address.logic.commands;
 
+import com.google.api.services.people.v1.PeopleService;
 import seedu.address.commons.core.Messages;
-import seedu.address.google.SyncTable;
+import seedu.address.google.OAuth;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Represents a command with hidden internal logic and the ability to be executed.
@@ -13,8 +17,10 @@ import seedu.address.model.Model;
 public abstract class Command {
     protected Model model;
     protected CommandHistory history;
-    protected SyncTable syncTable;
     protected UndoRedoStack undoRedoStack;
+    protected OAuth oauth;
+    protected ExecutorService executor;
+    protected static CompletableFuture<PeopleService> clientFuture;
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
@@ -43,7 +49,12 @@ public abstract class Command {
         this.model = model;
     }
 
-    public void setSyncTable (SyncTable syncTable) {
-        this.syncTable = syncTable;
+    public void setOAuth (OAuth oauth) {
+        this.oauth = oauth;
     }
+
+    public void setExecutor (ExecutorService executor) {
+        this.executor = executor;
+    }
+
 }

@@ -1,17 +1,20 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Represents a Person's note in the address book.
  */
-public class LastUpdated {
+public class Id {
 
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person notes can take any values";
+            "Person value can take any values";
 
 
     private String value;
 
-    public LastUpdated(String value) {
+    public Id(String value) {
+        requireNonNull(value);
         this.value = value;
     }
 
@@ -20,7 +23,7 @@ public class LastUpdated {
     }
 
 
-    public void setValue (String lastUpdated) {
+    public void setValue (String value) {
         this.value = value;
     }
     @Override
@@ -33,8 +36,8 @@ public class LastUpdated {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof LastUpdated // instanceof handles nulls
-                && this.value.equals(((LastUpdated) other).value));// state check
+                || (other instanceof Id // instanceof handles nulls
+                && this.value.equals(((Id) other).value));// state check
     }
 
     @Override
